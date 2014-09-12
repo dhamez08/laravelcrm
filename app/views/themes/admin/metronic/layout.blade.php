@@ -130,22 +130,6 @@
 		<script src="{{$asset_path}}/pages/scripts/index.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/pages/scripts/tasks.js" type="text/javascript"></script>
 		<!-- END PAGE LEVEL SCRIPTS -->
-		<script>
-		jQuery(document).ready(function() {
-		   Metronic.init(); // init metronic core componets
-		   Layout.init(); // init layout
-		   Index.init();
-		   Index.initDashboardDaterange();
-		   Index.initJQVMAP(); // init index page's custom scripts
-		   Index.initCalendar(); // init index page's custom scripts
-		   Index.initCharts(); // init index page's custom scripts
-		   Index.initChat();
-		   Index.initMiniCharts();
-		   //Index.initIntro();
-		   //Tasks.initDashboardWidget();
-		  //$('.error li').addClass('list-group-item list-group-item-danger');
-		});
-		</script>
 	@show
 
 	@yield('footer-custom-css')

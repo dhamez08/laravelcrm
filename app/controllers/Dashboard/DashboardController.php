@@ -19,6 +19,7 @@ class DashboardController extends \BaseController {
 	public function __construct(){
 		parent::__construct();
 		$this->data_view = parent::setupThemes();
+		$this->data_view['dashboard_index'] = $this->data_view['view_path'] . '.dashboard.index';
 	}
 
 	/**
@@ -38,11 +39,13 @@ class DashboardController extends \BaseController {
 	}
 
 	public function getSetupThemes(){
-		var_dump($this->data_view);
+		$this->data_view['html_body_class'] = 'page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo page-container-bg-solid page-full-width';
+		$this->data_view['header_class'] = 'page-header navbar navbar-fixed-top';
+		return $this->data_view;
 	}
 
 	public function getIndex(){
-		$data = $this->data_view;
+		$data = $this->getSetupThemes();
 		return \View::make( $data['view_path'] . '.dashboard.index', $data );
 	}
 
