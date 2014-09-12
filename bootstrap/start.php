@@ -27,6 +27,7 @@ $app = new Illuminate\Foundation\Application;
 $env = $app->detectEnvironment(array(
 
 	'local' => array('homestead','allanpc-System-Product-Name','allan-R439'),
+	'richard_local' => array('precise32')
 
 ));
 
