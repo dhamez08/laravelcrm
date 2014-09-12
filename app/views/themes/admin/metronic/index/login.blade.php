@@ -82,7 +82,7 @@
 				</div>
 				<div class="create-account">
 					<p>
-						 Don't have an account yet ?&nbsp; <a id="register-btn" href="javascript:;">
+						 Don't have an account yet ?&nbsp; <a id="register-btn" href="{{URL::('register');}}">
 						Create an account </a>
 					</p>
 				</div>
