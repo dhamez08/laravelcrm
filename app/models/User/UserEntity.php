@@ -98,7 +98,7 @@ class UserEntity extends \Eloquent implements UserInterface, RemindableInterface
 		if( $confirm->count() > 0 ){
 			$user_id 		= $confirm->pluck('id');
 			$user 			= \User\User::find($user_id);
-			$user->active 	= 1
+			$user->active 	= 1;
 			$user->save();
 			return $user;
 		}
