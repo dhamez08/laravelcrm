@@ -13,7 +13,8 @@
 Route::get( '/' , 'HomeController@getIndex' );
 Route::get('testmail', function()
 {
-	Mail::send('emails.welcome', $data, function($message)
+	$data = array();
+	Mail::send('emails.welcome', $data, function($message) use ($data)
 	{
 		$message->from('info@zeromyexcess.co.uk', 'Admin');
 		$message->to('allan.paul.casilum@gmail.com', 'John Smith')->subject('Welcome!');
