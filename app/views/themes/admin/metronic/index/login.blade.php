@@ -16,13 +16,20 @@
 			</a>
 		</div>
 		<div class="content">
-			{{ HTML::ul($errors->all(),array('class' => 'list-group error')) }}
-
-			@if (Session::has('message'))
-				<div class="alert alert-info">{{ Session::get('message') }}</div>
+			@if (Session::has('login_errors'))
+			  <div class="alert alert-danger">Username or password incorrect.</div>
 			@endif
 
-			<form method="post" action="index_3.html" class="login-form" novalidate="novalidate" style="display: block;">
+			{{ Form::open(
+				array(
+						'action' => array('AuthController@postAuth'),
+						'method' => 'POST',
+						'role'=>'form',
+						'class'=>'login-form',
+						'novalidate'=>'novalidate'
+					)
+				)
+			}}
 				<h3 class="form-title">Login to your account</h3>
 				<div class="alert alert-danger display-hide">
 					<button data-close="alert" class="close"></button>
@@ -34,14 +41,32 @@
 					<label class="control-label visible-ie8 visible-ie9">Username or Email</label>
 					<div class="input-icon">
 						<i class="fa fa-user"></i>
-						<input type="text" name="username" placeholder="Username or Email" autocomplete="off" class="form-control placeholder-no-fix" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QsPDhss3LcOZQAAAU5JREFUOMvdkzFLA0EQhd/bO7iIYmklaCUopLAQA6KNaawt9BeIgnUwLHPJRchfEBR7CyGWgiDY2SlIQBT/gDaCoGDudiy8SLwkBiwz1c7y+GZ25i0wnFEqlSZFZKGdi8iiiOR7aU32QkR2c7ncPcljAARAkgckb8IwrGf1fg/oJ8lRAHkR2VDVmOQ8AKjqY1bMHgCGYXhFchnAg6omJGcBXEZRtNoXYK2dMsaMt1qtD9/3p40x5yS9tHICYF1Vn0mOxXH8Uq/Xb389wff9PQDbQRB0t/QNOiPZ1h4B2MoO0fxnYz8dOOcOVbWhqq8kJzzPa3RAXZIkawCenHMjJN/+GiIqlcoFgKKq3pEMAMwAuCa5VK1W3SAfbAIopum+cy5KzwXn3M5AI6XVYlVt1mq1U8/zTlS1CeC9j2+6o1wuz1lrVzpWXLDWTg3pz/0CQnd2Jos49xUAAAAASUVORK5CYII=&quot;); background-repeat: no-repeat; background-attachment: scroll; background-position: right center; cursor: auto;">
+						{{
+							Form::text(
+								'username',
+								null,
+								array(
+									'placeholder'=>'Username',
+									'class'=>'form-control placeholder-no-fix'
+								)
+							);
+						}}
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label visible-ie8 visible-ie9">Password</label>
 					<div class="input-icon">
 						<i class="fa fa-lock"></i>
-						<input type="password" name="password" placeholder="Password" autocomplete="off" class="form-control placeholder-no-fix" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QsPDhss3LcOZQAAAU5JREFUOMvdkzFLA0EQhd/bO7iIYmklaCUopLAQA6KNaawt9BeIgnUwLHPJRchfEBR7CyGWgiDY2SlIQBT/gDaCoGDudiy8SLwkBiwz1c7y+GZ25i0wnFEqlSZFZKGdi8iiiOR7aU32QkR2c7ncPcljAARAkgckb8IwrGf1fg/oJ8lRAHkR2VDVmOQ8AKjqY1bMHgCGYXhFchnAg6omJGcBXEZRtNoXYK2dMsaMt1qtD9/3p40x5yS9tHICYF1Vn0mOxXH8Uq/Xb389wff9PQDbQRB0t/QNOiPZ1h4B2MoO0fxnYz8dOOcOVbWhqq8kJzzPa3RAXZIkawCenHMjJN/+GiIqlcoFgKKq3pEMAMwAuCa5VK1W3SAfbAIopum+cy5KzwXn3M5AI6XVYlVt1mq1U8/zTlS1CeC9j2+6o1wuz1lrVzpWXLDWTg3pz/0CQnd2Jos49xUAAAAASUVORK5CYII=&quot;); background-repeat: no-repeat; background-attachment: scroll; background-position: right center;">
+						{{
+							Form::password(
+								'password',
+								array(
+									'placeholder'=>'Password',
+									'class'=>'form-control placeholder-no-fix',
+									'id'=>'register_password',
+								)
+							);
+						}}
 					</div>
 				</div>
 				<div class="form-actions">
@@ -86,7 +111,7 @@
 						Create an account </a>
 					</p>
 				</div>
-			</form>
+			{{Form::close()}}
 		</div>
 @stop
 @section('body-footer')

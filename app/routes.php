@@ -11,7 +11,8 @@
 |
 */
 Route::get( '/' , 'HomeController@getIndex' );
-Route::get( 'login' , 'AuthController@getIndex' );
+Route::controller( 'login' , 'AuthController' );
+Route::controller( 'logout' , 'AuthController' );
 Route::controller( 'register' , 'RegisterController' );
 Route::group(array('before' => 'auth'), function()
 {

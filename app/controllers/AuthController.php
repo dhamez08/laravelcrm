@@ -36,4 +36,25 @@ class AuthController extends BaseController {
 		return \View::make( $data['view_path'] . '.index.login', $data );
 	}
 
+	public function postAuth(){
+		$credentials = array(
+			'username' 	=> Input::get('username'),
+			'password' 	=> Input::get('password'),
+			'active' => 2
+		);
+
+		if ( Auth::attempt($credentials) ){
+		  return Redirect::intended('/');
+		}
+
+		return Redirect::to('login')
+				->withInput()
+				->with('login_errors', true);
+	}
+
+	public function getLogout(){
+		\Auth::logout();
+	    return Redirect::to('/');
+	}
+
 }

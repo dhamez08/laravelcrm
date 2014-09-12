@@ -89,8 +89,8 @@ class RegisterController extends \BaseController {
 			$userToGroup = $this->userToGroupEntity->createUserToGroup($user->id, $userGroup->id);
 			$subscription = $this->SubscriptionEntity->createSubscription($user->id);
 
-			//\Session::flash('message', 'Success! Please check your email for verification.');
-			//return \Redirect::to('register');
+			\Session::flash('message', 'Success! Please check your email for verification.');
+			return \Redirect::to('register');
 		}else{
 			\Input::flash();
 			return \Redirect::to('register')
