@@ -94,7 +94,7 @@ class RegisterController extends \BaseController {
 
 			$data['confirm_code'] 	= \Input::get('confirm_code');
 			$data['to'] 			= \Input::get('email');
-			$data['name']			= \Input::get('first_name') . \Input::get('last_name');
+			$data['name']			= \Input::get('first_name') .' '. \Input::get('last_name');
 			Mail::send('emails.welcome', $data, function($message) use ($data)
 			{
 				$message->from(\Config::get('mail.from.address'), \Config::get('mail.from.name'));
