@@ -58,7 +58,11 @@ class AuthController extends BaseController {
 	}
 
 	public function getConfirmAuthCode($confirm_code){
-		\User\UserEntity::get_instance()->activateUser($confirm_code);
+		$activate = \User\UserEntity::get_instance()->activateUser($confirm_code);
+		if( $activate ){
+			\Session::flash('message', 'Success! You have activated your account, please log-in to start using the CRM.');
+			return \Redirect::to('login');
+		}
 	}
 
 }

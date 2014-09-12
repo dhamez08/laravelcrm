@@ -16,6 +16,10 @@
 			</a>
 		</div>
 		<div class="content">
+			@if (Session::has('message'))
+				<div class="alert alert-info">{{ Session::get('message') }}</div>
+			@endif
+
 			@if (Session::has('login_errors'))
 			  <div class="alert alert-danger">Username or password incorrect.</div>
 			@endif
