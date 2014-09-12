@@ -93,4 +93,8 @@ class UserEntity extends \Eloquent implements UserInterface, RemindableInterface
 		}
 	}
 
+	public function activateUser($confirm_code){
+		return \User\User::confirmCode($confirm_code);
+	}
+
 }

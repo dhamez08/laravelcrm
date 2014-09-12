@@ -23,4 +23,8 @@ class User extends \Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $hidden = array('password', 'remember_token');
 
+	public function scopeConfirmCode($query, $confirm_code){
+		return $query->where('confirm_code', '=' , $confirm_code);
+	}
+
 }
