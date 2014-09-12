@@ -53,8 +53,12 @@ class AuthController extends BaseController {
 	}
 
 	public function getLogout(){
-		\Auth::logout();
+		Auth::logout();
 	    return Redirect::to('/');
+	}
+
+	public function getConfirmAuthCode($confirm_code){
+		echo $confirm_code;
 	}
 
 }

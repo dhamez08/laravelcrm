@@ -84,10 +84,22 @@ class RegisterController extends \BaseController {
 		);
 		$validator = \Validator::make(\Input::all(), $rules, $messages);
 		if ( $validator->passes() ) {
-			$user = $this->userEntity->createOrUpdate();
-			$userGroup = $this->userGroupEntity->createGroup($user->id);
-			$userToGroup = $this->userToGroupEntity->createUserToGroup($user->id, $userGroup->id);
-			$subscription = $this->SubscriptionEntity->createSubscription($user->id);
+			$code = md5(rand(100,999).time());
+			\Input::merge(array('confirm_code' => $code));
+
+			$user 			= $this->userEntity->createOrUpdate();
+			$userGroup 		= $this->userGroupEntity->createGroup($user->id);
+			$userToGroup 	= $this->userToGroupEntity->createUserToGroup($user->id, $userGroup->id);
+			$subscription 	= $this->SubscriptionEntity->createSubscription($user->id);
+
+			$data['confirm_code'] 	= \Input::get('confirm_code');
+			$data['to'] 			= \Input::get('email');
+			$data['name']			= \Input::get('first_name') . \Input::get('last_name');
+			Mail::send('emails.welcome', $data, function($message) use ($data)
+			{
+				$message->from(\Config::get('mail.from.address'), \Config::get('mail.from.name'));
+				$message->to($data['to'], $data['name'])->subject('Please Confirm Registration!');
+			});
 
 			\Session::flash('message', 'Success! Please check your email for verification.');
 			return \Redirect::to('register');

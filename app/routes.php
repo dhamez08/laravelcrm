@@ -11,17 +11,10 @@
 |
 */
 Route::get( '/' , 'HomeController@getIndex' );
-Route::get('testmail', function()
-{
-	$data = array();
-	Mail::send('emails.welcome', $data, function($message) use ($data)
-	{
-		$message->from('info@zeromyexcess.co.uk', 'Admin');
-		$message->to('allan.paul.casilum@gmail.com', 'John Smith')->subject('Welcome!');
-	});
-});
-Route::controller( 'login' , 'AuthController' );
-Route::controller( 'logout' , 'AuthController' );
+Route::get( 'login' , 'AuthController@getIndex' );
+Route::post( 'login' , 'AuthController@postAuth' );
+Route::get( 'logout' , 'AuthController@getLogout' );
+Route::get( 'confirmcode/{confirm_code}' , 'AuthController@getConfirmAuthCode' );
 Route::controller( 'register' , 'RegisterController' );
 Route::group(array('before' => 'auth'), function()
 {
@@ -31,3 +24,13 @@ Route::group(array('before' => 'auth'), function()
 	});
 });
 
+ Route::get('testmail', function()
+{
+	$data = array('to'=>'John Smith');
+	Mail::send('emails.welcome', $data, function($message) use ($data)
+	{
+		$message->from(\Config::get('mail.from.address'), \Config::get('mail.from.name'));
+		$message->to('allan.paul.casilum@gmail.com', $data['to'])->subject('Welcome!');
+	});
+	//echo \Config::get('mail.from.address');
+});

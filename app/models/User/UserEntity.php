@@ -51,8 +51,6 @@ class UserEntity extends \Eloquent implements UserInterface, RemindableInterface
 	public function createOrUpdate($id = null){
 		if( is_null($id) ) {
 			//create
-			$code = md5(rand(100,999).time());
-
 			$user 					= new \User\User;
 			$user->username			= \Input::get('username');
 			$user->password			= \Hash::make( \Input::get('password') );
@@ -67,7 +65,7 @@ class UserEntity extends \Eloquent implements UserInterface, RemindableInterface
 			$user->address_town 	= \Input::get('address_town');
 			$user->address_county 	= \Input::get('address_county');
 			$user->address_postcode = \Input::get('address_postcode');
-			$user->confirm_code 	= $code;
+			$user->confirm_code 	= \Input::get('confirm_code');
 			$user->active 			= 2;
 			$user->save();
 
