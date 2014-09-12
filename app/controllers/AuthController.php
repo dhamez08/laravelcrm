@@ -58,8 +58,7 @@ class AuthController extends BaseController {
 	}
 
 	public function getConfirmAuthCode($confirm_code){
-		$user = \User\UserEntity::get_instance()->activateUser($confirm_code);
-		var_dump($user->count());
+		\User\UserEntity::get_instance()->activateUser($confirm_code);
 	}
 
 }
