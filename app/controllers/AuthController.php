@@ -40,7 +40,7 @@ class AuthController extends BaseController {
 		$credentials = array(
 			'username' 	=> Input::get('username'),
 			'password' 	=> Input::get('password'),
-			'active' => 2
+			'active' => 1
 		);
 
 		if ( Auth::attempt($credentials) ){
