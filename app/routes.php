@@ -11,6 +11,13 @@
 |
 */
 Route::get( '/' , 'HomeController@getIndex' );
+Route::get('testmail', function()
+{
+	Mail::send('emails.welcome', array('key' => 'value'), function($message)
+	{
+		$message->to('allan.paul.casilum@gmail.com', 'John Smith')->subject('Welcome!');
+	});
+});
 Route::controller( 'login' , 'AuthController' );
 Route::controller( 'logout' , 'AuthController' );
 Route::controller( 'register' , 'RegisterController' );
