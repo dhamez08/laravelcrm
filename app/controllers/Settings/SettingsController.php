@@ -71,4 +71,15 @@ class SettingsController extends \BaseController {
 		return \View::make( $data['view_path'] . '.settings.index', $data );
 	}
 
+	public function getTags() {
+		$data 					= $this->data_view;
+		$data['pageTitle'] 		= 'Settings - Tags';
+		$data['pageSubTitle'] 	= '';
+		$data['contentClass'] 	= 'settings';
+		$data = array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
+		//var_dump($data);exit();
+		return \View::make( $data['view_path'] . '.settings.tags', $data );
+	}
+
+
 }
