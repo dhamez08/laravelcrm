@@ -4,29 +4,29 @@
 			<div class="col-md-3">
 				<ul class="ver-inline-menu tabbable margin-bottom-10">
 					<li class="active">
-						<a data-toggle="tab" href="#tab_1-1">
+						<a data-toggle="tab" href="#tab_personal_info">
 						<i class="fa fa-cog"></i> Personal info </a>
 						<span class="after">
 						</span>
 					</li>
 					<li>
-						<a data-toggle="tab" href="#tab_2-2">
+						<a data-toggle="tab" href="#tab_change_avatar">
 						<i class="fa fa-picture-o"></i> Change Avatar </a>
 					</li>
 					<li>
-						<a data-toggle="tab" href="#tab_3-3">
+						<a data-toggle="tab" href="#tab_change_password">
 						<i class="fa fa-lock"></i> Change Password </a>
 					</li>
 					<li>
-						<a data-toggle="tab" href="#tab_4-4">
+						<a data-toggle="tab" href="#tab_privacy_settings">
 						<i class="fa fa-eye"></i> Privacity Settings </a>
 					</li>
 				</ul>
 			</div>
 			<div class="col-md-9">
 				<div class="tab-content">
-					<div id="tab_1-1" class="tab-pane active">
-						<form role="form" action="#">
+					<div id="tab_personal_info" class="tab-pane active">
+
 							<div class="form-group">
 								<label class="control-label">First Name</label>
 								<input type="text" placeholder="John" class="form-control"/>
@@ -61,9 +61,9 @@
 								<a href="#" class="btn default">
 								Cancel </a>
 							</div>
-						</form>
+						{{Form::close()}}
 					</div>
-					<div id="tab_2-2" class="tab-pane">
+					<div id="tab_change_avatar" class="tab-pane">
 						<p>
 							 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
 						</p>
@@ -102,7 +102,7 @@
 							</div>
 						</form>
 					</div>
-					<div id="tab_3-3" class="tab-pane">
+					<div id="tab_change_password" class="tab-pane">
 						<form action="#">
 							<div class="form-group">
 								<label class="control-label">Current Password</label>
@@ -124,7 +124,7 @@
 							</div>
 						</form>
 					</div>
-					<div id="tab_4-4" class="tab-pane">
+					<div id="tab_privacy_settings" class="tab-pane">
 						<form action="#">
 							<table class="table table-bordered table-striped">
 							<tr>

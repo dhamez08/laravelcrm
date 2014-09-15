@@ -22,8 +22,8 @@ Route::group(array('before' => 'auth'), function()
 	//{
 		Route::get( 'dashboard' , 'Dashboard\DashboardController@getIndex' );
 		Route::get( 'settings' , 'Settings\SettingsController@getIndex' );
-		Route::get( 'profile' , 'Profile\ProfileController@getIndex' );
 		Route::get( 'clients' , 'Clients\ClientsController@getIndex');
+		Route::controller( 'profile' , 'Profile\ProfileController' );
 	//});
 });
 
