@@ -18,13 +18,15 @@ Route::get( 'confirmcode/{confirm_code}' , 'AuthController@getConfirmAuthCode' )
 Route::controller( 'register' , 'RegisterController' );
 Route::group(array('before' => 'auth'), function()
 {
-	Route::group(array('prefix' => 'dashboard'), function()
-	{
-		Route::get( '/' , 'Dashboard\DashboardController@getIndex' );
-	});
+	//Route::group(array('prefix' => 'dashboard'), function()
+	//{
+		Route::get( 'dashboard' , 'Dashboard\DashboardController@getIndex' );
+		Route::get( 'settings' , 'Settings\SettingsController@getIndex' );
+		Route::get( 'profile' , 'Profile\ProfileController@getIndex' );
+	//});
 });
 
- Route::get('testmail', function()
+Route::get('testmail', function()
 {
 	$data = array('to'=>'John Smith');
 	Mail::send('emails.welcome', $data, function($message) use ($data)

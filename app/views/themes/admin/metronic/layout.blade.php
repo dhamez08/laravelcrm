@@ -13,7 +13,7 @@
 	<head>
 		@section('head-meta')
 			<meta charset="utf-8"/>
-			<title>{{{ $html_title or 'Website Administration' }}}</title>
+			<title>{{{ $pageTitle or 'Website Administration' }}}</title>
 			<meta http-equiv="X-UA-Compatible" content="IE=edge">
 			<meta content="width=device-width, initial-scale=1" name="viewport"/>
 			<meta content="" name="description"/>
@@ -54,12 +54,6 @@
 
 @section('begin-body')
 	<body class="{{{ $html_body_class or 'one23-body' }}}">
-@show
-
-@section('body-header')
-@show
-
-@section('body-content')
 @show
 
 @section('body-footer')

@@ -1,9 +1,9 @@
 <?php
+namespace Dashboard;
 /**
  * This is for the dashboard controller
- * @author APYC
+ * @author Allan
  * */
-namespace Dashboard;
 
 class DashboardController extends \BaseController {
 
@@ -14,8 +14,17 @@ class DashboardController extends \BaseController {
 	 */
 	protected static $instance = null;
 
+	/**
+	 * hold the view essentials like
+	 * - title
+	 * - view path
+	 * @return array | associative
+	 * */
 	protected $data_view;
 
+	/**
+	 * auto setup initialize object
+	 * */
 	public function __construct(){
 		parent::__construct();
 		$this->data_view = parent::setupThemes();
@@ -38,17 +47,29 @@ class DashboardController extends \BaseController {
 		return self::$instance;
 	}
 
+	/**
+	 * get themes
+	 * @return	array
+	 * */
 	public function getSetupThemes(){
 		$this->data_view['html_body_class'] = 'page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo page-container-bg-solid page-full-width';
 		$this->data_view['header_class'] = 'page-header navbar navbar-fixed-top';
 		return $this->data_view;
 	}
 
+	/**
+	 * Index of the dashboard
+	 * @return	View
+	 * */
 	public function getIndex(){
 		$data = $this->getSetupThemes();
 		return \View::make( $data['view_path'] . '.dashboard.index', $data );
 	}
 
+	/**
+	 * display content dashboard
+	 * @return View
+	 * */
 	public function displayContent(){
 		$data = $this->data_view;
 		return \View::make( $data['view_path'] . '.dashboard.partials.content', $data );

@@ -117,7 +117,7 @@
 				</div>
 			{{Form::close()}}
 		</div>
-@stop
+@show
 @section('body-footer')
 	<!-- BEGIN FOOTER -->
 	<div class="copyright">
