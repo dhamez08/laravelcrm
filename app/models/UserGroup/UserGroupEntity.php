@@ -1,5 +1,8 @@
 <?php
 namespace UserGroup;
+/**
+ * Base class for user group entity
+ * */
 class UserGroupEntity extends \Eloquent{
 
 	protected static $instance = null;
@@ -21,7 +24,12 @@ class UserGroupEntity extends \Eloquent{
 
 		return self::$instance;
 	}
-
+	/**
+	 * Create User Group
+	 *
+	 * @param	$user_id	int		the user id to where manager it belong
+	 * @return	object
+	 * */
 	public function createGroup($user_id){
 		$userGroup = new \UserGroup\UserGroup;
 		$userGroup->manager_id = $user_id;

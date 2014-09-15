@@ -1,5 +1,8 @@
 <?php
 namespace Subscription;
+/**
+ * base model entity class for subscription
+ * */
 class SubscriptionEntity extends \Eloquent{
 
 	protected static $instance = null;
@@ -25,6 +28,12 @@ class SubscriptionEntity extends \Eloquent{
 		return self::$instance;
 	}
 
+	/**
+	 * Create subscription
+	 *
+	 * @param	$user_id	int		the user id to subscribe
+	 * @return	object
+	 * */
 	public function createSubscription($user_id){
 		$Subscription 			= new \Subscription\Subscription;
 		$Subscription->user_id 	= $user_id;
