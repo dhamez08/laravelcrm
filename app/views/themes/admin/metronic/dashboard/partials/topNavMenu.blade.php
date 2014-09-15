@@ -356,11 +356,11 @@
 			</a>
 			<ul class="dropdown-menu">
 				<li>
-					<a href="extra_profile.html">
+					<a href="{{url('profile')}}">
 					<i class="icon-user"></i> My Profile </a>
 				</li>
 				<li>
-					<a href="#">
+					<a href="{{url('settings')}}">
 					<i class="fa fa-gear"></i> Settings
 					</a>
 				</li>

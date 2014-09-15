@@ -45,7 +45,7 @@
 					<!-- Dashboard Title -->
 					<!-- END PAGE HEADER-->
 					<!-- BEGIN DASHBOARD STATS -->
-					<div class="row">
+					<div class="row {{{$contentClass or 'dashboard'}}}">
 						@section('innerpage-content')
 							@include( \DashboardEntity::get_instance()->getView() . '.dashboard.partials.dashboardContent' )
 						@show

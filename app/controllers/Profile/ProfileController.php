@@ -1,11 +1,11 @@
 <?php
-namespace Settings;
+namespace Profile;
 /**
- * This is for the settings controller
+ * This is for the Profile controller
  * @author APYC
  * */
 
-class SettingsController extends \BaseController {
+class ProfileController extends \BaseController {
 
 	/**
 	 * Instance of this class.
@@ -63,12 +63,12 @@ class SettingsController extends \BaseController {
 	 * */
 	public function getIndex(){
 		$data 					= $this->data_view;
-		$data['pageTitle'] 		= 'Settings';
-		$data['pageSubTitle'] 	= '';
-		$data['contentClass'] 	= 'settings';
-		$data = array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
+		$data['pageTitle'] 		= 'Profile';
+		$data['pageSubTitle'] 	= \Auth::user()->title.' '.\Auth::user()->first_name.' '.\Auth::user()->last_name;
+		$data['contentClass'] 	= 'profile';
+		$data 					= array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
 		//var_dump($data);exit();
-		return \View::make( $data['view_path'] . '.settings.index', $data );
+		return \View::make( $data['view_path'] . '.profile.index', $data );
 	}
 
 }
