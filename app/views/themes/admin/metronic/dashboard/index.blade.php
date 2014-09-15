@@ -29,13 +29,17 @@
 	@section('innerpage-main-content')
 		<div class="page-container">
 			<!-- BEGIN SIDEBAR -->
-			@include( \DashboardEntity::get_instance()->getView() . '.dashboard.partials.leftSidebar' )
+			@section('left-sidebar')
+				@include( \DashboardEntity::get_instance()->getView() . '.dashboard.partials.leftSidebar' )
+			@show
 			<!-- END SIDEBAR -->
 			<!-- BEGIN CONTENT -->
 			<div class="page-content-wrapper">
 				<div class="page-content">
 					<!-- BEGIN PAGE HEADER-->
-					@include( \DashboardEntity::get_instance()->getView() . '.dashboard.partials.headerClientList' )
+					@section('pagebar')
+						@include( \DashboardEntity::get_instance()->getView() . '.dashboard.partials.headerClientList' )
+					@show
 					<!-- Dashboard Title -->
 					@section('innerpage-page-title')
 						<h3 class="page-title">

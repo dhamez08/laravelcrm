@@ -28,7 +28,7 @@ class ClientsController extends \BaseController {
 	 * */
 	public function __construct(){
 		parent::__construct();		
-		$this->data_view = parent::setupThemes();
+		$this->data_view = parent::setupThemes();		
 		$this->data_view['master_view'] 	= $this->data_view['view_path'] . '.dashboard.index';
 	}
 
@@ -64,7 +64,10 @@ class ClientsController extends \BaseController {
 		$data 					= $this->data_view;
 		$data['pageTitle'] 		= 'Clients';
 		$data['contentClass'] 	= '';
-		$data 					= array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
+		$data 					= array_merge($data,$this->getSetupThemes());
+
+		$data['html_body_class'] = 'page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo page-container-bg-solid page-sidebar-closed';
+
 		return \View::make( $data['view_path'] . '.clients.index', $data );
 	}
 
