@@ -50,14 +50,6 @@ class ProfileController extends \BaseController {
 	}
 
 	/**
-	 * get themes
-	 * @return	array
-	 * */
-	public function getSetupThemes(){
-		return \Dashboard\DashboardController::get_instance()->getSetupThemes();
-	}
-
-	/**
 	 * Index of settings
 	 * @return View
 	 * */
@@ -69,6 +61,11 @@ class ProfileController extends \BaseController {
 		$data 					= array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
 		//var_dump($data);exit();
 		return \View::make( $data['view_path'] . '.profile.index', $data );
+	}
+
+	public function postStore(){
+		$input = \Input::all();
+		var_dump($input);
 	}
 
 }
