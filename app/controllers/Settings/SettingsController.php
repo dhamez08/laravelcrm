@@ -1,11 +1,11 @@
 <?php
-namespace Dashboard;
+namespace Settings;
 /**
- * This is for the dashboard controller
- * @author Allan
+ * This is for the settings controller
+ * @author APYC
  * */
 
-class DashboardController extends \BaseController {
+class SettingsController extends \BaseController {
 
 	/**
 	 * Instance of this class.
@@ -27,8 +27,10 @@ class DashboardController extends \BaseController {
 	 * */
 	public function __construct(){
 		parent::__construct();
+		//$this->data_view = \Dashboard\DashboardController::get_instance()->getSetupThemes();
 		$this->data_view = parent::setupThemes();
-		$this->data_view['dashboard_index'] = $this->data_view['view_path'] . '.dashboard.index';
+		$this->data_view['settings_index'] 	= $this->data_view['view_path'] . '.settings.index';
+		$this->data_view['master_view'] 	= $this->data_view['view_path'] . '.dashboard.index';
 	}
 
 	/**
@@ -52,27 +54,20 @@ class DashboardController extends \BaseController {
 	 * @return	array
 	 * */
 	public function getSetupThemes(){
-		$this->data_view['html_body_class'] = 'page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo page-container-bg-solid page-full-width';
-		$this->data_view['header_class'] = 'page-header navbar navbar-fixed-top';
-		return $this->data_view;
+		return \Dashboard\DashboardController::get_instance()->getSetupThemes();
 	}
 
 	/**
-	 * Index of the dashboard
-	 * @return	View
-	 * */
-	public function getIndex(){
-		$data = $this->getSetupThemes();
-		return \View::make( $data['view_path'] . '.dashboard.index', $data );
-	}
-
-	/**
-	 * display content dashboard
+	 * Index of settings
 	 * @return View
 	 * */
-	public function displayContent(){
+	public function getIndex(){
 		$data = $this->data_view;
-		return \View::make( $data['view_path'] . '.dashboard.partials.content', $data );
+		$data['pageTitle'] = 'Settings';
+		$data['pageSubTitle'] = 'Main Page';
+		$data = array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
+		//var_dump($data);exit();
+		return \View::make( $data['view_path'] . '.settings.index', $data );
 	}
 
 }

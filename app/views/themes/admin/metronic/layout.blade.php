@@ -56,12 +56,6 @@
 	<body class="{{{ $html_body_class or 'one23-body' }}}">
 @show
 
-@section('body-header')
-@show
-
-@section('body-content')
-@show
-
 @section('body-footer')
 	<!-- BEGIN FOOTER -->
 	<div class="page-footer">
