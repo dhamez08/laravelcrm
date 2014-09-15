@@ -50,6 +50,22 @@
 					<!-- END PAGE HEADER-->
 					<!-- BEGIN DASHBOARD STATS -->
 					<div class="row {{{$contentClass or 'dashboard'}}}">
+						@section('innerpage-action-msg')
+							@if ($errors->all())
+								<div class="alert alert-danger fade in" role="alert">
+									<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+									{{ HTML::ul($errors->all(),array('class' => 'list-unstyled')) }}
+								</div>
+							@endif
+
+							@if (Session::has('message'))
+								<div class="alert alert-success">
+									{{ Session::get('message') }}
+									<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+								</div>
+							@endif
+						@show
+
 						@section('innerpage-content')
 							@include( \DashboardEntity::get_instance()->getView() . '.dashboard.partials.dashboardContent' )
 						@show

@@ -1,8 +1,9 @@
 <?php
+namespace User;
 /**
  * A wrapper for the User Model
  * */
-namespace User;
+
 use \Illuminate\Auth\UserTrait;
 use \Illuminate\Auth\UserInterface;
 use \Illuminate\Auth\Reminders\RemindableTrait;
@@ -48,6 +49,13 @@ class UserEntity extends \Eloquent implements UserInterface, RemindableInterface
 		return self::$instance;
 	}
 
+	/**
+	 * This is use to create user or update
+	 * this is full field, mainly use in register
+	 *
+	 * @param 	$id		int		default null		if there is id then update, else create
+	 * @return db last insert id
+	 * */
 	public function createOrUpdate($id = null){
 		if( is_null($id) ) {
 			//create
@@ -93,6 +101,11 @@ class UserEntity extends \Eloquent implements UserInterface, RemindableInterface
 		}
 	}
 
+	/**
+	 * Use to activate user
+	 * @param	$confirm_coed	int		use to confirm code
+	 * @return object
+	 * */
 	public function activateUser($confirm_code){
 		$confirm = \User\User::confirmCode($confirm_code);
 		if( $confirm->count() > 0 ){
@@ -102,6 +115,32 @@ class UserEntity extends \Eloquent implements UserInterface, RemindableInterface
 			$user->save();
 			return $user;
 		}
+	}
+
+	/**
+	 * update user account
+	 * limited fields only
+	 * personal fields particularly
+	 *
+	 * @param	$userId		int		pass user id
+	 * @return object
+	 * */
+	public function updateAccount($userId){
+		$user 					= \User\User::find($userId);
+		$user->title 			= \Input::get('title');
+		$user->first_name 		= \Input::get('first_name');
+		$user->last_name 		= \Input::get('last_name');
+		$user->company 			= \Input::get('company');
+		$user->email 			= \Input::get('email');
+		$user->sms 				= \Input::get('sms');
+		$user->telephone 		= \Input::get('telephone');
+		$user->address_line 	= \Input::get('address_line');
+		$user->address_town 	= \Input::get('address_town');
+		$user->address_county 	= \Input::get('address_county');
+		$user->address_postcode = \Input::get('address_postcode');
+		$user->save();
+
+		return $user;
 	}
 
 }

@@ -14,7 +14,7 @@
 	@section('innerpage-content')
 		<div class="col-md-12">
 			<div class="tabbable tabbable-custom tabbable-full-width">
-				<ul class="nav nav-tabs">
+				<ul class="nav nav-tabs" role="tablist">
 					<li class="active">
 						<a href="#tab_overview" data-toggle="tab">
 						Overview </a>
@@ -34,8 +34,8 @@
 				</ul>
 				<div class="tab-content">
 					@include( \DashboardEntity::get_instance()->getView() . '.profile.partials.overview' )
-					@include( \DashboardEntity::get_instance()->getView() . '.profile.partials.account' )
-					@include( \DashboardEntity::get_instance()->getView() . '.profile.partials.currentProjects' )
+					@include( \DashboardEntity::get_instance()->getView() . '.profile.partials.account')
+					@include( \DashboardEntity::get_instance()->getView() . '.profile.partials.currentProjects')
 					@include( \DashboardEntity::get_instance()->getView() . '.profile.partials.helpSettings' )
 				</div>
 			</div>
