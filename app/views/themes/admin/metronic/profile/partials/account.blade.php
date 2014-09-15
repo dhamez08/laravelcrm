@@ -26,38 +26,172 @@
 			<div class="col-md-9">
 				<div class="tab-content">
 					<div id="tab_personal_info" class="tab-pane active">
-
+							{{
+								Form::model(
+									$user,
+									array(
+										'action' => array('Profile\ProfileController@putAccount', $user->id),
+										'method' => 'PUT'
+									)
+								)
+							}}
+							<p>
+								 Your Contact Infomation
+							</p>
+							<div class="form-group">
+								<label class="control-label">Title</label>
+									{{
+										Form::select(
+											'title',
+											array(
+												'0'=>'Please Select Title',
+												'Mr' => 'Mr',
+												'Mrs' => 'Mrs',
+												'Ms' => 'Ms',
+												'Miss' => 'Miss',
+											),
+											null,
+											array('class'=>'form-control')
+										)
+									}}
+							</div>
 							<div class="form-group">
 								<label class="control-label">First Name</label>
-								<input type="text" placeholder="John" class="form-control"/>
+								{{
+									Form::text(
+										'first_name',
+										null,
+										array(
+											'placeholder'=>'First Name',
+											'class'=>'form-control placeholder-no-fix'
+										)
+									);
+								}}
 							</div>
 							<div class="form-group">
-								<label class="control-label">Last Name</label>
-								<input type="text" placeholder="Doe" class="form-control"/>
+								<label class="control-label">Surname</label>
+								{{
+									Form::text(
+										'last_name',
+										null,
+										array(
+											'placeholder'=>'Surname',
+											'class'=>'form-control placeholder-no-fix'
+										)
+									);
+								}}
 							</div>
 							<div class="form-group">
-								<label class="control-label">Mobile Number</label>
-								<input type="text" placeholder="+1 646 580 DEMO (6284)" class="form-control"/>
+								<label class="control-label">Email</label>
+								{{
+									Form::text(
+										'email',
+										null,
+										array(
+											'placeholder'=>'Email',
+											'class'=>'form-control placeholder-no-fix'
+										)
+									);
+								}}
 							</div>
 							<div class="form-group">
-								<label class="control-label">Interests</label>
-								<input type="text" placeholder="Design, Web etc." class="form-control"/>
+								<label class="control-label">Phone</label>
+									{{
+										Form::text(
+											'telephone',
+											null,
+											array(
+												'placeholder'=>'Phone',
+												'class'=>'form-control placeholder-no-fix'
+											)
+										);
+									}}
+							</div>
+							<p>
+								Company Information
+							</p>
+							<div class="form-group">
+								<label class="control-label">Company</label>
+									{{
+										Form::text(
+											'company',
+											null,
+											array(
+												'placeholder'=>'Company',
+												'class'=>'form-control placeholder-no-fix'
+											)
+										);
+									}}
 							</div>
 							<div class="form-group">
-								<label class="control-label">Occupation</label>
-								<input type="text" placeholder="Web Developer" class="form-control"/>
+								<label class="control-label">Address</label>
+									{{
+										Form::text(
+											'address_line',
+											null,
+											array(
+												'placeholder'=>'Address',
+												'class'=>'form-control placeholder-no-fix'
+											)
+										);
+									}}
 							</div>
 							<div class="form-group">
-								<label class="control-label">About</label>
-								<textarea class="form-control" rows="3" placeholder="We are KeenThemes!!!"></textarea>
+								<label class="control-label">Town</label>
+									{{
+										Form::text(
+											'address_town',
+											null,
+											array(
+												'placeholder'=>'Town',
+												'class'=>'form-control placeholder-no-fix'
+											)
+										);
+									}}
 							</div>
 							<div class="form-group">
-								<label class="control-label">Website Url</label>
-								<input type="text" placeholder="http://www.mywebsite.com" class="form-control"/>
+								<label class="control-label">County</label>
+									{{
+										Form::text(
+											'address_county',
+											null,
+											array(
+												'placeholder'=>'County',
+												'class'=>'form-control placeholder-no-fix'
+											)
+										);
+									}}
+							</div>
+							<div class="form-group">
+								<label class="control-label">Postcode</label>
+									{{
+										Form::text(
+											'address_postcode',
+											null,
+											array(
+												'placeholder'=>'Postcode',
+												'class'=>'form-control placeholder-no-fix'
+											)
+										);
+									}}
+							</div>
+							<div class="form-group">
+								<label class="control-label">SMS Display Name</label>
+								<div class="controls">
+										{{
+										Form::text(
+											'sms',
+											null,
+											array(
+												'placeholder'=>'SMS Display Name',
+												'class'=>'form-control placeholder-no-fix',
+											)
+										);
+									}}
+								</div>
 							</div>
 							<div class="margiv-top-10">
-								<a href="#" class="btn green">
-								Save Changes </a>
+								{{Form::submit('Save Changes',array('class'=>'btn green'))}}
 								<a href="#" class="btn default">
 								Cancel </a>
 							</div>

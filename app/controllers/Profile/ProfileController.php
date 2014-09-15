@@ -30,7 +30,27 @@ class ProfileController extends \BaseController {
 		//$this->data_view = \Dashboard\DashboardController::get_instance()->getSetupThemes();
 		$this->data_view = parent::setupThemes();
 		$this->data_view['settings_index'] 	= $this->data_view['view_path'] . '.settings.index';
-		$this->data_view['master_view'] 	= $this->data_view['view_path'] . '.dashboard.index';
+		/**
+		 * use for the class name
+		 * @var string $contentClass
+		 * @see views/themes/admin/metronic/dashboard/index.blade.php
+		 * line 48
+		 * */
+		$this->data_view['contentClass'] 	= 'profile';
+		/**
+		 * use for the page title
+		 * @var $pageTitle string
+		 * @see views/themes/admin/metronic/dashboard/index.blade.php
+		 * line 42
+		 * */
+		$this->data_view['pageTitle'] 		= 'Profile';
+		/**
+		 * use for the page sub title
+		 * @var $pageSubTitle string
+		 * @see views/themes/admin/metronic/dashboard/index.blade.php
+		 * line 42
+		 * */
+		$this->data_view['pageSubTitle'] 	= \Auth::user()->title.' '.\Auth::user()->first_name.' '.\Auth::user()->last_name;
 	}
 
 	/**
@@ -54,18 +74,57 @@ class ProfileController extends \BaseController {
 	 * @return View
 	 * */
 	public function getIndex(){
-		$data 					= $this->data_view;
-		$data['pageTitle'] 		= 'Profile';
-		$data['pageSubTitle'] 	= \Auth::user()->title.' '.\Auth::user()->first_name.' '.\Auth::user()->last_name;
-		$data['contentClass'] 	= 'profile';
-		$data 					= array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
+		$data 			= $this->data_view;
+		$data['user']	= \User\User::find( \Auth::user()->id );
+		$data 			= array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
 		//var_dump($data);exit();
 		return \View::make( $data['view_path'] . '.profile.index', $data );
 	}
 
-	public function postStore(){
-		$input = \Input::all();
-		var_dump($input);
+	public function putAccount($userId){
+		$rules = array(
+			'title' => 'required',
+			'first_name' => 'required|min:3',
+			'last_name' => 'required|min:3',
+			'telephone' => 'required|min:3',
+			'email' => 'required|email',
+			'company' => 'required|min:3',
+			'address_line' => 'required|min:3',
+			'address_town' => 'required|min:3',
+			'address_postcode' => 'required|min:3',
+			'sms' => 'required|min:3',
+		);
+		$messages = array(
+			'email.required' => 'Email field is required.',
+			'email.email' => 'Email field is invalid.',
+			'firstname.required'=>'First Name is required',
+			'title.required'=>'Title is required',
+			'first_name.required'=>'First Name is required',
+			'first_name.min'=>'First Name must have more than 3 character',
+			'last_name.required'=>'Last Name is required',
+			'last_name.min'=>'Last Name must have more than 3 character',
+			'address_line.required'=>'Address is required',
+			'address_line.min'=>'Address must have more than 3 character',
+			'address_town.required'=>'Town is required',
+			'address_town.min'=>'Town must have more than 3 character',
+			'address_postcode.required'=>'Postcode is required',
+			'address_postcode.min'=>'Postcode must have more than 3 character',
+			'sms.required'=>'SMS Display Name is required',
+			'sms.min'=>'SMS Display Name must have more than 3 character',
+			'telephone.required'=>'Phone is required',
+			'telephone.min'=>'Phone must have more than 3 character',
+		);
+		$validator = \Validator::make(\Input::all(), $rules, $messages);
+		if ( $validator->passes() ) {
+			\User\UserEntity::get_instance()->updateAccount($userId);
+			\Session::flash('message', 'Successfully updated account');
+			return \Redirect::to('profile');
+		}else{
+			\Input::flash();
+			return \Redirect::to('profile')
+			->withErrors($validator)
+			->withInput();
+		}
 	}
 
 }
