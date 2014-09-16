@@ -36,4 +36,12 @@ class UserGroupEntity extends \Eloquent{
 		$userGroup->save();
 		return $userGroup;
 	}
+
+	public function getLogo($manager_id){
+	}
+
+	public function updateLogo(){
+
+	}
+
 }

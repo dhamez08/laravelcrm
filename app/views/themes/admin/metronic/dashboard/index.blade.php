@@ -1,4 +1,5 @@
 @extends( $master_view )
+
 @section('begin-head')
 	@parent
 	@section('head-page-level-css')
@@ -12,6 +13,7 @@
 	<!-- END PAGE LEVEL SCRIPTS -->
 	@stop
 @stop
+
 @section('body-header')
 	<div class="{{{$header_class}}}">
 		<!-- BEGIN HEADER INNER -->
@@ -22,7 +24,7 @@
 		</div>
 		<!-- END HEADER INNER -->
 	</div>
-@show
+@stop
 
 @section('body-content')
 	<div class="clearfix"></div>
@@ -81,7 +83,7 @@
 			<!-- END QUICK SIDEBAR -->
 		</div>
 	@show
-@show
+@stop
 
 @section('script-footer')
 	@parent

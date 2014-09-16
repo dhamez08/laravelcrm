@@ -81,5 +81,4 @@ class SettingsController extends \BaseController {
 		return \View::make( $data['view_path'] . '.settings.tags', $data );
 	}
 
-
 }

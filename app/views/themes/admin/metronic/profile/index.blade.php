@@ -9,6 +9,7 @@
 	<!-- END PAGE LEVEL SCRIPTS -->
 	@stop
 @stop
+
 @section('body-content')
 	@parent
 	@section('innerpage-content')
@@ -40,5 +41,12 @@
 				</div>
 			</div>
 		</div>
+	@stop
+@stop
+@section('script-footer')
+	@parent
+	@section('footer-custom-js')
+	<script type="text/javascript" src="{{$asset_path}}	/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"></script>
+	@parent
 	@stop
 @stop
