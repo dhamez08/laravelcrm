@@ -54,9 +54,11 @@ class UserEntity extends \Eloquent implements UserInterface, RemindableInterface
 	 * this is full field, mainly use in register
 	 *
 	 * @param 	$id		int		default null		if there is id then update, else create
+	 * @param	$active	int		default 2			#2 means not active
+	 * 												#1 would be active
 	 * @return db last insert id
 	 * */
-	public function createOrUpdate($id = null){
+	public function createOrUpdate($id = null, $active = 2){
 		if( is_null($id) ) {
 			//create
 			$user 					= new \User\User;
@@ -74,7 +76,7 @@ class UserEntity extends \Eloquent implements UserInterface, RemindableInterface
 			$user->address_county 	= \Input::get('address_county');
 			$user->address_postcode = \Input::get('address_postcode');
 			$user->confirm_code 	= \Input::get('confirm_code');
-			$user->active 			= 2;
+			$user->active 			= $active;
 			$user->save();
 
 			return $user;

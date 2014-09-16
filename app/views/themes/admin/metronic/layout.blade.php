@@ -56,6 +56,9 @@
 	<body class="{{{ $html_body_class or 'one23-body' }}}">
 @show
 
+@yield('body-header')
+@yield('body-content')
+
 @section('body-footer')
 	<!-- BEGIN FOOTER -->
 	<div class="page-footer">

@@ -87,7 +87,7 @@ class RegisterController extends \BaseController {
 			$code = md5(rand(100,999).time());
 			\Input::merge(array('confirm_code' => $code));
 
-			$user 			= $this->userEntity->createOrUpdate();
+			$user 			= $this->userEntity->createOrUpdate('',2);
 			$userGroup 		= $this->userGroupEntity->createGroup($user->id);
 			$userToGroup 	= $this->userToGroupEntity->createUserToGroup($user->id, $userGroup->id);
 			$subscription 	= $this->SubscriptionEntity->createSubscription($user->id);

@@ -36,4 +36,7 @@ class User extends \Eloquent implements UserInterface, RemindableInterface {
 		return $query->where('confirm_code', '=' , $confirm_code);
 	}
 
+	public function userToGroup(){
+		return $this->hasMany('\UserToGroup\UserToGroup','user_id');
+	}
 }

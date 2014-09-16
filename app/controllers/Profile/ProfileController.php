@@ -81,6 +81,12 @@ class ProfileController extends \BaseController {
 		return \View::make( $data['view_path'] . '.profile.index', $data );
 	}
 
+	/**
+	 * Update current user account
+	 *
+	 * @param	$userId		int		the current user id
+	 * @return \Redirect
+	 * */
 	public function putAccount($userId){
 		$rules = array(
 			'title' => 'required',
@@ -125,6 +131,14 @@ class ProfileController extends \BaseController {
 			->withErrors($validator)
 			->withInput();
 		}
+	}
+
+	/**
+	 * Update account logo
+	 * @return		\Redirect
+	 * */
+	public function putAccountLogo(){
+
 	}
 
 }

@@ -201,7 +201,16 @@
 						<p>
 							 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
 						</p>
-						<form action="#" role="form">
+						{{
+							Form::model(
+								$user,
+								array(
+									'action' => array('Profile\ProfileController@putAccountLogo', $user->id),
+									'method' => 'PUT',
+									'role'=>'form'
+								)
+							)
+						}}
 							<div class="form-group">
 								<div class="fileinput fileinput-new" data-provides="fileinput">
 									<div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
@@ -234,7 +243,7 @@
 								<a href="#" class="btn default">
 								Cancel </a>
 							</div>
-						</form>
+						{{Form::close()}}
 					</div>
 					<div id="tab_change_password" class="tab-pane">
 						<form action="#">
