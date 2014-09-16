@@ -1,9 +1,18 @@
 <?php
 namespace ClientTag;
+
+use \Illuminate\Database\Eloquent\SoftDeletingTrait;
+
 class ClientTagEntity extends \Eloquent{
+
+	use SoftDeletingTrait;
 
 	protected $table = 'tags';
 	protected static $instance = null;
+
+	protected $dates = ['deleted_at'];
+
+	protected $fillable = array('tag', 'belongs_to');
 
 	public function __construct(){
 	}
@@ -21,5 +30,22 @@ class ClientTagEntity extends \Eloquent{
 		}
 
 		return self::$instance;
+	}
+
+	public function saveTag($data) {
+
+		$this->tag = $data['tag'];
+		$this->belongs_to = \Auth::id();
+		$this->save();
+
+	}
+
+	public function getTagsByLoggedUser() {
+
+		$tags = $this->where('belongs_to', '=', \Auth::id())
+					->whereNull('deleted_at');
+
+		return $tags->get();
+
 	}
 }

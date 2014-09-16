@@ -27,6 +27,7 @@ Route::group(array('before' => 'auth'), function()
 	//});
 
 	Route::group(array('prefix'=>'settings/tags'), function() {
+		Route::get('/', 'ClientTags\ClientTagsController@getIndex');
 		Route::controller('clients', 'ClientTags\ClientTagsController');
 		Route::controller('opportunities', 'OpportunityTags\OpportunityTagsController');
 	});
