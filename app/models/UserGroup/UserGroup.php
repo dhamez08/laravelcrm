@@ -5,4 +5,9 @@ namespace UserGroup;
  * */
 class UserGroup extends \Eloquent{
 	protected $table = 'users_groups';
+
+	public function userToGroup(){
+		return $this->hasMany('\UserToGroup\UserToGroup','group_id');
+	}
+
 }

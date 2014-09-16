@@ -74,9 +74,11 @@ class ProfileController extends \BaseController {
 	 * @return View
 	 * */
 	public function getIndex(){
-		$data 			= $this->data_view;
-		$data['user']	= \User\User::find( \Auth::user()->id );
-		$data 			= array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
+		$data 					= $this->data_view;
+		$data['user']			= \User\User::find( \Auth::user()->id );
+		$data['userToGroup']	= \User\User::find( \Auth::user()->id )->userToGroup()->first();
+		$data['group']			= \UserGroup\UserGroup::find( $data['userToGroup']->group_id );
+		$data 					= array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
 		//var_dump($data);exit();
 		return \View::make( $data['view_path'] . '.profile.index', $data );
 	}
@@ -138,7 +140,12 @@ class ProfileController extends \BaseController {
 	 * @return		\Redirect
 	 * */
 	public function putAccountLogo(){
+		$input = \Input::all();
 
+		if( \UserGroup\UserGroupEntity::get_instance()->updateLogo() ){
+			\Session::flash('message', 'Successfully updated logo');
+			return \Redirect::to('profile');
+		}
 	}
 
 }
