@@ -21,10 +21,15 @@ Route::group(array('before' => 'auth'), function()
 	//Route::group(array('prefix' => 'dashboard'), function()
 	//{
 		Route::get( 'dashboard' , 'Dashboard\DashboardController@getIndex' );
-		Route::controller( 'settings' , 'Settings\SettingsController' );
+		Route::get( 'settings' , 'Settings\SettingsController@getIndex' );
 		Route::get( 'clients' , 'Clients\ClientsController@getIndex');
 		Route::controller( 'profile' , 'Profile\ProfileController' );
 	//});
+
+	Route::group(array('prefix'=>'settings/tags'), function() {
+		Route::controller('clients', 'ClientTags\ClientTagsController');
+		Route::controller('opportunities', 'OpportunityTags\OpportunityTagsController');
+	});
 });
 
 Route::get('testmail', function()
