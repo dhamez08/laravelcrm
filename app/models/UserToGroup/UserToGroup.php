@@ -9,4 +9,8 @@ class UserToGroup extends \Eloquent{
 	public function user(){
 		return $this->belongsTo('\User\User');
 	}
+
+	public function userGroup(){
+		return $this->belongsTo('\UserGroup\UserGroup');
+	}
 }

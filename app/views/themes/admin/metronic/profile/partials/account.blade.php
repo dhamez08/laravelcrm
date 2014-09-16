@@ -198,23 +198,26 @@
 						{{Form::close()}}
 					</div>
 					<div id="tab_change_avatar" class="tab-pane">
-						<p>
-							 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-						</p>
 						{{
 							Form::model(
 								$user,
 								array(
 									'action' => array('Profile\ProfileController@putAccountLogo', $user->id),
 									'method' => 'PUT',
-									'role'=>'form'
+									'role'=>'form',
+									'files' => true
 								)
 							)
 						}}
 							<div class="form-group">
 								<div class="fileinput fileinput-new" data-provides="fileinput">
 									<div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-										<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt=""/>
+										@if( $group->logo )
+											<img src="{{URL::asset('public/img/company_logos/' . $group->logo)}}" alt="" style="max-width: 200px; max-height: 150px;"/>
+										@else
+											<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" style="max-width: 200px; max-height: 150px;"/>
+										@endif
+
 									</div>
 									<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;">
 									</div>
@@ -224,7 +227,7 @@
 										Select image </span>
 										<span class="fileinput-exists">
 										Change </span>
-										<input type="file" name="...">
+										{{Form::file('logo')}}
 										</span>
 										<a href="#" class="btn default fileinput-exists" data-dismiss="fileinput">
 										Remove </a>
@@ -238,8 +241,7 @@
 								</div>
 							</div>
 							<div class="margin-top-10">
-								<a href="#" class="btn green">
-								Submit </a>
+								{{Form::submit('Upload Logo',array('class'=>'btn green'))}}
 								<a href="#" class="btn default">
 								Cancel </a>
 							</div>
