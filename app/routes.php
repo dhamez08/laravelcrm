@@ -45,6 +45,11 @@ Route::group(array('before' => 'auth'), function()
 		Route::controller('/', 'Settings\ScreensController');
 	});
 
+	Route::group(array('prefix' => 'settings/email'), function()
+	{
+		Route::controller('/', 'Email\EmailController');
+	});
+
 	
 });
 
