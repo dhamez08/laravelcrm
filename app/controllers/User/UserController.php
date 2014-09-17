@@ -1,11 +1,11 @@
 <?php
-namespace Settings;
+namespace User;
 /**
- * This is for the settings controller
+ * This is for the settings / user controller
  * @author APYC
  * */
 
-class ScreensController extends \BaseController {
+class UserController extends \BaseController {
 
 	/**
 	 * Instance of this class.
@@ -13,7 +13,6 @@ class ScreensController extends \BaseController {
 	 * @var      object
 	 */
 	protected static $instance = null;
-	protected $userEntity;
 
 	/**
 	 * hold the view essentials like
@@ -32,7 +31,6 @@ class ScreensController extends \BaseController {
 		$this->data_view = parent::setupThemes();
 		$this->data_view['settings_index'] 	= $this->data_view['view_path'] . '.settings.index';
 		$this->data_view['master_view'] 	= $this->data_view['view_path'] . '.dashboard.index';
-		$this->userEntity = new \User\UserEntity;
 	}
 
 	/**
@@ -59,41 +57,28 @@ class ScreensController extends \BaseController {
 		return \Dashboard\DashboardController::get_instance()->getSetupThemes();
 	}
 
-	/**
-	 * Index of settings
-	 * @return View
-	 * */
-	public function getIndex() {
+	public function getIndex(){
 		$data 					= $this->data_view;
-		$data['pageTitle'] 		= 'Screen Settings';
-		$data['pageSubTitle'] 	= '';
+		$data['pageTitle'] 		= 'Settings';
+		$data['pageSubTitle'] 	= 'List of User';
 		$data['contentClass'] 	= 'settings';
 		$data = array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
 		//var_dump($data);exit();
-		return \View::make( $data['view_path'] . '.settings.settings', $data );
+		return \View::make( $data['view_path'] . '.settings.users.users', $data );
 	}
 
-	public function getChangeTheme($color) {
-		// if they have selected a valid theme update it
-		if ( ($color=="naturalgreen") || ($color=="blue") || ($color=="bluedusk") || ($color=="purple") || ($color=="pink") || ($color=="red") || ($color=="icesteel") || ($color=="olive") || ($color=="salmon") ) {
-
-			$icons = 0;
-
-			// update the user record for next time
-			$user = $this->userEntity->find(\Auth::id());
-			
-			if($user->updateTheme($color, $icons)) {
-				\Session::put('theme',$color);
-				\Session::flash('message', 'You have successfully changed the theme');
-				return \Redirect::to('settings/screen');
-			} else {
-				return \Redirect::to('settings/screen')->withErrors(['There was a problem updating your theme, please try again']);
-			}
-
-			
-		} else {
-			return \Redirect::to('settings/screen')->withErrors(['There was a problem updating your theme, please try again']);
-		}
+	public function getAddAditionalUser(){
+		$data 					= $this->data_view;
+		$data['pageTitle'] 		= 'Settings';
+		$data['pageSubTitle'] 	= 'Add aditional User';
+		$data['contentClass'] 	= 'settings';
+		$data['permission']		= \UserPermission\UsersPermissionEntity::get_instance()->getPermission();
+		$data = array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
+		//var_dump($data);exit();
+		return \View::make( $data['view_path'] . '.settings.users.addUser', $data );
 	}
 
+	public function postAdditionalUser(){
+		var_dump( \Input::all() );
+	}
 }

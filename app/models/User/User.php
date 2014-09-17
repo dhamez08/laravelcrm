@@ -26,6 +26,10 @@ class User extends \Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $hidden = array('password', 'remember_token');
 
+	public function permission(){
+		return $this->hasMany('\UserPermission\UsersPermission', 'user_id');
+	}
+
 	/**
 	 * Query scope to get confirm_code column
 	 * @param 	$query	laravel default

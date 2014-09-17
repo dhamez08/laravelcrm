@@ -167,7 +167,7 @@ class ProfileController extends \BaseController {
 			);
 			$validator = \Validator::make(\Input::all(), $rules, $messages);
 			if ( $validator->passes() ) {
-				if( \User\UserEntity::get_instance()->updatePassword(\Auth::user()->id, \Input::get('new_password')) ){
+				if( \User\UserEntity::get_instance()->updatePassword(\Auth::id(), \Input::get('new_password')) ){
 					\Session::flash('message', 'Successfully updated password');
 					return \Redirect::to('profile');
 				}else{
