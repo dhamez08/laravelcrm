@@ -27,13 +27,20 @@ Route::group(array('before' => 'auth'), function()
 	//});
 
 	Route::group(array('prefix'=>'settings'), function() {
-		Route::controller( '/' , 'Settings\SettingsController' );
+		
 		Route::group(array('prefix' => 'tags'), function()
 		{
 			Route::get('/', 'ClientTags\ClientTagsController@getIndex');
 			Route::controller('clients', 'ClientTags\ClientTagsController');
 			Route::controller('opportunities', 'OpportunityTags\OpportunityTagsController');
 		});
+
+		Route::group(array('prefix' => 'screen'), function()
+		{
+			Route::controller('/', 'Settings\ScreensController');
+		});
+
+		Route::controller( '/' , 'Settings\SettingsController' );
 	});
 });
 

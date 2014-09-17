@@ -1,0 +1,7 @@
+.site-themes img {
+	border:1px solid #000;
+}
+
+.site-themes .portlet-body > .row {
+	margin-top: 20px;
+}

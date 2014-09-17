@@ -159,4 +159,18 @@ class UserEntity extends \Eloquent implements UserInterface, RemindableInterface
 		return $user;
 	}
 
+	/**
+	 * update user theme
+	 *
+	 * @param	$color	string	
+	 * @return boolean
+	 * */
+	public function updateTheme($color, $icon){
+		
+		$this->theme_site = $color;
+		$this->theme_icons = $icon;
+
+		return $this->save() ? 1:0;
+	}
+
 }
