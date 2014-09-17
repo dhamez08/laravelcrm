@@ -79,6 +79,39 @@ class UserController extends \BaseController {
 	}
 
 	public function postAdditionalUser(){
-		var_dump( \Input::all() );
+		$rules = array(
+			'first_name' => 'required|min:3',
+			'last_name' => 'required|min:3',
+			'email' => 'required|email|unique:users',
+			'username' => 'required|min:3|unique:users',
+			'password' => 'required|min:3',
+		);
+		$messages = array(
+			'password.min' => 'Password must have more than 3 character',
+			'username.min' => 'Username must have more than 3 character',
+			'username.required' => 'Username is required',
+			'username.unique' => 'Username is already taken',
+			'email.required' => 'Email field is required.',
+			'email.email' => 'Email field is invalid.',
+			'email.unique' => 'Email is already taken.',
+			'firstname.required'=>'First Name is required',
+			'first_name.required'=>'First Name is required',
+			'first_name.min'=>'First Name must have more than 3 character',
+			'last_name.required'=>'Last Name is required',
+			'last_name.min'=>'Last Name must have more than 3 character',
+		);
+		$validator = \Validator::make(\Input::all(), $rules, $messages);
+		if ( $validator->passes() ) {
+			//$user = \User\UserEntity::get_instance()->createOrUpdate(null,1);
+			var_dump( \Input::all() );
+			foreach( \Input::get('permission') as $key => $val ){
+				echo $key.'-'.$val.'<br>';
+			}
+		}else{
+			\Input::flash();
+			return \Redirect::to('settings/users/add-aditional-user')
+			->withErrors($validator)
+			->withInput();
+		}
 	}
 }

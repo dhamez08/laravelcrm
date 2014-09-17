@@ -10,8 +10,8 @@
 	 @foreach( $permission as $key => $val )
 	 	<tr>
 		  <td><strong>{{$key}}</strong></td>
-		  <td>{{Form::radio($val, 0, true);}}</td>
-		  <td>{{Form::radio($val, 1);}}</td>
+		  <td>{{Form::radio("permission[$val]", 0, true);}}</td>
+		  <td>{{Form::radio("permission[$val]", 1);}}</td>
 		</tr>
 	 @endforeach
   </tbody>

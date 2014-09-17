@@ -38,4 +38,6 @@ class UsersPermissionEntity extends \Eloquent{
 		return $this->array_permission;
 	}
 
+	//public function addPermission($userId,$per
+
 }
