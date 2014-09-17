@@ -1,11 +1,11 @@
 <?php
-namespace Settings;
+namespace User;
 /**
- * This is for the settings controller
+ * This is for the settings / user controller
  * @author APYC
  * */
 
-class SettingsController extends \BaseController {
+class UserController extends \BaseController {
 
 	/**
 	 * Instance of this class.
@@ -57,18 +57,28 @@ class SettingsController extends \BaseController {
 		return \Dashboard\DashboardController::get_instance()->getSetupThemes();
 	}
 
-	/**
-	 * Index of settings
-	 * @return View
-	 * */
 	public function getIndex(){
 		$data 					= $this->data_view;
 		$data['pageTitle'] 		= 'Settings';
-		$data['pageSubTitle'] 	= '';
+		$data['pageSubTitle'] 	= 'List of User';
 		$data['contentClass'] 	= 'settings';
 		$data = array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
 		//var_dump($data);exit();
-		return \View::make( $data['view_path'] . '.settings.index', $data );
+		return \View::make( $data['view_path'] . '.settings.users.users', $data );
 	}
 
+	public function getAddAditionalUser(){
+		$data 					= $this->data_view;
+		$data['pageTitle'] 		= 'Settings';
+		$data['pageSubTitle'] 	= 'Add aditional User';
+		$data['contentClass'] 	= 'settings';
+		$data['permission']		= \UserPermission\UsersPermissionEntity::get_instance()->getPermission();
+		$data = array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
+		//var_dump($data);exit();
+		return \View::make( $data['view_path'] . '.settings.users.addUser', $data );
+	}
+
+	public function postAdditionalUser(){
+		var_dump( \Input::all() );
+	}
 }

@@ -1,11 +1,11 @@
 <?php
-namespace Settings;
+namespace Permission;
 /**
  * This is for the settings controller
  * @author APYC
  * */
 
-class SettingsController extends \BaseController {
+class PermissionController extends \BaseController {
 
 	/**
 	 * Instance of this class.
@@ -56,19 +56,4 @@ class SettingsController extends \BaseController {
 	public function getSetupThemes(){
 		return \Dashboard\DashboardController::get_instance()->getSetupThemes();
 	}
-
-	/**
-	 * Index of settings
-	 * @return View
-	 * */
-	public function getIndex(){
-		$data 					= $this->data_view;
-		$data['pageTitle'] 		= 'Settings';
-		$data['pageSubTitle'] 	= '';
-		$data['contentClass'] 	= 'settings';
-		$data = array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
-		//var_dump($data);exit();
-		return \View::make( $data['view_path'] . '.settings.index', $data );
-	}
-
 }
