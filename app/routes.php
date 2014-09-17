@@ -26,10 +26,13 @@ Route::group(array('before' => 'auth'), function()
 		Route::controller( 'profile' , 'Profile\ProfileController' );
 	//});
 
-	Route::group(array('prefix'=>'settings/tags'), function() {
-		Route::get('/', 'ClientTags\ClientTagsController@getIndex');
-		Route::controller('clients', 'ClientTags\ClientTagsController');
-		Route::controller('opportunities', 'OpportunityTags\OpportunityTagsController');
+	Route::group(array('prefix'=>'settings'), function() {
+		Route::group(array('prefix' => 'tags'), function()
+		{
+			Route::get('/', 'ClientTags\ClientTagsController@getIndex');
+			Route::controller('clients', 'ClientTags\ClientTagsController');
+			Route::controller('opportunities', 'OpportunityTags\OpportunityTagsController');
+		});
 	});
 });
 
