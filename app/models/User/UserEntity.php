@@ -145,4 +145,18 @@ class UserEntity extends \Eloquent implements UserInterface, RemindableInterface
 		return $user;
 	}
 
+	/**
+	 * update user password
+	 *
+	 * @param	$userId		int		pass user id
+	 * @return object
+	 * */
+	public function updatePassword($userId, $password){
+		$user 			= \User\User::find($userId);
+		$user->password	= \Hash::make( $password );
+		$user->save();
+
+		return $user;
+	}
+
 }

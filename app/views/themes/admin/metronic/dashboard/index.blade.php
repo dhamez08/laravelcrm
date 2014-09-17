@@ -61,7 +61,7 @@
 							@endif
 
 							@if (Session::has('message'))
-								<div class="alert alert-success">
+								<div class="alert alert-{{Session::has('alertClass') ? Session::get('alertClass'):'success'}}">
 									{{ Session::get('message') }}
 									<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 								</div>

@@ -36,6 +36,16 @@ class User extends \Eloquent implements UserInterface, RemindableInterface {
 		return $query->where('confirm_code', '=' , $confirm_code);
 	}
 
+	/**
+	 * Query scope to get user ID column
+	 * @param 	$query	laravel default
+	 * @param	$userID	mix		user id
+	 * @return 	query
+	 * */
+	public function scopeGetID($query, $userID){
+		return $query->where('id', '=' , $userID);
+	}
+
 	public function userToGroup(){
 		return $this->hasMany('\UserToGroup\UserToGroup','user_id');
 	}

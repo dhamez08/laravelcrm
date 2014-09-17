@@ -11,7 +11,7 @@
 					</li>
 					<li>
 						<a data-toggle="tab" href="#tab_change_avatar">
-						<i class="fa fa-picture-o"></i> Change Avatar </a>
+						<i class="fa fa-picture-o"></i> Company Logo </a>
 					</li>
 					<li>
 						<a data-toggle="tab" href="#tab_change_password">
@@ -248,26 +248,54 @@
 						{{Form::close()}}
 					</div>
 					<div id="tab_change_password" class="tab-pane">
-						<form action="#">
+						{{
+							Form::model(
+								$user,
+								array(
+									'action' => array('Profile\ProfileController@putUpdatePassword', $user->id),
+									'method' => 'PUT'
+								)
+							)
+						}}
 							<div class="form-group">
 								<label class="control-label">Current Password</label>
-								<input type="password" class="form-control"/>
+								{{
+									Form::password(
+										'password',
+										array(
+											'class'=>'form-control'
+										)
+									);
+								}}
 							</div>
 							<div class="form-group">
 								<label class="control-label">New Password</label>
-								<input type="password" class="form-control"/>
+								{{
+									Form::password(
+										'new_password',
+										array(
+											'class'=>'form-control'
+										)
+									);
+								}}
 							</div>
 							<div class="form-group">
 								<label class="control-label">Re-type New Password</label>
-								<input type="password" class="form-control"/>
+								{{
+									Form::password(
+										'new_password_confirmation',
+										array(
+											'class'=>'form-control'
+										)
+									);
+								}}
 							</div>
 							<div class="margin-top-10">
-								<a href="#" class="btn green">
-								Change Password </a>
+								{{Form::submit('Change Password',array('class'=>'btn green'))}}
 								<a href="#" class="btn default">
 								Cancel </a>
 							</div>
-						</form>
+						{{Form::close()}}
 					</div>
 					<div id="tab_privacy_settings" class="tab-pane">
 						<form action="#">

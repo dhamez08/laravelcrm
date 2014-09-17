@@ -148,4 +148,39 @@ class ProfileController extends \BaseController {
 		}
 	}
 
+	public function putUpdatePassword(){
+		if( !\Hash::check(\Input::get('password'),\Auth::user()->getAuthPassword()) ){
+			\Session::flash('message', 'Password Incorrect');
+			/**
+			 * The ->with('alertClass','danger') is use to change alert bootstrap color
+			 * @see app/views/themes/admin/metronic/dashboard/index.blade.php
+			 * */
+			return \Redirect::to('profile')->with('alertClass','danger');
+		}else{
+			$rules = array(
+				'new_password' => 'required|min:3|confirmed',
+			);
+			$messages = array(
+				'new_password.min' => 'Password must have more than 3 character',
+				'new_password.confirmed' => 'Confirm Password',
+				'new_password.required' => 'Password is required',
+			);
+			$validator = \Validator::make(\Input::all(), $rules, $messages);
+			if ( $validator->passes() ) {
+				if( \User\UserEntity::get_instance()->updatePassword(\Auth::user()->id, \Input::get('new_password')) ){
+					\Session::flash('message', 'Successfully updated password');
+					return \Redirect::to('profile');
+				}else{
+					\Session::flash('message', 'Error in updating Password');
+					return \Redirect::to('profile')->with('alertClass','danger');
+				}
+			}else{
+				\Input::flash();
+				return \Redirect::to('profile')
+				->withErrors($validator)
+				->withInput();
+			}
+		}
+	}
+
 }
