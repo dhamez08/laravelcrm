@@ -71,4 +71,8 @@ class SettingsController extends \BaseController {
 		return \View::make( $data['view_path'] . '.settings.index', $data );
 	}
 
+	public function getAddAditionalUser(){
+
+	}
+
 }

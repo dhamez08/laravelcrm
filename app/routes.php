@@ -21,12 +21,13 @@ Route::group(array('before' => 'auth'), function()
 	//Route::group(array('prefix' => 'dashboard'), function()
 	//{
 		Route::get( 'dashboard' , 'Dashboard\DashboardController@getIndex' );
-		Route::get( 'settings' , 'Settings\SettingsController@getIndex' );
+
 		Route::controller( 'clients' , 'Clients\ClientsController');
 		Route::controller( 'profile' , 'Profile\ProfileController' );
 	//});
 
 	Route::group(array('prefix'=>'settings'), function() {
+		Route::controller( '/' , 'Settings\SettingsController' );
 		Route::group(array('prefix' => 'tags'), function()
 		{
 			Route::get('/', 'ClientTags\ClientTagsController@getIndex');
