@@ -7,7 +7,9 @@
 			$user,
 			array(
 				'action' => array('User\UserController@putAdditionalUserUpdate', $user->id),
-				'method' => 'PUT'
+				'method' => 'PUT',
+				'role'=>'form',
+				'class'=>'form-horizontal'
 			)
 		)
 	}}
@@ -28,7 +30,7 @@
 		</div>
 		<div class="col-md-8">
 			<h3>Set User Permision</h3>
-			{{--@include( \DashboardEntity::get_instance()->getView() . '.settings.users.partials.userPermission' )--}}
+			@include( \DashboardEntity::get_instance()->getView() . '.settings.users.partials.userPermission' )
 		</div>
 	{{Form::close()}}
 	@stop
