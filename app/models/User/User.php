@@ -34,6 +34,10 @@ class User extends \Eloquent implements UserInterface, RemindableInterface {
 		return $this->hasMany('\UserToGroup\UserToGroup');
 	}
 
+	public function userGroup(){
+		return $this->hasOne('\UserGroup\UserGroup','manager_id','user_id');
+	}
+
 	/**
 	 * Query scope to get confirm_code column
 	 * @param 	$query	laravel default

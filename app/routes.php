@@ -45,7 +45,7 @@ Route::group(array('before' => 'auth'), function()
 		Route::controller('/', 'Settings\ScreensController');
 	});
 
-	
+
 });
 
 Route::get('testmail', function()

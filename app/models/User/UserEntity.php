@@ -174,4 +174,12 @@ class UserEntity extends \Eloquent implements UserInterface, RemindableInterface
 		return $account;
 	}
 
+	public function getSubscribeUsersList($groupId, $role = 2){
+		$users = \UserToGroup\UserToGroup::with('user')
+		->groupID($groupId)
+		->role($role)
+		->orderBy('created_at','desc');
+		return $users;
+	}
+
 }

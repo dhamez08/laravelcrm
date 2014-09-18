@@ -62,8 +62,11 @@ class UserController extends \BaseController {
 		$data['pageTitle'] 		= 'Settings';
 		$data['pageSubTitle'] 	= 'List of User';
 		$data['contentClass'] 	= 'settings';
+
+		$groupId 		= \UserGroup\UserGroup::managerID(\Auth::id());
+		$data['users']	= \User\UserEntity::get_instance()->getSubscribeUsersList($groupId->first()->id);
+
 		$data = array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
-		//var_dump($data);exit();
 		return \View::make( $data['view_path'] . '.settings.users.users', $data );
 	}
 
@@ -74,7 +77,6 @@ class UserController extends \BaseController {
 		$data['contentClass'] 	= 'settings';
 		$data['permission']		= \UserPermission\UsersPermissionEntity::get_instance()->getPermission();
 		$data = array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
-		//print_r($data['account']->first()->group_id);exit();
 		return \View::make( $data['view_path'] . '.settings.users.addUser', $data );
 	}
 
