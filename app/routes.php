@@ -44,10 +44,20 @@ Route::group(array('before' => 'auth'), function()
 	{
 		Route::controller('/', 'Settings\ScreensController');
 	});
-	
+
 	Route::group(array('prefix' => 'settings/email'), function()
 	{
 		Route::controller('/', 'Email\EmailController');
+	});
+
+	Route::group(array('prefix' => 'settings/custom-fields'), function()
+	{
+		Route::controller('/', 'CustomFieldTabs\CustomFieldTabsController');
+	});
+
+	Route::group(array('prefix' => 'settings/custom-forms'), function()
+	{
+		Route::controller('/', 'CustomForms\CustomFormsController');
 	});
 
 
