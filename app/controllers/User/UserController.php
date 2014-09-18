@@ -120,4 +120,19 @@ class UserController extends \BaseController {
 			->withInput();
 		}
 	}
+
+	public function getAddtionalUserEdit($userId){
+		$data 					= $this->data_view;
+		$data['pageTitle'] 		= 'Settings';
+		$data['pageSubTitle'] 	= 'List of User';
+		$data['contentClass'] 	= 'settings';
+
+		$data['user']	= \User\User::find($userId);
+
+		$data = array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
+		return \View::make( $data['view_path'] . '.settings.users.editUser', $data );
+	}
+
+	public function putAdditionalUserUpdate($userId){
+	}
 }
