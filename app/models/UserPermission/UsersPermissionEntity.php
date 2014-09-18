@@ -33,6 +33,13 @@ class UsersPermissionEntity extends \Eloquent{
 		return $this->array_permission;
 	}
 
+	public function getPermissionByUser($userId){
+		$permission = \UserPermission\UsersPermission::userID($userId)
+		->permissionKey('permissions');
+		$arrayPermission = (object)unserialize($permission->first()->permission_value);
+		return $arrayPermission;
+	}
+
 	public function addOrUpdatePermission($userId, $data, $id = null){
 		if( is_null($id) ){
 			$permissions = new \UserPermission\UsersPermission;

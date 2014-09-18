@@ -10,4 +10,12 @@ class UsersPermission extends \Eloquent{
 		return $this->belongsTo('\User\User');
 	}
 
+	public function scopeUserID($query, $userID){
+		return $query->where('user_id', '=', $userID);
+	}
+
+	public function scopePermissionKey($query, $key){
+		return $query->where('permission_key', '=', $key);
+	}
+
 }

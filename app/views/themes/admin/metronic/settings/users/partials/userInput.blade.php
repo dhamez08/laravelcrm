@@ -15,6 +15,10 @@
 <div class="form-group">
 	<div class="col-xs-10">
 	<label class="control-label">Password</label>
+	@if( isset($user) )
+		<p class="text-muted">Leave blank to keep existing</p>
+	@endif
+	<p class="text-muted"></p>
 	{{
 		Form::password(
 			'password',

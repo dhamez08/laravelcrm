@@ -63,7 +63,6 @@ class UserEntity extends \Eloquent implements UserInterface, RemindableInterface
 			//create
 			$user 					= new \User\User;
 			$user->username			= \Input::get('username','');
-			$user->password			= \Hash::make( \Input::get('password','') );
 			$user->title 			= \Input::get('title','');
 			$user->first_name 		= \Input::get('first_name','');
 			$user->last_name 		= \Input::get('last_name','');
@@ -81,7 +80,6 @@ class UserEntity extends \Eloquent implements UserInterface, RemindableInterface
 			//update
 			$user 					= \User\User::find($id);
 			$user->username			= \Input::get('username','');
-			$user->password			= \Hash::make( \Input::get('password','') );
 			$user->title 			= \Input::get('title','');
 			$user->first_name 		= \Input::get('first_name','');
 			$user->last_name 		= \Input::get('last_name','');
