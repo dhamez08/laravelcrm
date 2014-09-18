@@ -4,7 +4,7 @@ namespace UserPermission;
  * Base class for user permission
  * */
 class UsersPermission extends \Eloquent{
-	protected $table = 'users_permissions';
+	protected $table = 'user_permission';
 
 	public function user(){
 		return $this->belongsTo('\User\User');

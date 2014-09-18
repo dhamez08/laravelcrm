@@ -10,4 +10,16 @@ class UserGroup extends \Eloquent{
 		return $this->hasMany('\UserToGroup\UserToGroup','group_id');
 	}
 
+	public function user(){
+		return $this->belongsTo('\User\User','id','manager_id');
+	}
+	/**
+	 * Query scope to get manager ID column
+	 * @param 	$query	laravel default
+	 * @param	$groupID	int		manager_id column
+	 * @return 	query
+	 * */
+	public function scopeManagerID($query, $managerID){
+		return $query->where('manager_id', '=' , $managerID);
+	}
 }

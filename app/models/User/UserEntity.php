@@ -62,45 +62,41 @@ class UserEntity extends \Eloquent implements UserInterface, RemindableInterface
 		if( is_null($id) ) {
 			//create
 			$user 					= new \User\User;
-			$user->username			= \Input::get('username');
-			$user->password			= \Hash::make( \Input::get('password') );
-			$user->title 			= \Input::get('title');
-			$user->first_name 		= \Input::get('first_name');
-			$user->last_name 		= \Input::get('last_name');
-			$user->company 			= \Input::get('company');
-			$user->email 			= \Input::get('email');
-			$user->sms 				= \Input::get('sms');
-			$user->telephone 		= \Input::get('telephone');
-			$user->address_line 	= \Input::get('address_line');
-			$user->address_town 	= \Input::get('address_town');
-			$user->address_county 	= \Input::get('address_county');
-			$user->address_postcode = \Input::get('address_postcode');
-			$user->confirm_code 	= \Input::get('confirm_code');
+			$user->username			= \Input::get('username','');
+			$user->password			= \Hash::make( \Input::get('password','') );
+			$user->title 			= \Input::get('title','');
+			$user->first_name 		= \Input::get('first_name','');
+			$user->last_name 		= \Input::get('last_name','');
+			$user->company 			= \Input::get('company','');
+			$user->email 			= \Input::get('email','');
+			$user->sms 				= \Input::get('sms','');
+			$user->telephone 		= \Input::get('telephone','');
+			$user->address_line 	= \Input::get('address_line','');
+			$user->address_town 	= \Input::get('address_town','');
+			$user->address_county 	= \Input::get('address_county','');
+			$user->address_postcode = \Input::get('address_postcode','');
+			$user->confirm_code 	= \Input::get('confirm_code','');
 			$user->active 			= $active;
-			$user->save();
-
-			return $user;
 		}else{
 			//update
 			$user 					= \User\User::find($id);
-			$user->username			= \Input::get('username');
-			$user->password			= \Hash::make( \Input::get('password') );
-			$user->title 			= \Input::get('title');
-			$user->first_name 		= \Input::get('first_name');
-			$user->last_name 		= \Input::get('last_name');
-			$user->company 			= \Input::get('company');
-			$user->email 			= \Input::get('email');
-			$user->sms 				= \Input::get('sms');
-			$user->telephone 		= \Input::get('telephone');
-			$user->address_line 	= \Input::get('address_line');
-			$user->address_town 	= \Input::get('address_town');
-			$user->address_county 	= \Input::get('address_county');
-			$user->address_postcode = \Input::get('address_postcode');
-			$user->active 			= \Input::get('active');
-			$user->save();
-
-			return $user;
+			$user->username			= \Input::get('username','');
+			$user->password			= \Hash::make( \Input::get('password','') );
+			$user->title 			= \Input::get('title','');
+			$user->first_name 		= \Input::get('first_name','');
+			$user->last_name 		= \Input::get('last_name','');
+			$user->company 			= \Input::get('company','');
+			$user->email 			= \Input::get('email','');
+			$user->sms 				= \Input::get('sms','');
+			$user->telephone 		= \Input::get('telephone','');
+			$user->address_line 	= \Input::get('address_line','');
+			$user->address_town 	= \Input::get('address_town','');
+			$user->address_county 	= \Input::get('address_county','');
+			$user->address_postcode = \Input::get('address_postcode','');
+			$user->active 			= \Input::get('active',$active);
 		}
+		$user->save();
+		return $user;
 	}
 
 	/**
@@ -162,15 +158,28 @@ class UserEntity extends \Eloquent implements UserInterface, RemindableInterface
 	/**
 	 * update user theme
 	 *
-	 * @param	$color	string	
+	 * @param	$color	string
 	 * @return boolean
 	 * */
 	public function updateTheme($color, $icon){
-		
+
 		$this->theme_site = $color;
 		$this->theme_icons = $icon;
 
 		return $this->save() ? 1:0;
+	}
+
+	public function getUserToGroup(){
+		$account =  \User\User::find( \Auth::id() )->userToGroup();
+		return $account;
+	}
+
+	public function getSubscribeUsersList($groupId, $role = 2){
+		$users = \UserToGroup\UserToGroup::with('user')
+		->groupID($groupId)
+		->role($role)
+		->orderBy('created_at','desc');
+		return $users;
 	}
 
 }

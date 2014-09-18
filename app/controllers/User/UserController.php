@@ -62,8 +62,11 @@ class UserController extends \BaseController {
 		$data['pageTitle'] 		= 'Settings';
 		$data['pageSubTitle'] 	= 'List of User';
 		$data['contentClass'] 	= 'settings';
+
+		$groupId 		= \UserGroup\UserGroup::managerID(\Auth::id());
+		$data['users']	= \User\UserEntity::get_instance()->getSubscribeUsersList($groupId->first()->id);
+
 		$data = array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
-		//var_dump($data);exit();
 		return \View::make( $data['view_path'] . '.settings.users.users', $data );
 	}
 
@@ -74,11 +77,62 @@ class UserController extends \BaseController {
 		$data['contentClass'] 	= 'settings';
 		$data['permission']		= \UserPermission\UsersPermissionEntity::get_instance()->getPermission();
 		$data = array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
-		//var_dump($data);exit();
 		return \View::make( $data['view_path'] . '.settings.users.addUser', $data );
 	}
 
 	public function postAdditionalUser(){
-		var_dump( \Input::all() );
+		$rules = array(
+			'first_name' => 'required|min:3',
+			'last_name' => 'required|min:3',
+			'email' => 'required|email|unique:users',
+			'username' => 'required|min:3|unique:users',
+			'password' => 'required|min:3',
+		);
+		$messages = array(
+			'password.min' => 'Password must have more than 3 character',
+			'username.min' => 'Username must have more than 3 character',
+			'username.required' => 'Username is required',
+			'username.unique' => 'Username is already taken',
+			'email.required' => 'Email field is required.',
+			'email.email' => 'Email field is invalid.',
+			'email.unique' => 'Email is already taken.',
+			'firstname.required'=>'First Name is required',
+			'first_name.required'=>'First Name is required',
+			'first_name.min'=>'First Name must have more than 3 character',
+			'last_name.required'=>'Last Name is required',
+			'last_name.min'=>'Last Name must have more than 3 character',
+		);
+		$validator = \Validator::make(\Input::all(), $rules, $messages);
+		if ( $validator->passes() ) {
+			$user 			= \User\UserEntity::get_instance()->createOrUpdate(null,1);
+			$groupId 		= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+			\UserToGroup\UserToGroupEntity::get_instance()->createUserToGroup($user->id, $groupId, 2);
+			\UserPermission\UsersPermissionEntity::get_instance()->addOrUpdatePermission(
+				$user->id,
+				serialize( \Input::get('permission') )
+			);
+			\Session::flash('message', 'Successfully Added User');
+			return \Redirect::to('settings/users');
+		}else{
+			\Input::flash();
+			return \Redirect::to('settings/users/add-aditional-user')
+			->withErrors($validator)
+			->withInput();
+		}
+	}
+
+	public function getAddtionalUserEdit($userId){
+		$data 					= $this->data_view;
+		$data['pageTitle'] 		= 'Settings';
+		$data['pageSubTitle'] 	= 'List of User';
+		$data['contentClass'] 	= 'settings';
+
+		$data['user']	= \User\User::find($userId);
+
+		$data = array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
+		return \View::make( $data['view_path'] . '.settings.users.editUser', $data );
+	}
+
+	public function putAdditionalUserUpdate($userId){
 	}
 }
