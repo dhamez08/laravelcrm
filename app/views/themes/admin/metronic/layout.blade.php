@@ -58,6 +58,7 @@
 
 @yield('body-header')
 @yield('body-content')
+@yield('body-modals')
 
 @section('body-footer')
 	<!-- BEGIN FOOTER -->
