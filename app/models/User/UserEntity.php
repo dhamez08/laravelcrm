@@ -77,9 +77,6 @@ class UserEntity extends \Eloquent implements UserInterface, RemindableInterface
 			$user->address_postcode = \Input::get('address_postcode','');
 			$user->confirm_code 	= \Input::get('confirm_code','');
 			$user->active 			= $active;
-			$user->save();
-
-			return $user;
 		}else{
 			//update
 			$user 					= \User\User::find($id);
@@ -97,10 +94,9 @@ class UserEntity extends \Eloquent implements UserInterface, RemindableInterface
 			$user->address_county 	= \Input::get('address_county','');
 			$user->address_postcode = \Input::get('address_postcode','');
 			$user->active 			= \Input::get('active',$active);
-			$user->save();
-
-			return $user;
 		}
+		$user->save();
+		return $user;
 	}
 
 	/**
@@ -171,6 +167,11 @@ class UserEntity extends \Eloquent implements UserInterface, RemindableInterface
 		$this->theme_icons = $icon;
 
 		return $this->save() ? 1:0;
+	}
+
+	public function getUserToGroup(){
+		$account =  \User\User::find( \Auth::id() )->userToGroup();
+		return $account;
 	}
 
 }

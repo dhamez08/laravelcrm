@@ -4,19 +4,14 @@ namespace UserPermission;
  * Base class for user permission
  * */
 class UsersPermissionEntity extends \Eloquent{
-	protected $table = 'users_permissions';
+	protected $table = 'user_permission';
 
 	protected static $instance = null;
 
-	protected $array_permission = array(
-		'Client - Edit Details' => 'client_edit',
-		'Client - Delete' => 'client_delete',
-		'Client - Notes' => 'client_notes',
-		'Client - Files' => 'client_files',
-		'Client - Opportunities' => 'client_opportunities',
-	);
+	protected $array_permission;
 
 	public function __construct(){
+		$this->array_permission = \Config::get('crm.permissions');
 	}
 
 	/**
@@ -38,6 +33,17 @@ class UsersPermissionEntity extends \Eloquent{
 		return $this->array_permission;
 	}
 
-	//public function addPermission($userId,$per
+	public function addOrUpdatePermission($userId, $data, $id = null){
+		if( is_null($id) ){
+			$permissions = new \UserPermission\UsersPermission;
+			$permissions->user_id 			= $userId;
+			$permissions->permission_key 	= 'permissions';
+		}else{
+			$permissions = \UserPermission\UsersPermission::find($id);
+		}
+		$permissions->permission_value 	= $data;
+		$permissions->save();
+		return $permissions;
+	}
 
 }

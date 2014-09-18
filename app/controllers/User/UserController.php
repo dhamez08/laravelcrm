@@ -74,7 +74,7 @@ class UserController extends \BaseController {
 		$data['contentClass'] 	= 'settings';
 		$data['permission']		= \UserPermission\UsersPermissionEntity::get_instance()->getPermission();
 		$data = array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
-		//var_dump($data);exit();
+		//print_r($data['account']->first()->group_id);exit();
 		return \View::make( $data['view_path'] . '.settings.users.addUser', $data );
 	}
 
@@ -102,11 +102,15 @@ class UserController extends \BaseController {
 		);
 		$validator = \Validator::make(\Input::all(), $rules, $messages);
 		if ( $validator->passes() ) {
-			//$user = \User\UserEntity::get_instance()->createOrUpdate(null,1);
-			var_dump( \Input::all() );
-			foreach( \Input::get('permission') as $key => $val ){
-				echo $key.'-'.$val.'<br>';
-			}
+			$user 			= \User\UserEntity::get_instance()->createOrUpdate(null,1);
+			$groupId 		= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+			\UserToGroup\UserToGroupEntity::get_instance()->createUserToGroup($user->id, $groupId, 2);
+			\UserPermission\UsersPermissionEntity::get_instance()->addOrUpdatePermission(
+				$user->id,
+				serialize( \Input::get('permission') )
+			);
+			\Session::flash('message', 'Successfully Added User');
+			return \Redirect::to('settings/users');
 		}else{
 			\Input::flash();
 			return \Redirect::to('settings/users/add-aditional-user')

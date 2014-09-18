@@ -30,6 +30,10 @@ class User extends \Eloquent implements UserInterface, RemindableInterface {
 		return $this->hasMany('\UserPermission\UsersPermission', 'user_id');
 	}
 
+	public function userToGroup(){
+		return $this->hasMany('\UserToGroup\UserToGroup');
+	}
+
 	/**
 	 * Query scope to get confirm_code column
 	 * @param 	$query	laravel default
@@ -48,9 +52,5 @@ class User extends \Eloquent implements UserInterface, RemindableInterface {
 	 * */
 	public function scopeGetID($query, $userID){
 		return $query->where('id', '=' , $userID);
-	}
-
-	public function userToGroup(){
-		return $this->hasMany('\UserToGroup\UserToGroup','user_id');
 	}
 }
