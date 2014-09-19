@@ -38,6 +38,16 @@ class User extends \Eloquent implements UserInterface, RemindableInterface {
 		return $this->hasOne('\UserGroup\UserGroup','manager_id','user_id');
 	}
 
+	public function emailTemplate()
+	{
+		return $this->hasMany('\EmailTemplate\EmailTemplate', 'belongs_to', 'id');
+	}
+
+	public function emailSignature()
+	{
+		return $this->hasMany('\EmailSignature\EmailSignature', 'belongs_to', 'id');
+	}
+
 	/**
 	 * Query scope to get confirm_code column
 	 * @param 	$query	laravel default

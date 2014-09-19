@@ -69,17 +69,17 @@
 															</tr>
 															</thead>
 															<tbody>
-															@foreach(range(1,3) as $i)
+															@foreach($email_templates as $template)
 															<tr>
 																<td>
-																	 Initial Email
+																	{{ $template->name }}
 																</td>
 																<td>
-																	 Welcome to Finley Jacobs
+																	{{ $template->subject }}
 																</td>
 																<td>
-																	 <button class="btn btn-sm blue"><i class="fa fa-edit"></i></button>
-																	 <button class="btn btn-sm red"><i class="fa fa-times"></i></button>
+																	 <a href="{{ url('settings/email/edit-template') }}" class="btn btn-sm blue"><i class="fa fa-edit"></i></a>
+																	 <a href="{{ url('settings/email/remove-template') }}" class="btn btn-sm red"><i class="fa fa-times"></i></a>
 																</td>
 															</tr>
 															@endforeach
@@ -111,14 +111,14 @@
 															</tr>
 															</thead>
 															<tbody>
-															@foreach(range(1,5) as $i)
+															@foreach($email_signatures as $signature)
 															<tr>
 																<td>
-																	Signature {{ $i }}
+																	{{ $signature->name }}
 																</td>
 																<td>
-																	 <button class="btn btn-sm blue"><i class="fa fa-edit"></i></button>
-																	 <button class="btn btn-sm red"><i class="fa fa-times"></i></button>																	 
+																	 <a href="{{ url('settings/email/edit-signature') }}" class="btn btn-sm blue"><i class="fa fa-edit"></i></a>
+																	 <a href="{{ url('settings/email/remove-signature') }}" class="btn btn-sm red"><i class="fa fa-times"></i></a>																	 
 																</td>
 															</tr>
 															@endforeach
@@ -146,8 +146,8 @@
 @stop
 
 @section('body-modals')
-	@include($view_path.'.settings.email.partials.modals.add_template')
-	@include($view_path.'.settings.email.partials.modals.add_signature')	
+	{{ $add_template_modal }}
+	{{-- $add_signature_modal --}}	
 @stop
 
 @section('footer-custom-js')

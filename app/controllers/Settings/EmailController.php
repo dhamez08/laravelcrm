@@ -24,6 +24,12 @@ class EmailController extends \BaseController {
 	protected $data_view;
 
 	/**
+	 * Logged in user object
+	 *
+	 */
+	protected $user;
+
+	/**
 	 * auto setup initialize object
 	 * */
 	public function __construct(){
@@ -65,10 +71,70 @@ class EmailController extends \BaseController {
 	public function getIndex() {
 		$data 					= $this->data_view;
 		$data['pageTitle'] 		= 'Email Settings';
-		$data['pageSubTitle'] 	= 'mga settings para sa email';
+		$data['pageSubTitle'] 	= 'Settings for email.. duhhh.';
 		$data['contentClass'] 	= '';
+
+		/* Templates and Signatures */
+		$data['email_templates']  = \User\User::find(\Auth::id())->emailTemplate;
+		$data['email_signatures'] = \User\User::find(\Auth::id())->emailSignature;
+
+		/* Initialize view data for modals */
+		$dataAddTemplateModal = array();
+		
+		$dataAddSignatureModal = array();
+
 		$data = array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
-		return \View::make( $data['view_path'] . '.settings.email.email', $data );
+		return \View::make( $data['view_path'] . '.settings.email.email', $data )
+			->nest('add_template_modal'  , $data['view_path'] . '.settings.email.partials.modals.add_template', $dataAddTemplateModal)
+			->nest('add_signature_modal' , $data['view_path'] . '.settings.email.partials.modals.add_signature', $dataAddSignatureModal);
+	}
+
+	public function postSaveTemplate()
+	{
+		$emailTemplate = new \EmailTemplate\EmailTemplate;
+		$emailTemplate->belongs_to 	= \Auth::id();
+		$emailTemplate->name 		= \Input::get('template_name', '');
+		$emailTemplate->subject 	= \Input::get('template_subject', '');
+		$emailTemplate->body 		= \Input::get('template_body', '');
+		$emailTemplate->save();
+
+		if($emailTemplate) {
+			\Session::flash('message', 'Successfully Added Template');
+		} else {
+			\Session::flash('message', 'Something went wrong');
+		}
+
+		return \Redirect::to('settings/email');
+	}
+
+	public function getUpdateTemplate($id)
+	{
+		
+	}
+
+	public function postUpdateTemplate()
+	{
+
+	}
+
+	public function postDeleteTemplate($id)
+	{
+
+	}
+
+	public function postSaveSignature()
+	{
+
+	}
+
+	public function postUpdateSignature()
+	{
+
+	}
+
+	public function postDeleteEmailSignature()
+	{
+
 	}
 
 }
