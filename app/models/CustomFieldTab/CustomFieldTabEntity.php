@@ -30,4 +30,10 @@ class CustomFieldTabEntity extends \Eloquent{
 		return self::$instance;
 	}
 
+	public function saveTab($data) {
+		$this->name = $data['tab'];
+		$this->user_id = \Auth::id();
+		$this->save();
+	}
+
 }

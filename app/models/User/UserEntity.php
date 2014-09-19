@@ -180,4 +180,8 @@ class UserEntity extends \Eloquent implements UserInterface, RemindableInterface
 		return $users;
 	}
 
+	public function tabs() {
+		return $this->hasOne('\UserTab\UserTabEntity','user_id');
+	}
+
 }
