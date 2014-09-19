@@ -65,6 +65,13 @@ class TaskLabelEntity extends \Eloquent{
 		);
 	}
 
+	public function getMyActionLabel($userId = null){
+		if( is_null($userId) ){
+			$userId = \Auth::id();
+		}
+		return \TaskLabel\TaskLabel::userID($userId)->orderBy('created_at','desc');
+	}
+
 	/**
 	 * Get all task label by user id
 	 * @param		int		$by_user		Default is null

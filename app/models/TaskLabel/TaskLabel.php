@@ -11,4 +11,11 @@ class TaskLabel extends \Eloquent{
 		'color',
 	);
 
+	public function scopeUserID($query, $userID){
+		return $query->where('user_id', '=', $userID);
+	}
+	public function scopeTaskLabelID($query, $ID){
+		return $query->where('id', '=', $ID);
+	}
+
 }
