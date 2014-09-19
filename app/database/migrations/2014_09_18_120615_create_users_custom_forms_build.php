@@ -12,7 +12,7 @@ class CreateUsersCustomFormsBuild extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('users_custom_forms', function(Blueprint $table)
+		/*Schema::create('users_custom_forms', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->integer('form_id')->unsigned();
@@ -24,7 +24,7 @@ class CreateUsersCustomFormsBuild extends Migration {
 			$table->timestamp('created_at');
 			$table->timestamp('updated_at');
 			$table->softDeletes();
-		});
+		});*/
 	}
 
 	/**

@@ -46,7 +46,7 @@ Route::group(array('before' => 'auth'), function()
 	});
 
 	Route::group(array('prefix' => 'settings/email'), function()
-	{		
+	{
 		//Route::controller('/', 'Email\EmailController');
 		Route::controller('/', 'Settings\EmailController');
 	});
@@ -61,7 +61,10 @@ Route::group(array('before' => 'auth'), function()
 		Route::controller('/', 'CustomForms\CustomFormsController');
 	});
 
-
+	Route::group(array('prefix' => 'settings/task-label'), function()
+	{
+		Route::controller('/', 'Settings\TaskLabelController');
+	});
 });
 
 Route::get('testmail', function()
