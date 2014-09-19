@@ -106,8 +106,10 @@ class UserController extends \BaseController {
 		$validator = \Validator::make(\Input::all(), $rules, $messages);
 		if ( $validator->passes() ) {
 			$user 			= \User\UserEntity::get_instance()->createOrUpdate(null,1);
-			\User\UserEntity::get_instance()->updatePassword($user->id,\Input::get('password'));
-
+			$newUser = new \User\UserEntity();
+			//\User\UserEntity::get_instance()->updatePassword($user->id,\Input::get('password'));
+			$newUser->updatePassword($user->id,\Input::get('password'));
+			
 			$groupId 		= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
 			\UserToGroup\UserToGroupEntity::get_instance()->createUserToGroup($user->id, $groupId, 2);
 			\UserPermission\UsersPermissionEntity::get_instance()->addOrUpdatePermission(

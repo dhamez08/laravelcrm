@@ -12,19 +12,19 @@ class CreateUsersCustomFormsBuild extends Migration {
 	 */
 	public function up()
 	{
-		/*Schema::create('users_custom_forms', function(Blueprint $table)
+		Schema::create('users_custom_forms_build', function(Blueprint $table)
 		{
-			$table->increments('id');
+			$table->increments('id')->unsigned();
 			$table->integer('form_id')->unsigned();
 			$table->foreign('form_id')->references('id')->on('users_custom_forms')->onDelete('CASCADE')->onUpdate('CASCADE');
 			$table->string('label',30);
-			$table->integer('type',1);
+			$table->integer('type');
 			$table->string('placeholder',30);
 			$table->text('value');
 			$table->timestamp('created_at');
 			$table->timestamp('updated_at');
 			$table->softDeletes();
-		});*/
+		});
 	}
 
 	/**
@@ -34,7 +34,7 @@ class CreateUsersCustomFormsBuild extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('users_custom_forms');
+		Schema::drop('users_custom_forms_build');
 	}
 
 }

@@ -54,7 +54,14 @@ class CustomFieldTabsController extends \BaseController {
 	}
 
 	public function getIndex(){
-		echo "...";
+		$data 					= $this->data_view;
+		$data['pageTitle'] 		= 'Custom Field Settings';
+		$data['tabActive'] 		= 'custom-tabs';
+		$data['pageSubTitle'] 	= '';
+		$data['contentClass'] 	= 'settings';
+		$data = array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
+		//var_dump($data);exit();
+		return \View::make( $data['view_path'] . '.settings.custom-fields.index', $data );
 	}
 
 }
