@@ -27,7 +27,6 @@ class SettingsController extends \BaseController {
 	 * */
 	public function __construct(){
 		parent::__construct();
-		//$this->data_view = \Dashboard\DashboardController::get_instance()->getSetupThemes();
 		$this->data_view = parent::setupThemes();
 		$this->data_view['settings_index'] 	= $this->data_view['view_path'] . '.settings.index';
 		$this->data_view['master_view'] 	= $this->data_view['view_path'] . '.dashboard.index';

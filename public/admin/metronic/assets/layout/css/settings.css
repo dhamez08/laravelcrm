@@ -1,0 +1,13 @@
+/**
+ * Settings - add action label
+ * */
+.icons-list {
+    height: 500px;
+    overflow: auto;
+}
+.icons-list-wrapper > li{
+	margin: 10px 0;
+}
+.color-label-wrapper li {
+    padding: 10px;
+}

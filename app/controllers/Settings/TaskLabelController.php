@@ -29,8 +29,8 @@ class TaskLabelController extends \BaseController {
 	public function __construct(){
 		parent::__construct();
 		$this->data_view = parent::setupThemes();
-		//$this->data_view['settings_index'] 	= $this->data_view['view_path'] . '.settings.index';
-		//$this->data_view['master_view'] 	= $this->data_view['view_path'] . '.dashboard.index';
+		$this->data_view['settings_index'] 	= $this->data_view['view_path'] . '.settings.index';
+		$this->data_view['master_view'] 	= $this->data_view['view_path'] . '.dashboard.index';
 		$this->userEntity = new \User\UserEntity;
 	}
 
@@ -64,11 +64,49 @@ class TaskLabelController extends \BaseController {
 	 * */
 	public function getIndex() {
 		$data 					= $this->data_view;
-		$data['pageTitle'] 		= 'Email Settings';
-		$data['pageSubTitle'] 	= 'mga settings para sa email';
-		$data['contentClass'] 	= '';
+		$data['pageTitle'] 		= 'Task Action Label';
+		$data['pageSubTitle'] 	= '';
+		$data['contentClass'] 	= 'task-action-label';
 		$data = array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
-		return \View::make( $data['view_path'] . '.settings.email.email', $data );
+		return \View::make( $data['view_path'] . '.settings.calendar.index', $data );
+	}
+
+	public function getAddActionLabel(){
+		$data 					= $this->data_view;
+		$data['pageTitle'] 		= 'Task Action Label';
+		$data['pageSubTitle'] 	= 'Add Task Action Label';
+		$data['contentClass'] 	= 'task-action-label';
+		$data['icons'] = array_keys( \TaskLabel\TaskLabelEntity::get_instance()->getIcons() );
+		$data['color_label'] = \TaskLabel\TaskLabelEntity::get_instance()->getColorLabel();
+		$data = array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
+		return \View::make( $data['view_path'] . '.settings.calendar.addTaskActionLabel', $data );
+	}
+
+	public function postAddActionLabel(){
+		\Input::merge(array('user_id' => \Auth::id()));
+		var_dump( \Input::all() );
+		$rules = array(
+			'action_name' => 'required|min:3',
+			'icons' => 'required',
+			'color' => 'required',
+		);
+		$messages = array(
+			'action_name.required'=>'Action Name is required',
+			'action_name.min'=>'Action Name must have more than 3 character',
+			'icons.required'=>'Choose Icons',
+			'color.min'=>'Choose Color',
+		);
+		$validator = \Validator::make(\Input::all(), $rules, $messages);
+		if ( $validator->passes() ) {
+			\TaskLabel\TaskLabelEntity::get_instance()->createOrUpdate();
+			\Session::flash('message', 'Successfully Added Action Label');
+			return \Redirect::action('Settings\TaskLabelController@getIndex');
+		}else{
+			\Input::flash();
+			return \Redirect::to('settings/task-label/add-action-label')
+			->withErrors($validator)
+			->withInput();
+		}
 	}
 
 }
