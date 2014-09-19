@@ -38,7 +38,7 @@
 				<div class="alert alert-danger display-hide">
 					<button data-close="alert" class="close"></button>
 					<span>
-					Enter any username and password. asd</span>
+					Enter any username and password. </span>
 				</div>
 				<div class="form-group">
 					<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
