@@ -14,4 +14,15 @@ return array(
 		'Client - Files' => 'client_files',
 		'Client - Opportunities' => 'client_opportunities',
 	),
+	'settings' => array(
+		'customFields' => array(
+			'clientTabs' => array(
+				'files_tab'			=>	'Files Tab',
+				'messages_tab'		=>	'Messages Tab',
+				'people_tab'		=>	'People Tab(shown on company only',
+				'opportunities_tab'	=>	'Opportunities Tab',
+				'live_tab'			=>	'Live Documents Tab'
+			)
+		)
+	)
 );
