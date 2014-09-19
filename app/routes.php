@@ -28,6 +28,11 @@ Route::group(array('before' => 'auth'), function()
 
 	Route::get( 'settings' , 'Settings\SettingsController@getIndex' );
 
+	Route::group(array('prefix' => 'clients'), function()
+	{
+		Route::controller( '/' , 'Clients\ClientsController' );
+	});
+
 	Route::group(array('prefix' => 'settings/tags'), function()
 	{
 		Route::get('/', 'ClientTags\ClientTagsController@getIndex');

@@ -88,7 +88,7 @@ class RegisterController extends \BaseController {
 			\Input::merge(array('confirm_code' => $code));
 
 			$user 			= $this->userEntity->createOrUpdate(null,2);
-			$this->userGroupEntity->updatePassword($user->id, \Input::get('password'));
+			$this->userEntity->updatePassword($user->id, \Input::get('password'));
 			$userGroup 		= $this->userGroupEntity->createGroup($user->id);
 			$userToGroup 	= $this->userToGroupEntity->createUserToGroup($user->id, $userGroup->id);
 			$subscription 	= $this->SubscriptionEntity->createSubscription($user->id);

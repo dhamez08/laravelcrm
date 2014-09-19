@@ -11,7 +11,7 @@
 @stop
 @section('body-content')
 		<div class="logo">
-			<a href="index_3.html">
+			<a href="{{url('/')}}">
 			<img style="width: 375px;" alt="" src="{{$asset_path}}/layout/img/123crm_logo.jpg">
 			</a>
 		</div>
@@ -299,7 +299,7 @@
 				</div>
 			{{Form::close()}}
 		</div>
-@show
+@stop
 @section('body-footer')
 	<!-- BEGIN FOOTER -->
 	<div class="copyright">
