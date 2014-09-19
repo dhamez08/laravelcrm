@@ -26,8 +26,9 @@ class ClientTagsController extends \BaseController {
 	 * auto setup initialize object
 	 * */
 	public function __construct(){
-		parent::__construct();		
-		$this->data_view = parent::setupThemes();		
+		parent::__construct();
+		$this->data_view = parent::setupThemes();
+		$this->data_view['settings_index'] 	= $this->data_view['view_path'] . '.settings.index';
 		$this->data_view['master_view'] 	= $this->data_view['view_path'] . '.dashboard.index';
 		$this->clientTagEntity = new \ClientTag\ClientTagEntity;
 		$this->opportunityTagEntity = new \OpportunityTag\OpportunityTagEntity;
@@ -85,7 +86,7 @@ class ClientTagsController extends \BaseController {
 
 		$validator = \Validator::make(\Input::all(), $rules, $messages);
 		if ( $validator->passes() ) {
-			
+
 			$this->clientTagEntity->saveTag(\Input::all());
 
 			\Session::flash('message', 'The Tag was successfully created');
@@ -112,9 +113,9 @@ class ClientTagsController extends \BaseController {
 	    $newTagname = \Input::get('value');
 	    $tag = $this->clientTagEntity->find($tagId);
 	    $tag->tag = $newTagname;
-	    if($tag->save()) 
+	    if($tag->save())
 	        return \Response::json(array('status'=>1));
-	    else 
+	    else
 	        return \Response::json(array('status'=>0));
 	}
 

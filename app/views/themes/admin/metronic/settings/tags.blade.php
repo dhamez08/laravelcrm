@@ -1,4 +1,4 @@
-@extends( $dashboard_index )
+@extends( $settings_index )
 
 @section('begin-head')
 	@parent
@@ -13,6 +13,7 @@
 @section('body-content')
 	@parent
 	@section('innerpage-content')
+		@parent
 		<div class="col-md-12">
 			<div class="tabbable tabbable-custom tabbable-full-width">
 				<ul class="nav nav-tabs">

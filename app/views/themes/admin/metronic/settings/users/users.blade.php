@@ -1,7 +1,8 @@
-@extends( $dashboard_index )
+@extends( $settings_index )
 @section('body-content')
 	@parent
 	@section('innerpage-content')
+	@parent
 	<div class="col-md-12">
 		<h3><a href="{{url('settings/users/add-aditional-user')}}" class="btn green">Add Additional User</a></h3>
 	</div>

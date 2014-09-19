@@ -1,7 +1,8 @@
-@extends( $dashboard_index )
+@extends( $settings_index )
 @section('body-content')
 	@parent
 	@section('innerpage-content')
+	@parent
 	{{
 		Form::model(
 			$user,
