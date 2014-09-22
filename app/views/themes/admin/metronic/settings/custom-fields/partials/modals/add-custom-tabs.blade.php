@@ -21,8 +21,8 @@
       	</div>
       	<div class="row">
 	      	<div class="col-md-12">
-	      		<button type="submit" class="btn btn-success">Save</button>
-	      		<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+	      		<button type="submit" class="btn blue">Save</button>
+	      		<button type="button" class="btn blue" data-dismiss="modal">Cancel</button>
 	      	</div>
       	</div>
       	{{ Form::close() }}

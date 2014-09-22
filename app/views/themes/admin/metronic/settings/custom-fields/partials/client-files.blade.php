@@ -12,17 +12,17 @@
 						<div class="col-md-12">
 							Customise client file sections.
 							<br /><br />
-							<form role="form">
+							{{ Form::open(array('url' => 'settings/custom-fields/save-custom-files')) }}
 								@foreach($clientFiles as $key => $file)
 								<div>
-	        						<div class="form-group">
+	        						<div class="form-group {{ $file['field_name'] }}">
 									    <label for="{{ $file['form_name'] }}">{{ $file['label_name'] }}</label>
-									    <input type="text" class="form-control" value="{{ $file['default_value'] }}" id="{{ $file['form_name'] }}" placeholder="{{ $file['placeholder'] }}" {{ $file['readonly'] ? 'readonly':'' }}>
+									    <input type="text" class="form-control" value="{{ $clientFileRows->$file['field_name'] }}" id="{{ $file['form_name'] }}" name="{{ $file['form_name'] }}" placeholder="{{ $file['placeholder'] }}" {{ $file['readonly'] ? 'readonly':'' }}>
 									</div>
 								</div>
 								@endforeach
 								<button type="submit" class="btn blue">Save Changes</button>
-							</form>
+							{{ Form::close() }}
 						</div>
 
 					</div>

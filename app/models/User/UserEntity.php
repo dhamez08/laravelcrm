@@ -184,4 +184,19 @@ class UserEntity extends \Eloquent implements UserInterface, RemindableInterface
 		return $this->hasOne('\UserTab\UserTabEntity','user_id');
 	}
 
+	public function updateCustomFiles($data) {
+		$this->files_1 = $data['files_1'];
+		$this->files_2 = $data['files_2'];
+		$this->files_3 = $data['files_3'];
+		$this->files_4 = $data['files_4'];
+		$this->files_5 = $data['files_5'];
+		$this->files_6 = $data['files_6'];
+
+		return $this->save() ? 1:0;
+	}
+
+	public function getClientFiles() {
+		return $this->select('files_1','files_2','files_3','files_4','files_5','files_6')->first();
+	}
+
 }

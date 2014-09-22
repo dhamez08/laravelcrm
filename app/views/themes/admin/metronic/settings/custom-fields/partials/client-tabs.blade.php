@@ -16,7 +16,7 @@
 								@foreach($clientTabs as $key => $ct)
 								<div>
 	        						<label>
-										<input type="checkbox" name="{{ $key }}" value="1" {{ $sess = \Session::has($key) ? $sess==1 ? 'checked':'':'checked' }}> {{ $ct }}
+										<input type="checkbox" name="{{ $key }}" value="1" {{ ($clientTabRows) ? $clientTabRows->$key==1 ? 'checked':'':'checked' }}> {{ $ct }}
 									</label>
 								</div>
 								@endforeach

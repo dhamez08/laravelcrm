@@ -65,7 +65,9 @@ class CustomFieldTabsController extends \BaseController {
 		$data['pageTitle'] 		= 'Custom Field Settings';
 		$data['tabActive'] 		= 'custom-tabs';
 		$data['clientTabs']		= \Config::get('crm.settings.customFields.clientTabs');
+		$data['clientTabRows']	= $this->userEntity->find(\Auth::id())->tabs;
 		$data['clientFiles']	= \Config::get('crm.settings.customFields.clientFiles');
+		$data['clientFileRows']	= $this->userEntity->find(\Auth::id())->getClientFiles();
 		$data['customTabs']		= $this->customFieldTabEntity->get();
 		$data['pageSubTitle'] 	= '';
 		$data['contentClass'] 	= 'settings';
@@ -107,8 +109,25 @@ class CustomFieldTabsController extends \BaseController {
 		} else {
 			return \Redirect::to('settings/custom-fields')->withErrors(['There was a problem updating your tabs, please try again']);
 		}
+	}
 
-		
+	public function postSaveCustomFiles() {
+		$sections = array(
+			'files_1' => \Input::get('section1'),
+			'files_2' => \Input::get('section2'),
+			'files_3' => \Input::get('section3'),
+			'files_4' => \Input::get('section4'),
+			'files_5' => \Input::get('section5'),
+			'files_6' => \Input::get('section6')
+		);
+
+		if($this->userEntity->find(\Auth::id())->updateCustomFiles($sections)) {
+			\Session::flash('message', 'Client file sections was successfully updated');
+			return \Redirect::to('settings/custom-fields');
+		} else {
+			return \Redirect::to('settings/custom-fields')->withErrors(['There was a problem updating your the sections, please try again']);
+		}
+
 	}
 
 }

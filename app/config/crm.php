@@ -26,44 +26,44 @@ return array(
 			'clientFiles' => array(
 				array(
 					'label_name'	=>	'Section 1 Name:',
-					'default_value'	=>	'Custom Form Files',
 					'form_name'		=>	'section1',
+					'field_name'	=>	'files_1',
 					'placeholder'	=>	'Enter a name for section 1',
 					'readonly'		=>	1
 				),
 				array(
 					'label_name'	=>	'Section 2 Name:',
-					'default_value'	=>	'',
 					'form_name'		=>	'section2',
+					'field_name'	=>	'files_2',
 					'placeholder'	=>	'Enter a name for section 2',
 					'readonly'		=>	0
 				),
 				array(
 					'label_name'	=>	'Section 3 Name:',
-					'default_value'	=>	'',
 					'form_name'		=>	'section3',
+					'field_name'	=>	'files_3',
 					'placeholder'	=>	'Enter a name for section 3',
 					'readonly'		=>	0
 				),
 				array(
 					'label_name'	=>	'Section 4 Name:',
-					'default_value'	=>	'',
 					'form_name'		=>	'section4',
+					'field_name'	=>	'files_4',
 					'placeholder'	=>	'Enter a name for section 4',
 					'readonly'		=>	0
 				),
 				array(
 					'label_name'	=>	'Section 5 Name:',
-					'default_value'	=>	'',
 					'form_name'		=>	'section5',
+					'field_name'	=>	'files_5',
 					'placeholder'	=>	'Enter a name for section 5',
 					'readonly'		=>	0
 				),
 				array(
-					'label_name'	=>	'Section 5 Name:',
-					'default_value'	=>	'',
-					'form_name'		=>	'section5',
-					'placeholder'	=>	'Enter a name for section 5',
+					'label_name'	=>	'Section 6 Name:',
+					'form_name'		=>	'section6',
+					'field_name'	=>	'files_6',
+					'placeholder'	=>	'Enter a name for section 6',
 					'readonly'		=>	0
 				),
 			)
