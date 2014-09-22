@@ -30,4 +30,13 @@ class CustomFormEntity extends \Eloquent{
 		return self::$instance;
 	}
 
+	public function getFormsByLoggedUser() {
+
+		$forms = $this->where('user_id', '=', \Auth::id())
+					->whereNull('deleted_at');
+
+		return $forms->get();
+
+	}
+
 }

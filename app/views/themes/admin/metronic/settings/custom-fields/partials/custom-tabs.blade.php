@@ -24,8 +24,8 @@
 										{{ $tab->name }}
 									</div>
 									<div class="col-md-3 text-right">
-										<button class="btn btn-sm blue" title="Edit"><i class="fa fa-edit"></i></button>
-										<button class="btn btn-sm red" title="Delete"><i class="fa fa-times"></i></button>
+										<a href="{{ url('settings/custom-fields/custom-tab/'.$tab->id) }}"><button class="btn btn-sm blue" title="Edit"><i class="fa fa-edit"></i></button></a>
+										<a href="{{ url('settings/custom-fields/delete-custom-tab/'.$tab->id) }}" onclick="return confirm('Are you sure you wish to delete this custom tab?')"><button class="btn btn-sm red" title="Delete"><i class="fa fa-times"></i></button></a>
 									</div>
 								</div>
 							</li>
