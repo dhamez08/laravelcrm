@@ -27,9 +27,9 @@ class ClientsController extends \BaseController {
 	 * auto setup initialize object
 	 * */
 	public function __construct(){
-		parent::__construct();		
-		$this->data_view = parent::setupThemes();				
-		$this->data_view['master_view'] 	= $this->data_view['view_path'] . '.dashboard.index';
+		parent::__construct();
+		$this->data_view = parent::setupThemes();
+		$this->data_view['client_index'] 	= $this->data_view['view_path'] . '.clients.index';
 	}
 
 	/**
@@ -52,7 +52,7 @@ class ClientsController extends \BaseController {
 	 * get themes
 	 * @return	array
 	 * */
-	public function getSetupThemes(){		
+	public function getSetupThemes(){
 		return \Dashboard\DashboardController::get_instance()->getSetupThemes();
 	}
 
@@ -64,12 +64,29 @@ class ClientsController extends \BaseController {
 		$data 					= $this->data_view;
 		$data['pageTitle'] 		= 'Client';
 		$data['contentClass'] 	= '';
+		$data['portlet_body_class']	= 'form';
+		$data['portlet_title']		= 'Client';
+		$data['fa_icons']		= 'user';
 		$data 					= array_merge($data,$this->getSetupThemes());
 
 		$data['html_body_class'] = 'page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed';
 		$data['center_column_view'] = 'dashboard';
 
 		return \View::make( $data['view_path'] . '.clients.index', $data );
+	}
+
+	public function getCreate(){
+		$data 					= $this->data_view;
+		$data['pageTitle'] 		= 'Client';
+		$data['contentClass'] 	= 'create';
+		$data['portlet_body_class']	= 'form';
+		$data['portlet_title']		= 'Add Client';
+		$data['fa_icons']		= 'user';
+		$data 					= array_merge($data,$this->getSetupThemes());
+		$data['html_body_class'] = 'page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed';
+		$data['center_column_view'] = 'dashboard';
+
+		return \View::make( $data['view_path'] . '.clients.create', $data );
 	}
 
 	public function getFiles()
@@ -82,7 +99,7 @@ class ClientsController extends \BaseController {
 		$data['html_body_class'] = 'page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed';
 		$data['center_column_view'] = 'files';
 
-		return \View::make( $data['view_path'] . '.clients.index', $data );	
+		return \View::make( $data['view_path'] . '.clients.index', $data );
 	}
 
 }

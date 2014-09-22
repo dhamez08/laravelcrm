@@ -31,6 +31,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::group(array('prefix' => 'clients'), function()
 	{
 		Route::controller( '/' , 'Clients\ClientsController' );
+		Route::controller( 'create' , 'Clients\ClientsController' );
 	});
 
 	Route::group(array('prefix' => 'settings/tags'), function()

@@ -1,4 +1,4 @@
-@extends( $dashboard_index )
+@extends( $client_index )
 
 @section('begin-head')
 	@parent
@@ -21,29 +21,38 @@
 	@section('innerpage-page-title')
 		&nbsp;
 	@show
-	@section('innerpage-content')
-		<div class="col-md-12">
-			<!-- CENTER COLUMN -->
-			<div class="portlet box {{{$dashboard_class or 'blue'}}} tabbable">
-				<div class="portlet-title">
-					<div class="caption">
-						@section('portlet-captions')
-							<i class="fa fa-{{{$fa_icons or 'cog'}}}"></i>{{{$portlet_title or 'Portlet Title'}}}
-						@show
-					</div>
-					<div class="actions">
-						<a class="btn btn-default btn-sm" href="{{url('clients/create')}}">
-						<i class="fa fa-plus"></i> Add </a>
+	@section('portlet-content')
+		{{ Form::open(
+			array(
+					'action' => array('User\UserController@postAdditionalUser'),
+					'method' => 'POST',
+					'role'=>'form',
+					'class'=>'horizontal-form'
+				)
+			)
+		}}
+		<div class="form-body">
+			<div class="col-md-12">
+				{{Form::submit('Add User',array('class'=>"btn blue"))}}
+				<a class="btn {{{$dashboard_css or 'blue'}}}" href="{{url('settings/users')}}">Cancel</a>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="container-fluid">
+						<h3>User Information</h3>
+						<div class="form-body">
+							<div class="row">
+
+							</div>
+						</div>
 					</div>
 				</div>
-				<div class="portlet-body {{{$portlet_body_class or ''}}}">
-					@section('portlet-content')
-					@show
+				<div class="col-md-8">
+					<h3>Set User Permision</h3>
 				</div>
 			</div>
-			{{--@include($view_path.'.clients.partials.center_column.'.$center_column_view)--}}
-			<!-- END CENTER COLUMN -->
 		</div>
+		{{Form::close()}}
 	@stop
 @stop
 

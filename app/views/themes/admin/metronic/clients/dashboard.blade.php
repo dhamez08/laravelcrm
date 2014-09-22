@@ -16,33 +16,27 @@
 		@include($view_path.'.clients.partials.leftSidebar')
 	@stop
 	@section('pagebar')
-
+		@parent
+		@include($view_path.'.clients.partials.subPagebar')
 	@stop
 	@section('innerpage-page-title')
 		&nbsp;
 	@show
 	@section('innerpage-content')
-		<div class="col-md-12">
+		<div class="col-md-2">
+			<!-- CLIENT LEFT SIDEBAR -->
+			@include($view_path.'.clients.partials.leftColumn')
+			<!-- END CLIENT LEFT SIDEBAR -->
+		</div>
+		<div class="col-md-8">
 			<!-- CENTER COLUMN -->
-			<div class="portlet box {{{$dashboard_class or 'blue'}}} tabbable">
-				<div class="portlet-title">
-					<div class="caption">
-						@section('portlet-captions')
-							<i class="fa fa-{{{$fa_icons or 'cog'}}}"></i>{{{$portlet_title or 'Portlet Title'}}}
-						@show
-					</div>
-					<div class="actions">
-						<a class="btn btn-default btn-sm" href="{{url('clients/create')}}">
-						<i class="fa fa-plus"></i> Add </a>
-					</div>
-				</div>
-				<div class="portlet-body {{{$portlet_body_class or ''}}}">
-					@section('portlet-content')
-					@show
-				</div>
-			</div>
-			{{--@include($view_path.'.clients.partials.center_column.'.$center_column_view)--}}
+			@include($view_path.'.clients.partials.center_column.'.$center_column_view)
 			<!-- END CENTER COLUMN -->
+		</div>
+		<div class="col-md-2">
+			<!-- ADS -->
+			@include($view_path.'.clients.partials.rightColumn')
+			<!-- END ADS -->
 		</div>
 	@stop
 @stop
