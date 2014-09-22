@@ -75,7 +75,9 @@ class UserController extends \BaseController {
 		$data['pageTitle'] 		= 'Settings';
 		$data['pageSubTitle'] 	= 'Add aditional User';
 		$data['contentClass'] 	= 'settings';
-		//$data['userPermission']	= (object)array();
+		$data['portlet_body_class']	= 'form';
+		$data['portlet_title']		= 'Add User';
+		$data['fa_icons']		= 'user';
 		$data['permission']		= \UserPermission\UsersPermissionEntity::get_instance()->getPermission();
 		$data = array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
 		return \View::make( $data['view_path'] . '.settings.users.addUser', $data );

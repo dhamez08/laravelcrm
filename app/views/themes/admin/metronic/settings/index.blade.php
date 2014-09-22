@@ -7,7 +7,26 @@
 @stop
 @section('body-content')
 	@parent
+	@section('innerpage-page-title')
+	@stop
 	@section('innerpage-content')
-		@include( \DashboardEntity::get_instance()->getView() . '.settings.partials.nav' )
+		<div class="portlet box {{{$dashboard_class or 'blue'}}} tabbable">
+			<div class="portlet-title">
+				<div class="caption">
+					@section('portlet-captions')
+						<i class="fa fa-{{{$fa_icons or 'cog'}}}"></i>{{{$portlet_title or 'Portlet Title'}}}
+					@show
+				</div>
+			</div>
+			<div class="portlet-body {{{$portlet_body_class or ''}}}">
+				<div class="tabbable portlet-tabs">
+					@include( \DashboardEntity::get_instance()->getView() . '.settings.partials.nav' )
+					<div class="tab-content">
+						@section('portlet-content')
+						@show
+					</div>
+				</div>
+			</div>
+		</div>
 	@stop
 @stop
