@@ -1,13 +1,13 @@
 <div class="col-md-4">
 	<div class="row">
 		<div class="col-md-12 site-themes">
-			<div class="portlet box green-haze tasks-widget">
+			<div class="portlet box blue tasks-widget">
 				<div class="portlet-title">
 					<div class="caption">
 						Custom Tabs
 					</div>
 				</div>
-				<div class="portlet-body">
+				<div class="portlet-body" style="padding:15px">
 					@if(count($customTabs)==0)
 					<div class="row">
 						<div class="col-md-12">
@@ -35,7 +35,7 @@
 					
 					<div class="row">
 						<div class="col-md-12">
-							<button class="btn btn-sm btn-default" data-toggle="modal" data-target=".bs-tab-modal-md"><div class="caption"><i class="fa fa-plus"></i>&nbsp;Add custom tabs</div></button>
+							<button class="btn btn-sm blue" data-toggle="modal" data-target=".bs-tab-modal-md"><div class="caption"><i class="fa fa-plus"></i>&nbsp;Add custom tabs</div></button>
 						</div>
 					</div>
 				</div>

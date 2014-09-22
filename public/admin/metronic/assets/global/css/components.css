@@ -9496,3 +9496,7 @@ Transparent Button
   background: transparent;
   color: #888;
 }
+
+.padding15 {
+  padding:15px;
+}
