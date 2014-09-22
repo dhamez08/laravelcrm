@@ -11,7 +11,7 @@
 						<th>
 							 Name
 						</th>
-						<th colspan="2">
+						<th>
 							 Action
 						</th>
 					</tr>
@@ -25,8 +25,6 @@
 								</td>
 								<td>
 									<a class="btn btn-primary btn-xs" href="{{action('User\UserController@getAddtionalUserEdit', $list->user->id)}}" role="button">Edit</a>
-								</td>
-								<td>
 									<a class="btn btn-warning btn-xs" href="{{$list->user->id}}" role="button">Delete</a>
 								</td>
 							</tr>
