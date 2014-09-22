@@ -1,4 +1,4 @@
-@extends( $dashboard_index )
+@extends( $settings_index )
 
 @section('begin-head')
 	@parent
@@ -13,71 +13,64 @@
 @section('body-content')
 	@parent
 	@section('innerpage-content')
+	@parent
+		@section('portlet-content')
 		<div class="col-md-12 site-themes">
-			<div class="portlet box green-haze tasks-widget">
-				<div class="portlet-title">
-					<div class="caption">
-						<i class="fa fa-check"></i>Available Themes
-					</div>
+			<div class="row">
+				<div class="col-md-3 text-center">
+					<a href="{{ URL::to('settings/screen/change-theme/naturalgreen') }}">
+					{{ HTML::image($asset_path."/pages/media/settings/screen/settings_sytle_naturalgreen.png", "Natural Green") }}
+					<p><strong>Natural Green</strong></p></a>
 				</div>
-				<div class="portlet-body">
-					<div class="row">
-						<div class="col-md-3 text-center">
-							<a href="{{ URL::to('settings/screen/change-theme/naturalgreen') }}">
-							{{ HTML::image($asset_path."/pages/media/settings/screen/settings_sytle_naturalgreen.png", "Natural Green") }}
-							<p><strong>Natural Green</strong></p></a>
-						</div>
-						<div class="col-md-3 text-center">
-							<a href="{{ URL::to('settings/screen/change-theme/blue') }}">
-							{{ HTML::image($asset_path."/pages/media/settings/screen/settings_sytle_blue.png", "Blue") }}
-							<p><strong>Blue</strong></p></a>
-						</div>
-						<div class="col-md-3 text-center">
-							<a href="{{ URL::to('settings/screen/change-theme/bluedusk') }}">
-							{{ HTML::image($asset_path."/pages/media/settings/screen/settings_sytle_bluedusk.png", "Blue Dusk") }}
-							<p><strong>Blue Dusk</strong></p></a>
-						</div>
-						<div class="col-md-3 text-center">
-							<a href="{{ URL::to('settings/screen/change-theme/purple') }}">
-							{{ HTML::image($asset_path."/pages/media/settings/screen/settings_sytle_purple.png", "Purple") }}
-							<p><strong>Purple</strong></p></a>
-						</div>
-					</div>
+				<div class="col-md-3 text-center">
+					<a href="{{ URL::to('settings/screen/change-theme/blue') }}">
+					{{ HTML::image($asset_path."/pages/media/settings/screen/settings_sytle_blue.png", "Blue") }}
+					<p><strong>Blue</strong></p></a>
+				</div>
+				<div class="col-md-3 text-center">
+					<a href="{{ URL::to('settings/screen/change-theme/bluedusk') }}">
+					{{ HTML::image($asset_path."/pages/media/settings/screen/settings_sytle_bluedusk.png", "Blue Dusk") }}
+					<p><strong>Blue Dusk</strong></p></a>
+				</div>
+				<div class="col-md-3 text-center">
+					<a href="{{ URL::to('settings/screen/change-theme/purple') }}">
+					{{ HTML::image($asset_path."/pages/media/settings/screen/settings_sytle_purple.png", "Purple") }}
+					<p><strong>Purple</strong></p></a>
+				</div>
+			</div>
 
-					<div class="row">
-						<div class="col-md-3 text-center">
-							<a href="{{ URL::to('settings/screen/change-theme/pink') }}">
-							{{ HTML::image($asset_path."/pages/media/settings/screen/settings_sytle_pink.png", "Pink") }}
-							<p><strong>Pink</strong></p></a>
-						</div>
-						<div class="col-md-3 text-center">
-							<a href="{{ URL::to('settings/screen/change-theme/red') }}">
-							{{ HTML::image($asset_path."/pages/media/settings/screen/settings_sytle_red.png", "Red") }}
-							<p><strong>Red</strong></p></a>
-						</div>
-						<div class="col-md-3 text-center">
-							<a href="{{ URL::to('settings/screen/change-theme/icesteel') }}">
-							{{ HTML::image($asset_path."/pages/media/settings/screen/settings_sytle_icesteel.png", "Ice Steel") }}
-							<p><strong>Ice Steel</strong></p></a>
-						</div>
-						<div class="col-md-3 text-center">
-							<a href="{{ URL::to('settings/screen/change-theme/olive') }}">
-							{{ HTML::image($asset_path."/pages/media/settings/screen/settings_sytle_olive.png", "Olive") }}
-							<p><strong>Olive</strong></p></a>
-						</div>
-					</div>
+			<div class="row">
+				<div class="col-md-3 text-center">
+					<a href="{{ URL::to('settings/screen/change-theme/pink') }}">
+					{{ HTML::image($asset_path."/pages/media/settings/screen/settings_sytle_pink.png", "Pink") }}
+					<p><strong>Pink</strong></p></a>
+				</div>
+				<div class="col-md-3 text-center">
+					<a href="{{ URL::to('settings/screen/change-theme/red') }}">
+					{{ HTML::image($asset_path."/pages/media/settings/screen/settings_sytle_red.png", "Red") }}
+					<p><strong>Red</strong></p></a>
+				</div>
+				<div class="col-md-3 text-center">
+					<a href="{{ URL::to('settings/screen/change-theme/icesteel') }}">
+					{{ HTML::image($asset_path."/pages/media/settings/screen/settings_sytle_icesteel.png", "Ice Steel") }}
+					<p><strong>Ice Steel</strong></p></a>
+				</div>
+				<div class="col-md-3 text-center">
+					<a href="{{ URL::to('settings/screen/change-theme/olive') }}">
+					{{ HTML::image($asset_path."/pages/media/settings/screen/settings_sytle_olive.png", "Olive") }}
+					<p><strong>Olive</strong></p></a>
+				</div>
+			</div>
 
-					<div class="row">
-						<div class="col-md-3 text-center">
-							<a href="{{ URL::to('settings/screen/change-theme/salmon') }}">
-							{{ HTML::image($asset_path."/pages/media/settings/screen/settings_sytle_salmon.png", "Warm Salmon") }}
-							<p><strong>Warm Salmon</strong></p></a>
-						</div>
-					</div>
-
+			<div class="row">
+				<div class="col-md-3 text-center">
+					<a href="{{ URL::to('settings/screen/change-theme/salmon') }}">
+					{{ HTML::image($asset_path."/pages/media/settings/screen/settings_sytle_salmon.png", "Warm Salmon") }}
+					<p><strong>Warm Salmon</strong></p></a>
 				</div>
 			</div>
 		</div>
+		@stop
 	@stop
 @stop
 

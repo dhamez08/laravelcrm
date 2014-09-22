@@ -1,13 +1,13 @@
 <div class="col-md-4">
 	<div class="row">
 		<div class="col-md-12 site-themes">
-			<div class="portlet box green-haze tasks-widget">
+			<div class="portlet box blue tasks-widget">
 				<div class="portlet-title">
 					<div class="caption">
 						Client Files
 					</div>
 				</div>
-				<div class="portlet-body">
+				<div class="portlet-body" style="padding:15px">
 					<div class="row">
 						<div class="col-md-12">
 							Customise client file sections.
@@ -21,7 +21,7 @@
 									</div>
 								</div>
 								@endforeach
-								<button type="submit" class="btn btn-primary">Save Changes</button>
+								<button type="submit" class="btn blue">Save Changes</button>
 							</form>
 						</div>
 

@@ -18,7 +18,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<button class="btn btn-sm btn-default" data-toggle="modal" data-target=".bs-opportunity-modal-md"><div class="caption"><i class="fa fa-plus"></i>&nbsp;Add oppotunities tag</div></button>
+				<button class="btn btn-sm blue" data-toggle="modal" data-target=".bs-opportunity-modal-md"><div class="caption"><i class="fa fa-plus"></i>&nbsp;Add oppotunities tag</div></button>
 			</div>
 		</div>
 	</div>
@@ -47,8 +47,8 @@
       	</div>
       	<div class="row">
 	      	<div class="col-md-12">
-	      		<button type="submit" class="btn btn-success">Save</button>
-	      		<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+	      		<button type="submit" class="btn blue">Save</button>
+	      		<button type="button" class="btn blue" data-dismiss="modal">Cancel</button>
 	      	</div>
       	</div>
       	{{ Form::close() }}

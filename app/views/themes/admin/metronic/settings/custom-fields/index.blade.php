@@ -12,7 +12,8 @@
 @section('body-content')
 	@parent
 	@section('innerpage-content')
-		@parent
+	@parent
+		@section('portlet-content')
 		<div class="col-md-12">
 			<div class="tabbable tabbable-custom tabbable-full-width">
 				<ul class="nav nav-tabs">
@@ -44,6 +45,7 @@
 				</div>
 			</div>
 		</div>
+		@stop
 	@stop
 @stop
 
