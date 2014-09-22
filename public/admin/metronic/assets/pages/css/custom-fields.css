@@ -1,0 +1,7 @@
+.tab-content .container-fluid > .row {
+	margin-top: 20px;
+}
+
+.tab-content .container-fluid > .row .row{
+	margin-top: 10px;
+}

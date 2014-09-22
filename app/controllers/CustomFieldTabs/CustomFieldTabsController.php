@@ -13,6 +13,7 @@ class CustomFieldTabsController extends \BaseController {
 	protected $customFieldTabEntity;
 	protected $userEntity;
 	protected $userTabEntity;
+	protected $customFormEntity;
 
 	/**
 	 * hold the view essentials like
@@ -34,6 +35,7 @@ class CustomFieldTabsController extends \BaseController {
 		$this->customFieldTabEntity = new \CustomFieldTab\CustomFieldTabEntity;
 		$this->userEntity = new \User\UserEntity;
 		$this->userTabEntity = new \UserTab\UserTabEntity;
+		$this->customFormEntity = new \CustomForm\CustomFormEntity;
 	}
 
 	/**
@@ -68,7 +70,7 @@ class CustomFieldTabsController extends \BaseController {
 		$data['clientTabRows']	= $this->userEntity->find(\Auth::id())->tabs;
 		$data['clientFiles']	= \Config::get('crm.settings.customFields.clientFiles');
 		$data['clientFileRows']	= $this->userEntity->find(\Auth::id())->getClientFiles();
-		$data['customTabs']		= $this->customFieldTabEntity->get();
+		$data['customTabs']		= $this->customFieldTabEntity->getTabsByLoggedUser();
 		$data['pageSubTitle'] 	= '';
 		$data['contentClass'] 	= 'settings';
 		$data = array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
@@ -128,6 +130,46 @@ class CustomFieldTabsController extends \BaseController {
 			return \Redirect::to('settings/custom-fields')->withErrors(['There was a problem updating your the sections, please try again']);
 		}
 
+	}
+
+	public function getDeleteCustomTab($id) {
+		$tab = $this->customFieldTabEntity->find($id);
+		if($tab) {
+			$tab->delete();
+			\Session::flash('message', 'The Tab was successfully deleted');
+			return \Redirect::to('settings/custom-fields');
+		}
+	}
+
+	public function getCustomTab($id) {
+		$tab = $this->customFieldTabEntity->find($id);
+		if($tab) {
+			$data 					= $this->data_view;
+			$data['pageTitle'] 		= 'Custom Tab Settings';
+			$data['portlet_title'] 	= 'Edit Custom Tab';
+			$data['customForms']	= $this->customFormEntity->all();
+			$data['tab']		= $tab;
+			$data['pageSubTitle'] 	= '';
+			$data['contentClass'] 	= 'settings';
+			$data = array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
+			return \View::make( $data['view_path'] . '.settings.custom-fields.edit-custom-tab', $data );
+		} else {
+			return \Redirect::back()->withErrors(['There was a problem accessing the tab, please try again']); 
+		}
+	}
+
+	public function postCustomTab($id) {
+		$tab = $this->customFieldTabEntity->find($id);
+		if($tab) {
+			if($tab->updateCustomTab(\Input::all())) {
+				\Session::flash('message', 'The Tab was successfully updated');
+				return \Redirect::to('settings/custom-fields');
+			} else {
+				return \Redirect::back()->withErrors(['There was a problem updating the Tab, please try again']);
+			}
+		} else {
+			return \Redirect::back()->withErrors(['There was a problem accessing the tab, please try again']);
+		}
 	}
 
 }
