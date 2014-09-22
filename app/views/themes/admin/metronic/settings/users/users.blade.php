@@ -21,10 +21,11 @@
 						@foreach( $users->get() as $list )
 							<tr>
 								<td>
-									{{$list->user->first_name}} {{$list->user->last_name}}
+									<h4>
+										<a href="{{action('User\UserController@getAddtionalUserEdit', $list->user->id)}}" role="button">{{$list->user->first_name}} {{$list->user->last_name}}</a>
+									</h4>
 								</td>
 								<td>
-									<a class="btn btn-primary btn-xs" href="{{action('User\UserController@getAddtionalUserEdit', $list->user->id)}}" role="button">Edit</a>
 									<a class="btn btn-warning btn-xs" href="{{$list->user->id}}" role="button">Delete</a>
 								</td>
 							</tr>
