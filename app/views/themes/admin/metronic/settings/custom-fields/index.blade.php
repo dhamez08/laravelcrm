@@ -39,6 +39,9 @@
 
 					<div class="tab-pane {{ $tabActive=='custom-forms' ? 'active':'' }}" id="tab_custom_forms">
 						<div class="container-fluid">
+							<div class="row">
+								{{ $custom_forms }}
+							</div>
 						</div>
 					</div>
 

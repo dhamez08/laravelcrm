@@ -71,6 +71,10 @@ class CustomFieldTabsController extends \BaseController {
 		$data['customTabs']		= $this->customFieldTabEntity->get();
 		$data['pageSubTitle'] 	= '';
 		$data['contentClass'] 	= 'settings';
+
+		$data['custom_forms']	= \View::make( $data['view_path'] . '.settings.custom-fields.partials.custom-forms' )
+									->nest('add_custom_form_modal', $data['view_path'] . '.settings.custom-fields.partials.modals.add-custom-form');
+
 		$data = array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
 		//var_dump($data);exit();
 		return \View::make( $data['view_path'] . '.settings.custom-fields.index', $data );
@@ -128,6 +132,18 @@ class CustomFieldTabsController extends \BaseController {
 			return \Redirect::to('settings/custom-fields')->withErrors(['There was a problem updating your the sections, please try again']);
 		}
 
+	}
+
+	public function getEditCustomForm()
+	{
+		$data 					= $this->data_view;
+		$data['pageTitle'] 		= 'Edit Custom Form';
+		$data['tabActive'] 		= 'custom-forms';
+		$data['pageSubTitle'] 	= '';
+		$data['contentClass'] 	= 'settings';
+
+		$data = array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());		
+		return \View::make( $data['view_path'] . '.settings.custom-fields.partials.edit-custom-form', $data );
 	}
 
 }
