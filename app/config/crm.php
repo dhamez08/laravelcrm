@@ -68,5 +68,62 @@ return array(
 				),
 			)
 		)
-	)
+	),
+	'person_title' => array(
+		'Mr',
+		'Mrs',
+		'Miss',
+		'Ms',
+		'Dr',
+	),
+	'marital_status' => array(
+		'Married',
+		'Single',
+		'Widowed',
+		'Seperated',
+		'Divorced',
+		'Co-habiting',
+		'Living together',
+	),
+	'living_status' => array(
+		'Owner - Outright',
+		'Owner - Mortgage',
+		'Rented',
+		'Living With Parents',
+	),
+	'employment_status' => array(
+		'Employed - Full Time',
+		'Employed - Part Time',
+		'Self-Employed',
+		'Retired',
+		'Unemployed',
+		'House Person',
+	),
+	'phone_for' => array(
+		'Home'=>'Home',
+		'Work'=>'Work',
+		'Direct'=>'Direct',
+		'Mobile'=>'Mobile',
+		'Fax'=>'Fax',
+	),
+	'email_for' => array(
+		'Home'=>'Home',
+		'Work'=>'Work',
+	),
+	'website_for' => array(
+		'Website'=>'Website',
+		'Twitter'=>'Twitter',
+		'Skype'=>'Skype',
+		'Xing'=>'Xing',
+		'Google+'=>'Google+',
+		'Facebook'=>'Facebook',
+		'YouTube'=>'YouTube',
+		'GitHub'=>'GitHub',
+		'LinkedIn'=>'LinkedIn',
+		'Blog'=>'Blog',
+	),
+	'website_is' => array(
+		'Personal'=>'Personal',
+		'Work'=>'Work',
+	),
 );
