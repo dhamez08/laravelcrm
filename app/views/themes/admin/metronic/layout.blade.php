@@ -32,6 +32,7 @@
 
 			<!-- BEGIN PAGE LEVEL STYLES -->
 			@yield('head-page-level-css')
+			<link href="{{$asset_path}}/global/plugins/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet" type="text/css"/>
 			<!-- END PAGE LEVEL STYLES -->
 
 			<!-- BEGIN THEME STYLES -->
@@ -118,6 +119,7 @@
 		<script src="{{$asset_path}}/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/global/plugins/jquery.sparkline.min.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/global/plugins/gritter/js/jquery.gritter.js" type="text/javascript"></script>
+		<script src="{{$asset_path}}/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
 		<!-- END PAGE LEVEL PLUGINS -->
 		<!-- BEGIN PAGE LEVEL SCRIPTS -->
 		<script src="{{$asset_path}}/global/scripts/metronic.js" type="text/javascript"></script>

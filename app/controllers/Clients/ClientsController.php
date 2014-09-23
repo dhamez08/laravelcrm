@@ -22,14 +22,56 @@ class ClientsController extends \BaseController {
 	 * @return array | associative
 	 * */
 	protected $data_view;
+	/**
+	 * Person Title like
+	 * Mr, Ms, etc...
+	 * */
+	protected $title;
+	/**
+	 * Person Marital Status
+	 * */
+	protected $marital_status;
+	/**
+	 * Person Living Status
+	 * */
+	protected $living_status;
+	/**
+	 * Person Employment Status
+	 * */
+	protected $employment_status;
+	/**
+	 * Person Phone for
+	 * */
+	protected $phone_for;
+	/**
+	 * Person Email for
+	 * */
+	protected $email_for;
+	/**
+	 * Person Website for
+	 * */
+	protected $website_for;
+	/**
+	 * Person Website is
+	 * */
+	protected $website_is;
 
 	/**
 	 * auto setup initialize object
 	 * */
 	public function __construct(){
 		parent::__construct();
-		$this->data_view = parent::setupThemes();
+		$this->data_view 					= parent::setupThemes();
 		$this->data_view['client_index'] 	= $this->data_view['view_path'] . '.clients.index';
+		$this->data_view['html_body_class'] = 'page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed';
+		$this->title 						= \Config::get('crm.person_title');
+		$this->marital_status 				= \Config::get('crm.marital_status');
+		$this->living_status 				= \Config::get('crm.living_status');
+		$this->employment_status 			= \Config::get('crm.employment_status');
+		$this->phone_for 					= \Config::get('crm.phone_for');
+		$this->email_for 					= \Config::get('crm.email_for');
+		$this->website_for 					= \Config::get('crm.website_for');
+		$this->website_is 					= \Config::get('crm.website_is');
 	}
 
 	/**
@@ -46,6 +88,38 @@ class ClientsController extends \BaseController {
 		}
 
 		return self::$instance;
+	}
+
+	public function getTitleClient(){
+		return $this->title;
+	}
+
+	public function getMaritalStatus(){
+		return $this->marital_status;
+	}
+
+	public function getLivingStatus(){
+		return $this->living_status;
+	}
+
+	public function getEmploymentStatus(){
+		return $this->employment_status;
+	}
+
+	public function getPhoneFor(){
+		return $this->phone_for;
+	}
+
+	public function getEmailFor(){
+		return $this->email_for;
+	}
+
+	public function getWebsiteFor(){
+		return $this->website_for;
+	}
+
+	public function getWebsiteIs(){
+		return $this->website_is;
 	}
 
 	/**
@@ -68,24 +142,27 @@ class ClientsController extends \BaseController {
 		$data['portlet_title']		= 'Client';
 		$data['fa_icons']		= 'user';
 		$data 					= array_merge($data,$this->getSetupThemes());
-
-		$data['html_body_class'] = 'page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed';
 		$data['center_column_view'] = 'dashboard';
 
 		return \View::make( $data['view_path'] . '.clients.index', $data );
 	}
 
 	public function getCreate(){
-		$data 					= $this->data_view;
-		$data['pageTitle'] 		= 'Client';
-		$data['contentClass'] 	= 'create';
+		$data 						= $this->data_view;
+		$data['pageTitle'] 			= 'Client';
+		$data['contentClass'] 		= 'create';
 		$data['portlet_body_class']	= 'form';
 		$data['portlet_title']		= 'Add Client';
-		$data['fa_icons']		= 'user';
-		$data 					= array_merge($data,$this->getSetupThemes());
-		$data['html_body_class'] = 'page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed';
+		$data['fa_icons']			= 'user';
+		$data['title']				= $this->getTitleClient();
+		$data['maritalStatus']		= $this->getMaritalStatus();
+		$data['livingStatus']		= $this->getLivingStatus();
+		$data['employmentStatus']	= $this->getEmploymentStatus();
+		$data['phoneFor']			= $this->getPhoneFor();
+		$data['emailFor']			= $this->getEmailFor();
+		$data 						= array_merge($data,$this->getSetupThemes());
+		$data['html_body_class'] 	= $this->data_view['html_body_class'];
 		$data['center_column_view'] = 'dashboard';
-
 		return \View::make( $data['view_path'] . '.clients.create', $data );
 	}
 
@@ -95,11 +172,13 @@ class ClientsController extends \BaseController {
 		$data['pageTitle'] 		= 'Client - Files';
 		$data['contentClass'] 	= '';
 		$data 					= array_merge($data,$this->getSetupThemes());
-
-		$data['html_body_class'] = 'page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed';
+		$data['html_body_class'] 	= $this->data_view['html_body_class'];
 		$data['center_column_view'] = 'files';
-
 		return \View::make( $data['view_path'] . '.clients.index', $data );
+	}
+
+	public function postCreateClient(){
+		var_dump( \Input::all() );
 	}
 
 }
