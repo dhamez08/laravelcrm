@@ -5,6 +5,7 @@
 	@section('head-page-level-css')
 	@parent
 	<!-- BEGIN PAGE LEVEL STYLES -->
+	<link href="{{$asset_path}}/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" type="text/css"/>
 	<!-- END PAGE LEVEL SCRIPTS -->
 	@stop
 @stop
@@ -115,11 +116,13 @@
 	@parent
 	@section('footer-custom-js')
 	@parent
+	<script src="{{$asset_path}}/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
 	<script>
 		var selectoption = '{{ Form::select('item_type[]', $item_type, null, array('class' => 'form-control itemType', 'required' => 'required')) }}';
-	</script>
-
+		$('.formContainer').sortable();
+	</script>	
 	<script src="{{$asset_path}}/pages/scripts/custom-fields.js" type="text/javascript"></script>
+
 	
 	@stop
 @stop
