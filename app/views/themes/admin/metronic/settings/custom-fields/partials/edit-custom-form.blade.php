@@ -27,14 +27,14 @@
 							<div class="portlet-body" style="padding:15px">
 								<div class="row">
 									<div class="col-md-12">
-										{{ Form::open() }}
+										{{ Form::open(array('url' => 'settings/custom-forms/update-form/'.$form->id)) }}
 											<div>
 				        						<div class="form-group ">
 									              {{ Form::label('custom_form_name', 'Name') }}
 									              {{ 
 									                Form::text
 									                (
-									                  'custom_form_name', '', array('class' => 'form-control', 'required' => 'required')
+									                  'custom_form_name', $form->name, array('class' => 'form-control', 'required' => 'required')
 									                ) 
 									              }}
 												</div>
@@ -45,53 +45,56 @@
 									              {{ 
 									                Form::text
 									                (
-									                  'custom_form_desc', '', array('class' => 'form-control', 'required' => 'required')
+									                  'custom_form_desc', $form->desc, array('class' => 'form-control', 'required' => 'required')
 									                ) 
 									              }}
 												</div>
 											</div>
 											<hr/>
-											@foreach(range(1,5) as $i)
-											<div class="panel panel-default">
-											  <div class="panel-body">
-												<div>
-					        						<div class="form-group ">
-										              {{ Form::label('item_type_'.$i, 'Item Type') }}
-										              {{ 
-										                Form::select
-										                (
-										                  'item_type_'.$i, $item_type, null, array('class' => 'form-control', 'required' => 'required')
-										                ) 
-										              }}
-													</div>
-												</div>
-												<div>
-					        						<div class="form-group ">
-										              {{ Form::label('item_name_'.$i, 'Item Name') }}
-										              {{ 
-										                Form::text
-										                (
-										                  'item_name_'.$i, '', array('class' => 'form-control', 'required' => 'required')
-										                ) 
-										              }}
-													</div>
-												</div>
-												<div>
-					        						<div class="form-group ">
-										              {{ Form::label('item_placeholder_'.$i, 'Item Name') }}
-										              {{ 
-										                Form::text
-										                (
-										                  'item_placeholder_'.$i, '', array('class' => 'form-control', 'required' => 'required')
-										                ) 
-										              }}
-													</div>
-												</div>												
-											  </div>
+											<div class="formContainer">
+												@if(count($builds)>0)
+													@foreach($builds as $build)
+													<?php
+													$opt_values = "";
+													$values = json_decode($build->value,true);
+													if ($values) {
+														foreach($values as $opt_value) {
+															$opt_values .= $opt_value .';';
+														}
+														$opt_values = rtrim($opt_values, ';');
+													}
+													?>
+														<div class="panel panel-default">
+															<div class="panel-body formBody">
+																<div>
+																	<div class="form-group">
+																		<label>Item Type</label>
+																		{{ Form::select('item_type[]', $item_type, $build->type, array('class' => 'form-control itemType', 'required' => 'required')) }}
+																	</div>
+																</div>
+																<div>
+																	<div class="form-group">
+																		<label>Item Name</label>
+																		<input type="text" class="form-control" name="item_name[]" placeholder="Enter name for this item" value="{{ $build->label }}">
+																	</div>
+																</div>
+																<div>
+																	<div class="form-group hasPlaceholder" style="display:{{ ($build->type==1 || $build->type==4 || $build->type==5) ? 'block':'none' }}">
+																		<label>Item Placeholder</label>
+																		<input type="text" class="form-control" name="item_placeholder[]" placeholder="Enter placeholder text" value="{{ $build->placeholder }}">
+																	</div>
+																	<div class="form-group dropdownOption" style="display:{{ $build->type==2 ? 'block':'none' }}">
+																		<label>Item Values (separate values with semicolon):</label>
+																		<input type="text" class="form-control" name="item_values[]" value="{{ $opt_values }}" placeholder="Enter dropdown values">
+																	</div>
+																</div>
+															</div>
+														</div>
+													@endforeach
+												@endif
 											</div>
-											@endforeach
 											<a href="{{ url('settings/custom-fields') }}" class="btn blue"><i class="fa fa-chevron-left"></i> Back</a>
-											<button type="button" class="btn blue"><i class="fa fa-plus"></i> Add Form Item</button>
+											<button type="button" class="btn blue" id="addForm"><i class="fa fa-plus"></i> Add Form Item</button>
 											<button type="submit" class="btn blue"><i class="fa fa-save"></i> Save</button>
 											
 										{{ Form::close() }}
@@ -112,5 +115,11 @@
 	@parent
 	@section('footer-custom-js')
 	@parent
+	<script>
+		var selectoption = '{{ Form::select('item_type[]', $item_type, null, array('class' => 'form-control itemType', 'required' => 'required')) }}';
+	</script>
+
+	<script src="{{$asset_path}}/pages/scripts/custom-fields.js" type="text/javascript"></script>
+	
 	@stop
 @stop

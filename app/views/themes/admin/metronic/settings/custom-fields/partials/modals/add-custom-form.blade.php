@@ -10,7 +10,7 @@
       	<h4 class="modal-title">Add Custom Form</h3>
       </div>
       <div class="modal-body">
-      	{{ Form::open(array('url' => '#')) }}
+      	{{ Form::open(array('url' => 'settings/custom-forms/add-form')) }}
       	<div class="row">
 	      	<div class="col-md-12">
 	      		<div class="form-group">

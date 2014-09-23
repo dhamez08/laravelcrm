@@ -40,7 +40,7 @@
 					<div class="tab-pane {{ $tabActive=='custom-forms' ? 'active':'' }}" id="tab_custom_forms">
 						<div class="container-fluid">
 							<div class="row">
-								{{ $custom_forms }}
+								@include( \DashboardEntity::get_instance()->getView() . '.settings.custom-fields.partials.custom-forms' )
 							</div>
 						</div>
 					</div>

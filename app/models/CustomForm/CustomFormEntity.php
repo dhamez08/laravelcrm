@@ -39,4 +39,16 @@ class CustomFormEntity extends \Eloquent{
 
 	}
 
+	public function saveForm($data) {
+		$this->name 	= $data['form_name'];
+		$this->desc 	= $data['form_description'];
+		$this->ref 		= rand(1,9) . time();
+		$this->user_id 	= \Auth::id();
+		$this->save();
+	}
+
+	public function builds() {
+		return $this->hasMany('\CustomFormBuild\CustomFormBuildEntity','form_id');
+	}
+
 }

@@ -6,25 +6,24 @@
 			</div>
 		</div>
 		<div class="portlet-body" style="padding:15px">
-			@if(true)
+			@if(count($clientForms)==0)
 			<div class="row">
 				<div class="col-md-12">
-					No custom tabs have been created.
+					No custom forms have been created.
 				</div>
 			</div>
 			<br>
-			@endif
-			@if(true)
+			@else
 			<table class="table">
 				<tbody>
-					@foreach(range(1,10) as $i)
+					@foreach($clientForms as $form)
 					<tr>
 						<td>
-							Custom Form No. {{$i}}
+							{{ $form->name }}
 						</td>
 						<td class="text-right">
-							 <a href="{{ url('settings/custom-fields/edit-custom-form') }}" class="btn btn-sm blue"><i class="fa fa-edit"></i> Edit</a>
-							 <a href="#" class="btn btn-sm red"><i class="fa fa-times"></i> Remove</a>
+							 <a href="{{ url('settings/custom-forms/edit/'.$form->id) }}" class="btn btn-sm blue"><i class="fa fa-edit"></i> Edit</a>
+							 <a href="{{ url('settings/custom-forms/delete/'.$form->id) }}" class="btn btn-sm red" onclick="return confirm('Are you sure you want to delete?')"><i class="fa fa-times"></i> Remove</a>
 						</td>
 					</tr>
 					@endforeach
@@ -40,4 +39,4 @@
 	</div>
 </div>
 
-{{ $add_custom_form_modal }}
+@include( \DashboardEntity::get_instance()->getView() . '.settings.custom-fields.partials.modals.add-custom-form' )
