@@ -39,21 +39,21 @@ class CustomerAddressEntity extends \Eloquent{
 	public function createOrUpdate($id = null){
 		if( is_null($id) ) {
 			//create
-			$customer = new \CustomerAddress\CustomerAddress;
+			$obj = new \CustomerAddress\CustomerAddress;
 		}else{
 			//update
-			$customer = \CustomerAddress\CustomerAddress::find($id);
+			$obj = \CustomerAddress\CustomerAddress::find($id);
 		}
 
-		$customer->customer_id 		= \Input::get('customer_id', \Auth::id());
-		$customer->address_line_1 	= \Input::get('address_line_1','');
-		$customer->address_line_2 	= \Input::get('address_line_2','');
-		$customer->town 			= \Input::get('town','');
-		$customer->county 			= \Input::get('county','');
-		$customer->postcode 		= \Input::get('postcode','');
-		$customer->type 			= \Input::get('type','');
+		$obj->customer_id 		= \Input::get('customer_id', \Auth::id());
+		$obj->address_line_1 	= \Input::get('address_line_1','');
+		$obj->address_line_2 	= \Input::get('address_line_2','');
+		$obj->town 				= \Input::get('town','');
+		$obj->county 			= \Input::get('county','');
+		$obj->postcode 			= \Input::get('postcode','');
+		$obj->type 				= \Input::get('type','');
 
-		$customer->save();
-		return $customer;
+		$obj->save();
+		return $obj;
 	}
 }

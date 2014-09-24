@@ -37,7 +37,7 @@
 				array(
 					'class'=>'form-control input-sm',
 					'data-provide'=>'datepicker',
-					'data-date-format'=>'dd/mm/yyyy'
+					'data-date-format'=>'yyyy-mm-dd'
 				)
 			);
 		}}

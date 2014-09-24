@@ -101,6 +101,65 @@ var addEmail = function () {
     };
 
 }();
+var addWebsite = function () {
+    // private functions & variables
+
+    // public functions
+    return {
+
+        //main function
+        init: function () {
+            var max_fields      = 10; //maximum input boxes allowed
+			var wrapper         = jQuery("#clone-website"); //Fields wrapper
+			var add_button      = jQuery(".add-website"); //Add button ID
+			var x = 1; //initlal text box count
+
+			jQuery(add_button).click(function(e){ //on add input button click
+				e.preventDefault();
+				if( jQuery("#clone-website .website-wrapper").length > 0  ){
+					x = jQuery("#clone-website .website-wrapper").length;
+				}
+				if(x < max_fields){ //max input box allowed
+					x++; //text box increment
+					var content = '<div class="row website-wrapper">'
+						+'<div class="col-xs-4">'
+							+'<div class="form-group">'
+								+'<input type="text" name="urls['+x+'][url]" class="form-control input-sm"/>'
+							+'</div>'
+						+'</div>'
+						+'<div class="col-xs-2">'
+							+'<div class="form-group">'
+								+ '<select name="urls['+x+'][for]" class="form-control input-sm"/>'
+								+ '</select>'
+							+'</div>'
+						+'</div>'
+						+'<div class="col-xs-2">'
+							+'<div class="form-group">'
+								+ '<select name="urls['+x+'][is]" class="form-control input-sm"/>'
+								+ '</select>'
+							+'</div>'
+						+'</div>'
+						+'<a href="#" class="remove_field">Remove</a>'
+					+'</div>';
+
+					jQuery(wrapper).append(content); //add input box
+					// append dropdown phone type / for
+					jQuery("#baseFor > option").each(function () {
+						jQuery('select[name="urls['+x+'][for]"]').append(jQuery("<option />").val(this.value).text(this.value));
+					});
+					jQuery("#baseIs > option").each(function () {
+						jQuery('select[name="urls['+x+'][is]"]').append(jQuery("<option />").val(this.value).text(this.value));
+					});
+				}
+			});
+
+            jQuery(wrapper).on("click",".remove_field", function(e){ //user click on remove text
+				e.preventDefault(); $(this).parent('div').remove(); x--;
+			})
+        },
+    };
+
+}();
 var addPartner = function () {
 
     // public functions
@@ -144,7 +203,7 @@ var addChildren = function () {
 			+'<div class="col-xs-2">'
 				+'<div class="form-group">'
 				+'<label class="control-label">Date of Birth</label>'
-				+'<input type="text" name="children['+incrementId+'][dob]" data-date-format="dd/mm/yyyy" data-provide="datepicker" class="form-control input-sm">'
+				+'<input type="text" name="children['+incrementId+'][dob]" data-date-format="yyyy-mm-dd" data-provide="datepicker" class="form-control input-sm">'
 				+'</div>'
 			+'</div>'
 			+'<div class="col-xs-2">'

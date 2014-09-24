@@ -44,12 +44,12 @@ class CustomerUrlEntity extends \Eloquent{
 			//update
 			$url = \CustomerUrl\CustomerUrl::find($id);
 		}
-		$url->customer_id = \Input::get('customer_id',\Auth::id());
-		$url->url = \Input::get('url','');
-		$url->website = \Input::get('website','');
-		$url->type = \Input::get('type','');
+		$url->customer_id 	= \Input::get('customer_id',\Auth::id());
+		$url->url 			= \Input::get('url','');
+		$url->website 		= \Input::get('website','');
+		$url->type 			= \Input::get('type','');
 		$url->save();
-		return $telephone;
+		return $url;
 	}
 
 }

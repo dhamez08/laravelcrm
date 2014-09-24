@@ -39,15 +39,15 @@ class CustomerTelephoneEntity extends \Eloquent{
 	public function createOrUpdate($id = null){
 		if( is_null($id) ) {
 			//create
-			$telephone = new \CustomerTelephone\CustomerTelephone;
+			$obj = new \CustomerTelephone\CustomerTelephone;
 		}else{
 			//update
-			$telephone = \CustomerTelephone\CustomerTelephone::find($id);
+			$obj = \CustomerTelephone\CustomerTelephone::find($id);
 		}
-		$telephone->customer_id = \Input::get('customer_id',\Auth::id());
-		$telephone->number = \Input::get('number','');
-		$telephone->type = \Input::get('type','');
-		$telephone->save();
-		return $telephone;
+		$obj->customer_id 	= \Input::get('customer_id',\Auth::id());
+		$obj->number 		= \Input::get('number','');
+		$obj->type 			= \Input::get('type','');
+		$obj->save();
+		return $obj;
 	}
 }

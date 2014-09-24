@@ -48,17 +48,16 @@ class ClientEntity extends \Eloquent{
 		}
 		$clients->type 						= \Input::get('type','');
 		$clients->ref 						= \Input::get('ref','');
-		$clients->belongs_to 				= \Input::get('belongs_to','');
-		$clients->belongs_user 				= \Input::get('belongs_user','');
-		$clients->added_date 				= \Input::get('added_date','');
+		$clients->belongs_to 				= \Input::get('belongs_to',0);
+		$clients->belongs_user 				= \Input::get('belongs_user',0);
 		$clients->title 					= \Input::get('title','');
 		$clients->first_name 				= \Input::get('first_name','');
 		$clients->last_name 				= \Input::get('last_name','');
 		$clients->email 					= \Input::get('email','');
-		$clients->address_id 				= \Input::get('address_id','');
+		$clients->address_id 				= \Input::get('address_id',0);
 		$clients->gender 					= \Input::get('gender','');
-		$clients->dob 						= \Input::get('dob','');
-		$clients->smoker 					= \Input::get('smoker','');
+		$clients->dob 						= \Input::get('dob');
+		$clients->smoker 					= \Input::get('smoker',0);
 		$clients->marital_status 			= \Input::get('marital_status','');
 		$clients->living_status 			= \Input::get('living_status','');
 		$clients->employment_status 		= \Input::get('employment_status','');
@@ -91,7 +90,7 @@ class ClientEntity extends \Eloquent{
 		return $clients;
 	}
 
-	public function convertDate($value = 0, $dateFormat = 'Y-d-m'){
+	public function convertDate($value = 0, $dateFormat = 'Y-m-d'){
 		if( $value != 0 ){
 			return \Carbon\Carbon::parse( $value )->format($dateFormat);
 		}else{

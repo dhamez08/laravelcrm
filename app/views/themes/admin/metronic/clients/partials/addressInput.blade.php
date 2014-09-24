@@ -18,7 +18,7 @@
 	<div class="input-group">
 		{{
 			Form::text(
-				'first_name',
+				'post_code',
 				null,
 				array(
 					'class'=>'form-control input-sm',
@@ -74,21 +74,6 @@
 			array(
 				'class'=>'form-control input-sm',
 				'id'=>'county'
-			)
-		);
-	}}
-	</div>
-</div>
-<div class="col-xs-4">
-	<div class="form-group">
-	<label class="control-label">Post Code</label>
-	{{
-		Form::text(
-			'postcode',
-			null,
-			array(
-				'class'=>'form-control input-sm',
-				'id'=>'postcode_final'
 			)
 		);
 	}}

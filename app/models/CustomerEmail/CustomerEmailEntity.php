@@ -39,18 +39,17 @@ class CustomerEmailEntity extends \Eloquent{
 	public function createOrUpdate($id = null){
 		if( is_null($id) ) {
 			//create
-			$email = new \CustomerEmail\CustomerEmail;
+			$obj = new \CustomerEmail\CustomerEmail;
 		}else{
 			//update
-			$email = \CustomerEmail\CustomerEmail::find($id);
+			$obj = \CustomerEmail\CustomerEmail::find($id);
 		}
 
-		$email->customer_id 	= \Input::get('customer_id',\Auth::id());
-		$email->email 			= \Input::get('email','');
-		$email->type 			= \Input::get('type','');
-
-		$email->save();
-		return $email;
+		$obj->customer_id 	= \Input::get('customer_id',\Auth::id());
+		$obj->email 		= \Input::get('email','');
+		$obj->type 			= \Input::get('type','');
+		$obj->save();
+		return $obj;
 	}
 
 }

@@ -5,6 +5,7 @@ namespace Clients;
  * Clients Controller
  *
  * */
+use \Carbon\Carbon;
 
 class ClientsController extends \BaseController {
 
@@ -200,6 +201,8 @@ class ClientsController extends \BaseController {
 		$data['emailFor']			= $this->getEmailFor();
 		$data['relationToClient']	= $this->getRelationshipToClient();
 		$data['addressType']		= $this->getAddressType();
+		$data['websiteType']		= $this->getWebsiteFor();
+		$data['websiteIs']			= $this->getWebsiteIs();
 		$data 						= array_merge($data,$this->getSetupThemes());
 		$data['html_body_class'] 	= $this->data_view['html_body_class'];
 		$data['center_column_view'] = 'dashboard';
@@ -218,9 +221,6 @@ class ClientsController extends \BaseController {
 	}
 
 	public function postCreateClient(){
-		//unset(\Input::get('children'));
-		var_dump( \Input::all() );
-		echo '<br>======================<br>';
 		\Input::merge(
 			array(
 				'dob' => \Clients\ClientEntity::get_instance()->convertDate(\Input::get('dob')),
@@ -229,9 +229,9 @@ class ClientsController extends \BaseController {
 				'belongs_user' => \Auth::id(),
 			)
 		);
-		var_dump( \Input::all() );
 		$customer = \Clients\ClientEntity::get_instance()->createOrUpdate();
 
+		// if Married add partner details
 		if( \Input::get('marital_status') == 'Married' ) {
 			\Input::merge(
 				array(
@@ -239,23 +239,85 @@ class ClientsController extends \BaseController {
 					'ref' => \Auth::id().time(),
 					'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
 					'belongs_user' => \Auth::id(),
-					'title' => \Input::get('partner_title'),
-					'first_name' => \Input::get('partner_first_name'),
-					'last_name' => \Input::get('partner_last_name'),
-					'smoker' => \Input::get('partner_smoker'),
-					'job_title' => \Input::get('partner_job'),
-					'living_status' => \Input::get('partner_living'),
-					'employment_status' => \Input::get('partner_employment'),
+					'title' => \Input::get('partner_title',''),
+					'first_name' => \Input::get('partner_first_name',''),
+					'last_name' => \Input::get('partner_last_name',''),
+					'smoker' => \Input::get('partner_smoker',0),
+					'job_title' => \Input::get('partner_job_title',''),
+					'living_status' => \Input::get('partner_living_status',''),
+					'employment_status' => \Input::get('partner_employment_status',''),
 					'associated' => $customer->id,
 					'relationship' => 'Spouse/Partner',
 				)
 			);
-		}
-		$partner = \Clients\ClientEntity::get_instance()->createOrUpdate();
-		/*if( count( \Input::get('children') ) > 0 ){
-			foreach( \Input::get('children') as $key=>$val ){
+			$partner = \Clients\ClientEntity::get_instance()->createOrUpdate();
+		}// if Married add partner details
+
+		// insert address
+		\CustomerAddress\CustomerAddressController::get_instance()->postAddressWrapper($customer->id);
+
+		// if has children then add
+		if( count( \Input::get('children') ) > 0 ){
+			foreach( \Input::get('children') as $key => $val ){
+				if( trim($val['firstname']) != '' ){
+					\Input::merge(
+						array(
+							'dob' => \Clients\ClientEntity::get_instance()->convertDate($val['dob']),
+							'ref' => \Auth::id() . time() . rand(1,9),
+							'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
+							'belongs_user' => \Auth::id(),
+							'first_name' => $val['firstname'],
+							'last_name' => $val['lastname'],
+							'associated' => $customer->id,
+							'relationship' => $val['relation_to_client'],
+							'type' => 4,
+						)
+					);
+					\Clients\ClientEntity::get_instance()->createOrUpdate();
+				}
 			}
-		}*/
+		}// if has children then add
+
+		// if has telephone then add
+		if( count( \Input::get('telephone') ) > 0 ){
+			foreach( \Input::get('telephone') as $key => $val ){
+				if( trim($val['number']) != '' ){
+					\CustomerPhone\CustomerPhoneController::get_instance()->postPhoneWrapper(
+						$customer->id,
+						$val['number'],
+						$val['for']
+					);
+				}
+			}
+		}// if has telephone then add
+
+		// if has emails then add
+		if( count( \Input::get('emails') ) > 0 ){
+			foreach( \Input::get('emails') as $key => $val ){
+				if( trim($val['mail']) != '' ){
+					\CustomerEmail\CustomerEmailController::get_instance()->postEmailWrapper(
+						$customer->id,
+						$val['mail'],
+						$val['for']
+					);
+				}
+			}
+		}// if has emails then add
+
+		// if has urls then add
+
+		if( count( \Input::get('urls') ) > 0 ){
+			foreach( \Input::get('urls') as $key => $val ){
+				if( trim($val['url']) != '' ){
+					\CustomerURL\CustomerURLController::get_instance()->postURLWrapper(
+						$customer->id,
+						$val['url'],
+						$val['for'],
+						$val['is']
+					);
+				}
+			}
+		}// if has urls then add
 	}
 
 	public function getOpportunities($client_id) {

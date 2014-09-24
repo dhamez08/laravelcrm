@@ -78,6 +78,12 @@
 					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.emailInput' )
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<h3 class="form-section">Website</h3>
+					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.urlInput' )
+				</div>
+			</div>
 		</div>
 		{{Form::close()}}
 	@stop
@@ -96,6 +102,7 @@
 				addPartner.init();
 				addChildren.init();
 				addressLookup.init();
+				addWebsite.init();
 			});
 		</script>
 	@stop

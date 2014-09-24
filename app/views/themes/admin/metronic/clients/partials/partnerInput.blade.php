@@ -51,7 +51,7 @@
 			array(
 				'class'=>'form-control input-sm',
 				'data-provide'=>'datepicker',
-				'data-date-format'=>'dd/mm/yyyy'
+				'data-date-format'=>'yyyy-mm-dd'
 			)
 		);
 	}}
@@ -62,7 +62,7 @@
 	<label class="control-label">Job Title</label>
 	{{
 		Form::text(
-			'partner_job',
+			'partner_job_title',
 			null,
 			array(
 				'class'=>'form-control input-sm'
@@ -76,7 +76,7 @@
 	<label class="control-label">Living Status</label>
 	{{
 		Form::select(
-			'living_status',
+			'partner_living_status',
 			$livingStatus,
 			null,
 			array(
