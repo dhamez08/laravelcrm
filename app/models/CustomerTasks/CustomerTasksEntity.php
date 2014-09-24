@@ -39,100 +39,25 @@ class CustomerTasksEntity extends \Eloquent{
 	public function createOrUpdate($id = null){
 		if( is_null($id) ) {
 			//create
-			$clients = new \Clients\Clients;
-			$clients = \Input::get('type','');
-			$clients = \Input::get('ref','');
-			$clients = \Input::get('belongs_to','');
-			$clients = \Input::get('belongs_user','');
-			$clients = \Input::get('added_date','');
-			$clients = \Input::get('title','');
-			$clients = \Input::get('first_name','');
-			$clients = \Input::get('last_name','');
-			$clients = \Input::get('email','');
-			$clients = \Input::get('address_id','');
-			$clients = \Input::get('gender','');
-			$clients = \Input::get('dob','');
-			$clients = \Input::get('smoker','');
-			$clients = \Input::get('marital_status','');
-			$clients = \Input::get('living_status','');
-			$clients = \Input::get('employment_status','');
-			$clients = \Input::get('occupation','');
-			$clients = \Input::get('telephone_day','');
-			$clients = \Input::get('telephone_evening','');
-			$clients = \Input::get('telephone_mobile','');
-			$clients = \Input::get('partner_title','');
-			$clients = \Input::get('partner_first_name','');
-			$clients = \Input::get('partner_last_name','');
-			$clients = \Input::get('partner_dob','');
-			$clients = \Input::get('partner_gender','');
-			$clients = \Input::get('partner_employment','');
-			$clients = \Input::get('partner_occupation','');
-			$clients = \Input::get('company_name','');
-			$clients = \Input::get('companyreg','');
-			$clients = \Input::get('companyemployee','');
-			$clients = \Input::get('sector','');
-			$clients = \Input::get('background_info','');
-			$clients = \Input::get('job_title','');
-			$clients = \Input::get('organisation','');
-			$clients = \Input::get('associated','');
-			$clients = \Input::get('relationship','');
-			$clients = \Input::get('profile_image','');
-			$clients = \Input::get('duedil_company_details','');
-			$clients = \Input::get('vmd','');
-			$clients = \Input::get('vmd_pin','');
+			$obj = new \CustomerTasks\CustomerTasks;
 		}else{
 			//update
-			$clients = \Clients\Clients::find($id);
-			$clients = \Input::get('type','');
-			$clients = \Input::get('ref','');
-			$clients = \Input::get('belongs_to','');
-			$clients = \Input::get('belongs_user','');
-			$clients = \Input::get('added_date','');
-			$clients = \Input::get('title','');
-			$clients = \Input::get('first_name','');
-			$clients = \Input::get('last_name','');
-			$clients = \Input::get('email','');
-			$clients = \Input::get('address_id','');
-			$clients = \Input::get('gender','');
-			$clients = \Input::get('dob','');
-			$clients = \Input::get('smoker','');
-			$clients = \Input::get('marital_status','');
-			$clients = \Input::get('living_status','');
-			$clients = \Input::get('employment_status','');
-			$clients = \Input::get('occupation','');
-			$clients = \Input::get('telephone_day','');
-			$clients = \Input::get('telephone_evening','');
-			$clients = \Input::get('telephone_mobile','');
-			$clients = \Input::get('partner_title','');
-			$clients = \Input::get('partner_first_name','');
-			$clients = \Input::get('partner_last_name','');
-			$clients = \Input::get('partner_dob','');
-			$clients = \Input::get('partner_gender','');
-			$clients = \Input::get('partner_employment','');
-			$clients = \Input::get('partner_occupation','');
-			$clients = \Input::get('company_name','');
-			$clients = \Input::get('companyreg','');
-			$clients = \Input::get('companyemployee','');
-			$clients = \Input::get('sector','');
-			$clients = \Input::get('background_info','');
-			$clients = \Input::get('job_title','');
-			$clients = \Input::get('organisation','');
-			$clients = \Input::get('associated','');
-			$clients = \Input::get('relationship','');
-			$clients = \Input::get('profile_image','');
-			$clients = \Input::get('duedil_company_details','');
-			$clients = \Input::get('vmd','');
-			$clients = \Input::get('vmd_pin','');
+			$obj = \CustomerTasks\CustomerTasks::find($id);
 		}
-		$clients->save();
-		return $clients;
+		$obj->customer_id = \Input('customer_id',\Auth::id());
+		$obj->belongs_to = \Input('belongs_to','');
+		$obj->task_setting = \Input('task_setting','');
+		$obj->name = \Input('name','');
+		$obj->date = \Input('date','');
+		$obj->end_time = \Input('end_time','');
+		$obj->completed_date = \Input('completed_date','');
+		$obj->added_by = \Input('added_by','');
+		$obj->action = \Input('action','');
+		$obj->remind = \Input('remind','');
+		$obj->remind_mins = \Input('remind_mins','');
+		$obj->status = \Input('status','');
+		$obj->save();
+		return $obj;
 	}
 
-	public function convertDate($value = 0, $dateFormat = 'Y/d/m'){
-		if( $value != 0 ){
-			return \Carbon\Carbon::parse( $value )->format($dateFormat);
-		}else{
-			return "0000-00-00";
-		}
-	}
 }
