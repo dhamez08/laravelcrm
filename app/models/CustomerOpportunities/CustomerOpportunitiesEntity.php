@@ -44,19 +44,18 @@ class CustomerOpportunitiesEntity extends \Eloquent{
 			//update
 			$obj = \CustomerOpportunities\CustomerOpportunities::find($id);
 		}
-		$obj->customer_id = \Input('customer_id',\Auth::id());
-		$obj->belongs_to = \Input('belongs_to',0);
-		$obj->belongs_user = \Input('belongs_user',0);
-		$obj->milestone = \Input('milestone','');
-		$obj->probability = \Input('probability','');
-		$obj->value = \Input('value','');
-		$obj->value_calc = \Input('value_calc','');
-		$obj->close_date = \Input('close_date','');
-		$obj->name = \Input('name','');
-		$obj->text = \Input('text','');
-		$obj->status = \Input('status','');
-		$obj->save();
-		return $obj;
+		$obj->customer_id = \Input::get('customer_id',\Auth::id());
+		$obj->belongs_to = \Input::get('belongs_to',0);
+		$obj->belongs_user = \Input::get('belongs_user',0);
+		$obj->milestone = \Input::get('milestone','');
+		$obj->probability = \Input::get('probability','');
+		$obj->value = \Input::get('expected_value','');
+		$obj->value_calc = \Input::get('value_calc','');
+		$obj->close_date = \Input::get('close_date','');
+		$obj->name = \Input::get('opportunity_name','');
+		$obj->text = \Input::get('opportunity_description','');
+		$obj->status = \Input::get('status','');
+		return $obj->save() ? 1:0;
 	}
 
 }

@@ -251,7 +251,62 @@ class ClientsController extends \BaseController {
 	}
 
 	public function postCreateOpportunities($client_id) {
-		echo "asdasdasd";
+		$rules = array(
+			'opportunity_name' => 'required|min:3',
+			'opportunity_description' => 'required|min:3',
+			'expected_value' => 'required|numeric',
+			'milestone' => 'required|not_in:0',
+			'probability' => 'required|not_in:0',
+			'close_date' => 'required',
+		);
+
+		$messages = array(
+			'opportunity_name.required' => 'Opportunity name is required.',
+			'opportunity_name.min'=>'Opportunity name must have atleast 3 characters',
+			'expected_value.required' => 'Expected is required.',
+			'expected_value.number'=>'Expected value is not valid',
+			'milestone.required' => 'Milestone is required.',
+			'milestone.not_in' => 'Milestone is required.',
+			'probability.required' => 'Probability is required.',
+			'probability.not_in' => 'Probability is required.',
+			'close_date.required' => 'Expected close date is required.',
+		);
+
+		$validator = \Validator::make(\Input::all(), $rules, $messages);
+		if ( $validator->passes() ) {
+			$value = \Input::get('expected_value');
+			$probability = \Input::get('probability');
+			if ($probability==100) {
+				$value_calc = $value;
+			} else {
+				$value_calc = ($value*('.'.$probability));
+			}
+
+			$explode_date = explode('/', \Input::get('close_date'));
+			$new_close_date = $explode_date['2'] . '-' . $explode_date['1'] . '-' . $explode_date['0'];
+
+			\Input::merge(
+				array(
+					'belongs_to'=>\Auth::id(),
+					'customer_id'=>$client_id,
+					'value_calc'=>$value_calc,
+					'close_date' => $new_close_date,
+				)
+			);
+			
+			// add to database
+			if(\CustomerOpportunities\CustomerOpportunitiesEntity::get_instance()->createOrUpdate()) {
+				\Session::flash('message', 'Opportunity was successfully created');
+				return \Redirect::back();
+			} else {
+				return \Redirect::back()->withErrors(['There was a problem creating the opportunity, please try again']);
+			}
+		} else {
+			\Input::flash();
+			return \Redirect::back()
+			->withErrors($validator)
+			->withInput();
+		}
 	}
 
 }
