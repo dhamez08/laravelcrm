@@ -230,7 +230,28 @@ class ClientsController extends \BaseController {
 			)
 		);
 		var_dump( \Input::all() );
-		echo \Clients\ClientEntity::get_instance()->createOrUpdate();
+		$customer = \Clients\ClientEntity::get_instance()->createOrUpdate();
+
+		if( \Input::get('marital_status') == 'Married' ) {
+			\Input::merge(
+				array(
+					'dob' => \Clients\ClientEntity::get_instance()->convertDate(\Input::get('dob')),
+					'ref' => \Auth::id().time(),
+					'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
+					'belongs_user' => \Auth::id(),
+					'title' => \Input::get('partner_title'),
+					'first_name' => \Input::get('partner_first_name'),
+					'last_name' => \Input::get('partner_last_name'),
+					'smoker' => \Input::get('partner_smoker'),
+					'job_title' => \Input::get('partner_job'),
+					'living_status' => \Input::get('partner_living'),
+					'employment_status' => \Input::get('partner_employment'),
+					'associated' => $customer->id,
+					'relationship' => 'Spouse/Partner',
+				)
+			);
+		}
+		$partner = \Clients\ClientEntity::get_instance()->createOrUpdate();
 		/*if( count( \Input::get('children') ) > 0 ){
 			foreach( \Input::get('children') as $key=>$val ){
 			}
@@ -293,7 +314,7 @@ class ClientsController extends \BaseController {
 					'close_date' => $new_close_date,
 				)
 			);
-			
+
 			// add to database
 			if(\CustomerOpportunities\CustomerOpportunitiesEntity::get_instance()->createOrUpdate()) {
 				\Session::flash('message', 'Opportunity was successfully created');
