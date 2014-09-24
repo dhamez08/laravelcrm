@@ -136,4 +136,24 @@ return array(
 		'Home'=>'Home',
 		'Work'=>'Work'
 	),
+	'opportunity_milestone' => array(
+		'Suspect' => 'Suspect',
+		'Prospect' => 'Prospect',
+		'Champion' => 'Champion',
+		'Opportunity' => 'Opportunity',
+		'Proposal' => 'Proposal',
+		'Verbal' => 'Verbal',
+		'Lost' => 'Lost',
+		'Won' => 'Won'
+	),
+	'opportunity_probability' => array(
+		'10' => '10%',
+		'20' => '20%',
+		'25' => '25%',
+		'30' => '30%',
+		'50' => '50%',
+		'75' => '75%',
+		'90' => '90%',
+		'100' => '100%'
+	),
 );

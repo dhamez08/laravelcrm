@@ -65,6 +65,16 @@ class ClientsController extends \BaseController {
 	protected $address_type;
 
 	/**
+	 * Opportunity milestone
+	 * */
+	protected $opportunity_milestones;
+
+	/**
+	 * Opportunity probability
+	 * */
+	protected $opportunity_probabilities;
+
+	/**
 	 * auto setup initialize object
 	 * */
 	public function __construct(){
@@ -82,6 +92,8 @@ class ClientsController extends \BaseController {
 		$this->website_is 					= \Config::get('crm.website_is');
 		$this->relationship_to_client		= \Config::get('crm.relationship_to_client');
 		$this->address_type					= \Config::get('crm.address_type');
+		$this->opportunity_milestones		= \Config::get('crm.opportunity_milestone');
+		$this->opportunity_probabilities	= \Config::get('crm.opportunity_probability');
 	}
 
 	/**
@@ -138,6 +150,14 @@ class ClientsController extends \BaseController {
 
 	public function getAddressType(){
 		return $this->address_type;
+	}
+
+	public function getOpportunityMilestones(){
+		return $this->opportunity_milestones;
+	}
+
+	public function getOpportunityProbabilities(){
+		return $this->opportunity_probabilities;
 	}
 
 	/**
@@ -215,6 +235,23 @@ class ClientsController extends \BaseController {
 			foreach( \Input::get('children') as $key=>$val ){
 			}
 		}*/
+	}
+
+	public function getOpportunities($client_id) {
+		$data 					= $this->data_view;
+		$data['pageTitle'] 		= 'Client - Opportunities';
+		$data['portlet_title'] 	= 'Client - Opportunities';
+		$data['contentClass'] 	= '';
+		$data['client_id'] = $client_id;
+		$data['milestones']		= $this->getOpportunityMilestones();
+		$data['probabilities']	= $this->getOpportunityProbabilities();
+		$data 					= array_merge($data,$this->getSetupThemes());
+		$data['html_body_class'] 	= $this->data_view['html_body_class'];
+		return \View::make( $data['view_path'] . '.clients.opportunities', $data );
+	}
+
+	public function postCreateOpportunities($client_id) {
+		echo "asdasdasd";
 	}
 
 }
