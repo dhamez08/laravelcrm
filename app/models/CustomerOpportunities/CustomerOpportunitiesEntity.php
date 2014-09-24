@@ -58,4 +58,9 @@ class CustomerOpportunitiesEntity extends \Eloquent{
 		return $obj->save() ? 1:0;
 	}
 
+	public function getListsByLoggedUser() {
+		$obj = new \CustomerOpportunities\CustomerOpportunities;
+		return $obj->where('belongs_to','=',\Auth::id())->get();
+	}
+
 }
