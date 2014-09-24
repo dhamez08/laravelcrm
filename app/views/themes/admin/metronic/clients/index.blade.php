@@ -32,8 +32,10 @@
 						@show
 					</div>
 					<div class="actions">
-						<a class="btn btn-default btn-sm" href="{{url('clients/create')}}">
-						<i class="fa fa-plus"></i> Add </a>
+						@section('portlet-actions')
+							<a class="btn btn-default btn-sm" href="{{url('clients/create')}}">
+							<i class="fa fa-plus"></i> Add </a>
+						@show
 					</div>
 				</div>
 				<div class="portlet-body {{{$portlet_body_class or ''}}}">

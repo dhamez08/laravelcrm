@@ -8,6 +8,11 @@
 		<link href="{{$asset_path}}/global/plugins/jquery-file-upload/blueimp-gallery/blueimp-gallery.min.css" rel="stylesheet"/>
 		<link href="{{$asset_path}}/global/plugins/jquery-file-upload/css/jquery.fileupload.css" rel="stylesheet"/>
 		<link href="{{$asset_path}}/global/plugins/jquery-file-upload/css/jquery.fileupload-ui.css" rel="stylesheet"/>
+		<style>
+			.phone-wrapper, .email-wrapper, .children-wrapper, .clone-children{
+				margin-left:0px;
+			}
+		</style>
 	@stop
 @stop
 @section('body-content')
@@ -21,58 +26,56 @@
 	@section('innerpage-page-title')
 		&nbsp;
 	@show
+	@section('portlet-actions')
+	@stop
 	@section('portlet-content')
 		{{ Form::open(
 			array(
 					'action' => array('Clients\ClientsController@postCreateClient'),
 					'method' => 'POST',
 					'role'=>'form',
-					'class'=>'horizontal-form'
 				)
 			)
 		}}
 		<div class="form-body">
 			<div class="col-md-12">
-				{{Form::submit('Add User',array('class'=>"btn blue"))}}
-				<a class="btn {{{$dashboard_css or 'blue'}}}" href="{{url('settings/users')}}">Cancel</a>
-			</div>
-			<div class="col-md-12">
-				<h3>Personal Details</h3>
+				{{Form::submit('Add Client',array('class'=>"btn blue"))}}
+				<a class="btn {{{$dashboard_css or 'blue'}}}" href="{{url('clients')}}">Cancel</a>
 			</div>
 			<div class="row">
-				<div class="col-md-12">
+				<div class="col-md-6">
+					<h3 class="form-section">Person Info</h3>
 					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.personalInput' )
 				</div>
-			</div>
-			<div class="col-md-12">
-				<h3>Contact Details</h3>
-			</div>
-			<div class="">
 				<div class="col-md-6">
+					<h3 class="form-section">Address</h3>
+					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.addressInput' )
+				</div>
+			</div>
+			<div id="partner_details" class="hide">
+				<div class="row">
 					<div class="col-md-12">
-						<h5>Telephone Number</h5>
+						<h3 class="form-section">Partner Details</h3>
+						@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.partnerInput' )
 					</div>
+				</div>
+			</div>
+			<div id="children_details" class="hide">
+				<div class="row">
+					<div class="col-md-12">
+						<h3 class="form-section">Childrens Details</h3>
+						@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.childrenInput' )
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<h3 class="form-section">Telephone Number</h3>
 					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.contactInput' )
 				</div>
 				<div class="col-md-6">
-					<div class="col-md-12">
-						<h5>Email</h5>
-					</div>
+					<h3 class="form-section">Email</h3>
 					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.emailInput' )
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6">
-					<div class="col-md-12">
-						<h5>Website</h5>
-					</div>
-					{{--@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.contactInput' )--}}
-				</div>
-				<div class="col-md-6">
-					<div class="col-md-12">
-						<h5>Address</h5>
-					</div>
-					{{--@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.emailInput' )--}}
 				</div>
 			</div>
 		</div>
@@ -89,6 +92,8 @@
 			jQuery(document).ready(function() {
 				addPhone.init();
 				addEmail.init();
+				addPartner.init();
+				addChildren.init();
 			});
 		</script>
 	@stop

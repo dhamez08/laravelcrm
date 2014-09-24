@@ -11,7 +11,7 @@
 			</a>
 		</li>
 		<li class="classic-menu-dropdown">
-			<a href="client_dashboard.html">
+			<a href="{{url('clients')}}">
 			<i class="fa fa-users"></i>  Clients
 			</a>
 		</li>

@@ -30,6 +30,6 @@
 		</div>
 	</div>
 </div>
-<div class="">
+<div class="col-xs-12">
 	<button class="btn green btn-xs add-email" type="button">Add Email</button>
 </div>

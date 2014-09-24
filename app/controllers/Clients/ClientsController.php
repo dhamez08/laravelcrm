@@ -55,6 +55,14 @@ class ClientsController extends \BaseController {
 	 * Person Website is
 	 * */
 	protected $website_is;
+	/**
+	 * Children Relation to client
+	 * */
+	protected $relationship_to_client;
+	/**
+	 * Address type
+	 * */
+	protected $address_type;
 
 	/**
 	 * auto setup initialize object
@@ -72,6 +80,8 @@ class ClientsController extends \BaseController {
 		$this->email_for 					= \Config::get('crm.email_for');
 		$this->website_for 					= \Config::get('crm.website_for');
 		$this->website_is 					= \Config::get('crm.website_is');
+		$this->relationship_to_client		= \Config::get('crm.relationship_to_client');
+		$this->address_type					= \Config::get('crm.address_type');
 	}
 
 	/**
@@ -122,6 +132,14 @@ class ClientsController extends \BaseController {
 		return $this->website_is;
 	}
 
+	public function getRelationshipToClient(){
+		return $this->relationship_to_client;
+	}
+
+	public function getAddressType(){
+		return $this->address_type;
+	}
+
 	/**
 	 * get themes
 	 * @return	array
@@ -160,6 +178,8 @@ class ClientsController extends \BaseController {
 		$data['employmentStatus']	= $this->getEmploymentStatus();
 		$data['phoneFor']			= $this->getPhoneFor();
 		$data['emailFor']			= $this->getEmailFor();
+		$data['relationToClient']	= $this->getRelationshipToClient();
+		$data['addressType']		= $this->getAddressType();
 		$data 						= array_merge($data,$this->getSetupThemes());
 		$data['html_body_class'] 	= $this->data_view['html_body_class'];
 		$data['center_column_view'] = 'dashboard';
@@ -179,6 +199,17 @@ class ClientsController extends \BaseController {
 
 	public function postCreateClient(){
 		var_dump( \Input::all() );
+		echo '<br>======================<br>';
+		\Input::merge(
+			array(
+				'dob' => \Clients\ClientEntity::get_instance()->convertDate(\Input::get('dob'))
+			)
+		);
+		var_dump( \Input::all() );
+		/*if( count( \Input::get('children') ) > 0 ){
+			foreach( \Input::get('children') as $key=>$val ){
+			}
+		}*/
 	}
 
 }
