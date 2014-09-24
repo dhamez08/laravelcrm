@@ -127,12 +127,4 @@ class CustomerTagsEntity extends \Eloquent{
 		$clients->save();
 		return $clients;
 	}
-
-	public function convertDate($value = 0, $dateFormat = 'Y/d/m'){
-		if( $value != 0 ){
-			return \Carbon\Carbon::parse( $value )->format($dateFormat);
-		}else{
-			return "0000-00-00";
-		}
-	}
 }
