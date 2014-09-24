@@ -4,7 +4,7 @@
 			<div class="form-group">
 			{{
 				Form::email(
-					'email[0][mail]',
+					'emails[0][mail]',
 					null,
 					array(
 						'class'=>'form-control input-sm'
@@ -17,7 +17,7 @@
 			<div class="form-group">
 			{{
 				Form::select(
-					'email[0][for]',
+					'emails[0][for]',
 					$emailFor,
 					null,
 					array(

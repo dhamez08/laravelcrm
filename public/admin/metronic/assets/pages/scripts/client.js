@@ -74,12 +74,12 @@ var addEmail = function () {
 					var content = '<div class="row email-wrapper">'
 						+'<div class="col-xs-4">'
 							+'<div class="form-group">'
-								+'<input type="text" name="email['+x+'][mail]" class="form-control input-sm"/>'
+								+'<input type="text" name="emails['+x+'][mail]" class="form-control input-sm"/>'
 							+'</div>'
 						+'</div>'
 						+'<div class="col-xs-4">'
 							+'<div class="form-group">'
-								+ '<select name="email['+x+'][for]" class="form-control input-sm"/>'
+								+ '<select name="emails['+x+'][for]" class="form-control input-sm"/>'
 								+ '</select>'
 							+'</div>'
 						+'</div>'
@@ -89,7 +89,7 @@ var addEmail = function () {
 					jQuery(wrapper).append(content); //add input box
 					// append dropdown phone type / for
 					jQuery("#baseEmail > option").each(function () {
-						jQuery('select[name="email['+x+'][for]"]').append(jQuery("<option />").val(this.value).text(this.value));
+						jQuery('select[name="emails['+x+'][for]"]').append(jQuery("<option />").val(this.value).text(this.value));
 					});
 				}
 			});

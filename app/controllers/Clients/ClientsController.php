@@ -198,14 +198,19 @@ class ClientsController extends \BaseController {
 	}
 
 	public function postCreateClient(){
+		//unset(\Input::get('children'));
 		var_dump( \Input::all() );
 		echo '<br>======================<br>';
 		\Input::merge(
 			array(
-				'dob' => \Clients\ClientEntity::get_instance()->convertDate(\Input::get('dob'))
+				'dob' => \Clients\ClientEntity::get_instance()->convertDate(\Input::get('dob')),
+				'ref' => \Auth::id().time(),
+				'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
+				'belongs_user' => \Auth::id(),
 			)
 		);
 		var_dump( \Input::all() );
+		echo \Clients\ClientEntity::get_instance()->createOrUpdate();
 		/*if( count( \Input::get('children') ) > 0 ){
 			foreach( \Input::get('children') as $key=>$val ){
 			}
