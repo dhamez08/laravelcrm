@@ -1,5 +1,6 @@
 <div class="row">
 	<div class="col-md-12">
+	@if(count($opportunities)>0)
 		<table class="table">
 			<thead>
 				<tr>
@@ -11,14 +12,24 @@
 				</tr>
 			</thead>
 			<tbody>
+			@foreach($opportunities as $opportunity)
 				<tr>
-					<td>Opportunity</td>
-					<td>Milestone</td>
-					<td>Value</td>
-					<td>Close Date</td>
-					<td><a href="#" class="btn btn-sm red" onclick="return confirm('Are you sure you want to delete?')"><i class="fa fa-times"></i> Remove</a></td>
+					<td>{{ $opportunity->name }}</td>
+					<td>{{ $opportunity->milestone }}({{ $opportunity->probability }}%)</td>
+					<td>£{{ $opportunity->value }}</td>
+					<td>{{ date('d/m/Y',strtotime($opportunity->close_date)) }}</td>
+					<td>
+						<a href="#" class="btn btn-sm blue"><i class="fa fa-edit"></i> Edit</a>
+						<a href="#" class="btn btn-sm red" onclick="return confirm('Are you sure you want to delete?')"><i class="fa fa-times"></i> Remove</a>
+					</td>
 				</tr>
+			@endforeach
 			</tbody>
 		</table>
+	@else
+		<div style="padding:15px">
+			Currently no opportunities for this client.
+		</div>
+	@endif
 	</div>
 </div>

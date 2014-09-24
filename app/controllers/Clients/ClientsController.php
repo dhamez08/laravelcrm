@@ -263,6 +263,7 @@ class ClientsController extends \BaseController {
 		$data['pageTitle'] 		= 'Client - Opportunities';
 		$data['portlet_title'] 	= 'Client - Opportunities';
 		$data['contentClass'] 	= '';
+		$data['opportunities'] = \CustomerOpportunities\CustomerOpportunitiesEntity::get_instance()->getListsByLoggedUser();
 		$data['client_id'] = $client_id;
 		$data['milestones']		= $this->getOpportunityMilestones();
 		$data['probabilities']	= $this->getOpportunityProbabilities();
