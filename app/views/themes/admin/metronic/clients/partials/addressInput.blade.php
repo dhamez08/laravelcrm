@@ -15,15 +15,21 @@
 <div class="col-xs-6">
 	<div class="form-group">
 	<label class="control-label">Post Code</label>
-	{{
-		Form::text(
-			'first_name',
-			null,
-			array(
-				'class'=>'form-control input-sm'
-			)
-		);
-	}}
+	<div class="input-group">
+		{{
+			Form::text(
+				'first_name',
+				null,
+				array(
+					'class'=>'form-control input-sm',
+					'id'=>'postcode'
+				)
+			);
+		}}
+		<span class="input-group-btn">
+	        <button class="btn btn-default input-sm address-lookup" type="button">Find Address</button>
+	    </span>
+	</div>
 	</div>
 </div>
 <div class="col-xs-12">
@@ -36,7 +42,8 @@
 				'class'=>'form-control input-sm',
 				'rows'=>5,
 				'cols'=>8,
-				'style'=>'resize:none;'
+				'style'=>'resize:none;',
+				'id'=>'address1'
 			)
 		);
 	}}
@@ -51,6 +58,7 @@
 			null,
 			array(
 				'class'=>'form-control input-sm',
+				'id'=>'town'
 			)
 		);
 	}}
@@ -64,7 +72,8 @@
 			'county',
 			null,
 			array(
-				'class'=>'form-control input-sm'
+				'class'=>'form-control input-sm',
+				'id'=>'county'
 			)
 		);
 	}}
@@ -78,7 +87,8 @@
 			'postcode',
 			null,
 			array(
-				'class'=>'form-control input-sm'
+				'class'=>'form-control input-sm',
+				'id'=>'postcode_final'
 			)
 		);
 	}}

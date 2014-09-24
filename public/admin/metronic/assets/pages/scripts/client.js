@@ -218,3 +218,89 @@ var clearInput = function () {
     };
 
 }();
+
+var addressLookup = function() {
+	// public functions
+    return {
+        //main function
+        init: function (selector) {
+		  $(".address-lookup").on("click", function() {
+		  		if($.trim($("#postcode").val())!='') {
+			      var geocoder = new google.maps.Geocoder();
+			      var address = $("#postcode").val() + ', UK';
+
+			      var error = 0;
+			      geocoder.geocode( { 'address': address}, function(results, status) {
+
+			        if (status == google.maps.GeocoderStatus.OK) {
+
+			            if(results.length==0) {
+			              error = 1;
+			            } else {
+			              var latitude = results[0].geometry.location.lat();
+			              var longitude = results[0].geometry.location.lng();
+
+			              var latlng = new google.maps.LatLng(latitude, longitude);
+
+			              geocoder.geocode( { 'location': latlng}, function(results1, status1) {
+
+			                var street_no='';
+			                var route='';
+			                var locality='';
+			                var county='';
+
+			                if (status1 == google.maps.GeocoderStatus.OK) {
+
+			                  if(results1.length==0) {
+			                    error = 1;
+			                  } else {
+
+			                    arrAddress = results1[0].address_components;
+
+			                    formatted_address_result = results1[0].formatted_address;
+
+			                    $.each(arrAddress, function(i, address_component) {
+
+			                      if(address_component.types[0]=='street_number') {
+			                        street_no = address_component.long_name;
+			                      }
+
+			                      if(address_component.types[0]=='route') {
+			                        route = address_component.long_name;
+			                      }
+
+			                      if(address_component.types[0]=='locality') {
+			                        locality = address_component.long_name;
+			                      }
+
+			                      if(address_component.types[0]=='administrative_area_level_2') {
+			                        county = address_component.long_name;
+			                      }
+
+			                      if(locality=='') {
+			                        if(address_component.types[0]=='postal_town') {
+			                          locality = address_component.long_name;
+			                        }
+			                      }
+
+			                    });
+
+			                    $("#address1").val($.trim(route));
+			                    $("#town").val($.trim(locality));
+			                    $("#county").val($.trim(county));
+
+			                    $("#postcode_final").val($("#postcode").val());
+
+			                  }
+
+			                }
+			              });
+			            }
+			        }
+
+			      });
+			    }
+		  });
+        }
+    };
+}();
