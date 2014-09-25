@@ -66,7 +66,6 @@ class ClientsController extends \BaseController {
 	protected $address_type;
 
 	/**
-<<<<<<< HEAD
 	 * Opportunity milestone
 	 * */
 	protected $opportunity_milestones;
@@ -79,8 +78,6 @@ class ClientsController extends \BaseController {
 	private $get_customer_type;
 
 	/**
-=======
->>>>>>> 10983bcc6c6bbde1d852b3b07d0a86523f455a45
 	 * auto setup initialize object
 	 * */
 	public function __construct(){
@@ -98,12 +95,9 @@ class ClientsController extends \BaseController {
 		$this->website_is 					= \Config::get('crm.website_is');
 		$this->relationship_to_client		= \Config::get('crm.relationship_to_client');
 		$this->address_type					= \Config::get('crm.address_type');
-<<<<<<< HEAD
 		$this->opportunity_milestones		= \Config::get('crm.opportunity_milestone');
 		$this->opportunity_probabilities	= \Config::get('crm.opportunity_probability');
 		$this->get_customer_type			= array(1,2,3);
-=======
->>>>>>> 10983bcc6c6bbde1d852b3b07d0a86523f455a45
 	}
 
 	/**

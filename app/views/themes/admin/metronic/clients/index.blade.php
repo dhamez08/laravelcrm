@@ -63,6 +63,7 @@
 											</td>
 											<td>
 												<div>
+													{{Helpers::helloWorld()}}
 													{{$customers->title.' '.$customers->first_name.' '.$customers->last_name}}
 													- {{$customers->relationship}}
 													@if( $customers->associated != 0 && $customers->relationship != '' )
