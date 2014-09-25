@@ -6,6 +6,13 @@
 	@parent
 	<!-- BEGIN PAGE LEVEL STYLES -->
 	<link href="{{$asset_path}}/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" type="text/css"/>
+
+	<style>
+		.empty-column {
+			min-height: 150px;
+		}
+	</style>
+
 	<!-- END PAGE LEVEL SCRIPTS -->
 	@stop
 @stop
@@ -52,6 +59,7 @@
 												</div>
 											</div>
 											<hr/>
+											<!--
 											<div class="formContainer">
 												@if(count($builds)>0)
 													@foreach($builds as $build)
@@ -94,6 +102,51 @@
 													@endforeach
 												@endif
 											</div>
+											-->
+											<div class="formContainer well	">
+
+												<div class="form-group">
+													<label>Text Field</label>
+													<input type="text" class="form-control" placeholder="Text Field">
+												</div>
+
+												<div class="form-group">
+													<label>Textarea</label>
+													<textarea class="form-control" rows="3"></textarea>
+												</div>
+
+												<div class="form-group">
+													<label>Dropdown</label>
+													<select class="form-control">
+														<option>Option 1</option>
+														<option>Option 2</option>
+														<option>Option 3</option>
+														<option>Option 4</option>
+														<option>Option 5</option>
+													</select>
+												</div>												
+
+												<div class="form-group">
+													<label>Checkbox</label>
+													<div class="checkbox-list">
+														<label>
+															<span><input type="checkbox"></span>
+															Checkbox
+														</label>
+													</div>
+												</div>
+
+												<div class="form-group">
+													<label>Date Field</label>
+													<input type="text" class="form-control" placeholder="Date Field">
+												</div>
+
+												<div class="form-group">
+													<label>Text Line / Heading</label>
+													<p class="form-control-static">Sample Text</p>
+												</div>
+
+											</div>
 											<a href="{{ url('settings/custom-fields') }}" class="btn blue"><i class="fa fa-chevron-left"></i> Back</a>
 											<button type="button" class="btn blue" id="addForm"><i class="fa fa-plus"></i> Add Form Item</button>
 											<button type="submit" class="btn blue"><i class="fa fa-save"></i> Save</button>
@@ -104,6 +157,33 @@
 								</div>
 							</div>
 						</div>						
+					</div>
+					<div class="col-md-6">
+						<div class="portlet box blue tasks-widget">
+							<div class="portlet-title">
+								<div class="caption">
+									Form Canvas <small>Drag and drop form items here</small>
+								</div>
+							</div>							
+							<div class="portlet-body" style="padding:15px">
+								<h1>Form content here</h1>
+								<div class="row">
+									<div class="col-md-4 empty-column sect"></div>
+									<div class="col-md-4 empty-column sect"></div>
+									<div class="col-md-4 empty-column sect"></div>
+								</div>
+								<div class="row">
+									<div class="col-md-6 empty-column sect"></div>
+									<div class="col-md-6 empty-column sect"></div>
+								</div>
+								<div class="row">
+									<div class="col-md-3 empty-column sect"></div>
+									<div class="col-md-3 empty-column sect"></div>
+									<div class="col-md-3 empty-column sect"></div>
+									<div class="col-md-3 empty-column sect"></div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -119,7 +199,36 @@
 	<script src="{{$asset_path}}/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
 	<script>
 		var selectoption = '{{ Form::select('item_type[]', $item_type, null, array('class' => 'form-control itemType', 'required' => 'required')) }}';
-		$('.formContainer').sortable();
+		
+		/*
+		$('.formContainer, .empty-column').sortable({
+			connectWith: '.sect'
+		}).disableSelection();
+		*/
+
+		$( ".formContainer, .empty-column" ).sortable({
+		    connectWith: ".sect",
+		    forcePlaceholderSize: false,
+		    helper: function(e,li) {
+		        copyHelper= li.clone().insertAfter(li);
+		        return li.clone();
+		    },
+		    stop: function() {
+		        copyHelper && copyHelper.remove();
+		    }
+		});
+		$(".sect").sortable({
+			receive: function(e,ui) {
+				if(!$(ui.sender).hasClass('sect'))
+					copyHelper= null;
+			},
+			over: function(event, ui) {
+				$(this).addClass('bg-info');
+			},
+			out: function(event, ui) {
+				$(this).removeClass('bg-info');
+			}
+		});
 	</script>	
 	<script src="{{$asset_path}}/pages/scripts/custom-fields.js" type="text/javascript"></script>
 
