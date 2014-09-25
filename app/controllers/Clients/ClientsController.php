@@ -176,7 +176,7 @@ class ClientsController extends \BaseController {
 		$data['fa_icons']			= 'user';
 		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
 		$data['array_customer']		= \Clients\ClientEntity::get_instance()->getCustomerHead($group_id,$this->get_customer_type);
-		$data['customer']			= \Clients\ClientEntity::get_instance()->getCustomerList($group_id,$this->get_customer_type);
+		//$data['customer']			= \Clients\ClientEntity::get_instance()->getCustomerList($group_id,$this->get_customer_type);
 		$data['center_column_view'] = 'dashboard';
 		$data 						= array_merge($data,$this->getSetupThemes());
 		return \View::make( $data['view_path'] . '.clients.index', $data );

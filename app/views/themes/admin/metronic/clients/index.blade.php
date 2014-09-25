@@ -55,20 +55,20 @@
 									</tr>
 								</thead>
 								<tbody>
-									@if( isset($customer) && $customer->count() > 0 )
-										@foreach($customer->get() as $customers)
+									@if( isset($array_customer) && count($array_customer) > 0 )
+										@foreach($array_customer as $customers)
 										<tr>
 											<td>
 												Photo here
 											</td>
 											<td>
 												<div>
-													{{$customers->title.' '.$customers->first_name.' '.$customers->last_name}}
-													- {{$customers->relationship}}
-													@if( $customers->associated != 0 && $customers->relationship != '' )
-														<?php $partner = \Helpers::array_key_exists_wildcard($array_customer,$customers->associated,'key-value'); ?>
+													{{$customers['fullname']}}
+													- {{$customers['relationship']}}
+													@if( $customers['associated'] != 0 && $customers['relationship'] != '' )
+														<?php $partner = \Helpers::array_key_exists_wildcard($array_customer,$customers['associated'],'key-value'); ?>
 														@if( $partner )
-															of {{$partner[$customers->associated]['first_name'].' '.$partner[$customers->associated]['last_name']}}
+															of {{$partner[$customers['associated']]['fullname']}}
 														@endif
 													@endif
 												</div>

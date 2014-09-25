@@ -26,7 +26,7 @@
 			</a>
 		</li>
 		<li class="classic-menu-dropdown">
-			<a href="index_3.html">
+			<a href="{{url('document-library')}}">
 			<i class="fa fa-briefcase"></i>  Document Library
 			</a>
 		</li>
