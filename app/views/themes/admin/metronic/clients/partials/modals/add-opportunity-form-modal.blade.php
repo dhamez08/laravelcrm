@@ -11,6 +11,7 @@
       </div>
       <div class="modal-body">
       	{{ Form::open(array('url' => 'clients/create-opportunities/'.$client_id)) }}
+        <input type="hidden" name="id" id="opportunity-id-hidden" value="" />
       	<div class="row">
           <div class="col-md-12">
             <div class="row">

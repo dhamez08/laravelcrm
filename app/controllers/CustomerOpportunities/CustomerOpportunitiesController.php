@@ -138,8 +138,8 @@ class CustomerOpportunitiesController extends \BaseController {
 			);
 
 			// add to database
-			if(\CustomerOpportunities\CustomerOpportunitiesEntity::get_instance()->createOrUpdate()) {
-				\Session::flash('message', 'Opportunity was successfully created');
+			if(\CustomerOpportunities\CustomerOpportunitiesEntity::get_instance()->createOrUpdate(\Input::get('id')<>'' ? \Input::get('id'):null)) {
+				\Session::flash('message', 'Opportunity was successfully saved');
 				return \Redirect::back();
 			} else {
 				return \Redirect::back()->withErrors(['There was a problem creating the opportunity, please try again']);
@@ -149,6 +149,17 @@ class CustomerOpportunitiesController extends \BaseController {
 			return \Redirect::back()
 			->withErrors($validator)
 			->withInput();
+		}
+	}
+
+	public function getDelete($id) {
+		$opportunity = \CustomerOpportunities\CustomerOpportunitiesEntity::get_instance()->find($id);
+		if($opportunity) {
+			$opportunity->delete();
+			\Session::flash('message', 'Opportunity was successfully deleted');
+			return \Redirect::back();
+		} else {
+			return \Redirect::back()->withErrors(['There was a problem deleting the opportunity, please try again']);
 		}
 	}
 

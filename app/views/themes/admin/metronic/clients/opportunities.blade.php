@@ -18,7 +18,7 @@
 		&nbsp;
 	@show
 	@section('portlet-actions')
-		<a class="btn btn-default btn-sm" href="#" data-toggle="modal" data-target="#add-opportunity-form-modal">
+		<a class="btn btn-default btn-sm" href="#" id="addOpportunity">
 		<i class="fa fa-plus"></i> Add </a>
 	@stop
 	@section('portlet-content')

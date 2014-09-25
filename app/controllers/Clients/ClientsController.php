@@ -394,4 +394,9 @@ class ClientsController extends \BaseController {
 		return $data;
 	}
 
+	public function getDeleteOpportunities($id) {
+		$data = \CustomerOpportunities\CustomerOpportunitiesController::get_instance()->getDelete($id);
+		return $data;
+	}
+
 }

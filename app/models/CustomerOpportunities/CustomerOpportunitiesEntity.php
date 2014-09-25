@@ -8,6 +8,8 @@ class CustomerOpportunitiesEntity extends \Eloquent{
 
 	protected static $instance = null;
 
+	protected $table = 'customer_opportunities';
+
 	public function __construct(){
 
 	}

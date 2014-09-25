@@ -19,8 +19,14 @@
 					<td>£{{ $opportunity->value }}</td>
 					<td>{{ date('d/m/Y',strtotime($opportunity->close_date)) }}</td>
 					<td>
+						<input type="hidden" id="opportunity_edit_name_{{ $opportunity->id }}" value="{{ $opportunity->name }}">
+						<input type="hidden" id="opportunity_edit_desc_{{ $opportunity->id }}" value="{{ $opportunity->text }}">
+						<input type="hidden" id="opportunity_edit_milestone_{{ $opportunity->id }}" value="{{ $opportunity->milestone }}">
+						<input type="hidden" id="opportunity_edit_probability_{{ $opportunity->id }}" value="{{ $opportunity->probability }}">
+						<input type="hidden" id="opportunity_edit_value_{{ $opportunity->id }}" value="{{ $opportunity->value }}">
+						<input type="hidden" id="opportunity_edit_close_date_{{ $opportunity->id }}" value="{{ date('d/m/Y',strtotime($opportunity->close_date)) }}">
 						<a href="javascript:void(0)" class="btn btn-sm blue editOpportunity" opportunity-id="{{ $opportunity->id }}"><i class="fa fa-edit"></i> Edit</a>
-						<a href="#" class="btn btn-sm red" onclick="return confirm('Are you sure you want to delete?')"><i class="fa fa-times"></i> Remove</a>
+						<a href="{{ url('clients/delete-opportunities/'.$opportunity->id) }}" class="btn btn-sm red" onclick="return confirm('Are you sure you want to delete?')"><i class="fa fa-times"></i> Remove</a>
 					</td>
 				</tr>
 			@endforeach
