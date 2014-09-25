@@ -179,6 +179,12 @@ var addPartner = function () {
 					partner_details.switchClass('show','hide');
 				}
 			});
+			if( partner_status.val() == 'Married' ){
+				partner_details.switchClass('hide','show');
+			}else{
+				clearInput.init('#partner_details');
+				partner_details.switchClass('show','hide');
+			}
         }
     };
 

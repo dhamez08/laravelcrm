@@ -75,6 +75,8 @@ class ClientsController extends \BaseController {
 	 * */
 	protected $opportunity_probabilities;
 
+	private $get_customer_type;
+
 	/**
 	 * auto setup initialize object
 	 * */
@@ -95,6 +97,7 @@ class ClientsController extends \BaseController {
 		$this->address_type					= \Config::get('crm.address_type');
 		$this->opportunity_milestones		= \Config::get('crm.opportunity_milestone');
 		$this->opportunity_probabilities	= \Config::get('crm.opportunity_probability');
+		$this->get_customer_type			= array(1,2,3);
 	}
 
 	/**
@@ -174,15 +177,16 @@ class ClientsController extends \BaseController {
 	 * @return View
 	 * */
 	public function getIndex(){
-		$data 					= $this->data_view;
-		$data['pageTitle'] 		= 'Client';
-		$data['contentClass'] 	= '';
+		$data 						= $this->data_view;
+		$data['pageTitle'] 			= 'Client';
+		$data['contentClass'] 		= '';
 		$data['portlet_body_class']	= 'form';
 		$data['portlet_title']		= 'Client';
-		$data['fa_icons']		= 'user';
-		$data 					= array_merge($data,$this->getSetupThemes());
+		$data['fa_icons']			= 'user';
+		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+		$data['customer']			= \Clients\ClientEntity::get_instance()->getCustomerList($group_id,$this->get_customer_type);
 		$data['center_column_view'] = 'dashboard';
-
+		$data 						= array_merge($data,$this->getSetupThemes());
 		return \View::make( $data['view_path'] . '.clients.index', $data );
 	}
 
@@ -229,95 +233,155 @@ class ClientsController extends \BaseController {
 				'belongs_user' => \Auth::id(),
 			)
 		);
-		$customer = \Clients\ClientEntity::get_instance()->createOrUpdate();
+		$rules = array(
+			'title' => 'required',
+			'first_name' => 'required|min:3',
+			'last_name' => 'required|min:3',
+			'dob' => 'required',
+			'job_title' => 'required|min:3',
+			'marital_status' => 'required',
+			'partner_title' => 'required_if:marital_status,Married',
+			'partner_first_name' => 'required_if:marital_status,Married|min:3',
+			'partner_last_name' => 'required_if:marital_status,Married|min:3',
+			'partner_dob' => 'required_if:marital_status,Married',
+			'partner_job_title' => 'required_if:marital_status,Married|min:3',
+		);
+		$messages = array(
+			'title.required'=>'Person Title is required',
+			'first_name.required'=>'Person Name is required',
+			'first_name.min'=>'Person Name must have more than 3 character',
+			'last_name.required'=>'Person Last Name is required',
+			'last_name.min'=>'Person Last Name must have more than 3 character',
+			'dob.required'=>'Person Date of birth is required',
+			'job_title.required'=>'Person Job Title is required',
+			'job_title.min'=>'Person Job Title must have more than 3 character',
+			'marital_status.required'=>'Person Marital Status is required',
+			'partner_title.required_if'=>'Partner Title is required',
+			'partner_first_name.required_if'=>'Partner Name is required',
+			'partner_first_name.min'=>'Partner Name must have more than 3 character',
+			'partner_last_name.required_if'=>'Partner Last Name is required',
+			'partner_last_name.min'=>'Partner Last Name must have more than 3 character',
+			'partner_dob.required_if'=>'Partner Date of birth is required',
+			'partner_job_title.required_if'=>'Partner Title is required',
+			'partner_job_title.min'=>'Partner Title Job Title must have more than 3 character',
+		);
+		$validator = \Validator::make(\Input::all(), $rules, $messages);
 
-		// if Married add partner details
-		if( \Input::get('marital_status') == 'Married' ) {
+		if ( $validator->passes() ) {
 			\Input::merge(
-				array(
-					'dob' => \Clients\ClientEntity::get_instance()->convertDate(\Input::get('dob')),
-					'ref' => \Auth::id().time(),
-					'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
-					'belongs_user' => \Auth::id(),
-					'title' => \Input::get('partner_title',''),
-					'first_name' => \Input::get('partner_first_name',''),
-					'last_name' => \Input::get('partner_last_name',''),
-					'smoker' => \Input::get('partner_smoker',0),
-					'job_title' => \Input::get('partner_job_title',''),
-					'living_status' => \Input::get('partner_living_status',''),
-					'employment_status' => \Input::get('partner_employment_status',''),
-					'associated' => $customer->id,
-					'relationship' => 'Spouse/Partner',
-				)
+				array('type'=>1)
 			);
-			$partner = \Clients\ClientEntity::get_instance()->createOrUpdate();
-		}// if Married add partner details
+			$customer = \Clients\ClientEntity::get_instance()->createOrUpdate();
 
-		// insert address
-		\CustomerAddress\CustomerAddressController::get_instance()->postAddressWrapper($customer->id);
-
-		// if has children then add
-		if( count( \Input::get('children') ) > 0 ){
-			foreach( \Input::get('children') as $key => $val ){
-				if( trim($val['firstname']) != '' ){
+			//check if customer went in
+			if( $customer->id ){
+				// if Married add partner details
+				if( \Input::get('marital_status') == 'Married' ) {
 					\Input::merge(
 						array(
-							'dob' => \Clients\ClientEntity::get_instance()->convertDate($val['dob']),
-							'ref' => \Auth::id() . time() . rand(1,9),
+							'type'=>1,
+							'dob' => \Clients\ClientEntity::get_instance()->convertDate(\Input::get('dob')),
+							'ref' => \Auth::id().time(),
 							'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
 							'belongs_user' => \Auth::id(),
-							'first_name' => $val['firstname'],
-							'last_name' => $val['lastname'],
+							'title' => \Input::get('partner_title',''),
+							'first_name' => \Input::get('partner_first_name',''),
+							'last_name' => \Input::get('partner_last_name',''),
+							'smoker' => \Input::get('partner_smoker',0),
+							'job_title' => \Input::get('partner_job_title',''),
+							'living_status' => \Input::get('partner_living_status',''),
+							'employment_status' => \Input::get('partner_employment_status',''),
 							'associated' => $customer->id,
-							'relationship' => $val['relation_to_client'],
-							'type' => 4,
+							'relationship' => 'Spouse/Partner',
 						)
 					);
-					\Clients\ClientEntity::get_instance()->createOrUpdate();
-				}
-			}
-		}// if has children then add
+					$partner = \Clients\ClientEntity::get_instance()->createOrUpdate();
+				}// if Married add partner details
 
-		// if has telephone then add
-		if( count( \Input::get('telephone') ) > 0 ){
-			foreach( \Input::get('telephone') as $key => $val ){
-				if( trim($val['number']) != '' ){
-					\CustomerPhone\CustomerPhoneController::get_instance()->postPhoneWrapper(
-						$customer->id,
-						$val['number'],
-						$val['for']
-					);
-				}
-			}
-		}// if has telephone then add
+				// insert address
+				\CustomerAddress\CustomerAddressController::get_instance()->postAddressWrapper($customer->id);
 
-		// if has emails then add
-		if( count( \Input::get('emails') ) > 0 ){
-			foreach( \Input::get('emails') as $key => $val ){
-				if( trim($val['mail']) != '' ){
-					\CustomerEmail\CustomerEmailController::get_instance()->postEmailWrapper(
-						$customer->id,
-						$val['mail'],
-						$val['for']
-					);
-				}
-			}
-		}// if has emails then add
+				// if has children then add
+				if( count( \Input::get('children') ) > 0 ){
+					foreach( \Input::get('children') as $key => $val ){
+						if( trim($val['firstname']) != '' ){
+							\Input::merge(
+								array(
+									'dob' => \Clients\ClientEntity::get_instance()->convertDate($val['dob']),
+									'ref' => \Auth::id() . time() . rand(1,9),
+									'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
+									'belongs_user' => \Auth::id(),
+									'first_name' => $val['firstname'],
+									'last_name' => $val['lastname'],
+									'associated' => $customer->id,
+									'relationship' => $val['relation_to_client'],
+									'type' => 4,
+								)
+							);
+							\Clients\ClientEntity::get_instance()->createOrUpdate();
+						}
+					}
+				}// if has children then add
 
-		// if has urls then add
+				// if has telephone then add
+				if( count( \Input::get('telephone') ) > 0 ){
+					foreach( \Input::get('telephone') as $key => $val ){
+						if( trim($val['number']) != '' ){
+							\CustomerPhone\CustomerPhoneController::get_instance()->postPhoneWrapper(
+								$customer->id,
+								$val['number'],
+								$val['for']
+							);
+						}
+					}
+				}// if has telephone then add
 
-		if( count( \Input::get('urls') ) > 0 ){
-			foreach( \Input::get('urls') as $key => $val ){
-				if( trim($val['url']) != '' ){
-					\CustomerURL\CustomerURLController::get_instance()->postURLWrapper(
-						$customer->id,
-						$val['url'],
-						$val['for'],
-						$val['is']
-					);
-				}
-			}
-		}// if has urls then add
+				// if has emails then add
+				if( count( \Input::get('emails') ) > 0 ){
+					foreach( \Input::get('emails') as $key => $val ){
+						if( trim($val['mail']) != '' ){
+							\CustomerEmail\CustomerEmailController::get_instance()->postEmailWrapper(
+								$customer->id,
+								$val['mail'],
+								$val['for']
+							);
+						}
+					}
+				}// if has emails then add
+
+				// if has urls then add
+				if( count( \Input::get('urls') ) > 0 ){
+					foreach( \Input::get('urls') as $key => $val ){
+						if( trim($val['url']) != '' ){
+							\CustomerURL\CustomerURLController::get_instance()->postURLWrapper(
+								$customer->id,
+								$val['url'],
+								$val['for'],
+								$val['is']
+							);
+						}
+					}
+				}// if has urls then add
+
+				// update dashboard
+				\Updates\UpdatesController::get_instance()->postUpdateWrapper(
+					\User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
+					\Auth::id(),
+					$customer->id,
+					\Auth::user()->first_name.' '.\Auth::user()->last_name,
+					'added a new personal client ',
+					1
+				);
+				// update dashboard
+			}//end customer id
+			\Session::flash('message', 'Successfully Added Customer');
+			return \Redirect::action('Clients\ClientsController@getIndex');
+		}else{
+			\Input::flash();
+			return \Redirect::action('Clients\ClientsController@getCreate')
+			->withErrors($validator)
+			->withInput();
+		}
 	}
 
 	public function getOpportunities($client_id) {

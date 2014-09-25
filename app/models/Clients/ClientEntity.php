@@ -46,18 +46,18 @@ class ClientEntity extends \Eloquent{
 			//update
 			$clients = \Clients\Clients::find($id);
 		}
-		$clients->type 						= \Input::get('type','');
+		$clients->type 						= \Input::get('type','1');
 		$clients->ref 						= \Input::get('ref','');
-		$clients->belongs_to 				= \Input::get('belongs_to',0);
-		$clients->belongs_user 				= \Input::get('belongs_user',0);
+		$clients->belongs_to 				= \Input::get('belongs_to','0');
+		$clients->belongs_user 				= \Input::get('belongs_user','0');
 		$clients->title 					= \Input::get('title','');
 		$clients->first_name 				= \Input::get('first_name','');
 		$clients->last_name 				= \Input::get('last_name','');
 		$clients->email 					= \Input::get('email','');
-		$clients->address_id 				= \Input::get('address_id',0);
+		$clients->address_id 				= \Input::get('address_id','0');
 		$clients->gender 					= \Input::get('gender','');
 		$clients->dob 						= \Input::get('dob');
-		$clients->smoker 					= \Input::get('smoker',0);
+		$clients->smoker 					= \Input::get('smoker','0');
 		$clients->marital_status 			= \Input::get('marital_status','');
 		$clients->living_status 			= \Input::get('living_status','');
 		$clients->employment_status 		= \Input::get('employment_status','');
@@ -97,4 +97,9 @@ class ClientEntity extends \Eloquent{
 			return "0000-00-00";
 		}
 	}
+
+	public function getCustomerList($belongsTo, $arrayType = array()){
+		return \Clients\Clients::customerType($arrayType)->customerBelongsTo($belongsTo);
+	}
+
 }

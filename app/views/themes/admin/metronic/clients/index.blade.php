@@ -40,6 +40,49 @@
 				</div>
 				<div class="portlet-body {{{$portlet_body_class or ''}}}">
 					@section('portlet-content')
+						<div class="client-list" style="padding:10px;">
+							<table class="table table-striped table-advance table-hover">
+								<thead>
+									<tr>
+										<th>
+
+										</th>
+										<th>
+											Client / Company Name
+										</th>
+										<th>
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									@if( $customer->count() > 0 )
+										@foreach($customer->get() as $customers)
+										<tr>
+											<td>
+												Photo here
+											</td>
+											<td>
+												<div>
+													{{$customers->title.' '.$customers->first_name.' '.$customers->last_name}}
+													- {{$customers->relationship}}
+													@if( $customers->associated != 0 && $customers->relationship != '' )
+														@if( $customers->associated == $customers->id )
+															of {{$customers->title.' '.$customers->first_name.' '.$customers->last_name}}
+														@endif
+													@endif
+												</div>
+											</td>
+											<td>
+												<a href="#" class="btn default btn-xs red-stripe">
+												Delete </a>
+											</td>
+										</tr>
+										@endforeach
+									@endif
+
+								</tbody>
+							</table>
+						</div>
 					@show
 				</div>
 			</div>
