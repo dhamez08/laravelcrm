@@ -33,6 +33,11 @@
 	@section('footer-custom-js')
 	<!-- add here -->
 	@parent
-
+	<script type="text/javascript" src="{{$asset_path}}/pages/scripts/opportunities.js"></script>
+	<script type="text/javascript">
+		jQuery(document).ready(function() {
+			UpdateModal.init();
+		});
+	</script>
 	@stop
 @stop
