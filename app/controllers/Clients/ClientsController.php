@@ -66,6 +66,7 @@ class ClientsController extends \BaseController {
 	protected $address_type;
 
 	/**
+<<<<<<< HEAD
 	 * Opportunity milestone
 	 * */
 	protected $opportunity_milestones;
@@ -78,6 +79,8 @@ class ClientsController extends \BaseController {
 	private $get_customer_type;
 
 	/**
+=======
+>>>>>>> 10983bcc6c6bbde1d852b3b07d0a86523f455a45
 	 * auto setup initialize object
 	 * */
 	public function __construct(){
@@ -95,9 +98,12 @@ class ClientsController extends \BaseController {
 		$this->website_is 					= \Config::get('crm.website_is');
 		$this->relationship_to_client		= \Config::get('crm.relationship_to_client');
 		$this->address_type					= \Config::get('crm.address_type');
+<<<<<<< HEAD
 		$this->opportunity_milestones		= \Config::get('crm.opportunity_milestone');
 		$this->opportunity_probabilities	= \Config::get('crm.opportunity_probability');
 		$this->get_customer_type			= array(1,2,3);
+=======
+>>>>>>> 10983bcc6c6bbde1d852b3b07d0a86523f455a45
 	}
 
 	/**
@@ -154,14 +160,6 @@ class ClientsController extends \BaseController {
 
 	public function getAddressType(){
 		return $this->address_type;
-	}
-
-	public function getOpportunityMilestones(){
-		return $this->opportunity_milestones;
-	}
-
-	public function getOpportunityProbabilities(){
-		return $this->opportunity_probabilities;
 	}
 
 	/**
@@ -385,76 +383,16 @@ class ClientsController extends \BaseController {
 	}
 
 	public function getOpportunities($client_id) {
-		$data 					= $this->data_view;
-		$data['pageTitle'] 		= 'Client - Opportunities';
-		$data['portlet_title'] 	= 'Client - Opportunities';
-		$data['contentClass'] 	= '';
-		$data['opportunities'] = \CustomerOpportunities\CustomerOpportunitiesEntity::get_instance()->getListsByLoggedUser();
-		$data['client_id'] = $client_id;
-		$data['milestones']		= $this->getOpportunityMilestones();
-		$data['probabilities']	= $this->getOpportunityProbabilities();
-		$data 					= array_merge($data,$this->getSetupThemes());
-		$data['html_body_class'] 	= $this->data_view['html_body_class'];
+
+		$data = \CustomerOpportunities\CustomerOpportunitiesController::get_instance()->getOpportunities($client_id);
+
 		return \View::make( $data['view_path'] . '.clients.opportunities', $data );
+
 	}
 
 	public function postCreateOpportunities($client_id) {
-		$rules = array(
-			'opportunity_name' => 'required|min:3',
-			'opportunity_description' => 'required|min:3',
-			'expected_value' => 'required|numeric',
-			'milestone' => 'required|not_in:0',
-			'probability' => 'required|not_in:0',
-			'close_date' => 'required',
-		);
-
-		$messages = array(
-			'opportunity_name.required' => 'Opportunity name is required.',
-			'opportunity_name.min'=>'Opportunity name must have atleast 3 characters',
-			'expected_value.required' => 'Expected is required.',
-			'expected_value.number'=>'Expected value is not valid',
-			'milestone.required' => 'Milestone is required.',
-			'milestone.not_in' => 'Milestone is required.',
-			'probability.required' => 'Probability is required.',
-			'probability.not_in' => 'Probability is required.',
-			'close_date.required' => 'Expected close date is required.',
-		);
-
-		$validator = \Validator::make(\Input::all(), $rules, $messages);
-		if ( $validator->passes() ) {
-			$value = \Input::get('expected_value');
-			$probability = \Input::get('probability');
-			if ($probability==100) {
-				$value_calc = $value;
-			} else {
-				$value_calc = ($value*('.'.$probability));
-			}
-
-			$explode_date = explode('/', \Input::get('close_date'));
-			$new_close_date = $explode_date['2'] . '-' . $explode_date['1'] . '-' . $explode_date['0'];
-
-			\Input::merge(
-				array(
-					'belongs_to'=>\Auth::id(),
-					'customer_id'=>$client_id,
-					'value_calc'=>$value_calc,
-					'close_date' => $new_close_date,
-				)
-			);
-
-			// add to database
-			if(\CustomerOpportunities\CustomerOpportunitiesEntity::get_instance()->createOrUpdate()) {
-				\Session::flash('message', 'Opportunity was successfully created');
-				return \Redirect::back();
-			} else {
-				return \Redirect::back()->withErrors(['There was a problem creating the opportunity, please try again']);
-			}
-		} else {
-			\Input::flash();
-			return \Redirect::back()
-			->withErrors($validator)
-			->withInput();
-		}
+		$data = \CustomerOpportunities\CustomerOpportunitiesController::get_instance()->postCreateOpportunities($client_id);
+		return $data;
 	}
 
 }
