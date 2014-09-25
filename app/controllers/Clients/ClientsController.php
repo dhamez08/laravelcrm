@@ -179,11 +179,6 @@ class ClientsController extends \BaseController {
 		$data['customer']			= \Clients\ClientEntity::get_instance()->getCustomerList($group_id,$this->get_customer_type);
 		$data['center_column_view'] = 'dashboard';
 		$data 						= array_merge($data,$this->getSetupThemes());
-		/*var_dump($data['array_customer']);
-		if ( \Helpers::array_key_exists_wildcard($data['array_customer'],71,'key-value') ){
-			var_dump(\Helpers::array_key_exists_wildcard($data['array_customer'],7,'key-value'));
-		}
-		exit();*/
 		return \View::make( $data['view_path'] . '.clients.index', $data );
 	}
 
