@@ -64,10 +64,11 @@
 											<td>
 												<div>
 													{{$customers->title.' '.$customers->first_name.' '.$customers->last_name}}
-													- {{$customers->relationship}} {{$customers->associated}}
+													- {{$customers->relationship}}
 													@if( $customers->associated != 0 && $customers->relationship != '' )
-														@if( $customers->associated == $customers->id )
-															of {{$customers->title.' '.$customers->first_name.' '.$customers->last_name}}
+														<?php $partner = \Helpers::array_key_exists_wildcard($array_customer,$customers->associated,'key-value'); ?>
+														@if( $partner )
+															of {{$partner[$customers->associated]['first_name'].' '.$partner[$customers->associated]['last_name']}}
 														@endif
 													@endif
 												</div>
