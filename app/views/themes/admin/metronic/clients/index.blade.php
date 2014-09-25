@@ -55,7 +55,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									@if( $customer->count() > 0 )
+									@if( isset($customer) && $customer->count() > 0 )
 										@foreach($customer->get() as $customers)
 										<tr>
 											<td>
@@ -63,9 +63,8 @@
 											</td>
 											<td>
 												<div>
-													{{Helpers::helloWorld()}}
 													{{$customers->title.' '.$customers->first_name.' '.$customers->last_name}}
-													- {{$customers->relationship}}
+													- {{$customers->relationship}} {{$customers->associated}}
 													@if( $customers->associated != 0 && $customers->relationship != '' )
 														@if( $customers->associated == $customers->id )
 															of {{$customers->title.' '.$customers->first_name.' '.$customers->last_name}}
