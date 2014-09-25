@@ -107,8 +107,11 @@ class ClientEntity extends \Eloquent{
 		$dataCustomer = \Clients\Clients::customerType($arrayType)->customerBelongsTo($belongsTo);
 		if( $dataCustomer->count() > 0 ){
 			foreach($dataCustomer->get() as $val){
-				$arrayCustomer[$val->id]['first_name'] = $val->first_name;
-				$arrayCustomer[$val->id]['last_name'] = $val->last_name;
+				$arrayCustomer[$val->id]['customer_id'] = $val->id;
+				$arrayCustomer[$val->id]['title'] = $val->title;
+				$arrayCustomer[$val->id]['fullname'] = $val->title.' '.$val->first_name.' '.$val->last_name;
+				$arrayCustomer[$val->id]['associated'] = $val->associated;
+				$arrayCustomer[$val->id]['relationship'] = $val->relationship;
 			}
 			return $arrayCustomer;
 		}
