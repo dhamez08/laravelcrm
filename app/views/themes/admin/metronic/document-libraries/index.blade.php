@@ -27,47 +27,25 @@
 							<div class="tab-pane active">
 								<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 310px;"><div class="scroller" style="overflow: hidden; width: auto; height: 337px;" data-always-visible="1" data-rail-visible="0" data-initialized="1">
 									<ul class="feeds">
+										
+										@foreach($documents as $document)
 										<li>
 											<div class="col1">
 												<div class="cont">
 													<div class="cont-col1">
 														<div class="label label-sm label-danger">
-															<i class="fa fa-file-pdf-o"></i>
+															<i class="fa {{ $icons[$document->file_ext] }}"></i>
 														</div>
 													</div>
 													<div class="cont-col2">
 														<div class="desc">
-															Client order form
+															<a href="{{ $path.$document->filename }}" target="_blank">{{ $document->name }}</a>
 														</div>
 													</div>
 												</div>
 											</div>
-											<div class="col2">
-												<div class="date">
-													 Just now
-												</div>
-											</div>
-										</li>
-										@foreach(range(1,4) as $i)
-										<li>
-											<div class="col1">
-												<div class="cont">
-													<div class="cont-col1">
-														<div class="label label-sm label-danger">
-															<i class="fa fa-file-pdf-o"></i>
-														</div>
-													</div>
-													<div class="cont-col2">
-														<div class="desc">
-															File {{ $i }}
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="col2">
-												<div class="date">
-													{{ 20 + $i }} mins
-												</div>
+											<div class="col2" style="margin-left:-95px">
+												<a href="{{ url('document-library/delete/'.$document->id) }}" class="btn btn-sm red" onclick="return confirm('Are you sure you want to delete?')"><i class="fa fa-times"></i> Remove</a>
 											</div>
 										</li>
 										@endforeach
@@ -76,13 +54,16 @@
 							</div>
 						</div>
 						<!--END TABS-->
-						<button class="btn green-haze btn-circle btn-sm pull-right">New</button>
+						<button class="btn green-haze btn-circle btn-sm pull-right" data-toggle="modal" data-target="#add-document-library-modal">New</button>
 					</div>
 				</div>	
 				<!-- END CUSTOM FILES -->
 			</div>
 		</div>
 	</div>
+
+	@include( \DashboardEntity::get_instance()->getView() . '.document-libraries.partials.modals.add-document-library-modal' )
+
 	@stop
 @stop
 @section('script-footer')

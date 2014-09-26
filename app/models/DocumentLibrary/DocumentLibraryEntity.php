@@ -10,7 +10,7 @@ class DocumentLibraryEntity extends \Eloquent{
 	protected $table = 'document_library_own';
 	protected static $instance = null;
 
-	protected $fillable = array('belongs_to', 'name', 'filename', 'active');
+	protected $fillable = array('belongs_to', 'name', 'filename', 'file_ext','active');
 
 	protected $dates = ['deleted_at'];
 
@@ -32,5 +32,32 @@ class DocumentLibraryEntity extends \Eloquent{
 		return self::$instance;
 	}
 
+	public function upload() {
+
+		$destination = public_path()."/document/library/own/";
+		$file = \Input::file('doc');
+		$ext = $file->getClientOriginalExtension();
+		$file_name = \Auth::id().'_'.time().'.'.$ext;
+
+		$document = new $this;
+		$document->belongs_to = \Auth::id();
+		$document->name = \Input::get('name');
+		$document->filename = $file_name;
+		$document->file_ext = $ext;
+		$document->active = 1;
+
+		if($file->move($destination, $file_name)) {
+			return $document->save() ? 1:0;
+		}
+
+		return 0;
+
+	}
+
+	public function documents() {
+		$documents = $this->where('belongs_to', '=', \Auth::id())
+					->whereNull('deleted_at');
+		return $documents->get();
+	}
 
 }
