@@ -30,6 +30,23 @@ class ClientEntity extends \Eloquent{
 	}
 
 	/**
+	 * bind the customer and loop them
+	 * @param	object	$object_data
+	 * 	- this should be a object, if not please convert it first
+	 * */
+	public function bindCustomer($object_data){
+		$binded_data = array();
+		//single only
+		if( count( $object_data ) == 1 ){
+			$bind_data = new \Clients\ClientFormat;
+			$binded_data = $bind_data->bind( $object_data );
+		}else{
+			// if its a array
+		}
+		return $binded_data;
+	}
+
+	/**
 	 * This is use to create user or update
 	 * this is full field, mainly use in register
 	 *

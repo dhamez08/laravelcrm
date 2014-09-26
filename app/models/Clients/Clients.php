@@ -14,7 +14,11 @@ class Clients extends \Eloquent{
 	protected $table = 'customer';
 
 	public function address(){
-		return $this->hasOne('\CustomerAddress\CustomerAddress','client_id','customer_id');
+		return $this->hasOne('\CustomerAddress\CustomerAddress','customer_id','id');
+	}
+
+	public function scopeClientId($query, $id){
+		return $query->where('id','=',$id);
 	}
 
 	public function scopeCustomerType($query, $arrayType){

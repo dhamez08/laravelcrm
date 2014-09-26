@@ -82,8 +82,8 @@ class ClientsController extends \BaseController {
 	public function __construct(){
 		parent::__construct();
 		$this->data_view 					= parent::setupThemes();
+		$this->data_view['html_body_class'] = 'page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo page-container-bg-solid page-full-width';
 		$this->data_view['client_index'] 	= $this->data_view['view_path'] . '.clients.index';
-		$this->data_view['html_body_class'] = 'page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed';
 		$this->title 						= \Config::get('crm.person_title');
 		$this->marital_status 				= \Config::get('crm.marital_status');
 		$this->living_status 				= \Config::get('crm.living_status');
@@ -176,7 +176,6 @@ class ClientsController extends \BaseController {
 		$data['fa_icons']			= 'user';
 		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
 		$data['array_customer']		= \Clients\ClientEntity::get_instance()->getCustomerHead($group_id,$this->get_customer_type);
-		//$data['customer']			= \Clients\ClientEntity::get_instance()->getCustomerList($group_id,$this->get_customer_type);
 		$data['center_column_view'] = 'dashboard';
 		$data 						= array_merge($data,$this->getSetupThemes());
 		return \View::make( $data['view_path'] . '.clients.index', $data );
@@ -289,7 +288,9 @@ class ClientsController extends \BaseController {
 					);
 					$partner = \Clients\ClientEntity::get_instance()->createOrUpdate();
 				}// if Married add partner details
-
+				\Input::merge(
+					array('type'=>\Input::get('type'))
+				);
 				// insert address
 				\CustomerAddress\CustomerAddressController::get_instance()->postAddressWrapper($customer->id);
 
@@ -376,6 +377,30 @@ class ClientsController extends \BaseController {
 		}
 	}
 
+	public function getClientSummary($clientId){
+		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+		$dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
+		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed');
+
+		$data 						= $this->data_view;
+		$data['pageTitle'] 			= 'Client';
+		$data['contentClass'] 		= '';
+		$data['portlet_body_class']	= 'form';
+		$data['portlet_title']		= 'Client';
+		$data['fa_icons']			= 'user';
+		$customer					= \Clients\Clients::find($clientId);
+		$data['currentClient']		= \Clients\ClientEntity::get_instance()->bindCustomer($customer);
+		$data['center_column_view']	= 'dashboard';
+		$data 						= array_merge($data,$dashboard_data);
+		//echo $customer->address()->count();
+		//var_dump($customer->address()->first()->toArray());
+		//exit();
+		return \View::make( $data['view_path'] . '.clients.summary', $data );
+	}
+
+	/**
+	 * For Oppurtunities
+	 * */
 	public function getOpportunities($client_id) {
 
 		$data = \CustomerOpportunities\CustomerOpportunitiesController::get_instance()->getOpportunities($client_id);
@@ -393,5 +418,7 @@ class ClientsController extends \BaseController {
 		$data = \CustomerOpportunities\CustomerOpportunitiesController::get_instance()->getDelete($id);
 		return $data;
 	}
-
+	/**
+	 * For Oppurtunities
+	 * */
 }

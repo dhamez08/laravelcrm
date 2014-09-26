@@ -16,79 +16,27 @@
 		@include($view_path.'.clients.partials.leftSidebar')
 	@stop
 	@section('pagebar')
-
+		@parent
+		@include($view_path.'.clients.partials.subPagebar')
 	@stop
 	@section('innerpage-page-title')
 		&nbsp;
 	@show
 	@section('innerpage-content')
-		<div class="col-md-12">
+		<div class="col-md-3">
+			<!-- CLIENT LEFT SIDEBAR -->
+			@include($view_path.'.clients.partials.leftColumn')
+			<!-- END CLIENT LEFT SIDEBAR -->
+		</div>
+		<div class="col-md-6">
 			<!-- CENTER COLUMN -->
-			<div class="portlet box {{{$dashboard_class or 'blue'}}} tabbable">
-				<div class="portlet-title">
-					<div class="caption">
-						@section('portlet-captions')
-							<i class="fa fa-{{{$fa_icons or 'cog'}}}"></i>{{{$portlet_title or 'Portlet Title'}}}
-						@show
-					</div>
-					<div class="actions">
-						@section('portlet-actions')
-							<a class="btn btn-default btn-sm" href="{{url('clients/create')}}">
-							<i class="fa fa-plus"></i> Add </a>
-						@show
-					</div>
-				</div>
-				<div class="portlet-body {{{$portlet_body_class or ''}}}">
-					@section('portlet-content')
-						<div class="client-list" style="padding:10px;">
-							<table class="table table-striped table-advance table-hover">
-								<thead>
-									<tr>
-										<th>
-
-										</th>
-										<th>
-											Client / Company Name
-										</th>
-										<th>
-										</th>
-									</tr>
-								</thead>
-								<tbody>
-									@if( isset($array_customer) && count($array_customer) > 0 )
-										@foreach($array_customer as $customers)
-										<tr>
-											<td>
-												Photo here
-											</td>
-											<td>
-												<div>
-													<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$customers['customer_id']))}}">{{$customers['fullname']}}</a>
-													- {{$customers['relationship']}}
-													@if( $customers['associated'] != 0 && $customers['relationship'] != '' )
-														<?php $partner = \Helpers::array_key_exists_wildcard($array_customer,$customers['associated'],'key-value'); ?>
-														@if( $partner )
-															of {{$partner[$customers['associated']]['fullname']}}
-														@endif
-													@endif
-												</div>
-											</td>
-											<td>
-												<a href="#" class="btn default btn-xs red-stripe">
-												Delete </a>
-											</td>
-										</tr>
-										@endforeach
-									@endif
-
-								</tbody>
-							</table>
-						</div>
-					@show
-				</div>
-			</div>
-			{{--@include($view_path.'.clients.partials.center_column.'.$center_column_view)--}}
+			@include($view_path.'.clients.partials.center_column.'.$center_column_view)
 			<!-- END CENTER COLUMN -->
+		</div>
+		<div class="col-md-3">
+			<!-- ADS -->
+			@include($view_path.'.clients.partials.rightColumn')
+			<!-- END ADS -->
 		</div>
 	@stop
 @stop
