@@ -14,7 +14,15 @@
 			<tbody>
 			@foreach($opportunities as $opportunity)
 				<tr>
-					<td>{{ $opportunity->name }}</td>
+					<td>
+						<a href="javascript:void()" class="hastooltip" data-toggle="tooltip" data-placement="right" title="{{ $opportunity->text }}">{{ $opportunity->name }}</a>
+						<br />
+						@if($opportunity->status==0)
+							<strong>Open</strong>
+						@else
+							<strong>Closed</strong>
+						@endif
+					</td>
 					<td>{{ $opportunity->milestone }}({{ $opportunity->probability }}%)</td>
 					<td>£{{ $opportunity->value }}</td>
 					<td>{{ date('d/m/Y',strtotime($opportunity->close_date)) }}</td>

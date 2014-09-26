@@ -37,6 +37,7 @@
 	<script type="text/javascript">
 		jQuery(document).ready(function() {
 			UpdateModal.init();
+			$("a.hastooltip").tooltip();
 		});
 	</script>
 	@stop
