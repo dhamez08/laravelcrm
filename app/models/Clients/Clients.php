@@ -29,4 +29,11 @@ class Clients extends \Eloquent{
 		return $query->where('belongs_to','=',$belongsTo);
 	}
 
+	/**
+	 * Person that is associated to
+	 * */
+	public function scopeCustomerAssociatedTo($query, $associated){
+		return $query->where('associated','=',$associated);
+	}
+
 }

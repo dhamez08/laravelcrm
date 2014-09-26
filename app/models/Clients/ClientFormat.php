@@ -38,7 +38,16 @@ class ClientFormat extends Facade{
 		// this is for customer personal
 		$array_customer = (object)$customer->toArray();
 		// this is for customer address
-		$array_address  = (object)$customer->address()->first()->toArray();
+		$array_address = (object)array(
+			'address_line_1' => '',
+			'address_line_2' => '',
+			'town' => '',
+			'county' => '',
+			'postcode' => '',
+		);
+		if( $customer->address()->count() > 0 ){
+			$array_address  = (object)$customer->address()->first()->toArray();
+		}
 		// merge array and convert to object
 		$obj_merged = (object)array_merge((array) $array_customer, (array) $array_address);
 		// process bind
@@ -80,7 +89,7 @@ class ClientFormat extends Facade{
 	}
 
 	public function displayCustomerAddress($long = false){
-		return $this->address_line_1 . ' ' .  $this->address_line_2 . ' ' .$this->town . ' ' .$this->county  . ( $long ? ' ' . $this->postcode:'');
+		return $this->address_line_1.' '.$this->address_line_2.' '.$this->town.' '.$this->county.' '.( $long ? $this->postcode:' ');
 	}
 
 	public function displayGoogleMapLink(){
@@ -91,8 +100,16 @@ class ClientFormat extends Facade{
 		return "http://maps.google.co.uk/maps?daddr=".$this->postcode;
 	}
 
+	public function parseDate($value, $dateFormat = 'Y-m-d'){
+		return \Carbon\Carbon::parse( $value )->format($dateFormat);
+	}
+
 	public function displayDob($dateFormat = 'Y-m-d'){
 		return \Carbon\Carbon::parse( $this->dob )->format($dateFormat);
+	}
+
+	public function displayPartnerDob($dateFormat = 'Y-m-d'){
+		return \Carbon\Carbon::parse( $this->partner_dob )->format($dateFormat);
 	}
 
 }

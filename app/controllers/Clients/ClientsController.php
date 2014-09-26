@@ -388,12 +388,12 @@ class ClientsController extends \BaseController {
 		$data['portlet_body_class']	= 'form';
 		$data['portlet_title']		= 'Client';
 		$data['fa_icons']			= 'user';
-		$customer					= \Clients\Clients::find($clientId);
-		$data['currentClient']		= \Clients\ClientEntity::get_instance()->bindCustomer($customer);
+		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+		$data['customer']			= \Clients\Clients::find($clientId);
+		$data['currentClient']		= \Clients\ClientEntity::get_instance()->bindCustomer($data['customer']);
 		$data['center_column_view']	= 'dashboard';
 		$data 						= array_merge($data,$dashboard_data);
-		//echo $customer->address()->count();
-		//var_dump($customer->address()->first()->toArray());
+		//var_dump($data['currentClient']);
 		//exit();
 		return \View::make( $data['view_path'] . '.clients.summary', $data );
 	}

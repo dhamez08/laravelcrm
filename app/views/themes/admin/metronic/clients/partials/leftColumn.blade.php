@@ -55,10 +55,21 @@
 		 		<h5><strong>Family</strong></h5>
 		 		<div class="form-body client-detail">
 		 			<div class="form-group">
-		 				<p class="form-control-static"><strong>Karen Warden</strong> - 02/11/1978 - Spouse/Partner</p>
-		 				<p class="form-control-static"><strong>Finley Warden</strong> - 29/09/2011 - Son</p>
-		 				<p class="form-control-static"><strong>Neve Summer Warden</strong> - 20/06/2014 - Spouse/Partner</p>
-		 				<p class="form-control-static"><a href="#"><i class="fa fa-plus-circle"></i> Create new person</a></p>
+		 				@if( $customer->customerAssociatedTo($customer->id)->count() > 0 )
+							@foreach( $customer->customerAssociatedTo($customer->id)->get() as $family )
+								@if( $family->relationship == 'Spouse/Partner' )
+									<p class="form-control-static">
+										<strong>{{$family->partner_title.' '.$family->partner_first_name.' '.$family->partner_last_name}}</strong>
+										- {{$currentClient->parseDate($family->partner_dob)}} - {{$family->relationship}}
+									</p>
+								@elseif( $family->type == 4 )
+									<p class="form-control-static">
+										<strong>{{$family->first_name.' '.$family->last_name}}</strong>
+										- {{$currentClient->parseDate($family->dob)}} - {{$family->relationship}}
+									</p>
+								@endif
+							@endforeach
+		 				@endif
 		 			</div>
 		 		</div>
 		 	</div>
