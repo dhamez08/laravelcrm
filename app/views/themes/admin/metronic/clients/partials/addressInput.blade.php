@@ -84,7 +84,7 @@
 	<label class="control-label">Type</label>
 	{{
 		Form::select(
-			'type',
+			'address_type',
 			$addressType,
 			null,
 			array(

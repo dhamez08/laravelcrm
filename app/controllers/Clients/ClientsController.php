@@ -204,6 +204,32 @@ class ClientsController extends \BaseController {
 		return \View::make( $data['view_path'] . '.clients.create', $data );
 	}
 
+	public function getEdit($clientId){
+		$data 						= $this->data_view;
+		$data['pageTitle'] 			= 'Client';
+		$data['contentClass'] 		= 'create';
+		$data['portlet_body_class']	= 'form';
+		$data['portlet_title']		= 'Add Client';
+		$data['fa_icons']			= 'user';
+		$data['title']				= $this->getTitleClient();
+		$data['maritalStatus']		= $this->getMaritalStatus();
+		$data['livingStatus']		= $this->getLivingStatus();
+		$data['employmentStatus']	= $this->getEmploymentStatus();
+		$data['phoneFor']			= $this->getPhoneFor();
+		$data['emailFor']			= $this->getEmailFor();
+		$data['relationToClient']	= $this->getRelationshipToClient();
+		$data['addressType']		= $this->getAddressType();
+		$data['websiteType']		= $this->getWebsiteFor();
+		$data['websiteIs']			= $this->getWebsiteIs();
+		//$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+		$data['customer']			= \Clients\Clients::find($clientId);
+		//$data['currentClient']		= \Clients\ClientEntity::get_instance()->bindCustomer($data['customer']);
+		$data 						= array_merge($data,$this->getSetupThemes());
+		$data['html_body_class'] 	= $this->data_view['html_body_class'];
+		$data['center_column_view'] = 'dashboard';
+		return \View::make( $data['view_path'] . '.clients.edit', $data );
+	}
+
 	public function getFiles()
 	{
 		$data 					= $this->data_view;
@@ -289,7 +315,7 @@ class ClientsController extends \BaseController {
 					$partner = \Clients\ClientEntity::get_instance()->createOrUpdate();
 				}// if Married add partner details
 				\Input::merge(
-					array('type'=>\Input::get('type'))
+					array('type'=>\Input::get('address_type'))
 				);
 				// insert address
 				\CustomerAddress\CustomerAddressController::get_instance()->postAddressWrapper($customer->id);
@@ -365,10 +391,13 @@ class ClientsController extends \BaseController {
 					'added a new personal client ',
 					1
 				);
+
 				// update dashboard
+				\Session::flash('message', 'Successfully Added Customer');
+				return \Redirect::action('Clients\ClientsController@getIndex');
+
 			}//end customer id
-			\Session::flash('message', 'Successfully Added Customer');
-			return \Redirect::action('Clients\ClientsController@getIndex');
+
 		}else{
 			\Input::flash();
 			return \Redirect::action('Clients\ClientsController@getCreate')
@@ -396,6 +425,62 @@ class ClientsController extends \BaseController {
 		//var_dump($data['currentClient']);
 		//exit();
 		return \View::make( $data['view_path'] . '.clients.summary', $data );
+	}
+
+	public function putClientUpdate($clientId){
+		\Input::merge(
+			array(
+				'dob' => \Clients\ClientEntity::get_instance()->convertDate(\Input::get('dob')),
+				'ref' => \Auth::id().time(),
+				'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
+				'belongs_user' => \Auth::id(),
+			)
+		);
+		$rules = array(
+			'title' => 'required',
+			'first_name' => 'required|min:3',
+			'last_name' => 'required|min:3',
+			'dob' => 'required',
+			'job_title' => 'required|min:3',
+			'marital_status' => 'required',
+			'partner_title' => 'required_if:marital_status,Married',
+			'partner_first_name' => 'required_if:marital_status,Married|min:3',
+			'partner_last_name' => 'required_if:marital_status,Married|min:3',
+			'partner_dob' => 'required_if:marital_status,Married',
+			'partner_job_title' => 'required_if:marital_status,Married|min:3',
+		);
+		$messages = array(
+			'title.required'=>'Person Title is required',
+			'first_name.required'=>'Person Name is required',
+			'first_name.min'=>'Person Name must have more than 3 character',
+			'last_name.required'=>'Person Last Name is required',
+			'last_name.min'=>'Person Last Name must have more than 3 character',
+			'dob.required'=>'Person Date of birth is required',
+			'job_title.required'=>'Person Job Title is required',
+			'job_title.min'=>'Person Job Title must have more than 3 character',
+			'marital_status.required'=>'Person Marital Status is required',
+			'partner_title.required_if'=>'Partner Title is required',
+			'partner_first_name.required_if'=>'Partner Name is required',
+			'partner_first_name.min'=>'Partner Name must have more than 3 character',
+			'partner_last_name.required_if'=>'Partner Last Name is required',
+			'partner_last_name.min'=>'Partner Last Name must have more than 3 character',
+			'partner_dob.required_if'=>'Partner Date of birth is required',
+			'partner_job_title.required_if'=>'Partner Title is required',
+			'partner_job_title.min'=>'Partner Title Job Title must have more than 3 character',
+		);
+		$validator = \Validator::make(\Input::all(), $rules, $messages);
+		if ( $validator->passes() ) {
+			$customer = \Clients\ClientEntity::get_instance()->createOrUpdate($clientId);
+			if( $customer ){
+				\Session::flash('message', 'Successfully Updated Customer');
+				return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>$clientId));
+			}
+		}else{
+			\Input::flash();
+			return \Redirect::action('Clients\ClientsController@getEdit',array('clientId'=>$clientId))
+			->withErrors($validator)
+			->withInput();
+		}
 	}
 
 	/**

@@ -34,7 +34,7 @@
 						<p class="form-control-static">Marital Status: <strong>{{$currentClient->marital_status}}</strong></p>
 						<p class="form-control-static">Employment Status: <strong>{{$currentClient->employment_status}}</strong></p>
 						<p class="form-control-static">Occupation: <strong>{{$currentClient->job_title}}</strong></p>
-						<p class="form-control-static"><a href="#">Edit client information</a></p>
+						<p class="form-control-static"><a href="{{action('Clients\ClientsController@getEdit',array('clientId'=>$customer->id))}}">Edit client information</a></p>
 		 			</div>
 		 		</div>
 		 	</div>
