@@ -236,7 +236,7 @@ class ClientsController extends \BaseController {
 		/*var_dump($data['telephone']->get()->toArray());
 		var_dump($data['email']->get()->toArray());
 		var_dump($data['url']->get()->toArray());
-		exit();*
+		exit();*/
 		return \View::make( $data['view_path'] . '.clients.edit', $data );
 	}
 

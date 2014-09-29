@@ -1,11 +1,11 @@
-<div id="edit-clone-phone">
-	<div class="row phone-wrapper">
+<div id="edit-clone-email">
+	<div class="row email-wrapper">
 		<div class="col-xs-4">
 			<div class="form-group">
 			{{
-				Form::text(
-					'telephone['.$telephoneIdx.'][number]',
-					$val->number,
+				Form::email(
+					'emails['.$emailIdx.'][mail]',
+					$val->email,
 					array(
 						'class'=>'form-control input-sm'
 					)
@@ -17,12 +17,12 @@
 			<div class="form-group">
 			{{
 				Form::select(
-					'telephone['.$telephoneIdx.'][for]',
-					$phoneFor,
+					'emails['.$emailIdx.'][for]',
+					$emailFor,
 					$val->type,
 					array(
 						'class'=>'form-control input-sm',
-						'id'=>'basePhone'
+						'id'=>'baseEmail'
 					)
 				);
 			}}

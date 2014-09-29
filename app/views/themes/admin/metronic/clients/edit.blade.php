@@ -91,23 +91,36 @@
 					<h3 class="form-section">Telephone Number</h3>
 					@if( isset($telephone) )
 						<?php $telephoneIdx = 0; ?>
-						@foreach( $telephone as $val )
+						@foreach( $telephone->get() as $val )
 							@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.EditContactInput' )
 							<?php $telephoneIdx++; ?>
 						@endforeach
-					@else
-						@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.contactInput' )
 					@endif
+					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.contactInput' )
 				</div>
 				<div class="col-md-6">
 					<h3 class="form-section">Email</h3>
-					{{--@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.emailInput' )--}}
+					@if( isset($email) )
+						<?php $emailIdx = 0; ?>
+						@foreach( $email->get() as $val )
+							@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.EditEmailInput' )
+							<?php $emailIdx++; ?>
+						@endforeach
+					@endif
+					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.emailInput' )
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-12">
 					<h3 class="form-section">Website</h3>
-					{{--@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.urlInput' )--}}
+					@if( isset($url) )
+						<?php $urlIdx = 0; ?>
+						@foreach( $url->get() as $val )
+							@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.EditUrlInput' )
+							<?php $urlIdx++; ?>
+						@endforeach
+					@endif
+					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.urlInput' )
 				</div>
 			</div>
 		</div>
