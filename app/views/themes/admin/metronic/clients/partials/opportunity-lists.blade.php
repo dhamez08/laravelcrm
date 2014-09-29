@@ -32,7 +32,7 @@
 					<td>{{ $opportunity->milestone }}({{ $opportunity->probability }}%)</td>
 					<td>£{{ $opportunity->value }}</td>
 					<td>{{ date('d/m/Y',strtotime($opportunity->close_date)) }}</td>
-					<td>
+					<td align="right">
 						<input type="hidden" id="opportunity_edit_name_{{ $opportunity->id }}" value="{{ $opportunity->name }}">
 						<input type="hidden" id="opportunity_edit_desc_{{ $opportunity->id }}" value="{{ $opportunity->text }}">
 						<input type="hidden" id="opportunity_edit_milestone_{{ $opportunity->id }}" value="{{ $opportunity->milestone }}">
@@ -41,6 +41,11 @@
 						<input type="hidden" id="opportunity_edit_tags_{{ $opportunity->id }}" value="{{ implode(',',$tags); }}">
 						<input type="hidden" id="opportunity_edit_close_date_{{ $opportunity->id }}" value="{{ date('d/m/Y',strtotime($opportunity->close_date)) }}">
 						<a href="javascript:void(0)" class="btn btn-sm blue editOpportunity" opportunity-id="{{ $opportunity->id }}"><i class="fa fa-edit"></i> Edit</a>
+						@if($opportunity->status==0)
+						<a href="{{ url('clients/update-opportunity-status/'.$opportunity->id.'/1') }}" class="btn btn-sm yellow"><i class="fa fa-edit"></i> Close</a>
+						@else
+						<a href="{{ url('clients/update-opportunity-status/'.$opportunity->id.'/0') }}" class="btn btn-sm yellow"><i class="fa fa-edit"></i> Open</a>
+						@endif
 						<a href="{{ url('clients/delete-opportunities/'.$opportunity->id) }}" class="btn btn-sm red" onclick="return confirm('Are you sure you want to delete?')"><i class="fa fa-times"></i> Remove</a>
 					</td>
 				</tr>
