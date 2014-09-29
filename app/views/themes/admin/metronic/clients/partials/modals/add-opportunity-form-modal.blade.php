@@ -63,6 +63,25 @@
                 </div>
               </div>
             </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="control-label">Expected Close Date:</label>
+                  <input type="text" class="form-control" name="close_date" data-provide="datepicker" data-date-format="dd/mm/yyyy" />
+                </div>
+              </div>
+            </div>
+            <div class="row op_status" style="display:none">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="control-label">Status:</label>
+                  <select name="status" class="form-control">
+                    <option value="0">Open</option>
+                    <option value="1">Close</option>
+                  </select>
+                </div>
+              </div>
+            </div>
             @if(count($opp_tags)>0)
             <div class="row">
               <div class="col-md-12">
@@ -77,14 +96,6 @@
               </div>
             </div>
             @endif
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label class="control-label">Expected Close Date:</label>
-                  <input type="text" class="form-control" name="close_date" data-provide="datepicker" data-date-format="dd/mm/yyyy" />
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       	<div class="row">

@@ -519,6 +519,11 @@ class ClientsController extends \BaseController {
 		$data = \CustomerOpportunities\CustomerOpportunitiesController::get_instance()->getDelete($id);
 		return $data;
 	}
+
+	public function getUpdateOpportunityStatus($id, $status) {
+		$data = \CustomerOpportunities\CustomerOpportunitiesController::get_instance()->getUpdateStatus($id, $status);
+		return $data;
+	}
 	/**
 	 * For Oppurtunities
 	 * */

@@ -181,4 +181,16 @@ class CustomerOpportunitiesController extends \BaseController {
 		}
 	}
 
+	public function getUpdateStatus($id, $status) {
+		$opportunity = \CustomerOpportunities\CustomerOpportunitiesEntity::get_instance()->find($id);
+		if($opportunity) {
+			$opportunity->status = $status;
+			$opportunity->save();
+			\Session::flash('message', 'Opportunity status was successfully saved');
+			return \Redirect::back();
+		} else {
+			return \Redirect::back()->withErrors(['There was a problem updating the opportunity, please try again']);
+		}
+	}
+
 }

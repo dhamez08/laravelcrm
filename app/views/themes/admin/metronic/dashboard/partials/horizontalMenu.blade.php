@@ -21,7 +21,7 @@
 			</a>
 		</li>
 		<li class="classic-menu-dropdown">
-			<a href="index_3.html">
+			<a href="{{url('pipeline')}}">
 			<i class="fa fa-bar-chart-o"></i>  Sales Pipeline
 			</a>
 		</li>
