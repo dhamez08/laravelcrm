@@ -13,4 +13,8 @@ class CustomerEmail extends \Eloquent{
 	 */
 	protected $table = 'customer_email';
 
+	public function client(){
+		return $this->belongsTo('\Clients\Clients','customer_id','id');
+	}
+
 }

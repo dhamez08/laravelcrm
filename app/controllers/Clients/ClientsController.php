@@ -223,10 +223,20 @@ class ClientsController extends \BaseController {
 		$data['websiteIs']			= $this->getWebsiteIs();
 		//$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
 		$data['customer']			= \Clients\Clients::find($clientId);
-		//$data['currentClient']		= \Clients\ClientEntity::get_instance()->bindCustomer($data['customer']);
+		$data['currentClient']		= \Clients\ClientEntity::get_instance()->bindCustomer($data['customer']);
+		$data['associate']			= \Clients\ClientEntity::get_instance()->setAssociateCustomer($clientId);
+		$data['children']			= \Clients\ClientEntity::get_instance()->getCustomerChildren();
+		$data['partner']			= \Clients\ClientEntity::get_instance()->getCustomerPartner();
+		$data['telephone']			= $data['customer']->telephone();
+		$data['email']				= $data['customer']->emails();
+		$data['url']				= $data['customer']->url();
 		$data 						= array_merge($data,$this->getSetupThemes());
 		$data['html_body_class'] 	= $this->data_view['html_body_class'];
 		$data['center_column_view'] = 'dashboard';
+		/*var_dump($data['telephone']->get()->toArray());
+		var_dump($data['email']->get()->toArray());
+		var_dump($data['url']->get()->toArray());
+		exit();*
 		return \View::make( $data['view_path'] . '.clients.edit', $data );
 	}
 
@@ -248,6 +258,7 @@ class ClientsController extends \BaseController {
 				'ref' => \Auth::id().time(),
 				'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
 				'belongs_user' => \Auth::id(),
+				'email' => '',
 			)
 		);
 		$rules = array(
@@ -297,7 +308,7 @@ class ClientsController extends \BaseController {
 					\Input::merge(
 						array(
 							'type'=>1,
-							'dob' => \Clients\ClientEntity::get_instance()->convertDate(\Input::get('dob')),
+							'partner_dob' => \Clients\ClientEntity::get_instance()->convertDate(\Input::get('partner_dob')),
 							'ref' => \Auth::id().time(),
 							'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
 							'belongs_user' => \Auth::id(),
@@ -310,6 +321,7 @@ class ClientsController extends \BaseController {
 							'employment_status' => \Input::get('partner_employment_status',''),
 							'associated' => $customer->id,
 							'relationship' => 'Spouse/Partner',
+							'email' => '',
 						)
 					);
 					$partner = \Clients\ClientEntity::get_instance()->createOrUpdate();
@@ -335,6 +347,7 @@ class ClientsController extends \BaseController {
 									'associated' => $customer->id,
 									'relationship' => $val['relation_to_client'],
 									'type' => 4,
+									'email' => '',
 								)
 							);
 							\Clients\ClientEntity::get_instance()->createOrUpdate();
@@ -420,6 +433,9 @@ class ClientsController extends \BaseController {
 		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
 		$data['customer']			= \Clients\Clients::find($clientId);
 		$data['currentClient']		= \Clients\ClientEntity::get_instance()->bindCustomer($data['customer']);
+		$data['telephone']			= $data['customer']->telephone();
+		$data['email']				= $data['customer']->emails();
+		$data['url']				= $data['customer']->url();
 		$data['center_column_view']	= 'dashboard';
 		$data 						= array_merge($data,$dashboard_data);
 		//var_dump($data['currentClient']);

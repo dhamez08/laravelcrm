@@ -13,4 +13,8 @@ class CustomerTelephone extends \Eloquent{
 	 */
 	protected $table = 'customer_telephone';
 
+	public function client(){
+		return $this->belongsTo('\Clients\Clients','customer_id','id');
+	}
+
 }

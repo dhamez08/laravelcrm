@@ -10,6 +10,10 @@ class ClientEntity extends \Eloquent{
 
 	protected static $instance = null;
 
+	protected $partner_data;
+
+	protected $children_data;
+
 	public function __construct(){
 
 	}
@@ -67,41 +71,41 @@ class ClientEntity extends \Eloquent{
 		$clients->ref 						= \Input::get('ref');
 		$clients->belongs_to 				= \Input::get('belongs_to');
 		$clients->belongs_user 				= \Input::get('belongs_user');
-		$clients->title 					= \Input::get('title');
-		$clients->first_name 				= \Input::get('first_name');
-		$clients->last_name 				= \Input::get('last_name');
-		$clients->email 					= \Input::get('email');
-		$clients->address_id 				= \Input::get('address_id');
-		$clients->gender 					= \Input::get('gender');
-		$clients->dob 						= \Input::get('dob');
-		$clients->smoker 					= \Input::get('smoker');
-		$clients->marital_status 			= \Input::get('marital_status');
-		$clients->living_status 			= \Input::get('living_status');
-		$clients->employment_status 		= \Input::get('employment_status');
-		$clients->occupation 				= \Input::get('occupation');
-		$clients->telephone_day 			= \Input::get('telephone_day');
-		$clients->telephone_evening 		= \Input::get('telephone_evening');
-		$clients->telephone_mobile 			= \Input::get('telephone_mobile');
-		$clients->partner_title 			= \Input::get('partner_title');
-		$clients->partner_first_name 		= \Input::get('partner_first_name');
-		$clients->partner_last_name 		= \Input::get('partner_last_name');
-		$clients->partner_dob 				= \Input::get('partner_dob');
-		$clients->partner_gender 			= \Input::get('partner_gender');
-		$clients->partner_employment 		= \Input::get('partner_employment');
-		$clients->partner_occupation 		= \Input::get('partner_occupation');
-		$clients->company_name 				= \Input::get('company_name');
-		$clients->companyreg 				= \Input::get('companyreg');
-		$clients->companyemployee 			= \Input::get('companyemployee');
-		$clients->sector 					= \Input::get('sector');
-		$clients->background_info 			= \Input::get('background_info');
-		$clients->job_title 				= \Input::get('job_title');
-		$clients->organisation 				= \Input::get('organisation');
-		$clients->associated				= \Input::get('associated');
-		$clients->relationship 				= \Input::get('relationship');
-		$clients->profile_image 			= \Input::get('profile_image');
-		$clients->duedil_company_details 	= \Input::get('duedil_company_details');
-		$clients->vmd						= \Input::get('vmd');
-		$clients->vmd_pin 					= \Input::get('vmd_pin');
+		$clients->title 					= \Input::get('title','');
+		$clients->first_name 				= \Input::get('first_name','');
+		$clients->last_name 				= \Input::get('last_name','');
+		$clients->email 					= \Input::get('email','');
+		$clients->address_id 				= \Input::get('address_id',0);
+		$clients->gender 					= \Input::get('gender','');
+		$clients->dob 						= \Input::get('dob','0000-00-00');
+		$clients->smoker 					= \Input::get('smoker',0);
+		$clients->marital_status 			= \Input::get('marital_status','');
+		$clients->living_status 			= \Input::get('living_status','');
+		$clients->employment_status 		= \Input::get('employment_status','');
+		$clients->occupation 				= \Input::get('occupation','');
+		$clients->telephone_day 			= \Input::get('telephone_day','');
+		$clients->telephone_evening 		= \Input::get('telephone_evening','');
+		$clients->telephone_mobile 			= \Input::get('telephone_mobile','');
+		$clients->partner_title 			= \Input::get('partner_title','');
+		$clients->partner_first_name 		= \Input::get('partner_first_name','');
+		$clients->partner_last_name 		= \Input::get('partner_last_name','');
+		$clients->partner_dob 				= \Input::get('partner_dob','');
+		$clients->partner_gender 			= \Input::get('partner_gender','');
+		$clients->partner_employment 		= \Input::get('partner_employment','');
+		$clients->partner_occupation 		= \Input::get('partner_occupation','');
+		$clients->company_name 				= \Input::get('company_name','');
+		$clients->companyreg 				= \Input::get('companyreg','');
+		$clients->companyemployee 			= \Input::get('companyemployee','');
+		$clients->sector 					= \Input::get('sector','');
+		$clients->background_info 			= \Input::get('background_info','');
+		$clients->job_title 				= \Input::get('job_title','');
+		$clients->organisation 				= \Input::get('organisation','');
+		$clients->associated				= \Input::get('associated','');
+		$clients->relationship 				= \Input::get('relationship','');
+		$clients->profile_image 			= \Input::get('profile_image','');
+		$clients->duedil_company_details 	= \Input::get('duedil_company_details','');
+		$clients->vmd						= \Input::get('vmd','');
+		$clients->vmd_pin 					= \Input::get('vmd_pin','');
 
 		$clients->save();
 		return $clients;
@@ -148,6 +152,42 @@ class ClientEntity extends \Eloquent{
 			}
 			return $arrayCustomer;
 		}
+	}
+
+	public function setAssociateCustomer($customerId){
+		$customer = \Clients\Clients::find($customerId);
+		if( $customer->customerAssociatedTo($customer->id)->count() > 0 ){
+			$children = 0;
+			foreach( $customer->customerAssociatedTo($customer->id)->get() as $family ){
+				if( $family->relationship == 'Spouse/Partner' ){
+					$this->partner_data = array(
+						'partner_id'=>$family->id,
+						'partner_title'=>$family->partner_title,
+						'partner_first_name'=>$family->partner_first_name,
+						'partner_last_name'=>$family->partner_last_name,
+						'partner_dob'=>$family->partner_dob,
+						'partner_job_title'=>$family->job_title,
+						'relationship'=>$family->relationship,
+					);
+				}elseif( $family->type == 4 ){
+					$this->children_data[] = (object)array(
+						'children_id'=>$family->id,
+						'first_name'=>$family->first_name,
+						'last_name'=>$family->last_name,
+						'dob'=>$family->dob,
+						'relationship'=>$family->relationship,
+					);
+				}
+			}
+		}
+	}
+
+	public function getCustomerPartner(){
+		return (object)$this->partner_data;
+	}
+
+	public function getCustomerChildren(){
+		return $this->children_data;
 	}
 
 }

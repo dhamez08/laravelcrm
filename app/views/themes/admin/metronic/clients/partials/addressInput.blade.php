@@ -1,10 +1,24 @@
+@if( isset($customer ) )
+	@if( $customer->address()->count() > 0 )
+		@foreach($customer->address()->get() as $address)
+			<?php
+				$address_line_2 = $address->address_line_2;
+				$postcode 		= $address->postcode;
+				$address_line_1 = $address->address_line_1;
+				$town 			= $address->town;
+				$address_type 	= $address->type;
+				$county 		= $address->county;
+			?>
+		@endforeach
+	@endif
+@endif
 <div class="col-xs-6">
 	<div class="form-group">
 	<label class="control-label">House Number</label>
 	{{
 		Form::text(
-			'house_number',
-			null,
+			'address_line_2',
+			isset($address_line_2) ? $address_line_2:null,
 			array(
 				'class'=>'form-control input-sm'
 			)
@@ -18,8 +32,8 @@
 	<div class="input-group">
 		{{
 			Form::text(
-				'post_code',
-				null,
+				'postcode',
+				isset($postcode) ? $postcode:null,
 				array(
 					'class'=>'form-control input-sm',
 					'id'=>'postcode'
@@ -37,7 +51,7 @@
 	{{
 		Form::textarea(
 			'address_line_1',
-			null,
+			isset($address_line_1) ? $address_line_1:null,
 			array(
 				'class'=>'form-control input-sm',
 				'rows'=>5,
@@ -55,7 +69,7 @@
 	{{
 		Form::text(
 			'town',
-			null,
+			isset($town) ? $town:null,
 			array(
 				'class'=>'form-control input-sm',
 				'id'=>'town'
@@ -70,7 +84,7 @@
 	{{
 		Form::text(
 			'county',
-			null,
+			isset($county) ? $county:null,
 			array(
 				'class'=>'form-control input-sm',
 				'id'=>'county'
@@ -86,7 +100,7 @@
 		Form::select(
 			'address_type',
 			$addressType,
-			null,
+			isset($address_type) ? $address_type:null,
 			array(
 				'class'=>'form-control input-sm',
 			)

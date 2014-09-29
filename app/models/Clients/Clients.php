@@ -17,6 +17,18 @@ class Clients extends \Eloquent{
 		return $this->hasOne('\CustomerAddress\CustomerAddress','customer_id','id');
 	}
 
+	public function telephone(){
+		return $this->hasMany('\CustomerTelephone\CustomerTelephone','customer_id','id');
+	}
+
+	public function emails(){
+		return $this->hasMany('\CustomerEmail\CustomerEmail','customer_id','id');
+	}
+
+	public function url(){
+		return $this->hasMany('\CustomerUrl\CustomerUrl','customer_id','id');
+	}
+
 	public function scopeClientId($query, $id){
 		return $query->where('id','=',$id);
 	}

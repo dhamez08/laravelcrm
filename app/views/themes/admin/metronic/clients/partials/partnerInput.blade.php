@@ -1,3 +1,17 @@
+@if( isset($customer) )
+	@if( $customer->customerAssociatedTo($customer->id)->count() > 0 )
+		@foreach( $customer->customerAssociatedTo($customer->id)->get() as $family )
+			@if( $family->relationship == 'Spouse/Partner' )
+				<?php
+					$partner_job_title = $family->job_title;
+					$partner_first_name = $family->partner_first_name;
+					$partner_last_name = $family->partner_last_name;
+					$partner_dob = $family->partner_dob;
+				?>
+			@endif
+		@endforeach
+	@endif
+@endif
 <div class="col-xs-2">
 	<div class="form-group">
 	<label class="control-label">Title</label>
@@ -63,7 +77,7 @@
 	{{
 		Form::text(
 			'partner_job_title',
-			null,
+			isset($partner->partner_job_title) ? $partner->partner_job_title:null,
 			array(
 				'class'=>'form-control input-sm'
 			)

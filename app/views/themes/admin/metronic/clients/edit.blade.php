@@ -66,22 +66,38 @@
 				<div class="row">
 					<div class="col-md-12">
 						<h3 class="form-section">Partner Details</h3>
-						{{--@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.partnerInput' )--}}
+						@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.partnerInput' )
 					</div>
 				</div>
 			</div>
-			<div id="children_details" class="hide">
+			<div id="children_details" class="<?php echo  isset($children) ?  count($children) > 0 ? 'show':'hide' : 'hide';?>">
 				<div class="row">
 					<div class="col-md-12">
 						<h3 class="form-section">Childrens Details</h3>
-						{{--@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.childrenInput' )--}}
+						@if( isset($children) )
+							<?php $childrenIdx = 0; ?>
+							@foreach( $children as $val )
+								@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.editChildrenInput' )
+								<?php $childrenIdx++; ?>
+							@endforeach
+						@else
+							@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.childrenInput' )
+						@endif
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-6">
 					<h3 class="form-section">Telephone Number</h3>
-					{{--@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.contactInput' )--}}
+					@if( isset($telephone) )
+						<?php $telephoneIdx = 0; ?>
+						@foreach( $telephone as $val )
+							@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.EditContactInput' )
+							<?php $telephoneIdx++; ?>
+						@endforeach
+					@else
+						@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.contactInput' )
+					@endif
 				</div>
 				<div class="col-md-6">
 					<h3 class="form-section">Email</h3>
