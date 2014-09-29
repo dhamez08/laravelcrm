@@ -63,6 +63,20 @@
                 </div>
               </div>
             </div>
+            @if(count($opp_tags)>0)
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="control-label">Assign Tag: <small>(select multiple by holding Crtl)</small></label>
+                  <select multiple="multiple" name="tag[]" class="form-control">
+                  @foreach($opp_tags as $tag)
+                    <option value="{{ $tag->id }}">{{ $tag->tag }}</option>
+                  @endforeach
+                  </select>
+                </div>
+              </div>
+            </div>
+            @endif
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">

@@ -8,6 +8,8 @@ class CustomerOpportunitiesTagsEntity extends \Eloquent{
 
 	protected static $instance = null;
 
+	protected $table = 'customer_opportunities_tags';
+
 	public function __construct(){
 
 	}
@@ -27,6 +29,14 @@ class CustomerOpportunitiesTagsEntity extends \Eloquent{
 		return self::$instance;
 	}
 
+	public function opportunity() {
+		return $this->belongsTo('CustomerOpportunities\CustomerOpportunitiesEntity');
+	}
+
+	public function tag() {
+		return $this->belongsTo('OpportunityTag\OpportunityTagEntity');
+	}
+
 	/**
 	 * This is use to create user or update
 	 * this is full field, mainly use in register
@@ -37,16 +47,20 @@ class CustomerOpportunitiesTagsEntity extends \Eloquent{
 	 * @return db last insert id
 	 * */
 	public function createOrUpdate($id = null){
-		if( is_null($id) ) {
-			//create
-			$obj = new \CustomerOpportunitiesTags\CustomerOpportunitiesTags;
-		}else{
-			//update
-			$obj = \CustomerOpportunitiesTags\CustomerOpportunitiesTags::find($id);
+		$tag = $this->where('opp_id','=',\Input::get('opp_id'))
+					->where('opp_tag','=',\Input::get('opp_tag'))->get();
+		if(count($tag)==0) {
+			if( is_null($id) ) {
+				//create
+				$obj = new \CustomerOpportunitiesTags\CustomerOpportunitiesTags;
+			}else{
+				//update
+				$obj = \CustomerOpportunitiesTags\CustomerOpportunitiesTags::find($id);
+			}
+			$obj->opp_id = \Input::get('opp_id');
+			$obj->opp_tag = \Input::get('opp_tag');
+			$obj->save();
+			return $obj;
 		}
-		$obj->opp_id = \Input('opp_id','');
-		$obj->opp_tag = \Input('opp_tag',0);
-		$obj->save();
-		return $obj;
 	}
 }

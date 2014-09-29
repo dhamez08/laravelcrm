@@ -33,6 +33,10 @@ class OpportunityTagEntity extends \Eloquent{
 		return self::$instance;
 	}
 
+	public function opportunities_tag() {
+		return $this->hasMany('CustomerOpportunitiesTags\CustomerOpportunitiesTagsEntity','opp_tag');
+	}
+
 	public function saveTag($data) {
 
 		$this->tag = $data['tag'];

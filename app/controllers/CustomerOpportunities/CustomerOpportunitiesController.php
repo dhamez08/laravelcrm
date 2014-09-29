@@ -83,8 +83,10 @@ class CustomerOpportunitiesController extends \BaseController {
 		$data['pageTitle'] 		= 'Client - Opportunities';
 		$data['portlet_title'] 	= 'Client - Opportunities';
 		$data['contentClass'] 	= '';
-		$data['opportunities'] = \CustomerOpportunities\CustomerOpportunitiesEntity::get_instance()->getListsByLoggedUser();
-		$data['client_id'] = $client_id;
+		$data['opportunities'] 	= \CustomerOpportunities\CustomerOpportunitiesEntity::get_instance()->getListsByLoggedUser();
+		//$data['opportunities'] 	= \CustomerOpportunities\CustomerOpportunitiesEntity::with('tags.tag')->get();
+		$data['opp_tags'] 		= \OpportunityTag\OpportunityTagEntity::get_instance()->getTagsByLoggedUser();
+		$data['client_id'] 		= $client_id;
 		$data['milestones']		= $this->getOpportunityMilestones();
 		$data['probabilities']	= $this->getOpportunityProbabilities();
 		$data 					= array_merge($data,$this->getSetupThemes());
@@ -138,7 +140,23 @@ class CustomerOpportunitiesController extends \BaseController {
 			);
 
 			// add to database
-			if(\CustomerOpportunities\CustomerOpportunitiesEntity::get_instance()->createOrUpdate(\Input::get('id')<>'' ? \Input::get('id'):null)) {
+			$opp = \CustomerOpportunities\CustomerOpportunitiesEntity::get_instance()->createOrUpdate(\Input::get('id')<>'' ? \Input::get('id'):null);
+			if($opp) {
+				//check if tag exists
+				if(\Input::get('tag')) {
+					//delete existing tag
+					\CustomerOpportunitiesTags\CustomerOpportunitiesTagsEntity::get_instance()->where('opp_id','=',$opp->id)->delete();
+					foreach(\Input::get('tag') as $tag) {
+						\Input::merge(
+							array(
+								'opp_id'=>$opp->id,
+								'opp_tag'=>$tag
+							)
+						);
+						$opp_tag = \CustomerOpportunitiesTags\CustomerOpportunitiesTagsEntity::get_instance()->createOrUpdate();
+					}
+				}
+
 				\Session::flash('message', 'Opportunity was successfully saved');
 				return \Redirect::back();
 			} else {

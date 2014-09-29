@@ -29,6 +29,10 @@ class CustomerOpportunitiesEntity extends \Eloquent{
 		return self::$instance;
 	}
 
+	public function tags() {
+		return $this->hasMany('CustomerOpportunitiesTags\CustomerOpportunitiesTagsEntity','opp_id');
+	}
+
 	/**
 	 * This is use to create user or update
 	 * this is full field, mainly use in register
@@ -57,12 +61,12 @@ class CustomerOpportunitiesEntity extends \Eloquent{
 		$obj->name = \Input::get('opportunity_name','');
 		$obj->text = \Input::get('opportunity_description','');
 		$obj->status = \Input::get('status','');
-		return $obj->save() ? 1:0;
+		return $obj->save() ? $obj:0;
 	}
 
 	public function getListsByLoggedUser() {
-		$obj = new \CustomerOpportunities\CustomerOpportunities;
-		return $obj->where('belongs_to','=',\Auth::id())->get();
+		//$obj = new \CustomerOpportunities\CustomerOpportunities;
+		return $this->with('tags')->where('belongs_to','=',\Auth::id())->get();
 	}
 
 }
