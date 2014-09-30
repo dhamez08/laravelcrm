@@ -81,7 +81,9 @@
 								@if( $family->relationship == 'Spouse/Partner' )
 									<p class="form-control-static">
 										<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$partner->partner_id))}}">
-										<strong>{{$family->partner_title.' '.$family->partner_first_name.' '.$family->partner_last_name}}</strong>
+											<strong>
+												{{$family->partner_title.' '.$family->partner_first_name.' '.$family->partner_last_name}}
+											</strong>
 										</a>
 										- {{$currentClient->parseDate($family->partner_dob)}} - {{$family->relationship}}
 									</p>
@@ -99,7 +101,11 @@
 		 	<div class="col-md-12">
 		 		<div class="form-body client-detail">
 		 			<div class="form-group">
-		 				<p class="form-control-static"><a href="#">Add family</a></p>
+		 				<p class="form-control-static">
+							<a href="{{action('Clients\ClientsController@getAddFamilyPerson',array('clientId'=>$customer->id))}}">
+								Add family
+							</a>
+						</p>
 		 			</div>
 		 		</div>
 		 	</div>

@@ -76,6 +76,12 @@ return array(
 		'Ms'=>'Ms',
 		'Dr'=>'Dr',
 	),
+	'people_relationship' => array(
+		'0'=>'Select',
+		'Spouse/Partner'=>'Spouse/Partner',
+		'Son'=>'Son',
+		'Daughter'=>'Daughter',
+	),
 	'marital_status' => array(
 		''=>'Select',
 		'Married'=>'Married',

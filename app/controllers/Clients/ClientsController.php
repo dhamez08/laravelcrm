@@ -74,6 +74,11 @@ class ClientsController extends \BaseController {
 	 * */
 	protected $opportunity_probabilities;
 
+	/**
+	 * People / Family Relationship
+	 * */
+	protected $people_relationship;
+
 	private $get_customer_type;
 
 	/**
@@ -96,6 +101,7 @@ class ClientsController extends \BaseController {
 		$this->address_type					= \Config::get('crm.address_type');
 		$this->opportunity_milestones		= \Config::get('crm.opportunity_milestone');
 		$this->opportunity_probabilities	= \Config::get('crm.opportunity_probability');
+		$this->people_relationship			= \Config::get('crm.people_relationship');
 		$this->get_customer_type			= array(1,2,3);
 	}
 
@@ -153,6 +159,10 @@ class ClientsController extends \BaseController {
 
 	public function getAddressType(){
 		return $this->address_type;
+	}
+
+	public function getPeopleRelationship(){
+		return $this->people_relationship;
 	}
 
 	/**
@@ -590,6 +600,125 @@ class ClientsController extends \BaseController {
 			->withInput();
 		}
 	}
+
+	/**
+	 * People
+	 * */
+	public function getPeople($clientId){
+		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+		$dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
+		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed');
+
+		$data 						= $this->data_view;
+		$data['pageTitle'] 			= 'Client';
+		$data['contentClass'] 		= '';
+		$data['portlet_body_class']	= 'form';
+		$data['portlet_title']		= 'Client';
+		$data['fa_icons']			= 'user';
+		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+		$data['customer']			= \Clients\Clients::find($clientId);
+		$data['currentClient']		= \Clients\ClientEntity::get_instance()->bindCustomer($data['customer']);
+		$data['telephone']			= $data['customer']->telephone();
+		$data['email']				= $data['customer']->emails();
+		$data['url']				= $data['customer']->url();
+		$data['belongToPartner']	= \Clients\ClientEntity::get_instance()->getPartnerBelong($data['customer']);
+		$data['associate']			= \Clients\ClientEntity::get_instance()->setAssociateCustomer($clientId);
+		$data['partner']			= \Clients\ClientEntity::get_instance()->getCustomerPartner();
+		$data['center_column_view']	= 'dashboard';
+		$data 						= array_merge($data,$dashboard_data);
+		//var_dump($data['partner']->partner_id);
+		//exit();
+		return \View::make( $data['view_path'] . '.clients.people.people', $data );
+	}
+	/**
+	 * People
+	 * */
+
+	/**
+	 * Adding Company Person
+	 * */
+	public function postCompanyPerson(){
+	}
+	/**
+	 * Adding Company Person
+	 * */
+
+	/**
+	 * Adding Family
+	 * */
+	public function getAddFamilyPerson($clientId){
+
+		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+		$dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
+		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed');
+
+		$data 						= $this->data_view;
+		$data['title']				= $this->getTitleClient();
+		$data['pageTitle'] 			= 'Client';
+		$data['contentClass'] 		= '';
+		$data['portlet_body_class']	= 'form';
+		$data['portlet_title']		= 'Client';
+		$data['fa_icons']			= 'user';
+		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+		$data['customer']			= \Clients\Clients::find($clientId);
+		$data['currentClient']		= \Clients\ClientEntity::get_instance()->bindCustomer($data['customer']);
+		$data['telephone']			= $data['customer']->telephone();
+		$data['email']				= $data['customer']->emails();
+		$data['url']				= $data['customer']->url();
+		$data['belongToPartner']	= \Clients\ClientEntity::get_instance()->getPartnerBelong($data['customer']);
+		$data['associate']			= \Clients\ClientEntity::get_instance()->setAssociateCustomer($clientId);
+		$data['partner']			= \Clients\ClientEntity::get_instance()->getCustomerPartner();
+		$data['peopleRelationship']	= $this->getPeopleRelationship();
+		$data['center_column_view']	= 'dashboard';
+		$data 						= array_merge($data,$dashboard_data);
+		//var_dump($data['partner']->partner_id);
+		//exit();
+		return \View::make( $data['view_path'] . '.clients.people.addPeople', $data );
+	}
+
+	public function postFamilyPerson(){
+		if (\Input::get('relationship')=="Spouse/Partner") {
+			\Input::merge(
+				array(
+					'dob' => \Clients\ClientEntity::get_instance()->convertDate(\Input::get('dob')),
+					'ref' => \Auth::id() . time() . rand(1,9),
+					'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
+					'belongs_user' => \Auth::id(),
+					'title' => \Input::get('title'),
+					'first_name' => \Input::get('first_name'),
+					'last_name' => \Input::get('last_name'),
+					'associated' => \Input::get('clientId'),
+					'relationship' => \Input::get('relationship'),
+					'partner_title' => \Input::get('title'),
+					'partner_first_name' => \Input::get('first_name'),
+					'partner_last_name' => \Input::get('last_name'),
+					'partner_dob' => \Clients\ClientEntity::get_instance()->convertDate(\Input::get('dob')),
+					'type' => 3,
+				)
+			);
+		} else {
+			\Input::merge(
+				array(
+					'dob' => \Clients\ClientEntity::get_instance()->convertDate(\Input::get('dob')),
+					'ref' => \Auth::id() . time() . rand(1,9),
+					'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
+					'belongs_user' => \Auth::id(),
+					'title' => \Input::get('title'),
+					'first_name' => \Input::get('first_name'),
+					'last_name' => \Input::get('last_name'),
+					'associated' => \Input::get('clientId'),
+					'relationship' => \Input::get('relationship'),
+					'type' => 4,
+				)
+			);
+		}
+		\Clients\ClientEntity::get_instance()->createOrUpdate();
+		\Session::flash('message', 'Successfully Added Family Person');
+		return \Redirect::action('Clients\ClientsController@getPeople',array('clientId'=>\Input::get('clientId')));
+	}
+	/**
+	 * Adding Family
+	 * */
 
 	/**
 	 * For Oppurtunities
