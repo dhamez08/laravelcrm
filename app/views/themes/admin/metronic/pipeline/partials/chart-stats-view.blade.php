@@ -20,15 +20,15 @@
 			<div class="row">
 				<div class="col-md-6">
 					<!-- BEGIN BASIC CHART PORTLET-->
-					<div class="portlet box blue">
+					<div class="portlet solid bordered grey-cararra">
 						<div class="portlet-title">
 							<div class="caption">
-								<i class="fa fa-gift"></i>Pipeline Forecast
+								<i class="fa fa-bar-chart-o"></i>Pipeline Forecast
 							</div>
 						</div>
 						<div class="portlet-body">
-							<div style="height:400px;text-align:center">        
-                                <div id="flot-placeholder" style="width:100%;height:100%;"></div>        
+							<div style="height:460px;text-align:center">        
+                                <div id="pipeline-forecast-placeholder" style="width:100%;height:100%;"></div>        
                             </div>
 						</div>
 					</div>
@@ -37,48 +37,156 @@
                 <div class="col-md-6">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="portlet box blue">
+                            <div class="portlet solid bordered grey-cararra">
                                 <div class="portlet-title">
                                     <div class="caption">
+                                        <i class="fa fa-calendar"></i>
                                         Pipeline Stats
                                     </div>
                                 </div>
                                 <div class="portlet-body">
-                                    asdasdasdasd
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="dashboard-stat red-intense">
+                                                <div class="visual"><i class="fa fa-calendar"></i></div>
+                                                <div class="details">   
+                                                    <div class="number">
+                                                    @if(count($stats)>0)
+                                                        £{{ number_format($stats[0]->pipeline,2) }}
+                                                    @else
+                                                        £0.00
+                                                    @endif
+                                                    </div>
+                                                    <div class="desc">Pipeline Value</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="dashboard-stat green-haze">
+                                                <div class="visual"><i class="fa fa-calendar"></i></div>
+                                                <div class="details">   
+                                                    <div class="number">
+                                                    @if(count($stats)>0)
+                                                        £{{ number_format($stats[0]->total,2) }}
+                                                    @else
+                                                        £0.00
+                                                    @endif
+                                                    </div>
+                                                    <div class="desc">Total Value</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="portlet box blue">
+                            <div class="portlet solid bordered grey-cararra">
                                 <div class="portlet-title">
                                     <div class="caption">
+                                        <i class="fa fa-table"></i>
                                         Conversion Rates
                                     </div>
                                 </div>
                                 <div class="portlet-body">
-                                    asdasdasdasd
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="dashboard-stat blue-madison">
+                                                <div class="visual"><i class="fa fa-bar-chart-o"></i></div>
+                                                <div class="details">   
+                                                    <div class="number">{{ $conversion_30days }}%</div>
+                                                    <div class="desc">This Month</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="dashboard-stat purple-plum">
+                                                <div class="visual"><i class="fa fa-bar-chart-o"></i></div>
+                                                <div class="details">   
+                                                    <div class="number">{{ $conversion_90days }}%</div>
+                                                    <div class="desc">Last 90 Days</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="dashboard-stat red-intense">
+                                                <div class="visual"><i class="fa fa-bar-chart-o"></i></div>
+                                                <div class="details">   
+                                                    <div class="number">{{ $conversion_360days }}%</div>
+                                                    <div class="desc">Year to Date</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="portlet box blue">
+                            <div class="portlet solid bordered grey-cararra">
                                 <div class="portlet-title">
                                     <div class="caption">
+                                        <i class="fa fa-table"></i>
                                         Actual Sales
                                     </div>
                                 </div>
                                 <div class="portlet-body">
-                                    asdasdasdasd
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="dashboard-stat blue-madison">
+                                                <div class="visual"><i class="fa fa-money"></i></div>
+                                                <div class="details">   
+                                                    <div class="number">£{{ number_format($sales_30days,2) }}</div>
+                                                    <div class="desc">This Month</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="dashboard-stat purple-plum">
+                                                <div class="visual"><i class="fa fa-money"></i></div>
+                                                <div class="details">   
+                                                    <div class="number">£{{ number_format($sales_90days,2) }}</div>
+                                                    <div class="desc">Last 90 Days</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="dashboard-stat red-intense">
+                                                <div class="visual"><i class="fa fa-money"></i></div>
+                                                <div class="details">   
+                                                    <div class="number">£{{ number_format($sales_360days,2) }}</div>
+                                                    <div class="desc">Year to Date</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 			</div>
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- BEGIN BASIC CHART PORTLET-->
+                    <div class="portlet solid bordered grey-cararra">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="fa fa-bar-chart-o"></i>Sales by Month
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <div style="height:400px;text-align:center">        
+                                <div id="sales-placeholder" style="width:100%;height:100%;"></div>        
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END BASIC CHART PORTLET-->
+                </div>
+            </div>
 		@stop
 	@stop
 @stop
@@ -92,40 +200,36 @@
     <script src="{{$asset_path}}/global/plugins/flot/jquery.flot.orderBars.js"></script>
 	<script src="{{$asset_path}}/global/plugins/flot/jquery.flot.axislabels.js"></script>
 	<script type="text/javascript">
-        //******* 2012 Average Temperature - BAR CHART
+
+        //Pipeline forecast chart data
         var data = [
-                        [0, 100],
-                        [1, 300],
-                        [2, 100],
-                        [3, 600],
-                        [4, 1000],
-                        [5, 700],
-                        [6, 600],
-                        [7, 700],
+                    @foreach($forecast as $key=>$value)
+                        [{{ $key }}, {{ $value->maxcash }}],
+                    @endforeach
                     ];
 
         var data1 = [
-                        [0, 20],
-                        [1, 35],
-                        [2, 15],
-                        [3, 70],
-                        [4, 300],
-                        [5, 230],
-                        [6, 100],
-                        [7, 100],
+                    @foreach($forecast as $key=>$value)
+                        [{{ $key }}, {{ $value->thecash }}],
+                    @endforeach
                     ];
 
         var dataset = [
                         { label: "Expected Total Value", data: data, color: "#009CB6" },
                         { label: "Pipeline Value", data: data1, color: "#6AE5FA" }
                     ];
-        var ticks = [[0, "January 2014"], [1, "Febuary 2014"], [2, "March 2014"], [3, "May 2014"],[4, "June 2014"], [5, "August 2014"], [6, "September 2014"], [7, "October 2014"]];
+        var ticks = [
+                    @foreach($forecast as $key=>$value)
+                        [{{ $key }}, "{{ $value->themonth }}"],
+                    @endforeach
+                    ];
  
         var options = {
             series: {
                 bars: {
                     show: true,
-                    order:1
+                    order:1,
+                    barWidth: 0.75
                 }
             },
             bars: {
@@ -158,10 +262,70 @@
                 backgroundColor: { colors: ["#ffffff", "#EDF5FF"] }
             }
         };
+
+        //sales chart data
+
+        var data_sales = [
+                         @foreach($sales_by_month as $key=>$sales)
+                            [{{ $key }}, {{ $sales[0]->total }}],
+                         @endforeach
+                    ];
+
+        var dataset_sales = [
+                        { label: "Actual Sales Value", data: data_sales, color: "#6AE5FA" }
+                    ];
+
+        var ticks_sales = [
+                        @foreach($sales_by_month as $key=>$sales)
+                            [{{ $key }}, "{{ $sales[0]->themonth }}"],
+                        @endforeach
+                        ];
  
+        var options_sales = {
+            series: {
+                bars: {
+                    show: true,
+                    order:1,
+                    align: "center"
+                } 
+            },
+            bars: {
+                barWidth: 0.4
+            },
+            xaxis: {
+                axisLabelUseCanvas: true,
+                axisLabelFontSizePixels: 12,
+                axisLabelFontFamily: 'Verdana, Arial',
+                axisLabelPadding: 10,
+                ticks: ticks_sales
+            },
+            yaxis: {
+                axisLabelUseCanvas: true,
+                axisLabelFontSizePixels: 12,
+                axisLabelFontFamily: 'Verdana, Arial',
+                axisLabelPadding: 3,
+                tickFormatter: function (v, axis) {
+                    return "£" + v;
+                }
+            },
+            legend: {
+                noColumns: 0,
+                labelBoxBorderColor: "#000000",
+                position: "nw"
+            },
+            grid: {
+                hoverable: true,
+                borderWidth: 2,
+                backgroundColor: { colors: ["#ffffff", "#EDF5FF"] }
+            }
+        };
+
         $(document).ready(function () {
-            $.plot($("#flot-placeholder"), dataset, options);
-            $("#flot-placeholder").UseTooltip();
+            $.plot($("#pipeline-forecast-placeholder"), dataset, options);
+            $("#pipeline-forecast-placeholder").UseTooltip();
+
+            $.plot($("#sales-placeholder"), dataset_sales, options_sales);
+            $("#sales-placeholder").UseTooltip();
         });
  
         function gd(year, month, day) {

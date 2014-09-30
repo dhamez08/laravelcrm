@@ -12,6 +12,7 @@ class PipelineController extends \BaseController {
 	protected static $instance = null;
 
 	protected $destination_path = null;
+	protected $pipeline_model;
 
 	/**
 	 * hold the view essentials like
@@ -30,6 +31,7 @@ class PipelineController extends \BaseController {
 		$this->destination_path = "/public/document/library/own/";
 		$this->data_view['pipeline_index'] 	= $this->data_view['view_path'] . '.pipeline.index';
 		$this->data_view['master_view'] 	= $this->data_view['view_path'] . '.dashboard.index';
+		$this->pipeline_model = new \CustomerOpportunities\CustomerOpportunitiesEntity;
 	}
 
 	/**
@@ -65,6 +67,90 @@ class PipelineController extends \BaseController {
 		$data['pageTitle'] 			= 'Sales Pipeline';
 		$data['portlet_title']		= 'Chart / Sales View';
 		$data 						= array_merge($data,$this->getSetupThemes());
+
+		$user = \Input::get('user');
+		$role = \Session::get('role');
+
+		// set vars for the different things
+		$todays_date = date("Y-m-d");
+		$month = date("Y-m-01") . " 00:00:00";
+		$today = date("Y-m-t") . " 23:59:59";
+		$days_360 = date("Y"). "-01-01 00:00:00";
+		$first_day_month = date("Y-m-01") . " 00:00:00";
+		$last_day_month = date("Y-m-t") . " 23:59:59";
+		$start_few_months_ago = new \DateTime(date("Y-m-01"));
+		$start_few_months_ago->modify('- 3 months');
+		$new_start_date = $start_few_months_ago->format("Y-m-d");
+		$start_date = new \DateTime($new_start_date);
+		$end_date = new \DateTime($start_date->format("Y-m-d"));
+		$how_many_months = 8;
+		$chart_array = array();
+
+		if (is_numeric($user)) {
+			
+		} elseif ($user=="all") {
+			
+		} else {
+
+			//$data['bymilestone'] = $this->pipeline_model->pipelineByMilestone();
+			$data['forecast'] = $this->pipeline_model->pipelineForecast();
+			$data['stats'] = $this->pipeline_model->pipelineStats();
+
+			
+			$con_30 = $this->pipeline_model->pipelineConversion($month, $today);
+			
+			if ($con_30[0]->won!=0) {
+				$cal_30 = ($con_30[0]->won/$con_30[0]->total*100);
+			} else {
+				$cal_30 = 0;
+			}
+			$data['conversion_30days'] = number_format($cal_30);
+			$data['conversion_30days_count'] = $con_30[0]->total;
+
+			// get data for the last 90 days
+			$threemonths = date("Y-m-d", strtotime($todays_date ." -90 days")) . " 00:00:00";
+			$con_90 = $this->pipeline_model->pipelineConversion($threemonths, $today);
+			if ($con_90[0]->won!=0) {
+				$cal_90 = ($con_90[0]->won/$con_90[0]->total*100);
+			} else {
+				$cal_90 = 0;
+			}
+			$data['conversion_90days'] = number_format($cal_90);
+			$data['conversion_90days_count'] = $con_90[0]->total;
+
+			$con_360 = $this->pipeline_model->pipelineConversion($days_360, $today);
+			if ($con_360[0]->won!=0) {
+				$cal_360 = ($con_360[0]->won/$con_360[0]->total*100);
+			} else {
+				$cal_360 = 0;
+			}
+			$data['conversion_360days'] = number_format($cal_360);
+			$data['conversion_360days_count'] = $con_360[0]->total;
+
+			$sales_30 = $this->pipeline_model->pipelineSales($first_day_month, $last_day_month);
+			$data['sales_30days'] = $sales_30[0]->total;
+
+			// get sales data from last 30 days
+			$sales_90 = $this->pipeline_model->pipelineSales($threemonths, $today);
+			$data['sales_90days'] = $sales_90[0]->total;
+
+			// get sales data from last 30 days
+			$sales_360 = $this->pipeline_model->pipelineSales($days_360, $today);
+			$data['sales_360days'] = $sales_360[0]->total;
+
+			for($i=1;$i<=$how_many_months;$i++) {
+				$end_date->modify('+ 1 month');
+				$sales_for_month = $this->pipeline_model->pipelineSalesMonth($start_date->format("Y-m-d H:i:s"), $end_date->format("Y-m-d H:i:s"),$start_date->format("m/Y"));
+				// add from the query into the array
+				$chart_array[] = $sales_for_month;
+				// add a month to the start date
+				$start_date->modify('+ 1 month');
+			}
+			$data['sales_by_month'] = $chart_array;
+
+		}
+
+		//$data['group'] = $this->pipeline_model->getGroupUsersList();
 
 		return \View::make( $data['view_path'] . '.pipeline.partials.chart-stats-view', $data );
 	}
