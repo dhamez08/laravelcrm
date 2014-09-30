@@ -230,15 +230,10 @@ class ClientsController extends \BaseController {
 		$data['telephone']			= $data['customer']->telephone();
 		$data['email']				= $data['customer']->emails();
 		$data['url']				= $data['customer']->url();
+		$data['belongToPartner']	= \Clients\ClientEntity::get_instance()->getPartnerBelong($data['customer']);
 		$data 						= array_merge($data,$this->getSetupThemes());
 		$data['html_body_class'] 	= $this->data_view['html_body_class'];
 		$data['center_column_view'] = 'dashboard';
-		/*var_dump($data['partner']);
-		var_dump($data['children']);
-		var_dump($data['telephone']->get()->toArray());
-		var_dump($data['email']->get()->toArray());
-		var_dump($data['url']->get()->toArray());
-		exit();*/
 		return \View::make( $data['view_path'] . '.clients.edit', $data );
 	}
 
@@ -439,9 +434,11 @@ class ClientsController extends \BaseController {
 		$data['email']				= $data['customer']->emails();
 		$data['url']				= $data['customer']->url();
 		$data['belongToPartner']	= \Clients\ClientEntity::get_instance()->getPartnerBelong($data['customer']);
+		$data['associate']			= \Clients\ClientEntity::get_instance()->setAssociateCustomer($clientId);
+		$data['partner']			= \Clients\ClientEntity::get_instance()->getCustomerPartner();
 		$data['center_column_view']	= 'dashboard';
 		$data 						= array_merge($data,$dashboard_data);
-		//var_dump($data['belongToPartner']->first_name);
+		//var_dump($data['partner']->partner_id);
 		//exit();
 		return \View::make( $data['view_path'] . '.clients.summary', $data );
 	}
@@ -455,6 +452,29 @@ class ClientsController extends \BaseController {
 				'belongs_user' => \Auth::id(),
 			)
 		);
+
+		if( \Input::has('associated') ){
+			$partner = \Clients\Clients::find($clientId);
+			\Input::merge(
+				array(
+					'type'=>1,
+					'partner_dob' => \Clients\ClientEntity::get_instance()->convertDate($partner->partner_dob),
+					'ref' => \Auth::id().time(),
+					'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
+					'belongs_user' => \Auth::id(),
+					'title' => $partner->partner_title,
+					'first_name' => $partner->partner_first_name,
+					'last_name' => $partner->partner_last_name,
+					'job_title' => $partner->partner_job_title,
+					'living_status' => $partner->partner_living_status,
+					'employment_status' => $partner->partner_employment_status,
+					'associated' => $clientId,
+					'relationship' => 'Spouse/Partner',
+					'email' => '',
+				)
+			);
+		}
+
 		$rules = array(
 			'title' => 'required',
 			'first_name' => 'required|min:3',
@@ -472,8 +492,6 @@ class ClientsController extends \BaseController {
 			'job_title.required'=>'Person Job Title is required',
 			'job_title.min'=>'Person Job Title must have more than 3 character',
 		);
-		//var_dump( \Input::all() );
-		//echo count( \Input::get('telephone') );
 
 		$validator = \Validator::make(\Input::all(), $rules, $messages);
 		if ( $validator->passes() ) {
@@ -561,8 +579,6 @@ class ClientsController extends \BaseController {
 
 
 			}
-			//var_dump( \Input::all() );
-			//exit();
 			if( $customer ){
 				\Session::flash('message', 'Successfully Updated Customer');
 				return \Redirect::action('Clients\ClientsController@getEdit',array('clientId'=>$clientId));
