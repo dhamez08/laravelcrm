@@ -11,6 +11,12 @@
 		.empty-column {
 			min-height: 150px;
 		}
+		.movable {
+			cursor: move;
+		}
+		.pointer {
+			cursor: pointer;
+		}
 	</style>
 
 	<!-- END PAGE LEVEL SCRIPTS -->
@@ -103,19 +109,19 @@
 												@endif
 											</div>
 											-->
+											<h4>Form Items</h4>
 											<div class="formContainer well	">
-
-												<div class="form-group">
+												<div class="form-group movable">
 													<label>Text Field</label>
 													<input type="text" class="form-control" placeholder="Text Field">
 												</div>
 
-												<div class="form-group">
+												<div class="form-group movable">
 													<label>Textarea</label>
 													<textarea class="form-control" rows="3"></textarea>
 												</div>
 
-												<div class="form-group">
+												<div class="form-group movable">
 													<label>Dropdown</label>
 													<select class="form-control">
 														<option>Option 1</option>
@@ -126,8 +132,7 @@
 													</select>
 												</div>												
 
-												<div class="form-group">
-													<label>Checkbox</label>
+												<div class="form-group movable">
 													<div class="checkbox-list">
 														<label>
 															<span><input type="checkbox"></span>
@@ -136,12 +141,12 @@
 													</div>
 												</div>
 
-												<div class="form-group">
+												<div class="form-group movable">
 													<label>Date Field</label>
 													<input type="text" class="form-control" placeholder="Date Field">
 												</div>
 
-												<div class="form-group">
+												<div class="form-group movable">
 													<label>Text Line / Heading</label>
 													<p class="form-control-static">Sample Text</p>
 												</div>
@@ -162,11 +167,11 @@
 						<div class="portlet box blue tasks-widget">
 							<div class="portlet-title">
 								<div class="caption">
-									Form Canvas <small>Drag and drop form items here</small>
+									Form Canvas <small>(Drag and drop form items here)</small>
 								</div>
 							</div>							
 							<div class="portlet-body" style="padding:15px">
-								<h1>Form content here</h1>
+								
 								<div class="row">
 									<div class="col-md-4 empty-column sect"></div>
 									<div class="col-md-4 empty-column sect"></div>
@@ -190,6 +195,10 @@
 		</div>
 		@stop
 	@stop
+@stop
+
+@section('body-modals')
+	@include($view_path . '.settings.custom-fields.partials.modals.define-form-item')
 @stop
 
 @section('script-footer')
@@ -221,6 +230,16 @@
 			receive: function(e,ui) {
 				if(!$(ui.sender).hasClass('sect'))
 					copyHelper= null;
+
+				// Generate remove button
+				if($(ui.item).find('.remove-form-item').length == 0) {
+					$(ui.item).prepend('<i class="fa fa-times text-danger pointer pull-right remove-form-item"></i>');
+				}
+
+				$('#define-form-item-modal').modal('show');
+
+				console.log(e);
+				console.log(ui);
 			},
 			over: function(event, ui) {
 				$(this).addClass('bg-info');
@@ -228,6 +247,10 @@
 			out: function(event, ui) {
 				$(this).removeClass('bg-info');
 			}
+		});
+
+		$(document).on('click', '.remove-form-item', function() {
+			$(this).parent().remove();
 		});
 	</script>	
 	<script src="{{$asset_path}}/pages/scripts/custom-fields.js" type="text/javascript"></script>
