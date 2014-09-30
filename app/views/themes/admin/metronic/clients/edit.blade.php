@@ -56,6 +56,17 @@
 							)
 						);
 					}}
+					@if( $belongToPartner && $belongToPartner->id )
+						{{
+							Form::hidden(
+								'associated',
+								$belongToPartner->id,
+								array(
+									'class'=>'form-control input-sm'
+								)
+							);
+						}}
+					@endif
 				</div>
 				<div class="col-md-6">
 					<h3 class="form-section">Address</h3>

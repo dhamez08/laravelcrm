@@ -69,4 +69,54 @@ class CustomerOpportunitiesEntity extends \Eloquent{
 		return $this->with('tags')->where('belongs_to','=',\Auth::id())->get();
 	}
 
+	function pipelineForecast() {	
+		$rows = array();
+		$sql = "SELECT SUM(value_calc) as thecash, SUM(value) as maxcash, DATE_FORMAT(close_date,'%m/%Y') as themonth FROM customer_opportunities WHERE belongs_to=? AND status='0' GROUP BY themonth ORDER BY themonth";		
+		$query = \DB::select($sql, array(\Auth::id()));	
+		return $query;	
+	}
+
+	function pipelineStats() {
+		$sql = "SELECT SUM(value_calc) as pipeline, SUM(value) as total FROM customer_opportunities WHERE belongs_to=? AND status='0'";		
+		$query = \DB::select($sql, array(\Auth::id()));
+		return $query;
+		
+	}
+
+	function pipelineConversion($date_from, $date_to) {
+		$sql = "SELECT COUNT(*) as total, COALESCE(sum(milestone='Won'), 0) as won FROM customer_opportunities WHERE belongs_to=? AND close_date>=? AND close_date<=?";		
+		$query = \DB::select($sql, array(\Auth::id(),$date_from,$date_to));	
+		return $query;
+	
+	}
+
+	function pipelineSales($date_from, $date_to) {
+		$sql = "SELECT SUM(value_calc) as total FROM customer_opportunities WHERE belongs_to=? AND close_date>=? AND close_date<=? AND milestone='Won'";		
+		$query = \DB::select($sql, array(\Auth::id(),$date_from,$date_to));
+						
+		return $query;
+			
+	}
+
+	function pipelineSalesMonth($date_from, $date_to, $month) {
+		$sql = "SELECT IFNULL(SUM(value),0) as total, IFNULL(DATE_FORMAT(close_date,'%m/%Y'),?) as themonth FROM customer_opportunities WHERE belongs_to=? AND close_date>=? AND close_date<=? AND milestone='Won'";		
+		
+		$query = \DB::select($sql, array($month,\Auth::id(),$date_from,$date_to));
+								
+		return $query;	
+			
+	}
+
+	function getGroupUsersList() {
+		// $rows = array();
+		// $sql = "SELECT users_to_groups.*, users.first_name, users.last_name, users.username FROM users_to_groups LEFT JOIN users ON users_to_groups.user_id=users.id WHERE users_to_groups.group_id='". $this->session->userdata("group_id") ."' AND user_id!='". $this->session->userdata("user_id") ."'";		
+		// $query = $this->db->query($sql);		
+		// if($query->num_rows() > 0) {
+		// 	foreach($query->result_array() as $row) {
+		// 		$rows[] = $row;
+		// 	}
+		// }		
+		// return $rows;
+	}
+
 }
