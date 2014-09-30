@@ -90,17 +90,22 @@
 <div class="col-xs-4">
 	<div class="form-group">
 	<label class="control-label">Number of Children</label>
-	{{
-		Form::select(
-			'noc',
-			range(0, 10),
-			null,
-			array(
-				'class'=>'form-control input-sm',
-				'id'=>'noc'
-			)
-		);
-	}}
+	@if( isset($children) && count($children) > 0 )
+		<p>{{count($children)}}</p>
+	@else
+		{{
+			Form::select(
+				'noc',
+				range(0,10),
+				null,
+				array(
+					'class'=>'form-control input-sm',
+					'id'=>'noc',
+				)
+			);
+		}}
+	@endif
+
 	</div>
 </div>
 <div class="col-xs-4">

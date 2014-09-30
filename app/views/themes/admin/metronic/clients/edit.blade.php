@@ -9,7 +9,7 @@
 		<link href="{{$asset_path}}/global/plugins/jquery-file-upload/css/jquery.fileupload.css" rel="stylesheet"/>
 		<link href="{{$asset_path}}/global/plugins/jquery-file-upload/css/jquery.fileupload-ui.css" rel="stylesheet"/>
 		<style>
-			.phone-wrapper, .email-wrapper, .children-wrapper, .clone-children{
+			.phone-wrapper, .email-wrapper, .children-wrapper, .clone-children, .edit-children-wrapper{
 				margin-left:0px;
 			}
 		</style>
@@ -46,7 +46,7 @@
 			<div class="row">
 				<div class="col-md-6">
 					<h3 class="form-section">Person Info </h3>
-					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.personalInput' )
+					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.EditPersonalInput' )
 					{{
 						Form::hidden(
 							'type',
@@ -60,30 +60,6 @@
 				<div class="col-md-6">
 					<h3 class="form-section">Address</h3>
 					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.addressInput' )
-				</div>
-			</div>
-			<div id="partner_details" class="hide">
-				<div class="row">
-					<div class="col-md-12">
-						<h3 class="form-section">Partner Details</h3>
-						@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.partnerInput' )
-					</div>
-				</div>
-			</div>
-			<div id="children_details" class="<?php echo  isset($children) ?  count($children) > 0 ? 'show':'hide' : 'hide';?>">
-				<div class="row">
-					<div class="col-md-12">
-						<h3 class="form-section">Childrens Details</h3>
-						@if( isset($children) )
-							<?php $childrenIdx = 0; ?>
-							@foreach( $children as $val )
-								@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.editChildrenInput' )
-								<?php $childrenIdx++; ?>
-							@endforeach
-						@else
-							@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.childrenInput' )
-						@endif
-					</div>
 				</div>
 			</div>
 			<div class="row">
@@ -142,6 +118,7 @@
 				addChildren.init();
 				addressLookup.init();
 				addWebsite.init();
+				addRowChildren.init();
 			});
 		</script>
 	@stop

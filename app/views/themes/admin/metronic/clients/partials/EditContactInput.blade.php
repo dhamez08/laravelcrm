@@ -4,7 +4,7 @@
 			<div class="form-group">
 			{{
 				Form::text(
-					'telephone['.$telephoneIdx.'][number]',
+					'edit_telephone['.$telephoneIdx.'][number]',
 					$val->number,
 					array(
 						'class'=>'form-control input-sm'
@@ -17,17 +17,17 @@
 			<div class="form-group">
 			{{
 				Form::select(
-					'telephone['.$telephoneIdx.'][for]',
+					'edit_telephone['.$telephoneIdx.'][for]',
 					$phoneFor,
 					$val->type,
 					array(
 						'class'=>'form-control input-sm',
-						'id'=>'basePhone'
 					)
 				);
 			}}
 			</div>
 		</div>
+		{{Form::hidden('edit_telephone['.$telephoneIdx.'][id]',$val->id)}}
 	</div>
 </div>
 

@@ -53,7 +53,7 @@ class CustomerURLController extends \BaseController {
 	 * the $data is for \Input::all()
 	 * each $data is defined
 	 * */
-	public function postURLWrapper($clientId, $url, $website, $type){
+	public function postURLWrapper($clientId, $url, $website, $type, $id = null){
 		if ($url != "") {
 			if ((substr($url,0,7)!="http://") && (substr($url,0,8)!="https://")) {
 				$url = "http://".$url;
@@ -67,7 +67,12 @@ class CustomerURLController extends \BaseController {
 				'type'=>$type,
 			)
 		);
-		\CustomerUrl\CustomerUrlEntity::get_instance()->createOrUpdate();
+		if( is_null($id) ){
+			\CustomerUrl\CustomerUrlEntity::get_instance()->createOrUpdate();
+		}else{
+			\CustomerUrl\CustomerUrlEntity::get_instance()->createOrUpdate($id);
+		}
+
 	}
 
 }

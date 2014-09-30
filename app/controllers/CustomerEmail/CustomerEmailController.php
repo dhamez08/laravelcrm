@@ -53,7 +53,7 @@ class CustomerEmailController extends \BaseController {
 	 * the $data is for \Input::all()
 	 * each $data is defined
 	 * */
-	public function postEmailWrapper($clientId, $email, $type){
+	public function postEmailWrapper($clientId, $email, $type, $id = null){
 		\Input::merge(
 			array(
 				'customer_id'=>$clientId,
@@ -61,7 +61,11 @@ class CustomerEmailController extends \BaseController {
 				'type'=>$type,
 			)
 		);
-		\CustomerEmail\CustomerEmailEntity::get_instance()->createOrUpdate();
+		if( is_null($id) ){
+			\CustomerEmail\CustomerEmailEntity::get_instance()->createOrUpdate();
+		}else{
+			\CustomerEmail\CustomerEmailEntity::get_instance()->createOrUpdate($id);
+		}
 	}
 
 }

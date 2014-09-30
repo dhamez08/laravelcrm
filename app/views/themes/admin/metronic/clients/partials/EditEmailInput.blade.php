@@ -4,7 +4,7 @@
 			<div class="form-group">
 			{{
 				Form::email(
-					'emails['.$emailIdx.'][mail]',
+					'edit_emails['.$emailIdx.'][mail]',
 					$val->email,
 					array(
 						'class'=>'form-control input-sm'
@@ -17,17 +17,17 @@
 			<div class="form-group">
 			{{
 				Form::select(
-					'emails['.$emailIdx.'][for]',
+					'edit_emails['.$emailIdx.'][for]',
 					$emailFor,
 					$val->type,
 					array(
 						'class'=>'form-control input-sm',
-						'id'=>'baseEmail'
 					)
 				);
 			}}
 			</div>
 		</div>
+		{{Form::hidden('edit_emails['.$emailIdx.'][id]',$val->id)}}
 	</div>
 </div>
 

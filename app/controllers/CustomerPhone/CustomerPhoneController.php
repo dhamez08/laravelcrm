@@ -53,7 +53,7 @@ class CustomerPhoneController extends \BaseController {
 	 * the $data is for \Input::all()
 	 * each $data is defined
 	 * */
-	public function postPhoneWrapper($clientId, $number, $type){
+	public function postPhoneWrapper($clientId, $number, $type, $id = null){
 		\Input::merge(
 			array(
 				'customer_id'=>$clientId,
@@ -61,7 +61,11 @@ class CustomerPhoneController extends \BaseController {
 				'type'=>$type,
 			)
 		);
-		\CustomerTelephone\CustomerTelephoneEntity::get_instance()->createOrUpdate();
+		if( is_null($id) ){
+			\CustomerTelephone\CustomerTelephoneEntity::get_instance()->createOrUpdate();
+		}else{
+			\CustomerTelephone\CustomerTelephoneEntity::get_instance()->createOrUpdate($id);
+		}
 	}
 
 }

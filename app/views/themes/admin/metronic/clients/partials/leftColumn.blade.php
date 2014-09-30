@@ -19,12 +19,30 @@
 		 	<div class="col-md-12">
 		 		<div class="form-body client-detail">
 		 			<div class="form-group">
-						<p class="form-control-static">steve.warden1@btopenworld.com <span class="label label-success">Home</span></p>
-						<p class="form-control-static">steve.warden@finleyjacobs.co.uk <span class="label label-info">Work</span></p>
-						<p class="form-control-static">http://www.finleyjacobs.co.uk <span class="label label-info">Work</span></p>
-						<p class="form-control-static"><i class="fa fa-skype"></i> 0800 5837288 <span class="label label-info">Work</span></p>
-						<p class="form-control-static"><i class="fa fa-skype"></i> 01455 888622 <span class="label label-success">Work</span></p>
-						<p class="form-control-static">07453322941 <span class="label label-warning">Mobile</span></p>
+						@if( $url->count() > 0 )
+							@foreach($url->get() as $urls)
+								<p class="form-control-static">
+									<i class="fa fa-cloud"></i>
+									<a href="{{$urls->url}}" target="_blank">{{$urls->url}}</a> <span class="label label-info">{{$urls->type}}</span>
+								</p>
+							@endforeach
+						@endif
+						@if( $email->count() > 0 )
+							@foreach($email->get() as $mail)
+								<p class="form-control-static">
+									<i class="fa fa-envelope"></i>
+									<a href="mailto:{{$mail->email}}" target="_blank">{{$mail->email}}</a> <span class="label label-info">{{$mail->type}}</span>
+								</p>
+							@endforeach
+						@endif
+						@if( $telephone->count() > 0 )
+							@foreach($telephone->get() as $phone)
+								<p class="form-control-static">
+									<i class="fa fa-phone"></i>
+									{{$phone->number}} <span class="label label-info">{{$phone->type}}</span>
+								</p>
+							@endforeach
+						@endif
 						<p class="form-control-static">{{$currentClient->displayCustomerAddress()}}</p>
 						<p class="form-control-static">
 							<a href="{{$currentClient->displayGoogleMapLink()}}" target="_blank">show on map</a>

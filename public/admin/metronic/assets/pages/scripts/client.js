@@ -257,6 +257,70 @@ var addChildren = function () {
 
 }();
 
+var addRowChildren = function () {
+
+	var content = function(incrementId) {
+        return '<div class="row children-wrapper">'
+			+'<div class="col-xs-3">'
+				+'<div class="form-group">'
+				+'<label class="control-label">First Name</label>'
+				+'<input type="text" name="children['+incrementId+'][firstname]" class="form-control input-sm">'
+				+'</div>'
+			+'</div>'
+			+'<div class="col-xs-3">'
+				+'<div class="form-group">'
+				+'<label class="control-label">Last Name</label>'
+				+'<input type="text" name="children['+incrementId+'][lastname]" class="form-control input-sm">'
+				+'</div>'
+			+'</div>'
+			+'<div class="col-xs-2">'
+				+'<div class="form-group">'
+				+'<label class="control-label">Date of Birth</label>'
+				+'<input type="text" name="children['+incrementId+'][dob]" data-date-format="yyyy-mm-dd" data-provide="datepicker" class="form-control input-sm">'
+				+'</div>'
+			+'</div>'
+			+'<div class="col-xs-2">'
+				+'<div class="form-group">'
+				+'<label class="control-label">Relation To Client</label>'
+				+'<select name="children['+incrementId+'][relation_to_client]" class="form-control input-sm">'
+				+'</select>'
+				+'</div>'
+			+'</div>'
+			+'<a href="#" class="remove_field">Remove</a>'
+		+'</div>';
+    }
+
+    // public functions
+    return {
+
+        //main function
+        init: function () {
+            //initialize here something.
+            var max_fields      = 15; //maximum input boxes allowed
+            var children_details = jQuery('#children_details');
+            var children_wrapper = jQuery('#clone-children');
+			var add_row_button = jQuery('.add-row-children');
+			var x = 1;
+
+            jQuery(add_row_button).click(function(e){
+				e.preventDefault();
+				if(x < max_fields){ //max input box allowed
+					x++; //text box increment
+					jQuery(children_wrapper).append(content(x)); //add input box
+					// append dropdown phone type / for
+					jQuery(".relation_to_client > option").each(function () {
+						jQuery('#clone-children .children-wrapper select[name="children['+x+'][relation_to_client]"]').append(jQuery("<option />").val(this.value).text(this.text));
+					});
+				}
+			});
+			jQuery(children_wrapper).on("click",".remove_field", function(e){ //user click on remove text
+				e.preventDefault(); $(this).parent('div').remove(); x--;
+			})
+        }
+    };
+
+}();
+
 var clearInput = function () {
 
     // public functions

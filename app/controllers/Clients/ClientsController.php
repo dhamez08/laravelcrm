@@ -233,7 +233,9 @@ class ClientsController extends \BaseController {
 		$data 						= array_merge($data,$this->getSetupThemes());
 		$data['html_body_class'] 	= $this->data_view['html_body_class'];
 		$data['center_column_view'] = 'dashboard';
-		/*var_dump($data['telephone']->get()->toArray());
+		/*var_dump($data['partner']);
+		var_dump($data['children']);
+		var_dump($data['telephone']->get()->toArray());
 		var_dump($data['email']->get()->toArray());
 		var_dump($data['url']->get()->toArray());
 		exit();*/
@@ -436,9 +438,10 @@ class ClientsController extends \BaseController {
 		$data['telephone']			= $data['customer']->telephone();
 		$data['email']				= $data['customer']->emails();
 		$data['url']				= $data['customer']->url();
+		$data['belongToPartner']	= \Clients\ClientEntity::get_instance()->getPartnerBelong($data['customer']);
 		$data['center_column_view']	= 'dashboard';
 		$data 						= array_merge($data,$dashboard_data);
-		//var_dump($data['currentClient']);
+		//var_dump($data['belongToPartner']->first_name);
 		//exit();
 		return \View::make( $data['view_path'] . '.clients.summary', $data );
 	}
@@ -458,12 +461,6 @@ class ClientsController extends \BaseController {
 			'last_name' => 'required|min:3',
 			'dob' => 'required',
 			'job_title' => 'required|min:3',
-			'marital_status' => 'required',
-			'partner_title' => 'required_if:marital_status,Married',
-			'partner_first_name' => 'required_if:marital_status,Married|min:3',
-			'partner_last_name' => 'required_if:marital_status,Married|min:3',
-			'partner_dob' => 'required_if:marital_status,Married',
-			'partner_job_title' => 'required_if:marital_status,Married|min:3',
 		);
 		$messages = array(
 			'title.required'=>'Person Title is required',
@@ -474,22 +471,101 @@ class ClientsController extends \BaseController {
 			'dob.required'=>'Person Date of birth is required',
 			'job_title.required'=>'Person Job Title is required',
 			'job_title.min'=>'Person Job Title must have more than 3 character',
-			'marital_status.required'=>'Person Marital Status is required',
-			'partner_title.required_if'=>'Partner Title is required',
-			'partner_first_name.required_if'=>'Partner Name is required',
-			'partner_first_name.min'=>'Partner Name must have more than 3 character',
-			'partner_last_name.required_if'=>'Partner Last Name is required',
-			'partner_last_name.min'=>'Partner Last Name must have more than 3 character',
-			'partner_dob.required_if'=>'Partner Date of birth is required',
-			'partner_job_title.required_if'=>'Partner Title is required',
-			'partner_job_title.min'=>'Partner Title Job Title must have more than 3 character',
 		);
+		//var_dump( \Input::all() );
+		//echo count( \Input::get('telephone') );
+
 		$validator = \Validator::make(\Input::all(), $rules, $messages);
 		if ( $validator->passes() ) {
-			$customer = \Clients\ClientEntity::get_instance()->createOrUpdate($clientId);
+			//check if customer went in
+			if( $clientId ){
+				$customer = \Clients\ClientEntity::get_instance()->createOrUpdate($clientId);
+				// if has telephone then update
+				if( count( \Input::get('edit_telephone') ) > 0 ){
+					foreach( \Input::get('edit_telephone') as $key => $val ){
+						if( trim($val['number']) != '' ){
+							\CustomerPhone\CustomerPhoneController::get_instance()->postPhoneWrapper(
+								$clientId,
+								$val['number'],
+								$val['for'],
+								$val['id']
+							);
+						}
+					}
+				}
+				// if has telephone then add
+				if( count( \Input::get('telephone') ) > 0 ){
+					foreach( \Input::get('telephone') as $key => $val ){
+						if( trim($val['number']) != '' ){
+							echo $val['number'].'<br>';
+							\CustomerPhone\CustomerPhoneController::get_instance()->postPhoneWrapper(
+								$clientId,
+								$val['number'],
+								$val['for']
+							);
+						}
+					}
+				}// if has telephone then add
+				// if has emails then update
+				if( count( \Input::get('edit_emails') ) > 0 ){
+					foreach( \Input::get('edit_emails') as $key => $val ){
+						if( trim($val['mail']) != '' ){
+							\CustomerEmail\CustomerEmailController::get_instance()->postEmailWrapper(
+								$clientId,
+								$val['mail'],
+								$val['for'],
+								$val['id']
+							);
+						}
+					}
+				}
+				// if has emails then update
+				if( count( \Input::get('emails') ) > 0 ){
+					foreach( \Input::get('emails') as $key => $val ){
+						if( trim($val['mail']) != '' ){
+							\CustomerEmail\CustomerEmailController::get_instance()->postEmailWrapper(
+								$clientId,
+								$val['mail'],
+								$val['for']
+							);
+						}
+					}
+				}// if has emails then add
+				// if has urls then update
+				if( count( \Input::get('edit_urls') ) > 0 ){
+					foreach( \Input::get('edit_urls') as $key => $val ){
+						if( trim($val['url']) != '' ){
+							\CustomerURL\CustomerURLController::get_instance()->postURLWrapper(
+								$clientId,
+								$val['url'],
+								$val['for'],
+								$val['is'],
+								$val['id']
+							);
+						}
+					}
+				}
+				// if has urls then add
+				if( count( \Input::get('urls') ) > 0 ){
+					foreach( \Input::get('urls') as $key => $val ){
+						if( trim($val['url']) != '' ){
+							\CustomerURL\CustomerURLController::get_instance()->postURLWrapper(
+								$clientId,
+								$val['url'],
+								$val['for'],
+								$val['is']
+							);
+						}
+					}
+				}// if has urls then add
+
+
+			}
+			//var_dump( \Input::all() );
+			//exit();
 			if( $customer ){
 				\Session::flash('message', 'Successfully Updated Customer');
-				return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>$clientId));
+				return \Redirect::action('Clients\ClientsController@getEdit',array('clientId'=>$clientId));
 			}
 		}else{
 			\Input::flash();

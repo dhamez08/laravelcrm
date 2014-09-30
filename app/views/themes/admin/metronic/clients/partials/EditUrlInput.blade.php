@@ -4,7 +4,7 @@
 			<div class="form-group">
 			{{
 				Form::text(
-					'urls['.$urlIdx.'][url]',
+					'edit_urls['.$urlIdx.'][url]',
 					$val->url,
 					array(
 						'class'=>'form-control input-sm'
@@ -17,12 +17,11 @@
 			<div class="form-group">
 			{{
 				Form::select(
-					'urls['.$urlIdx.'][for]',
+					'edit_urls['.$urlIdx.'][for]',
 					$websiteType,
 					$val->website,
 					array(
 						'class'=>'form-control input-sm',
-						'id'=>'baseFor'
 					)
 				);
 			}}
@@ -32,17 +31,17 @@
 			<div class="form-group">
 			{{
 				Form::select(
-					'urls['.$urlIdx.'][is]',
+					'edit_urls['.$urlIdx.'][is]',
 					$websiteIs,
 					$val->type,
 					array(
 						'class'=>'form-control input-sm',
-						'id'=>'baseIs'
 					)
 				);
 			}}
 			</div>
 		</div>
+		{{Form::hidden('edit_urls['.$urlIdx.'][id]',$val->id)}}
 	</div>
 </div>
 

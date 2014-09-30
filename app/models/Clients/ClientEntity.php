@@ -167,6 +167,9 @@ class ClientEntity extends \Eloquent{
 						'partner_last_name'=>$family->partner_last_name,
 						'partner_dob'=>$family->partner_dob,
 						'partner_job_title'=>$family->job_title,
+						'partner_living_status'=>$family->living_status,
+						'partner_employment_status'=>$family->employment_status,
+						'partner_smoker'=>$family->smoker,
 						'relationship'=>$family->relationship,
 					);
 				}elseif( $family->type == 4 ){
@@ -188,6 +191,14 @@ class ClientEntity extends \Eloquent{
 
 	public function getCustomerChildren(){
 		return $this->children_data;
+	}
+
+	public function getPartnerBelong($partnerBelong){
+		if( $partnerBelong->associated != 0 ){
+			return \Clients\Clients::clientId($partnerBelong->associated)->first();
+		}else{
+			return false;
+		}
 	}
 
 }
