@@ -3,7 +3,7 @@
 	<label class="control-label">Company Name</label>
 	{{
 		Form::text(
-			'company_name',
+			'company',
 			null,
 			array(
 				'class'=>'form-control input-sm',

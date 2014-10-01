@@ -49,7 +49,7 @@
 				</div>
 				<div class="col-md-6">
 					<h3 class="form-section">Address</h3>
-					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.addressInput' )
+					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.companyAddressInput' )
 				</div>
 			</div>
 			<div id="partner_details" class="hide">
@@ -109,7 +109,10 @@
 				addChildren.init();
 				addressLookup.init();
 				addWebsite.init();
-				searchCompany.init("{{action('Clients\ClientsController@getAjaxSearchCompany')}}");
+				searchCompany.init(
+					"{{action('Clients\ClientsController@getAjaxSearchCompany')}}",
+					"{{action('Clients\ClientsController@getAjaxSearcCompanyInfo')}}"
+				);
 			});
 		</script>
 	@stop

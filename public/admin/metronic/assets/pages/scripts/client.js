@@ -350,7 +350,7 @@ var clearInput = function () {
 
 var searchCompany = function () {
 	return {
-		init:function(ajaxUrl){
+		init:function(ajaxCompanySearchUrl,ajaxCompanySearchUrlInfo){
 			var searchCompany = jQuery('#searchCompanyInfo');
 			searchCompany.click(function() {
 				var company_info = [];
@@ -358,7 +358,7 @@ var searchCompany = function () {
 				jQuery.ajax({
 					dataType: 'json',
 					data: 'company='+company,
-					url: ajaxUrl,
+					url: ajaxCompanySearchUrl,
 					success: function(data) {
 						var line;
 						jQuery("#company_lookup_results").html('<select id="company_lookup_results_list" multiple="multiple" style="width:500px;"></select>');
@@ -369,22 +369,22 @@ var searchCompany = function () {
 						}
 						jQuery("#company_lookup_results_list").click(function() {
 							var company_number = (this.value);
-								jQuery.ajax({
-									dataType: 'json',
-									data: 'company_number='+company_number,
-									url: '<?php echo base_url(); ?>clients/get_company_details',
-									success: function(company_data) {
-										var att = jQuery.parseJSON(company_data);
-										jQuery("#duedil_company").text(company_data);
-										jQuery("#company").val(att.name_formatted);
-										jQuery("#companyreg").val(att.company_number);
-										jQuery("#find_address_1").val(att.registered_address['full_address'][0]);
-										jQuery("#find_address_2").val(att.registered_address['postcode']);
-										jQuery("#address").val(att.registered_address['full_address'][0]);
-										jQuery("#postcode").val(att.registered_address['postcode']);
-									},
-									cache: false
-								});
+							jQuery.ajax({
+								dataType: 'json',
+								data: 'company_number='+company_number,
+								url: ajaxCompanySearchUrlInfo,
+								success: function(company_data) {
+									//var address = jQuery.parseJSON(company_data.registered_address);
+									var att = company_data;
+									//jQuery("#duedil_company").text(company_data);
+									jQuery("#company").val(att.name_formatted);
+									jQuery("#companyreg").val(att.company_number);
+									jQuery("#address_line_2").val(att.registered_address['full_address'][0]);
+									jQuery("#postcode").val(att.registered_address['postcode']);
+									jQuery("#address1").val(att.registered_address['full_address'][0] + ', ' + att.registered_address['full_address'][1]);
+								},
+								cache: false
+							});
 						});
 					},
 					cache: false

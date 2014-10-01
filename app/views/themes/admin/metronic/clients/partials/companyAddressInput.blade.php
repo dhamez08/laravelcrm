@@ -41,9 +41,6 @@
 				)
 			);
 		}}
-		<span class="input-group-btn">
-	        <button class="btn btn-default input-sm address-lookup" type="button">Find Address</button>
-	    </span>
 	</div>
 	</div>
 </div>

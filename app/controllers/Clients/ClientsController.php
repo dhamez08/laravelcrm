@@ -663,25 +663,52 @@ class ClientsController extends \BaseController {
 
 	public function postCompanyPerson(){
 	}
-
+	public function getAjaxSearcCompanyInfo() {
+		if( \Input::has('company_number') ){
+			$number = \Input::get('company_number');
+			$duedil_url = "http://api.duedil.com/open/uk/company/". urlencode($number) .".json?api_key=wtxqempevsm84r9tdc362v75";
+			$curl = curl_init();
+			// Set some options - we are passing in a useragent too here
+			curl_setopt_array($curl, array(
+				CURLOPT_RETURNTRANSFER => TRUE,
+				CURLOPT_URL => $duedil_url
+			));
+			// Send the request & save response to $resp
+			$response = curl_exec($curl);
+			// Close request to clear up some resources
+			curl_close($curl);
+			if ($response) {
+				$json = json_decode($response, true);
+				return \Response::json($json);
+			} else {
+				return false;
+			}
+		}
+	}
 	public function getAjaxSearchCompany(){
 		if( \Input::has('company') ){
-			$companyName = \Input::has('company');
+			$companyName = \Input::get('company');
 			$duedil_url = "http://api.duedil.com/open/search?q=". urlencode($companyName) ."&api_key=wtxqempevsm84r9tdc362v75";
-			$curl = new \Curl;
-			//::get_instance()->get($duedil_url);
-			$response = $curl->get($duedil_url);
-			var_dump($response);
-			var_dump($duedil_url);
-			exit();
+			// Get cURL resource
+			$curl = curl_init();
+			// Set some options - we are passing in a useragent too here
+			curl_setopt_array($curl, array(
+				CURLOPT_RETURNTRANSFER => TRUE,
+				CURLOPT_URL => $duedil_url
+			));
+			// Send the request & save response to $resp
+			$response = curl_exec($curl);
+			// Close request to clear up some resources
+			curl_close($curl);
+
 			if ($response) {
 				$json = json_decode($response, true);
 				$return = array();
 				foreach($json['response']['data'] as $result) {
 					$return[] = array('name'=> $result['name'], 'number' => $result['company_number']);
 				}
-				//return json_encode($return);
-				return \Response::json($return);
+				return json_encode($return);
+				//return \Response::json($return);
 			} else {
 				return false;
 			}
