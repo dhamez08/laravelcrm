@@ -631,16 +631,40 @@ class ClientsController extends \BaseController {
 		return \View::make( $data['view_path'] . '.clients.people.people', $data );
 	}
 	/**
-	 * People
+	 * End People
 	 * */
 
 	/**
-	 * Adding Company Person
+	 * Company
 	 * */
+
+	public function getCreateClientCompany(){
+		$data 						= $this->data_view;
+		$data['pageTitle'] 			= 'Client';
+		$data['contentClass'] 		= 'create';
+		$data['portlet_body_class']	= 'form';
+		$data['portlet_title']		= 'Add Company Client';
+		$data['fa_icons']			= 'user';
+		$data['title']				= $this->getTitleClient();
+		$data['maritalStatus']		= $this->getMaritalStatus();
+		$data['livingStatus']		= $this->getLivingStatus();
+		$data['employmentStatus']	= $this->getEmploymentStatus();
+		$data['phoneFor']			= $this->getPhoneFor();
+		$data['emailFor']			= $this->getEmailFor();
+		$data['relationToClient']	= $this->getRelationshipToClient();
+		$data['addressType']		= $this->getAddressType();
+		$data['websiteType']		= $this->getWebsiteFor();
+		$data['websiteIs']			= $this->getWebsiteIs();
+		$data 						= array_merge($data,$this->getSetupThemes());
+		$data['html_body_class'] 	= $this->data_view['html_body_class'];
+		$data['center_column_view'] = 'dashboard';
+		return \View::make( $data['view_path'] . '.clients.company.create', $data );
+	}
+
 	public function postCompanyPerson(){
 	}
 	/**
-	 * Adding Company Person
+	 * End Company
 	 * */
 
 	/**
@@ -792,7 +816,7 @@ class ClientsController extends \BaseController {
 
 
 	/**
-	 * Adding Family
+	 * End Adding Family
 	 * */
 
 	/**

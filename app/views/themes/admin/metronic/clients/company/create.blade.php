@@ -39,13 +39,13 @@
 		}}
 		<div class="form-body">
 			<div class="col-md-12">
-				{{Form::submit('Add Client',array('class'=>"btn blue"))}}
+				{{Form::submit('Add Company Client',array('class'=>"btn blue"))}}
 				<a class="btn {{{$dashboard_css or 'blue'}}}" href="{{url('clients')}}">Cancel</a>
 			</div>
 			<div class="row">
 				<div class="col-md-6">
-					<h3 class="form-section">Person Info</h3>
-					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.personalInput' )
+					<h3 class="form-section">Organisation Info</h3>
+					@include( \DashboardEntity::get_instance()->getView() . '.clients.company.organisationInput' )
 				</div>
 				<div class="col-md-6">
 					<h3 class="form-section">Address</h3>
@@ -82,6 +82,12 @@
 				<div class="col-md-12">
 					<h3 class="form-section">Website</h3>
 					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.urlInput' )
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<h3 class="form-section">Main Contact Details (if required):</h3>
+					@include( \DashboardEntity::get_instance()->getView() . '.clients.company.contactPersonInput' )
 				</div>
 			</div>
 		</div>

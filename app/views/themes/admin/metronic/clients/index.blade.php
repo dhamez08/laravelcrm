@@ -34,7 +34,9 @@
 					<div class="actions">
 						@section('portlet-actions')
 							<a class="btn btn-default btn-sm" href="{{url('clients/create')}}">
-							<i class="fa fa-plus"></i> Add </a>
+							<i class="fa fa-plus"></i> Add Client Person</a>
+							<a class="btn btn-default btn-sm" href="{{action('Clients\ClientsController@getCreateClientCompany')}}">
+							<i class="fa fa-plus"></i> Add Company</a>
 						@show
 					</div>
 				</div>
