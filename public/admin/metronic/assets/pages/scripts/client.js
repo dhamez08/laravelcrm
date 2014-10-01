@@ -348,6 +348,52 @@ var clearInput = function () {
 
 }();
 
+var searchCompany = function () {
+	return {
+		init:function(ajaxUrl){
+			var searchCompany = jQuery('#searchCompanyInfo');
+			searchCompany.click(function() {
+				var company_info = [];
+				var company = jQuery("#company").val();
+				jQuery.ajax({
+					dataType: 'json',
+					data: 'company='+company,
+					url: ajaxUrl,
+					success: function(data) {
+						var line;
+						jQuery("#company_lookup_results").html('<select id="company_lookup_results_list" multiple="multiple" style="width:500px;"></select>');
+						for(var i in data) {
+							company_info[i] = data[i];
+							line = data[i].name;
+							jQuery("#company_lookup_results_list").append('<option value="'+data[i].number+'">'+line+'</option>')
+						}
+						jQuery("#company_lookup_results_list").click(function() {
+							var company_number = (this.value);
+								jQuery.ajax({
+									dataType: 'json',
+									data: 'company_number='+company_number,
+									url: '<?php echo base_url(); ?>clients/get_company_details',
+									success: function(company_data) {
+										var att = jQuery.parseJSON(company_data);
+										jQuery("#duedil_company").text(company_data);
+										jQuery("#company").val(att.name_formatted);
+										jQuery("#companyreg").val(att.company_number);
+										jQuery("#find_address_1").val(att.registered_address['full_address'][0]);
+										jQuery("#find_address_2").val(att.registered_address['postcode']);
+										jQuery("#address").val(att.registered_address['full_address'][0]);
+										jQuery("#postcode").val(att.registered_address['postcode']);
+									},
+									cache: false
+								});
+						});
+					},
+					cache: false
+				});
+			});
+		}
+	};
+}();
+
 var addressLookup = function() {
 	// public functions
     return {

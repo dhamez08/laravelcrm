@@ -663,6 +663,31 @@ class ClientsController extends \BaseController {
 
 	public function postCompanyPerson(){
 	}
+
+	public function getAjaxSearchCompany(){
+		if( \Input::has('company') ){
+			$companyName = \Input::has('company');
+			$duedil_url = "http://api.duedil.com/open/search?q=". urlencode($companyName) ."&api_key=wtxqempevsm84r9tdc362v75";
+			$curl = new \Curl;
+			//::get_instance()->get($duedil_url);
+			$response = $curl->get($duedil_url);
+			var_dump($response);
+			var_dump($duedil_url);
+			exit();
+			if ($response) {
+				$json = json_decode($response, true);
+				$return = array();
+				foreach($json['response']['data'] as $result) {
+					$return[] = array('name'=> $result['name'], 'number' => $result['company_number']);
+				}
+				//return json_encode($return);
+				return \Response::json($return);
+			} else {
+				return false;
+			}
+		}
+	}
+
 	/**
 	 * End Company
 	 * */

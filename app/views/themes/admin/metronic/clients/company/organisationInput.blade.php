@@ -6,7 +6,8 @@
 			'company_name',
 			null,
 			array(
-				'class'=>'form-control input-sm'
+				'class'=>'form-control input-sm',
+				'id'=>'company',
 			)
 		);
 	}}

@@ -109,6 +109,7 @@
 				addChildren.init();
 				addressLookup.init();
 				addWebsite.init();
+				searchCompany.init("{{action('Clients\ClientsController@getAjaxSearchCompany')}}");
 			});
 		</script>
 	@stop
