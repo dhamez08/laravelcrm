@@ -44,6 +44,10 @@ class AuthController extends BaseController {
 		);
 
 		if ( Auth::attempt($credentials) ){
+		  $user = \User\User::find(\Auth::id());
+		  $group = $user->userToGroup()->first();
+		  \Session::put('group_id', $group->group_id);
+		  \Session::put('role', $group->role);
 		  return Redirect::intended('/');
 		}
 

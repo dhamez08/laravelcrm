@@ -21,6 +21,18 @@
 				<div class="col-md-6">
 					<!-- BEGIN BASIC CHART PORTLET-->
 					<div class="portlet solid bordered grey-cararra">
+                        <form class="form-inline" method="get">
+                            <label for="user" class="control-label"><strong>Pipeline for user:</strong></label>
+                            <select id="user" name="user" class="form-control" onchange="this.form.submit()">
+                                <option value="" @if(\Input::get('user')=='' || !\Input::get('user')) selected="selected" @endif>Myself Only</option>
+                                <option value="all" @if(\Input::get('user')=='all') selected="selected" @endif>All Users</option>
+                            @if(count($group)>0)
+                                @foreach($group as $g)
+                                    <option value="{{ $g->user_id }}" @if($g->user_id==\Input::get('user')) selected="selected" @endif>{{ $g->first_name . ' ' . $g->last_name . ' (' . $g->username . ')' }}</option>
+                                @endforeach
+                            @endif
+                            </select>
+                        </form>
 						<div class="portlet-title">
 							<div class="caption">
 								<i class="fa fa-bar-chart-o"></i>Pipeline Forecast
@@ -227,7 +239,11 @@
         var options = {
             series: {
                 bars: {
+                    @if(count($forecast)>0)
                     show: true,
+                    @else
+                    show: false,
+                    @endif
                     order:1,
                     barWidth: 0.75
                 }

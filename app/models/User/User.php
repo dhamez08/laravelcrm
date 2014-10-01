@@ -38,6 +38,10 @@ class User extends \Eloquent implements UserInterface, RemindableInterface {
 		return $this->hasOne('\UserGroup\UserGroup','manager_id','user_id');
 	}
 
+	public function group() {
+		return $this->hasOne('\UserGroup\UserGroup','manager_id');
+	}
+
 	public function emailTemplate()
 	{
 		return $this->hasMany('\EmailTemplate\EmailTemplate', 'belongs_to', 'id');
