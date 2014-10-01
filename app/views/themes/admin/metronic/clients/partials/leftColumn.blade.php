@@ -6,11 +6,14 @@
 	-->
 	<div class="panel-body">
 		 <div class="row">
-		 	<div class="col-md-3"><img src="../../assets/admin/layout/img/avatar.png" /></div>
+		 	<div class="col-md-3"><img src="../../assets/admin/layout/img/avatar.png" alt="profile pic" /></div>
 		 	<div class="col-md-9">
 		 		<p>{{$currentClient->displayCustomerName()}}</p>
 		 		@if( $belongToPartner )
-					<p>{{$customer->relationship}} of {{$belongToPartner->first_name}} {{$belongToPartner->last_name}}</p>
+					<p>{{$customer->relationship}} of </p>
+					<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$belongToPartner->id))}}">
+					{{$belongToPartner->first_name}} {{$belongToPartner->last_name}}
+					</a>
 		 		@endif
 		 		<ul class="client-social-icons">
 		 			<li><i class="fa fa-twitter"></i></li>
@@ -80,7 +83,7 @@
 							@foreach( $customer->customerAssociatedTo($customer->id)->get() as $family )
 								@if( $family->relationship == 'Spouse/Partner' )
 									<p class="form-control-static">
-										<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$partner->partner_id))}}">
+										<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$family->id))}}">
 											<strong>
 												{{$family->partner_title.' '.$family->partner_first_name.' '.$family->partner_last_name}}
 											</strong>

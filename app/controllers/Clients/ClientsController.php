@@ -716,6 +716,81 @@ class ClientsController extends \BaseController {
 		\Session::flash('message', 'Successfully Added Family Person');
 		return \Redirect::action('Clients\ClientsController@getPeople',array('clientId'=>\Input::get('clientId')));
 	}
+
+	public function getEditFamilyPerson($clientId){
+		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+		$dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
+		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed');
+
+		$data 						= $this->data_view;
+		$data['title']				= $this->getTitleClient();
+		$data['pageTitle'] 			= 'Client';
+		$data['contentClass'] 		= '';
+		$data['portlet_body_class']	= 'form';
+		$data['portlet_title']		= 'Client';
+		$data['fa_icons']			= 'user';
+		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+		$data['customer']			= \Clients\Clients::find($clientId);
+		$data['currentClient']		= \Clients\ClientEntity::get_instance()->bindCustomer($data['customer']);
+		$data['telephone']			= $data['customer']->telephone();
+		$data['email']				= $data['customer']->emails();
+		$data['url']				= $data['customer']->url();
+		$data['belongToPartner']	= \Clients\ClientEntity::get_instance()->getPartnerBelong($data['customer']);
+		$data['associate']			= \Clients\ClientEntity::get_instance()->setAssociateCustomer($clientId);
+		$data['partner']			= \Clients\ClientEntity::get_instance()->getCustomerPartner();
+		$data['peopleRelationship']	= $this->getPeopleRelationship();
+		$data['center_column_view']	= 'dashboard';
+		$data 						= array_merge($data,$dashboard_data);
+		//var_dump($data['belongToPartner']);
+		//exit();
+		return \View::make( $data['view_path'] . '.clients.people.editPeople', $data );
+	}
+
+	public function putFamilyPerson($personId){
+		$customer			= \Clients\Clients::find($personId);
+		$belongToPartner	= \Clients\ClientEntity::get_instance()->getPartnerBelong($customer);
+
+		if (\Input::get('relationship')=="Spouse/Partner") {
+			\Input::merge(
+				array(
+					'dob' => \Clients\ClientEntity::get_instance()->convertDate(\Input::get('dob')),
+					'ref' => \Auth::id() . time() . rand(1,9),
+					'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
+					'belongs_user' => \Auth::id(),
+					'title' => \Input::get('title'),
+					'first_name' => \Input::get('first_name'),
+					'last_name' => \Input::get('last_name'),
+					'associated' => $belongToPartner->id,
+					'relationship' => \Input::get('relationship'),
+					'partner_title' => \Input::get('title'),
+					'partner_first_name' => \Input::get('first_name'),
+					'partner_last_name' => \Input::get('last_name'),
+					'partner_dob' => \Clients\ClientEntity::get_instance()->convertDate(\Input::get('dob')),
+					'type' => 3,
+				)
+			);
+		} else {
+			\Input::merge(
+				array(
+					'dob' => \Clients\ClientEntity::get_instance()->convertDate(\Input::get('dob')),
+					'ref' => \Auth::id() . time() . rand(1,9),
+					'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
+					'belongs_user' => \Auth::id(),
+					'title' => \Input::get('title'),
+					'first_name' => \Input::get('first_name'),
+					'last_name' => \Input::get('last_name'),
+					'associated' => $belongToPartner->id,
+					'relationship' => \Input::get('relationship'),
+					'type' => 4,
+				)
+			);
+		}
+		\Clients\ClientEntity::get_instance()->createOrUpdate($personId);
+		\Session::flash('message', 'Successfully Updated - ' . \Input::get('first_name') . \Input::get('last_name') );
+		return \Redirect::action('Clients\ClientsController@getEditFamilyPerson',array('personId'=>$personId));
+	}
+
+
 	/**
 	 * Adding Family
 	 * */

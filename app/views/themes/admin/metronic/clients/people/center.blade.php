@@ -22,14 +22,9 @@
 					@foreach( $customer->customerAssociatedTo($customer->id)->orderBy('created_at','desc')->get() as $family )
 					<tr>
 						<td>
-							@if( $family->relationship == 'Spouse/Partner' )
-								<a href="#">
-									{{$family->first_name.' '.$family->last_name}}
-								</a>
-							@else
+							<a href="{{action('Clients\ClientsController@getEditFamilyPerson',array('personId'=>$family->id))}}">
 								{{$family->first_name.' '.$family->last_name}}
-							@endif
-
+							</a>
 						</td>
 						<td>
 							{{$currentClient->parseDate($family->dob)}}
