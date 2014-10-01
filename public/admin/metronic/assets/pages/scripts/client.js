@@ -376,7 +376,10 @@ var searchCompany = function () {
 								success: function(company_data) {
 									//var address = jQuery.parseJSON(company_data.registered_address);
 									var att = company_data;
-									//jQuery("#duedil_company").text(company_data);
+									var arr = $.map(att, function(el) { return el; })
+									console.log(att);
+									console.log(JSON.stringify(company_data));
+									jQuery("#duedil_company").val(JSON.stringify(company_data));
 									jQuery("#company").val(att.name_formatted);
 									jQuery("#companyreg").val(att.company_number);
 									jQuery("#address_line_2").val(att.registered_address['full_address'][0]);

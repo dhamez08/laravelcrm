@@ -31,7 +31,7 @@
 	@section('portlet-content')
 		{{ Form::open(
 			array(
-					'action' => array('Clients\ClientsController@postCreateClient'),
+					'action' => array('Clients\ClientsController@postCreateClientCompany'),
 					'method' => 'POST',
 					'role'=>'form',
 				)
@@ -60,14 +60,6 @@
 					</div>
 				</div>
 			</div>
-			<div id="children_details" class="hide">
-				<div class="row">
-					<div class="col-md-12">
-						<h3 class="form-section">Childrens Details</h3>
-						@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.childrenInput' )
-					</div>
-				</div>
-			</div>
 			<div class="row">
 				<div class="col-md-6">
 					<h3 class="form-section">Telephone Number</h3>
@@ -91,6 +83,7 @@
 				</div>
 			</div>
 		</div>
+		{{Form::hidden('duedil_company',null,array('id'=>'duedil_company'))}}
 		{{Form::close()}}
 	@stop
 @stop

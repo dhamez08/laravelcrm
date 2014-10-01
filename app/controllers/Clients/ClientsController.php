@@ -661,8 +661,166 @@ class ClientsController extends \BaseController {
 		return \View::make( $data['view_path'] . '.clients.company.create', $data );
 	}
 
+
+	public function postCreateClientCompany(){
+		var_dump( \Input::all() );
+		//echo explode(\Input::get('duedil_company');
+		//exit();
+		/*$rules = array(
+			'title' => 'required',
+			'first_name' => 'required|min:3',
+			'last_name' => 'required|min:3',
+			'dob' => 'required',
+			'job_title' => 'required|min:3',
+			'marital_status' => 'required',
+			'partner_title' => 'required_if:marital_status,Married',
+			'partner_first_name' => 'required_if:marital_status,Married|min:3',
+			'partner_last_name' => 'required_if:marital_status,Married|min:3',
+			'partner_dob' => 'required_if:marital_status,Married',
+			'partner_job_title' => 'required_if:marital_status,Married|min:3',
+		);
+		$messages = array(
+			'title.required'=>'Person Title is required',
+			'first_name.required'=>'Person Name is required',
+			'first_name.min'=>'Person Name must have more than 3 character',
+			'last_name.required'=>'Person Last Name is required',
+			'last_name.min'=>'Person Last Name must have more than 3 character',
+			'dob.required'=>'Person Date of birth is required',
+			'job_title.required'=>'Person Job Title is required',
+			'job_title.min'=>'Person Job Title must have more than 3 character',
+			'marital_status.required'=>'Person Marital Status is required',
+			'partner_title.required_if'=>'Partner Title is required',
+			'partner_first_name.required_if'=>'Partner Name is required',
+			'partner_first_name.min'=>'Partner Name must have more than 3 character',
+			'partner_last_name.required_if'=>'Partner Last Name is required',
+			'partner_last_name.min'=>'Partner Last Name must have more than 3 character',
+			'partner_dob.required_if'=>'Partner Date of birth is required',
+			'partner_job_title.required_if'=>'Partner Title is required',
+			'partner_job_title.min'=>'Partner Title Job Title must have more than 3 character',
+		);
+		$validator = \Validator::make(\Input::all(), $rules, $messages);*/
+
+		//if ( $validator->passes() ) {
+			\Input::merge(
+				array(
+					'ref' => \Auth::id().time(),
+					'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
+					'belongs_user' => \Auth::id(),
+					'email' => '',
+					'company_name' => \Input::get('company'),
+					'companyreg' => \Input::get('companyreg'),
+					'companyemployee' => \Input::get('companyemployee'),
+					'sector' => \Input::get('sector'),
+					'duedil_company_details' => \Input::get('duedil_company'),
+					'type' => '2',
+				)
+			);
+			$customer = \Clients\ClientEntity::get_instance()->createOrUpdate();
+
+			//check if customer went in
+			if( $customer->id ){
+				// if has contact
+				if( \Input::has('first_name') ) {
+					\Input::merge(
+						array(
+							'type'=>1,
+							'ref' => \Auth::id().time(),
+							'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
+							'belongs_user' => \Auth::id(),
+							'title' => \Input::get('title',''),
+							'first_name' => \Input::get('first_name',''),
+							'last_name' => \Input::get('last_name',''),
+							'smoker' => \Input::get('partner_smoker',0),
+							'job_title' => \Input::get('job_title',''),
+							'associated' => $customer->id,
+							'relationship' => 0,
+							'organisation' => \Input::get('company',''),
+							'email' => \Input::get('contact_email'),
+							'telephone_day' => \Input::get('contact_phone')
+						)
+					);
+					$contact = \Clients\ClientEntity::get_instance()->createOrUpdate();
+				}// if has contact
+
+				\Input::merge(
+					array(
+						'type'=>\Input::get('address_type'),
+						'address_line_1' => \Input::get('address_line_1'),
+						'town' => \Input::get('town'),
+						'postcode' => \Input::get('postcode'),
+						'customer_id' => $customer->id,
+					)
+				);
+				// insert address
+				$address = \CustomerAddress\CustomerAddressController::get_instance()->postAddressWrapper($customer->id);
+
+				// if has telephone then add
+				if( count( \Input::get('telephone') ) > 0 ){
+					foreach( \Input::get('telephone') as $key => $val ){
+						if( trim($val['number']) != '' ){
+							\CustomerPhone\CustomerPhoneController::get_instance()->postPhoneWrapper(
+								$customer->id,
+								$val['number'],
+								$val['for']
+							);
+						}
+					}
+				}// if has telephone then add
+
+				// if has emails then add
+				if( count( \Input::get('emails') ) > 0 ){
+					foreach( \Input::get('emails') as $key => $val ){
+						if( trim($val['mail']) != '' ){
+							\CustomerEmail\CustomerEmailController::get_instance()->postEmailWrapper(
+								$customer->id,
+								$val['mail'],
+								$val['for']
+							);
+						}
+					}
+				}// if has emails then add
+
+				// if has urls then add
+				if( count( \Input::get('urls') ) > 0 ){
+					foreach( \Input::get('urls') as $key => $val ){
+						if( trim($val['url']) != '' ){
+							\CustomerURL\CustomerURLController::get_instance()->postURLWrapper(
+								$customer->id,
+								$val['url'],
+								$val['for'],
+								$val['is']
+							);
+						}
+					}
+				}// if has urls then add
+
+				// update dashboard
+				\Updates\UpdatesController::get_instance()->postUpdateWrapper(
+					\User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
+					\Auth::id(),
+					$customer->id,
+					\Auth::user()->first_name.' '.\Auth::user()->last_name,
+					'added a new company client ',
+					1
+				);
+
+				// update dashboard
+				\Session::flash('message', 'Successfully Added Customer');
+				return \Redirect::action('Clients\ClientsController@getIndex');
+
+			}//end customer id
+
+		/*}else{
+			\Input::flash();
+			return \Redirect::action('Clients\ClientsController@getCreate')
+			->withErrors($validator)
+			->withInput();
+		}*/
+	}
+
 	public function postCompanyPerson(){
 	}
+
 	public function getAjaxSearcCompanyInfo() {
 		if( \Input::has('company_number') ){
 			$number = \Input::get('company_number');

@@ -65,12 +65,25 @@
 											</td>
 											<td>
 												<div>
-													<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$customers['customer_id']))}}">{{$customers['fullname']}}</a>
-													- {{$customers['relationship']}}
+													{{--var_dump($customers)--}}
+													@if( $customers['type'] == 2 )
+														<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$customers['customer_id']))}}">{{$customers['company_name']}}</a>
+													@else
+														<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$customers['customer_id']))}}">{{$customers['fullname']}}</a>
+													@endif
+
+
+
 													@if( $customers['associated'] != 0 && $customers['relationship'] != '' )
 														<?php $partner = \Helpers::array_key_exists_wildcard($array_customer,$customers['associated'],'key-value'); ?>
+														{{--var_dump($partner)--}}
 														@if( $partner )
-															of {{$partner[$customers['associated']]['fullname']}}
+															@if( $partner[$customers['associated']]['type'] == 2 )
+																- {{$customers['job_title']}} at {{$partner[$customers['associated']]['company_name']}}
+															@else
+																- {{$customers['relationship']}} of {{$partner[$customers['associated']]['fullname']}}
+															@endif
+
 														@endif
 													@endif
 												</div>

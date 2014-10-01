@@ -19,4 +19,9 @@ class Helpers {
 	}
 	// http://magp.ie/2013/04/17/search-associative-array-with-wildcard-in-php/
 
+	// move to helper
+	public static function convert_json_php($json_data){
+		return json_decode(stripslashes($json_data));
+	}
+
 }

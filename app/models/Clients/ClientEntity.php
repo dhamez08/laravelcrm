@@ -149,6 +149,10 @@ class ClientEntity extends \Eloquent{
 				$arrayCustomer[$val->id]['fullname'] = $val->title.' '.$val->first_name.' '.$val->last_name;
 				$arrayCustomer[$val->id]['associated'] = $val->associated;
 				$arrayCustomer[$val->id]['relationship'] = $val->relationship;
+				$arrayCustomer[$val->id]['job_title'] = $val->job_title;
+				$arrayCustomer[$val->id]['type'] = $val->type;
+				$arrayCustomer[$val->id]['company_name'] = $val->company_name;
+				$arrayCustomer[$val->id]['organisation'] = $val->organisation;
 			}
 			return $arrayCustomer;
 		}
