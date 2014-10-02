@@ -231,6 +231,36 @@ class PipelineController extends \BaseController {
 		$data['portlet_title']		= 'List View';
 		$data 						= array_merge($data,$this->getSetupThemes());
 
+		$status = \Input::get('status');
+		$tag = \Input::get('tag');
+		$user = \Input::get("user");
+		$role = \Session::get("role");
+
+		if ($role==1) {
+			if (is_numeric($user)) {
+				// check if user is part of this group
+				if ($this->pipeline_model->getUserMemeberOfGroup($user)) {
+					$data['group'] = $this->pipeline_model->getGroupUsersList();
+					$data['list'] = $this->pipeline_model->pipelineListGroupUser($status, $tag, $user);
+				} else {
+					$data['list'] = "";
+				}
+			} elseif ($user=="all") {
+				$users = $this->pipeline_model->getFullGroupUsersList();
+				$data['group'] = $this->pipeline_model->getGroupUsersList();
+				$data['list'] = $this->pipeline_model->pipelineListGroupUser($status, $tag, implode(',', $users));
+			} else {
+				$data['group'] = $this->pipeline_model->getGroupUsersList();
+				$data['list'] =	$this->pipeline_model->pipelineList($status, $tag);
+			}
+		} else {
+			$data['list'] =	$this->pipeline_model->pipelineList($status, $tag);
+		}
+
+		$data['selected_status'] = $status;
+		$data['selected_tag'] = $tag;
+		$data['opp_tags'] = $this->pipeline_model->getOpportunitiesTags();
+
 		return \View::make( $data['view_path'] . '.pipeline.partials.list-view', $data );
 	}
 

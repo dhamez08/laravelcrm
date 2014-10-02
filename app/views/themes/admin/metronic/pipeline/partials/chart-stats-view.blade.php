@@ -342,6 +342,14 @@
 
             $.plot($("#sales-placeholder"), dataset_sales, options_sales);
             $("#sales-placeholder").UseTooltip();
+
+            window.onresize = function(event) {
+                $.plot($("#pipeline-forecast-placeholder"), dataset, options);
+                $("#pipeline-forecast-placeholder").UseTooltip();
+
+                $.plot($("#sales-placeholder"), dataset_sales, options_sales);
+                $("#sales-placeholder").UseTooltip();
+            };
         });
  
         function gd(year, month, day) {

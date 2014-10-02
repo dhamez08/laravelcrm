@@ -175,4 +175,136 @@ class CustomerOpportunitiesEntity extends \Eloquent{
 		}
 	}
 
+	function getOpportunitiesTags() {
+		$sql = "SELECT * FROM tags_opportunities WHERE belongs_to=? ORDER BY tag ASC";
+		$query = \DB::select($sql, array(\Auth::id()));
+		return $query;
+	}
+
+	public function pipelineList($status, $tag) {
+		$rows = array();
+		$sql = "SELECT customer_opportunities.*, CONCAT(customer.company_name, ' ', customer.first_name, ' ', customer.last_name) as client FROM customer_opportunities LEFT JOIN customer on customer_opportunities.customer_id=customer.id";
+		if ($tag!="") {		
+		$sql .= " LEFT JOIN customer_opportunities_tags on customer_opportunities_tags.opp_id=customer_opportunities.id";
+		}		
+		$sql .= " WHERE customer_opportunities.belongs_to=? ";
+		// todays date
+		$todays_is = date("Y-m-d H:i:s");	
+		if ($status=="open") {
+			$sql .=" AND customer_opportunities.status='0' ";
+		} elseif ($status=="closed") {
+			$sql .=" AND customer_opportunities.status='1' ";
+		} elseif ($status=="closed30") {
+			$todate = date("Y-m-d H:i:s", strtotime($todays_is . " -30 days"));
+			$sql .=" AND customer_opportunities.status='1' AND customer_opportunities.close_date>='".$todate."' AND customer_opportunities.close_date<='".$todays_is."' ";
+		} elseif ($status=="closed90") {
+			$todate = date("Y-m-d H:i:s", strtotime($todays_is . " -90 days"));
+			$sql .=" AND customer_opportunities.status='1' AND customer_opportunities.close_date>='".$todate."' AND customer_opportunities.close_date<='".$todays_is."' ";
+		} elseif ($status=="closedyear") {
+			$todate = date("Y-m-d H:i:s", strtotime($todays_is . " -1 year"));
+			$sql .=" AND customer_opportunities.status='1' AND customer_opportunities.close_date>='".$todate."' AND customer_opportunities.close_date<='".$todays_is."' ";
+		} elseif ($status=="suspect") {
+			$sql .=" AND customer_opportunities.milestone='Suspect' ";
+		} elseif ($status=="prospect") {
+			$sql .=" AND customer_opportunities.milestone='Prospect' ";
+		} elseif ($status=="champion") {
+			$sql .=" AND customer_opportunities.milestone='Champion' ";
+		} elseif ($status=="opportunity") {
+			$sql .=" AND customer_opportunities.milestone='Opportunity' ";
+		} elseif ($status=="proposal") {
+			$sql .=" AND customer_opportunities.milestone='Proposal' ";
+		} elseif ($status=="verbal") {
+			$sql .=" AND customer_opportunities.milestone='Verbal' ";
+		} elseif ($status=="lost") {
+			$sql .=" AND customer_opportunities.milestone='Lost' ";
+		} elseif ($status=="won") {
+			$sql .=" AND customer_opportunities.milestone='Won' ";					
+		} elseif ($status=="wonthismonth") {
+			$sql .=" AND customer_opportunities.milestone='Won' AND customer_opportunities.status='1' AND customer_opportunities.close_date>='".date("Y-m")."-01 00:00:00' AND customer_opportunities.close_date<='".date("Y-m-t"). " 23:59:59' ";	
+		} elseif ($status=="won90days") {
+			$sql .=" AND customer_opportunities.milestone='Won' AND customer_opportunities.status='1' AND customer_opportunities.close_date>='". date("Y-m-d H:i:s", strtotime($todays_is . " -90 days")) ."' AND customer_opportunities.close_date<='". $todays_is ."' ";		
+		} elseif ($status=="wonthisyear") {
+			$sql .=" AND customer_opportunities.milestone='Won' AND customer_opportunities.status='1' AND customer_opportunities.close_date>='".date("Y")."-01-01 00:00:00' AND customer_opportunities.close_date<='".date("Y")."-12-31 23:59:59' ";
+		} elseif ($status=="conversionthismonth") {
+			$sql .=" AND customer_opportunities.milestone='Won' AND customer_opportunities.status='1' AND customer_opportunities.close_date>='".date("Y-m")."-01 00:00:00' AND customer_opportunities.close_date<='".date("Y-m-t"). " 23:59:59' ";	
+		} elseif ($status=="conversion90days") {
+			$sql .=" AND customer_opportunities.milestone='Won' AND customer_opportunities.status='1' AND customer_opportunities.close_date>='". date("Y-m-d H:i:s", strtotime($todays_is . " -90 days")) ."' AND customer_opportunities.close_date<='". $todays_is ."' ";		
+		} elseif ($status=="conversionthisyear") {
+			$sql .=" AND customer_opportunities.milestone='Won' AND customer_opportunities.status='1' AND customer_opportunities.close_date>='".date("Y")."-01-01 00:00:00' AND customer_opportunities.close_date<='".date("Y")."-12-31 23:59:59' ";
+		}	
+		
+		if ($tag!="") {
+			$sql .= "AND customer_opportunities_tags.opp_tag=? ";
+		}
+		
+		$sql .= "ORDER BY customer_opportunities.close_date DESC";
+
+		$query = \DB::select($sql, array(\Auth::id(),$tag));
+
+		return $query;	
+	}
+
+	public function pipelineListGroupUser($status, $tag, $user) {
+		$rows = array();
+		$sql = "SELECT customer_opportunities.*, CONCAT(customer.company_name, ' ', customer.first_name, ' ', customer.last_name) as client FROM customer_opportunities LEFT JOIN customer on customer_opportunities.customer_id=customer.id";
+		if ($tag!="") {		
+		$sql .= " LEFT JOIN customer_opportunities_tags on customer_opportunities_tags.opp_id=customer_opportunities.id";
+		}		
+		$sql .= " WHERE customer_opportunities.belongs_to IN (?) ";
+		// todays date
+		$todays_is = date("Y-m-d H:i:s");	
+		if ($status=="open") {
+			$sql .=" AND customer_opportunities.status='0' ";
+		} elseif ($status=="closed") {
+			$sql .=" AND customer_opportunities.status='1' ";
+		} elseif ($status=="closed30") {
+			$todate = date("Y-m-d H:i:s", strtotime($todays_is . " -30 days"));
+			$sql .=" AND customer_opportunities.status='1' AND customer_opportunities.close_date>='".$todate."' AND customer_opportunities.close_date<='".$todays_is."' ";
+		} elseif ($status=="closed90") {
+			$todate = date("Y-m-d H:i:s", strtotime($todays_is . " -90 days"));
+			$sql .=" AND customer_opportunities.status='1' AND customer_opportunities.close_date>='".$todate."' AND customer_opportunities.close_date<='".$todays_is."' ";
+		} elseif ($status=="closedyear") {
+			$todate = date("Y-m-d H:i:s", strtotime($todays_is . " -1 year"));
+			$sql .=" AND customer_opportunities.status='1' AND customer_opportunities.close_date>='".$todate."' AND customer_opportunities.close_date<='".$todays_is."' ";
+		} elseif ($status=="suspect") {
+			$sql .=" AND customer_opportunities.milestone='Suspect' ";
+		} elseif ($status=="prospect") {
+			$sql .=" AND customer_opportunities.milestone='Prospect' ";
+		} elseif ($status=="champion") {
+			$sql .=" AND customer_opportunities.milestone='Champion' ";
+		} elseif ($status=="opportunity") {
+			$sql .=" AND customer_opportunities.milestone='Opportunity' ";
+		} elseif ($status=="proposal") {
+			$sql .=" AND customer_opportunities.milestone='Proposal' ";
+		} elseif ($status=="verbal") {
+			$sql .=" AND customer_opportunities.milestone='Verbal' ";
+		} elseif ($status=="lost") {
+			$sql .=" AND customer_opportunities.milestone='Lost' ";
+		} elseif ($status=="won") {
+			$sql .=" AND customer_opportunities.milestone='Won' ";					
+		} elseif ($status=="wonthismonth") {
+			$sql .=" AND customer_opportunities.milestone='Won' AND customer_opportunities.status='1' AND customer_opportunities.close_date>='".date("Y-m")."-01 00:00:00' AND customer_opportunities.close_date<='".date("Y-m-t"). " 23:59:59' ";	
+		} elseif ($status=="won90days") {
+			$sql .=" AND customer_opportunities.milestone='Won' AND customer_opportunities.status='1' AND customer_opportunities.close_date>='". date("Y-m-d H:i:s", strtotime($todays_is . " -90 days")) ."' AND customer_opportunities.close_date<='". $todays_is ."' ";		
+		} elseif ($status=="wonthisyear") {
+			$sql .=" AND customer_opportunities.milestone='Won' AND customer_opportunities.status='1' AND customer_opportunities.close_date>='".date("Y")."-01-01 00:00:00' AND customer_opportunities.close_date<='".date("Y")."-12-31 23:59:59' ";
+		} elseif ($status=="conversionthismonth") {
+			$sql .=" AND customer_opportunities.milestone='Won' AND customer_opportunities.status='1' AND customer_opportunities.close_date>='".date("Y-m")."-01 00:00:00' AND customer_opportunities.close_date<='".date("Y-m-t"). " 23:59:59' ";	
+		} elseif ($status=="conversion90days") {
+			$sql .=" AND customer_opportunities.milestone='Won' AND customer_opportunities.status='1' AND customer_opportunities.close_date>='". date("Y-m-d H:i:s", strtotime($todays_is . " -90 days")) ."' AND customer_opportunities.close_date<='". $todays_is ."' ";		
+		} elseif ($status=="conversionthisyear") {
+			$sql .=" AND customer_opportunities.milestone='Won' AND customer_opportunities.status='1' AND customer_opportunities.close_date>='".date("Y")."-01-01 00:00:00' AND customer_opportunities.close_date<='".date("Y")."-12-31 23:59:59' ";
+		}	
+		
+		if ($tag!="") {
+			$sql .= "AND customer_opportunities_tags.opp_tag=? ";
+		}
+		
+		$sql .= "ORDER BY customer_opportunities.close_date DESC";
+
+		$query = \DB::select($sql, array($user,$tag));
+
+		return $query;	
+	}
+
 }
