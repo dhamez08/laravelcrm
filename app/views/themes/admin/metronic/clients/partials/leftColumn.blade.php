@@ -38,6 +38,7 @@
 								<p class="form-control-static">
 									<i class="fa fa-cloud"></i>
 									<a href="{{$urls->url}}" target="_blank">{{$urls->url}}</a> <span class="label label-info">{{$urls->type}}</span>
+									<a href="{{action('Clients\ClientsController@getConfirmUrlDelete',array('id'=>$urls->id,'client'=>$currentClient->id,'hash'=>($urls->id . csrf_token())))}}" class="deleteURL" >Delete</a>
 								</p>
 							@endforeach
 						@endif
@@ -46,6 +47,7 @@
 								<p class="form-control-static">
 									<i class="fa fa-envelope"></i>
 									<a href="mailto:{{$mail->email}}" target="_blank">{{$mail->email}}</a> <span class="label label-info">{{$mail->type}}</span>
+									<a href="{{action('Clients\ClientsController@getConfirmMailDelete',array('id'=>$mail->id,'client'=>$currentClient->id,'hash'=>($mail->id . csrf_token())))}}" class="deleteMail" >Delete</a>
 								</p>
 							@endforeach
 						@endif
@@ -54,6 +56,7 @@
 								<p class="form-control-static">
 									<i class="fa fa-phone"></i>
 									{{$phone->number}} <span class="label label-info">{{$phone->type}}</span>
+									<a href="{{action('Clients\ClientsController@getConfirmPhoneDelete',array('id'=>$phone->id,'client'=>$currentClient->id,'hash'=>($phone->id . csrf_token())))}}" class="deletePhone" >Delete</a>
 								</p>
 							@endforeach
 						@endif
@@ -104,6 +107,7 @@
 										- {{$currentClient->parseDate($family->dob)}} - {{$family->relationship}}
 									</p>
 								@endif
+								<a href="{{action('Clients\ClientsController@getConfirmPersonDelete',array('id'=>$family->id,'client'=>$currentClient->id,'hash'=>($family->id . csrf_token())))}}" class="deletePerson" >Delete</a>
 							@endforeach
 		 				@endif
 		 			</div>

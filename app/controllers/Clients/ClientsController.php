@@ -191,6 +191,55 @@ class ClientsController extends \BaseController {
 		return \View::make( $data['view_path'] . '.clients.index', $data );
 	}
 
+	public function getConfirmPhoneDelete($id, $client, $token){
+		if( strcmp($id . \Session::token(), $token) == 0 ){
+			$phone = \CustomerTelephone\CustomerTelephone::find($id);
+			//echo $phone->number;
+			$phone->delete();
+			\Session::flash('message', 'Successfully Delete Phone Customer');
+			return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>$client));
+		}else{
+			echo 'nice try hacker';
+			die();
+		}
+	}
+	public function getConfirmUrlDelete($id, $client, $token){
+		if( strcmp($id . \Session::token(), $token) == 0 ){
+			$url = \CustomerUrl\CustomerUrl::find($id);
+			//echo $phone->number;
+			$url->delete();
+			\Session::flash('message', 'Successfully Delete Website');
+			return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>$client));
+		}else{
+			echo 'nice try hacker';
+			die();
+		}
+	}
+	public function getConfirmMailDelete($id, $client, $token){
+		if( strcmp($id . \Session::token(), $token) == 0 ){
+			$mail = \CustomerEmail\CustomerEmail::find($id);
+			//echo $phone->number;
+			$mail->delete();
+			\Session::flash('message', 'Successfully Delete Email');
+			return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>$client));
+		}else{
+			echo 'nice try hacker';
+			die();
+		}
+	}
+	public function getConfirmPersonDelete($id, $client, $token){
+		if( strcmp($id . \Session::token(), $token) == 0 ){
+			$person = \Clients\Clients::find($id);
+			//echo $phone->number;
+			$person->delete();
+			\Session::flash('message', 'Successfully Delete Person');
+			return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>$client));
+		}else{
+			echo 'nice try hacker';
+			die();
+		}
+	}
+
 	public function getCreate(){
 		$data 						= $this->data_view;
 		$data['pageTitle'] 			= 'Client';
@@ -333,6 +382,7 @@ class ClientsController extends \BaseController {
 					);
 					$partner = \Clients\ClientEntity::get_instance()->createOrUpdate();
 				}// if Married add partner details
+
 				\Input::merge(
 					array('type'=>\Input::get('address_type'))
 				);
@@ -976,7 +1026,7 @@ class ClientsController extends \BaseController {
 		}*/
 	}
 
-		public function getAddCompanyPerson($clientId){
+	public function getAddCompanyPerson($clientId){
 
 		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
 		$dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
@@ -999,15 +1049,95 @@ class ClientsController extends \BaseController {
 		$data['associate']			= \Clients\ClientEntity::get_instance()->setAssociateCustomer($clientId);
 		$data['partner']			= \Clients\ClientEntity::get_instance()->getCustomerPartner();
 		$data['peopleRelationship']	= $this->getPeopleRelationship();
+		$data['phoneFor']			= $this->getPhoneFor();
+		$data['emailFor']			= $this->getEmailFor();
+		$data['addressType']		= $this->getAddressType();
+		$data['websiteType']		= $this->getWebsiteFor();
+		$data['websiteIs']			= $this->getWebsiteIs();
 		$data['center_column_view']	= 'dashboard';
 		$data 						= array_merge($data,$dashboard_data);
-		//var_dump($data['partner']->partner_id);
+		//var_dump($data['belongToPartner']);
 		//exit();
-		return \View::make( $data['view_path'] . '.clients.people.addPeople', $data );
+		return \View::make( $data['view_path'] . '.clients.company.addPeople', $data );
 	}
 
 
 	public function postCompanyPerson(){
+		//var_dump( \Input::all() );
+		//exit();
+		$company = \Clients\Clients::find( \Input::get('clientId') );
+		\Input::merge(
+			array(
+				'type'=>1,
+				'ref' => \Auth::id().time(),
+				'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
+				'belongs_user' => \Auth::id(),
+				'first_name' => \Input::get('first_name'),
+				'last_name' => \Input::get('last_name'),
+				'smoker' => \Input::get('partner_smoker',0),
+				'job_title' => \Input::get('job_title'),
+				'associated' => \Input::get('clientId'),
+				'organisation' => $company->company_name,
+			)
+		);
+		$companyPerson = \Clients\ClientEntity::get_instance()->createOrUpdate();
+		\Input::merge(
+			array('type'=>\Input::get('address_type'))
+		);
+
+		// insert address
+		\CustomerAddress\CustomerAddressController::get_instance()->postAddressWrapper($companyPerson->id);
+
+		// if has telephone then add
+		if( count( \Input::get('telephone') ) > 0 ){
+			foreach( \Input::get('telephone') as $key => $val ){
+				if( trim($val['number']) != '' ){
+					\CustomerPhone\CustomerPhoneController::get_instance()->postPhoneWrapper(
+						$companyPerson->id,
+						$val['number'],
+						$val['for']
+					);
+				}
+			}
+		}// if has telephone then add
+
+		// if has emails then add
+		if( count( \Input::get('emails') ) > 0 ){
+			foreach( \Input::get('emails') as $key => $val ){
+				if( trim($val['mail']) != '' ){
+					\CustomerEmail\CustomerEmailController::get_instance()->postEmailWrapper(
+						$companyPerson->id,
+						$val['mail'],
+						$val['for']
+					);
+				}
+			}
+		}// if has emails then add
+
+		// if has urls then add
+		if( count( \Input::get('urls') ) > 0 ){
+			foreach( \Input::get('urls') as $key => $val ){
+				if( trim($val['url']) != '' ){
+					\CustomerURL\CustomerURLController::get_instance()->postURLWrapper(
+						$companyPerson->id,
+						$val['url'],
+						$val['for'],
+						$val['is']
+					);
+				}
+			}
+		}// if has urls then add
+
+		// update dashboard
+		\Updates\UpdatesController::get_instance()->postUpdateWrapper(
+			\User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
+			\Auth::id(),
+			\Input::get('clientId'),
+			\Auth::user()->first_name.' '.\Auth::user()->last_name,
+			'added a new person to a ' . $company->company_name,
+			1
+		);
+
 	}
 
 	public function getAjaxSearcCompanyInfo() {

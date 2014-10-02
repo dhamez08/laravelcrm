@@ -397,6 +397,59 @@ var searchCompany = function () {
 	};
 }();
 
+var deletePhone = function() {
+	return {
+		init:function(){
+			jQuery('.deletePhone').click(function(e){
+				e.preventDefault();
+				var _link = jQuery(this);
+				bootbox.confirm("Are you Sure want to delete this phone number?", function (confirmation) {
+					confirmation && document.location.assign(_link.attr('href'));
+				});
+			});
+		}
+	};
+}();
+var deleteURL = function() {
+	return {
+		init:function(){
+			jQuery('.deleteURL').click(function(e){
+				e.preventDefault();
+				var _link = jQuery(this);
+				bootbox.confirm("Are you Sure want to delete this website?", function (confirmation) {
+					confirmation && document.location.assign(_link.attr('href'));
+				});
+			});
+		}
+	};
+}();
+var deleteEmail = function() {
+	return {
+		init:function(){
+			jQuery('.deleteMail').click(function(e){
+				e.preventDefault();
+				var _link = jQuery(this);
+				bootbox.confirm("Are you Sure want to delete this Email?", function (confirmation) {
+					confirmation && document.location.assign(_link.attr('href'));
+				});
+			});
+		}
+	};
+}();
+var deletePerson = function() {
+	return {
+		init:function(){
+			jQuery('.deletePerson').click(function(e){
+				e.preventDefault();
+				var _link = jQuery(this);
+				bootbox.confirm("Are you Sure want to delete this Person?", function (confirmation) {
+					confirmation && document.location.assign(_link.attr('href'));
+				});
+			});
+		}
+	};
+}();
+
 var addressLookup = function() {
 	// public functions
     return {

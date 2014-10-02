@@ -158,10 +158,14 @@
 		<script src="{{$asset_path}}/global/plugins/jquery-file-upload/js/jquery.fileupload-ui.js"></script>
 
 		<script src="{{$asset_path}}/pages/scripts/form-fileupload.js"></script>
-
+		<script src="{{$asset_path}}/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
+		<script type="text/javascript" src="{{$asset_path}}/pages/scripts/client.js"></script>
 		<script>
         jQuery(document).ready(function() {
-        	FormFileUpload.init();
+        	deletePhone.init();
+        	deleteURL.init();
+        	deleteEmail.init();
+        	deletePerson.init();
         });
 		</script>
 	@stop
