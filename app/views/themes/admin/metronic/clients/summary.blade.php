@@ -25,7 +25,12 @@
 	@section('innerpage-content')
 		<div class="col-md-3">
 			<!-- CLIENT LEFT SIDEBAR -->
-			@include($view_path.'.clients.partials.leftColumn')
+			@if( $customer->type == 2 )
+				@include($view_path.'.clients.company.leftColumn')
+			@else
+				@include($view_path.'.clients.partials.leftColumn')
+			@endif
+
 			<!-- END CLIENT LEFT SIDEBAR -->
 		</div>
 		<div class="col-md-6">

@@ -4,28 +4,12 @@
 		 Panel heading without title
 	</div>
 	-->
+	Company
 	<div class="panel-body">
 		 <div class="row">
 		 	<div class="col-md-3"><img src="../../assets/admin/layout/img/avatar.png" alt="profile pic" /></div>
 		 	<div class="col-md-9">
-		 		<p>{{$currentClient->displayCustomerName()}}</p>
-		 		@if( $belongToPartner )
-					@if( $belongToPartner->type == 2 )
-						<span>{{$customer->job_title}} at
-						<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$belongToPartner->id))}}">
-							{{$belongToPartner->company_name}}
-						</a>
-						</span>
-					@else
-						<p>{{$customer->relationship}} of </p>
-						<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$belongToPartner->id))}}">
-						{{$belongToPartner->first_name}} {{$belongToPartner->last_name}}
-						</a>
-					@endif
-		 		@endif
-		 		<ul class="client-social-icons">
-		 			<li><i class="fa fa-twitter"></i></li>
-		 		</ul>
+		 		<p>{{$customer->company_name}}</p>
 		 	</div>
 		 </div>
 		 <div class="clearfix"></div>
@@ -62,17 +46,20 @@
 							<a href="{{$currentClient->displayGoogleMapLink()}}" target="_blank">show on map</a>
 							| <a href="{{$currentClient->displayGoogleMapDirectionLink()}}" target="_blank">get directions</a>
 						</p>
-						<p class="form-control-static">Date of Birth: <strong>{{$currentClient->displayDob()}}</strong></p>
-						<p class="form-control-static">Marital Status: <strong>{{$currentClient->marital_status}}</strong></p>
-						<p class="form-control-static">Employment Status: <strong>{{$currentClient->employment_status}}</strong></p>
-						<p class="form-control-static">Occupation: <strong>{{$currentClient->job_title}}</strong></p>
-						<p class="form-control-static"><a href="{{action('Clients\ClientsController@getEdit',array('clientId'=>$customer->id))}}">Edit client information</a></p>
+						<p class="form-control-static">Company Number: <strong>{{$currentClient->companyreg}}</strong></p>
+						<p class="form-control-static">Number of Employees: <strong>{{$currentClient->companyemployee}}</strong></p>
+						<p class="form-control-static">Industry Sector: <strong>{{$currentClient->sector}}</strong></p>
+						<p class="form-control-static">
+							<a href="{{action('Clients\ClientsController@getEditCompany',array('clientId'=>$customer->id))}}">
+								Edit company information
+							</a>
+						</p>
 		 			</div>
 		 		</div>
 		 	</div>
 		 </div>
 		 <hr/>
-		 <div class="row">
+		 <div class="row hide">
 		 	<div class="col-md-12">
 		 		<div class="form-body client-detail" style="display:none">
 		 			<div class="form-group">
@@ -81,29 +68,21 @@
 		 		</div>
 		 	</div>
 		 </div>
-		 <hr/>
 		 <div class="row">
 		 	<div class="col-md-12">
-		 		<h5><strong>Family</strong></h5>
+		 		<h5>People working at <strong>{{$customer->company_name}}</strong></h5>
 		 		<div class="form-body client-detail">
 		 			<div class="form-group">
 		 				@if( $customer->customerAssociatedTo($customer->id)->count() > 0 )
-							@foreach( $customer->customerAssociatedTo($customer->id)->get() as $family )
-								@if( $family->relationship == 'Spouse/Partner' )
+							@foreach( $customer->customerAssociatedTo($customer->id)->get() as $people )
 									<p class="form-control-static">
-										<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$family->id))}}">
+										<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$people->id))}}">
 											<strong>
-												{{$family->partner_title.' '.$family->partner_first_name.' '.$family->partner_last_name}}
+												{{$people->title.' '.$people->first_name.' '.$people->last_name}}
 											</strong>
 										</a>
-										- {{$currentClient->parseDate($family->partner_dob)}} - {{$family->relationship}}
 									</p>
-								@elseif( $family->type == 4 )
-									<p class="form-control-static">
-										<strong>{{$family->first_name.' '.$family->last_name}}</strong>
-										- {{$currentClient->parseDate($family->dob)}} - {{$family->relationship}}
-									</p>
-								@endif
+									<p>{{$people->job_title}}</p>
 							@endforeach
 		 				@endif
 		 			</div>
@@ -113,7 +92,7 @@
 		 		<div class="form-body client-detail">
 		 			<div class="form-group">
 		 				<p class="form-control-static">
-							<a href="{{action('Clients\ClientsController@getAddFamilyPerson',array('clientId'=>$customer->id))}}">
+							<a href="{{action('Clients\ClientsController@getAddCompanyPerson',array('clientId'=>$customer->id))}}">
 								Add People
 							</a>
 						</p>

@@ -661,6 +661,164 @@ class ClientsController extends \BaseController {
 		return \View::make( $data['view_path'] . '.clients.company.create', $data );
 	}
 
+	public function getEditCompany($clientId){
+		$data 						= $this->data_view;
+		$data['customer']			= \Clients\Clients::find($clientId);
+		$data['pageTitle'] 			= 'Client';
+		$data['contentClass'] 		= 'create';
+		$data['portlet_body_class']	= 'form';
+		$data['portlet_title']		= 'Add Company Client';
+		$data['fa_icons']			= 'user';
+		$data['title']				= $this->getTitleClient();
+		$data['maritalStatus']		= $this->getMaritalStatus();
+		$data['livingStatus']		= $this->getLivingStatus();
+		$data['employmentStatus']	= $this->getEmploymentStatus();
+		$data['phoneFor']			= $this->getPhoneFor();
+		$data['emailFor']			= $this->getEmailFor();
+		$data['relationToClient']	= $this->getRelationshipToClient();
+		$data['addressType']		= $this->getAddressType();
+		$data['websiteType']		= $this->getWebsiteFor();
+		$data['websiteIs']			= $this->getWebsiteIs();
+		$data 						= array_merge($data,$this->getSetupThemes());
+		$data['html_body_class'] 	= $this->data_view['html_body_class'];
+		$data['center_column_view'] = 'dashboard';
+		$data['associate']			= \Clients\ClientEntity::get_instance()->setAssociateCustomer($clientId);
+		$data['contactPerson']		= $data['customer']->customerAssociatedTo($clientId)->first();
+		$data['telephone']			= $data['customer']->telephone();
+		$data['email']				= $data['customer']->emails();
+		$data['url']				= $data['customer']->url();
+		/*var_dump($data['contactPerson']->get()->toArray());
+		exit();*/
+		return \View::make( $data['view_path'] . '.clients.company.edit', $data );
+	}
+
+	public function putUpdateClientCompany($clientId){
+		//echo $clientId;
+		//var_dump( \Input::all() );
+		//exit();
+		if( $clientId ){
+			\Input::merge(
+				array(
+					'ref' => \Auth::id().time(),
+					'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
+					'belongs_user' => \Auth::id(),
+					'email' => '',
+					'company_name' => \Input::get('company_name'),
+					'companyreg' => \Input::get('companyreg'),
+					'companyemployee' => \Input::get('companyemployee'),
+					'sector' => \Input::get('sector'),
+					'duedil_company_details' => \Input::get('duedil_company'),
+					'type' => '2',
+				)
+			);
+			$customer = \Clients\ClientEntity::get_instance()->createOrUpdate($clientId);
+			// if has telephone then update
+			if( count( \Input::get('edit_telephone') ) > 0 ){
+				foreach( \Input::get('edit_telephone') as $key => $val ){
+					if( trim($val['number']) != '' ){
+						\CustomerPhone\CustomerPhoneController::get_instance()->postPhoneWrapper(
+							$clientId,
+							$val['number'],
+							$val['for'],
+							$val['id']
+						);
+					}
+				}
+			}
+			// if has telephone then add
+			if( count( \Input::get('telephone') ) > 0 ){
+				foreach( \Input::get('telephone') as $key => $val ){
+					if( trim($val['number']) != '' ){
+						echo $val['number'].'<br>';
+						\CustomerPhone\CustomerPhoneController::get_instance()->postPhoneWrapper(
+							$clientId,
+							$val['number'],
+							$val['for']
+						);
+					}
+				}
+			}// if has telephone then add
+			// if has emails then update
+			if( count( \Input::get('edit_emails') ) > 0 ){
+				foreach( \Input::get('edit_emails') as $key => $val ){
+					if( trim($val['mail']) != '' ){
+						\CustomerEmail\CustomerEmailController::get_instance()->postEmailWrapper(
+							$clientId,
+							$val['mail'],
+							$val['for'],
+							$val['id']
+						);
+					}
+				}
+			}
+			// if has emails then update
+			if( count( \Input::get('emails') ) > 0 ){
+				foreach( \Input::get('emails') as $key => $val ){
+					if( trim($val['mail']) != '' ){
+						\CustomerEmail\CustomerEmailController::get_instance()->postEmailWrapper(
+							$clientId,
+							$val['mail'],
+							$val['for']
+						);
+					}
+				}
+			}// if has emails then add
+			// if has urls then update
+			if( count( \Input::get('edit_urls') ) > 0 ){
+				foreach( \Input::get('edit_urls') as $key => $val ){
+					if( trim($val['url']) != '' ){
+						\CustomerURL\CustomerURLController::get_instance()->postURLWrapper(
+							$clientId,
+							$val['url'],
+							$val['for'],
+							$val['is'],
+							$val['id']
+						);
+					}
+				}
+			}
+			// if has urls then add
+			if( count( \Input::get('urls') ) > 0 ){
+				foreach( \Input::get('urls') as $key => $val ){
+					if( trim($val['url']) != '' ){
+						\CustomerURL\CustomerURLController::get_instance()->postURLWrapper(
+							$clientId,
+							$val['url'],
+							$val['for'],
+							$val['is']
+						);
+					}
+				}
+			}// if has urls then add
+
+			// if has contact
+			if( \Input::has('contact_person') ) {
+				\Input::merge(
+					array(
+						'type'=>1,
+						'ref' => \Auth::id().time(),
+						'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
+						'belongs_user' => \Auth::id(),
+						'title' => \Input::get('title',''),
+						'first_name' => \Input::get('first_name',''),
+						'last_name' => \Input::get('last_name',''),
+						'smoker' => \Input::get('partner_smoker',0),
+						'job_title' => \Input::get('job_title',''),
+						'associated' => $customer->id,
+						'relationship' => 0,
+						'organisation' => \Input::get('company',''),
+						'email' => \Input::get('contact_email'),
+						'telephone_day' => \Input::get('contact_phone')
+					)
+				);
+				$contact = \Clients\ClientEntity::get_instance()->createOrUpdate(\Input::get('contact_person'));
+			}// if has contact
+
+			\Session::flash('message', 'Successfully Updated Company');
+			return \Redirect::action('Clients\ClientsController@getEditCompany',array('clientId'=>$clientId));
+
+		}
+	}
 
 	public function postCreateClientCompany(){
 		var_dump( \Input::all() );
@@ -707,7 +865,7 @@ class ClientsController extends \BaseController {
 					'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
 					'belongs_user' => \Auth::id(),
 					'email' => '',
-					'company_name' => \Input::get('company'),
+					'company_name' => \Input::get('company_name'),
 					'companyreg' => \Input::get('companyreg'),
 					'companyemployee' => \Input::get('companyemployee'),
 					'sector' => \Input::get('sector'),
@@ -817,6 +975,37 @@ class ClientsController extends \BaseController {
 			->withInput();
 		}*/
 	}
+
+		public function getAddCompanyPerson($clientId){
+
+		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+		$dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
+		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed');
+
+		$data 						= $this->data_view;
+		$data['title']				= $this->getTitleClient();
+		$data['pageTitle'] 			= 'Client';
+		$data['contentClass'] 		= '';
+		$data['portlet_body_class']	= 'form';
+		$data['portlet_title']		= 'Client';
+		$data['fa_icons']			= 'user';
+		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+		$data['customer']			= \Clients\Clients::find($clientId);
+		$data['currentClient']		= \Clients\ClientEntity::get_instance()->bindCustomer($data['customer']);
+		$data['telephone']			= $data['customer']->telephone();
+		$data['email']				= $data['customer']->emails();
+		$data['url']				= $data['customer']->url();
+		$data['belongToPartner']	= \Clients\ClientEntity::get_instance()->getPartnerBelong($data['customer']);
+		$data['associate']			= \Clients\ClientEntity::get_instance()->setAssociateCustomer($clientId);
+		$data['partner']			= \Clients\ClientEntity::get_instance()->getCustomerPartner();
+		$data['peopleRelationship']	= $this->getPeopleRelationship();
+		$data['center_column_view']	= 'dashboard';
+		$data 						= array_merge($data,$dashboard_data);
+		//var_dump($data['partner']->partner_id);
+		//exit();
+		return \View::make( $data['view_path'] . '.clients.people.addPeople', $data );
+	}
+
 
 	public function postCompanyPerson(){
 	}

@@ -1,32 +1,35 @@
-<div class="col-xs-5">
+<div class="col-xs-{{!isset($customer) ? 5:12}}">
 	<div class="form-group">
 	<label class="control-label">Company Name</label>
 	{{
 		Form::text(
-			'company',
+			'company_name',
 			null,
 			array(
 				'class'=>'form-control input-sm',
 				'id'=>'company',
+				isset($customer) ? 'readonly':'',
 			)
 		);
 	}}
 	</div>
 </div>
-<div class="col-xs-5">
-	<div class="form-group">
-		<label class="control-label">&nbsp;</label>
-		<button id="searchCompanyInfo" class="btn btn-primary" type="button">search company information</button>
-	</div>
-</div>
-<div class="col-xs-12">
-	<div class="form-group">
-		<div id="company_lookup_results">
-			<select style="width:500px;" class="form-control" multiple="multiple" id="company_lookup_results_list">
-			</select>
+@if( !isset($customer) )
+	<div class="col-xs-5">
+		<div class="form-group">
+			<label class="control-label">&nbsp;</label>
+			<button id="searchCompanyInfo" class="btn btn-primary" type="button">search company information</button>
 		</div>
 	</div>
-</div>
+	<div class="col-xs-12">
+		<div class="form-group">
+			<div id="company_lookup_results">
+				<select style="width:500px;" class="form-control" multiple="multiple" id="company_lookup_results_list">
+				</select>
+			</div>
+		</div>
+	</div>
+@endif
 <div class="col-xs-6">
 	<div class="form-group">
 	<label class="control-label">Company Registration Number</label>

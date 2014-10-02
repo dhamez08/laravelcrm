@@ -5,7 +5,7 @@
 		Form::select(
 			'title',
 			$title,
-			null,
+			isset($contactPerson) ? $contactPerson->title:null,
 			array(
 				'class'=>'form-control input-sm'
 			)
@@ -19,7 +19,7 @@
 	{{
 		Form::text(
 			'first_name',
-			null,
+			isset($contactPerson) ? $contactPerson->first_name:null,
 			array(
 				'class'=>'form-control input-sm'
 			)
@@ -33,7 +33,7 @@
 	{{
 		Form::text(
 			'last_name',
-			null,
+			isset($contactPerson) ? $contactPerson->last_name:null,
 			array(
 				'class'=>'form-control input-sm'
 			)
@@ -47,7 +47,7 @@
 	{{
 		Form::text(
 			'job_title',
-			null,
+			isset($contactPerson) ? $contactPerson->job_title:null,
 			array(
 				'class'=>'form-control input-sm'
 			)
@@ -61,7 +61,7 @@
 	{{
 		Form::text(
 			'contact_email',
-			null,
+			isset($contactPerson) ? $contactPerson->email:null,
 			array(
 				'class'=>'form-control input-sm'
 			)
@@ -75,7 +75,7 @@
 	{{
 		Form::text(
 			'contact_phone',
-			null,
+			isset($contactPerson) ? $contactPerson->telephone_day:null,
 			array(
 				'class'=>'form-control input-sm'
 			)

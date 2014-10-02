@@ -93,11 +93,11 @@ class ClientFormat extends Facade{
 	}
 
 	public function displayGoogleMapLink(){
-		return "http://maps.google.co.uk/maps?hl=en&safe=off&q=".$this->postcode;
+		return "http://maps.google.co.uk/maps?hl=en&safe=off&q=".$this->displayCustomerAddress();
 	}
 
 	public function displayGoogleMapDirectionLink(){
-		return "http://maps.google.co.uk/maps?daddr=".$this->postcode;
+		return "http://maps.google.co.uk/maps?daddr=".$this->displayCustomerAddress();
 	}
 
 	public function parseDate($value, $dateFormat = 'Y-m-d'){
@@ -105,7 +105,12 @@ class ClientFormat extends Facade{
 	}
 
 	public function displayDob($dateFormat = 'Y-m-d'){
-		return \Carbon\Carbon::parse( $this->dob )->format($dateFormat);
+		if( $this->dob == '0000-00-00' ){
+			return '';
+		}else{
+			return \Carbon\Carbon::parse( $this->dob )->format($dateFormat);
+		}
+
 	}
 
 	public function displayPartnerDob($dateFormat = 'Y-m-d'){
