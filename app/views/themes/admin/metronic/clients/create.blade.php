@@ -95,15 +95,15 @@
 	@parent
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 	<script type="text/javascript" src="{{$asset_path}}/pages/scripts/client.js"></script>
-		<script>
-			jQuery(document).ready(function() {
-				addPhone.init();
-				addEmail.init();
-				addPartner.init();
-				addChildren.init();
-				addressLookup.init();
-				addWebsite.init();
-			});
-		</script>
+	<script>
+		jQuery(document).ready(function() {
+			addPhone.init();
+			addEmail.init();
+			addPartner.init();
+			addChildren.init();
+			addressLookup.init();
+			addWebsite.init();
+		});
+	</script>
 	@stop
 @stop
