@@ -72,9 +72,7 @@
 														<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$customers['customer_id']))}}">{{$customers['fullname']}}</a>
 													@endif
 
-
-
-													@if( $customers['associated'] != 0 && $customers['relationship'] != '' )
+													{{--@if( $customers['associated'] != 0 && $customers['relationship'] != '' )--}}
 														<?php $partner = \Helpers::array_key_exists_wildcard($array_customer,$customers['associated'],'key-value'); ?>
 														{{--var_dump($partner)--}}
 														@if( $partner )
@@ -85,7 +83,7 @@
 															@endif
 
 														@endif
-													@endif
+													{{--@endif--}}
 												</div>
 											</td>
 											<td>
