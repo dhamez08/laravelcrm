@@ -191,6 +191,55 @@ class ClientsController extends \BaseController {
 		return \View::make( $data['view_path'] . '.clients.index', $data );
 	}
 
+	public function getConfirmPhoneDelete($id, $client, $token){
+		if( strcmp($id . \Session::token(), $token) == 0 ){
+			$phone = \CustomerTelephone\CustomerTelephone::find($id);
+			//echo $phone->number;
+			$phone->delete();
+			\Session::flash('message', 'Successfully Delete Phone Customer');
+			return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>$client));
+		}else{
+			echo 'nice try hacker';
+			die();
+		}
+	}
+	public function getConfirmUrlDelete($id, $client, $token){
+		if( strcmp($id . \Session::token(), $token) == 0 ){
+			$url = \CustomerUrl\CustomerUrl::find($id);
+			//echo $phone->number;
+			$url->delete();
+			\Session::flash('message', 'Successfully Delete Website');
+			return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>$client));
+		}else{
+			echo 'nice try hacker';
+			die();
+		}
+	}
+	public function getConfirmMailDelete($id, $client, $token){
+		if( strcmp($id . \Session::token(), $token) == 0 ){
+			$mail = \CustomerEmail\CustomerEmail::find($id);
+			//echo $phone->number;
+			$mail->delete();
+			\Session::flash('message', 'Successfully Delete Email');
+			return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>$client));
+		}else{
+			echo 'nice try hacker';
+			die();
+		}
+	}
+	public function getConfirmPersonDelete($id, $client, $token){
+		if( strcmp($id . \Session::token(), $token) == 0 ){
+			$person = \Clients\Clients::find($id);
+			//echo $phone->number;
+			$person->delete();
+			\Session::flash('message', 'Successfully Delete Person');
+			return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>$client));
+		}else{
+			echo 'nice try hacker';
+			die();
+		}
+	}
+
 	public function getCreate(){
 		$data 						= $this->data_view;
 		$data['pageTitle'] 			= 'Client';
