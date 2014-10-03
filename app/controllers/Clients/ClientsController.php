@@ -543,85 +543,36 @@ class ClientsController extends \BaseController {
 			if( $clientId ){
 				$customer = \Clients\ClientEntity::get_instance()->createOrUpdate($clientId);
 				// if has telephone then update
-				if( count( \Input::get('edit_telephone') ) > 0 ){
-					foreach( \Input::get('edit_telephone') as $key => $val ){
-						if( trim($val['number']) != '' ){
-							\CustomerPhone\CustomerPhoneController::get_instance()->postPhoneWrapper(
-								$clientId,
-								$val['number'],
-								$val['for'],
-								$val['id']
-							);
-						}
-					}
-				}
 				
-				// if has telephone then add
-				if( count( \Input::get('telephone') ) > 0 ){
-					foreach( \Input::get('telephone') as $key => $val ){
-						if( trim($val['number']) != '' ){
-							echo $val['number'].'<br>';
-							\CustomerPhone\CustomerPhoneController::get_instance()->postPhoneWrapper(
-								$clientId,
-								$val['number'],
-								$val['for']
-							);
-						}
-					}
-				}// if has telephone then add
-				// if has emails then update
-				if( count( \Input::get('edit_emails') ) > 0 ){
-					foreach( \Input::get('edit_emails') as $key => $val ){
-						if( trim($val['mail']) != '' ){
-							\CustomerEmail\CustomerEmailController::get_instance()->postEmailWrapper(
-								$clientId,
-								$val['mail'],
-								$val['for'],
-								$val['id']
-							);
-						}
-					}
-				}
-				// if has emails then update
-				if( count( \Input::get('emails') ) > 0 ){
-					foreach( \Input::get('emails') as $key => $val ){
-						if( trim($val['mail']) != '' ){
-							\CustomerEmail\CustomerEmailController::get_instance()->postEmailWrapper(
-								$clientId,
-								$val['mail'],
-								$val['for']
-							);
-						}
-					}
-				}// if has emails then add
-				// if has urls then update
-				if( count( \Input::get('edit_urls') ) > 0 ){
-					foreach( \Input::get('edit_urls') as $key => $val ){
-						if( trim($val['url']) != '' ){
-							\CustomerURL\CustomerURLController::get_instance()->postURLWrapper(
-								$clientId,
-								$val['url'],
-								$val['for'],
-								$val['is'],
-								$val['id']
-							);
-						}
-					}
-				}
-				// if has urls then add
-				if( count( \Input::get('urls') ) > 0 ){
-					foreach( \Input::get('urls') as $key => $val ){
-						if( trim($val['url']) != '' ){
-							\CustomerURL\CustomerURLController::get_instance()->postURLWrapper(
-								$clientId,
-								$val['url'],
-								$val['for'],
-								$val['is']
-							);
-						}
-					}
-				}// if has urls then add
+				\CustomerPhone\CustomerPhoneController::get_instance()->iteratePhoneInput(
+					\Input::get('telephone'),
+					$clientId
+				);
+				// if has emails then add	
+				\CustomerEmail\CustomerEmailController::get_instance()->iterateEmailInput(
+					\Input::get('emails'),
+					$clientId
+				);
+				// if has url then add	
+				\CustomerURL\CustomerURLController::get_instance()->iterateURLInput(
+					\Input::get('urls'),
+					$clientId
+				);
 
+				\CustomerPhone\CustomerPhoneController::get_instance()->iteratePhoneInput(
+					\Input::get('edit_telephone'),
+					$clientId
+				);
+				// if has emails then add	
+				\CustomerEmail\CustomerEmailController::get_instance()->iterateEmailInput(
+					\Input::get('edit_emails'),
+					$clientId
+				);
+				// if has url then add	
+				\CustomerURL\CustomerURLController::get_instance()->iterateURLInput(
+					\Input::get('edit_urls'),
+					$clientId
+				);
 
 			}
 			if( $customer ){
@@ -762,84 +713,36 @@ class ClientsController extends \BaseController {
 					)
 				);
 				$customer = \Clients\ClientEntity::get_instance()->createOrUpdate($clientId);
-				// if has telephone then update
-				if( count( \Input::get('edit_telephone') ) > 0 ){
-					foreach( \Input::get('edit_telephone') as $key => $val ){
-						if( trim($val['number']) != '' ){
-							\CustomerPhone\CustomerPhoneController::get_instance()->postPhoneWrapper(
-								$clientId,
-								$val['number'],
-								$val['for'],
-								$val['id']
-							);
-						}
-					}
-				}
-				// if has telephone then add
-				if( count( \Input::get('telephone') ) > 0 ){
-					foreach( \Input::get('telephone') as $key => $val ){
-						if( trim($val['number']) != '' ){
-							echo $val['number'].'<br>';
-							\CustomerPhone\CustomerPhoneController::get_instance()->postPhoneWrapper(
-								$clientId,
-								$val['number'],
-								$val['for']
-							);
-						}
-					}
-				}// if has telephone then add
-				// if has emails then update
-				if( count( \Input::get('edit_emails') ) > 0 ){
-					foreach( \Input::get('edit_emails') as $key => $val ){
-						if( trim($val['mail']) != '' ){
-							\CustomerEmail\CustomerEmailController::get_instance()->postEmailWrapper(
-								$clientId,
-								$val['mail'],
-								$val['for'],
-								$val['id']
-							);
-						}
-					}
-				}
-				// if has emails then update
-				if( count( \Input::get('emails') ) > 0 ){
-					foreach( \Input::get('emails') as $key => $val ){
-						if( trim($val['mail']) != '' ){
-							\CustomerEmail\CustomerEmailController::get_instance()->postEmailWrapper(
-								$clientId,
-								$val['mail'],
-								$val['for']
-							);
-						}
-					}
-				}// if has emails then add
-				// if has urls then update
-				if( count( \Input::get('edit_urls') ) > 0 ){
-					foreach( \Input::get('edit_urls') as $key => $val ){
-						if( trim($val['url']) != '' ){
-							\CustomerURL\CustomerURLController::get_instance()->postURLWrapper(
-								$clientId,
-								$val['url'],
-								$val['for'],
-								$val['is'],
-								$val['id']
-							);
-						}
-					}
-				}
-				// if has urls then add
-				if( count( \Input::get('urls') ) > 0 ){
-					foreach( \Input::get('urls') as $key => $val ){
-						if( trim($val['url']) != '' ){
-							\CustomerURL\CustomerURLController::get_instance()->postURLWrapper(
-								$clientId,
-								$val['url'],
-								$val['for'],
-								$val['is']
-							);
-						}
-					}
-				}// if has urls then add
+				
+				\CustomerPhone\CustomerPhoneController::get_instance()->iteratePhoneInput(
+					\Input::get('telephone'),
+					$clientId
+				);
+				// if has emails then add	
+				\CustomerEmail\CustomerEmailController::get_instance()->iterateEmailInput(
+					\Input::get('emails'),
+					$clientId
+				);
+				// if has url then add	
+				\CustomerURL\CustomerURLController::get_instance()->iterateURLInput(
+					\Input::get('urls'),
+					$clientId
+				);
+
+				\CustomerPhone\CustomerPhoneController::get_instance()->iteratePhoneInput(
+					\Input::get('edit_telephone'),
+					$clientId
+				);
+				// if has emails then add	
+				\CustomerEmail\CustomerEmailController::get_instance()->iterateEmailInput(
+					\Input::get('edit_emails'),
+					$clientId
+				);
+				// if has url then add	
+				\CustomerURL\CustomerURLController::get_instance()->iterateURLInput(
+					\Input::get('edit_urls'),
+					$clientId
+				);
 
 				// if has contact
 				if( \Input::has('contact_person') ) {
@@ -947,45 +850,20 @@ class ClientsController extends \BaseController {
 				// insert address
 				$address = \CustomerAddress\CustomerAddressController::get_instance()->postAddressWrapper($customer->id);
 
-				// if has telephone then add
-				if( count( \Input::get('telephone') ) > 0 ){
-					foreach( \Input::get('telephone') as $key => $val ){
-						if( trim($val['number']) != '' ){
-							\CustomerPhone\CustomerPhoneController::get_instance()->postPhoneWrapper(
-								$customer->id,
-								$val['number'],
-								$val['for']
-							);
-						}
-					}
-				}// if has telephone then add
-
-				// if has emails then add
-				if( count( \Input::get('emails') ) > 0 ){
-					foreach( \Input::get('emails') as $key => $val ){
-						if( trim($val['mail']) != '' ){
-							\CustomerEmail\CustomerEmailController::get_instance()->postEmailWrapper(
-								$customer->id,
-								$val['mail'],
-								$val['for']
-							);
-						}
-					}
-				}// if has emails then add
-
-				// if has urls then add
-				if( count( \Input::get('urls') ) > 0 ){
-					foreach( \Input::get('urls') as $key => $val ){
-						if( trim($val['url']) != '' ){
-							\CustomerURL\CustomerURLController::get_instance()->postURLWrapper(
-								$customer->id,
-								$val['url'],
-								$val['for'],
-								$val['is']
-							);
-						}
-					}
-				}// if has urls then add
+				\CustomerPhone\CustomerPhoneController::get_instance()->iteratePhoneInput(
+					\Input::get('telephone'),
+					$customer->id
+				);
+				// if has emails then add	
+				\CustomerEmail\CustomerEmailController::get_instance()->iterateEmailInput(
+					\Input::get('emails'),
+					$customer->id
+				);
+				// if has url then add	
+				\CustomerURL\CustomerURLController::get_instance()->iterateURLInput(
+					\Input::get('urls'),
+					$customer->id
+				);
 
 				// update dashboard
 				\Updates\UpdatesController::get_instance()->postUpdateWrapper(
@@ -1088,45 +966,20 @@ class ClientsController extends \BaseController {
 			// insert address
 			\CustomerAddress\CustomerAddressController::get_instance()->postAddressWrapper($companyPerson->id);
 
-			// if has telephone then add
-			if( count( \Input::get('telephone') ) > 0 ){
-				foreach( \Input::get('telephone') as $key => $val ){
-					if( trim($val['number']) != '' ){
-						\CustomerPhone\CustomerPhoneController::get_instance()->postPhoneWrapper(
-							$companyPerson->id,
-							$val['number'],
-							$val['for']
-						);
-					}
-				}
-			}// if has telephone then add
-
-			// if has emails then add
-			if( count( \Input::get('emails') ) > 0 ){
-				foreach( \Input::get('emails') as $key => $val ){
-					if( trim($val['mail']) != '' ){
-						\CustomerEmail\CustomerEmailController::get_instance()->postEmailWrapper(
-							$companyPerson->id,
-							$val['mail'],
-							$val['for']
-						);
-					}
-				}
-			}// if has emails then add
-
-			// if has urls then add
-			if( count( \Input::get('urls') ) > 0 ){
-				foreach( \Input::get('urls') as $key => $val ){
-					if( trim($val['url']) != '' ){
-						\CustomerURL\CustomerURLController::get_instance()->postURLWrapper(
-							$companyPerson->id,
-							$val['url'],
-							$val['for'],
-							$val['is']
-						);
-					}
-				}
-			}// if has urls then add
+			\CustomerPhone\CustomerPhoneController::get_instance()->iteratePhoneInput(
+				\Input::get('telephone'),
+				$companyPerson->id
+			);
+			// if has emails then add	
+			\CustomerEmail\CustomerEmailController::get_instance()->iterateEmailInput(
+				\Input::get('emails'),
+				$companyPerson->id
+			);
+			// if has url then add	
+			\CustomerURL\CustomerURLController::get_instance()->iterateURLInput(
+				\Input::get('urls'),
+				$companyPerson->id
+			);
 
 			// update dashboard
 			\Updates\UpdatesController::get_instance()->postUpdateWrapper(
@@ -1137,7 +990,7 @@ class ClientsController extends \BaseController {
 				'added a new person to a ' . $company->company_name,
 				1
 			);
-			\Clients\ClientEntity::get_instance()->createOrUpdate();
+
 			\Session::flash('message', 'Successfully Added Company Person');
 			return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>\Input::get('clientId')));
 		}else{
@@ -1245,7 +1098,6 @@ class ClientsController extends \BaseController {
 			'last_name' => 'required|min:3',
 			'dob' => 'required',
 			'relationship' => 'required',
-			'job_title' => 'required|min:3',
 		);
 		$messages = array(
 			'title.required'=>'Person Title is required',
