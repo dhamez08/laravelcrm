@@ -13,4 +13,8 @@ class CustomerProfileImages extends \Eloquent{
 	 */
 	protected $table = 'customer_profile_images';
 
+	public function client(){
+		return $this->belongsTo('\Clients\Clients','customer_id','id');
+	}
+
 }

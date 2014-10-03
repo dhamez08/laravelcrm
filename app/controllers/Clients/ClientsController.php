@@ -230,7 +230,18 @@ class ClientsController extends \BaseController {
 	public function getConfirmPersonDelete($id, $client, $token){
 		if( strcmp($id . \Session::token(), $token) == 0 ){
 			$person = \Clients\Clients::find($id);
-			//echo $phone->number;
+			if( $person->telephone()->count() > 0 ){
+				$person->telephone()->delete();
+			}
+			if( $person->address()->count() > 0 ){
+				$person->address()->delete();
+			}
+			if( $person->emails()->count() > 0 ){
+				$person->emails()->delete();
+			}
+			if( $person->url()->count() > 0 ){
+				$person->url()->delete();
+			}
 			$person->delete();
 			\Session::flash('message', 'Successfully Delete Person');
 			return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>$client));
@@ -265,10 +276,15 @@ class ClientsController extends \BaseController {
 
 	public function getEdit($clientId){
 		$data 						= $this->data_view;
+		$data['customer']			= \Clients\Clients::find($clientId);
+		$data['currentClient']		= \Clients\ClientEntity::get_instance()->bindCustomer($data['customer']);
+		$data['associate']			= \Clients\ClientEntity::get_instance()->setAssociateCustomer($clientId);
+		$data['children']			= \Clients\ClientEntity::get_instance()->getCustomerChildren();
+		$data['partner']			= \Clients\ClientEntity::get_instance()->getCustomerPartner();
 		$data['pageTitle'] 			= 'Client';
 		$data['contentClass'] 		= 'create';
 		$data['portlet_body_class']	= 'form';
-		$data['portlet_title']		= 'Add Client';
+		$data['portlet_title']		= 'Update Client - ' . $data['currentClient']->displayCustomerName();
 		$data['fa_icons']			= 'user';
 		$data['title']				= $this->getTitleClient();
 		$data['maritalStatus']		= $this->getMaritalStatus();
@@ -281,11 +297,7 @@ class ClientsController extends \BaseController {
 		$data['websiteType']		= $this->getWebsiteFor();
 		$data['websiteIs']			= $this->getWebsiteIs();
 		//$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
-		$data['customer']			= \Clients\Clients::find($clientId);
-		$data['currentClient']		= \Clients\ClientEntity::get_instance()->bindCustomer($data['customer']);
-		$data['associate']			= \Clients\ClientEntity::get_instance()->setAssociateCustomer($clientId);
-		$data['children']			= \Clients\ClientEntity::get_instance()->getCustomerChildren();
-		$data['partner']			= \Clients\ClientEntity::get_instance()->getCustomerPartner();
+		
 		$data['telephone']			= $data['customer']->telephone();
 		$data['email']				= $data['customer']->emails();
 		$data['url']				= $data['customer']->url();
@@ -493,13 +505,12 @@ class ClientsController extends \BaseController {
 		$data['telephone']			= $data['customer']->telephone();
 		$data['email']				= $data['customer']->emails();
 		$data['url']				= $data['customer']->url();
+		$data['profileImg']			= $data['customer']->profileImage();
 		$data['belongToPartner']	= \Clients\ClientEntity::get_instance()->getPartnerBelong($data['customer']);
 		$data['associate']			= \Clients\ClientEntity::get_instance()->setAssociateCustomer($clientId);
 		$data['partner']			= \Clients\ClientEntity::get_instance()->getCustomerPartner();
 		$data['center_column_view']	= 'dashboard';
 		$data 						= array_merge($data,$dashboard_data);
-		//var_dump($data['partner']->partner_id);
-		//exit();
 		return \View::make( $data['view_path'] . '.clients.summary', $data );
 	}
 
@@ -514,27 +525,24 @@ class ClientsController extends \BaseController {
 		);
 
 		if( \Input::has('associated') ){
-			$partner = \Clients\Clients::find($clientId);
 			\Input::merge(
 				array(
 					'type'=>1,
-					'partner_dob' => \Clients\ClientEntity::get_instance()->convertDate($partner->partner_dob),
 					'ref' => \Auth::id().time(),
 					'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
 					'belongs_user' => \Auth::id(),
-					'title' => $partner->partner_title,
-					'first_name' => $partner->partner_first_name,
-					'last_name' => $partner->partner_last_name,
-					'job_title' => $partner->partner_job_title,
-					'living_status' => $partner->partner_living_status,
-					'employment_status' => $partner->partner_employment_status,
-					'associated' => $clientId,
+					'title' => \Input::get('title'),
+					'first_name' => \Input::get('first_name'),
+					'last_name' => \Input::get('last_name'),
+					'job_title' => \Input::get('job_title'),
+					'living_status' => \Input::get('living_status'),
+					'employment_status' => \Input::get('employment_status'),
+					'associated' => \Input::get('associated'),
 					'relationship' => 'Spouse/Partner',
 					'email' => '',
 				)
 			);
 		}
-
 		$rules = array(
 			'title' => 'required',
 			'first_name' => 'required|min:3',
@@ -717,7 +725,7 @@ class ClientsController extends \BaseController {
 		$data['pageTitle'] 			= 'Client';
 		$data['contentClass'] 		= 'create';
 		$data['portlet_body_class']	= 'form';
-		$data['portlet_title']		= 'Add Company Client';
+		$data['portlet_title']		= 'Update Company - ' . $data['customer']->company_name;
 		$data['fa_icons']			= 'user';
 		$data['title']				= $this->getTitleClient();
 		$data['maritalStatus']		= $this->getMaritalStatus();
@@ -743,172 +751,172 @@ class ClientsController extends \BaseController {
 	}
 
 	public function putUpdateClientCompany($clientId){
-		//echo $clientId;
-		//var_dump( \Input::all() );
-		//exit();
-		if( $clientId ){
-			\Input::merge(
-				array(
-					'ref' => \Auth::id().time(),
-					'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
-					'belongs_user' => \Auth::id(),
-					'email' => '',
-					'company_name' => \Input::get('company_name'),
-					'companyreg' => \Input::get('companyreg'),
-					'companyemployee' => \Input::get('companyemployee'),
-					'sector' => \Input::get('sector'),
-					'duedil_company_details' => \Input::get('duedil_company'),
-					'type' => '2',
-				)
-			);
-			$customer = \Clients\ClientEntity::get_instance()->createOrUpdate($clientId);
-			// if has telephone then update
-			if( count( \Input::get('edit_telephone') ) > 0 ){
-				foreach( \Input::get('edit_telephone') as $key => $val ){
-					if( trim($val['number']) != '' ){
-						\CustomerPhone\CustomerPhoneController::get_instance()->postPhoneWrapper(
-							$clientId,
-							$val['number'],
-							$val['for'],
-							$val['id']
-						);
-					}
-				}
-			}
-			// if has telephone then add
-			if( count( \Input::get('telephone') ) > 0 ){
-				foreach( \Input::get('telephone') as $key => $val ){
-					if( trim($val['number']) != '' ){
-						echo $val['number'].'<br>';
-						\CustomerPhone\CustomerPhoneController::get_instance()->postPhoneWrapper(
-							$clientId,
-							$val['number'],
-							$val['for']
-						);
-					}
-				}
-			}// if has telephone then add
-			// if has emails then update
-			if( count( \Input::get('edit_emails') ) > 0 ){
-				foreach( \Input::get('edit_emails') as $key => $val ){
-					if( trim($val['mail']) != '' ){
-						\CustomerEmail\CustomerEmailController::get_instance()->postEmailWrapper(
-							$clientId,
-							$val['mail'],
-							$val['for'],
-							$val['id']
-						);
-					}
-				}
-			}
-			// if has emails then update
-			if( count( \Input::get('emails') ) > 0 ){
-				foreach( \Input::get('emails') as $key => $val ){
-					if( trim($val['mail']) != '' ){
-						\CustomerEmail\CustomerEmailController::get_instance()->postEmailWrapper(
-							$clientId,
-							$val['mail'],
-							$val['for']
-						);
-					}
-				}
-			}// if has emails then add
-			// if has urls then update
-			if( count( \Input::get('edit_urls') ) > 0 ){
-				foreach( \Input::get('edit_urls') as $key => $val ){
-					if( trim($val['url']) != '' ){
-						\CustomerURL\CustomerURLController::get_instance()->postURLWrapper(
-							$clientId,
-							$val['url'],
-							$val['for'],
-							$val['is'],
-							$val['id']
-						);
-					}
-				}
-			}
-			// if has urls then add
-			if( count( \Input::get('urls') ) > 0 ){
-				foreach( \Input::get('urls') as $key => $val ){
-					if( trim($val['url']) != '' ){
-						\CustomerURL\CustomerURLController::get_instance()->postURLWrapper(
-							$clientId,
-							$val['url'],
-							$val['for'],
-							$val['is']
-						);
-					}
-				}
-			}// if has urls then add
+		$rules = array(
+			'company_name' => 'required|min:3',
+			'companyreg' => 'required|min:3',
+			'companyemployee' => 'required',
+			'sector' => 'required',
+		);
+		$messages = array(
+			'company_name.required'=>'Company Name is required',
+			'company_name.min'=>'Company Name must have more than 3 character',
+			'companyreg.required'=>'Company Reg is required',
+			'companyreg.min'=>'Company Reg must have more than 3 character',
+			'companyemployee.required' => 'Company Employee is Required',
+			'sector.required'=>'Sector is required',
+		);
+		
+		$validator = \Validator::make(\Input::all(), $rules, $messages);
 
-			// if has contact
-			if( \Input::has('contact_person') ) {
+		if ( $validator->passes() ) {
+			if( $clientId ){
 				\Input::merge(
 					array(
-						'type'=>1,
 						'ref' => \Auth::id().time(),
 						'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
 						'belongs_user' => \Auth::id(),
-						'title' => \Input::get('title',''),
-						'first_name' => \Input::get('first_name',''),
-						'last_name' => \Input::get('last_name',''),
-						'smoker' => \Input::get('partner_smoker',0),
-						'job_title' => \Input::get('job_title',''),
-						'associated' => $customer->id,
-						'relationship' => 0,
-						'organisation' => \Input::get('company',''),
-						'email' => \Input::get('contact_email'),
-						'telephone_day' => \Input::get('contact_phone')
+						'email' => '',
+						'company_name' => \Input::get('company_name'),
+						'companyreg' => \Input::get('companyreg'),
+						'companyemployee' => \Input::get('companyemployee'),
+						'sector' => \Input::get('sector'),
+						'duedil_company_details' => \Input::get('duedil_company'),
+						'type' => '2',
 					)
 				);
-				$contact = \Clients\ClientEntity::get_instance()->createOrUpdate(\Input::get('contact_person'));
-			}// if has contact
+				$customer = \Clients\ClientEntity::get_instance()->createOrUpdate($clientId);
+				// if has telephone then update
+				if( count( \Input::get('edit_telephone') ) > 0 ){
+					foreach( \Input::get('edit_telephone') as $key => $val ){
+						if( trim($val['number']) != '' ){
+							\CustomerPhone\CustomerPhoneController::get_instance()->postPhoneWrapper(
+								$clientId,
+								$val['number'],
+								$val['for'],
+								$val['id']
+							);
+						}
+					}
+				}
+				// if has telephone then add
+				if( count( \Input::get('telephone') ) > 0 ){
+					foreach( \Input::get('telephone') as $key => $val ){
+						if( trim($val['number']) != '' ){
+							echo $val['number'].'<br>';
+							\CustomerPhone\CustomerPhoneController::get_instance()->postPhoneWrapper(
+								$clientId,
+								$val['number'],
+								$val['for']
+							);
+						}
+					}
+				}// if has telephone then add
+				// if has emails then update
+				if( count( \Input::get('edit_emails') ) > 0 ){
+					foreach( \Input::get('edit_emails') as $key => $val ){
+						if( trim($val['mail']) != '' ){
+							\CustomerEmail\CustomerEmailController::get_instance()->postEmailWrapper(
+								$clientId,
+								$val['mail'],
+								$val['for'],
+								$val['id']
+							);
+						}
+					}
+				}
+				// if has emails then update
+				if( count( \Input::get('emails') ) > 0 ){
+					foreach( \Input::get('emails') as $key => $val ){
+						if( trim($val['mail']) != '' ){
+							\CustomerEmail\CustomerEmailController::get_instance()->postEmailWrapper(
+								$clientId,
+								$val['mail'],
+								$val['for']
+							);
+						}
+					}
+				}// if has emails then add
+				// if has urls then update
+				if( count( \Input::get('edit_urls') ) > 0 ){
+					foreach( \Input::get('edit_urls') as $key => $val ){
+						if( trim($val['url']) != '' ){
+							\CustomerURL\CustomerURLController::get_instance()->postURLWrapper(
+								$clientId,
+								$val['url'],
+								$val['for'],
+								$val['is'],
+								$val['id']
+							);
+						}
+					}
+				}
+				// if has urls then add
+				if( count( \Input::get('urls') ) > 0 ){
+					foreach( \Input::get('urls') as $key => $val ){
+						if( trim($val['url']) != '' ){
+							\CustomerURL\CustomerURLController::get_instance()->postURLWrapper(
+								$clientId,
+								$val['url'],
+								$val['for'],
+								$val['is']
+							);
+						}
+					}
+				}// if has urls then add
 
+				// if has contact
+				if( \Input::has('contact_person') ) {
+					\Input::merge(
+						array(
+							'type'=>1,
+							'ref' => \Auth::id().time(),
+							'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
+							'belongs_user' => \Auth::id(),
+							'title' => \Input::get('title',''),
+							'first_name' => \Input::get('first_name',''),
+							'last_name' => \Input::get('last_name',''),
+							'smoker' => \Input::get('partner_smoker',0),
+							'job_title' => \Input::get('job_title',''),
+							'associated' => $customer->id,
+							'relationship' => 0,
+							'organisation' => \Input::get('company',''),
+							'email' => \Input::get('contact_email'),
+							'telephone_day' => \Input::get('contact_phone')
+						)
+					);
+					$contact = \Clients\ClientEntity::get_instance()->createOrUpdate(\Input::get('contact_person'));
+				}// if has contact
+			}
 			\Session::flash('message', 'Successfully Updated Company');
 			return \Redirect::action('Clients\ClientsController@getEditCompany',array('clientId'=>$clientId));
-
+		}else{
+			\Input::flash();
+			return \Redirect::action('Clients\ClientsController@getEditCompany',array('clientId'=>$clientId))
+			->withErrors($validator)
+			->withInput();	
 		}
+				
 	}
 
 	public function postCreateClientCompany(){
-		var_dump( \Input::all() );
-		//echo explode(\Input::get('duedil_company');
-		//exit();
-		/*$rules = array(
-			'title' => 'required',
-			'first_name' => 'required|min:3',
-			'last_name' => 'required|min:3',
-			'dob' => 'required',
-			'job_title' => 'required|min:3',
-			'marital_status' => 'required',
-			'partner_title' => 'required_if:marital_status,Married',
-			'partner_first_name' => 'required_if:marital_status,Married|min:3',
-			'partner_last_name' => 'required_if:marital_status,Married|min:3',
-			'partner_dob' => 'required_if:marital_status,Married',
-			'partner_job_title' => 'required_if:marital_status,Married|min:3',
+		$rules = array(
+			'company_name' => 'required|min:3',
+			'companyreg' => 'required|min:3',
+			'companyemployee' => 'required',
+			'sector' => 'required',
 		);
 		$messages = array(
-			'title.required'=>'Person Title is required',
-			'first_name.required'=>'Person Name is required',
-			'first_name.min'=>'Person Name must have more than 3 character',
-			'last_name.required'=>'Person Last Name is required',
-			'last_name.min'=>'Person Last Name must have more than 3 character',
-			'dob.required'=>'Person Date of birth is required',
-			'job_title.required'=>'Person Job Title is required',
-			'job_title.min'=>'Person Job Title must have more than 3 character',
-			'marital_status.required'=>'Person Marital Status is required',
-			'partner_title.required_if'=>'Partner Title is required',
-			'partner_first_name.required_if'=>'Partner Name is required',
-			'partner_first_name.min'=>'Partner Name must have more than 3 character',
-			'partner_last_name.required_if'=>'Partner Last Name is required',
-			'partner_last_name.min'=>'Partner Last Name must have more than 3 character',
-			'partner_dob.required_if'=>'Partner Date of birth is required',
-			'partner_job_title.required_if'=>'Partner Title is required',
-			'partner_job_title.min'=>'Partner Title Job Title must have more than 3 character',
+			'company_name.required'=>'Company Name is required',
+			'company_name.min'=>'Company Name must have more than 3 character',
+			'companyreg.required'=>'Company Reg is required',
+			'companyreg.min'=>'Company Reg must have more than 3 character',
+			'companyemployee.required' => 'Company Employee is Required',
+			'sector.required'=>'Sector is required',
 		);
-		$validator = \Validator::make(\Input::all(), $rules, $messages);*/
+		
+		$validator = \Validator::make(\Input::all(), $rules, $messages);
 
-		//if ( $validator->passes() ) {
+		if ( $validator->passes() ) {
 			\Input::merge(
 				array(
 					'ref' => \Auth::id().time(),
@@ -1018,12 +1026,12 @@ class ClientsController extends \BaseController {
 
 			}//end customer id
 
-		/*}else{
+		}else{
 			\Input::flash();
-			return \Redirect::action('Clients\ClientsController@getCreate')
+			return \Redirect::action('Clients\ClientsController@getCreateClientCompany')
 			->withErrors($validator)
 			->withInput();
-		}*/
+		}
 	}
 
 	public function getAddCompanyPerson($clientId){
@@ -1063,80 +1071,104 @@ class ClientsController extends \BaseController {
 
 
 	public function postCompanyPerson(){
-		//var_dump( \Input::all() );
-		//exit();
-		$company = \Clients\Clients::find( \Input::get('clientId') );
-		\Input::merge(
-			array(
-				'type'=>1,
-				'ref' => \Auth::id().time(),
-				'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
-				'belongs_user' => \Auth::id(),
-				'first_name' => \Input::get('first_name'),
-				'last_name' => \Input::get('last_name'),
-				'smoker' => \Input::get('partner_smoker',0),
-				'job_title' => \Input::get('job_title'),
-				'associated' => \Input::get('clientId'),
-				'organisation' => $company->company_name,
-			)
+		$rules = array(
+			'first_name' => 'required|min:3',
+			'last_name' => 'required|min:3',
+			'job_title' => 'required|min:3',
 		);
-		$companyPerson = \Clients\ClientEntity::get_instance()->createOrUpdate();
-		\Input::merge(
-			array('type'=>\Input::get('address_type'))
+		$messages = array(
+			'first_name.required'=>'Person Name is required',
+			'first_name.min'=>'Person Name must have more than 3 character',
+			'last_name.required'=>'Person Last Name is required',
+			'last_name.min'=>'Person Last Name must have more than 3 character',
+			'job_title.required'=>'Person Job Title is required',
+			'job_title.min'=>'Person Job Title must have more than 3 character',
 		);
+		
+		$validator = \Validator::make(\Input::all(), $rules, $messages);
 
-		// insert address
-		\CustomerAddress\CustomerAddressController::get_instance()->postAddressWrapper($companyPerson->id);
+		if ( $validator->passes() ) {
+			$company = \Clients\Clients::find( \Input::get('clientId') );
+			\Input::merge(
+				array(
+					'type'=>1,
+					'ref' => \Auth::id().time(),
+					'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
+					'belongs_user' => \Auth::id(),
+					'first_name' => \Input::get('first_name'),
+					'last_name' => \Input::get('last_name'),
+					'smoker' => \Input::get('partner_smoker',0),
+					'job_title' => \Input::get('job_title'),
+					'associated' => \Input::get('clientId'),
+					'organisation' => $company->company_name,
+				)
+			);
+			$companyPerson = \Clients\ClientEntity::get_instance()->createOrUpdate();
+			\Input::merge(
+				array('type'=>\Input::get('address_type'))
+			);
 
-		// if has telephone then add
-		if( count( \Input::get('telephone') ) > 0 ){
-			foreach( \Input::get('telephone') as $key => $val ){
-				if( trim($val['number']) != '' ){
-					\CustomerPhone\CustomerPhoneController::get_instance()->postPhoneWrapper(
-						$companyPerson->id,
-						$val['number'],
-						$val['for']
-					);
+			// insert address
+			\CustomerAddress\CustomerAddressController::get_instance()->postAddressWrapper($companyPerson->id);
+
+			// if has telephone then add
+			if( count( \Input::get('telephone') ) > 0 ){
+				foreach( \Input::get('telephone') as $key => $val ){
+					if( trim($val['number']) != '' ){
+						\CustomerPhone\CustomerPhoneController::get_instance()->postPhoneWrapper(
+							$companyPerson->id,
+							$val['number'],
+							$val['for']
+						);
+					}
 				}
-			}
-		}// if has telephone then add
+			}// if has telephone then add
 
-		// if has emails then add
-		if( count( \Input::get('emails') ) > 0 ){
-			foreach( \Input::get('emails') as $key => $val ){
-				if( trim($val['mail']) != '' ){
-					\CustomerEmail\CustomerEmailController::get_instance()->postEmailWrapper(
-						$companyPerson->id,
-						$val['mail'],
-						$val['for']
-					);
+			// if has emails then add
+			if( count( \Input::get('emails') ) > 0 ){
+				foreach( \Input::get('emails') as $key => $val ){
+					if( trim($val['mail']) != '' ){
+						\CustomerEmail\CustomerEmailController::get_instance()->postEmailWrapper(
+							$companyPerson->id,
+							$val['mail'],
+							$val['for']
+						);
+					}
 				}
-			}
-		}// if has emails then add
+			}// if has emails then add
 
-		// if has urls then add
-		if( count( \Input::get('urls') ) > 0 ){
-			foreach( \Input::get('urls') as $key => $val ){
-				if( trim($val['url']) != '' ){
-					\CustomerURL\CustomerURLController::get_instance()->postURLWrapper(
-						$companyPerson->id,
-						$val['url'],
-						$val['for'],
-						$val['is']
-					);
+			// if has urls then add
+			if( count( \Input::get('urls') ) > 0 ){
+				foreach( \Input::get('urls') as $key => $val ){
+					if( trim($val['url']) != '' ){
+						\CustomerURL\CustomerURLController::get_instance()->postURLWrapper(
+							$companyPerson->id,
+							$val['url'],
+							$val['for'],
+							$val['is']
+						);
+					}
 				}
-			}
-		}// if has urls then add
+			}// if has urls then add
 
-		// update dashboard
-		\Updates\UpdatesController::get_instance()->postUpdateWrapper(
-			\User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
-			\Auth::id(),
-			\Input::get('clientId'),
-			\Auth::user()->first_name.' '.\Auth::user()->last_name,
-			'added a new person to a ' . $company->company_name,
-			1
-		);
+			// update dashboard
+			\Updates\UpdatesController::get_instance()->postUpdateWrapper(
+				\User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
+				\Auth::id(),
+				\Input::get('clientId'),
+				\Auth::user()->first_name.' '.\Auth::user()->last_name,
+				'added a new person to a ' . $company->company_name,
+				1
+			);
+			\Clients\ClientEntity::get_instance()->createOrUpdate();
+			\Session::flash('message', 'Successfully Added Company Person');
+			return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>\Input::get('clientId')));
+		}else{
+			\Input::flash();
+			return \Redirect::action('Clients\ClientsController@getAddCompanyPerson',array('clientId'=>\Input::get('clientId')))
+			->withErrors($validator)
+			->withInput();
+		}
 
 	}
 
@@ -1230,44 +1262,72 @@ class ClientsController extends \BaseController {
 	}
 
 	public function postFamilyPerson(){
-		if (\Input::get('relationship')=="Spouse/Partner") {
-			\Input::merge(
-				array(
-					'dob' => \Clients\ClientEntity::get_instance()->convertDate(\Input::get('dob')),
-					'ref' => \Auth::id() . time() . rand(1,9),
-					'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
-					'belongs_user' => \Auth::id(),
-					'title' => \Input::get('title'),
-					'first_name' => \Input::get('first_name'),
-					'last_name' => \Input::get('last_name'),
-					'associated' => \Input::get('clientId'),
-					'relationship' => \Input::get('relationship'),
-					'partner_title' => \Input::get('title'),
-					'partner_first_name' => \Input::get('first_name'),
-					'partner_last_name' => \Input::get('last_name'),
-					'partner_dob' => \Clients\ClientEntity::get_instance()->convertDate(\Input::get('dob')),
-					'type' => 3,
-				)
-			);
-		} else {
-			\Input::merge(
-				array(
-					'dob' => \Clients\ClientEntity::get_instance()->convertDate(\Input::get('dob')),
-					'ref' => \Auth::id() . time() . rand(1,9),
-					'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
-					'belongs_user' => \Auth::id(),
-					'title' => \Input::get('title'),
-					'first_name' => \Input::get('first_name'),
-					'last_name' => \Input::get('last_name'),
-					'associated' => \Input::get('clientId'),
-					'relationship' => \Input::get('relationship'),
-					'type' => 4,
-				)
-			);
+		$rules = array(
+			'title' => 'required',
+			'first_name' => 'required|min:3',
+			'last_name' => 'required|min:3',
+			'dob' => 'required',
+			'relationship' => 'required',
+			'job_title' => 'required|min:3',
+		);
+		$messages = array(
+			'title.required'=>'Person Title is required',
+			'first_name.required'=>'Person Name is required',
+			'first_name.min'=>'Person Name must have more than 3 character',
+			'last_name.required'=>'Person Last Name is required',
+			'last_name.min'=>'Person Last Name must have more than 3 character',
+			'dob.required'=>'Person Date of birth is required',
+			'relationship.required' => 'Person Relationship is required',
+		);
+		
+		$validator = \Validator::make(\Input::all(), $rules, $messages);
+
+		if ( $validator->passes() ) {
+			if (\Input::get('relationship')=="Spouse/Partner") {
+				\Input::merge(
+					array(
+						'dob' => \Clients\ClientEntity::get_instance()->convertDate(\Input::get('dob')),
+						'ref' => \Auth::id() . time() . rand(1,9),
+						'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
+						'belongs_user' => \Auth::id(),
+						'title' => \Input::get('title'),
+						'first_name' => \Input::get('first_name'),
+						'last_name' => \Input::get('last_name'),
+						'associated' => \Input::get('clientId'),
+						'relationship' => \Input::get('relationship'),
+						'partner_title' => \Input::get('title'),
+						'partner_first_name' => \Input::get('first_name'),
+						'partner_last_name' => \Input::get('last_name'),
+						'partner_dob' => \Clients\ClientEntity::get_instance()->convertDate(\Input::get('dob')),
+						'type' => 3,
+					)
+				);
+			} else {
+				\Input::merge(
+					array(
+						'dob' => \Clients\ClientEntity::get_instance()->convertDate(\Input::get('dob')),
+						'ref' => \Auth::id() . time() . rand(1,9),
+						'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
+						'belongs_user' => \Auth::id(),
+						'title' => \Input::get('title'),
+						'first_name' => \Input::get('first_name'),
+						'last_name' => \Input::get('last_name'),
+						'associated' => \Input::get('clientId'),
+						'relationship' => \Input::get('relationship'),
+						'type' => 4,
+					)
+				);
+			}
+			\Clients\ClientEntity::get_instance()->createOrUpdate();
+			\Session::flash('message', 'Successfully Added Family Person');
+			return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>\Input::get('clientId')));
+		}else{
+			\Input::flash();
+			return \Redirect::action('Clients\ClientsController@getAddFamilyPerson',array('clientId'=>\Input::get('clientId')))
+			->withErrors($validator)
+			->withInput();	
 		}
-		\Clients\ClientEntity::get_instance()->createOrUpdate();
-		\Session::flash('message', 'Successfully Added Family Person');
-		return \Redirect::action('Clients\ClientsController@getPeople',array('clientId'=>\Input::get('clientId')));
+		
 	}
 
 	public function getEditFamilyPerson($clientId){
