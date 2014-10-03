@@ -7,7 +7,6 @@
 	<div class="panel-body">
 		 <div class="row">
 		 	<div class="col-md-3">
-		 		{{$profileImg->count()}}
 		 		@if( $currentClient->type == 1 )
 		 		@elseif($currentClient->type == 2)
 		 		@endif
