@@ -230,7 +230,18 @@ class ClientsController extends \BaseController {
 	public function getConfirmPersonDelete($id, $client, $token){
 		if( strcmp($id . \Session::token(), $token) == 0 ){
 			$person = \Clients\Clients::find($id);
-			//echo $phone->number;
+			if( $person->telephone()->count() > 0 ){
+				$person->telephone()->delete();
+			}
+			if( $person->address()->count() > 0 ){
+				$person->address()->delete();
+			}
+			if( $person->emails()->count() > 0 ){
+				$person->emails()->delete();
+			}
+			if( $person->url()->count() > 0 ){
+				$person->url()->delete();
+			}
 			$person->delete();
 			\Session::flash('message', 'Successfully Delete Person');
 			return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>$client));
@@ -493,6 +504,7 @@ class ClientsController extends \BaseController {
 		$data['telephone']			= $data['customer']->telephone();
 		$data['email']				= $data['customer']->emails();
 		$data['url']				= $data['customer']->url();
+		$data['profileImg']			= $data['customer']->profileImage();
 		$data['belongToPartner']	= \Clients\ClientEntity::get_instance()->getPartnerBelong($data['customer']);
 		$data['associate']			= \Clients\ClientEntity::get_instance()->setAssociateCustomer($clientId);
 		$data['partner']			= \Clients\ClientEntity::get_instance()->getCustomerPartner();
@@ -514,26 +526,27 @@ class ClientsController extends \BaseController {
 		);
 
 		if( \Input::has('associated') ){
-			$partner = \Clients\Clients::find($clientId);
+			//$partner = \Clients\Clients::find($clientId);
+			echo \Input::get('associated');
 			\Input::merge(
 				array(
 					'type'=>1,
-					'partner_dob' => \Clients\ClientEntity::get_instance()->convertDate($partner->partner_dob),
 					'ref' => \Auth::id().time(),
 					'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
 					'belongs_user' => \Auth::id(),
-					'title' => $partner->partner_title,
-					'first_name' => $partner->partner_first_name,
-					'last_name' => $partner->partner_last_name,
-					'job_title' => $partner->partner_job_title,
-					'living_status' => $partner->partner_living_status,
-					'employment_status' => $partner->partner_employment_status,
-					'associated' => $clientId,
+					'title' => \Input::get('title'),
+					'first_name' => \Input::get('first_name'),
+					'last_name' => \Input::get('last_name'),
+					'job_title' => \Input::get('job_title'),
+					'living_status' => \Input::get('living_status'),
+					'employment_status' => \Input::get('employment_status'),
+					'associated' => \Input::get('associated'),
 					'relationship' => 'Spouse/Partner',
 					'email' => '',
 				)
 			);
 		}
+
 
 		$rules = array(
 			'title' => 'required',

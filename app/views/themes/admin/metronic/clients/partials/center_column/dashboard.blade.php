@@ -1,4 +1,4 @@
-<div class="col-md-6">
+<div class="col-md-12">
 	<div class="row">
 		<div class="col-md-12">
 			<!-- FILES -->
@@ -840,7 +840,7 @@
 					</div>
 					<!--END TABS-->
 				</div>
-			</div>	
+			</div>
 			<!-- END FILES -->
 		</div>
 		<div class="col-md-12">
@@ -1681,12 +1681,12 @@
 					</div>
 					<!--END TABS-->
 				</div>
-			</div>								
+			</div>
 			<!-- END ACTIVITY -->
 		</div>
 	</div>
 </div>
-<div class="col-md-6">
+<div class="col-md-12">
 	<div class="row">
 		<div class="col-md-12">
 			<!-- TASKS -->
@@ -2011,7 +2011,7 @@
 						</div>
 					</div>
 				</div>
-			</div>	
+			</div>
 			<!-- END TASKS -->
 		</div>
 		<div class="col-md-12">
@@ -2852,7 +2852,7 @@
 					</div>
 					<!--END TABS-->
 				</div>
-			</div>								
+			</div>
 			<!-- END FEEDS -->
 		</div>
 	</div>

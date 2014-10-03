@@ -7,7 +7,9 @@
 	Company
 	<div class="panel-body">
 		 <div class="row">
-		 	<div class="col-md-3"><img src="../../assets/admin/layout/img/avatar.png" alt="profile pic" /></div>
+		 	<div class="col-md-3">
+		 		<img src="{{$asset_path . '/global/img/summary_comp.png'}}" alt="profile pic" class="profilePic"/>
+		 	</div>
 		 	<div class="col-md-9">
 		 		<p>{{$customer->company_name}}</p>
 		 	</div>
@@ -83,6 +85,20 @@
 										</a>
 									</p>
 									<p>{{$people->job_title}}</p>
+									<a 	class="btn red btn-sm deletePerson" 
+										href="{{
+											action(
+												'Clients\ClientsController@getConfirmPersonDelete',
+												array(
+													'id'=>$people->id,
+													'client'=>$currentClient->id,
+													'hash'=>($people->id . csrf_token())
+												)
+											)
+										}}" 
+									>
+										<i class="fa fa-trash-o fa-5x"></i>
+									</a>
 							@endforeach
 		 				@endif
 		 			</div>
@@ -93,7 +109,8 @@
 		 			<div class="form-group">
 		 				<p class="form-control-static">
 							<a href="{{action('Clients\ClientsController@getAddCompanyPerson',array('clientId'=>$customer->id))}}">
-								Add People
+								<i class="fa fa-plus-circle"></i>
+								Create New Person
 							</a>
 						</p>
 		 			</div>
