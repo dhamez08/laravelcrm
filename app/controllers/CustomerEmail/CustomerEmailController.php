@@ -49,9 +49,19 @@ class CustomerEmailController extends \BaseController {
 	}
 
 	/**
-	 * I call this postEmailWrapper cause it is call in another controller
-	 * the $data is for \Input::all()
-	 * each $data is defined
+	* I call this postEmailWrapper cause it is call in another controller
+	* the $data is for \Input::all()
+	* each $data is defined
+  	* @param 	$clientId 	 	integer
+	* - the id of the client, foreign key
+	* @param 	$number 	 	alphanumeric
+	* - actual email
+	* @param 	$type 	 		string
+	* - what is the email for
+	* @param 	$id 			integer or null
+	* - the current database id of the phone
+	* - if null then create, else update
+	* @return eloquent orm
 	 * */
 	public function postEmailWrapper($clientId, $email, $type, $id = null){
 		\Input::merge(
@@ -62,9 +72,43 @@ class CustomerEmailController extends \BaseController {
 			)
 		);
 		if( is_null($id) ){
-			\CustomerEmail\CustomerEmailEntity::get_instance()->createOrUpdate();
+			return \CustomerEmail\CustomerEmailEntity::get_instance()->createOrUpdate();
 		}else{
-			\CustomerEmail\CustomerEmailEntity::get_instance()->createOrUpdate($id);
+			return \CustomerEmail\CustomerEmailEntity::get_instance()->createOrUpdate($id);
+		}
+	}
+
+	/**
+	* This is use to iterate phone input,
+	* when adding phone.
+	*
+	* @param 	$arrayInput 	array
+	* - this is the name of the input array
+	* @param 	$clientId 	 	integer
+	* - the id of the client, foreign key
+	* @param 	$id 			integer or null
+	* - the current database id of the phone
+	* - if null then create, else update
+	* @return 	false | eloquent resource 	if $arrayInput is zero,
+	*										else return as eloquent resource
+	*/
+	public function iterateEmailInput( 
+		$arrayInput ,
+		$clientId
+	){
+		if( count( $arrayInput ) > 0 ){
+			foreach( $arrayInput as $key => $val ){
+				if( trim($val['mail']) != '' ){
+					$this->postEmailWrapper(
+						$clientId,
+						$val['mail'],
+						$val['for'],
+						isset($val['id']) ? $val['id']:null
+					);
+				}
+			}
+		}else{
+			return false;			
 		}
 	}
 

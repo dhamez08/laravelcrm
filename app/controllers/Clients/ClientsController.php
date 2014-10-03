@@ -425,44 +425,20 @@ class ClientsController extends \BaseController {
 				}// if has children then add
 
 				// if has telephone then add
-				if( count( \Input::get('telephone') ) > 0 ){
-					foreach( \Input::get('telephone') as $key => $val ){
-						if( trim($val['number']) != '' ){
-							\CustomerPhone\CustomerPhoneController::get_instance()->postPhoneWrapper(
-								$customer->id,
-								$val['number'],
-								$val['for']
-							);
-						}
-					}
-				}// if has telephone then add
-
-				// if has emails then add
-				if( count( \Input::get('emails') ) > 0 ){
-					foreach( \Input::get('emails') as $key => $val ){
-						if( trim($val['mail']) != '' ){
-							\CustomerEmail\CustomerEmailController::get_instance()->postEmailWrapper(
-								$customer->id,
-								$val['mail'],
-								$val['for']
-							);
-						}
-					}
-				}// if has emails then add
-
-				// if has urls then add
-				if( count( \Input::get('urls') ) > 0 ){
-					foreach( \Input::get('urls') as $key => $val ){
-						if( trim($val['url']) != '' ){
-							\CustomerURL\CustomerURLController::get_instance()->postURLWrapper(
-								$customer->id,
-								$val['url'],
-								$val['for'],
-								$val['is']
-							);
-						}
-					}
-				}// if has urls then add
+				$phone = \CustomerPhone\CustomerPhoneController::get_instance()->iteratePhoneInput(
+					\Input::get('telephone'),
+					$customer->id
+				);
+				// if has emails then add	
+				$email = \CustomerEmail\CustomerEmailController::get_instance()->iterateEmailInput(
+					\Input::get('emails'),
+					$customer->id
+				);
+				// if has url then add	
+				$url = \CustomerURL\CustomerURLController::get_instance()->iterateURLInput(
+					\Input::get('urls'),
+					$customer->id
+				);
 
 				// update dashboard
 				\Updates\UpdatesController::get_instance()->postUpdateWrapper(
@@ -579,6 +555,7 @@ class ClientsController extends \BaseController {
 						}
 					}
 				}
+				
 				// if has telephone then add
 				if( count( \Input::get('telephone') ) > 0 ){
 					foreach( \Input::get('telephone') as $key => $val ){
