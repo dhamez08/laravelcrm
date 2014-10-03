@@ -18,7 +18,7 @@
 				<div class="col-md-6">
 					<form class="form-inline" method="get" id="status_sort">
 					    <label for="status" class="control-label">Filter by status or milestone:</label>
-					    <select id="status" name="status" class="form-control">
+					    <select id="status" name="status" class="form-control" onchange="this.form.submit()">
 					    <optgroup label="Status">
 					    <option value="">All (open &amp; closed)</option>
 					    <option value="open" <?php if ($selected_status=="open") { echo 'selected="selected"'; } ?>>Open</option>
@@ -40,7 +40,7 @@
 					    </select>
 					    @if(count($opp_tags)>0)
 						<label for="tag" class="control-label">Tag:</label>
-						<select name="tag" id="tag" class="form-control">
+						<select name="tag" id="tag" class="form-control" onchange="this.form.submit()">
 							<option value=""></option>
 							@foreach($opp_tags as $tag)
 								<option value="{{ $tag->id }}" @if($selected_tag==$tag->id) selected="selected" @endif>{{ $tag->tag }}</option>
@@ -50,7 +50,7 @@
 					    
 						@if(\Session::get("role")==1)
 					    <label for="user" class="control-label">User:</label>
-					    <select id="user" name="user" class="form-control">
+					    <select id="user" name="user" class="form-control" onchange="this.form.submit()">
 					    <option value="">Myself Only</option>
 						<option value="all" <?php if (\Input::get("user")=="all") { echo 'selected="selected"'; } ?>>All Users</option>
 					    @if(count($group)>0)
@@ -80,30 +80,16 @@
 									</tr>
 								</thead>
 								<tbody>
+								@foreach($list as $opp)
 									<tr>
-										<td>Client</td>
-										<td>Opportunity</td>
-										<td>Milestone</td>
-										<td>Expected Value</td>
-										<td>Expected Close Date</td>
-										<td>Status</td>
+										<td>{{ $opp->client }}</td>
+										<td>{{ $opp->name }} ({{ $opp->probability }}%)</td>
+										<td>{{ $opp->milestone }}</td>
+										<td>&pound;{{ $opp->value_calc }}</td>
+										<td>{{ date("jS F Y", strtotime($opp->close_date)) }}</td>
+										<td>{{ $opp->status==0 ? 'Open':'Closed' }}</td>
 									</tr>
-									<tr>
-										<td>Client</td>
-										<td>Opportunity</td>
-										<td>Milestone</td>
-										<td>Expected Value</td>
-										<td>Expected Close Date</td>
-										<td>Status</td>
-									</tr>
-									<tr>
-										<td>Client</td>
-										<td>Opportunity</td>
-										<td>Milestone</td>
-										<td>Expected Value</td>
-										<td>Expected Close Date</td>
-										<td>Status</td>
-									</tr>
+								@endforeach
 								</tbody>
 							</table>
 						</div>

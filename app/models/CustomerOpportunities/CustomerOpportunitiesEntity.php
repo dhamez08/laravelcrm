@@ -238,9 +238,10 @@ class CustomerOpportunitiesEntity extends \Eloquent{
 		}
 		
 		$sql .= "ORDER BY customer_opportunities.close_date DESC";
-
-		$query = \DB::select($sql, array(\Auth::id(),$tag));
-
+		if($tag!="")
+			$query = \DB::select($sql, array(\Auth::id(),$tag));
+		else
+			$query = \DB::select($sql, array(\Auth::id()));
 		return $query;	
 	}
 
@@ -302,7 +303,10 @@ class CustomerOpportunitiesEntity extends \Eloquent{
 		
 		$sql .= "ORDER BY customer_opportunities.close_date DESC";
 
-		$query = \DB::select($sql, array($user,$tag));
+		if($tag!="")
+			$query = \DB::select($sql, array(\Auth::id(),$tag));
+		else
+			$query = \DB::select($sql, array(\Auth::id()));
 
 		return $query;	
 	}
