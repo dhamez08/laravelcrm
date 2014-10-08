@@ -14,6 +14,10 @@ class ClientEntity extends \Eloquent{
 
 	protected $children_data;
 
+	protected $array_not_included_data = array(
+		'_token',
+	);
+
 	public function __construct(){
 
 	}
@@ -48,6 +52,25 @@ class ClientEntity extends \Eloquent{
 			// if its a array
 		}
 		return $binded_data;
+	}
+
+	public function _createOrUpdate($arrayData, $arrayNotIncluded = array(), $id = null){
+		if( is_null($id) ) {
+			//create
+			$clients = new \Clients\Clients;
+		}else{
+			//update
+			$clients = \Clients\Clients::find($id);
+		}
+		if( count($arrayData) > 0 ){
+			foreach($arrayData as $data_key=>$data_val){
+				if( !in_array($data_key,$arrayNotIncluded) ){
+					$clients->$data_key = $data_val;
+				}
+			}
+			$clients->save();
+			return $clients;
+		}
 	}
 
 	/**
@@ -203,6 +226,10 @@ class ClientEntity extends \Eloquent{
 		}else{
 			return false;
 		}
+	}
+
+	public function processImport(){
+
 	}
 
 }

@@ -21,7 +21,7 @@ class Helpers {
 
 	// move to helper
 	public static function convert_json_php($json_data){
-		return json_decode(stripslashes($json_data));
+		return json_decode($json_data);
 	}
 
 }

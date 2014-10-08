@@ -11,7 +11,7 @@
 		 		@elseif($currentClient->type == 2)
 		 		@endif
 		 		<img src="{{$asset_path . '/global/img/summary_person.png'}}" alt="profile pic" class="profilePic"/>
-		 		
+
 		 	</div>
 		 	<div class="col-md-9">
 		 		<p>{{$currentClient->displayCustomerName()}}</p>
@@ -39,12 +39,15 @@
 		 	<div class="col-md-12">
 		 		<div class="form-body client-detail">
 		 			<div class="form-group">
+						<p></p>
 						@if( $url->count() > 0 )
+							<ul class="list-unstyled">
 							@foreach($url->get() as $urls)
-								<p class="form-control-static">
+								<li>
 									<i class="fa fa-cloud"></i>
-									<a href="{{$urls->url}}" target="_blank">{{$urls->url}}</a> <span class="label label-info">{{$urls->type}}</span>
-									<a 
+									<a href="{{$urls->url}}" target="_blank">{{$urls->url}}</a>
+									<span class="label label-info" style="font-size:9px;">{{$urls->type}}</span>
+									<a
 										href="{{
 											action('Clients\ClientsController@getConfirmUrlDelete',
 											array(
@@ -52,20 +55,23 @@
 												'client'=>$currentClient->id,
 												'hash'=>($urls->id . csrf_token()))
 											)
-										}}" 
-										class="btn red btn-xs deleteURL" 
+										}}"
+										class="btn red btn-xs deleteURL"
 									>
 											<i class="fa fa-trash-o fa-5x"></i>
 									</a>
-								</p>
+								</li>
 							@endforeach
+							</ul>
 						@endif
 						@if( $email->count() > 0 )
+							<ul class="list-unstyled">
 							@foreach($email->get() as $mail)
-								<p class="form-control-static">
+								<li>
 									<i class="fa fa-envelope"></i>
-									<a href="mailto:{{$mail->email}}" target="_blank">{{$mail->email}}</a> <span class="label label-info">{{$mail->type}}</span>
-									<a 
+									<a href="mailto:{{$mail->email}}" target="_blank">{{$mail->email}}</a>
+									<span class="label label-info" style="font-size:9px;">{{$mail->type}}</span>
+									<a
 										href="{{
 											action('Clients\ClientsController@getConfirmMailDelete',
 											array(
@@ -73,33 +79,37 @@
 												'client'=>$currentClient->id,
 												'hash'=>($mail->id . csrf_token()))
 											)
-										}}" 
-										class="btn red btn-xs deleteMail" 
+										}}"
+										class="btn red btn-xs deleteMail"
 									>
 										<i class="fa fa-trash-o fa-5x"></i>
 									</a>
-								</p>
+								</li>
 							@endforeach
+							</ul>
 						@endif
 						@if( $telephone->count() > 0 )
+							<ul class="list-unstyled">
 							@foreach($telephone->get() as $phone)
-								<p class="form-control-static">
+								<li>
 									<i class="fa fa-phone"></i>
-									{{$phone->number}} <span class="label label-info">{{$phone->type}}</span>
-									<a 
+									{{$phone->number}}
+									<span class="label label-info" style="font-size:9px;">{{$phone->type}}</span>
+									<a
 										href="{{
 											action('Clients\ClientsController@getConfirmPhoneDelete',
 											array(
 												'id'=>$phone->id,
 												'client'=>$currentClient->id,'hash'=>($phone->id . csrf_token()))
 											)
-										}}" 
-										class="btn red btn-xs deletePhone" 
+										}}"
+										class="btn red btn-xs deletePhone"
 									>
 										<i class="fa fa-trash-o fa-5x"></i>
 									</a>
-								</p>
+								</li>
 							@endforeach
+							</ul>
 						@endif
 						<p class="form-control-static">{{$currentClient->displayCustomerAddress()}}</p>
 						<p class="form-control-static">
@@ -137,18 +147,19 @@
 									<p class="form-control-static">
 										<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$family->id))}}">
 											<strong>
+												xxx
 												{{($family->partner_title == '' ) ? $family->title:$family->partner_title}}
 												{{($family->partner_first_name == '') ? $family->first_name:$family->partner_first_name}}
 												{{($family->partner_last_name == '') ? $family->last_name:$family->partner_last_name}}
 											</strong>
 										</a>
 										- {{$currentClient->parseDate($family->partner_dob)}} - {{$family->relationship}}
-								@elseif( $family->type == 4 )
+								@else
 									<p class="form-control-static">
 										<strong>{{$family->first_name.' '.$family->last_name}}</strong>
 										- {{$currentClient->parseDate($family->dob)}} - {{$family->relationship}}
 								@endif
-								<a 	class="btn red btn-sm deletePerson" 
+								<a 	class="btn red btn-sm deletePerson"
 									href="{{
 										action(
 											'Clients\ClientsController@getConfirmPersonDelete',
@@ -158,7 +169,7 @@
 												'hash'=>($family->id . csrf_token())
 											)
 										)
-									}}" 
+									}}"
 								>
 									<i class="fa fa-trash-o fa-5x"></i>
 								</a>
@@ -182,7 +193,7 @@
 		 	</div>
 		 </div>
 		 <hr/>
-		 <div class="row">
+		<div class="row">
 		 	<div class="col-md-12">
 		 		<h5><strong>Background Information</strong></h5>
 		 		<div class="form-body client-detail">
@@ -191,6 +202,6 @@
 		 			</div>
 		 		</div>
 		 	</div>
-		 </div>
+		</div>
 	</div>
 </div>

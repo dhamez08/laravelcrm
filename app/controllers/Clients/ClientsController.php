@@ -297,7 +297,7 @@ class ClientsController extends \BaseController {
 		$data['websiteType']		= $this->getWebsiteFor();
 		$data['websiteIs']			= $this->getWebsiteIs();
 		//$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
-		
+
 		$data['telephone']			= $data['customer']->telephone();
 		$data['email']				= $data['customer']->emails();
 		$data['url']				= $data['customer']->url();
@@ -429,12 +429,12 @@ class ClientsController extends \BaseController {
 					\Input::get('telephone'),
 					$customer->id
 				);
-				// if has emails then add	
+				// if has emails then add
 				$email = \CustomerEmail\CustomerEmailController::get_instance()->iterateEmailInput(
 					\Input::get('emails'),
 					$customer->id
 				);
-				// if has url then add	
+				// if has url then add
 				$url = \CustomerURL\CustomerURLController::get_instance()->iterateURLInput(
 					\Input::get('urls'),
 					$customer->id
@@ -543,17 +543,17 @@ class ClientsController extends \BaseController {
 			if( $clientId ){
 				$customer = \Clients\ClientEntity::get_instance()->createOrUpdate($clientId);
 				// if has telephone then update
-				
+
 				\CustomerPhone\CustomerPhoneController::get_instance()->iteratePhoneInput(
 					\Input::get('telephone'),
 					$clientId
 				);
-				// if has emails then add	
+				// if has emails then add
 				\CustomerEmail\CustomerEmailController::get_instance()->iterateEmailInput(
 					\Input::get('emails'),
 					$clientId
 				);
-				// if has url then add	
+				// if has url then add
 				\CustomerURL\CustomerURLController::get_instance()->iterateURLInput(
 					\Input::get('urls'),
 					$clientId
@@ -563,12 +563,12 @@ class ClientsController extends \BaseController {
 					\Input::get('edit_telephone'),
 					$clientId
 				);
-				// if has emails then add	
+				// if has emails then add
 				\CustomerEmail\CustomerEmailController::get_instance()->iterateEmailInput(
 					\Input::get('edit_emails'),
 					$clientId
 				);
-				// if has url then add	
+				// if has url then add
 				\CustomerURL\CustomerURLController::get_instance()->iterateURLInput(
 					\Input::get('edit_urls'),
 					$clientId
@@ -613,6 +613,7 @@ class ClientsController extends \BaseController {
 		$data['center_column_view']	= 'dashboard';
 		$data 						= array_merge($data,$dashboard_data);
 		//var_dump($data['partner']->partner_id);
+		//echo ($data['customer']->customerAssociatedTo($clientId)->get());
 		//exit();
 		return \View::make( $data['view_path'] . '.clients.people.people', $data );
 	}
@@ -693,37 +694,38 @@ class ClientsController extends \BaseController {
 			'companyemployee.required' => 'Company Employee is Required',
 			'sector.required'=>'Sector is required',
 		);
-		
+
 		$validator = \Validator::make(\Input::all(), $rules, $messages);
 
 		if ( $validator->passes() ) {
 			if( $clientId ){
+				$company = \Clients\Clients::find($clientId);
 				\Input::merge(
 					array(
 						'ref' => \Auth::id().time(),
 						'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
 						'belongs_user' => \Auth::id(),
 						'email' => '',
-						'company_name' => \Input::get('company_name'),
+						'company_name' => $company->company_name,
 						'companyreg' => \Input::get('companyreg'),
 						'companyemployee' => \Input::get('companyemployee'),
 						'sector' => \Input::get('sector'),
-						'duedil_company_details' => \Input::get('duedil_company'),
+						'duedil_company_details' => $company->duedil_company_details,
 						'type' => '2',
 					)
 				);
 				$customer = \Clients\ClientEntity::get_instance()->createOrUpdate($clientId);
-				
+
 				\CustomerPhone\CustomerPhoneController::get_instance()->iteratePhoneInput(
 					\Input::get('telephone'),
 					$clientId
 				);
-				// if has emails then add	
+				// if has emails then add
 				\CustomerEmail\CustomerEmailController::get_instance()->iterateEmailInput(
 					\Input::get('emails'),
 					$clientId
 				);
-				// if has url then add	
+				// if has url then add
 				\CustomerURL\CustomerURLController::get_instance()->iterateURLInput(
 					\Input::get('urls'),
 					$clientId
@@ -733,12 +735,12 @@ class ClientsController extends \BaseController {
 					\Input::get('edit_telephone'),
 					$clientId
 				);
-				// if has emails then add	
+				// if has emails then add
 				\CustomerEmail\CustomerEmailController::get_instance()->iterateEmailInput(
 					\Input::get('edit_emails'),
 					$clientId
 				);
-				// if has url then add	
+				// if has url then add
 				\CustomerURL\CustomerURLController::get_instance()->iterateURLInput(
 					\Input::get('edit_urls'),
 					$clientId
@@ -773,9 +775,9 @@ class ClientsController extends \BaseController {
 			\Input::flash();
 			return \Redirect::action('Clients\ClientsController@getEditCompany',array('clientId'=>$clientId))
 			->withErrors($validator)
-			->withInput();	
+			->withInput();
 		}
-				
+
 	}
 
 	public function postCreateClientCompany(){
@@ -793,7 +795,7 @@ class ClientsController extends \BaseController {
 			'companyemployee.required' => 'Company Employee is Required',
 			'sector.required'=>'Sector is required',
 		);
-		
+
 		$validator = \Validator::make(\Input::all(), $rules, $messages);
 
 		if ( $validator->passes() ) {
@@ -854,12 +856,12 @@ class ClientsController extends \BaseController {
 					\Input::get('telephone'),
 					$customer->id
 				);
-				// if has emails then add	
+				// if has emails then add
 				\CustomerEmail\CustomerEmailController::get_instance()->iterateEmailInput(
 					\Input::get('emails'),
 					$customer->id
 				);
-				// if has url then add	
+				// if has url then add
 				\CustomerURL\CustomerURLController::get_instance()->iterateURLInput(
 					\Input::get('urls'),
 					$customer->id
@@ -939,7 +941,7 @@ class ClientsController extends \BaseController {
 			'job_title.required'=>'Person Job Title is required',
 			'job_title.min'=>'Person Job Title must have more than 3 character',
 		);
-		
+
 		$validator = \Validator::make(\Input::all(), $rules, $messages);
 
 		if ( $validator->passes() ) {
@@ -970,12 +972,12 @@ class ClientsController extends \BaseController {
 				\Input::get('telephone'),
 				$companyPerson->id
 			);
-			// if has emails then add	
+			// if has emails then add
 			\CustomerEmail\CustomerEmailController::get_instance()->iterateEmailInput(
 				\Input::get('emails'),
 				$companyPerson->id
 			);
-			// if has url then add	
+			// if has url then add
 			\CustomerURL\CustomerURLController::get_instance()->iterateURLInput(
 				\Input::get('urls'),
 				$companyPerson->id
@@ -1108,7 +1110,7 @@ class ClientsController extends \BaseController {
 			'dob.required'=>'Person Date of birth is required',
 			'relationship.required' => 'Person Relationship is required',
 		);
-		
+
 		$validator = \Validator::make(\Input::all(), $rules, $messages);
 
 		if ( $validator->passes() ) {
@@ -1154,9 +1156,9 @@ class ClientsController extends \BaseController {
 			\Input::flash();
 			return \Redirect::action('Clients\ClientsController@getAddFamilyPerson',array('clientId'=>\Input::get('clientId')))
 			->withErrors($validator)
-			->withInput();	
+			->withInput();
 		}
-		
+
 	}
 
 	public function getEditFamilyPerson($clientId){
@@ -1265,4 +1267,51 @@ class ClientsController extends \BaseController {
 	/**
 	 * For Oppurtunities
 	 * */
+
+
+	/**
+	*
+	* for import purposes
+	**/
+	public function getImportPerson(){
+		//$data 					= $this->data_view;
+		//$this->data_view['settings_index'] 	= $this->data_view['view_path'] . '.page';
+		$data['page_view'] 		= $this->data_view['view_path'] . '.page';
+		$data['pageTitle'] 		= 'Import';
+		$data['pageSubTitle'] 	= '';
+		$data['contentClass'] 	= 'import';
+		$data['active']			= 'active';
+		$data['portlet_title']	= 'Import';
+
+		$data = array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
+		return \View::make( $data['view_path'] . '.clients.import.index', $data );
+	}
+
+	public function postImportClientPerson(){
+		$csv = \Clients\ImportClient::get_instance()->processImport();
+		$data['csv']			= $csv;
+
+		$data['page_view'] 		= $this->data_view['view_path'] . '.page';
+		$data['pageTitle'] 		= 'Import';
+		$data['pageSubTitle'] 	= '';
+		$data['contentClass'] 	= 'import';
+		$data['active']			= 'active';
+		$data['portlet_title']	= 'Import';
+		$data = array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
+		return \View::make( $data['view_path'] . '.clients.import.verify', $data );
+	}
+
+	public function postProcessImportClientPerson(){
+		if( \Clients\ImportClient::get_instance()->processImportToDBperson() ){
+			\Session::flash('message', 'Successfully Imported Clients' );
+		}else{
+			\Session::flash('message', 'Sorry something wrong in Importing clients' );
+		}
+		return \Redirect::action('Clients\ClientsController@getIndex');
+	}
+
+	/**
+	*
+	* for import purposes
+	**/
 }

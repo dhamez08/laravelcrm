@@ -106,7 +106,6 @@
 				</div>
 			</div>
 		</div>
-		{{Form::hidden('duedil_company',$customer->duedil_company_details,array('id'=>'duedil_company'))}}
 		{{Form::hidden('contact_person',isset($contactPerson) ? $contactPerson->id:null)}}
 		{{Form::close()}}
 	@stop

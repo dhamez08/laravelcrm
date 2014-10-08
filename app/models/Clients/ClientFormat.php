@@ -117,4 +117,18 @@ class ClientFormat extends Facade{
 		return \Carbon\Carbon::parse( $this->partner_dob )->format($dateFormat);
 	}
 
+	public function displayCompanyDetails(){
+		$companyInfo = array();
+		$duedil_company_details = json_decode($this->duedil_company_details);
+		$companyInfo = array(
+			'name'=>$duedil_company_details->name_formatted,
+			'company_number'=>$duedil_company_details->company_number,
+			'registered_address'=>$duedil_company_details->registered_address->string,
+			'category'=>$duedil_company_details->category,
+			'status'=>$duedil_company_details->status,
+			'inc_date'=>date("jS F Y", strtotime($duedil_company_details->incorporation_date)),
+		);
+		return (object)$companyInfo;
+	}
+
 }

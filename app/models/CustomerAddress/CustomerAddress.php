@@ -12,6 +12,16 @@ class CustomerAddress extends \Eloquent{
 	 * @var string
 	 */
 	protected $table = 'customer_address';
+	
+	protected $fillable = array(
+		'customer_id',
+		'address_line_1',
+		'address_line_2',
+		'town',
+		'county',
+		'postcode',
+		'type',
+	);
 
 	public function client(){
 		return $this->belongsTo('\Clients\Clients','customer_id','id');
