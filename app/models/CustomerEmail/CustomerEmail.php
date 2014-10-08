@@ -13,6 +13,12 @@ class CustomerEmail extends \Eloquent{
 	 */
 	protected $table = 'customer_email';
 
+	protected $fillable = array(
+		'customer_id',
+		'email',
+		'type',
+	);
+
 	public function client(){
 		return $this->belongsTo('\Clients\Clients','customer_id','id');
 	}

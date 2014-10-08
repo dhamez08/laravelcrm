@@ -37,6 +37,8 @@
 							<i class="fa fa-plus"></i> Add Client Person</a>
 							<a class="btn btn-default btn-sm" href="{{action('Clients\ClientsController@getCreateClientCompany')}}">
 							<i class="fa fa-plus"></i> Add Company</a>
+							<a class="btn btn-default btn-sm" href="{{action('Clients\ClientsController@getImportPerson')}}">
+							<i class="fa fa-plus"></i> Import Client</a>
 						@show
 					</div>
 				</div>

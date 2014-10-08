@@ -13,4 +13,11 @@ class CustomerNotes extends \Eloquent{
 	 */
 	protected $table = 'customer_notes';
 
+	protected $fillable = array(
+		'customer_id',
+		'note',
+		'file',
+		'added_by',
+	);
+
 }

@@ -13,6 +13,17 @@ class Clients extends \Eloquent{
 	 */
 	protected $table = 'customer';
 
+	protected $fillable = array(
+		'ref',
+		'type',
+		'belongs_to',
+		'belongs_user',
+		'first_name', 
+		'last_name', 
+		'title',
+		'company_name',
+	);
+
 	public function address(){
 		return $this->hasOne('\CustomerAddress\CustomerAddress','customer_id','id');
 	}
