@@ -164,7 +164,7 @@
 		
 		var selected_content_html = selected_content.html();
 		
-		var dialogContent  ='<!DOCTYPE HTML>\n<html lang="en-US">\n<head>\n<meta charset="UTF-8">\n<title></title>\n';
+		var dialogContent  ='<html>\n<head>\n<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>\n';
 		dialogContent+= '<link href="{{$asset_path}}/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>\n';
 		dialogContent+='<style>\n'+$("#content-styles").html()+'\n</style>\n';
 		dialogContent+= '</head>\n<body>';
@@ -172,15 +172,18 @@
 		dialogContent+= selected_content_html;
 		dialogContent+= '\n</body></html>';
 
-		dialogContent+='<br/><br/><b>Source code: </b><pre>'+$('<div/>').text(dialogContent).html();+'</pre>\n\n';
+		//dialogContent+='<br/><br/><b>Source code: </b><pre>'+$('<div/>').text(dialogContent).html();+'</pre>\n\n';
 
 		dialogContent = dialogContent.replace('\n</body></html>','');
 		dialogContent+= '\n</body></html>';
 		
 		
 
-		var win = window.open("about:blank");
-		win.document.write(dialogContent);
+		//var win = window.open("about:blank");
+		//win.document.write(dialogContent);
+		$("input#content").val(dialogContent);
+		$("#formpreview").submit();
+		//return dialogContent;
 	}
 		
 	if(typeof(console)=='undefined' || console==null) { console={}; console.log=function(){}}
@@ -518,7 +521,7 @@
 					-- Grid system used for rendering columns 
 					-- Columns can be simply added by defining a div with droppedFields class
 			-->
-			<div class="col-md-9" id="selected-content">
+			<div class="col-md-9">
 				<!--[if lt IE 9]>
 				<div class="row-fluid" id="form-title-div">
 					<label>Type form title here...</label>
@@ -535,7 +538,7 @@
 							    Form Canvas <small>(Drag and drop form items here)</small>
 						    </div>
 					    </div>							
-					    <div class="portlet-body" style="padding:15px">
+					    <div class="portlet-body" style="padding:15px" id="selected-content">
 						    <div class="row">
 							    <div id="selected-column-1" class="col-md-6 droppedFields" style="min-height:80px;"></div>
 							    <div id="selected-column-2" class="col-md-6 droppedFields" style="min-height:80px;"></div>
@@ -550,11 +553,15 @@
 			  
 			  
 			</div>
-
 			<!-- Preview button -->
 			<div class="row-fluid">	
 				<div class="col-md-12">
+				<form action="{{ url('settings/custom-forms/preview') }}" method="post" target="_blank" id="formpreview">
+					{{ \Form::token() }}
+					<input type="hidden" name="content" id="content">
+				</form>
 					<input type="button" class="btn btn-primary" value="Preview" onclick="preview();">
+
 				</div>
 			</div>
 		  </div>

@@ -110,8 +110,9 @@ class CustomFormsController extends \BaseController {
 		}
 	}
 
-	public function getEdit($id)
+	public function getEdit($id, $action='')
 	{
+
 		$form = $this->customFormEntity->find($id);
 		if($form) {
 			$data 					= $this->data_view;
@@ -135,6 +136,16 @@ class CustomFormsController extends \BaseController {
 			return \View::make( $data['view_path'] . '.settings.custom-fields.partials.edit-custom-form', $data );
 		} else {
 			return \Redirect::back()->withErrors(['There was a problem accessing the form, please try again']);
+		}
+	}
+
+	public function postPreview() {
+		if(\Input::get('content')) {
+			$pdf = \App::make('dompdf');
+			$html = \Input::get('content');
+			$pdf->loadHTML($html);
+			return $pdf->stream();
+			//return $html;
 		}
 	}
 

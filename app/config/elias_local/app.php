@@ -15,4 +15,12 @@ return array(
 
 	'debug' => true,
 
+	'providers' => array(
+	    'Nitmedia\Wkhtml2pdf\Wkhtml2pdfServiceProvider',
+	),
+
+	'aliases' => array(
+	    'PDF'    => 'Nitmedia\Wkhtml2pdf\Facades\Wkhtml2pdf',
+	),
+
 );
