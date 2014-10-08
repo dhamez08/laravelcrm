@@ -445,9 +445,9 @@
 				<li>
 					<a href="#multiple" data-toggle="tab">Radio/Checkbox/List</a>
 				</li>
-				<li>
+				<!-- <li>
 					<a href="#btns" data-toggle="tab" >Buttons</a>
-				</li>
+				</li> -->
 			</ul>
 			<div class="row-fluid">
 			<div id="listOfFields" class="col-md-3 well tab-content">
@@ -540,13 +540,9 @@
 					    </div>							
 					    <div class="portlet-body" style="padding:15px" id="selected-content">
 						    <div class="row">
-							    <div id="selected-column-1" class="col-md-6 droppedFields" style="min-height:80px;"></div>
-							    <div id="selected-column-2" class="col-md-6 droppedFields" style="min-height:80px;"></div>
+							    <div id="selected-column-1" class="col-md-6 droppedFields" style="min-height:100px;"></div>
+							    <div id="selected-column-2" class="col-md-6 droppedFields" style="min-height:100px;"></div>
 						    </div>
-						    <!-- Action bar - Suited for buttons on form -->
-						    <div class="row">
-							    <div id="selected-action-column" class="col-md-12 action-bar droppedFields" style="min-height:80px;"></div>
-					  	   </div>
 					    </div>
 					</div>
 			    </div>
