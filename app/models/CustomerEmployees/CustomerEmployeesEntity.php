@@ -44,16 +44,16 @@ class CustomerEmployeesEntity extends \Eloquent{
 			$employees = \CustomerEmployees\CustomerEmployees::find($id);
 		}
 
-		$employees->customer_id 		= \Input::get('customer_id');
+		$employees->customer_id = \Input::get('customer_id');
 		$employees->title 		= \Input::get('title');
-		$employees->first_name 		= \Input::get('first_name');
-		$employees->last_name 		= \Input::get('last_name');
+		$employees->first_name 	= \Input::get('first_name');
+		$employees->last_name 	= \Input::get('last_name');
 		$employees->dob 		= \Input::get('dob');
-		$employees->job_title 		= \Input::get('job_title');
-		$employees->address 		= \Input::get('address');
+		$employees->job_title 	= \Input::get('job_title');
+		$employees->address 	= \Input::get('address');
 		$employees->town 		= \Input::get('town');
 		$employees->county 		= \Input::get('county');
-		$employees->postcode 		= \Input::get('postcode');
+		$employees->postcode 	= \Input::get('postcode');
 		$employees->gender 		= \Input::get('gender');
 		$employees->smoker 		= \Input::get('smoker');
 		$employees->dob2 		= \Input::get('dob2');

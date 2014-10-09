@@ -25,12 +25,12 @@
 	@section('innerpage-content')
 		<div class="col-md-4">
 			<!-- CLIENT LEFT SIDEBAR -->
-			@include($view_path.'.clients.partials.leftColumn')
+			@include($view_path.'.clients.company.leftColumn')
 			<!-- END CLIENT LEFT SIDEBAR -->
 		</div>
 		<div class="col-md-8">
 			<!-- CENTER COLUMN -->
-			@include($view_path.'.clients.people.center')
+			@include($view_path.'.clients.company.center')
 			<!-- END CENTER COLUMN -->
 		</div>
 	@stop

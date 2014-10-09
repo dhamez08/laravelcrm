@@ -617,6 +617,35 @@ class ClientsController extends \BaseController {
 		//exit();
 		return \View::make( $data['view_path'] . '.clients.people.people', $data );
 	}
+
+	public function getEmployee($clientId){
+		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+		$dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
+		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed');
+
+		$data 						= $this->data_view;
+		$data['pageTitle'] 			= 'Client';
+		$data['contentClass'] 		= '';
+		$data['portlet_body_class']	= 'form';
+		$data['portlet_title']		= 'Client';
+		$data['fa_icons']			= 'user';
+		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+		$data['customer']			= \Clients\Clients::find($clientId);
+		$data['currentClient']		= \Clients\ClientEntity::get_instance()->bindCustomer($data['customer']);
+		$data['telephone']			= $data['customer']->telephone();
+		$data['email']				= $data['customer']->emails();
+		$data['url']				= $data['customer']->url();
+		$data['belongToPartner']	= \Clients\ClientEntity::get_instance()->getPartnerBelong($data['customer']);
+		$data['associate']			= \Clients\ClientEntity::get_instance()->setAssociateCustomer($clientId);
+		$data['partner']			= \Clients\ClientEntity::get_instance()->getCustomerPartner();
+		$data['center_column_view']	= 'dashboard';
+		$data 						= array_merge($data,$dashboard_data);
+		//var_dump($data['partner']);
+		//var_dump($data['customer']->customerAssociatedTo($clientId)->get()->toArray());
+		//exit();
+		return \View::make( $data['view_path'] . '.clients.company.employee', $data );
+	}
+
 	/**
 	 * End People
 	 * */
@@ -1314,4 +1343,18 @@ class ClientsController extends \BaseController {
 	*
 	* for import purposes
 	**/
+
+	public function displayCreateTaskModal(){
+		$data					 = $this->data_view;
+		$modal['modalCallClass'] = \Task\TaskController::get_instance()->getModalCallClass();
+		return \View::make( $data['view_path'] . '.clients.createTaskModal', $modal );
+	}
+
+	public function getTypeaheadClient(){
+		$currentUserId = \Auth::id();
+		$customer = \Clients\Clients::find($currentUserId);
+		if( $customer->customerBelongsUser($customer->id)->count() > 0 ){
+			echo \Clients\ClientEntity::get_instance()->typeaheadJson($customer->customerBelongsUser($customer->id));
+		}
+	}
 }

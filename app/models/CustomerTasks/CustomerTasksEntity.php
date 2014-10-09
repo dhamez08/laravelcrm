@@ -5,7 +5,6 @@ namespace CustomerTasks;
  * */
 use Carbon\Carbon;
 class CustomerTasksEntity extends \Eloquent{
-
 	protected static $instance = null;
 
 	public function __construct(){
@@ -44,20 +43,20 @@ class CustomerTasksEntity extends \Eloquent{
 			//update
 			$obj = \CustomerTasks\CustomerTasks::find($id);
 		}
-		$obj->customer_id = \Input('customer_id',\Auth::id());
-		$obj->belongs_to = \Input('belongs_to','');
-		$obj->task_setting = \Input('task_setting','');
-		$obj->name = \Input('name','');
-		$obj->date = \Input('date','');
-		$obj->end_time = \Input('end_time','');
+		$obj->customer_id 	 = \Input('customer_id',\Auth::id());
+		$obj->belongs_to 	 = \Input('belongs_to','');
+		$obj->task_setting 	 = \Input('task_setting','');
+		$obj->name 			 = \Input('name','');
+		$obj->date 			 = \Input('date','');
+		$obj->end_time 		 = \Input('end_time','');
 		$obj->completed_date = \Input('completed_date','');
-		$obj->added_by = \Input('added_by','');
-		$obj->action = \Input('action','');
-		$obj->remind = \Input('remind','');
-		$obj->remind_mins = \Input('remind_mins','');
-		$obj->status = \Input('status','');
+		$obj->added_by 		 = \Input('added_by','');
+		$obj->action 		 = \Input('action','');
+		$obj->remind 		 = \Input('remind','');
+		$obj->remind_mins 	 = \Input('remind_mins','');
+		$obj->status 	     = \Input('status','');
+
 		$obj->save();
 		return $obj;
 	}
-
 }

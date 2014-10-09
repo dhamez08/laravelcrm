@@ -18,8 +18,8 @@ class Clients extends \Eloquent{
 		'type',
 		'belongs_to',
 		'belongs_user',
-		'first_name', 
-		'last_name', 
+		'first_name',
+		'last_name',
 		'title',
 		'company_name',
 	);
@@ -54,6 +54,10 @@ class Clients extends \Eloquent{
 
 	public function scopeCustomerBelongsTo($query, $belongsTo){
 		return $query->where('belongs_to','=',$belongsTo);
+	}
+
+	public function scopeCustomerBelongsUser($query, $belongsTo){
+		return $query->where('belongs_user','=',$belongsTo);
 	}
 
 	/**

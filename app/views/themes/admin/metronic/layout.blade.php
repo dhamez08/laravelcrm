@@ -33,6 +33,7 @@
 			<!-- BEGIN PAGE LEVEL STYLES -->
 			@yield('head-page-level-css')
 			<link href="{{$asset_path}}/global/plugins/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet" type="text/css"/>
+			<link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/typeahead/typeahead.css">
 			<!-- END PAGE LEVEL STYLES -->
 
 			<!-- BEGIN THEME STYLES -->
@@ -73,6 +74,7 @@
 			</span>
 		</div>
 	</div>
+	{{\Task\TaskController::get_instance()->modalCreateTask()}}
 	<!-- END FOOTER -->
 @show
 
@@ -129,7 +131,15 @@
 		<script src="{{$asset_path}}/layout/scripts/demo.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/pages/scripts/index.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/pages/scripts/tasks.js" type="text/javascript"></script>
+		<script src="{{$asset_path}}/global/plugins/typeahead/typeahead.bundle.min.js" type="text/javascript"></script>
 		<!-- END PAGE LEVEL SCRIPTS -->
+		<script type='text/javascript'>
+			var baseURL = "{{url('/')}}";
+			jQuery(document).ready(function() {
+				var url = baseURL + '/clients/typeahead-client';
+				GetClient.init('get-clients', '.getclient', url, '#customer_id', 'Name');
+			});
+		</script>
 	@show
 
 	@yield('footer-custom-css')
