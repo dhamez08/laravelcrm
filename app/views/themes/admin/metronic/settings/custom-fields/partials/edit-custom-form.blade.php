@@ -9,11 +9,11 @@
 
 	<style>
 		
-		div.activeDroppable {
+		td.activeDroppable {
 			background-color: #eeffee;
 		}
 
-		div.hoverDroppable {
+		td.hoverDroppable {
 			background-color: lightgreen;
 		}
 
@@ -539,9 +539,15 @@
 						    </div>
 					    </div>							
 					    <div class="portlet-body" style="padding:15px" id="selected-content">
-						    <div class="row">
-							    <div id="selected-column-1" class="col-md-6 droppedFields" style="min-height:100px;"></div>
-							    <div id="selected-column-2" class="col-md-6 droppedFields" style="min-height:100px;"></div>
+						    <table class="table" style="border:0px;">
+						    	<tr style="min-height:100px;">
+							    	<td id="selected-column-1" class="droppedFields" style="width:50%;border:0px">&nbsp;</td>
+							    	<td id="selected-column-2" class="droppedFields" style="width:50%;border:0px">&nbsp;</td>
+							    </tr>
+							    <tr style="min-height:100px;">
+							    	<td colspan="2" id="selected-column-3" class="droppedFields" style="width:100%;border:0px">&nbsp;</td>
+							    </tr>
+							</table>
 						    </div>
 					    </div>
 					</div>
@@ -556,8 +562,8 @@
 					{{ \Form::token() }}
 					<input type="hidden" name="content" id="content">
 				</form>
-					<input type="button" class="btn btn-primary" value="Preview" onclick="preview();">
-
+				<input type="button" class="btn blue" value="Preview" onclick="preview();">
+				<input type="button" class="btn blue" value="Save">
 				</div>
 			</div>
 		  </div>

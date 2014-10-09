@@ -16,11 +16,11 @@ return array(
 	'debug' => true,
 
 	'providers' => array(
-	    'Nitmedia\Wkhtml2pdf\Wkhtml2pdfServiceProvider',
+		'Ignited\Pdf\PdfServiceProvider',
 	),
 
 	'aliases' => array(
-	    'PDF'    => 'Nitmedia\Wkhtml2pdf\Facades\Wkhtml2pdf',
+		'PDF'  => 'Ignited\Pdf\Facades\Pdf'
 	),
 
 );

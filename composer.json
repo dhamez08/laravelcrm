@@ -6,7 +6,9 @@
 	"type": "project",
 	"require": {
 		"laravel/framework": "4.2.*",
-		"nitmedia/wkhtml2pdf": "dev-master"
+		"ignited/laravel-pdf": "1.*",
+		"h4cc/wkhtmltopdf-i386": "*",
+		"h4cc/wkhtmltopdf-amd64": "*"
 	},
 	"autoload": {
 		"classmap": [

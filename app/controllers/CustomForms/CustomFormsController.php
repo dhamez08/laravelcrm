@@ -141,11 +141,9 @@ class CustomFormsController extends \BaseController {
 
 	public function postPreview() {
 		if(\Input::get('content')) {
-			$pdf = \App::make('dompdf');
-			$html = \Input::get('content');
-			$pdf->loadHTML($html);
-			return $pdf->stream();
-			//return $html;
+			$pdf = \PDF::make();
+		    $pdf->addPage(\Input::get('content'));
+		    $pdf->send();
 		}
 	}
 
