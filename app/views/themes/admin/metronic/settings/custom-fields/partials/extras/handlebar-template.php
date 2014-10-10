@@ -20,14 +20,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="row">
-			      	<div class="col-md-12">
-			      		<div class="form-group">
-			      			<label class="control-label">Name</label> 
-			      			<input type="text" value="" name="name" class="form-control"></input>
-			      		</div>
-			      	</div>
-			     </div>
+				
 				{{{content}}}
 			</form>
 		</div>
@@ -49,6 +42,14 @@
 			</div>
 		</div>
 	</div>
+	<div class="row">
+	  	<div class="col-md-12">
+	  		<div class="form-group">
+	  			<label class="control-label">Name</label> 
+	  			<input type="text" value="" name="name" class="form-control"></input>
+	  		</div>
+	  	</div>
+	 </div>
 </script>
 
 <script id="combobox-template" type="text/x-handlebars-template">
@@ -60,4 +61,23 @@
       		</div>
       	</div>
     </div>
+    <div class="row">
+	  	<div class="col-md-12">
+	  		<div class="form-group">
+	  			<label class="control-label">Name</label> 
+	  			<input type="text" value="" name="name" class="form-control"></input>
+	  		</div>
+	  	</div>
+	 </div>
+</script>
+
+<script id="rating-template" type="text/x-handlebars-template">
+	<div class="row">
+	  	<div class="col-md-12">
+	  		<div class="form-group">
+	  			<label class="control-label">Name</label> 
+	  			<input type="text" value="" name="name" class="form-control"></input>
+	  		</div>
+	  	</div>
+	 </div>
 </script>

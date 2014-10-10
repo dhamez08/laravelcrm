@@ -6,14 +6,15 @@
 	@parent
 	<!-- BEGIN PAGE LEVEL STYLES -->
 	<link href="{{$asset_path}}/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" type="text/css"/>
-
+	<link href="{{$asset_path}}/global/plugins/star-rating/css/star-rating.css" rel="stylesheet" type="text/css"/>
 	<style>
 		
-		td.activeDroppable {
+		div.activeDroppable {
 			background-color: #eeffee;
+			min-height: 200px;
 		}
 
-		td.hoverDroppable {
+		div.hoverDroppable {
 			background-color: lightgreen;
 		}
 
@@ -166,6 +167,7 @@
 		
 		var dialogContent  ='<html>\n<head>\n<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>\n';
 		dialogContent+= '<link href="{{$asset_path}}/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>\n';
+		dialogContent+= '<link href="{{$asset_path}}/global/plugins/star-rating/css/star-rating.css" rel="stylesheet" type="text/css"/>\n';
 		dialogContent+='<style>\n'+$("#content-styles").html()+'\n</style>\n';
 		dialogContent+= '</head>\n<body>';
 		dialogContent+= '<legend>'+legend_text+'</legend>';
@@ -207,11 +209,12 @@
 		// Mostly we donot need so many templates
 		
 		window.templates.textbox = Handlebars.compile($("#textbox-template").html());
-		window.templates.passwordbox = Handlebars.compile($("#textbox-template").html());
+		window.templates.textarea = Handlebars.compile($("#textbox-template").html());
 		window.templates.combobox = Handlebars.compile($("#combobox-template").html());
 		window.templates.selectmultiplelist = Handlebars.compile($("#combobox-template").html());
 		window.templates.radiogroup = Handlebars.compile($("#combobox-template").html());
 		window.templates.checkboxgroup = Handlebars.compile($("#combobox-template").html());
+		window.templates.rating = Handlebars.compile($("#rating-template").html());
 		
 	}
 	
@@ -240,15 +243,20 @@
 	load_values.textbox = function(ctrl_type, ctrl_id) {
 		var form = $("#theForm");
 		var div_ctrl = $("#"+ctrl_id);
-		var ctrl = div_ctrl.find("input")[0];
+		var ctrl = div_ctrl.find("input, textarea")[0];
 		form.find("[name=name]").val(ctrl.name)		
 		form.find("[name=placeholder]").val(ctrl.placeholder)		
 	}
 	
-	// Passwordbox uses the same functionality as textbox - so just point to that
-	load_values.passwordbox = load_values.textbox;
+	load_values.textarea = load_values.textbox;
 
-	
+	load_values.rating = function(ctrl_type, ctrl_id) {
+		var form = $("#theForm");
+		var div_ctrl = $("#"+ctrl_id);
+		var ctrl = div_ctrl.find("input")[0];
+		form.find("[name=name]").val(ctrl.name)	
+	}
+
 	/* Specific method to load values from a combobox control to the customization dialog  */
 	load_values.combobox = function(ctrl_type, ctrl_id) {
 		var form = $("#theForm");
@@ -302,14 +310,21 @@
 	/* Specific method to save changes to a text box */
 	save_changes.textbox = function(values) {
 		var div_ctrl = $("#"+values.forCtrl);
-		var ctrl = div_ctrl.find("input")[0];
+		var ctrl = div_ctrl.find("input, textarea")[0];
 		ctrl.placeholder = values.placeholder;
 		ctrl.name = values.name;
 		//console.log(values);
 	}
 
-	// Password box customization behaves same as textbox
-	save_changes.passwordbox= save_changes.textbox;
+	save_changes.rating = function(values) {
+		var div_ctrl = $("#"+values.forCtrl);
+		var ctrl = div_ctrl.find("input");
+		$(ctrl).each(function(i,o) {
+			o.name = values.name;
+		});
+	}
+
+	save_changes.textarea= save_changes.textbox;
 
 	/* Specific method to save changes to a combobox */
 	save_changes.combobox = function(values) {
@@ -445,6 +460,12 @@
 				<li>
 					<a href="#multiple" data-toggle="tab">Radio/Checkbox/List</a>
 				</li>
+				<li>
+					<a href="#rating" data-toggle="tab">Rating</a>
+				</li>
+				<li>
+					<a href="#labels" data-toggle="tab">Labels</a>
+				</li>
 				<!-- <li>
 					<a href="#btns" data-toggle="tab" >Buttons</a>
 				</li> -->
@@ -457,11 +478,11 @@
 					<input type="text" placeholder="Text here..." class="ctrl-textbox form-control"></input>
 				</div>
 				<div class='selectorField draggableField'>
-					<label class="control-label">Password</label>
-					<input type="password" placeholder="Password..." class="ctrl-passwordbox form-control"></input>
+					<label class="control-label">Multiline Input</label>
+					<textarea placeholder="Text here..." class="ctrl-textarea form-control" rows="3"></textarea>
 				</div>
 				<div class='selectorField draggableField'>
-					<label class="control-label">Combobox</label>
+					<label class="control-label">Dropdown</label>
 					<select class="ctrl-combobox form-control">
 						<option value="option1">Option 1</option>
 						<option value="option2">Option 2</option>
@@ -496,6 +517,41 @@
 							<option value="option3">Option 3</option>
 						</select>
 					</div>
+				</div>
+			  </div>
+			  <div class="tab-pane" id="rating">
+				<div class='selectorField draggableField selectmultiple'>
+					<label class="control-label">Rating</label>
+					<div>
+						<span class="star-cb-group ctrl-rating">
+						    <input type="radio" id="rating-5" name="rating" value="5" /><label for="rating-5" style="margin:0px">5</label>
+						    <input type="radio" id="rating-4" name="rating" value="4" /><label for="rating-4" style="margin:0px">4</label>
+							<input type="radio" id="rating-3" name="rating" value="3" /><label for="rating-3" style="margin:0px">3</label>
+							<input type="radio" id="rating-2" name="rating" value="2" /><label for="rating-2" style="margin:0px">2</label>
+							<input type="radio" id="rating-1" name="rating" value="1" /><label for="rating-1" style="margin:0px">1</label>
+							<input type="radio" id="rating-0" name="rating" value="0" class="star-cb-clear" /><label for="rating-0" style="margin:0px">0</label>
+						</span>
+					</div>
+				</div>
+			  </div>
+			  <div class="tab-pane" id="labels">
+				<div class='selectorField draggableField selectmultiple'>
+					<h1 class="control-label ctrl-label">Example Heading</h1>
+				</div>
+				<div class='selectorField draggableField selectmultiple'>
+					<h2 class="control-label ctrl-label">Example Heading</h2>
+				</div>
+				<div class='selectorField draggableField selectmultiple'>
+					<h3 class="control-label ctrl-label">Example Heading</h3>
+				</div>
+				<div class='selectorField draggableField selectmultiple'>
+					<h4 class="control-label ctrl-label">Example Heading</h4>
+				</div>
+				<div class='selectorField draggableField selectmultiple'>
+					<h5 class="control-label ctrl-label">Example Heading</h5>
+				</div>
+				<div class='selectorField draggableField selectmultiple'>
+					<h6 class="control-label ctrl-label">Example Heading</h6>
 				</div>
 			  </div>
 			  <div class="tab-pane" id="btns">
@@ -540,12 +596,18 @@
 					    </div>							
 					    <div class="portlet-body" style="padding:15px" id="selected-content">
 						    <table class="table" style="border:0px;">
-						    	<tr style="min-height:100px;">
-							    	<td id="selected-column-1" class="droppedFields" style="width:50%;border:0px">&nbsp;</td>
-							    	<td id="selected-column-2" class="droppedFields" style="width:50%;border:0px">&nbsp;</td>
+						    	<tr>
+							    	<td style="width:50%;border:0px;padding:0px">
+							    		<div id="selected-column-1" class="droppedFields"></div>
+							    	</td>
+							    	<td style="width:50%;border:0px;padding:0px">
+							    		<div id="selected-column-2" class="droppedFields"></div>
+							    	</td>
 							    </tr>
-							    <tr style="min-height:100px;">
-							    	<td colspan="2" id="selected-column-3" class="droppedFields" style="width:100%;border:0px">&nbsp;</td>
+							    <tr>
+							    	<td colspan="2" style="width:100%;border:0px;padding:0px">
+							    		<div id="selected-column-3" class="droppedFields"></div>
+							    	</td>
 							    </tr>
 							</table>
 						    </div>
