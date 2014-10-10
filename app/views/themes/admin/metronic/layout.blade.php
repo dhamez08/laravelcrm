@@ -138,6 +138,7 @@
 			jQuery(document).ready(function() {
 				var url = baseURL + '/clients/typeahead-client';
 				GetClient.init('get-clients', '.getclient', url, '#customer_id', 'Name');
+				CreateTask.init('.openModal','.ajaxModal');
 			});
 		</script>
 	@show

@@ -233,7 +233,12 @@ class ClientEntity extends \Eloquent{
 
 		foreach($data->get() as $parse_key => $parse_val)
 		{
-			$typehead[] = array('id'=>$parse_val->id,'Name'=>$parse_val->first_name . $parse_val->last_name);
+			if($parse_val->type == 2){
+				$typehead[] = array('id'=>$parse_val->id,'Name'=>$parse_val->company_name);
+			}else{
+				$typehead[] = array('id'=>$parse_val->id,'Name'=>$parse_val->first_name . $parse_val->last_name);	
+			}
+			
 		}
 		return json_encode($typehead);
 	}

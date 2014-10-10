@@ -51,18 +51,20 @@ class TaskLabelEntity extends \Eloquent{
 	 * 										If null then use $this->session->userdata('user_id')
 	 * @return		object
 	 * */
-	public function getAllTaskLabel($by_user = null, $all = false){
-		/*if( !$by_user ){
+	public function getAllTaskLabel($all = false, $by_user = null){
+		
+		if( is_null($by_user) ){
 			$by_user = \Auth::id();
 		}
-		$query = $this->getTaskSettingBy(
-			array('user_id' => $by_user),
-			$all
-		);
-		return $query;*/
+		if( !$all ){
+			return \TaskLabel\TaskLabel::allTaskLabel($by_user);
+		}else{
+			return \TaskLabel\TaskLabel::userID($by_user);
+		}
+		
 	}
 
-		/**
+	/**
 	 * get task setting by name
 	 *
 	 * @param	string	$action_name	name of the action in the table column of task_setting

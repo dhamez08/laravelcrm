@@ -58,7 +58,7 @@ class TaskController extends \BaseController {
 	}
 
 	public function modalCreateTask($arrayOtherOption = array()){
-		$data['pageTitle'] 		= 'Create New Task';
+		$data['pageTitle'] 		= 'Task';
 		$data['pageSubTitle'] 	= '';
 		$data['option'] 		= (object)$arrayOtherOption;
 		$data['modalClass']		= $this->modalClass;
@@ -66,6 +66,80 @@ class TaskController extends \BaseController {
 		$data['getMin']			= \Config::get('crm.task_min');
 		$data 					= array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
 		return \View::make( $data['view_path'] . '.tasks.create', $data );
+	}
+
+	public function getAjaxModalCreateTask($arrayOtherOption = array()){
+		$data['redirectURL'] 	= $arrayOtherOption['redirect'];
+		$data['pageTitle'] 		= 'Create Task';
+		$data['pageSubTitle'] 	= '';
+		$data['option'] 		= (object)$arrayOtherOption;
+		$data['modalClass']		= $this->modalClass;
+		$data['getTime']		= \Config::get('crm.task_hour');
+		$data['getMin']			= \Config::get('crm.task_min');
+		$data['taskLabel']		= \TaskLabel\TaskLabelEntity::get_instance()->getAllTaskLabel()->lists('action_name','id');
+		$data['remindMin']		= \Config::get('crm.task_remind');
+		$data 					= array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
+		return \View::make( $data['view_path'] . '.tasks.createInput', $data );
+	}
+
+	public function postAjaxCreateTask(){
+		$rules = array(
+			'task_name' => 'required|min:3',
+			'getclient' => 'required',
+			'task_date' => 'required|date|date_format:Y-m-d',
+		);
+		$messages = array(
+			'task_name.required'=>'Task Name is required',
+			'getclient.required'=>'Link to client is required',
+			'task_name.min'=>'Task Name must have more than 3 character',
+			'task_date.required'=>'Task date is required',
+			'task_date.date'=>'Date is invalid',
+			'task_date.date_format'=>'Date format is invalid',
+		);
+
+		$validator = \Validator::make(\Input::all(), $rules, $messages);
+		if($validator->passes()){
+			//echo $startDate.'='.$endHr;	
+			$start_hour = \Input::get('task_hour');
+			$start_min 	= \Input::get('task_min');
+			$end_hour 	= \Input::get('end_task_hour');
+			$end_min 	= \Input::get('end_task_min');
+			$startDate 	= \Input::get('task_date') . ' '.$start_hour .':'. $start_min . ':00';
+			$endHr 		= $end_hour .':'. $end_min . ':00';
+
+			if( \Input::has('time_not_required') ){
+				$endHr = "00:00";
+			}
+
+			$remind_time = (\Input::get('remind_mins') == 0) ?  "":date('Y-m-d H:i:s', strtotime('- '.\Input::get('remind_mins').' minutes', strtotime($startDate)));
+		
+			$settingsLabelName = \TaskLabel\TaskLabel::find(\Input::get('task_setting'));
+			$data = array(
+				'customer_id' 	=> \Input::get('customer_id'),
+				'added_by' 		=> \Auth::user()->username,
+				'name' 			=> \Input::get('task_name'),
+				'date' 			=> $startDate,
+				'end_time' 		=> $endHr,
+				'action' 		=> $settingsLabelName->action_name,
+				'task_setting' 	=> \Input::get('task_setting'),
+				'status' 		=> '1',
+				'remind' 		=> $remind_time,
+				'remind_mins' 	=> \Input::get('remind_mins'),
+				'belongs_to' 	=> \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id
+			);
+			$task = \CustomerTasks\CustomerTasksEntity::get_instance()->createOrUpdate($data);
+			\Session::flash('message', 'Successfully Added Task' );
+			if( \Input::has('redirect') ){
+				return \Response::json(array('result'=>true,'redirect'=>\Input::get('redirect')));
+			}else{
+				return \Response::json(array('result'=>true,'redirect'=>\URL::action('Clients\ClientsController@getIndex')));
+			}
+			die();
+		}else{
+			$msg = $validator->messages()->all('<li class="list-group-item list-group-item-danger">:message</li>');
+			return \Response::json(array('result'=>false,'message'=>$msg));
+			die();
+		}
 	}
 
 }

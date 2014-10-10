@@ -26,6 +26,7 @@ Route::group(array('before' => 'auth'), function()
 		Route::controller( 'profile' , 'Profile\ProfileController' );
 		Route::controller( 'document-library' , 'DocumentLibraries\DocumentLibrariesController' );
 		Route::controller( 'pipeline' , 'Pipeline\PipelineController' );
+		Route::controller( 'task' , 'Task\TaskController');
 	//});
 
 	Route::get( 'settings' , 'Settings\SettingsController@getIndex' );

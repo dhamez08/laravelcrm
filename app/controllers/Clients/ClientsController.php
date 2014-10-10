@@ -1351,10 +1351,14 @@ class ClientsController extends \BaseController {
 	}
 
 	public function getTypeaheadClient(){
-		$currentUserId = \Auth::id();
-		$customer = \Clients\Clients::find($currentUserId);
+		$currentUserId 	= \Auth::id();
+		$customer 		= \Clients\Clients::find($currentUserId);
 		if( $customer->customerBelongsUser($customer->id)->count() > 0 ){
 			echo \Clients\ClientEntity::get_instance()->typeaheadJson($customer->customerBelongsUser($customer->id));
 		}
+	}
+
+	public function getCreateClientTask(){
+		return \Task\TaskController::get_instance()->getAjaxModalCreateTask(array('redirect'=>url('clients')));
 	}
 }
