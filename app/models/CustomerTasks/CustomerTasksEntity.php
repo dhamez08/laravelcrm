@@ -51,4 +51,8 @@ class CustomerTasksEntity extends \Eloquent{
 			return $obj;
 		}
 	}
+
+	public function getCustomerTasks($customerID){
+		return \CustomerTasks\CustomerTasks::customerID($customerID);
+	}
 }

@@ -1,6 +1,6 @@
 <?php
 namespace Task;
-
+use Carbon\Carbon;
 class TaskController extends \BaseController {
 
 	/**
@@ -82,6 +82,9 @@ class TaskController extends \BaseController {
 		return \View::make( $data['view_path'] . '.tasks.createInput', $data );
 	}
 
+	public function putAjaxUpdateTask($taskid){
+		var_dump(\Input::all());
+	}
 	public function postAjaxCreateTask(){
 		$rules = array(
 			'task_name' => 'required|min:3',
@@ -105,7 +108,7 @@ class TaskController extends \BaseController {
 			$end_hour 	= \Input::get('end_task_hour');
 			$end_min 	= \Input::get('end_task_min');
 			$startDate 	= \Input::get('task_date') . ' '.$start_hour .':'. $start_min . ':00';
-			$endHr 		= $end_hour .':'. $end_min . ':00';
+			$endHr 		= \Input::get('task_date') . ' '.$end_hour .':'. $end_min . ':00';
 
 			if( \Input::has('time_not_required') ){
 				$endHr = "00:00";
@@ -140,6 +143,30 @@ class TaskController extends \BaseController {
 			return \Response::json(array('result'=>false,'message'=>$msg));
 			die();
 		}
+	}
+
+	public function getEditClientTask($taskId, $customerId){
+		//return \Task\TaskController::get_instance()->getAjaxModalCreateTask(array('redirect'=>url('clients')));
+		$data['redirectURL'] 	= url('clients');
+		$data['pageTitle'] 		= 'Update Task';
+		$data['pageSubTitle'] 	= '';
+		$data['tasks'] 			= \CustomerTasks\CustomerTasks::find($taskId);
+		$data['modalClass']		= $this->modalClass;
+		$data['getTime']		= \Config::get('crm.task_hour');
+		$data['getMin']			= \Config::get('crm.task_min');
+		$data['taskLabel']		= \TaskLabel\TaskLabelEntity::get_instance()->getAllTaskLabel()->lists('action_name','id');
+		$data['remindMin']		= \Config::get('crm.task_remind');
+		$data['theDate']		= \Carbon\Carbon::parse($data['tasks']->date);
+		$data['endDate']		= \Carbon\Carbon::parse($data['tasks']->end_time);
+		$linktTo				= \Clients\Clients::find($data['tasks']->customer_id);
+		if($linktTo->type == 2){
+			$data['client_linkTo'] = $linktTo->company_name;
+		}else{
+			$data['client_linkTo'] = $linktTo->first_name.' '.$linkTo->last_name;
+		}
+		$data 					= array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
+		//var_dump($data);exit();
+		return \View::make( $data['view_path'] . '.tasks.editInput', $data );
 	}
 
 }

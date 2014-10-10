@@ -13,4 +13,8 @@ class CustomerTasks extends \Eloquent{
 	 */
 	protected $table = 'customer_tasks';
 
+	public function scopeCustomerID($query,$customerID){
+		return $query->where('customer_id', '=', $customerID);
+	}
+
 }

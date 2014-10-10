@@ -1709,6 +1709,80 @@
 						<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 305px;"><div class="scroller" style="overflow: hidden; width: auto; height: 305px;" data-always-visible="1" data-rail-visible1="1" data-initialized="1">
 							<!-- START TASK LIST -->
 							<ul class="task-list">
+								@if($tasks->count()>0)
+									@foreach($tasks->get() as $task)
+										<li>
+											<div class="task-checkbox">
+												<div class="checker"><span><input type="checkbox" class="liChild" value=""></span></div>
+											</div>
+											<div class="task-title">
+												<span class="task-title-sp">
+												<a class="openModal" data-toggle="modal" data-target=".ajaxModal" href="{{action('Task\TaskController@getEditClientTask',array('id'=>$task->id,'customerid'=>$task->customer_id))}}">
+													{{$task->name}}
+												</a> </span>
+												<span class="label label-sm label-success">Company</span>
+												<span class="task-bell">
+												<i class="fa fa-bell-o"></i>
+												</span>
+											</div>
+											<div class="task-config">
+												<div class="task-config-btn btn-group">
+													<a class="btn btn-xs default" href="#" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+													<i class="fa fa-cog"></i><i class="fa fa-angle-down"></i>
+													</a>
+													<ul class="dropdown-menu pull-right">
+														<li>
+															<a href="#">
+															<i class="fa fa-check"></i> Complete </a>
+														</li>
+														<li>
+															<a href="#">
+															<i class="fa fa-pencil"></i> Edit </a>
+														</li>
+														<li>
+															<a href="#">
+															<i class="fa fa-trash-o"></i> Cancel </a>
+														</li>
+													</ul>
+												</div>
+											</div>
+										</li>
+									@endforeach
+								@endif
+							</ul>
+							<!-- END START TASK LIST -->
+						</div><div class="slimScrollBar" style="width: 7px; position: absolute; top: 0px; opacity: 0.4; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; z-index: 99; right: 1px; height: 265.7857142857143px; display: block; background: rgb(187, 187, 187);"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(234, 234, 234);"></div></div>
+					</div>
+					<div class="task-footer">
+						<div class="btn-arrow-link pull-right">
+							<a href="#">See All Records</a>
+							<i class="icon-arrow-right"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- END TASKS -->
+		</div>		<div class="col-md-12">
+			<!-- TASKS -->
+			<div class="portlet light bordered tasks-widget" style="min-height: 425px">
+				<div class="portlet-title">
+					<div class="caption">
+						<i class="icon-share font-green-haze hide"></i>
+						<span class="caption-subject font-green-haze bold uppercase">Tasks</span>
+					</div>
+					<div class="actions">
+						<div class="btn-group">
+							<a class="btn green-haze btn-circle btn-sm" href="#">
+							New
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="portlet-body">
+					<div class="task-content">
+						<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 305px;"><div class="scroller" style="overflow: hidden; width: auto; height: 305px;" data-always-visible="1" data-rail-visible1="1" data-initialized="1">
+							<!-- START TASK LIST -->
+							<ul class="task-list">
 								<li>
 									<div class="task-checkbox">
 										<div class="checker"><span><input type="checkbox" class="liChild" value=""></span></div>
