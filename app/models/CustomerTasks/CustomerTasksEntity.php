@@ -35,7 +35,7 @@ class CustomerTasksEntity extends \Eloquent{
 	 * 												#1 would be active
 	 * @return db last insert id
 	 * */
-	public function createOrUpdate($id = null){
+	public function createOrUpdate($arrayData = array(), $id = null){
 		if( is_null($id) ) {
 			//create
 			$obj = new \CustomerTasks\CustomerTasks;
@@ -43,20 +43,12 @@ class CustomerTasksEntity extends \Eloquent{
 			//update
 			$obj = \CustomerTasks\CustomerTasks::find($id);
 		}
-		$obj->customer_id 	 = \Input('customer_id',\Auth::id());
-		$obj->belongs_to 	 = \Input('belongs_to','');
-		$obj->task_setting 	 = \Input('task_setting','');
-		$obj->name 			 = \Input('name','');
-		$obj->date 			 = \Input('date','');
-		$obj->end_time 		 = \Input('end_time','');
-		$obj->completed_date = \Input('completed_date','');
-		$obj->added_by 		 = \Input('added_by','');
-		$obj->action 		 = \Input('action','');
-		$obj->remind 		 = \Input('remind','');
-		$obj->remind_mins 	 = \Input('remind_mins','');
-		$obj->status 	     = \Input('status','');
-
-		$obj->save();
-		return $obj;
+		if( count($arrayData) > 0 ){
+			foreach($arrayData as $key=>$val){
+				$obj->$key = $val;
+			}
+			$obj->save();
+			return $obj;
+		}
 	}
 }

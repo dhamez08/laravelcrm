@@ -23,9 +23,14 @@ var GetClient = (function(){
 		var getClients = new Bloodhound({
 		  datumTokenizer: Bloodhound.tokenizers.obj.whitespace($displayKey),
 		  queryTokenizer: Bloodhound.tokenizers.whitespace,
-		  prefetch: $url
+		  prefetch: {
+		  	ttl: 1,
+		  	url:$url
+		  }
 		});
-
+		
+		getClients.clearPrefetchCache();
+		getClients.clearRemoteCache();
 		getClients.initialize();
 
 		jQuery($selector).typeahead({
@@ -52,4 +57,45 @@ var GetClient = (function(){
 		}
 	};
 
+})();
+
+var CreateTask = (function(){
+	var ajaxCreateTask = function() {
+	    jQuery('#createTask').on('submit',function(e){
+	    	e.preventDefault();
+	    	var _postUrl 	= jQuery(this).attr('action');
+	    	var _formInput 	= jQuery(this).serialize();
+
+	    	var request = $.ajax({
+			  url: _postUrl,
+			  type: "POST",
+			  data: _formInput,
+			  dataType: "json"
+			});
+			request.done(function(msg){
+				if( !msg.result ){
+					jQuery('.ajax-error-msg li').remove();
+					jQuery('.ajax-error-msg').append(msg.message);
+					jQuery('.ajax-container-msg').switchClass('hide','show');
+				}else{
+					jQuery('.ajax-error-msg li').remove();
+					jQuery('.ajax-container-msg').switchClass('show','hide');
+					if (typeof msg.redirect != 'undefined') {
+					    window.location.href = msg.redirect;
+					}
+				}
+			})
+	    });
+    }
+	return{
+		init:function($selector, $modalSelector){
+            jQuery('body').on('loaded.bs.modal', '.modal', function () {
+			    //jQuery(this).removeData('bs.modal');
+			    var url = baseURL + '/clients/typeahead-client';
+			   // console.log(url);
+			    GetClient.init('get-clients', '.getclient', url, '#customer_id', 'Name');
+			    ajaxCreateTask();
+			});
+		}
+	};
 })();
