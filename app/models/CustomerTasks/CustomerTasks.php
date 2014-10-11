@@ -17,6 +17,14 @@ class CustomerTasks extends \Eloquent{
 		return $query->where('customer_id', '=', $customerID);
 	}
 
+	public function scopeStatus($query, $status){
+		return $query->where('status', '=', $status);
+	}
+
+	public function scopeTaskID($query, $taskid){
+		return $query->where('id', '=', $taskid);
+	}
+
 	public function label(){
 		return $this->hasOne('\TaskLabel\TaskLabel','id','task_setting');
 	}

@@ -233,4 +233,27 @@ class TaskController extends \BaseController {
 		return \View::make( $data['view_path'] . '.tasks.editInput', $data );
 	}
 
+	public function getCompleteTask($taskid, $customerid){
+		$updateTask = \CustomerTasks\CustomerTasks::taskID($taskid)->customerID($customerid);
+		if($updateTask->count()){
+			$name = $updateTask->pluck('name');
+			$data = array(
+				'status'=>0,
+			);
+			$updateTask->update($data);
+			\Session::flash('message', 'Successfully Completed Task - ' . $name);
+			return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>$customerid));
+		}
+	}
+
+	public function getCancelTask($taskid, $customerid){
+		$Task = \CustomerTasks\CustomerTasks::taskID($taskid)->customerID($customerid);
+		if($Task->count()){
+			$name = $Task->pluck('name');
+			$Task->delete();
+			\Session::flash('message', 'Successfully Cancel Task - ' . $name);
+			return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>$customerid));
+		}
+	}
+
 }
