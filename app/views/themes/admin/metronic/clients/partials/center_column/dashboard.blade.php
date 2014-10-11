@@ -1698,7 +1698,11 @@
 					</div>
 					<div class="actions">
 						<div class="btn-group">
-							<a class="btn green-haze btn-circle btn-sm" href="#">
+							<a 
+								class="btn green-haze btn-circle btn-sm openModal" 
+								data-toggle="modal" 
+								data-target=".ajaxModal" 
+								href="{{action('Clients\ClientsController@getCreateClientTask',array('customerid'=>$customer->id))}}">
 							New
 							</a>
 						</div>
@@ -1706,7 +1710,7 @@
 				</div>
 				<div class="portlet-body">
 					<div class="task-content">
-						<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 305px;"><div class="scroller" style="overflow: hidden; width: auto; height: 305px;" data-always-visible="1" data-rail-visible1="1" data-initialized="1">
+						<div class="slimScrollDiv scroller">
 							<!-- START TASK LIST -->
 							<ul class="task-list">
 								@if($tasks->count()>0)
@@ -1720,9 +1724,9 @@
 												<a class="openModal" data-toggle="modal" data-target=".ajaxModal" href="{{action('Task\TaskController@getEditClientTask',array('id'=>$task->id,'customerid'=>$task->customer_id))}}">
 													{{$task->name}}
 												</a> </span>
-												<span class="label label-sm label-success">Company</span>
+												<span class="label label-sm label-success" style="background-color:{{$task->label->color}}">{{$task->label->action_name}}</span>
 												<span class="task-bell">
-												<i class="fa fa-bell-o"></i>
+												<i class="fa {{$task->label->icons}}"></i>
 												</span>
 											</div>
 											<div class="task-config">
@@ -1751,7 +1755,7 @@
 								@endif
 							</ul>
 							<!-- END START TASK LIST -->
-						</div><div class="slimScrollBar" style="width: 7px; position: absolute; top: 0px; opacity: 0.4; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; z-index: 99; right: 1px; height: 265.7857142857143px; display: block; background: rgb(187, 187, 187);"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(234, 234, 234);"></div></div>
+						</div>
 					</div>
 					<div class="task-footer">
 						<div class="btn-arrow-link pull-right">

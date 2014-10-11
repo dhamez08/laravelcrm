@@ -17,4 +17,8 @@ class CustomerTasks extends \Eloquent{
 		return $query->where('customer_id', '=', $customerID);
 	}
 
+	public function label(){
+		return $this->hasOne('\TaskLabel\TaskLabel','id','task_setting');
+	}
+
 }

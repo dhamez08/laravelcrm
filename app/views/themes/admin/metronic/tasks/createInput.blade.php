@@ -22,14 +22,15 @@
 			    <label>Link To</label>
 			    {{
 					Form::text(
-						'getclient',null,
+						'getclient',
+						isset($clientName) ? $clientName:null,
 						array(
 							'class'=>'form-control typeahead getclient',
 							'autocomplete'=>'off',
 						)
 					)
 			    }}
-			    {{Form::hidden('customer_id',null,array('id'=>'customer_id'))}}
+			    {{Form::hidden('customer_id',isset($currentClient) ? $currentClient->id:null,array('id'=>'customer_id'))}}
 			  </div>
 			  <div class="form-group">
 			    <label>Date</label>

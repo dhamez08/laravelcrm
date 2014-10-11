@@ -11,6 +11,10 @@ class TaskLabel extends \Eloquent{
 		'color',
 	);
 
+	public function tasks(){
+		return $this->belongsTo('\CustomerTasks\CustomerTasks','id','task_setting');
+	}
+
 	public function scopeUserID($query, $userID){
 		return $query->where('user_id', '=', $userID);
 	}

@@ -486,8 +486,11 @@ class ClientsController extends \BaseController {
 		$data['associate']			= \Clients\ClientEntity::get_instance()->setAssociateCustomer($clientId);
 		$data['partner']			= \Clients\ClientEntity::get_instance()->getCustomerPartner();
 		$data['center_column_view']	= 'dashboard';
-		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getCustomerTasks($clientId);
+		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getCustomerTasks($clientId)->with('label');
+		
 		$data 						= array_merge($data,$dashboard_data);
+		//var_dump($data['tasks']->with('label')->get()->toArray());
+		//exit();
 		return \View::make( $data['view_path'] . '.clients.summary', $data );
 	}
 
@@ -1359,7 +1362,8 @@ class ClientsController extends \BaseController {
 		}
 	}
 
-	public function getCreateClientTask(){
-		return \Task\TaskController::get_instance()->getAjaxModalCreateTask(array('redirect'=>url('clients')));
+	public function getCreateClientTask($clientId = null){
+		$data = array('clientid'=>$clientId,'redirect'=>url('clients'));
+		return \Task\TaskController::get_instance()->getAjaxModalCreateTask($data);
 	}
 }
