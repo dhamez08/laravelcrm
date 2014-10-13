@@ -55,4 +55,31 @@ class CustomerTasksEntity extends \Eloquent{
 	public function getCustomerTasks($customerID){
 		return \CustomerTasks\CustomerTasks::customerID($customerID);
 	}
+
+	public function jsonTaskInCalendar($start_date, $end_date){
+		$task = array();
+
+		$belongsTo = \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+		$tasks	= \CustomerTasks\CustomerTasks::belongsToGroup($belongsTo)->status(1)
+		->startDate($start_date)
+		->endDate($end_date)
+		->with('label')
+		->with('client');
+
+		foreach($tasks->get() as $row){
+			$task[] = array(
+				 'id' => $row->id,
+				 'title' => $row->name,
+				 'start' => $row->date,
+				 'end' => $row->end_time,
+				 'url' => "",
+				 'color'=> $row->label->color,
+				 'icon' => $row->label->icons,
+				 'customer_id' =>$row->customer_id,
+				 'customer_name' => ( $row->client->type == 2 )  ? $row->client->company_name : $row->client->title . ' ' .$row->client->first_name . ' ' . $row->client->last_name,
+				 'allDay' => false
+			);
+		}
+		echo json_encode($task);
+	}
 }

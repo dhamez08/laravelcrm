@@ -17,6 +17,10 @@ class CustomerTasks extends \Eloquent{
 		return $query->where('customer_id', '=', $customerID);
 	}
 
+	public function scopeBelongsToGroup($query,$belongsto){
+		return $query->where('belongs_to', '=', $belongsto);
+	}
+
 	public function scopeStatus($query, $status){
 		return $query->where('status', '=', $status);
 	}
@@ -25,8 +29,21 @@ class CustomerTasks extends \Eloquent{
 		return $query->where('id', '=', $taskid);
 	}
 
+	public function scopeStartDate($query, $startDate){
+		return $query->where('date', '>=', $startDate);
+	}
+
+	public function scopeEndDate($query, $endDate){
+		return $query->where('date', '<=', $endDate);
+	}
+
 	public function label(){
 		return $this->hasOne('\TaskLabel\TaskLabel','id','task_setting');
+	}
+
+
+	public function client(){
+		return $this->belongsTo('\Clients\Clients','customer_id','id');
 	}
 
 }

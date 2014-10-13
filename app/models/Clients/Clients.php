@@ -28,6 +28,10 @@ class Clients extends \Eloquent{
 		return $this->hasOne('\CustomerAddress\CustomerAddress','customer_id','id');
 	}
 
+	public function task(){
+		return $this->hasMany('\CustomerTasks\CustomerTasks','customer_id','id');
+	}
+
 	public function telephone(){
 		return $this->hasMany('\CustomerTelephone\CustomerTelephone','customer_id','id');
 	}

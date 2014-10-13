@@ -70,6 +70,7 @@ class TaskController extends \BaseController {
 
 	public function getAjaxModalCreateTask($arrayOtherOption = array()){
 		$data['redirectURL'] 	= $arrayOtherOption['redirect'];
+		
 		if( !is_null($arrayOtherOption['clientid']) ){
 			$data['currentClient'] = \Clients\Clients::find($arrayOtherOption['clientid']);
 			if($data['currentClient']->type == 2){
@@ -78,6 +79,9 @@ class TaskController extends \BaseController {
 				$data['clientName'] = $data['currentClient']->first_name . ' ' . $data['currentClient']->last_name;
 			}
 		}
+
+		
+
 		$data['pageTitle'] 		= 'Create Task';
 		$data['pageSubTitle'] 	= '';
 		$data['option'] 		= (object)$arrayOtherOption;
