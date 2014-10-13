@@ -97,7 +97,7 @@
 		$(".selectorField").draggable({ helper: "clone",stack: "div",cursor: "move", cancel: null  });
 	}
 
-	var _ctrl_index = 1001;
+	var _ctrl_index = @if(!empty($form->build)) {{ $form->last_field_ctr }} @else 1001 @endif;
 	function docReady() {
 		console.log("document ready");
 		compileTemplates();
@@ -119,15 +119,15 @@
 				
 
 				/* Once dropped, attach the customization handler to the control */
-				draggable.click(function () {
-										// The following assumes that dropped fields will have a ctrl-defined. 
-										//   If not required, code needs to handle exceptions here. 
-										var me = $(this)
-										var ctrl = me.find("[class*=ctrl]")[0];
-										var ctrl_type = $.trim(ctrl.className.match("ctrl-.*")[0].split(" ")[0].split("-")[1]);
-										customize_ctrl(ctrl_type, this.id);
-										//window["customize_"+ctrl_type](this.id);
-								});
+				// draggable.click(function () {
+				// 						// The following assumes that dropped fields will have a ctrl-defined. 
+				// 						//   If not required, code needs to handle exceptions here. 
+				// 						var me = $(this)
+				// 						var ctrl = me.find("[class*=ctrl]")[0];
+				// 						var ctrl_type = $.trim(ctrl.className.match("ctrl-.*")[0].split(" ")[0].split("-")[1]);
+				// 						customize_ctrl(ctrl_type, this.id);
+				// 						//window["customize_"+ctrl_type](this.id);
+				// 				});
 
 				makeDraggable();
 			}
@@ -138,6 +138,16 @@
 										cancel: null, // Cancel the default events on the controls
 										connectWith: ".droppedFields"
 									}).disableSelection();
+
+		$(".droppedField").live("click", function() {
+			var me = $(this)
+			var ctrl = me.find("[class*=ctrl]")[0];
+			var ctrl_type = $.trim(ctrl.className.match("ctrl-.*")[0].split(" ")[0].split("-")[1]);
+			customize_ctrl(ctrl_type, this.id);
+
+			console.log(ctrl_type);
+			console.log(this.id);
+		});
 	}
 	
 
@@ -187,6 +197,14 @@
 		$("#formpreview").submit();
 		//return dialogContent;
 	}
+
+	function save() {
+		var selected_content = $("#selected-content").clone();
+		var selected_content_html = selected_content.html();
+		$("input#form_id_ctr").val(_ctrl_index);
+		$("input#content_form").val(selected_content_html);
+		$("#formsave").submit();
+	}
 		
 	if(typeof(console)=='undefined' || console==null) { console={}; console.log=function(){}}
 	
@@ -195,7 +213,7 @@
 		if(window.confirm("Are you sure about this?")) {
 			var ctrl_id = $("#theForm").find("[name=forCtrl]").val()
 			console.log(ctrl_id);
-			$("#"+ctrl_id).remove();
+			$("#"+ctrl_id).detach();
 		}
 	}
 	
@@ -595,6 +613,7 @@
 						    </div>
 					    </div>							
 					    <div class="portlet-body" style="padding:15px" id="selected-content">
+					    @if(empty($form->build))
 						    <table class="table" style="border:0px;">
 						    	<tr>
 							    	<td style="width:50%;border:0px;padding:0px">
@@ -610,9 +629,12 @@
 							    	</td>
 							    </tr>
 							</table>
-						    </div>
-					    </div>
+						@else
+							{{ $form->build }}
+						@endif
+						</div>
 					</div>
+				</div>
 			    </div>
 			  
 			  
@@ -624,8 +646,15 @@
 					{{ \Form::token() }}
 					<input type="hidden" name="content" id="content">
 				</form>
+
+				<form action="{{ url('settings/custom-forms/save-form') }}" method="post" id="formsave">
+					{{ \Form::token() }}
+					<input type="hidden" name="form_id" value="{{ $form->id }}">
+					<input type="hidden" name="form_id_ctr" id="form_id_ctr" value="">
+					<input type="hidden" name="content" id="content_form">
+				</form>
 				<input type="button" class="btn blue" value="Preview" onclick="preview();">
-				<input type="button" class="btn blue" value="Save">
+				<input type="button" class="btn blue" value="Save" onclick="save();">
 				</div>
 			</div>
 		  </div>

@@ -147,6 +147,19 @@ class CustomFormsController extends \BaseController {
 		}
 	}
 
+	public function postSaveForm() {
+		$content = trim(\Input::get('content'));
+		$form_id_ctr = trim(\Input::get('form_id_ctr'));
+		$form = $this->customFormEntity->find(\Input::get('form_id'));
+		
+		$form->build = $content;
+		$form->last_field_ctr = $form_id_ctr;
+		$form->save();
+
+		\Session::flash('message', 'The Form was successfully updated');
+		return \Redirect::back();
+	}
+
 	public function getDelete($id) {
 		$form = $this->customFormEntity->find($id);
 		if($form) {
