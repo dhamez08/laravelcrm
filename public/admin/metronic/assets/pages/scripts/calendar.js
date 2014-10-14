@@ -67,7 +67,7 @@ var TaskCalendar = function () {
                         $.ajax({
                             type: "POST",
                             url: $url + "/calendar/ajax-update-task",
-                            data: { task_id: event.id, new_task_date: event.start.format('YYYY-MM-DD H:mm:ss')},
+                            data: { task_id: event.id, new_task_date: event.start.format('YYYY-MM-DD HH:mm:ss'), end_time: event.end.format('YYYY-MM-DD HH:mm:ss')},
                             success: function() {
                                 //location.reload(true);
                                 //alert(taskref+'----'+taskdate);
@@ -76,8 +76,29 @@ var TaskCalendar = function () {
                             }
                         });
                     }
-
-                }
+                },
+                eventResize: function(event, delta, revertFunc) {
+                    if (!confirm("Are you sure about this change?")) {
+                        revertFunc();
+                    }else{
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+                        $.ajax({
+                            type: "POST",
+                            url: $url + "/calendar/ajax-update-task",
+                            data: { task_id: event.id, new_task_date: event.start.format('YYYY-MM-DD HH:mm:ss'), end_time: event.end.format('YYYY-MM-DD HH:mm:ss')},
+                            success: function() {
+                                //location.reload(true);
+                                //alert(taskref+'----'+taskdate);
+                            },
+                            error: function() {
+                            }
+                        });
+                    }
+                },
             })
         },
     }

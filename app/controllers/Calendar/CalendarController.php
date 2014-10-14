@@ -91,6 +91,7 @@ class CalendarController extends \BaseController {
 	public function postAjaxUpdateTask(){
 		$data = array(
 			'date' => \Input::get('new_task_date'),
+			'end_time' => \Input::get('end_time'),
 		);
 		$taskid = \Input::get('task_id');
 		\CustomerTasks\CustomerTasksEntity::get_instance()->createOrUpdate($data, $taskid);
