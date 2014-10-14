@@ -249,6 +249,7 @@ class TaskController extends \BaseController {
 		$data['remindMin']		= \Config::get('crm.task_remind');
 		$data['theDate']		= \Carbon\Carbon::parse($data['tasks']->date);
 		$data['endDate']		= \Carbon\Carbon::parse($data['tasks']->end_time);
+		$data['from']			= 'client';
 		$linkTo					= \Clients\Clients::find($data['tasks']->customer_id);
 		if($linkTo->type == 2){
 			$data['client_linkTo'] = $linkTo->company_name;
@@ -268,8 +269,13 @@ class TaskController extends \BaseController {
 				'status'=>0,
 			);
 			$updateTask->update($data);
-			\Session::flash('message', 'Successfully Completed Task - ' . $name);
-			return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>$customerid));
+			if(\Input::has('redirect')){
+				\Session::flash('message', 'Successfully Completed Task - ' . $name);
+				return \Redirect::to(\Input::get('redirect'));
+			}else{
+				\Session::flash('message', 'Successfully Completed Task - ' . $name);
+				return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>$customerid));
+			}
 		}
 	}
 

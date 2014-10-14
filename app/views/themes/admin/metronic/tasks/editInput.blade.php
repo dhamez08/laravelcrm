@@ -145,6 +145,22 @@
 			   </div>
 			  {{Form::hidden('redirect',$redirectURL)}} 
 			  <button type="submit" class="btn btn-default">Submit</button>
+			  @if($from == 'calendar')
+			  <a class="btn btn-primary " 
+			  	 href="{{action('Calendar\CalendarController@getCompleteTask',
+			  	 	array('id'=>$tasks->id,'customerid'=>$tasks->customer_id)
+			  	 )}}">
+			  Complete
+			  </a>
+			  @else
+			  <a class="btn btn-primary " 
+			  	 href="{{action('Task\TaskController@getCompleteTask',
+			  	 	array('id'=>$tasks->id,'customerid'=>$tasks->customer_id)
+			  	 )}}">
+			  Complete
+			  </a>
+			  @endif
+			  
 			  <div class="ajax-container-msg hide" >
 			  	<ul class="list-group ajax-error-msg">
 			  	</ul>

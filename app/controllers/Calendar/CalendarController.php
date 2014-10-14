@@ -66,6 +66,7 @@ class CalendarController extends \BaseController {
 	}
 	
 	public function getEditTask($taskId, $customerId){
+		$data['from'] 			= 'calendar';
 		$data['redirectURL'] 	= url('calendar');
 		$data['pageTitle'] 		= 'Update Task';
 		$data['pageSubTitle'] 	= '';
@@ -88,6 +89,19 @@ class CalendarController extends \BaseController {
 		return \View::make( $data['view_path'] . '.tasks.editInput', $data );
 	}
 
+	public function getCompleteTask($taskid, $customerid){
+		$updateTask = \CustomerTasks\CustomerTasks::taskID($taskid)->customerID($customerid);
+		if($updateTask->count()){
+			$name = $updateTask->pluck('name');
+			$data = array(
+				'status'=>0,
+			);
+			$updateTask->update($data);
+			\Session::flash('message', 'Successfully Completed Task - ' . $name);
+			return \Redirect::action('Calendar\CalendarController@getIndex');
+		}
+	}
+
 	public function postAjaxUpdateTask(){
 		$data = array(
 			'date' => \Input::get('new_task_date'),
@@ -96,5 +110,4 @@ class CalendarController extends \BaseController {
 		$taskid = \Input::get('task_id');
 		\CustomerTasks\CustomerTasksEntity::get_instance()->createOrUpdate($data, $taskid);
 	}
-
 }
