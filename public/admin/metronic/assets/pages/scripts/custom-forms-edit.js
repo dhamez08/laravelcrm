@@ -15,24 +15,13 @@
 			  accept: ":not(.ui-sortable-helper)",
 			  drop: function( event, ui ) {
 				//console.log(event, ui);
-				var draggable = ui.draggable;				
+				var draggable = ui.draggable;		
 				draggable = draggable.clone();
 				draggable.removeClass("selectorField");
 				draggable.addClass("droppedField");
 				draggable[0].id = "CTRL-DIV-"+(_ctrl_index++); // Attach an ID to the rendered control
-				draggable.appendTo(this);				
-				
+				draggable.appendTo(this);
 
-				/* Once dropped, attach the customization handler to the control */
-				// draggable.click(function () {
-				// 						// The following assumes that dropped fields will have a ctrl-defined. 
-				// 						//   If not required, code needs to handle exceptions here. 
-				// 						var me = $(this)
-				// 						var ctrl = me.find("[class*=ctrl]")[0];
-				// 						var ctrl_type = $.trim(ctrl.className.match("ctrl-.*")[0].split(" ")[0].split("-")[1]);
-				// 						customize_ctrl(ctrl_type, this.id);
-				// 						//window["customize_"+ctrl_type](this.id);
-				// 				});
 
 				makeDraggable();
 			}
@@ -40,9 +29,9 @@
 
 		/* Make the droppedFields sortable and connected with other droppedFields containers*/
 		$( ".droppedFields" ).sortable({
-										cancel: null, // Cancel the default events on the controls
-										connectWith: ".droppedFields"
-									}).disableSelection();
+			cancel: null, // Cancel the default events on the controls
+			connectWith: ".droppedFields",
+		}).disableSelection();
 
 		$(".droppedField").live("click", function() {
 			var me = $(this)
@@ -72,52 +61,11 @@
 		Preview the customized form 
 			-- Opens a new window and renders html content there.
 	*/
-	function preview() {
-		console.log('Preview clicked');
-		
-		// Sample preview - opens in a new window by copying content -- use something better in production code
-
-		
-		var selected_content = $("#selected-content").clone();
-		selected_content.find("div").each(function(i,o) {
-								var obj = $(o)
-								obj.removeClass("draggableField ui-draggable well ui-droppable ui-sortable");
-							});
-		var legend_text = $("#form-title")[0].value;
-		
-		if(legend_text=="") {
-			legend_text="Form builder demo";
-		}
-		selected_content.find("#form-title-div").remove();
-		
-		var selected_content_html = selected_content.html();
-		
-		var dialogContent  ='<html>\n<head>\n<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>\n';
-		dialogContent+= '<link href="{{$asset_path}}/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>\n';
-		dialogContent+= '<link href="{{$asset_path}}/global/plugins/star-rating/css/star-rating.css" rel="stylesheet" type="text/css"/>\n';
-		dialogContent+='<style>\n'+$("#content-styles").html()+'\n</style>\n';
-		dialogContent+= '</head>\n<body>';
-		dialogContent+= '<legend>'+legend_text+'</legend>';
-		dialogContent+= selected_content_html;
-		dialogContent+= '\n</body></html>';
-
-		//dialogContent+='<br/><br/><b>Source code: </b><pre>'+$('<div/>').text(dialogContent).html();+'</pre>\n\n';
-
-		dialogContent = dialogContent.replace('\n</body></html>','');
-		dialogContent+= '\n</body></html>';
-		
-		
-
-		//var win = window.open("about:blank");
-		//win.document.write(dialogContent);
-		$("input#content").val(dialogContent);
-		$("#formpreview").submit();
-		//return dialogContent;
-	}
 
 	function save() {
 		var selected_content = $("#selected-content").clone();
 		var selected_content_html = selected_content.html();
+		$("input#form_name").val($("input#form-title").val());
 		$("input#form_id_ctr").val(_ctrl_index);
 		$("input#content_form").val(selected_content_html);
 
@@ -341,6 +289,8 @@
 		//console.log('save clicked', arguments);
 		var formValues = {};
 		var val=null;
+		var new_field_name="";
+		var old_field_name="";
 		$("#theForm").find("input, textarea").each(function(i,o) {
 			if(o.type=="checkbox"){
 				val = o.checked;
@@ -362,7 +312,7 @@
 		if(new_field_name!==old_field_name) {
 			
 			$("#selected-content :input").each(	function() {
-				if($(this).attr('name').toLowerCase()===new_field_name.toLowerCase() && $(this).attr('name').toLowerCase()!==old_field_name.toLowerCase()) {
+				if($(this).attr('name')===new_field_name && $(this).attr('name')!==old_field_name) {
 					exists++;
 				}
 			});

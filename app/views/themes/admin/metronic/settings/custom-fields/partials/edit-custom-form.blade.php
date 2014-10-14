@@ -11,7 +11,8 @@
 		
 		div.activeDroppable {
 			background-color: #eeffee;
-			min-height: 200px;
+			border: 1px dashed #000;
+			min-height: 100px;
 		}
 
 		div.hoverDroppable {
@@ -43,6 +44,10 @@
 		.checkbox input[type=checkbox] {
 			position: relative;
 			float:left;
+		}
+
+		div#selected-content {
+			min-height: 300px;
 		}
 	</style>
 
@@ -94,6 +99,48 @@
 
 	var _ctrl_index = @if(!empty($form->build)) {{ $form->last_field_ctr }} @else 1001 @endif;
 	
+	function preview() {
+		console.log('Preview clicked');
+		
+		// Sample preview - opens in a new window by copying content -- use something better in production code
+
+		
+		var selected_content = $("#selected-content").clone();
+		selected_content.find("div").each(function(i,o) {
+								var obj = $(o)
+								obj.removeClass("draggableField ui-draggable well ui-droppable ui-sortable");
+							});
+		var legend_text = $("#form-title")[0].value;
+		
+		if(legend_text=="") {
+			legend_text="Form builder demo";
+		}
+		selected_content.find("#form-title-div").remove();
+		
+		var selected_content_html = selected_content.html();
+		
+		var dialogContent  ='<html>\n<head>\n<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>\n';
+		dialogContent+= '<link href="{{$asset_path}}/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>\n';
+		dialogContent+= '<link href="{{$asset_path}}/global/plugins/star-rating/css/star-rating.css" rel="stylesheet" type="text/css"/>\n';
+		dialogContent+='<style>\n'+$("#content-styles").html()+'\n</style>\n';
+		dialogContent+= '</head>\n<body>';
+		dialogContent+= '<legend>'+legend_text+'</legend>';
+		dialogContent+= selected_content_html;
+		dialogContent+= '\n</body></html>';
+
+		//dialogContent+='<br/><br/><b>Source code: </b><pre>'+$('<div/>').text(dialogContent).html();+'</pre>\n\n';
+
+		dialogContent = dialogContent.replace('\n</body></html>','');
+		dialogContent+= '\n</body></html>';
+		
+		
+
+		//var win = window.open("about:blank");
+		//win.document.write(dialogContent);
+		$("input#content").val(dialogContent);
+		$("#formpreview").submit();
+		//return dialogContent;
+	}
 
 	</script>
 
@@ -266,6 +313,32 @@
 							    		<div id="selected-column-3" class="droppedFields"></div>
 							    	</td>
 							    </tr>
+							    <tr>
+							    	<td style="width:50%;border:0px;padding:0px">
+							    		<div id="selected-column-4" class="droppedFields"></div>
+							    	</td>
+							    	<td style="width:50%;border:0px;padding:0px">
+							    		<div id="selected-column-5" class="droppedFields"></div>
+							    	</td>
+							    </tr>
+							    <tr>
+							    	<td colspan="2" style="width:100%;border:0px;padding:0px">
+							    		<div id="selected-column-6" class="droppedFields"></div>
+							    	</td>
+							    </tr>
+							    <tr>
+							    	<td style="width:50%;border:0px;padding:0px">
+							    		<div id="selected-column-7" class="droppedFields"></div>
+							    	</td>
+							    	<td style="width:50%;border:0px;padding:0px">
+							    		<div id="selected-column-8" class="droppedFields"></div>
+							    	</td>
+							    </tr>
+							    <tr>
+							    	<td colspan="2" style="width:100%;border:0px;padding:0px">
+							    		<div id="selected-column-9" class="droppedFields"></div>
+							    	</td>
+							    </tr>
 							</table>
 						@else
 							{{ $form->build }}
@@ -288,6 +361,7 @@
 				<form action="{{ url('settings/custom-forms/save-form') }}" method="post" id="formsave">
 					{{ \Form::token() }}
 					<input type="hidden" name="form_id" value="{{ $form->id }}">
+					<input type="hidden" name="form_name" id="form_name" value="{{ $form->id }}">
 					<input type="hidden" name="form_id_ctr" id="form_id_ctr" value="">
 					<input type="hidden" name="content" id="content_form">
 				</form>

@@ -142,7 +142,9 @@ class CustomFormsController extends \BaseController {
 	public function postPreview() {
 		if(\Input::get('content')) {
 			$pdf = \PDF::make();
+
 		    $pdf->addPage(\Input::get('content'));
+
 		    $pdf->send();
 		}
 	}
@@ -159,6 +161,7 @@ class CustomFormsController extends \BaseController {
 	public function postSaveForm() {
 		$content = trim(\Input::get('content'));
 		$form_id_ctr = trim(\Input::get('form_id_ctr'));
+		$form_name = \Input::get('form_name');
 		$form = $this->customFormEntity->find(\Input::get('form_id'));
 		
 		$doc = new \DOMDocument;
@@ -167,6 +170,7 @@ class CustomFormsController extends \BaseController {
 		  return \Redirect::back()->withErrors(['There was a problem updating the form, please try again']);
 		} else {
 
+			$form->name = $form_name;
 			$form->build = $content;
 			$form->last_field_ctr = $form_id_ctr;
 			$form->save();
