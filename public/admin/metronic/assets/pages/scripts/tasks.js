@@ -66,6 +66,12 @@ var CreateTask = (function(){
 	    	var _postUrl 	= jQuery(this).attr('action');
 	    	var _formInput 	= jQuery(this).serialize();
 
+            jQuery.ajaxSetup({
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
 	    	var request = $.ajax({
 			  url: _postUrl,
 			  type: "POST",
