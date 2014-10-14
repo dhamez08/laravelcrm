@@ -33,7 +33,7 @@ var TaskCalendar = function () {
                 eventRender: function(event, element, calEvent) {
                     element.find(".fc-time").before($('<span class="fc-icons" style="margin-right:5px;"><i class="fa '+ event.icon + ' fa-lg"></i></span>'));
                     if( event.customer_name != null ){
-                        element.find(".fc-title").after($('<span class="fc-client"> - <a style="color:#FFFFFF;text-decoration: underline;" href="' + baseURL + 'clients/view?id=' + event.customer_id + '">' + event.customer_name + '</a></span>'));
+                        element.find(".fc-title").after($('<span class="fc-client"> - <a style="color:#FFFFFF;text-decoration: underline;" href="' + $url + '/clients/client-summary/' + event.customer_id + '">' + event.customer_name + '</a></span>'));
                     }
                 },
                 eventClick: function(calEvent, jsEvent, view) {
