@@ -23,12 +23,11 @@
 		@section('head-css')
 			<!-- BEGIN GLOBAL MANDATORY STYLES -->
 			<!--<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>-->
-			<link href="{{$asset_path}}/global/plugins/fullcalendar/fullcalendar/fullcalendar.min.css" type="text/css"></script>
+			<link href="{{$asset_path}}/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+			<link href="{{$asset_path}}/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
 			<link href="{{$asset_path}}/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 			<link href="{{$asset_path}}/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
-			<link href="{{$asset_path}}/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 			<link href="{{$asset_path}}/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
-			<link href="{{$asset_path}}/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
 			<!-- END GLOBAL MANDATORY STYLES -->
 
 			<!-- BEGIN PAGE LEVEL STYLES -->
@@ -118,8 +117,8 @@
 		<script src="{{$asset_path}}/global/plugins/bootstrap-daterangepicker/moment.min.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/global/plugins/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script>
 		<!-- IMPORTANT! fullcalendar depends on jquery-ui-1.10.3.custom.min.js for drag & drop support -->
-		<script src="{{$asset_path}}/global/plugins/fullcalendar/fullcalendar/momen.min.js" type="text/javascript"></script>
-		<script src="{{$asset_path}}/global/plugins/fullcalendar/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
+		<script src="{{$asset_path}}/global/plugins/fullcalendar/fullcalendar/moment.min.js" type="text/javascript"></script>
+		<script src="{{$asset_path}}/global/plugins/fullcalendar/fullcalendar/fullcalendar211.min.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/global/plugins/jquery.sparkline.min.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/global/plugins/gritter/js/jquery.gritter.js" type="text/javascript"></script>

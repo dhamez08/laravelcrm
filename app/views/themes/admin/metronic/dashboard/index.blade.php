@@ -7,7 +7,8 @@
 	<link href="{{$asset_path}}/pages/css/tasks.css" rel="stylesheet" type="text/css"/>
 	<link href="{{$asset_path}}/global/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" type="text/css"/>
 	<link href="{{$asset_path}}/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css"/>
-	<link href="{{$asset_path}}/global/plugins/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet" type="text/css"/>
+	<link href="{{$asset_path}}/global/plugins/fullcalendar/fullcalendar/fullcalendar211.min.css" rel="stylesheet" type="text/css"/>
+	<link href="{{$asset_path}}/global/plugins/fullcalendar/fullcalendar/fullcalendar211.print.css" type="text/css">
 	<link href="{{$asset_path}}/global/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css"/>
 	<link href="{{$asset_path}}/layout/css/themes/darkblue.css" rel="stylesheet" type="text/css" id="style_color"/>
 	<!-- END PAGE LEVEL SCRIPTS -->
