@@ -51,13 +51,14 @@ class TaskController extends \BaseController {
 	public function getIndex(){
 		$dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
 		$data 						= $this->data_view;
-		$data['pageTitle'] 			= 'Calendar';
+		$data['pageTitle'] 			= 'Task';
 		$data['contentClass'] 		= '';
 		$data['portlet_body_class']	= '';
-		$data['portlet_title']		= 'Calendar';
-		$data['fa_icons']			= 'calendar';
-		$belongsTo = \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
-		$data['tasks']	= \CustomerTasks\CustomerTasks::belongsToGroup($belongsTo)->status(1)
+		$data['portlet_title']		= 'Task';
+		$data['fa_icons']			= 'cog';
+		$belongsTo 					= \Auth::id();
+		//$data['tasks']				= \CustomerTasks\CustomerTasks::belongsToGroup($belongsTo)->status(1)
+		$data['tasks']				= \CustomerTasks\CustomerTasks::status(1)
 		->with('label')
 		->with('client');
 		$data 						= array_merge($data,$dashboard_data);

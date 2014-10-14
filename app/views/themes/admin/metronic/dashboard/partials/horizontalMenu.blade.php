@@ -16,7 +16,7 @@
 			</a>
 		</li>
 		<li class="classic-menu-dropdown">
-			<a href="index_3.html">
+			<a href="{{url('calendar')}}">
 			<i class="fa fa-calendar"></i>  Calendar
 			</a>
 		</li>
