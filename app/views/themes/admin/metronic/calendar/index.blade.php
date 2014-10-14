@@ -8,12 +8,6 @@
 		<link href="{{$asset_path}}/global/plugins/jquery-file-upload/blueimp-gallery/blueimp-gallery.min.css" rel="stylesheet"/>
 		<link href="{{$asset_path}}/global/plugins/jquery-file-upload/css/jquery.fileupload.css" rel="stylesheet"/>
 		<link href="{{$asset_path}}/global/plugins/jquery-file-upload/css/jquery.fileupload-ui.css" rel="stylesheet"/>
-		
-		<style>
-			#taskcalendar {
-				
-			}
-		</style>
 	@stop
 @stop
 @section('body-content')
@@ -22,7 +16,7 @@
 		
 	@stop
 	@section('innerpage-content')
-		<div class="portlet box {{{$dashboard_class or 'blue'}}}">
+		<div class="portlet box {{{$dashboard_class or 'blue'}}} tabbable">
 			<div class="portlet-title">
 				<div class="caption">
 					@section('portlet-captions')
@@ -31,7 +25,15 @@
 				</div>
 			</div>
 			<div class="portlet-body {{{$portlet_body_class or ''}}}">
-					<div id="taskcalendar"></div>
+					<div class="tabbable portlet-tabs">
+						<ul role="tablist" class="nav nav-tabs">
+						  <li class="active"><a href="{{url('calendar')}}">Calendar</a></li>
+						  <li class=""><a href="{{url('task')}}">Task List</a></li>
+						</ul>
+						<div class="tab-content">
+							<div id="taskcalendar"></div>
+						</div>
+					</div>
 			</div>
 		</div>
 	@stop

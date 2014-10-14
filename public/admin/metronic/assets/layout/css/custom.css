@@ -71,3 +71,11 @@ ul.client-social-icons {
  .form-body.client-detail .form-group .form-control-static .label{
 	font-size: 0.85em;
 }
+
+#taskcalendar {
+	max-width: 900px;
+	margin: 0 auto;
+}
+.fc-day-grid-event > .fc-content{
+	white-space: normal;
+}

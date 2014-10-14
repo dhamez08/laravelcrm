@@ -48,6 +48,24 @@ class TaskController extends \BaseController {
 		return self::$instance;
 	}
 
+	public function getIndex(){
+		$dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
+		$data 						= $this->data_view;
+		$data['pageTitle'] 			= 'Task';
+		$data['contentClass'] 		= '';
+		$data['portlet_body_class']	= '';
+		$data['portlet_title']		= 'Task';
+		$data['fa_icons']			= 'cog';
+		$belongsTo 					= \Auth::id();
+		//$data['tasks']				= \CustomerTasks\CustomerTasks::belongsToGroup($belongsTo)->status(1)
+		$data['tasks']				= \CustomerTasks\CustomerTasks::status(1)
+		->with('label')
+		->with('client');
+		$data 						= array_merge($data,$dashboard_data);
+		//var_dump($tasks->get()->toArray());
+		return \View::make( $data['view_path'] . '.tasks.index', $data );
+	}
+
 	public function displayButtonModalCreateTask(){
 		$data['modalTarget'] = 'createNewTask';
 		return $data;
@@ -80,6 +98,12 @@ class TaskController extends \BaseController {
 			}
 		}
 
+		if( \Input::has('start') || \Input::has('end') ){
+			$start = \Carbon\Carbon::createFromTimeStamp(\Input::get('start'));
+			$data['start'] = $start->year.'-'.$start->month.'-'.$start->day;
+			$data['startHour'] = $start->hour;
+			$data['startMinute'] = $start->minute;
+		}
 		
 
 		$data['pageTitle'] 		= 'Create Task';
@@ -226,6 +250,7 @@ class TaskController extends \BaseController {
 		$data['remindMin']		= \Config::get('crm.task_remind');
 		$data['theDate']		= \Carbon\Carbon::parse($data['tasks']->date);
 		$data['endDate']		= \Carbon\Carbon::parse($data['tasks']->end_time);
+		$data['from']			= 'client';
 		$linkTo					= \Clients\Clients::find($data['tasks']->customer_id);
 		if($linkTo->type == 2){
 			$data['client_linkTo'] = $linkTo->company_name;
@@ -245,8 +270,13 @@ class TaskController extends \BaseController {
 				'status'=>0,
 			);
 			$updateTask->update($data);
-			\Session::flash('message', 'Successfully Completed Task - ' . $name);
-			return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>$customerid));
+			if(\Input::has('redirect')){
+				\Session::flash('message', 'Successfully Completed Task - ' . $name);
+				return \Redirect::to(\Input::get('redirect'));
+			}else{
+				\Session::flash('message', 'Successfully Completed Task - ' . $name);
+				return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>$customerid));
+			}
 		}
 	}
 

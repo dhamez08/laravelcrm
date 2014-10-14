@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<!-- FILES -->
-			<div class="portlet light bordered" style="min-height: 425px">
+			<div class="portlet light bordered hide" style="min-height: 425px">
 				<div class="portlet-title tabbable-line">
 					<div class="caption">
 						<span class="caption-subject font-green-sharp ">Files</span>
@@ -845,7 +845,7 @@
 		</div>
 		<div class="col-md-12">
 			<!-- ACTIVITY -->
-			<div class="portlet light bordered">
+			<div class="portlet light bordered hide">
 				<div class="portlet-title tabbable-line">
 					<div class="caption">
 						<i class="icon-globe font-green-sharp"></i>
@@ -1770,7 +1770,7 @@
 
 		<div class="col-md-12">
 			<!-- FEEDS -->
-			<div class="portlet light bordered">
+			<div class="portlet light bordered hide">
 				<div class="portlet-title tabbable-line">
 					<div class="caption">
 						<i class="icon-share font-green-sharp"></i>
