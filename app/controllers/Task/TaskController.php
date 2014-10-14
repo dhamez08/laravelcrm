@@ -80,6 +80,12 @@ class TaskController extends \BaseController {
 			}
 		}
 
+		if( \Input::has('start') || \Input::has('end') ){
+			$start = \Carbon\Carbon::createFromTimeStamp(\Input::get('start'));
+			$data['start'] = $start->year.'-'.$start->month.'-'.$start->day;
+			$data['startHour'] = $start->hour;
+			$data['startMinute'] = $start->minute;
+		}
 		
 
 		$data['pageTitle'] 		= 'Create Task';

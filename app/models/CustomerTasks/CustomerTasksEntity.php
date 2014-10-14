@@ -77,7 +77,9 @@ class CustomerTasksEntity extends \Eloquent{
 				 'icon' => $row->label->icons,
 				 'customer_id' =>$row->customer_id,
 				 'customer_name' => ( $row->client->type == 2 )  ? $row->client->company_name : $row->client->title . ' ' .$row->client->first_name . ' ' . $row->client->last_name,
-				 'allDay' => false
+				 'allDay' => false,
+				 'belongsTo' => $row->belongs_to,
+				 'customerId' => $row->customer_id,
 			);
 		}
 		echo json_encode($task);

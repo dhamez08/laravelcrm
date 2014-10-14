@@ -39,7 +39,7 @@
 					{{
 						Form::text(
 							'task_date',
-							null,
+							isset($start) ? $start:null,
 							array(
 								'class'=>'form-control input-sm input-sm',
 								'data-provide'=>'datepicker',
@@ -58,7 +58,7 @@
 						Form::select(
 							'task_hour',
 							$getTime,
-							null,
+							isset($startHour) ? $startHour:null,
 							array(
 								'class'=>'form-control',
 								'id'=>'task_hour',
@@ -71,7 +71,7 @@
 						Form::select(
 							'task_min',
 							$getMin,
-							null,
+							isset($startMinute) ? $startMinute:null,
 							array(
 								'class'=>'form-control',
 								'id'=>'task_min',
