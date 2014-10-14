@@ -151,17 +151,17 @@
 				<div class='selectorField draggableField radiogroup'>
 					<label class="control-label" style="vertical-align:top">Radio buttons</label>
 					<div style="display:inline-block;margin-left:15px" class="ctrl-radiogroup">
-						<label class="radio">Option 1<input type="radio" name="radioField" value="option1"></label>
-						<label class="radio">Option 2<input type="radio" name="radioField" value="option2"></label>
-						<label class="radio">Option 3<input type="radio" name="radioField" value="option3"></label>
+						<label class="radio">Option 1<input type="radio" name="" value="option1"></label>
+						<label class="radio">Option 2<input type="radio" name="" value="option2"></label>
+						<label class="radio">Option 3<input type="radio" name="" value="option3"></label>
 					</div>
 				</div>
 				<div class='selectorField draggableField checkboxgroup' >
 					<label class="control-label" style="vertical-align:top">Checkboxes</label>
 					<div style="display:inline-block;margin-left:15px" class="ctrl-checkboxgroup">
-						<label class="checkbox">Option 1<input type="checkbox" name="checkboxField" value="option1"></label>
-						<label class="checkbox">Option 2<input type="checkbox" name="checkboxField" value="option2"></label>
-						<label class="checkbox">Option 3<input type="checkbox" name="checkboxField" value="option3"></label>
+						<label class="checkbox">Option 1<input type="checkbox" name="" value="option1"></label>
+						<label class="checkbox">Option 2<input type="checkbox" name="" value="option2"></label>
+						<label class="checkbox">Option 3<input type="checkbox" name="" value="option3"></label>
 					</div>
 				</div>
 				<div class='selectorField draggableField selectmultiple'>
@@ -180,12 +180,12 @@
 					<label class="control-label">Rating</label>
 					<div>
 						<span class="star-cb-group ctrl-rating">
-						    <input type="radio" id="rating-5" name="rating" value="5" /><label for="rating-5" style="margin:0px">5</label>
-						    <input type="radio" id="rating-4" name="rating" value="4" /><label for="rating-4" style="margin:0px">4</label>
-							<input type="radio" id="rating-3" name="rating" value="3" /><label for="rating-3" style="margin:0px">3</label>
-							<input type="radio" id="rating-2" name="rating" value="2" /><label for="rating-2" style="margin:0px">2</label>
-							<input type="radio" id="rating-1" name="rating" value="1" /><label for="rating-1" style="margin:0px">1</label>
-							<input type="radio" id="rating-0" name="rating" value="0" class="star-cb-clear" /><label for="rating-0" style="margin:0px">0</label>
+						    <input type="radio" id="rating-5" name="" value="5" /><label for="rating-5" style="margin:0px">5</label>
+						    <input type="radio" id="rating-4" name="" value="4" /><label for="rating-4" style="margin:0px">4</label>
+							<input type="radio" id="rating-3" name="" value="3" /><label for="rating-3" style="margin:0px">3</label>
+							<input type="radio" id="rating-2" name="" value="2" /><label for="rating-2" style="margin:0px">2</label>
+							<input type="radio" id="rating-1" name="" value="1" /><label for="rating-1" style="margin:0px">1</label>
+							<input type="radio" id="rating-0" name="" value="0" class="star-cb-clear" /><label for="rating-0" style="margin:0px">0</label>
 						</span>
 					</div>
 				</div>

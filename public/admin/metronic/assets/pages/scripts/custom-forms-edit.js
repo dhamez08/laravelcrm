@@ -48,10 +48,22 @@
 			var me = $(this)
 			var ctrl = me.find("[class*=ctrl]")[0];
 			var ctrl_type = $.trim(ctrl.className.match("ctrl-.*")[0].split(" ")[0].split("-")[1]);
-			customize_ctrl(ctrl_type, this.id);
+			var ctrl_name = '';
+			if(ctrl.name!==undefined) {
+				ctrl_name = ctrl.name;
+			} else {
+				//get the name for radio button or checkboxes because they're nested
+				var item = $("input");
+				me.find(item).each(function() {
+					ctrl_name = $(this).attr("name");
+				});
+			}
+
+			customize_ctrl(ctrl_type, this.id, ctrl_name);
 
 			console.log(ctrl_type);
 			console.log(this.id);
+			console.log(ctrl_name);
 		});
 	}
 	
@@ -108,7 +120,19 @@
 		var selected_content_html = selected_content.html();
 		$("input#form_id_ctr").val(_ctrl_index);
 		$("input#content_form").val(selected_content_html);
-		$("#formsave").submit();
+
+		var no_name = 0;
+		$("#selected-content :input").each(	function() {
+			if($(this).attr('name')=='' || !$(this).attr('name')) {
+				no_name++;
+			}
+		});
+
+		if(no_name>0) {
+			alert('The form cannot be saved, Please make sure you provide name in each field.');
+		} else {
+			$("#formsave").submit();
+		}
 	}
 		
 	if(typeof(console)=='undefined' || console==null) { console={}; console.log=function(){}}
@@ -324,14 +348,38 @@
 				val = o.value;
 			}
 			formValues[o.name] = val;
+			if(o.name=="name") {
+				new_field_name = val;
+			}
+			if(o.name=="forLastFieldName") {
+				old_field_name = val;
+			}
+			
 		});
-		save_changes.common(formValues);
+
+		var exists = 0;
+
+		if(new_field_name!==old_field_name) {
+			
+			$("#selected-content :input").each(	function() {
+				if($(this).attr('name').toLowerCase()===new_field_name.toLowerCase() && $(this).attr('name').toLowerCase()!==old_field_name.toLowerCase()) {
+					exists++;
+				}
+			});
+		}
+
+		if(exists>0) {
+			alert('Field name already exists. Please choose another!');
+		} else {
+			save_changes.common(formValues);
+			$("#customization_modal").modal("hide");
+		}
 	}
 	
 	/*
 		Opens the customization window for this
 	*/
-	function customize_ctrl(ctrl_type, ctrl_id) {
+	function customize_ctrl(ctrl_type, ctrl_id, field_name) {
 		console.log(ctrl_type);
 		var ctrl_params = {};
 
@@ -346,7 +394,8 @@
 			header:modal_header, 
 			content: specific_template(ctrl_params), 
 			type: ctrl_type,
-			forCtrl: ctrl_id
+			forCtrl: ctrl_id,
+			forLastFieldName: field_name
 		}
 		
 		// Pass the parameters - along with the specific template content to the Base template

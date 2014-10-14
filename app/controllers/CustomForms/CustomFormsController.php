@@ -147,17 +147,59 @@ class CustomFormsController extends \BaseController {
 		}
 	}
 
+	public function in_array_r($needle, $haystack, $strict = false) {
+	    foreach ($haystack as $item) {
+	        if (($strict ? $item === $needle : $item == $needle) || (is_array($item) && $this->in_array_r($needle, $item, $strict))) {
+	            return true;
+	        }
+	    }
+	    return false;
+	}
+
 	public function postSaveForm() {
 		$content = trim(\Input::get('content'));
 		$form_id_ctr = trim(\Input::get('form_id_ctr'));
 		$form = $this->customFormEntity->find(\Input::get('form_id'));
 		
-		$form->build = $content;
-		$form->last_field_ctr = $form_id_ctr;
-		$form->save();
+		$doc = new \DOMDocument;
+		$fields = array();
+		if ( !$doc->loadhtml($content) ) {
+		  return \Redirect::back()->withErrors(['There was a problem updating the form, please try again']);
+		} else {
 
-		\Session::flash('message', 'The Form was successfully updated');
-		return \Redirect::back();
+			$form->build = $content;
+			$form->last_field_ctr = $form_id_ctr;
+			$form->save();
+
+			// clear current form build
+			$form->builds()->forceDelete();
+
+			$xpath = new \DOMXpath($doc);
+
+			$inputs = $xpath->query('//input | //select | //textarea');
+
+
+			foreach($inputs as $input) {
+				if(!$this->in_array_r($input->getAttribute('name'), $fields)) {
+			  	$fields[] = array(
+				  		'name'=>$input->getAttribute('name')
+				  	);
+				}
+			}
+
+			foreach ($fields as $key => $field) {
+				$item = array(
+					'form_id' => $form->id,
+					'name' => $field['name']
+				);
+
+				$this->customFormBuildEntity->saveItem($item);
+			}
+
+			\Session::flash('message', 'The Form was successfully updated');
+			return \Redirect::back();
+
+		}
 	}
 
 	public function getDelete($id) {

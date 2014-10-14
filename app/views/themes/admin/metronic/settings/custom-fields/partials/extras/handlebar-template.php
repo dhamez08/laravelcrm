@@ -12,6 +12,7 @@
 			<form id="theForm" class="form-horizontal">
 				<input type="hidden" value="{{type}}" name="type"></input>
 				<input type="hidden" value="{{forCtrl}}" name="forCtrl"></input>
+				<input type="hidden" value="{{forLastFieldName}}" name="forLastFieldName"></input>
 				<div class="row">
 			      	<div class="col-md-12">
 			      		<div class="form-group">
@@ -25,7 +26,7 @@
 			</form>
 		</div>
 		<div class="modal-footer">
-			<button class="btn btn-primary" data-dismiss="modal" onclick='save_customize_changes()'>Save changes</button>
+			<button class="btn btn-primary" onclick='save_customize_changes()'>Save changes</button>
 			<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
 			<button class="btn btn-danger" data-dismiss="modal" aria-hidden="true" onclick='delete_ctrl()'>Delete</button>
 		</div>

@@ -39,10 +39,7 @@ class CustomFormBuildEntity extends \Eloquent{
 	public function saveItem($data) {
 		$build = new $this;
 		$build->form_id = $data['form_id'];
-		$build->label = $data['label'];
-		$build->type = $data['type'];
-		$build->placeholder = $data['placeholder'];
-		$build->value = $data['value'];
+		$build->field_name = $data['name'];
 		$build->save();
 	}
 
