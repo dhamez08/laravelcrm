@@ -48,6 +48,23 @@ class TaskController extends \BaseController {
 		return self::$instance;
 	}
 
+	public function getIndex(){
+		$dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
+		$data 						= $this->data_view;
+		$data['pageTitle'] 			= 'Calendar';
+		$data['contentClass'] 		= '';
+		$data['portlet_body_class']	= '';
+		$data['portlet_title']		= 'Calendar';
+		$data['fa_icons']			= 'calendar';
+		$belongsTo = \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+		$data['tasks']	= \CustomerTasks\CustomerTasks::belongsToGroup($belongsTo)->status(1)
+		->with('label')
+		->with('client');
+		$data 						= array_merge($data,$dashboard_data);
+		//var_dump($tasks->get()->toArray());
+		return \View::make( $data['view_path'] . '.tasks.index', $data );
+	}
+
 	public function displayButtonModalCreateTask(){
 		$data['modalTarget'] = 'createNewTask';
 		return $data;
