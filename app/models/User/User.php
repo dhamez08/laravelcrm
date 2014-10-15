@@ -71,4 +71,8 @@ class User extends \Eloquent implements UserInterface, RemindableInterface {
 	public function scopeGetID($query, $userID){
 		return $query->where('id', '=' , $userID);
 	}
+
+	public function tabs() {
+		return $this->hasOne('\UserTab\UserTabEntity','user_id');
+	}
 }
