@@ -88,7 +88,7 @@ class TaskController extends \BaseController {
 
 	public function getAjaxModalCreateTask($arrayOtherOption = array()){
 		$data['redirectURL'] 	= $arrayOtherOption['redirect'];
-		
+
 		if( !is_null($arrayOtherOption['clientid']) ){
 			$data['currentClient'] = \Clients\Clients::find($arrayOtherOption['clientid']);
 			if($data['currentClient']->type == 2){
@@ -100,11 +100,11 @@ class TaskController extends \BaseController {
 
 		if( \Input::has('start') || \Input::has('end') ){
 			$start = \Carbon\Carbon::createFromTimeStamp(\Input::get('start'));
-			$data['start'] = $start->year.'-'.$start->month.'-'.$start->day;
+			$data['start'] = $start->day.'/'.$start->month.'/'.$start->year;
 			$data['startHour'] = $start->hour;
 			$data['startMinute'] = $start->minute;
 		}
-		
+
 
 		$data['pageTitle'] 		= 'Create Task';
 		$data['pageSubTitle'] 	= '';
@@ -122,7 +122,7 @@ class TaskController extends \BaseController {
 		$rules = array(
 			'name' => 'required|min:3',
 			'getclient' => 'required',
-			'task_date' => 'required|date|date_format:Y-m-d',
+			'task_date' => 'required|date|date_format:d/m/Y',
 		);
 		$messages = array(
 			'name.required'=>'Task Name is required',
@@ -135,19 +135,21 @@ class TaskController extends \BaseController {
 
 		$validator = \Validator::make(\Input::all(), $rules, $messages);
 		if($validator->passes()){
+			$dt 			 = new \DateTime(\Input::get('task_date'));
+			$mysqlDateFormat = \Carbon\Carbon::instance($dt);
 			$start_hour = \Input::get('task_hour');
 			$start_min 	= \Input::get('task_min');
 			$end_hour 	= \Input::get('end_task_hour');
 			$end_min 	= \Input::get('end_task_min');
-			$startDate 	= \Input::get('task_date') . ' ' . $start_hour . ':' . $start_min . ':00';
-			$endHr 		= \Input::get('task_date') . ' ' . $end_hour . ':' . $end_min . ':00';
+			$startDate 	= $mysqlDateFormat->toDateString() . ' ' . $start_hour . ':' . $start_min . ':00';
+			$endHr 		= $mysqlDateFormat->toDateString() . ' ' . $end_hour . ':' . $end_min . ':00';
 
 			if( \Input::has('time_not_required') ){
 				$endHr = "00:00";
 			}
 
 			$remind_time = (\Input::get('remind_mins') == 0) ?  "":date('Y-m-d H:i:s', strtotime('- '.\Input::get('remind_mins').' minutes', strtotime($startDate)));
-		
+
 			$settingsLabelName = \TaskLabel\TaskLabel::find(\Input::get('task_setting'));
 			$data = array(
 				'customer_id' 	=> \Input::get('customer_id'),
@@ -163,7 +165,7 @@ class TaskController extends \BaseController {
 				'belongs_to' 	=> \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id
 			);
 			$task = \CustomerTasks\CustomerTasksEntity::get_instance()->createOrUpdate($data, $taskid);
-			
+
 			\Session::flash('message', 'Successfully Updated Task' );
 			if( \Input::has('redirect') ){
 				return \Response::json(array('result'=>true,'redirect'=>\Input::get('redirect')));
@@ -181,7 +183,7 @@ class TaskController extends \BaseController {
 		$rules = array(
 			'task_name' => 'required|min:3',
 			'getclient' => 'required',
-			'task_date' => 'required|date|date_format:Y-m-d',
+			'task_date' => 'required|date|date_format:d/m/Y',
 		);
 		$messages = array(
 			'task_name.required'=>'Task Name is required',
@@ -194,19 +196,22 @@ class TaskController extends \BaseController {
 
 		$validator = \Validator::make(\Input::all(), $rules, $messages);
 		if($validator->passes()){
+			$dt 			 = new \DateTime(\Input::get('task_date'));
+			$mysqlDateFormat = \Carbon\Carbon::instance($dt);
+
 			$start_hour = \Input::get('task_hour');
 			$start_min 	= \Input::get('task_min');
 			$end_hour 	= \Input::get('end_task_hour');
 			$end_min 	= \Input::get('end_task_min');
-			$startDate 	= \Input::get('task_date') . ' ' . $start_hour . ':' . $start_min . ':00';
-			$endHr 		= \Input::get('task_date') . ' ' . $end_hour . ':' . $end_min . ':00';
+			$startDate 	= $mysqlDateFormat->toDateString() . ' ' . $start_hour . ':' . $start_min . ':00';
+			$endHr 		= $mysqlDateFormat->toDateString() . ' ' . $end_hour . ':' . $end_min . ':00';
 
 			if( \Input::has('time_not_required') ){
 				$endHr = "00:00";
 			}
 
 			$remind_time = (\Input::get('remind_mins') == 0) ?  "":date('Y-m-d H:i:s', strtotime('- '.\Input::get('remind_mins').' minutes', strtotime($startDate)));
-		
+
 			$settingsLabelName = \TaskLabel\TaskLabel::find(\Input::get('task_setting'));
 			$data = array(
 				'customer_id' 	=> \Input::get('customer_id'),
@@ -222,7 +227,7 @@ class TaskController extends \BaseController {
 				'belongs_to' 	=> \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id
 			);
 			$task = \CustomerTasks\CustomerTasksEntity::get_instance()->createOrUpdate($data);
-			
+
 			\Session::flash('message', 'Successfully Added Task' );
 			if( \Input::has('redirect') ){
 				return \Response::json(array('result'=>true,'redirect'=>\Input::get('redirect')));

@@ -39,16 +39,15 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 control-label">Date</label>
+					<label class="col-sm-2 control-label">Date and Time</label>
 					<div class="col-sm-4">
 						{{
 							Form::text(
 								'task_date',
-								$theDate->year.'-'.$theDate->month.'-'.$theDate->day,
+								$theDate->day.'/'.$theDate->month.'/'.$theDate->year,
 								array(
 									'class'=>'form-control input-sm input-sm',
-									'data-provide'=>'datepicker',
-									'data-date-format'=>'yyyy-mm-dd'
+									'id'=>'task_date'
 								)
 							);
 						}}
@@ -146,7 +145,7 @@
 					</div>
 				</div>
 			  {{Form::hidden('redirect',$redirectURL)}}
-			  <button type="submit" class="btn btn-default">Submit</button>
+			  <button type="submit" class="btn btn-primary">Update</button>
 				  @if($from == 'calendar')
 					  <a class="btn btn-primary "
 						 href="{{action('Calendar\CalendarController@getCompleteTask',

@@ -136,7 +136,8 @@
 		<script src="{{$asset_path}}/global/plugins/typeahead/typeahead.bundle.min.js" type="text/javascript"></script>
 		<!-- END PAGE LEVEL SCRIPTS -->
 		<script type='text/javascript'>
-			var baseURL = "{{url('/')}}";
+			var baseURL 			= "{{url('/')}}";
+			var dateClientFormat 	= "{{\Config::get('crm.date.bootstrap_date_picker.format')}}";
 			jQuery(document).ready(function() {
 				var url = baseURL + '/clients/typeahead-client';
 				Layout.init(); // init layout
