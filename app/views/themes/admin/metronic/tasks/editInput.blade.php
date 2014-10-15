@@ -12,137 +12,139 @@
 						'method' => 'PUT',
 						'role'=>'form',
 						'id'=>'createTask',
+						'class'=>'form-horizontal'
 					)
 				)
 			}}
-			  <div class="form-group">
-			    <label>Description</label>
-			    {{Form::text('name',$tasks->name,array('class'=>'form-control'))}}
-			  </div>
-			  <div class="form-group">
-			    <label>Link To</label>
-			    {{
-					Form::text(
-						'getclient',
-						$client_linkTo,
-						array(
-							'class'=>'form-control typeahead getclient',
-							'autocomplete'=>'off',
-						)
-					)
-			    }}
-			    {{Form::hidden('customer_id',$tasks->customer_id,array('id'=>'customer_id'))}}
-			  </div>
-			  <div class="form-group">
-			    <label>Date</label>
-				<div class="row">
-					<div class="col-xs-4">
-					{{
-						Form::text(
-							'task_date',
-							$theDate->year.'-'.$theDate->month.'-'.$theDate->day,
-							array(
-								'class'=>'form-control input-sm input-sm',
-								'data-provide'=>'datepicker',
-								'data-date-format'=>'yyyy-mm-dd'
-							)
-						);
-					}}
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Description</label>
+					<div class="col-sm-10">
+					   {{Form::text('name',$tasks->name,array('class'=>'form-control'))}}
 					</div>
 				</div>
-			  </div>
-			  <div class="form-group">
-			    <label>Start Time</label>
-			    <div class="row">
-					<div class="col-xs-4">
-					{{
-						Form::select(
-							'task_hour',
-							$getTime,
-							$theDate->hour,
-							array(
-								'class'=>'form-control',
-								'id'=>'task_hour',
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Link To</label>
+					<div class="col-sm-10">
+					   {{
+							Form::text(
+								'getclient',
+								$client_linkTo,
+								array(
+									'class'=>'form-control typeahead getclient',
+									'autocomplete'=>'off',
+								)
 							)
-						)
-					}}
-					</div>
-					<div class="col-xs-4">
-					{{
-						Form::select(
-							'task_min',
-							$getMin,
-							$theDate->minute,
-							array(
-								'class'=>'form-control',
-								'id'=>'task_min',
-							)
-						)
-					}}
+						}}
+						{{Form::hidden('customer_id',$tasks->customer_id,array('id'=>'customer_id'))}}
 					</div>
 				</div>
-			  </div>
-			  <div class="form-group">
-					{{Form::checkbox('time_not_required',null,false,array('id'=>'time_not_required'))}}
-					End Time is not required.
-			  </div>
-			  <div class="form-group">
-				<label>End Time</label>
-				<div class="row">
-					<div class="col-xs-4">
-					{{
-						Form::select(
-							'end_task_hour',
-							$getTime,
-							$endDate->hour,
-							array(
-								'class'=>'form-control',
-								'id'=>'end_task_hour',
-							)
-						)
-					}}
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Date</label>
+					<div class="col-sm-4">
+						{{
+							Form::text(
+								'task_date',
+								$theDate->year.'-'.$theDate->month.'-'.$theDate->day,
+								array(
+									'class'=>'form-control input-sm input-sm',
+									'data-provide'=>'datepicker',
+									'data-date-format'=>'yyyy-mm-dd'
+								)
+							);
+						}}
 					</div>
-					<div class="col-xs-4">
-					{{
-						Form::select(
-							'end_task_min',
-							$getMin,
-							isset($endDate->minute)?$endDate->minute:'30',
-							array(
-								'class'=>'form-control',
-								'id'=>'end_task_min',
+					<div class="col-sm-3">
+						{{
+							Form::select(
+								'task_hour',
+								$getTime,
+								$theDate->hour,
+								array(
+									'class'=>'form-control',
+									'id'=>'task_hour',
+								)
 							)
-						)
-					}}
+						}}
+					</div>
+					<div class="col-sm-3">
+						{{
+							Form::select(
+								'task_min',
+								$getMin,
+								isset($startMinute) ? $startMinute:null,
+								array(
+									'class'=>'form-control',
+									'id'=>'task_min',
+								)
+							)
+						}}
 					</div>
 				</div>
-			   </div>
-			    <div class="form-group">
-					<label>Action</label>
-					{{
-						Form::select(
-							'task_setting',
-							$taskLabel,
-							null,
-							array(
-								'class'=>'form-control',
+				<div class="form-group">
+					<label class="col-sm-6 control-label">End Time is not required.</label>
+					<div class="col-sm-6">
+						{{Form::checkbox('time_not_required',null,false,array('id'=>'time_not_required'))}}
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">End Time</label>
+					<div class="col-sm-5">
+						{{
+							Form::select(
+								'end_task_hour',
+								$getTime,
+								$endDate->hour,
+								array(
+									'class'=>'form-control',
+									'id'=>'end_task_hour',
+								)
 							)
-						)
-					}}
-			   </div>
-			   <div class="form-group">
-					<label>Reminder</label>
-					{{
-						Form::select(
-							'remind_mins',
-							$remindMin,
-							null,
-							array(
-								'class'=>'form-control',
+						}}
+					</div>
+					<div class="col-sm-5">
+						{{
+							Form::select(
+								'end_task_min',
+								$getMin,
+								isset($endDate->minute)?$endDate->minute:'30',
+								array(
+									'class'=>'form-control',
+									'id'=>'end_task_min',
+								)
 							)
-						)
-					}}
-			   </div>
+						}}
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Action</label>
+					<div class="col-sm-10">
+						{{
+							Form::select(
+								'task_setting',
+								$taskLabel,
+								null,
+								array(
+									'class'=>'form-control',
+								)
+							)
+						}}
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Reminder</label>
+					<div class="col-sm-10">
+						{{
+							Form::select(
+								'remind_mins',
+								$remindMin,
+								null,
+								array(
+									'class'=>'form-control',
+								)
+							)
+						}}
+					</div>
+				</div>
 			  {{Form::hidden('redirect',$redirectURL)}}
 			  <button type="submit" class="btn btn-default">Submit</button>
 				  @if($from == 'calendar')
