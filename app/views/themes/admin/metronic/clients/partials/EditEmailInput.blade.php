@@ -27,6 +27,23 @@
 			}}
 			</div>
 		</div>
+		<div class="col-xs-4">
+			<div class="form-group">
+				<a
+					href="{{
+						action('Clients\ClientsController@getConfirmMailDelete',
+						array(
+							'id'=>$val->id,
+							'client'=>$val->customer_id,
+							'hash'=>($val->id . csrf_token()))
+						)
+					}}"
+					class="btn red btn-xs deleteMail"
+				>
+					<i class="fa fa-trash-o fa-5x"></i>
+				</a>
+			</div>
+		</div>
 		{{Form::hidden('edit_emails['.$emailIdx.'][id]',$val->id)}}
 	</div>
 </div>

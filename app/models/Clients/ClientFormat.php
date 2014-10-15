@@ -104,7 +104,7 @@ class ClientFormat extends Facade{
 		return \Carbon\Carbon::parse( $value )->format($dateFormat);
 	}
 
-	public function displayDob($dateFormat = 'Y-m-d'){
+	public function displayDob($dateFormat = 'd/m/Y'){
 		if( $this->dob == '0000-00-00' ){
 			return '';
 		}else{

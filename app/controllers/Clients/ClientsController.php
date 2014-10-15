@@ -197,7 +197,7 @@ class ClientsController extends \BaseController {
 			//echo $phone->number;
 			$phone->delete();
 			\Session::flash('message', 'Successfully Delete Phone Customer');
-			return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>$client));
+			return \Redirect::action('Clients\ClientsController@getEdit',array('clientId'=>$client));
 		}else{
 			echo 'nice try hacker';
 			die();
@@ -209,7 +209,7 @@ class ClientsController extends \BaseController {
 			//echo $phone->number;
 			$url->delete();
 			\Session::flash('message', 'Successfully Delete Website');
-			return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>$client));
+			return \Redirect::action('Clients\ClientsController@getEdit',array('clientId'=>$client));
 		}else{
 			echo 'nice try hacker';
 			die();
@@ -221,7 +221,7 @@ class ClientsController extends \BaseController {
 			//echo $phone->number;
 			$mail->delete();
 			\Session::flash('message', 'Successfully Delete Email');
-			return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>$client));
+			return \Redirect::action('Clients\ClientsController@getEdit',array('clientId'=>$client));
 		}else{
 			echo 'nice try hacker';
 			die();
