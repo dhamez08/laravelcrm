@@ -36,7 +36,33 @@ class CustomerAddressEntity extends \Eloquent{
 	 * 												#1 would be active
 	 * @return db last insert id
 	 * */
-	public function createOrUpdate($id = null){
+	public function createOrUpdate($arrayData = array(), $id = null){
+		if( is_null($id) ) {
+			//create
+			$obj = new \CustomerAddress\CustomerAddress;
+		}else{
+			//update
+			$obj = \CustomerAddress\CustomerAddress::find($id);
+		}
+		if( count($arrayData) > 0 ){
+			foreach($arrayData as $key=>$val){
+				$obj->$key = $val;
+			}
+			$obj->save();
+			return $obj;
+		}
+	}
+
+	/**
+	 * This is use to create user or update
+	 * this is full field, mainly use in register
+	 *
+	 * @param 	$id		int		default null		if there is id then update, else create
+	 * @param	$active	int		default 2			#2 means not active
+	 * 												#1 would be active
+	 * @return db last insert id
+	 * */
+	public function _createOrUpdate($id = null){
 		if( is_null($id) ) {
 			//create
 			$obj = new \CustomerAddress\CustomerAddress;
@@ -45,7 +71,7 @@ class CustomerAddressEntity extends \Eloquent{
 			$obj = \CustomerAddress\CustomerAddress::find($id);
 		}
 
-		$obj->customer_id 		= \Input::get('customer_id', \Auth::id());
+		$obj->customer_id 		= \Input::get('customer_id');
 		$obj->address_line_1 	= \Input::get('address_line_1','');
 		$obj->address_line_2 	= \Input::get('address_line_2','');
 		$obj->town 				= \Input::get('town','');

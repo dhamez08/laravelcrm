@@ -42,8 +42,7 @@
 							isset($start) ? $start:null,
 							array(
 								'class'=>'form-control input-sm input-sm',
-								'data-provide'=>'datepicker',
-								'data-date-format'=>'yyyy-mm-dd'
+								'id'=>'task_date'
 							)
 						);
 					}}

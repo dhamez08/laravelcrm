@@ -8,8 +8,10 @@
 				$town 			= $address->town;
 				$address_type 	= $address->type;
 				$county 		= $address->county;
+				$id 			= $address->id;
 			?>
 		@endforeach
+		{{Form::hidden('address_id',$id)}}
 	@endif
 @endif
 <div class="col-xs-6">

@@ -53,11 +53,8 @@ class CustomerAddressController extends \BaseController {
 	 * the $data is for \Input::all()
 	 * each $data is defined
 	 * */
-	public function postAddressWrapper($clientId){
-		\Input::merge(
-			array('customer_id'=>$clientId)
-		);
-		\CustomerAddress\CustomerAddressEntity::get_instance()->createOrUpdate();
+	public function postAddressWrapper($arrayData, $id = null){
+		return \CustomerAddress\CustomerAddressEntity::get_instance()->createOrUpdate($arrayData, $id);
 	}
 
 }

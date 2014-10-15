@@ -96,6 +96,10 @@ var CreateTask = (function(){
 	return{
 		init:function($selector, $modalSelector){
             jQuery('body').on('loaded.bs.modal', '.modal', function () {
+            	jQuery('#task_date').datepicker({
+				    autoclose:true,
+				    format: 'yyyy-mm-dd'
+				});
 			    jQuery(this).removeData('bs.modal');
 			    var url = baseURL + '/clients/typeahead-client';
 			   // console.log(url);

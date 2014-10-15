@@ -394,12 +394,17 @@ class ClientsController extends \BaseController {
 					);
 					$partner = \Clients\ClientEntity::get_instance()->createOrUpdate();
 				}// if Married add partner details
-
-				\Input::merge(
-					array('type'=>\Input::get('address_type'))
-				);
 				// insert address
-				\CustomerAddress\CustomerAddressController::get_instance()->postAddressWrapper($customer->id);
+				$arrayAddress = array(
+					'customer_id' 	 => $customer->id,
+					'address_line_1' => \Input::get('address_line_1'),
+					'address_line_2' => \Input::get('address_line_2'),
+					'town' 			 => \Input::get('town'),
+					'county' 		 => \Input::get('county'),
+					'postcode' 		 => \Input::get('postcode'),
+					'type' 			 => \Input::get('address_type'),
+				);
+				$address = \CustomerAddress\CustomerAddressController::get_instance()->postAddressWrapper($arrayAddress);
 
 				// if has children then add
 				if( count( \Input::get('children') ) > 0 ){
@@ -488,7 +493,7 @@ class ClientsController extends \BaseController {
 		$data['center_column_view']	= 'dashboard';
 		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getCustomerTasks($clientId)
 		->status(1)->with('label');
-		
+
 		$data 						= array_merge($data,$dashboard_data);
 		//var_dump($data['tasks']->with('label')->get()->toArray());
 		//exit();
@@ -578,6 +583,32 @@ class ClientsController extends \BaseController {
 					\Input::get('edit_urls'),
 					$clientId
 				);
+
+				if( \Input::has('address_id') ){
+					// update address
+					$arrayAddress = array(
+						'address_line_1' => \Input::get('address_line_1'),
+						'address_line_2' => \Input::get('address_line_2'),
+						'town' 			 => \Input::get('town'),
+						'county' 		 => \Input::get('county'),
+						'postcode' 		 => \Input::get('postcode'),
+						'type' 			 => \Input::get('address_type'),
+					);
+					$address = \CustomerAddress\CustomerAddressController::get_instance()->postAddressWrapper($arrayAddress, \Input::get('address_id'));
+				}else{
+					// insert address
+					$arrayAddress = array(
+						'customer_id' 	 => $clientId,
+						'address_line_1' => \Input::get('address_line_1'),
+						'address_line_2' => \Input::get('address_line_2'),
+						'town' 			 => \Input::get('town'),
+						'county' 		 => \Input::get('county'),
+						'postcode' 		 => \Input::get('postcode'),
+						'type' 			 => \Input::get('address_type'),
+					);
+					$address = \CustomerAddress\CustomerAddressController::get_instance()->postAddressWrapper($arrayAddress);
+				}
+
 
 			}
 			if( $customer ){
@@ -802,6 +833,31 @@ class ClientsController extends \BaseController {
 					);
 					$contact = \Clients\ClientEntity::get_instance()->createOrUpdate(\Input::get('contact_person'));
 				}// if has contact
+
+				if( \Input::has('address_id') ){
+					// update address
+					$arrayAddress = array(
+						'address_line_1' => \Input::get('address_line_1'),
+						'address_line_2' => \Input::get('address_line_2'),
+						'town' 			 => \Input::get('town'),
+						'county' 		 => \Input::get('county'),
+						'postcode' 		 => \Input::get('postcode'),
+						'type' 			 => \Input::get('address_type'),
+					);
+					$address = \CustomerAddress\CustomerAddressController::get_instance()->postAddressWrapper($arrayAddress, \Input::get('address_id'));
+				}else{
+					// insert address
+					$arrayAddress = array(
+						'customer_id' 	 => $clientId,
+						'address_line_1' => \Input::get('address_line_1'),
+						'address_line_2' => \Input::get('address_line_2'),
+						'town' 			 => \Input::get('town'),
+						'county' 		 => \Input::get('county'),
+						'postcode' 		 => \Input::get('postcode'),
+						'type' 			 => \Input::get('address_type'),
+					);
+					$address = \CustomerAddress\CustomerAddressController::get_instance()->postAddressWrapper($arrayAddress);
+				}
 			}
 			\Session::flash('message', 'Successfully Updated Company');
 			return \Redirect::action('Clients\ClientsController@getEditCompany',array('clientId'=>$clientId));
