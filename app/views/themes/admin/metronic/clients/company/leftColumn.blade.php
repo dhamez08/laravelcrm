@@ -76,34 +76,49 @@
 		 	<div class="col-md-12">
 		 		<h5>People working at <strong>{{$customer->company_name}}</strong></h5>
 		 		<div class="form-body client-detail">
-		 			<div class="form-group">
-		 				@if( $customer->customerAssociatedTo($customer->id)->count() > 0 )
+		 			<table class="table table-hover">
+					  <thead>
+						<tr>
+						  <th></th>
+						  <th></th>
+						</tr>
+					  </thead>
+					  <tbody>
+						  @if( $customer->customerAssociatedTo($customer->id)->count() > 0 )
 							@foreach( $customer->customerAssociatedTo($customer->id)->get() as $people )
-									<p class="form-control-static">
+								<tr>
+									<td>
+										<p class="form-control-static">
 										<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$people->id))}}">
-											<strong>
-												{{$people->title.' '.$people->first_name.' '.$people->last_name}}
-											</strong>
-										</a>
-									</p>
-									<p>{{$people->job_title}}</p>
-									<a 	class="btn red btn-sm deletePerson"
-										href="{{
-											action(
-												'Clients\ClientsController@getConfirmPersonDelete',
-												array(
-													'id'=>$people->id,
-													'client'=>$currentClient->id,
-													'hash'=>($people->id . csrf_token())
+												<strong>
+													{{$people->title.' '.$people->first_name.' '.$people->last_name}}
+												</strong>
+											</a>
+										</p>
+										<p>{{$people->job_title}}</p>
+									<td>
+									<td>
+										<a 	class="btn red btn-sm deletePerson"
+											href="{{
+												action(
+													'Clients\ClientsController@getConfirmPersonDelete',
+													array(
+														'id'=>$people->id,
+														'client'=>$currentClient->id,
+														'hash'=>($people->id . csrf_token())
+													)
 												)
-											)
-										}}"
-									>
-										<i class="fa fa-trash-o fa-5x"></i>
-									</a>
+											}}"
+										>
+											<i class="fa fa-trash-o fa-5x"></i>
+										</a>
+									</td>
+								</tr>
 							@endforeach
 		 				@endif
-		 			</div>
+						</tr>
+					  </tbody>
+					</table>
 		 		</div>
 		 	</div>
 		 	<div class="col-md-12">

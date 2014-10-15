@@ -94,43 +94,54 @@
 		 	<div class="col-md-12">
 		 		<h5><strong>Family</strong></h5>
 		 		<div class="form-body client-detail">
-		 			<div class="form-group">
-		 				@if( $customer->customerAssociatedTo($customer->id)->count() > 0 )
+		 			<table class="table table-hover">
+					  <thead>
+						<tr>
+						  <th></th>
+						  <th></th>
+						</tr>
+					  </thead>
+					  <tbody>
+						  @if( $customer->customerAssociatedTo($customer->id)->count() > 0 )
 							@foreach( $customer->customerAssociatedTo($customer->id)->get() as $family )
-								@if( $family->relationship == 'Spouse/Partner' )
-									<p class="form-control-static">
-										<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$family->id))}}">
-											<strong>
-												xxx
-												{{($family->partner_title == '' ) ? $family->title:$family->partner_title}}
-												{{($family->partner_first_name == '') ? $family->first_name:$family->partner_first_name}}
-												{{($family->partner_last_name == '') ? $family->last_name:$family->partner_last_name}}
-											</strong>
+								<tr>
+									<td>
+										@if( $family->relationship == 'Spouse/Partner' )
+												<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$family->id))}}">
+													<strong>
+														{{($family->partner_title == '' ) ? $family->title:$family->partner_title}}
+														{{($family->partner_first_name == '') ? $family->first_name:$family->partner_first_name}}
+														{{($family->partner_last_name == '') ? $family->last_name:$family->partner_last_name}}
+													</strong>
+												</a>
+												- {{$currentClient->parseDate($family->partner_dob)}} - {{$family->relationship}}
+										@else
+												<strong>{{$family->first_name.' '.$family->last_name}}</strong>
+												- {{$currentClient->parseDate($family->dob)}} - {{$family->relationship}}
+										@endif
+									<td>
+									<td>
+										<a 	class="btn red btn-sm deletePerson"
+											href="{{
+												action(
+													'Clients\ClientsController@getConfirmPersonDelete',
+													array(
+														'id'=>$family->id,
+														'client'=>$currentClient->id,
+														'hash'=>($family->id . csrf_token())
+													)
+												)
+											}}"
+										>
+											<i class="fa fa-trash-o fa-5x"></i>
 										</a>
-										- {{$currentClient->parseDate($family->partner_dob)}} - {{$family->relationship}}
-								@else
-									<p class="form-control-static">
-										<strong>{{$family->first_name.' '.$family->last_name}}</strong>
-										- {{$currentClient->parseDate($family->dob)}} - {{$family->relationship}}
-								@endif
-								<a 	class="btn red btn-sm deletePerson"
-									href="{{
-										action(
-											'Clients\ClientsController@getConfirmPersonDelete',
-											array(
-												'id'=>$family->id,
-												'client'=>$currentClient->id,
-												'hash'=>($family->id . csrf_token())
-											)
-										)
-									}}"
-								>
-									<i class="fa fa-trash-o fa-5x"></i>
-								</a>
-								</p>
+									</td>
+								</tr>
 							@endforeach
 		 				@endif
-		 			</div>
+						</tr>
+					  </tbody>
+					</table>
 		 		</div>
 		 	</div>
 		 	<div class="col-md-12">
