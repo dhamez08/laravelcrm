@@ -1462,7 +1462,7 @@ class ClientsController extends \BaseController {
 		$data['belongToPartner']	= \Clients\ClientEntity::get_instance()->getPartnerBelong($data['customer']);
 		$data['associate']			= \Clients\ClientEntity::get_instance()->setAssociateCustomer($clientId);
 		$data['partner']			= \Clients\ClientEntity::get_instance()->getCustomerPartner();
-		$data['center_column_view']	= 'dashboard';
+		
 		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getCustomerTasks($clientId)
 		->status(1)->with('label');
 
@@ -1475,6 +1475,8 @@ class ClientsController extends \BaseController {
 		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed');
 
 		$data = $this->_getClientData($clientId);
+
+		$data['center_column_view']	= 'custom-page';
 
 		$data 						= array_merge($data,$dashboard_data);
 
