@@ -41,8 +41,8 @@
 		}}
 		<div class="form-body">
 			<div class="col-md-12">
-				{{Form::submit('Update Company Client',array('class'=>"btn blue"))}}
-				<a class="btn {{{$dashboard_css or 'blue'}}}" href="{{url('clients/client-summary/' . $customer->id)}}">Cancel</a>
+				{{Form::submit('Update Company Client',array('class'=>"btn blue btn-sm"))}}
+				<a class="btn {{{$dashboard_css or 'blue'}}} btn-sm" href="{{url('clients/client-summary/' . $customer->id)}}">Go back to Client Summary</a>
 			</div>
 			<div class="row">
 				<div class="col-md-6">
@@ -116,6 +116,7 @@
 	<!-- add here -->
 	@parent
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+	<script src="{{$asset_path}}/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
 	<script type="text/javascript" src="{{$asset_path}}/pages/scripts/client.js"></script>
 		<script>
 			jQuery(document).ready(function() {
@@ -129,6 +130,10 @@
 				addChildren.init();
 				addressLookup.init();
 				addWebsite.init();
+				deletePhone.init();
+				deleteURL.init();
+				deleteEmail.init();
+				deletePerson.init();
 			});
 		</script>
 	@stop

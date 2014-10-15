@@ -27,6 +27,24 @@
 			}}
 			</div>
 		</div>
+		<div class="col-xs-4">
+			<div class="form-group">
+				<a
+					href="{{
+						action('Clients\ClientsController@getConfirmPhoneDelete',
+						array(
+							'id'=>$val->id,
+							'client'=>$val->customer_id,'hash'=>($val->id . csrf_token()),
+							'from'=>$from
+							)
+						)
+					}}"
+					class="btn red btn-xs deletePhone"
+				>
+					<i class="fa fa-trash-o fa-5x"></i>
+				</a>
+			</div>
+		</div>
 		{{Form::hidden('edit_telephone['.$telephoneIdx.'][id]',$val->id)}}
 	</div>
 </div>
