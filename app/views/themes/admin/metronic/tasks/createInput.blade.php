@@ -11,16 +11,20 @@
 						'method' => 'POST',
 						'role'=>'form',
 						'id'=>'createTask',
+						'class'=>'form-horizontal'
 					)
 				)
 			}}
-			  <div class="form-group">
-			    <label>Description</label>
-			    {{Form::text('task_name',null,array('class'=>'form-control'))}}
-			  </div>
-			  <div class="form-group">
-			    <label>Link To</label>
-			    {{
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Description</label>
+				<div class="col-sm-10">
+				   {{Form::text('task_name',null,array('class'=>'form-control'))}}
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Link To</label>
+				<div class="col-sm-10">
+				   {{
 					Form::text(
 						'getclient',
 						isset($clientName) ? $clientName:null,
@@ -31,11 +35,11 @@
 					)
 			    }}
 			    {{Form::hidden('customer_id',isset($currentClient) ? $currentClient->id:null,array('id'=>'customer_id'))}}
-			  </div>
-			  <div class="form-group">
-			    <label>Date</label>
-				<div class="row">
-					<div class="col-xs-4">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Date</label>
+				<div class="col-sm-4">
 					{{
 						Form::text(
 							'task_date',
@@ -46,13 +50,8 @@
 							)
 						);
 					}}
-					</div>
 				</div>
-			  </div>
-			  <div class="form-group">
-			    <label>Start Time</label>
-			    <div class="row">
-					<div class="col-xs-4">
+				<div class="col-sm-3">
 					{{
 						Form::select(
 							'task_hour',
@@ -64,8 +63,8 @@
 							)
 						)
 					}}
-					</div>
-					<div class="col-xs-4">
+				</div>
+				<div class="col-sm-3">
 					{{
 						Form::select(
 							'task_min',
@@ -77,17 +76,17 @@
 							)
 						)
 					}}
-					</div>
 				</div>
-			  </div>
-			  <div class="form-group">
+			</div>
+			<div class="form-group">
+				<label class="col-sm-6 control-label">End Time is not required.</label>
+				<div class="col-sm-6">
 					{{Form::checkbox('time_not_required',null,false,array('id'=>'time_not_required'))}}
-					End Time is not required.
-			  </div>
-			  <div class="form-group">
-				<label>End Time</label>
-				<div class="row">
-					<div class="col-xs-4">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">End Time</label>
+				<div class="col-sm-5">
 					{{
 						Form::select(
 							'end_task_hour',
@@ -99,8 +98,8 @@
 							)
 						)
 					}}
-					</div>
-					<div class="col-xs-4">
+				</div>
+				<div class="col-sm-5">
 					{{
 						Form::select(
 							'end_task_min',
@@ -112,11 +111,11 @@
 							)
 						)
 					}}
-					</div>
 				</div>
-			   </div>
-			    <div class="form-group">
-					<label>Action</label>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Action</label>
+				<div class="col-sm-10">
 					{{
 						Form::select(
 							'task_setting',
@@ -127,9 +126,11 @@
 							)
 						)
 					}}
-			   </div>
-			   <div class="form-group">
-					<label>Reminder</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Reminder</label>
+				<div class="col-sm-10">
 					{{
 						Form::select(
 							'remind_mins',
@@ -140,9 +141,10 @@
 							)
 						)
 					}}
-			   </div>
-			  {{Form::hidden('redirect',$redirectURL)}} 
-			  <button type="submit" class="btn btn-default">Submit</button>
+				</div>
+			</div>
+			  {{Form::hidden('redirect',$redirectURL)}}
+			  <button type="submit" class="btn btn-primary">Create</button>
 			  <div class="ajax-container-msg hide" >
 			  	<ul class="list-group ajax-error-msg">
 			  	</ul>
