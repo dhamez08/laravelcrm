@@ -4,6 +4,8 @@
 	@parent
 	@section('head-page-level-css')
 		@parent
+		<link href="{{$asset_path}}/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" type="text/css"/>
+		<link href="{{$asset_path}}/global/plugins/star-rating/css/star-rating.css" rel="stylesheet" type="text/css"/>
 	@stop
 @stop
 @section('body-content')

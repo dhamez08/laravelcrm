@@ -69,6 +69,10 @@ class CustomerOpportunitiesEntity extends \Eloquent{
 		return $this->with('tags')->where('belongs_to','=',\Auth::id())->get();
 	}
 
+	public function getListsByCustomer($client_id) {
+		return $this->with('tags')->where('customer_id','=',$client_id)->get();
+	}
+
 	public function pipelineForecast() {	
 		$rows = array();
 		$sql = "SELECT SUM(value_calc) as thecash, SUM(value) as maxcash, DATE_FORMAT(close_date,'%m/%Y') as themonth FROM customer_opportunities WHERE belongs_to=? AND status='0' AND deleted_at IS NULL GROUP BY themonth ORDER BY close_date";		

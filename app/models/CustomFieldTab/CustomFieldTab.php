@@ -4,6 +4,6 @@ class CustomFieldTab extends \Eloquent{
 	protected $table = 'users_custom_tabs';
 
 	public function user() {
-		return $this->belongsTo('\User\User','user_id','id');
+		return $this->belongsTo('\User\User','user_id','id')->whereNull('deleted_at');
 	}
 }

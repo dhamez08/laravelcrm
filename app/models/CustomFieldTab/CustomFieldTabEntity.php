@@ -90,27 +90,27 @@ class CustomFieldTabEntity extends \Eloquent{
 			$section4_form = "";
 		}
 
-		//section5
-		$section5 = $data["section5"];
-		$explode5 = explode('_', $section5);
-		if ($explode5[0]=="form") {
-			$section5 = 3;
-			$section5_form = $explode5[1];
-		} else {
-			$section5 = $explode5[1];
-			$section5_form = "";
-		}
+		// //section5
+		// $section5 = $data["section5"];
+		// $explode5 = explode('_', $section5);
+		// if ($explode5[0]=="form") {
+		// 	$section5 = 3;
+		// 	$section5_form = $explode5[1];
+		// } else {
+		// 	$section5 = $explode5[1];
+		// 	$section5_form = "";
+		// }
 
-		//section6
-		$section6 = $data["section6"];
-		$explode6 = explode('_', $section6);
-		if ($explode6[0]=="form") {
-			$section6 = 3;
-			$section6_form = $explode6[1];
-		} else {
-			$section6 = $explode6[1];
-			$section6_form = "";
-		}
+		// //section6
+		// $section6 = $data["section6"];
+		// $explode6 = explode('_', $section6);
+		// if ($explode6[0]=="form") {
+		// 	$section6 = 3;
+		// 	$section6_form = $explode6[1];
+		// } else {
+		// 	$section6 = $explode6[1];
+		// 	$section6_form = "";
+		// }
 
 		$this->name 		 = $data["tab_name"];
 		$this->section1 	 = $section1;
@@ -125,12 +125,12 @@ class CustomFieldTabEntity extends \Eloquent{
 		$this->section4 	 = $section4;
 		$this->section4_form = $section4_form;
 		$this->section4_name = $data["section4_name"];
-		$this->section5 	 = $section5;
-		$this->section5_form = $section5_form;
-		$this->section5_name = $data["section5_name"];
-		$this->section6 	 = $section6;
-		$this->section6_form = $section6_form;
-		$this->section6_name = $data["section6_name"];
+		// $this->section5 	 = $section5;
+		// $this->section5_form = $section5_form;
+		// $this->section5_name = $data["section5_name"];
+		// $this->section6 	 = $section6;
+		// $this->section6_form = $section6_form;
+		// $this->section6_name = $data["section6_name"];
 
 		return $this->save() ? 1:0;
 	}
