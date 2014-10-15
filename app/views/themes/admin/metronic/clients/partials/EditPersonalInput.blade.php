@@ -47,11 +47,9 @@
 	{{
 		Form::text(
 			'dob',
-			null,
+			($customer->dob == '0000-00-00' ) ? '':null,
 			array(
-				'class'=>'form-control input-sm input-sm',
-				'data-provide'=>'datepicker',
-				'data-date-format'=>'yyyy-mm-dd'
+				'class'=>'form-control input-sm input-sm dob',
 			)
 		);
 	}}

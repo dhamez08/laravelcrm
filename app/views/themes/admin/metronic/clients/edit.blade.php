@@ -123,6 +123,10 @@
 	<script type="text/javascript" src="{{$asset_path}}/pages/scripts/client.js"></script>
 		<script>
 			jQuery(document).ready(function() {
+				jQuery('.dob').datepicker({
+				    autoclose:true,
+				    format: 'yyyy-mm-dd'
+				});
 				addPhone.init();
 				addEmail.init();
 				addPartner.init();

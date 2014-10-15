@@ -1051,12 +1051,6 @@ class ClientsController extends \BaseController {
 				)
 			);
 			$companyPerson = \Clients\ClientEntity::get_instance()->createOrUpdate();
-			\Input::merge(
-				array('type'=>\Input::get('address_type'))
-			);
-
-			// insert address
-			\CustomerAddress\CustomerAddressController::get_instance()->postAddressWrapper($companyPerson->id);
 
 			\CustomerPhone\CustomerPhoneController::get_instance()->iteratePhoneInput(
 				\Input::get('telephone'),
@@ -1072,6 +1066,18 @@ class ClientsController extends \BaseController {
 				\Input::get('urls'),
 				$companyPerson->id
 			);
+
+			// insert address
+			$arrayAddress = array(
+				'customer_id' 	 => $companyPerson->id,
+				'address_line_1' => \Input::get('address_line_1'),
+				'address_line_2' => \Input::get('address_line_2'),
+				'town' 			 => \Input::get('town'),
+				'county' 		 => \Input::get('county'),
+				'postcode' 		 => \Input::get('postcode'),
+				'type' 			 => \Input::get('address_type')
+			);
+			\CustomerAddress\CustomerAddressController::get_instance()->postAddressWrapper($arrayAddress);
 
 			// update dashboard
 			\Updates\UpdatesController::get_instance()->postUpdateWrapper(
