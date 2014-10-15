@@ -1,19 +1,13 @@
 <div class="page-bar">
-	<ul class="page-breadcrumb">
-		<li>
-			<i class="fa fa-user"></i>
-			<a href="index.html">Andrew Manifield</a>
-			<!-- <i class="fa fa-angle-right"></i> -->
-		</li>
-		<li>
-			<i class="fa fa-user"></i>
-			<a href="#">Richard Joseph Porter</a>
-			<!-- <i class="fa fa-angle-right"></i> -->
-		</li>
-		<li>
-			<i class="fa fa-user"></i>
-			<a href="#">Steve Warden</a>
-		</li>
+	<ul class="page-breadcrumb client-list-top">
+		@if($clientTopList->count() > 0 )
+			@foreach($clientTopList->get() as $client)
+				<li>
+					<i class="fa fa-user"></i>
+					<a href="{{url('clients/client-summary') . '/' . $client->id}}">{{($client->type == 2) ? $client->company_name:$client->first_name}}...</a>
+				</li>
+			@endforeach
+		@endif
 	</ul>
 	<div style="width:20%" class="page-toolbar">
 		<div class="pull-right">
