@@ -165,7 +165,10 @@ class CustomFieldTabsController extends \BaseController {
 		if($tab) {
 			if($tab->updateCustomTab(\Input::all())) {
 				\Session::flash('message', 'The Tab was successfully updated');
-				return \Redirect::to('settings/custom-fields');
+				if(\Input::get('backToClient'))
+					return \Redirect::to('clients/custom/'.\Input::get('backToClient').'?custom='.$id);
+				else
+					return \Redirect::to('settings/custom-fields');
 			} else {
 				return \Redirect::back()->withErrors(['There was a problem updating the Tab, please try again']);
 			}

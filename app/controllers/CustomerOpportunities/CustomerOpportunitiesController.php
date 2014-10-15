@@ -83,7 +83,7 @@ class CustomerOpportunitiesController extends \BaseController {
 		$data['pageTitle'] 		= 'Client - Opportunities';
 		$data['portlet_title'] 	= 'Client - Opportunities';
 		$data['contentClass'] 	= '';
-		$data['opportunities'] 	= \CustomerOpportunities\CustomerOpportunitiesEntity::get_instance()->getListsByLoggedUser();
+		$data['opportunities'] 	= \CustomerOpportunities\CustomerOpportunitiesEntity::get_instance()->getListsByCustomer($client_id);
 		//$data['opportunities'] 	= \CustomerOpportunities\CustomerOpportunitiesEntity::with('tags.tag')->get();
 		$data['opp_tags'] 		= \OpportunityTag\OpportunityTagEntity::get_instance()->getTagsByLoggedUser();
 		$data['client_id'] 		= $client_id;
