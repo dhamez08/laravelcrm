@@ -1357,6 +1357,12 @@ class ClientsController extends \BaseController {
 
 		$data = \CustomerOpportunities\CustomerOpportunitiesController::get_instance()->getOpportunities($client_id);
 
+		$data1 = $this->_getClientData($client_id);
+
+		$data['center_column_view']	= 'opportunities';
+
+		$data 	= array_merge($data,$data1);
+
 		return \View::make( $data['view_path'] . '.clients.opportunities', $data );
 
 	}

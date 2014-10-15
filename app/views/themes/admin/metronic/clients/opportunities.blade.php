@@ -1,4 +1,4 @@
-@extends( $client_index )
+@extends( $dashboard_index )
 
 @section('begin-head')
 	@parent
@@ -12,22 +12,37 @@
 		@include($view_path.'.clients.partials.leftSidebar')
 	@stop
 	@section('pagebar')
-
+		@parent
+		@include($view_path.'.clients.partials.subPagebar')
 	@stop
 	@section('innerpage-page-title')
 		&nbsp;
 	@show
-	@section('portlet-actions')
-		<a class="btn btn-default btn-sm" href="#" id="addOpportunity">
-		<i class="fa fa-plus"></i> Add </a>
-	@stop
-	@section('portlet-content')
-		
-		@include($view_path.'.clients.partials.opportunity-lists')
+	@section('innerpage-content')
+		<div class="col-md-3">
+			<!-- CLIENT LEFT SIDEBAR -->
+			@if( $customer->type == 2 )
+				@include($view_path.'.clients.company.leftColumn')
+			@else
+				@include($view_path.'.clients.partials.leftColumn')
+			@endif
 
+			<!-- END CLIENT LEFT SIDEBAR -->
+		</div>
+		<div class="col-md-6">
+			<!-- CENTER COLUMN -->
+			@include($view_path.'.clients.partials.center_column.'.$center_column_view)
+			<!-- END CENTER COLUMN -->
+			@include($view_path.'.clients.partials.modals.add-opportunity-form-modal')
+		</div>
+		<div class="col-md-3">
+			<!-- ADS -->
+			@include($view_path.'.clients.partials.rightColumn')
+			<!-- END ADS -->
+		</div>
 	@stop
-	@include($view_path.'.clients.partials.modals.add-opportunity-form-modal')
 @stop
+
 @section('script-footer')
 	@parent
 	@section('footer-custom-js')
@@ -42,3 +57,4 @@
 	</script>
 	@stop
 @stop
+
