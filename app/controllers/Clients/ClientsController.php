@@ -930,17 +930,17 @@ class ClientsController extends \BaseController {
 					$contact = \Clients\ClientEntity::get_instance()->createOrUpdate();
 				}// if has contact
 
-				\Input::merge(
-					array(
-						'type'=>\Input::get('address_type'),
-						'address_line_1' => \Input::get('address_line_1'),
-						'town' => \Input::get('town'),
-						'postcode' => \Input::get('postcode'),
-						'customer_id' => $customer->id,
-					)
-				);
 				// insert address
-				$address = \CustomerAddress\CustomerAddressController::get_instance()->postAddressWrapper($customer->id);
+				$arrayAddress = array(
+					'customer_id' 	 => $customer->id,
+					'address_line_1' => \Input::get('address_line_1'),
+					'address_line_2' => \Input::get('address_line_2'),
+					'town' 			 => \Input::get('town'),
+					'county' 		 => \Input::get('county'),
+					'postcode' 		 => \Input::get('postcode'),
+					'type' 			 => \Input::get('address_type')
+				);
+				\CustomerAddress\CustomerAddressController::get_instance()->postAddressWrapper($arrayAddress);
 
 				\CustomerPhone\CustomerPhoneController::get_instance()->iteratePhoneInput(
 					\Input::get('telephone'),

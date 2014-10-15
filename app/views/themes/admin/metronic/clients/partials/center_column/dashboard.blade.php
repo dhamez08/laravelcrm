@@ -1698,10 +1698,10 @@
 					</div>
 					<div class="actions">
 						<div class="btn-group">
-							<a 
-								class="btn green-haze btn-circle btn-sm openModal" 
-								data-toggle="modal" 
-								data-target=".ajaxModal" 
+							<a
+								class="btn green-haze btn-circle btn-sm openModal"
+								data-toggle="modal"
+								data-target=".ajaxModal"
 								href="{{action('Clients\ClientsController@getCreateClientTask',array('customerid'=>$customer->id))}}">
 							New
 							</a>
@@ -1716,7 +1716,7 @@
 								@if($tasks->count()>0)
 									@foreach($tasks->get() as $task)
 										<li>
-											<div class="task-checkbox">
+											<div class="task-checkbox hide">
 												<div class="checker"><span><input type="checkbox" class="liChild" value=""></span></div>
 											</div>
 											<div class="task-title">
@@ -1766,7 +1766,7 @@
 				</div>
 			</div>
 			<!-- END TASKS -->
-		</div>		
+		</div>
 
 		<div class="col-md-12">
 			<!-- FEEDS -->
