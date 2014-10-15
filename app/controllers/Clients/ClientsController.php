@@ -191,37 +191,49 @@ class ClientsController extends \BaseController {
 		return \View::make( $data['view_path'] . '.clients.index', $data );
 	}
 
-	public function getConfirmPhoneDelete($id, $client, $token){
+	public function getConfirmPhoneDelete($id, $client, $token, $from){
 		if( strcmp($id . \Session::token(), $token) == 0 ){
 			$phone = \CustomerTelephone\CustomerTelephone::find($id);
 			//echo $phone->number;
 			$phone->delete();
 			\Session::flash('message', 'Successfully Delete Phone Customer');
-			return \Redirect::action('Clients\ClientsController@getEdit',array('clientId'=>$client));
+			if( $from == 'company' ){
+				return \Redirect::action('Clients\ClientsController@getEditCompany',array('clientId'=>$client));
+			}else{
+				return \Redirect::action('Clients\ClientsController@getEdit',array('clientId'=>$client));
+			}
 		}else{
 			echo 'nice try hacker';
 			die();
 		}
 	}
-	public function getConfirmUrlDelete($id, $client, $token){
+	public function getConfirmUrlDelete($id, $client, $token, $from){
 		if( strcmp($id . \Session::token(), $token) == 0 ){
 			$url = \CustomerUrl\CustomerUrl::find($id);
 			//echo $phone->number;
 			$url->delete();
 			\Session::flash('message', 'Successfully Delete Website');
-			return \Redirect::action('Clients\ClientsController@getEdit',array('clientId'=>$client));
+			if( $from == 'company' ){
+				return \Redirect::action('Clients\ClientsController@getEditCompany',array('clientId'=>$client));
+			}else{
+				return \Redirect::action('Clients\ClientsController@getEdit',array('clientId'=>$client));
+			}
 		}else{
 			echo 'nice try hacker';
 			die();
 		}
 	}
-	public function getConfirmMailDelete($id, $client, $token){
+	public function getConfirmMailDelete($id, $client, $token, $from){
 		if( strcmp($id . \Session::token(), $token) == 0 ){
 			$mail = \CustomerEmail\CustomerEmail::find($id);
 			//echo $phone->number;
 			$mail->delete();
 			\Session::flash('message', 'Successfully Delete Email');
-			return \Redirect::action('Clients\ClientsController@getEdit',array('clientId'=>$client));
+			if( $from == 'company' ){
+				return \Redirect::action('Clients\ClientsController@getEditCompany',array('clientId'=>$client));
+			}else{
+				return \Redirect::action('Clients\ClientsController@getEdit',array('clientId'=>$client));
+			}
 		}else{
 			echo 'nice try hacker';
 			die();
@@ -301,6 +313,7 @@ class ClientsController extends \BaseController {
 		$data['telephone']			= $data['customer']->telephone();
 		$data['email']				= $data['customer']->emails();
 		$data['url']				= $data['customer']->url();
+		$data['from']				= 'client';
 		$data['belongToPartner']	= \Clients\ClientEntity::get_instance()->getPartnerBelong($data['customer']);
 		$data 						= array_merge($data,$this->getSetupThemes());
 		$data['html_body_class'] 	= $this->data_view['html_body_class'];
@@ -613,7 +626,7 @@ class ClientsController extends \BaseController {
 			}
 			if( $customer ){
 				\Session::flash('message', 'Successfully Updated Customer');
-				return \Redirect::action('Clients\ClientsController@getEdit',array('clientId'=>$clientId));
+				return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>$clientId));
 			}
 		}else{
 			\Input::flash();
@@ -731,7 +744,7 @@ class ClientsController extends \BaseController {
 		$data['addressType']		= $this->getAddressType();
 		$data['websiteType']		= $this->getWebsiteFor();
 		$data['websiteIs']			= $this->getWebsiteIs();
-		$data 						= array_merge($data,$this->getSetupThemes());
+		$data['from']				= 'company';
 		$data['html_body_class'] 	= $this->data_view['html_body_class'];
 		$data['center_column_view'] = 'dashboard';
 		$data['associate']			= \Clients\ClientEntity::get_instance()->setAssociateCustomer($clientId);
@@ -739,6 +752,8 @@ class ClientsController extends \BaseController {
 		$data['telephone']			= $data['customer']->telephone();
 		$data['email']				= $data['customer']->emails();
 		$data['url']				= $data['customer']->url();
+		$data 						= array_merge($data,$this->getSetupThemes());
+
 		/*var_dump($data['contactPerson']->get()->toArray());
 		exit();*/
 		return \View::make( $data['view_path'] . '.clients.company.edit', $data );
@@ -860,7 +875,7 @@ class ClientsController extends \BaseController {
 				}
 			}
 			\Session::flash('message', 'Successfully Updated Company');
-			return \Redirect::action('Clients\ClientsController@getEditCompany',array('clientId'=>$clientId));
+			return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>$clientId));
 		}else{
 			\Input::flash();
 			return \Redirect::action('Clients\ClientsController@getEditCompany',array('clientId'=>$clientId))

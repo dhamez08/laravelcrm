@@ -40,8 +40,8 @@
 		}}
 		<div class="form-body">
 			<div class="col-md-12">
-				{{Form::submit('Update Client',array('class'=>"btn blue"))}}
-				<a class="btn {{{$dashboard_css or 'blue'}}}" href="{{url('clients/client-summary/' . $customer->id)}}">Cancel</a>
+				{{Form::submit('Update Client',array('class'=>"btn blue btn-sm"))}}
+				<a class="btn {{{$dashboard_css or 'blue'}}} btn-sm" href="{{url('clients/client-summary/' . $customer->id)}}">Go back to Client Summary</a>
 			</div>
 			<div class="row">
 				<div class="col-md-6">

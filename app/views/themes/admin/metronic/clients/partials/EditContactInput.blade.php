@@ -34,7 +34,9 @@
 						action('Clients\ClientsController@getConfirmPhoneDelete',
 						array(
 							'id'=>$val->id,
-							'client'=>$val->customer_id,'hash'=>($val->id . csrf_token()))
+							'client'=>$val->customer_id,'hash'=>($val->id . csrf_token()),
+							'from'=>$from
+							)
 						)
 					}}"
 					class="btn red btn-xs deletePhone"
