@@ -38,7 +38,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label">Date</label>
+				<label class="col-sm-2 control-label">Date and Time</label>
 				<div class="col-sm-4">
 					{{
 						Form::text(

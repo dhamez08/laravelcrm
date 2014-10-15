@@ -28,7 +28,7 @@ var GetClient = (function(){
 		  	url:$url
 		  }
 		});
-		
+
 		getClients.clearPrefetchCache();
 		getClients.clearRemoteCache();
 		getClients.initialize();
@@ -98,7 +98,8 @@ var CreateTask = (function(){
             jQuery('body').on('loaded.bs.modal', '.modal', function () {
             	jQuery('#task_date').datepicker({
 				    autoclose:true,
-				    format: 'yyyy-mm-dd'
+				    startDate: '+0d',
+				    format: dateClientFormat
 				});
 			    jQuery(this).removeData('bs.modal');
 			    var url = baseURL + '/clients/typeahead-client';

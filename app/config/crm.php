@@ -244,4 +244,9 @@ return array(
 		'#ffea94',
 		'#d7cdcd',
 	),
+	'date'=>array(
+		'bootstrap_date_picker' => array(
+			'format' => 'dd/mm/yyyy'
+		),
+	)
 );
