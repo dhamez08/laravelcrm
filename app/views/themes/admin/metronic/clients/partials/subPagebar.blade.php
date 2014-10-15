@@ -38,12 +38,12 @@
 		@endif
 		@if(count(Auth::user()->tabs)==0 || Auth::user()->tabs->messages_tab==1)
 		<li class="client-name">
-			<a href="{{ url('clients/messages/'.\Request::segment(3)) }}">Messages(0)</a>
+			<a href="#">Messages(0)</a>
 		</li>
 		@endif
 		@if(count(Auth::user()->tabs)==0 || (Auth::user()->tabs->people_tab==1 && $customer->type==2))
 		<li class="client-name">
-			<a href="{{ url('clients/people/'.\Request::segment(3)) }}">People</a>
+			<a href="#">People</a>
 		</li>
 		@endif
 		@if(count(Auth::user()->tabs)==0 || Auth::user()->tabs->opportunities_tab==1)
@@ -53,7 +53,7 @@
 		@endif
 		@if(count(Auth::user()->tabs)==0 || Auth::user()->tabs->live_tab==1)
 		<li class="client-name">
-			<a href="{{ url('clients/live-documents/'.\Request::segment(3)) }}">Live Documents</a>
+			<a href="#">Live Documents</a>
 		</li>
 		@endif
 	</ul>
