@@ -71,4 +71,8 @@ class Clients extends \Eloquent{
 		return $query->where('associated','=',$associated);
 	}
 
+	public function opportunities() {
+		return $this->hasMany('\CustomerOpportunities\CustomerOpportunities','customer_id','id');
+	}
+
 }

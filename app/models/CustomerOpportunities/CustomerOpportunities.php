@@ -13,4 +13,8 @@ class CustomerOpportunities extends \Eloquent{
 	 */
 	protected $table = 'customer_opportunities';
 
+	public function customer() {
+		return $this->belongsTo('\Clients\Clients','customer_id','id');
+	}
+
 }
