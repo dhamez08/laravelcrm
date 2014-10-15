@@ -144,24 +144,17 @@
 						}}
 					</div>
 				</div>
-			  {{Form::hidden('redirect',$redirectURL)}}
+			  {{Form::hidden('redirect',null,array('id'=>'redirect'))}}
 			  <button type="submit" class="btn btn-primary">Update</button>
-				  @if($from == 'calendar')
-					  <a class="btn btn-primary "
-						 href="{{action('Calendar\CalendarController@getCompleteTask',
-							array('id'=>$tasks->id,'customerid'=>$tasks->customer_id)
-						 )}}">
-					  Complete Task
-					  </a>
-				  @else
-					  <a class="btn btn-primary "
-						 href="{{action('Task\TaskController@getCompleteTask',
-							array('id'=>$tasks->id,'customerid'=>$tasks->customer_id)
-						 )}}">
-					  Complete Task
-					  </a>
-				  @endif
-				<a class="btn btn-primary "
+
+				<a class="btn btn-primary complete-task"
+					 href="{{action('Task\TaskController@getCompleteTask',
+						array('id'=>$tasks->id,'customerid'=>$tasks->customer_id))
+					}}"
+				>
+				  Complete Task
+				</a>
+				<a class="btn btn-primary delete-task"
 					 href="{{
 						 action('Task\TaskController@getCancelTask',
 						 array('id'=>$tasks->id,'customerid'=>$tasks->customer_id))

@@ -1446,8 +1446,21 @@ class ClientsController extends \BaseController {
 		}
 	}
 
-	public function getCreateClientTask($clientId = null){
-		$data = array('clientid'=>$clientId,'redirect'=>url('clients'));
+	public function getCreateClientTask($clientId = null, $redirect = null){
+		\Input::merge(
+			array('redirect'=>$redirect)
+		);
+		if( \Input::has('redirect') ){
+			if( \Input::get('redirect') == 'client-summary' ){
+				$redirect = url( 'clients/' . \Input::get('redirect') . '/' .$clientId );
+			}else{
+				$redirect = url( \Input::get('redirect') );
+			}
+
+		}else{
+			$redirect = url('clients');
+		}
+		$data = array('clientid'=>$clientId,'redirect'=>$redirect);
 		return \Task\TaskController::get_instance()->getAjaxModalCreateTask($data);
 	}
 
@@ -1468,12 +1481,12 @@ class ClientsController extends \BaseController {
 		$data['belongToPartner']	= \Clients\ClientEntity::get_instance()->getPartnerBelong($data['customer']);
 		$data['associate']			= \Clients\ClientEntity::get_instance()->setAssociateCustomer($clientId);
 		$data['partner']			= \Clients\ClientEntity::get_instance()->getCustomerPartner();
-		
+
 		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getCustomerTasks($clientId)
 		->status(1)->with('label');
 
 		return $data;
-	} 
+	}
 
 	public function getCustom($clientId) {
 		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;

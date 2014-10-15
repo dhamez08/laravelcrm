@@ -37,8 +37,8 @@ var TaskCalendar = function () {
                     }
                 },
                 eventClick: function(calEvent, jsEvent, view) {
-                    var $remoteurl = $url + '/calendar/edit-task' + '/' + calEvent.id + '/' + calEvent.customerId;
-                    openModal($remoteurl);   
+                    var $remoteurl = $url + '/calendar/edit-task' + '/' + calEvent.id + '/' + calEvent.customerId + '/calendar';
+                    openModal($remoteurl);
                 },
                 dayClick: function(date, jsEvent, view) {
                     var view = objCalendar.fullCalendar('getView');
@@ -49,8 +49,8 @@ var TaskCalendar = function () {
                     if(view.name == 'agendaDay'){
                         var $startTime   = date.format('X');
                         var $endTime     = date.format('X');
-                        var $remoteurl = $url + '/clients/create-client-task?start=' + $startTime + '&end=' + $endTime;
-                        openModal($remoteurl);   
+                        var $remoteurl = $url + '/clients/create-client-task?start=' + $startTime + '&end=' + $endTime + '&redirect=calendar';
+                        openModal($remoteurl);
                     }
                 },
                 eventDrop: function(event, delta, revertFunc) {

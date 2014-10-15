@@ -103,12 +103,26 @@ var CreateTask = (function(){
 				});
 			    jQuery(this).removeData('bs.modal');
 			    var url = baseURL + '/clients/typeahead-client';
-			   // console.log(url);
+
+			    var redirectUrl = jQuery(location).attr('href');
+			    jQuery(this).find('#redirect').val(redirectUrl);
+				//protocol
+				//host
 			    GetClient.init('get-clients', '.getclient', url, '#customer_id', 'Name');
 			    ajaxCreateTask();
+			    jQuery('.complete-task, .delete-task').on('click',function(e){
+					e.preventDefault();
+					var newUrl = jQuery(this).attr('href') + '?redirect=' + jQuery(location).attr('href');
+					window.location.href = newUrl;
+				});
 			});
 			jQuery('body').on('hidden.bs.modal', '.ajaxModal', function() {
 			    //jQuery(this).removeData('bs.modal');
+			});
+			jQuery('.complete-task, .delete-task').on('click',function(e){
+				e.preventDefault();
+				var newUrl = jQuery(this).attr('href') + '?redirect=' + jQuery(location).attr('href');
+				window.location.href = newUrl;
 			});
 		}
 	};

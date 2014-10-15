@@ -64,8 +64,9 @@ class CalendarController extends \BaseController {
 	public function getTaskCalendar(){
 		return \CustomerTasks\CustomerTasksEntity::get_instance()->jsonTaskInCalendar(\Input::get('start'), \Input::get('end'));
 	}
-	
-	public function getEditTask($taskId, $customerId){
+
+	public function getEditTask($taskId, $customerId, $redirect = null){
+		$data['redirect'] 		= $redirect;
 		$data['from'] 			= 'calendar';
 		$data['redirectURL'] 	= url('calendar');
 		$data['pageTitle'] 		= 'Update Task';
@@ -101,6 +102,7 @@ class CalendarController extends \BaseController {
 			return \Redirect::action('Calendar\CalendarController@getIndex');
 		}
 	}
+
 
 	public function postAjaxUpdateTask(){
 		$data = array(

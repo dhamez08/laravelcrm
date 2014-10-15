@@ -13,7 +13,7 @@
 @section('body-content')
 	@parent
 	@section('innerpage-page-title')
-		
+
 	@stop
 	@section('innerpage-content')
 		<div class="portlet box {{{$dashboard_class or 'blue'}}} tabbable">
@@ -32,9 +32,9 @@
 						</ul>
 						<div class="tab-content">
 							<p>
-							<a href="{{url('clients/create-client-task')}}" data-target=".createTask" data-toggle="modal" class="btn btn-default btn-sm openModal">
+							<a href="{{url('clients/create-client-task?redirect=task')}}" data-target=".createTask" data-toggle="modal" class="btn btn-default btn-sm openModal">
 							<i class="fa fa-plus"></i> Create Task</a>
-							</p>	
+							</p>
 							<!-- START TASK LIST -->
 							<ul class="task-list list-group">
 								@if($tasks->count()>0)
@@ -48,15 +48,15 @@
 												@endif
 												&nbsp;
 												<span class="task-title-sp">
-													<a class="openModal" data-toggle="modal" data-target=".ajaxModal" href="{{action('Task\TaskController@getEditClientTask',array('id'=>$task->id,'customerid'=>$task->customer_id))}}">
+													<a class="openModal" data-toggle="modal" data-target=".ajaxModal" href="{{action('Task\TaskController@getEditClientTask',array('id'=>$task->id,'customerid'=>$task->customer_id,'redirect'=>'task'))}}">
 														{{$task->name}}
-													</a> 
+													</a>
 												</span>
 												<span class="label label-sm" style="background-color:{{$task->label->color}}">
 													{{$task->label->action_name}}
-												</span>	
+												</span>
 												&nbsp;
-												<span>	
+												<span>
 													For
 													<a href="{{action('Clients\ClientsController@getClientSummary',array('id'=>$task->customer_id))}}">
 													@if( $task->client->type == 2 )
@@ -69,33 +69,33 @@
 												<span class="task-bell">
 													<i class="fa {{$task->label->icons}}"></i>
 												</span>
-											
+
 												<div class="task-config-btn btn-group">
 													<a class="btn btn-xs default" href="#" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 													<i class="fa fa-cog"></i><i class="fa fa-angle-down"></i>
 													</a>
 													<ul class="dropdown-menu pull-right">
 														<li>
-															<a href="{{action('Task\TaskController@getCompleteTask',array('id'=>$task->id,'customerid'=>$task->customer_id))}}">
+															<a class="complete-task" href="{{action('Task\TaskController@getCompleteTask',array('id'=>$task->id,'customerid'=>$task->customer_id,'redirect'=>'task'))}}">
 															<i class="fa fa-check"></i> Complete </a>
 														</li>
 														<li>
-															<a class="openModal" data-toggle="modal" data-target=".ajaxModal" href="{{action('Task\TaskController@getEditClientTask',array('id'=>$task->id,'customerid'=>$task->customer_id))}}">
+															<a class="openModal" data-toggle="modal" data-target=".ajaxModal" href="{{action('Task\TaskController@getEditClientTask',array('id'=>$task->id,'customerid'=>$task->customer_id,'redirect'=>'task'))}}">
 															<i class="fa fa-pencil"></i> Edit </a>
 														</li>
 														<li>
-															<a href="{{action('Task\TaskController@getCancelTask',array('id'=>$task->id,'customerid'=>$task->customer_id))}}">
+															<a class="delete-task" href="{{action('Task\TaskController@getCancelTask',array('id'=>$task->id,'customerid'=>$task->customer_id))}}">
 															<i class="fa fa-trash-o"></i> Cancel </a>
 														</li>
 													</ul>
 												</div>
-											
+
 										</li>
 									@endforeach
 								@endif
-							</ul>	
-						</div>					
-					</div>					
+							</ul>
+						</div>
+					</div>
 			</div>
 		</div>
 	@stop

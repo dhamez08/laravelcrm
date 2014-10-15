@@ -143,7 +143,7 @@
 					}}
 				</div>
 			</div>
-			  {{Form::hidden('redirect',$redirectURL)}}
+			  {{Form::hidden('redirect',null,array('id'=>'redirect'))}}
 			  <button type="submit" class="btn btn-primary">Create</button>
 			  <div class="ajax-container-msg hide" >
 			  	<ul class="list-group ajax-error-msg">

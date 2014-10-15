@@ -1690,7 +1690,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<!-- TASKS -->
-			<div class="portlet light bordered tasks-widget" style="min-height: 425px">
+			<div class="portlet light bordered tasks-widget ">
 				<div class="portlet-title">
 					<div class="caption">
 						<i class="icon-share font-green-haze hide"></i>
@@ -1702,7 +1702,7 @@
 								class="btn green-haze btn-circle btn-sm openModal"
 								data-toggle="modal"
 								data-target=".ajaxModal"
-								href="{{action('Clients\ClientsController@getCreateClientTask',array('customerid'=>$customer->id))}}">
+								href="{{action('Clients\ClientsController@getCreateClientTask',array('customerid'=>$customer->id,'redirect'=>'client-summary'))}}">
 							New
 							</a>
 						</div>
@@ -1710,7 +1710,7 @@
 				</div>
 				<div class="portlet-body">
 					<div class="task-content">
-						<div class="slimScrollDiv scroller">
+						<div class="">
 							<!-- START TASK LIST -->
 							<ul class="task-list">
 								@if($tasks->count()>0)
@@ -1736,7 +1736,7 @@
 													</a>
 													<ul class="dropdown-menu pull-right">
 														<li>
-															<a href="{{action('Task\TaskController@getCompleteTask',array('id'=>$task->id,'customerid'=>$task->customer_id))}}">
+															<a class="complete-task" href="{{action('Task\TaskController@getCompleteTask',array('id'=>$task->id,'customerid'=>$task->customer_id))}}">
 															<i class="fa fa-check"></i> Complete </a>
 														</li>
 														<li>
@@ -1744,7 +1744,7 @@
 															<i class="fa fa-pencil"></i> Edit </a>
 														</li>
 														<li>
-															<a href="{{action('Task\TaskController@getCancelTask',array('id'=>$task->id,'customerid'=>$task->customer_id))}}">
+															<a class="delete-task" href="{{action('Task\TaskController@getCancelTask',array('id'=>$task->id,'customerid'=>$task->customer_id))}}">
 															<i class="fa fa-trash-o"></i> Cancel </a>
 														</li>
 													</ul>

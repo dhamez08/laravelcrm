@@ -67,11 +67,17 @@ class CustomerTasksEntity extends \Eloquent{
 		->with('client');
 
 		foreach($tasks->get() as $row){
+			$parseEndTime = \Carbon\Carbon::parse($row->end_time);
+			if( $parseEndTime->hour == '00' && $parseEndTime->minute == '00' ){
+				$endhr = $parseEndTime->toDateString() . ' 23:00:00';
+			}else{
+				$endhr = $row->end_time;
+			}
 			$task[] = array(
 				 'id' => $row->id,
 				 'title' => $row->name,
 				 'start' => $row->date,
-				 'end' => $row->end_time,
+				 'end' => $endhr,
 				 'url' => "",
 				 'color'=> $row->label->color,
 				 'icon' => $row->label->icons,

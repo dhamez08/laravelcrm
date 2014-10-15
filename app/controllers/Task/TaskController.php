@@ -60,7 +60,9 @@ class TaskController extends \BaseController {
 		//$data['tasks']				= \CustomerTasks\CustomerTasks::belongsToGroup($belongsTo)->status(1)
 		$data['tasks']				= \CustomerTasks\CustomerTasks::status(1)
 		->with('label')
-		->with('client');
+		->with('client')
+		->orderBy('created_at','desc');
+		$data['redirectURL']		= url('task');
 		$data 						= array_merge($data,$dashboard_data);
 		//var_dump($tasks->get()->toArray());
 		return \View::make( $data['view_path'] . '.tasks.index', $data );
@@ -122,7 +124,7 @@ class TaskController extends \BaseController {
 		$rules = array(
 			'name' => 'required|min:3',
 			'getclient' => 'required',
-			'task_date' => 'required|date|date_format:d/m/Y',
+			'task_date' => 'required',
 		);
 		$messages = array(
 			'name.required'=>'Task Name is required',
@@ -135,17 +137,17 @@ class TaskController extends \BaseController {
 
 		$validator = \Validator::make(\Input::all(), $rules, $messages);
 		if($validator->passes()){
-			$dt 			 = new \DateTime(\Input::get('task_date'));
-			$mysqlDateFormat = \Carbon\Carbon::instance($dt);
+			$mysqlDateFormat = \Carbon\Carbon::createFromFormat('d/m/Y',\Input::get('task_date'));
 			$start_hour = \Input::get('task_hour');
 			$start_min 	= \Input::get('task_min');
 			$end_hour 	= \Input::get('end_task_hour');
 			$end_min 	= \Input::get('end_task_min');
-			$startDate 	= $mysqlDateFormat->toDateString() . ' ' . $start_hour . ':' . $start_min . ':00';
-			$endHr 		= $mysqlDateFormat->toDateString() . ' ' . $end_hour . ':' . $end_min . ':00';
+			$startDate 	= $mysqlDateFormat->instance($mysqlDateFormat)->toDateString() . ' ' . $start_hour . ':' . $start_min . ':00';
 
 			if( \Input::has('time_not_required') ){
-				$endHr = "00:00";
+				$endHr 		= $mysqlDateFormat->instance($mysqlDateFormat)->toDateString() . ' ' . '00:00';
+			}else{
+				$endHr 		= $mysqlDateFormat->instance($mysqlDateFormat)->toDateString() . ' ' . $start_hour . ':' . $end_min . ':00';
 			}
 
 			$remind_time = (\Input::get('remind_mins') == 0) ?  "":date('Y-m-d H:i:s', strtotime('- '.\Input::get('remind_mins').' minutes', strtotime($startDate)));
@@ -183,7 +185,7 @@ class TaskController extends \BaseController {
 		$rules = array(
 			'task_name' => 'required|min:3',
 			'getclient' => 'required',
-			'task_date' => 'required|date|date_format:d/m/Y',
+			'task_date' => 'required',
 		);
 		$messages = array(
 			'task_name.required'=>'Task Name is required',
@@ -196,18 +198,17 @@ class TaskController extends \BaseController {
 
 		$validator = \Validator::make(\Input::all(), $rules, $messages);
 		if($validator->passes()){
-			$dt 			 = new \DateTime(\Input::get('task_date'));
-			$mysqlDateFormat = \Carbon\Carbon::instance($dt);
-
+			$mysqlDateFormat = \Carbon\Carbon::createFromFormat('d/m/Y',\Input::get('task_date'));
 			$start_hour = \Input::get('task_hour');
 			$start_min 	= \Input::get('task_min');
 			$end_hour 	= \Input::get('end_task_hour');
 			$end_min 	= \Input::get('end_task_min');
-			$startDate 	= $mysqlDateFormat->toDateString() . ' ' . $start_hour . ':' . $start_min . ':00';
-			$endHr 		= $mysqlDateFormat->toDateString() . ' ' . $end_hour . ':' . $end_min . ':00';
+			$startDate 	= $mysqlDateFormat->instance($mysqlDateFormat)->toDateString() . ' ' . $start_hour . ':' . $start_min . ':00';
 
 			if( \Input::has('time_not_required') ){
-				$endHr = "00:00";
+				$endHr 		= $mysqlDateFormat->instance($mysqlDateFormat)->toDateString() . ' ' . '00:00';
+			}else{
+				$endHr 		= $mysqlDateFormat->instance($mysqlDateFormat)->toDateString() . ' ' . $start_hour . ':' . $end_min . ':00';
 			}
 
 			$remind_time = (\Input::get('remind_mins') == 0) ?  "":date('Y-m-d H:i:s', strtotime('- '.\Input::get('remind_mins').' minutes', strtotime($startDate)));
@@ -242,9 +243,16 @@ class TaskController extends \BaseController {
 		}
 	}
 
-	public function getEditClientTask($taskId, $customerId){
+	public function getEditClientTask($taskId, $customerId, $redirect = null){
 		//return \Task\TaskController::get_instance()->getAjaxModalCreateTask(array('redirect'=>url('clients')));
-		$data['redirectURL'] 	= url('clients/client-summary/' . $customerId);
+		if(!is_null($redirect)){
+			$data['redirectURL'] 	= url($redirect);
+			$data['redirect'] 		= $redirect;
+		}else{
+			$data['redirectURL'] 	= url('clients/client-summary/' . $customerId);
+
+		}
+		$data['from']			= 'client';
 		$data['pageTitle'] 		= 'Update Task';
 		$data['pageSubTitle'] 	= '';
 		$data['tasks'] 			= \CustomerTasks\CustomerTasks::find($taskId);
@@ -255,7 +263,7 @@ class TaskController extends \BaseController {
 		$data['remindMin']		= \Config::get('crm.task_remind');
 		$data['theDate']		= \Carbon\Carbon::parse($data['tasks']->date);
 		$data['endDate']		= \Carbon\Carbon::parse($data['tasks']->end_time);
-		$data['from']			= 'client';
+
 		$linkTo					= \Clients\Clients::find($data['tasks']->customer_id);
 		if($linkTo->type == 2){
 			$data['client_linkTo'] = $linkTo->company_name;
@@ -290,8 +298,13 @@ class TaskController extends \BaseController {
 		if($Task->count()){
 			$name = $Task->pluck('name');
 			$Task->delete();
-			\Session::flash('message', 'Successfully Cancel Task - ' . $name);
-			return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>$customerid));
+			if(\Input::has('redirect')){
+				\Session::flash('message', 'Successfully Deleted Task - ' . $name);
+				return \Redirect::to(\Input::get('redirect'));
+			}else{
+				\Session::flash('message', 'Successfully Deleted Task - ' . $name);
+				return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>$customerid));
+			}
 		}
 	}
 
