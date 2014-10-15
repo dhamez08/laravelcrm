@@ -75,4 +75,8 @@ class User extends \Eloquent implements UserInterface, RemindableInterface {
 	public function tabs() {
 		return $this->hasOne('\UserTab\UserTabEntity','user_id');
 	}
+
+	public function customtabs() {
+		return $this->hasMany('\CustomFieldTab\CustomFieldTab','user_id','id');
+	}
 }
