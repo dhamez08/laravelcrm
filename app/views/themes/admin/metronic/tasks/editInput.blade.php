@@ -145,7 +145,7 @@
 					</div>
 				</div>
 			  {{Form::hidden('redirect',$redirectURL)}}
-			  <button type="submit" class="btn btn-default">Submit</button>
+			  <button type="submit" class="btn btn-primary">Update</button>
 				  @if($from == 'calendar')
 					  <a class="btn btn-primary "
 						 href="{{action('Calendar\CalendarController@getCompleteTask',

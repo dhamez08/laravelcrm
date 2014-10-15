@@ -135,13 +135,14 @@ class TaskController extends \BaseController {
 
 		$validator = \Validator::make(\Input::all(), $rules, $messages);
 		if($validator->passes()){
-
+			$dt 			 = new \DateTime(\Input::get('task_date'));
+			$mysqlDateFormat = \Carbon\Carbon::instance($dt);
 			$start_hour = \Input::get('task_hour');
 			$start_min 	= \Input::get('task_min');
 			$end_hour 	= \Input::get('end_task_hour');
 			$end_min 	= \Input::get('end_task_min');
-			$startDate 	= \Input::get('task_date') . ' ' . $start_hour . ':' . $start_min . ':00';
-			$endHr 		= \Input::get('task_date') . ' ' . $end_hour . ':' . $end_min . ':00';
+			$startDate 	= $mysqlDateFormat->toDateString() . ' ' . $start_hour . ':' . $start_min . ':00';
+			$endHr 		= $mysqlDateFormat->toDateString() . ' ' . $end_hour . ':' . $end_min . ':00';
 
 			if( \Input::has('time_not_required') ){
 				$endHr = "00:00";
