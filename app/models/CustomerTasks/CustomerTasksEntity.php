@@ -90,4 +90,29 @@ class CustomerTasksEntity extends \Eloquent{
 		}
 		echo json_encode($task);
 	}
+
+	public function getTaskUser($belongsToUser = null){
+		if( is_null($belongsToUser) ){
+			$belongsToUser = \Auth::id();
+		}
+		$tasks	= \CustomerTasks\CustomerTasks::status(1)
+		->belongsToUser($belongsToUser)
+		->with('label')
+		->with('client')
+		->orderBy('created_at','desc');
+
+		$arrayData = array();
+
+		if( $tasks->count() > 0 ){
+			$data = json_decode(json_encode($tasks->get()->toArray()), FALSE);
+			foreach( (object)$data as $valTask){
+				$task = new \CustomerTasks\TasksFormat;
+				$task->bind($valTask);
+				$arrayData[] = $task;
+			}
+		}
+		//var_dump($arrayData);
+		return $arrayData;
+	}
+
 }

@@ -48,6 +48,12 @@ class BaseController extends Controller {
 		$this->beforeFilter('csrf', array('on' => array('post', 'put', 'patch', 'delete')));
 		$this->admin_theme_folder 	= \Config::get('crm.themes.admin.folder');
 		$this->admin_theme_path 	= \Config::get('crm.themes.admin.path');
+		$this->setTimeZone('Asia/Manila');
+	}
+
+	public function setTimeZone($timeZone = null){
+		date_default_timezone_set($timeZone);
+		\Config::set('app.timezone',$timeZone);
 	}
 
 	/**

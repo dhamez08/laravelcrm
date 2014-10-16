@@ -1,3 +1,24 @@
+<!-- BEGIN Portlet PORTLET-->
+<div class="portlet light tasks-widget">
+	<div class="portlet-title">
+		<div class="caption">
+			<i class="fa fa-gift"></i>Portlet1
+		</div>
+		<div class="actions">
+			<a href="#" class="btn btn-default btn-sm">
+			<i class="fa fa-pencil"></i> Edit </a>
+			<a href="#" class="btn btn-default btn-sm">
+			<i class="fa fa-plus"></i> Add </a>
+		</div>
+	</div>
+	<div class="portlet-body">
+		<div class="scroller" style="height:300px" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd">
+			<strong>Scroll is hidden</strong><br/>
+			Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. consectetur purus sit amet fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.
+		</div>
+	</div>
+</div>
+<!-- END Portlet PORTLET-->
 <div class="portlet box green-haze tasks-widget">
 	<div class="portlet-title">
 		<div class="caption">

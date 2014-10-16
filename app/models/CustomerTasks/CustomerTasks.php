@@ -17,7 +17,7 @@ class CustomerTasks extends \Eloquent{
 		return $query->where('customer_id', '=', $customerID);
 	}
 
-	public function scopeBelongsToGroup($query,$belongsto){
+	public function scopeBelongsToUser($query,$belongsto){
 		return $query->where('belongs_to', '=', $belongsto);
 	}
 

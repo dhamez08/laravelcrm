@@ -23,7 +23,7 @@
 
 		@section('head-css')
 			<!-- BEGIN GLOBAL MANDATORY STYLES -->
-			<!--<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>-->
+			<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
 			<link href="{{$asset_path}}/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 			<link href="{{$asset_path}}/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>
 			<link href="{{$asset_path}}/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
@@ -35,6 +35,7 @@
 			@yield('head-page-level-css')
 			<link href="{{$asset_path}}/global/plugins/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet" type="text/css"/>
 			<link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/typeahead/typeahead.css">
+			<link rel="stylesheet" type="text/css" href="{{$asset_path}}/admin/pages/css/tasks.css">
 			<!-- END PAGE LEVEL STYLES -->
 
 			<!-- BEGIN THEME STYLES -->
@@ -130,9 +131,8 @@
 		<script src="{{$asset_path}}/layout/scripts/layout.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/layout/scripts/quick-sidebar.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/layout/scripts/quick-sidebar.js" type="text/javascript"></script>
-		<script src="{{$asset_path}}/layout/scripts/demo.js" type="text/javascript"></script>
-		<script src="{{$asset_path}}/pages/scripts/index.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/pages/scripts/tasks.js" type="text/javascript"></script>
+		<script src="{{$asset_path}}/pages/scripts/crm.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/global/plugins/typeahead/typeahead.bundle.min.js" type="text/javascript"></script>
 		<!-- END PAGE LEVEL SCRIPTS -->
 		<script type='text/javascript'>
@@ -143,6 +143,7 @@
 				Layout.init(); // init layout
 				GetClient.init('get-clients', '.getclient', url, '#customer_id', 'Name');
 				CreateTask.init('.openModal','.ajaxModal');
+				Index.init();
 			});
 		</script>
 	@show
