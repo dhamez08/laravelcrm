@@ -265,15 +265,28 @@ class CustomFormsController extends \BaseController {
 
 	public function postSubmitData() {
 
-		$data = array();
+		$datas = array();
 
 		foreach(\Input::all() as $key=>$input) {
 			if($key!=='_token' && $key!=='form_id' && $key!=='customer_id' && $key!=='custom_id') {
-				$data[$key] = $input;
+				$datas[$key] = $input;
 			}
 		}
 
-		dd($data);
+		foreach($datas as $key=>$data) {
+			$row = array(
+				'form_id'		=>	\Input::get('form_id'),
+				'customer_id'	=>	\Input::get('customer_id'),
+				'field_name'	=>	$key,
+				'value'			=>	$data
+			);
+
+			//insert
+			\CustomFormData\CustomFormData::create($row);
+		}
+
+		\Session::flash('message', 'Successfully Added!');
+		return \Redirect::to('clients/custom/'.\Input::get('customer_id').'?custom='.\Input::get('custom_id'));
 	}
 
 }
