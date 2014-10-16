@@ -13,7 +13,7 @@ var TaskCalendar = function () {
         init: function ($url) {
             var objCalendar = jQuery('#taskcalendar');
             objCalendar.fullCalendar({
-                timeFormat: 'H:mm',
+                timeFormat: 'h:mm T',
                 editable:true,
                 selectable: true,
                 selectHelper: true,
