@@ -19,6 +19,7 @@ var TaskCalendar = function () {
                 selectHelper: true,
                 defaultView: 'month',
                 slotMinutes: 30,
+                eventLimit: true,
                 header: {
                         left: 'prev,next today',
                         center: 'title',
