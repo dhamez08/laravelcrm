@@ -263,4 +263,17 @@ class CustomFormsController extends \BaseController {
 		return \Redirect::to('settings/custom-forms');
 	}
 
+	public function postSubmitData() {
+
+		$data = array();
+
+		foreach(\Input::all() as $key=>$input) {
+			if($key!=='_token' && $key!=='form_id' && $key!=='customer_id' && $key!=='custom_id') {
+				$data[$key] = $input;
+			}
+		}
+
+		dd($data);
+	}
+
 }

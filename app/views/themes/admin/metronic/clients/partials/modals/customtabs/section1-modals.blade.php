@@ -84,7 +84,10 @@
         	<h4 class="modal-title">{{ \CustomForm\CustomForm::find($customtab->section1_form)->name }}</h3>
         </div>
         <div class="modal-body">
-        	{{ Form::open(array('url' => '#')) }}
+        	{{ Form::open(array('url' => 'settings/custom-forms/submit-data')) }}
+          <input type="hidden" name="form_id" value="{{ $customtab->section1_form }}" />
+          <input type="hidden" name="customer_id" value="{{ $customer->id }}" />
+          <input type="hidden" name="custom_id" value="{{ $customtab->id }}" />
         	<div class="row">
   	      	<div class="col-md-12">
   				{{ \CustomForm\CustomForm::find($customtab->section1_form)->build }}          
@@ -92,7 +95,7 @@
         	</div>
         	<div class="row">
   	      	<div class="col-md-12">
-  	      		<button type="button" class="btn blue">Save</button>
+  	      		<button type="submit" class="btn blue">Save</button>
   	      		<button type="button" class="btn blue" data-dismiss="modal">Cancel</button>
   	      	</div>
         	</div>
