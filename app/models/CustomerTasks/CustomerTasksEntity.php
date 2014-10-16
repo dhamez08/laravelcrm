@@ -117,6 +117,16 @@ class CustomerTasksEntity extends \Eloquent{
 		$due_future = 0;
 		$due_seven_day = 0;
 
+		$arrayData['due'] = (object)array(
+			'all'=>$due_all,
+			'today'=>$due_today,
+			'future'=>$due_future,
+			'seven'=>$due_seven_day
+		);
+
+		$arrayData['total'] = 0;
+		$arrayData['data'] = array();
+
 		if( $tasks->count() > 0 ){
 			$data = json_decode(json_encode($tasks->get()->toArray()), FALSE);
 			$arrayData['total'] = $tasks->count();
@@ -154,8 +164,9 @@ class CustomerTasksEntity extends \Eloquent{
 				'future'=>$due_future,
 				'seven'=>$due_seven_day
 			);
+
 		}
-		//var_dump($arrayData);exit();
+
 		return $arrayData;
 	}
 

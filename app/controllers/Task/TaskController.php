@@ -317,9 +317,7 @@ class TaskController extends \BaseController {
 			$data['customerId'] = $customerId;
 		}
 		$data 						= array_merge($data,$dashboard_data);
-		//var_dump($data['tasks']['due']->all);
-		//exit();
-		return \View::make( $data['view_path'] . '.tasks.partials.widget', $data );
+		return \View::make( $data['view_path'] . '.tasks.partials.widget', $data )->render();
 	}
 
 }
