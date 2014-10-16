@@ -4,39 +4,58 @@
 <div class="hor-menu hor-menu-light hidden-sm hidden-xs">
 	<ul class="nav navbar-nav">
 		<!-- DOC: Remove data-hover="dropdown" and data-close-others="true" attributes below to disable the horizontal opening on mouse hover -->
-		<li class="classic-menu-dropdown active">
-			<a href="index_3.html">
-			<i class="fa fa-home"></i>  Dashboard <span class="selected">
-			</span>
+		<li class="classic-menu-dropdown {{\Request::is('dashboard') ? 'active':''}}">
+			<a href="{{url('dashboard')}}">
+			<i class="fa fa-home"></i>  Dashboard
+			@if( \Request::is('dashboard') )
+				<span class="selected">
+				</span>
+			@endif
 			</a>
 		</li>
-		<li class="classic-menu-dropdown">
+		<li class="classic-menu-dropdown {{\Request::is('clients*') ? 'active':''}}">
 			<a href="{{url('clients')}}">
 			<i class="fa fa-users"></i>  Clients
+			@if( \Request::is('clients*') )
+				<span class="selected">
+				</span>
+			@endif
 			</a>
 		</li>
-		<li class="classic-menu-dropdown">
+		<li class="classic-menu-dropdown {{\Request::is('calendar*') || \Request::is('task*') ? 'active':''}}">
 			<a href="{{url('calendar')}}">
 			<i class="fa fa-calendar"></i>  Calendar
+			@if( \Request::is('calendar*') || \Request::is('task*') )
+				<span class="selected">
+				</span>
+			@endif
 			</a>
 		</li>
-		<li class="classic-menu-dropdown">
+		<li class="classic-menu-dropdown {{\Request::is('pipeline*') ? 'active':''}}">
 			<a href="{{url('pipeline')}}">
 			<i class="fa fa-bar-chart-o"></i>  Sales Pipeline
+			@if( \Request::is('pipeline*') )
+				<span class="selected">
+				</span>
+			@endif
 			</a>
 		</li>
-		<li class="classic-menu-dropdown">
+		<li class="classic-menu-dropdown {{\Request::is('document-library*') ? 'active':''}}">
 			<a href="{{url('document-library')}}">
 			<i class="fa fa-briefcase"></i>  Document Library
+			@if( \Request::is('document-library*') )
+				<span class="selected">
+				</span>
+			@endif
 			</a>
 		</li>
 		<li class="classic-menu-dropdown">
-			<a href="index_3.html">
+			<a href="#">
 			<i class="fa fa-bullseye"></i>  Marketing
 			</a>
 		</li>
 		<li class="classic-menu-dropdown">
-			<a href="index_3.html">
+			<a href="#">
 			<i class="fa fa-file-text-o"></i>  Accounting
 			</a>
 		</li>
