@@ -11,16 +11,19 @@
           <h4 class="modal-title">Add new Note</h3>
         </div>
         <div class="modal-body">
-          {{ Form::open(array('url' => '#')) }}
+          {{ Form::open(array('url' => 'custom-tab/add-note')) }}
+          <input type="hidden" name="section" value="2" />
+          <input type="hidden" name="customer_id" value="{{ $customer->id }}" />
+          <input type="hidden" name="custom_id" value="{{ $customtab->id }}" />
           <div class="row">
             <div class="col-md-12">
                 <label class="control-label">Note:</label>
-                <textarea class="form-control" name="notes" placeholder="Enter your Notes"></textarea>
+                <textarea class="form-control" name="entry" placeholder="Enter your Notes"></textarea>
             </div>
           </div>
           <div class="row" style="margin-top:15px">
             <div class="col-md-12">
-              <button type="button" class="btn blue">Save</button>
+              <button type="submit" class="btn blue">Save</button>
               <button type="button" class="btn blue" data-dismiss="modal">Cancel</button>
             </div>
           </div>

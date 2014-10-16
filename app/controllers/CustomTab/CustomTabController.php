@@ -45,11 +45,19 @@ class CustomTabController extends \BaseController {
 	}
 
 	public function postAddNote() {
+		$notesObj = new \CustomTabNotesData\CustomTabNotesData;
 
+		if($notesObj->create(\Input::all())) {
+			\Session::flash('message', 'Successfully Added!');
+			return \Redirect::to('clients/custom/'.\Input::get('customer_id').'?custom='.\Input::get('custom_id'));
+		} else {
+			return \Redirect::to('clients/custom/'.\Input::get('customer_id').'?custom='.\Input::get('custom_id'))
+					->withErrors(['There was a problem, please try again']);
+		}
 	}
 
 	public function postAddFile() {
-		
+
 	}
 
 }
