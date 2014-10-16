@@ -18,7 +18,7 @@
                 <textarea class="form-control" name="notes" placeholder="Enter your Notes"></textarea>
             </div>
           </div>
-          <div class="row">
+          <div class="row" style="margin-top:15px">
             <div class="col-md-12">
               <button type="button" class="btn blue">Save</button>
               <button type="button" class="btn blue" data-dismiss="modal">Cancel</button>
@@ -57,7 +57,7 @@
                 </div>
             </div>
           </div>
-          <div class="row">
+          <div class="row" style="margin-top:15px">
             <div class="col-md-12">
               <button type="button" class="btn blue">Upload</button>
               <button type="button" class="btn blue" data-dismiss="modal">Cancel</button>
@@ -92,7 +92,7 @@
           {{ \CustomForm\CustomForm::find($customtab->section4_form)->build }}          
             </div>
           </div>
-          <div class="row">
+          <div class="row" style="margin-top:15px">
             <div class="col-md-12">
               <button type="submit" class="btn blue">Save</button>
               <button type="button" class="btn blue" data-dismiss="modal">Cancel</button>
