@@ -11,7 +11,7 @@
           <h4 class="modal-title">Add new Note</h3>
         </div>
         <div class="modal-body">
-          {{ Form::open(array('url' => '#')) }}
+          {{ Form::open(array('url' => 'custom-tab/add-note')) }}
           <div class="row">
             <div class="col-md-12">
                 <label class="control-label">Note:</label>
@@ -20,7 +20,7 @@
           </div>
           <div class="row" style="margin-top:15px">
             <div class="col-md-12">
-              <button type="button" class="btn blue">Save</button>
+              <button type="submit" class="btn blue">Save</button>
               <button type="button" class="btn blue" data-dismiss="modal">Cancel</button>
             </div>
           </div>

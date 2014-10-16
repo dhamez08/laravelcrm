@@ -75,6 +75,9 @@ Route::group(array('before' => 'auth'), function()
 	{
 		Route::controller('/', 'Settings\TaskLabelController');
 	});
+
+	Route::post('custom-tab/add-note','CustomTab\CustomTabController@postAddNote');
+	Route::post('custom-tab/add-file','CustomTab\CustomTabController@postAddFile');
 });
 
 Route::get('testmail', function()
