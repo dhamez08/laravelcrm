@@ -71,6 +71,7 @@
   </div>
   <!-- end modal -->
 @elseif($customtab->section1==3)
+
   <!-- modal for creating custom forms -->
   <div class="modal fade" id="section1form-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -102,4 +103,5 @@
     </div>
   </div>
   <!-- end modal -->
+
 @endif

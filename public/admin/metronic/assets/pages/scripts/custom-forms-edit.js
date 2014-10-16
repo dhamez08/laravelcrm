@@ -216,6 +216,8 @@
 		var ctrl = div_ctrl.find("input");
 		$(ctrl).each(function(i,o) {
 			o.name = values.name;
+			o.id = form_id+"-"+values.name+"-"+i;
+			$(this).next().attr("for",form_id+"-"+values.name+"-"+i);
 		});
 	}
 

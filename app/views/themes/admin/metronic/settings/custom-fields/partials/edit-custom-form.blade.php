@@ -98,7 +98,7 @@
 
 
 	var _ctrl_index = @if(!empty($form->build)) {{ $form->last_field_ctr }} @else 1001 @endif;
-	
+	var form_id = {{ $form->id }};
 	function preview() {
 		console.log('Preview clicked');
 		
