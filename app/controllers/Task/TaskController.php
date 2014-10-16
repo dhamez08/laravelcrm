@@ -141,9 +141,12 @@ class TaskController extends \BaseController {
 			$startDate 	= $mysqlDateFormat->instance($mysqlDateFormat)->toDateString() . ' ' . $start_hour . ':' . $start_min . ':00';
 
 			if( \Input::has('time_not_required') ){
-				$endHr 		= $mysqlDateFormat->instance($mysqlDateFormat)->toDateString() . ' ' . '00:00';
+				$endHr 	= $mysqlDateFormat->instance($mysqlDateFormat)->toDateString() . ' ' . '00:00';
 			}else{
-				$endHr 		= $mysqlDateFormat->instance($mysqlDateFormat)->toDateString() . ' ' . $start_hour . ':' . $end_min . ':00';
+				if( $end_hour == '00' ){
+					$end_hour = $start_hour;
+				}
+				$endHr 	= $mysqlDateFormat->instance($mysqlDateFormat)->toDateString() . ' ' . $end_hour . ':' . $end_min . ':00';
 			}
 
 			$remind_time = (\Input::get('remind_mins') == 0) ?  "":date('Y-m-d H:i:s', strtotime('- '.\Input::get('remind_mins').' minutes', strtotime($startDate)));
@@ -204,7 +207,10 @@ class TaskController extends \BaseController {
 			if( \Input::has('time_not_required') ){
 				$endHr 		= $mysqlDateFormat->instance($mysqlDateFormat)->toDateString() . ' ' . '00:00';
 			}else{
-				$endHr 		= $mysqlDateFormat->instance($mysqlDateFormat)->toDateString() . ' ' . $start_hour . ':' . $end_min . ':00';
+				if( $end_hour != '00' ){
+					$end_hour = $start_hour;
+				}
+				$endHr 	= $mysqlDateFormat->instance($mysqlDateFormat)->toDateString() . ' ' . $end_hour . ':' . $end_min . ':00';
 			}
 
 			$remind_time = (\Input::get('remind_mins') == 0) ?  "":date('Y-m-d H:i:s', strtotime('- '.\Input::get('remind_mins').' minutes', strtotime($startDate)));
@@ -240,7 +246,6 @@ class TaskController extends \BaseController {
 	}
 
 	public function getEditClientTask($taskId, $customerId, $redirect = null){
-		//return \Task\TaskController::get_instance()->getAjaxModalCreateTask(array('redirect'=>url('clients')));
 		if(!is_null($redirect)){
 			$data['redirectURL'] 	= url($redirect);
 			$data['redirect'] 		= $redirect;
@@ -313,6 +318,8 @@ class TaskController extends \BaseController {
 			$data['customerId'] = $customerId;
 		}
 		$data 						= array_merge($data,$dashboard_data);
+		//var_dump($data['tasks']);
+		//exit();
 		return \View::make( $data['view_path'] . '.tasks.partials.widget', $data )->render();
 	}
 

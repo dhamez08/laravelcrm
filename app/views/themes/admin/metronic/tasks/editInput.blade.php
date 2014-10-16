@@ -82,7 +82,7 @@
 				<div class="form-group">
 					<label class="col-sm-6 control-label">End Time is not required.</label>
 					<div class="col-sm-6">
-						{{Form::checkbox('time_not_required',null,false,array('id'=>'time_not_required'))}}
+						{{Form::checkbox('time_not_required',null,($endDate->hour == '00' && $endDate->minute == '00') ? true:false,array('id'=>'time_not_required'))}}
 					</div>
 				</div>
 				<div class="form-group">

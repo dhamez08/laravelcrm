@@ -134,13 +134,13 @@ class CustomerTasksEntity extends \Eloquent{
 				$task = new \CustomerTasks\TasksFormat;
 				$task->bind($valTask);
 				$arrayData['data'][] = $task;
-
+				//echo $valTask->name.'-'.\Carbon\Carbon::parse($valTask->date)->diffInDays().'<br>';
 				if( \Carbon\Carbon::parse($valTask->date)->diffInDays() == 0 ){
 					$due_today += 1;
 					$due_all += 1;
 				}
 
-				if( \Carbon\Carbon::parse($valTask->date)->diffInDays() > 1
+				if( \Carbon\Carbon::parse($valTask->date)->diffInDays() >= 1
 					&& $valTask->date < \Carbon\Carbon::now()
 				){
 					$due_all += 1;
