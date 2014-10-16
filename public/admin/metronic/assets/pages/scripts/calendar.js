@@ -56,9 +56,9 @@ var TaskCalendar = function () {
                 eventDrop: function(event, delta, revertFunc) {
 
                     //alert(event.title + " was dropped on " + event.start.format());
-                    if (!confirm("Are you sure about this change?")) {
-                        revertFunc();
-                    }else{
+                    //if (!confirm("Are you sure about this change?")) {
+                        //revertFunc();
+                   // }else{
                         $.ajaxSetup({
                             headers: {
                                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
@@ -75,7 +75,7 @@ var TaskCalendar = function () {
                             error: function() {
                             }
                         });
-                    }
+                   // }
                 },
                 eventResize: function(event, delta, revertFunc) {
                     if (!confirm("Are you sure about this change?")) {
