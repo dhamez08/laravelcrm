@@ -31,7 +31,31 @@
 				<div class="portlet-body">
 					<div class="" style="position: relative; overflow-y: auto; width: auto; height: 200px;">
 					@if($customtab->section1)
-						No data has been added.
+						@if($customtab->section1==1)
+							No data has been added.
+						@elseif($customtab->section1==2)
+							No data has been added.
+						@elseif($customtab->section1==3)
+							<?php
+							$results = \CustomFormData\CustomFormDataEntity::get_instance()->getData($customtab->section1_form, $customer->id);
+							?>
+
+							@if(count($results)>0)
+							<table class="table">
+								@foreach($results as $result)
+									<tr>
+										<td>{{ $result->name }} - {{ $result->created_at }}</td>
+										<td align="right">
+										<a href="#" class="btn btn-circle blue-madison btn-sm">View</a>
+										<a href="#" class="btn btn-circle red-intense btn-sm">Delete</a>
+										</td>
+									</tr>
+								@endforeach
+							</table>
+							@else
+								No data has been added.
+							@endif
+						@endif
 					@endif
 					</div>
 				</div>
@@ -70,7 +94,31 @@
 				<div class="portlet-body">
 					<div class="" style="position: relative; overflow-y: auto; width: auto; height: 200px;">
 					@if($customtab->section2)
-						No data has been added.
+						@if($customtab->section2==1)
+							No data has been added.
+						@elseif($customtab->section2==2)
+							No data has been added.
+						@elseif($customtab->section2==3)
+							<?php
+							$results = \CustomFormData\CustomFormDataEntity::get_instance()->getData($customtab->section2_form, $customer->id);
+							?>
+
+							@if(count($results)>0)
+							<table class="table">
+								@foreach($results as $result)
+									<tr>
+										<td>{{ $result->name }} - {{ $result->created_at }}</td>
+										<td align="right">
+										<a href="#" class="btn btn-circle blue-madison btn-sm">View</a>
+										<a href="#" class="btn btn-circle red-intense btn-sm">Delete</a>
+										</td>
+									</tr>
+								@endforeach
+							</table>
+							@else
+								No data has been added.
+							@endif
+						@endif
 					@endif
 					</div>
 				</div>
@@ -109,7 +157,31 @@
 				<div class="portlet-body">
 					<div class="" style="position: relative; overflow-y: auto; width: auto; height: 200px;">
 					@if($customtab->section3)
-						No data has been added.
+						@if($customtab->section3==1)
+							No data has been added.
+						@elseif($customtab->section3==2)
+							No data has been added.
+						@elseif($customtab->section3==3)
+							<?php
+							$results = \CustomFormData\CustomFormDataEntity::get_instance()->getData($customtab->section3_form, $customer->id);
+							?>
+
+							@if(count($results)>0)
+							<table class="table">
+								@foreach($results as $result)
+									<tr>
+										<td>{{ $result->name }} - {{ $result->created_at }}</td>
+										<td align="right">
+										<a href="#" class="btn btn-circle blue-madison btn-sm">View</a>
+										<a href="#" class="btn btn-circle red-intense btn-sm">Delete</a>
+										</td>
+									</tr>
+								@endforeach
+							</table>
+							@else
+								No data has been added.
+							@endif
+						@endif
 					@endif
 					</div>
 				</div>
@@ -148,8 +220,32 @@
 				<div class="portlet-body">
 					<div class="" style="position: relative; overflow-y: auto; width: auto; height: 200px;">
 					@if($customtab->section4)
-						No data has been added.
-					@endif	
+						@if($customtab->section4==1)
+							No data has been added.
+						@elseif($customtab->section4==2)
+							No data has been added.
+						@elseif($customtab->section4==3)
+							<?php
+							$results = \CustomFormData\CustomFormDataEntity::get_instance()->getData($customtab->section4_form, $customer->id);
+							?>
+
+							@if(count($results)>0)
+							<table class="table">
+								@foreach($results as $result)
+									<tr>
+										<td>{{ $result->name }} - {{ $result->created_at }}</td>
+										<td align="right">
+										<a href="#" class="btn btn-circle blue-madison btn-sm">View</a>
+										<a href="#" class="btn btn-circle red-intense btn-sm">Delete</a>
+										</td>
+									</tr>
+								@endforeach
+							</table>
+							@else
+								No data has been added.
+							@endif
+						@endif
+					@endif
 					</div>
 				</div>
 			</div>

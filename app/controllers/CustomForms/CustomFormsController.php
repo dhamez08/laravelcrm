@@ -267,6 +267,9 @@ class CustomFormsController extends \BaseController {
 
 		$datas = array();
 
+		$length = 20;
+		$ref_id = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
+
 		foreach(\Input::all() as $key=>$input) {
 			if($key!=='_token' && $key!=='form_id' && $key!=='customer_id' && $key!=='custom_id') {
 				$datas[$key] = $input;
@@ -278,6 +281,7 @@ class CustomFormsController extends \BaseController {
 				'form_id'		=>	\Input::get('form_id'),
 				'customer_id'	=>	\Input::get('customer_id'),
 				'field_name'	=>	$key,
+				'ref_id'		=>	$ref_id,
 				'value'			=>	$data
 			);
 
@@ -287,6 +291,10 @@ class CustomFormsController extends \BaseController {
 
 		\Session::flash('message', 'Successfully Added!');
 		return \Redirect::to('clients/custom/'.\Input::get('customer_id').'?custom='.\Input::get('custom_id'));
+	}
+
+	public function getFormData($id) {
+		$formDataEntity = new \CustomFormData\CustomFormDataEntity;
 	}
 
 }

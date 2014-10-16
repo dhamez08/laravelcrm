@@ -76,26 +76,29 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content container-fluid">
         <div class="modal-header">
-        	<button type="button" class="close" data-dismiss="modal">
-        		<span aria-hidden="true">x</span>
-        		<span class="sr-only">Close</span>
-        	</button>
-        	<h4 class="modal-title">{{ \CustomForm\CustomForm::find($customtab->section3_form)->name }}</h3>
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">x</span>
+            <span class="sr-only">Close</span>
+          </button>
+          <h4 class="modal-title">{{ \CustomForm\CustomForm::find($customtab->section3_form)->name }}</h3>
         </div>
         <div class="modal-body">
-        	{{ Form::open(array('url' => '#')) }}
-        	<div class="row">
-  	      	<div class="col-md-12">
-  				{{ \CustomForm\CustomForm::find($customtab->section3_form)->build }}          
-  	      	</div>
-        	</div>
-        	<div class="row">
-  	      	<div class="col-md-12">
-  	      		<button type="button" class="btn blue">Save</button>
-  	      		<button type="button" class="btn blue" data-dismiss="modal">Cancel</button>
-  	      	</div>
-        	</div>
-        	{{ Form::close() }}
+          {{ Form::open(array('url' => 'settings/custom-forms/submit-data')) }}
+          <input type="hidden" name="form_id" value="{{ $customtab->section3_form }}" />
+          <input type="hidden" name="customer_id" value="{{ $customer->id }}" />
+          <input type="hidden" name="custom_id" value="{{ $customtab->id }}" />
+          <div class="row">
+            <div class="col-md-12">
+          {{ \CustomForm\CustomForm::find($customtab->section3_form)->build }}          
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <button type="submit" class="btn blue">Save</button>
+              <button type="button" class="btn blue" data-dismiss="modal">Cancel</button>
+            </div>
+          </div>
+          {{ Form::close() }}
         </div>
 
       </div>
