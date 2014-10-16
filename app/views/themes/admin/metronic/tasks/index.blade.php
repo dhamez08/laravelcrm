@@ -16,7 +16,7 @@
 
 	@stop
 	@section('innerpage-content')
-		<div class="portlet box {{{$dashboard_class or 'blue'}}} tabbable">
+		<div class="portlet box {{{$dashboard_class or 'blue'}}} tabbable tasks-widget">
 			<div class="portlet-title">
 				<div class="caption">
 					@section('portlet-captions')
@@ -35,52 +35,39 @@
 							<a href="{{url('clients/create-client-task?redirect=task')}}" data-target=".createTask" data-toggle="modal" class="btn btn-default btn-sm openModal">
 							<i class="fa fa-plus"></i> Create Task</a>
 							</p>
+							<p>Overdue : {{$tasks['due']->all}}</p>
 							<!-- START TASK LIST -->
-							<ul class="task-list list-group">
-								@if($tasks->count()>0)
-									@foreach($tasks->get() as $task)
-										<li class="list-group-item">
+							<ul class="task-list">
+								@if(count($tasks['total']) > 0)
+									@foreach($tasks['data'] as $task)
+										<li class="list-unstyled">
 											<div class="task-title">
-												@if($task->date < \Carbon\Carbon::now())
-													<span class="label label-danger">
-													Overdue {{\Carbon\Carbon::parse($task->date)->diffForHumans()}}
-													</span>
-												@endif
+												{{$task->displayHtmlTaskDue()}}
 												&nbsp;
 												<span class="task-title-sp">
 													<a class="openModal" data-toggle="modal" data-target=".ajaxModal" href="{{action('Task\TaskController@getEditClientTask',array('id'=>$task->id,'customerid'=>$task->customer_id,'redirect'=>'task'))}}">
-														{{$task->name}}
+														{{$task->displayName()}}
 													</a>
 												</span>
-												<span class="label label-sm" style="background-color:{{$task->label->color}}">
-													{{$task->label->action_name}}
-												</span>
+												{{$task->displayHtmlLabelIcon()}}
 												&nbsp;
 												<span>
 													For
 													<a href="{{action('Clients\ClientsController@getClientSummary',array('id'=>$task->customer_id))}}">
-													@if( $task->client->type == 2 )
-														{{$task->client->company_name}}
-													@else
-														{{$task->client->title}} {{$task->client->first_name}} {{$task->client->last_name}}
-													@endif
+													{{$task->displayTaskFullName()}}
 													</a>
 												</span>
-												<span class="task-bell">
-													<i class="fa {{$task->label->icons}}"></i>
-												</span>
-
 												<div class="task-config-btn btn-group">
 													<a class="btn btn-xs default" href="#" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 													<i class="fa fa-cog"></i><i class="fa fa-angle-down"></i>
 													</a>
 													<ul class="dropdown-menu pull-right">
 														<li>
-															<a class="complete-task" href="{{action('Task\TaskController@getCompleteTask',array('id'=>$task->id,'customerid'=>$task->customer_id,'redirect'=>'task'))}}">
+															<a class="complete-task" href="{{action('Task\TaskController@getCompleteTask',array('id'=>$task->id,'customerid'=>$task->customer_id))}}">
 															<i class="fa fa-check"></i> Complete </a>
 														</li>
 														<li>
-															<a class="openModal" data-toggle="modal" data-target=".ajaxModal" href="{{action('Task\TaskController@getEditClientTask',array('id'=>$task->id,'customerid'=>$task->customer_id,'redirect'=>'task'))}}">
+															<a class="openModal" data-toggle="modal" data-target=".ajaxModal" href="{{action('Task\TaskController@getEditClientTask',array('id'=>$task->id,'customerid'=>$task->customer_id))}}">
 															<i class="fa fa-pencil"></i> Edit </a>
 														</li>
 														<li>
@@ -89,11 +76,13 @@
 														</li>
 													</ul>
 												</div>
-
 										</li>
 									@endforeach
 								@endif
 							</ul>
+							<p>Today : {{$tasks['due']->today}}</p>
+							<p>Next Seven Days : {{$tasks['due']->seven}}</p>
+							<p>Future : {{$tasks['due']->future}}</p>
 						</div>
 					</div>
 			</div>

@@ -57,11 +57,7 @@ class TaskController extends \BaseController {
 		$data['portlet_title']		= 'Task';
 		$data['fa_icons']			= 'cog';
 		$belongsTo 					= \Auth::id();
-		//$data['tasks']				= \CustomerTasks\CustomerTasks::belongsToGroup($belongsTo)->status(1)
-		$data['tasks']				= \CustomerTasks\CustomerTasks::status(1)
-		->with('label')
-		->with('client')
-		->orderBy('created_at','desc');
+		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(null, \Auth::id());
 		$data['redirectURL']		= url('task');
 		$data 						= array_merge($data,$dashboard_data);
 		//var_dump($tasks->get()->toArray());
