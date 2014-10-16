@@ -504,11 +504,14 @@ class ClientsController extends \BaseController {
 		$data['associate']			= \Clients\ClientEntity::get_instance()->setAssociateCustomer($clientId);
 		$data['partner']			= \Clients\ClientEntity::get_instance()->getCustomerPartner();
 		$data['center_column_view']	= 'dashboard';
-		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getCustomerTasks($clientId)
-		->status(1)->with('label');
+		$data['customerId']			= $clientId;
+		$data['belongsTo']			= \Auth::id();
+		/*$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getCustomerTasks($clientId)
+		->status(1)->with('label');*/
+		//$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser($clientId,\Auth::id());
 
 		$data 						= array_merge($data,$dashboard_data);
-		//var_dump($data['tasks']->with('label')->get()->toArray());
+		//var_dump($data['tasks']['data']);
 		//exit();
 		return \View::make( $data['view_path'] . '.clients.summary', $data );
 	}

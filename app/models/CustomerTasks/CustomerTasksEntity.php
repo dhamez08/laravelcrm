@@ -59,8 +59,9 @@ class CustomerTasksEntity extends \Eloquent{
 	public function jsonTaskInCalendar($start_date, $end_date){
 		$task = array();
 
-		$belongsTo = \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
-		$tasks	= \CustomerTasks\CustomerTasks::belongsToGroup($belongsTo)->status(1)
+		//$belongsTo = \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+		$belongsTo = \Auth::id();
+		$tasks	= \CustomerTasks\CustomerTasks::belongsToUser($belongsTo)->status(1)
 		->startDate($start_date)
 		->endDate($end_date)
 		->with('label')
@@ -91,27 +92,70 @@ class CustomerTasksEntity extends \Eloquent{
 		echo json_encode($task);
 	}
 
-	public function getTaskUser($belongsToUser = null){
+	public function getTaskUser($customerId = null, $belongsToUser = null){
 		if( is_null($belongsToUser) ){
 			$belongsToUser = \Auth::id();
 		}
-		$tasks	= \CustomerTasks\CustomerTasks::status(1)
-		->belongsToUser($belongsToUser)
-		->with('label')
-		->with('client')
-		->orderBy('created_at','desc');
+		if( !is_null($customerId) ){
+			$tasks	= \CustomerTasks\CustomerTasks::status(1)
+			->belongsToUser($belongsToUser)
+			->customerID($customerId)
+			->with('label')
+			->with('client')
+			->orderBy('created_at','desc');
+		}else{
+			$tasks	= \CustomerTasks\CustomerTasks::status(1)
+			->belongsToUser($belongsToUser)
+			->with('label')
+			->with('client')
+			->orderBy('created_at','desc');
+		}
 
 		$arrayData = array();
+		$due_all = 0;
+		$due_today = 0;
+		$due_future = 0;
+		$due_seven_day = 0;
 
 		if( $tasks->count() > 0 ){
 			$data = json_decode(json_encode($tasks->get()->toArray()), FALSE);
+			$arrayData['total'] = $tasks->count();
 			foreach( (object)$data as $valTask){
 				$task = new \CustomerTasks\TasksFormat;
 				$task->bind($valTask);
-				$arrayData[] = $task;
+				$arrayData['data'][] = $task;
+
+				if( \Carbon\Carbon::parse($valTask->date)->diffInDays() == 0 ){
+					$due_today += 1;
+					$due_all += 1;
+				}
+
+				if( \Carbon\Carbon::parse($valTask->date)->diffInDays() > 1
+					&& $valTask->date < \Carbon\Carbon::now()
+				){
+					$due_all += 1;
+				}
+
+				if( \Carbon\Carbon::parse($valTask->date)->diffInDays() > 14
+					&& $valTask->date > \Carbon\Carbon::now()
+				){
+					$due_future += 1;
+				}
+				if( \Carbon\Carbon::parse($valTask->date)->diffInWeeks() == 1
+					&& $valTask->date > \Carbon\Carbon::now()
+				){
+					$due_seven_day += 1;
+				}
+
 			}
+			$arrayData['due'] = (object)array(
+				'all'=>$due_all,
+				'today'=>$due_today,
+				'future'=>$due_future,
+				'seven'=>$due_seven_day
+			);
 		}
-		//var_dump($arrayData);
+		//var_dump($arrayData);exit();
 		return $arrayData;
 	}
 
