@@ -98,7 +98,7 @@ var CreateTask = (function(){
             jQuery('body').on('loaded.bs.modal', '.modal', function () {
             	jQuery('#task_date').datepicker({
 				    autoclose:true,
-				    startDate: '+0d',
+				    //startDate: '+0d',
 				    format: dateClientFormat
 				});
 			    jQuery(this).removeData('bs.modal');
@@ -106,8 +106,6 @@ var CreateTask = (function(){
 
 			    var redirectUrl = jQuery(location).attr('href');
 			    jQuery(this).find('#redirect').val(redirectUrl);
-				//protocol
-				//host
 			    GetClient.init('get-clients', '.getclient', url, '#customer_id', 'Name');
 			    ajaxCreateTask();
 			    jQuery('.complete-task, .delete-task').on('click',function(e){

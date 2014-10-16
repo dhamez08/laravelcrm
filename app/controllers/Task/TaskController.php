@@ -308,11 +308,14 @@ class TaskController extends \BaseController {
 		}
 	}
 
-	public function getWidgetDisplay($redirect = null){
+	public function getWidgetDisplay($customerId, $belongsToUser){
 		$dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
 		$data 						= $this->data_view;
 		$belongsTo 					= \Auth::id();
-		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser();
+		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser($customerId, $belongsToUser);
+		if(!is_null($customerId)){
+			$data['customerId'] = $customerId;
+		}
 		$data 						= array_merge($data,$dashboard_data);
 		//var_dump($data['tasks']['due']->all);
 		//exit();

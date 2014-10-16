@@ -92,15 +92,24 @@ class CustomerTasksEntity extends \Eloquent{
 		echo json_encode($task);
 	}
 
-	public function getTaskUser($belongsToUser = null){
+	public function getTaskUser($customerId = null, $belongsToUser = null){
 		if( is_null($belongsToUser) ){
 			$belongsToUser = \Auth::id();
 		}
-		$tasks	= \CustomerTasks\CustomerTasks::status(1)
-		->belongsToUser($belongsToUser)
-		->with('label')
-		->with('client')
-		->orderBy('created_at','desc');
+		if( !is_null($customerId) ){
+			$tasks	= \CustomerTasks\CustomerTasks::status(1)
+			->belongsToUser($belongsToUser)
+			->customerID($customerId)
+			->with('label')
+			->with('client')
+			->orderBy('created_at','desc');
+		}else{
+			$tasks	= \CustomerTasks\CustomerTasks::status(1)
+			->belongsToUser($belongsToUser)
+			->with('label')
+			->with('client')
+			->orderBy('created_at','desc');
+		}
 
 		$arrayData = array();
 		$due_all = 0;
@@ -146,6 +155,7 @@ class CustomerTasksEntity extends \Eloquent{
 				'seven'=>$due_seven_day
 			);
 		}
+		//var_dump($arrayData);exit();
 		return $arrayData;
 	}
 
