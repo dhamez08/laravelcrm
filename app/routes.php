@@ -28,6 +28,7 @@ Route::group(array('before' => 'auth'), function()
 		Route::controller( 'pipeline' , 'Pipeline\PipelineController' );
 		Route::controller( 'task' , 'Task\TaskController');
 		Route::controller( 'calendar' , 'Calendar\CalendarController');
+		Route::controller( 'notes' , 'Notes\NotesController');
 	//});
 
 	Route::get( 'settings' , 'Settings\SettingsController@getIndex' );

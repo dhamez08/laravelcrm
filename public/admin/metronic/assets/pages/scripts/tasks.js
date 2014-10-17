@@ -101,11 +101,12 @@ var CreateTask = (function(){
 				    //startDate: '+0d',
 				    format: dateClientFormat
 				});
-			    jQuery(this).removeData('bs.modal');
+
 			    var url = baseURL + '/clients/typeahead-client';
 
 			    var redirectUrl = jQuery(location).attr('href');
 			    jQuery(this).find('#redirect').val(redirectUrl);
+
 			    GetClient.init('get-clients', '.getclient', url, '#customer_id', 'Name');
 			    ajaxCreateTask();
 			    jQuery('.complete-task, .delete-task').on('click',function(e){
@@ -113,9 +114,6 @@ var CreateTask = (function(){
 					var newUrl = jQuery(this).attr('href') + '?redirect=' + jQuery(location).attr('href');
 					window.location.href = newUrl;
 				});
-			});
-			jQuery('body').on('hidden.bs.modal', '.ajaxModal', function() {
-			    //jQuery(this).removeData('bs.modal');
 			});
 			jQuery('.complete-task, .delete-task').on('click',function(e){
 				e.preventDefault();
