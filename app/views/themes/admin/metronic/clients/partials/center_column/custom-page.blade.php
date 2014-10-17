@@ -32,9 +32,58 @@
 					<div class="" style="position: relative; overflow-y: auto; width: auto; height: 200px;">
 					@if($customtab->section1)
 						@if($customtab->section1==1)
-							No data has been added.
+							<?php
+							$results = \CustomTabNotesData\CustomTabNotesDataEntity::get_instance()->getNotesBySection_Custom_Customer(1, $customtab->id, $customer->id);
+							?>
+
+							@if(count($results)>0)
+							<table class="table">
+								@foreach($results as $result)
+									<tr>
+										<td>Added - {{ date("d/m/Y H:i",strtotime($result->created_at)) }}<br />{{ $result->entry }}</td>
+										<td align="right">
+										<a href="{{ url('custom-tab/delete-note/'.$result->id.'/'.$customer->id.'/'.$customtab->id) }}" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-circle red-intense btn-sm"><i class="fa fa-times"></i> Delete</a>
+										</td>
+									</tr>
+								@endforeach
+							</table>
+							@else
+								No data has been added.
+							@endif
 						@elseif($customtab->section1==2)
-							No data has been added.
+							<?php
+							$results = \CustomTabFilesData\CustomTabFilesDataEntity::get_instance()->getFilesBySection_Custom_Customer(1, $customtab->id, $customer->id);
+							$icons	 = \Config::get('crm.document_file_type_class');
+							$path = "/public/document/";
+							?>
+
+							@if(count($results)>0)
+							<ul class="feeds">
+								@foreach($results as $result)
+									<li>
+										<div class="col1">
+											<div class="cont">
+												<div class="cont-col1">
+													<div class="label label-sm label-danger">
+														<i class="fa {{ $icons[$result->file_type] }}"></i>
+													</div>
+												</div>
+												<div class="cont-col2">
+													<div class="desc">
+														<a href="{{ $path.$result->file_name }}" target="_blank">{{ $result->name }}</a>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col2" style="margin-left:-95px">
+											<a href="{{ url('custom-tab/delete-file/'.$result->id.'/'.$customer->id.'/'.$customtab->id) }}" class="btn btn-circle red-intense btn-sm" onclick="return confirm('Are you sure you want to delete?')"><i class="fa fa-times"></i> Delete</a>
+										</div>
+									</li>
+								@endforeach
+							</ul>
+							@else
+								No data has been added.
+							@endif
 						@elseif($customtab->section1==3)
 							<?php
 							$results = \CustomFormData\CustomFormDataEntity::get_instance()->getData($customtab->section1_form, $customer->id);
@@ -47,7 +96,7 @@
 										<td>{{ $result->name }} - {{ $result->created_at }}</td>
 										<td align="right">
 										<a href="#" class="btn btn-circle blue-madison btn-sm">View</a>
-										<a href="#" class="btn btn-circle red-intense btn-sm">Delete</a>
+										<a href="#" class="btn btn-circle red-intense btn-sm"><i class="fa fa-times"></i> Delete</a>
 										</td>
 									</tr>
 								@endforeach
@@ -95,9 +144,58 @@
 					<div class="" style="position: relative; overflow-y: auto; width: auto; height: 200px;">
 					@if($customtab->section2)
 						@if($customtab->section2==1)
-							No data has been added.
+							<?php
+							$results = \CustomTabNotesData\CustomTabNotesDataEntity::get_instance()->getNotesBySection_Custom_Customer(2, $customtab->id, $customer->id);
+							?>
+
+							@if(count($results)>0)
+							<table class="table">
+								@foreach($results as $result)
+									<tr>
+										<td>Added - {{ date("d/m/Y H:i",strtotime($result->created_at)) }}<br />{{ $result->entry }}</td>
+										<td align="right">
+										<a href="{{ url('custom-tab/delete-note/'.$result->id.'/'.$customer->id.'/'.$customtab->id) }}" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-circle red-intense btn-sm"><i class="fa fa-times"></i> Delete</a>
+										</td>
+									</tr>
+								@endforeach
+							</table>
+							@else
+								No data has been added.
+							@endif
 						@elseif($customtab->section2==2)
-							No data has been added.
+							<?php
+							$results = \CustomTabFilesData\CustomTabFilesDataEntity::get_instance()->getFilesBySection_Custom_Customer(2, $customtab->id, $customer->id);
+							$icons	 = \Config::get('crm.document_file_type_class');
+							$path = "/public/document/";
+							?>
+
+							@if(count($results)>0)
+							<ul class="feeds">
+								@foreach($results as $result)
+									<li>
+										<div class="col1">
+											<div class="cont">
+												<div class="cont-col1">
+													<div class="label label-sm label-danger">
+														<i class="fa {{ $icons[$result->file_type] }}"></i>
+													</div>
+												</div>
+												<div class="cont-col2">
+													<div class="desc">
+														<a href="{{ $path.$result->file_name }}" target="_blank">{{ $result->name }}</a>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col2" style="margin-left:-95px">
+											<a href="{{ url('custom-tab/delete-file/'.$result->id.'/'.$customer->id.'/'.$customtab->id) }}" class="btn btn-circle red-intense btn-sm" onclick="return confirm('Are you sure you want to delete?')"><i class="fa fa-times"></i> Delete</a>
+										</div>
+									</li>
+								@endforeach
+							</ul>
+							@else
+								No data has been added.
+							@endif
 						@elseif($customtab->section2==3)
 							<?php
 							$results = \CustomFormData\CustomFormDataEntity::get_instance()->getData($customtab->section2_form, $customer->id);
@@ -110,7 +208,7 @@
 										<td>{{ $result->name }} - {{ $result->created_at }}</td>
 										<td align="right">
 										<a href="#" class="btn btn-circle blue-madison btn-sm">View</a>
-										<a href="#" class="btn btn-circle red-intense btn-sm">Delete</a>
+										<a href="#" class="btn btn-circle red-intense btn-sm"><i class="fa fa-times"></i> Delete</a>
 										</td>
 									</tr>
 								@endforeach
@@ -168,7 +266,7 @@
 									<tr>
 										<td>Added - {{ date("d/m/Y H:i",strtotime($result->created_at)) }}<br />{{ $result->entry }}</td>
 										<td align="right">
-										<a href="{{ url('custom-tab/delete-note/'.$result->id.'/'.$customer->id.'/'.$customtab->id) }}" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-circle red-intense btn-sm">Delete</a>
+										<a href="{{ url('custom-tab/delete-note/'.$result->id.'/'.$customer->id.'/'.$customtab->id) }}" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-circle red-intense btn-sm"><i class="fa fa-times"></i> Delete</a>
 										</td>
 									</tr>
 								@endforeach
@@ -176,9 +274,40 @@
 							@else
 								No data has been added.
 							@endif
-
 						@elseif($customtab->section3==2)
-							No data has been added.
+							<?php
+							$results = \CustomTabFilesData\CustomTabFilesDataEntity::get_instance()->getFilesBySection_Custom_Customer(3, $customtab->id, $customer->id);
+							$icons	 = \Config::get('crm.document_file_type_class');
+							$path = "/public/document/";
+							?>
+
+							@if(count($results)>0)
+							<ul class="feeds">
+								@foreach($results as $result)
+									<li>
+										<div class="col1">
+											<div class="cont">
+												<div class="cont-col1">
+													<div class="label label-sm label-danger">
+														<i class="fa {{ $icons[$result->file_type] }}"></i>
+													</div>
+												</div>
+												<div class="cont-col2">
+													<div class="desc">
+														<a href="{{ $path.$result->file_name }}" target="_blank">{{ $result->name }}</a>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col2" style="margin-left:-95px">
+											<a href="{{ url('custom-tab/delete-file/'.$result->id.'/'.$customer->id.'/'.$customtab->id) }}" class="btn btn-circle red-intense btn-sm" onclick="return confirm('Are you sure you want to delete?')"><i class="fa fa-times"></i> Delete</a>
+										</div>
+									</li>
+								@endforeach
+							</ul>
+							@else
+								No data has been added.
+							@endif
 						@elseif($customtab->section3==3)
 							<?php
 							$results = \CustomFormData\CustomFormDataEntity::get_instance()->getData($customtab->section3_form, $customer->id);
@@ -191,7 +320,7 @@
 										<td>{{ $result->name }} - {{ $result->created_at }}</td>
 										<td align="right">
 										<a href="#" class="btn btn-circle blue-madison btn-sm">View</a>
-										<a href="#" class="btn btn-circle red-intense btn-sm">Delete</a>
+										<a href="#" class="btn btn-circle red-intense btn-sm"><i class="fa fa-times"></i> Delete</a>
 										</td>
 									</tr>
 								@endforeach
@@ -239,9 +368,58 @@
 					<div class="" style="position: relative; overflow-y: auto; width: auto; height: 200px;">
 					@if($customtab->section4)
 						@if($customtab->section4==1)
-							No data has been added.
+							<?php
+							$results = \CustomTabNotesData\CustomTabNotesDataEntity::get_instance()->getNotesBySection_Custom_Customer(4, $customtab->id, $customer->id);
+							?>
+
+							@if(count($results)>0)
+							<table class="table">
+								@foreach($results as $result)
+									<tr>
+										<td>Added - {{ date("d/m/Y H:i",strtotime($result->created_at)) }}<br />{{ $result->entry }}</td>
+										<td align="right">
+										<a href="{{ url('custom-tab/delete-note/'.$result->id.'/'.$customer->id.'/'.$customtab->id) }}" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-circle red-intense btn-sm"><i class="fa fa-times"></i> Delete</a>
+										</td>
+									</tr>
+								@endforeach
+							</table>
+							@else
+								No data has been added.
+							@endif
 						@elseif($customtab->section4==2)
-							No data has been added.
+							<?php
+							$results = \CustomTabFilesData\CustomTabFilesDataEntity::get_instance()->getFilesBySection_Custom_Customer(4, $customtab->id, $customer->id);
+							$icons	 = \Config::get('crm.document_file_type_class');
+							$path = "/public/document/";
+							?>
+
+							@if(count($results)>0)
+							<ul class="feeds">
+								@foreach($results as $result)
+									<li>
+										<div class="col1">
+											<div class="cont">
+												<div class="cont-col1">
+													<div class="label label-sm label-danger">
+														<i class="fa {{ $icons[$result->file_type] }}"></i>
+													</div>
+												</div>
+												<div class="cont-col2">
+													<div class="desc">
+														<a href="{{ $path.$result->file_name }}" target="_blank">{{ $result->name }}</a>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col2" style="margin-left:-95px">
+											<a href="{{ url('custom-tab/delete-file/'.$result->id.'/'.$customer->id.'/'.$customtab->id) }}" class="btn btn-circle red-intense btn-sm" onclick="return confirm('Are you sure you want to delete?')"><i class="fa fa-times"></i> Delete</a>
+										</div>
+									</li>
+								@endforeach
+							</ul>
+							@else
+								No data has been added.
+							@endif
 						@elseif($customtab->section4==3)
 							<?php
 							$results = \CustomFormData\CustomFormDataEntity::get_instance()->getData($customtab->section4_form, $customer->id);

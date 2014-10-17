@@ -63,7 +63,7 @@ class CustomTabController extends \BaseController {
 
 			\Session::flash('message', 'Successfully Deleted!');
 			return \Redirect::to('clients/custom/'.$customer_id.'?custom='.$custom_id);
-			
+
 		} else {
 			return \Redirect::to('clients/custom/'.$customer_id.'?custom='.$custom_id)
 					->withErrors(['There was a problem, please try again']);
@@ -71,7 +71,49 @@ class CustomTabController extends \BaseController {
 	}
 
 	public function postAddFile() {
+		$rules = array(
+			'name' => 'required',
+			'file'  => 'required|max:10000|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,zip,jpg,jpeg,rar,bmp,gif,tif,txt,xml,csv,png'
+		);
 
+		$messages = array(
+			'name.required' => 'Name is required.',
+			'file.required'=>'Please select a File',
+			'file.mimes'=>'The supported file types are : pdf, doc, docx, xls, xlsx, ppt, pptx, zip, jpg, jpeg, rar, bmp, gif, tif, txt, xml, csv and png',
+			'file.max'=>'File maximum file size is 10mb',
+		);
+
+		$validator = \Validator::make(\Input::all(), $rules, $messages);
+		if ( $validator->passes() ) {
+			if(\CustomTabFilesData\CustomTabFilesDataEntity::get_instance()->upload()) {
+				\Session::flash('message', 'file was successfully uploaded');
+				return \Redirect::back();
+			} else {
+				return \Redirect::back()->withErrors(['There was a problem uploading your file, please try again']);
+			}
+		} else {
+			\Input::flash();
+			return \Redirect::back()
+			->withErrors($validator)
+			->withInput();
+		}
 	}
+
+	public function getDeleteFile($id, $customer_id, $custom_id) {
+		$file = \CustomTabFilesData\CustomTabFilesDataEntity::get_instance()->where('id',$id)->where('customer_id', $customer_id)->first();
+		if($file) {
+			$img = $file->file_name;
+			if(\File::delete(public_path().'/document/'.$img)) {
+				$file->delete();
+				\Session::flash('message', 'File was successfully deleted');
+				return \Redirect::back();
+			} else {
+				return \Redirect::back()->withErrors(['There was a problem deleting the file, please try again']);
+			}
+		} else {
+			return \Redirect::back()->withErrors(['There was a problem deleting the file, please try again']);
+		}
+	}
+
 
 }

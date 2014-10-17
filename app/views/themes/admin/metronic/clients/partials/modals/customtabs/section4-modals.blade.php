@@ -35,7 +35,7 @@
   </div>
   <!-- end modal -->
 @elseif($customtab->section4==2)
-  <!-- modal for creating notes -->
+  <!-- modal for creating files -->
   <div class="modal fade" id="section4files-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content container-fluid">
@@ -47,7 +47,10 @@
           <h4 class="modal-title">Add new File</h3>
         </div>
         <div class="modal-body">
-          {{ Form::open(array('url' => '#')) }}
+          {{ Form::open(array('url' => 'custom-tab/add-file','files'=>true)) }}
+          <input type="hidden" name="section" value="4" />
+          <input type="hidden" name="customer_id" value="{{ $customer->id }}" />
+          <input type="hidden" name="custom_id" value="{{ $customtab->id }}" />
           <div class="row">
             <div class="col-md-12">
                 <div>
@@ -62,7 +65,7 @@
           </div>
           <div class="row" style="margin-top:15px">
             <div class="col-md-12">
-              <button type="button" class="btn blue">Upload</button>
+              <button type="submit" class="btn blue">Upload</button>
               <button type="button" class="btn blue" data-dismiss="modal">Cancel</button>
             </div>
           </div>
