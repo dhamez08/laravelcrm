@@ -52,6 +52,10 @@ class User extends \Eloquent implements UserInterface, RemindableInterface {
 		return $this->hasMany('\EmailSignature\EmailSignature', 'belongs_to', 'id');
 	}
 
+	public function notes(){
+		return $this->hasMany('\CustomerNotes\CustomerNotes','added_by','id');
+	}
+
 	/**
 	 * Query scope to get confirm_code column
 	 * @param 	$query	laravel default

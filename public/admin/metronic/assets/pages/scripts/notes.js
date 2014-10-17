@@ -42,6 +42,16 @@ var Notes = function () {
 	    });
 	}
 
+	var deleteNotes = function(){
+		jQuery('.deleteNote').on('click',function(e){
+			e.preventDefault();
+			var newUrl = jQuery(this).attr('href') + '?redirect=' + jQuery(location).attr('href');
+			bootbox.confirm("Are you Sure want to delete this Note?", function (confirmation) {
+				confirmation && document.location.assign(newUrl);
+			});
+		});
+	}
+
     var modalOnLoaded = function() {
         jQuery('body').on('loaded.bs.modal', '.modal', function () {
 			 var redirectUrl = jQuery(location).attr('href');
@@ -59,6 +69,7 @@ var Notes = function () {
             //initialize here something.
             //createNotes();
             modalOnLoaded();
+            deleteNotes();
         }
     };
 

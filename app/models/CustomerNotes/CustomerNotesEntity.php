@@ -54,4 +54,13 @@ class CustomerNotesEntity extends \Eloquent{
 			return false;
 		}
 	}
+
+	public function getNotes($customerId, $addedBy){
+		$notes = \CustomerNotes\CustomerNotes::customerId($customerId)
+		->addedBy($addedBy)
+		->with('user')
+		->with('customer')
+		->orderBy('created_at','desc');
+		return $notes;
+	}
 }

@@ -59,7 +59,8 @@ class NotesController extends \BaseController {
 		$dashboard_data 		= \Dashboard\DashboardController::get_instance()->getSetupThemes();
 		$data 					= $this->data_view;
 		$belongsTo 				= \Auth::id();
-		//$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser($customerId, $belongsToUser);
+		$data['notes']			= \CustomerNotes\CustomerNotesEntity::get_instance()->getNotes($customerId, $belongsTo);
+		//var_dump($data['notes']->get()->toArray());
 		if(!is_null($customerId)){
 			$data['customerId'] = $customerId;
 		}
@@ -104,7 +105,7 @@ class NotesController extends \BaseController {
 	public function postAjaxCreateNote($clientId){
 		$rules = array(
 			'note' => 'required',
-			'notefile' => 'mimes:pdf,doc,docx,gif,jpg,png',
+			'notefile' => 'mimes:pdf,doc,docx,gif,jpg,png,jpeg',
 		);
 		$messages = array(
 			'note.required'=>'Note is required',
@@ -138,6 +139,22 @@ class NotesController extends \BaseController {
 			return \Response::json(array('result'=>false,'message'=>$msg));
 		}
 		die();
+	}
+
+	public function getDeleteNote($id, $customerid){
+		$Note = \CustomerNotes\CustomerNotes::noteId($id)
+		->customerId($customerid)
+		->addedBy(\Auth::id());
+		if($Note->count() > 0){
+			$Note->delete();
+			if(\Input::has('redirect')){
+				\Session::flash('message', 'Successfully Deleted Note');
+				return \Redirect::to(\Input::get('redirect'));
+			}else{
+				\Session::flash('message', 'Successfully Deleted Note');
+				return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>$customerid));
+			}
+		}
 	}
 
 }

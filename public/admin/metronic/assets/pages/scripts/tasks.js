@@ -112,13 +112,20 @@ var CreateTask = (function(){
 			    jQuery('.complete-task, .delete-task').on('click',function(e){
 					e.preventDefault();
 					var newUrl = jQuery(this).attr('href') + '?redirect=' + jQuery(location).attr('href');
-					window.location.href = newUrl;
+					//var _link = jQuery(this);
+					//window.location.href = newUrl;
+					bootbox.confirm("Are you Sure want to delete this Task?", function (confirmation) {
+						confirmation && document.location.assign(newUrl);
+					});
 				});
 			});
 			jQuery('.complete-task, .delete-task').on('click',function(e){
 				e.preventDefault();
 				var newUrl = jQuery(this).attr('href') + '?redirect=' + jQuery(location).attr('href');
-				window.location.href = newUrl;
+				//window.location.href = newUrl;
+				bootbox.confirm("Are you Sure want to delete this Task?", function (confirmation) {
+					confirmation && document.location.assign(newUrl);
+				});
 			});
 		}
 	};

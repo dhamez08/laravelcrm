@@ -48,6 +48,10 @@ class Clients extends \Eloquent{
 		return $this->hasMany('\CustomerProfileImages\CustomerProfileImages','customer_id','id');
 	}
 
+	public function notes(){
+		return $this->hasMany('\CustomerNotes\CustomerNotes','customer_id','id');
+	}
+
 	public function scopeClientId($query, $id){
 		return $query->where('id','=',$id);
 	}
