@@ -101,26 +101,31 @@ var CreateTask = (function(){
 				    //startDate: '+0d',
 				    format: dateClientFormat
 				});
-			    jQuery(this).removeData('bs.modal');
+
 			    var url = baseURL + '/clients/typeahead-client';
 
 			    var redirectUrl = jQuery(location).attr('href');
 			    jQuery(this).find('#redirect').val(redirectUrl);
+
 			    GetClient.init('get-clients', '.getclient', url, '#customer_id', 'Name');
 			    ajaxCreateTask();
 			    jQuery('.complete-task, .delete-task').on('click',function(e){
 					e.preventDefault();
 					var newUrl = jQuery(this).attr('href') + '?redirect=' + jQuery(location).attr('href');
-					window.location.href = newUrl;
+					//var _link = jQuery(this);
+					//window.location.href = newUrl;
+					bootbox.confirm("Are you Sure want to delete this Task?", function (confirmation) {
+						confirmation && document.location.assign(newUrl);
+					});
 				});
-			});
-			jQuery('body').on('hidden.bs.modal', '.ajaxModal', function() {
-			    //jQuery(this).removeData('bs.modal');
 			});
 			jQuery('.complete-task, .delete-task').on('click',function(e){
 				e.preventDefault();
 				var newUrl = jQuery(this).attr('href') + '?redirect=' + jQuery(location).attr('href');
-				window.location.href = newUrl;
+				//window.location.href = newUrl;
+				bootbox.confirm("Are you Sure want to delete this Task?", function (confirmation) {
+					confirmation && document.location.assign(newUrl);
+				});
 			});
 		}
 	};

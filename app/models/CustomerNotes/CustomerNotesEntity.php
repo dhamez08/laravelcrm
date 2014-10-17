@@ -36,19 +36,40 @@ class CustomerNotesEntity extends \Eloquent{
 	 * 												#1 would be active
 	 * @return db last insert id
 	 * */
-	public function createOrUpdate($id = null){
+	public function createOrUpdate($arrayData = array(), $id = null){
 		if( is_null($id) ) {
 			//create
-			$notes = new \CustomerNotes\CustomerNotes;
+			$obj = new \CustomerNotes\CustomerNotes;
 		}else{
 			//update
-			$notes = \CustomerNotes\CustomerNotes::find($id);
+			$obj = \CustomerNotes\CustomerNotes::find($id);
 		}
-		$notes->customer_id = \Input('customer_id',\Auth::id());
-		$notes->added_by = \Input('added_by',0);
-		$notes->note = \Input('note','');
-		$notes->file = \Input('file','');
-		$notes->save();
+		if( count($arrayData) > 0 ){
+			foreach($arrayData as $key=>$val){
+				$obj->$key = $val;
+			}
+			$obj->save();
+			return $obj;
+		}else{
+			return false;
+		}
+	}
+
+	public function getNotes($customerId, $addedBy){
+		$notes = \CustomerNotes\CustomerNotes::customerId($customerId)
+		->addedBy($addedBy)
+		->with('user')
+		->with('customer')
+		->orderBy('created_at','desc');
 		return $notes;
+	}
+
+	public function removeNoteAttachFile($file){
+		$path = public_path() . '/documents/' . $file;
+		if( \File::exists($path) ){
+			\File::delete($path);
+		}else{
+			return false;
+		}
 	}
 }
