@@ -32,4 +32,15 @@ class CustomTabNotesDataEntity extends \Eloquent{
 		return self::$instance;
 	}
 
+
+	public function getNotesBySection_Custom_Customer($section, $custom, $customer_id) {
+
+		return $this->where('section',$section)
+					->where('custom_id',$custom)
+					->where('customer_id',$customer_id)
+					->whereNull('deleted_at')
+					->get();
+
+	}
+
 }
