@@ -63,4 +63,13 @@ class CustomerNotesEntity extends \Eloquent{
 		->orderBy('created_at','desc');
 		return $notes;
 	}
+
+	public function removeNoteAttachFile($file){
+		$path = public_path() . '/documents/' . $file;
+		if( \File::exists($path) ){
+			\File::delete($path);
+		}else{
+			return false;
+		}
+	}
 }

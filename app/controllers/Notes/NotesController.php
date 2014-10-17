@@ -146,6 +146,7 @@ class NotesController extends \BaseController {
 		->customerId($customerid)
 		->addedBy(\Auth::id());
 		if($Note->count() > 0){
+			\CustomerNotes\CustomerNotesEntity::get_instance()->removeNoteAttachFile($Note->pluck('file'));
 			$Note->delete();
 			if(\Input::has('redirect')){
 				\Session::flash('message', 'Successfully Deleted Note');
