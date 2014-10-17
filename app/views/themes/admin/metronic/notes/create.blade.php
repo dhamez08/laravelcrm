@@ -29,6 +29,7 @@
 			  	</ul>
 			</div>
 			{{Form::hidden('customerid',$customerId,array('id'=>'customerid'))}}
+			{{Form::hidden('redirect',null,array('id'=>'redirect'))}}
 			{{Form::close()}}
 		</div>
 	</div>

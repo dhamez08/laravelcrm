@@ -81,14 +81,62 @@ class NotesController extends \BaseController {
 		return \View::make( $data['include'] . '.create', $data )->render();
 	}
 
+	/**
+	 * This is a helper to upload logo
+	 *
+	 * @param	$groupID	int		id of the group
+	 * @see method updateLogo
+	 * @return filename
+	 * */
+	private function _doUpload($fileName){
+		// set the file name
+		// prefix first
+		// group id
+		// time
+		$file_name = $this->prefixNoteFileName . '_' . time() . '.' . \Input::file($fileName)->getClientOriginalExtension();
+		// upload
+		$upload_success = \Input::file($fileName)->move($this->noteFolder, $file_name);
+		if($upload_success ){
+			return $file_name;
+		}
+	}
+
 	public function postAjaxCreateNote($clientId){
-		$arr = array(
-			$clientId,
-			\Input::file('notefile'),
-			\Input::all()
+		$rules = array(
+			'note' => 'required',
+			'notefile' => 'mimes:pdf,doc,docx,gif,jpg,png',
 		);
-		var_dump($arr);
-		//return \Response::json(array('result'=>false,'message'=>$arr));
+		$messages = array(
+			'note.required'=>'Note is required',
+			'notefile.mimes'=>'File format is invalid',
+		);
+
+		$validator = \Validator::make(\Input::all(), $rules, $messages);
+
+		if($validator->passes()){
+			$fileName = $this->_doUpload('notefile');
+			if( $fileName ){
+				$data = array(
+					'note' => \Input::get('note'),
+					'customer_id' => \Input::get('customerid'),
+					'added_by' => \Auth::id(),
+					'file' => $fileName,
+				);
+				\CustomerNotes\CustomerNotesEntity::get_instance()->createOrUpdate($data);
+
+				\Session::flash('message', 'Successfully Added Note' );
+				if( \Input::has('redirect') ){
+					return \Response::json(array('result'=>true,'redirect'=>\Input::get('redirect')));
+				}else{
+					return \Response::json(array('result'=>true));
+				}
+			}else{
+				return \Response::json(array('result'=>false,'message'=>'Upload error'));
+			}
+		}else{
+			$msg = $validator->messages()->all('<li class="list-group-item list-group-item-danger">:message</li>');
+			return \Response::json(array('result'=>false,'message'=>$msg));
+		}
 		die();
 	}
 

@@ -54,8 +54,4 @@ class CustomerNotesEntity extends \Eloquent{
 			return false;
 		}
 	}
-
-	public function uploadFile(){
-	}
-
 }

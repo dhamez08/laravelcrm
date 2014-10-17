@@ -27,8 +27,6 @@ var Notes = function () {
 			  contentType: false
 			});
 			request.done(function(msg){
-				jQuery('.ajax-container-msg').switchClass('hide','show');
-				jQuery('.ajax-container-msg').html(msg);
 				if( !msg.result ){
 					jQuery('.ajax-error-msg li').remove();
 					jQuery('.ajax-error-msg').append(msg.message);
@@ -46,6 +44,9 @@ var Notes = function () {
 
     var modalOnLoaded = function() {
         jQuery('body').on('loaded.bs.modal', '.modal', function () {
+			 var redirectUrl = jQuery(location).attr('href');
+			 jQuery(this).find('#redirect').val(redirectUrl);
+
 			 createNotes();
 		});
     }
