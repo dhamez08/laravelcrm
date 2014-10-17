@@ -4,7 +4,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="portlet light bordered">
-				<div class="portlet-title">
+				<div class="portlet-title" style="border-bottom:0px">
 					@if($customtab->section1)
 						<div class="caption font-green-sharp">
 							<i class="icon-speech font-green-sharp"></i>
@@ -68,7 +68,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="portlet light bordered">
-				<div class="portlet-title">
+				<div class="portlet-title" style="border-bottom:0px">
 					@if($customtab->section2)
 						<div class="caption font-green-sharp">
 							<i class="icon-speech font-green-sharp"></i>
@@ -131,7 +131,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="portlet light bordered">
-				<div class="portlet-title">
+				<div class="portlet-title" style="border-bottom:0px">
 					@if($customtab->section3)
 						<div class="caption font-green-sharp">
 							<i class="icon-speech font-green-sharp"></i>
@@ -158,7 +158,25 @@
 					<div class="" style="position: relative; overflow-y: auto; width: auto; height: 200px;">
 					@if($customtab->section3)
 						@if($customtab->section3==1)
-							No data has been added.
+							<?php
+							$results = \CustomTabNotesData\CustomTabNotesDataEntity::get_instance()->getNotesBySection_Custom_Customer(3, $customtab->id, $customer->id);
+							?>
+
+							@if(count($results)>0)
+							<table class="table">
+								@foreach($results as $result)
+									<tr>
+										<td>Added - {{ date("d/m/Y H:i",strtotime($result->created_at)) }}<br />{{ $result->entry }}</td>
+										<td align="right">
+										<a href="{{ url('custom-tab/delete-note/'.$result->id.'/'.$customer->id.'/'.$customtab->id) }}" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-circle red-intense btn-sm">Delete</a>
+										</td>
+									</tr>
+								@endforeach
+							</table>
+							@else
+								No data has been added.
+							@endif
+
 						@elseif($customtab->section3==2)
 							No data has been added.
 						@elseif($customtab->section3==3)
@@ -194,7 +212,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="portlet light bordered">
-				<div class="portlet-title">
+				<div class="portlet-title" style="border-bottom:0px">
 					@if($customtab->section4)
 						<div class="caption font-green-sharp">
 							<i class="icon-speech font-green-sharp"></i>

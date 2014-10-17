@@ -56,6 +56,20 @@ class CustomTabController extends \BaseController {
 		}
 	}
 
+	public function getDeleteNote($id, $customer_id, $custom_id) {
+		$notesObj = \CustomTabNotesData\CustomTabNotesDataEntity::where('id',$id)->where('customer_id', $customer_id)->first();
+		if($notesObj) {
+			$notesObj->delete();
+
+			\Session::flash('message', 'Successfully Deleted!');
+			return \Redirect::to('clients/custom/'.$customer_id.'?custom='.$custom_id);
+			
+		} else {
+			return \Redirect::to('clients/custom/'.$customer_id.'?custom='.$custom_id)
+					->withErrors(['There was a problem, please try again']);
+		}
+	}
+
 	public function postAddFile() {
 
 	}
