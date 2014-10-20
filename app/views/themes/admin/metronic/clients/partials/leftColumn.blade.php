@@ -6,10 +6,10 @@
 	-->
 	<div class="panel-body">
 		 <div class="row">
-		 	<div class="col-md-3">
+		 	<div class="col-md-12">
 		 		<img src="{{$asset_path . '/global/img/summary_person.png'}}" alt="profile pic" class="profilePic"/>
 		 	</div>
-		 	<div class="col-md-9">
+		 	<div class="col-md-12">
 		 		<p>{{$currentClient->displayCustomerName()}}</p>
 		 		@if( $belongToPartner )
 					@if( $belongToPartner->type == 2 )

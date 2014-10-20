@@ -180,7 +180,7 @@ class ClientsController extends \BaseController {
 	public function getIndex(){
 		$data 						= $this->data_view;
 		$data['pageTitle'] 			= 'Client';
-		$data['contentClass'] 		= '';
+		$data['contentClass'] 		= 'no-gutter';
 		$data['portlet_body_class']	= 'form';
 		$data['portlet_title']		= 'Client';
 		$data['fa_icons']			= 'user';
@@ -489,7 +489,7 @@ class ClientsController extends \BaseController {
 
 		$data 						= $this->data_view;
 		$data['pageTitle'] 			= 'Client';
-		$data['contentClass'] 		= '';
+		$data['contentClass'] 		= 'main-gutter-summary';
 		$data['portlet_body_class']	= 'form';
 		$data['portlet_title']		= 'Client';
 		$data['fa_icons']			= 'user';

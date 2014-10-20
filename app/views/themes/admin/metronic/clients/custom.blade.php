@@ -36,7 +36,7 @@
 
 			<!-- END CLIENT LEFT SIDEBAR -->
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-8">
 			<!-- CENTER COLUMN -->
 			@include($view_path.'.clients.partials.center_column.'.$center_column_view)
 			<!-- END CENTER COLUMN -->
@@ -52,7 +52,7 @@
 @section('script-footer')
 	@parent
 	@section('footer-custom-js')
-		
+
 
 	@stop
 @stop
