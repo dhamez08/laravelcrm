@@ -115,25 +115,28 @@ class NotesController extends \BaseController {
 		$validator = \Validator::make(\Input::all(), $rules, $messages);
 
 		if($validator->passes()){
-			$fileName = $this->_doUpload('notefile');
-			if( $fileName ){
-				$data = array(
-					'note' => \Input::get('note'),
-					'customer_id' => \Input::get('customerid'),
-					'added_by' => \Auth::id(),
-					'file' => $fileName,
-				);
-				\CustomerNotes\CustomerNotesEntity::get_instance()->createOrUpdate($data);
 
-				\Session::flash('message', 'Successfully Added Note' );
-				if( \Input::has('redirect') ){
-					return \Response::json(array('result'=>true,'redirect'=>\Input::get('redirect')));
-				}else{
-					return \Response::json(array('result'=>true));
-				}
+			if( \Input::hasFile('notefile') ){
+				$fileName = $this->_doUpload('notefile');
 			}else{
-				return \Response::json(array('result'=>false,'message'=>'Upload error'));
+				$fileName = '';
 			}
+
+			$data = array(
+				'note' => \Input::get('note'),
+				'customer_id' => \Input::get('customerid'),
+				'added_by' => \Auth::id(),
+				'file' => $fileName,
+			);
+			\CustomerNotes\CustomerNotesEntity::get_instance()->createOrUpdate($data);
+
+			\Session::flash('message', 'Successfully Added Note' );
+			if( \Input::has('redirect') ){
+				return \Response::json(array('result'=>true,'redirect'=>\Input::get('redirect')));
+			}else{
+				return \Response::json(array('result'=>true));
+			}
+
 		}else{
 			$msg = $validator->messages()->all('<li class="list-group-item list-group-item-danger">:message</li>');
 			return \Response::json(array('result'=>false,'message'=>$msg));

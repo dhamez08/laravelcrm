@@ -64,7 +64,7 @@
 
 			<!-- END CLIENT LEFT SIDEBAR -->
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-8">
 			<!-- CENTER COLUMN -->
 			@include($view_path.'.clients.partials.center_column.'.$center_column_view)
 			<!-- END CENTER COLUMN -->
@@ -80,7 +80,7 @@
 @section('script-footer')
 	@parent
 	@section('footer-custom-js')
-
+	
 	<script type="text/javascript">
 		$(document).on("ready", function() {
 			$(".view-data-form").on("click", function(e) {
@@ -93,7 +93,7 @@
 				});
 			});
 		});
-	</script>		
+	</script>
 
 	@stop
 @stop

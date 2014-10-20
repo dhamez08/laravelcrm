@@ -78,3 +78,10 @@ ul.client-social-icons {
 .fc-day-grid-event > .fc-content{
 	white-space: normal;
 }
+.col-summary{
+	/*margin-left: -35px;
+	padding-left: 0;
+    padding-right: 0;*/
+    padding-left: 5px;
+    padding-right: 5px;
+}

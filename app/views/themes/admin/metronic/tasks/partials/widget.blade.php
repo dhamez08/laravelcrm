@@ -41,7 +41,7 @@
 									{{$task->displayTaskFullName()}}
 									</a>
 								</span>
-								<div class="task-config-btn btn-group">
+								<div class="task-config-btn btn-group hide">
 									<a class="btn btn-xs default" href="#" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 									<i class="fa fa-cog"></i><i class="fa fa-angle-down"></i>
 									</a>
