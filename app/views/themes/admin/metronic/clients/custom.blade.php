@@ -10,6 +10,34 @@
 		.portlet.light.bordered > .portlet-title {
 			border: 0px;
 		}
+
+		.radio input[type=radio] {
+			position: relative;
+			float:left;
+		}
+
+		.checkbox input[type=checkbox] {
+			position: relative;
+			float:left;
+		}
+
+		#content-form-data input[type="text"] {
+			border:0px;
+			font-weight: bold;
+		}
+		#content-form-data select {
+		    -webkit-appearance: none;
+		    -moz-appearance: none;
+		    text-indent: 1px;
+		    text-overflow: '';
+		}
+		#content-form-data .form-control[disabled] {
+			background: none;
+			cursor: default;
+			border: 0px;
+			font-weight: bold;
+			padding-left: 0px;
+		}
 		</style>
 	@stop
 @stop
@@ -52,7 +80,20 @@
 @section('script-footer')
 	@parent
 	@section('footer-custom-js')
-		
+
+	<script type="text/javascript">
+		$(document).on("ready", function() {
+			$(".view-data-form").on("click", function(e) {
+				e.preventDefault();
+				$this = $(this);
+				$.get("{{ url('settings/custom-forms/form-data') }}/"+$this.attr("data-ref-id"), function(responce) {
+					$("#form-data-modal #content-form-data").html(responce);
+					$("#form-data-modal #content-form-name").html($this.attr("data-form-name"));
+					$("#form-data-modal").modal("show");
+				});
+			});
+		});
+	</script>		
 
 	@stop
 @stop

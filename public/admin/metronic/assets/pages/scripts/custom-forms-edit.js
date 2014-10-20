@@ -265,14 +265,23 @@
 		$(values.options.split('\n')).each(function(i,o) {
 			var label = $(label_template).clone().text($.trim(o))
 			var checkbox = $(checkbox_template).clone();
-			checkbox[0].name = values.name;
+			checkbox[0].name = values.name+'[]';
+			checkbox[0].value = $.trim(o);
 			label.append(checkbox);
 			$(ctrl).append(label);
 		});
 	}
 	
-	// Multi-select customization behaves same as combobox
-	save_changes.selectmultiplelist = save_changes.combobox;
+	save_changes.selectmultiplelist = function(values) {
+		console.log(values);
+		var div_ctrl = $("#"+values.forCtrl);
+		var ctrl = div_ctrl.find("select")[0];
+		ctrl.name = values.name+'[]';
+		$(ctrl).empty();
+		$(values.options.split('\n')).each(function(i,o) {
+			$(ctrl).append("<option>"+$.trim(o)+"</option>");
+		});
+	}
 	
 	/* Specific method for Button */
 	save_changes.btn = function(values) {

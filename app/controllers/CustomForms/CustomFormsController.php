@@ -215,54 +215,6 @@ class CustomFormsController extends \BaseController {
 		}
 	}
 
-	public function postUpdateForm($id) {
-		$form = $this->customFormEntity->find($id);
-		if($form) {
-
-			$form->name = \Input::get('custom_form_name');
-			$form->desc = \Input::get('custom_form_desc');
-			$form->save();
-
-			// clear current form options
-			$form->builds()->forceDelete();
-
-			$item_name = \Input::get('item_name');
-			$item_type = \Input::get('item_type');
-			$item_placeholder = \Input::get('item_placeholder');
-			$item_values = \Input::get('item_values');
-
-			if($item_name) {
-				foreach($item_name as $key => $name) {
-					$values_json = "";
-					if (trim($name)!="") {
-						if ($item_type[$key]==2) {
-							$values_list = array();
-							$values = $item_values[$key];
-							if (trim($values)!="") {
-								$values_explode = explode(';', trim($values));
-								$values_json = json_encode($values_explode);
-							}
-						}
-
-						$item = array(
-							'form_id' => $form->id,
-							'label' => $name,
-							'type' => $item_type[$key],
-							'placeholder' => $item_placeholder[$key],
-							'value' => $values_json
-						);
-
-						$this->customFormBuildEntity->saveItem($item);
-					}
-				}
-			}
-
-		}
-
-		\Session::flash('message', 'The Form was successfully updated');
-		return \Redirect::to('settings/custom-forms');
-	}
-
 	public function postSubmitData() {
 
 		$datas = array();
@@ -282,19 +234,103 @@ class CustomFormsController extends \BaseController {
 				'customer_id'	=>	\Input::get('customer_id'),
 				'field_name'	=>	$key,
 				'ref_id'		=>	$ref_id,
-				'value'			=>	$data
+				'value'			=>	is_array($data) ? json_encode($data): $data
 			);
 
 			//insert
 			\CustomFormData\CustomFormData::create($row);
+
 		}
 
 		\Session::flash('message', 'Successfully Added!');
 		return \Redirect::to('clients/custom/'.\Input::get('customer_id').'?custom='.\Input::get('custom_id'));
 	}
 
-	public function getFormData($id) {
+	private function isJson($string) {
+	 json_decode($string);
+	 return (json_last_error() == JSON_ERROR_NONE);
+	}
+
+	public function getFormData($ref_id) {
 		$formDataEntity = new \CustomFormData\CustomFormDataEntity;
+
+		$form_id = "";
+		$customer_id="";
+
+		$data = array();
+
+		$fields = $formDataEntity->where('ref_id', $ref_id)->get();
+
+		foreach ($fields as $field) {
+			$data[$field->field_name] = $this->isJson($field->value) ? json_decode($field->value) : $field->value;
+			$form_id = $field->form_id;
+			$customer_id = $field->customer_id;
+		}
+
+		//dd($data);
+
+		//get the form build
+		$formEntity = new \CustomForm\CustomFormEntity;
+		$form= $formEntity->find($form_id);
+
+		$doc = new \DOMDocument;
+		$doc->loadhtml($form->build);
+		$xpath = new \DOMXpath($doc);
+
+		$inputs = $xpath->query('//input | //select | //textarea');
+
+
+		foreach($inputs as $input) {
+
+			if($input->nodeName=='input' && $input->getAttribute('type')=='text') {
+				$input->setAttribute('value', $data[$input->getAttribute('name')]);
+				$input->setAttribute('disabled', "disabled");
+			} elseif($input->nodeName=='select' && !$input->hasAttribute('multiple')) {
+				$nodes = $input->childNodes;
+				foreach ($nodes as $node) {
+					if(strtolower($node->nodeValue)==strtolower($data[$input->getAttribute('name')])) {
+						$node->setAttribute('selected', 'selected');
+
+					}
+				}
+
+				$input->setAttribute('disabled', "disabled");
+
+			} elseif($input->nodeName=='input' && $input->getAttribute('type')=='radio') {
+				if($input->getAttribute('value')==$data[$input->getAttribute('name')]) {
+					$input->setAttribute('checked','checked');
+				}
+				$input->setAttribute('disabled', "disabled");
+			} elseif($input->nodeName=='textarea') {
+				$input->nodeValue = $data[$input->getAttribute('name')];
+				$input->setAttribute('disabled', "disabled");
+			} elseif($input->nodeName=='input' && $input->getAttribute('type')=='checkbox') {
+				$input_name = str_replace("[]", "", $input->getAttribute('name'));
+
+				if(in_array($input->getAttribute('value'), $data[$input_name])) {
+					$input->setAttribute('checked','checked');
+				}
+			} elseif($input->nodeName=='select' && $input->hasAttribute('multiple')) {
+				$input_name = str_replace("[]", "", $input->getAttribute('name'));
+				$input->setAttribute('size',count($data[$input_name]));
+				$nodes = $input->childNodes;
+				foreach ($nodes as $node) { 
+					if(in_array($node->nodeValue, $data[$input_name])) {
+						$node->setAttribute('selected', 'selected');
+					}
+				}
+
+				$input->setAttribute('disabled', "disabled");
+			}
+			
+		}
+
+		//echo '<link href="http://one23.dev/public/admin/metronic/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">';
+
+
+		return $doc->saveHTML();
+
+		//dd($form->build);
 	}
 
 }
