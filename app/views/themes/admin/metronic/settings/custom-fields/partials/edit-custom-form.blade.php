@@ -91,6 +91,12 @@
 			float:left;
 		}
 
+		
+		.col-sm-6 {
+			width: 50%;
+			float:left;
+		}
+
 	</style>
 
 
@@ -299,47 +305,30 @@
 					    </div>							
 					    <div class="portlet-body" style="padding:15px" id="selected-content">
 					    @if(empty($form->build))
-						    <table class="table" style="border:0px;">
-						    	<tr>
-							    	<td style="width:50%;border:0px;padding:0px">
-							    		<div id="selected-column-1" class="droppedFields"></div>
-							    	</td>
-							    	<td style="width:50%;border:0px;padding:0px">
-							    		<div id="selected-column-2" class="droppedFields"></div>
-							    	</td>
-							    </tr>
-							    <tr>
-							    	<td colspan="2" style="width:100%;border:0px;padding:0px">
-							    		<div id="selected-column-3" class="droppedFields"></div>
-							    	</td>
-							    </tr>
-							    <tr>
-							    	<td style="width:50%;border:0px;padding:0px">
-							    		<div id="selected-column-4" class="droppedFields"></div>
-							    	</td>
-							    	<td style="width:50%;border:0px;padding:0px">
-							    		<div id="selected-column-5" class="droppedFields"></div>
-							    	</td>
-							    </tr>
-							    <tr>
-							    	<td colspan="2" style="width:100%;border:0px;padding:0px">
-							    		<div id="selected-column-6" class="droppedFields"></div>
-							    	</td>
-							    </tr>
-							    <tr>
-							    	<td style="width:50%;border:0px;padding:0px">
-							    		<div id="selected-column-7" class="droppedFields"></div>
-							    	</td>
-							    	<td style="width:50%;border:0px;padding:0px">
-							    		<div id="selected-column-8" class="droppedFields"></div>
-							    	</td>
-							    </tr>
-							    <tr>
-							    	<td colspan="2" style="width:100%;border:0px;padding:0px">
-							    		<div id="selected-column-9" class="droppedFields"></div>
-							    	</td>
-							    </tr>
-							</table>
+						    <div class="row">
+					    		<div id="selected-column-1" class="droppedFields col-sm-6"></div>
+					    		<div id="selected-column-2" class="droppedFields col-sm-6"></div>
+							</div>
+							<div class="row">
+					    		<div id="selected-column-3" class="droppedFields col-sm-6"></div>
+					    		<div id="selected-column-4" class="droppedFields col-sm-6"></div>
+							</div>
+							<div class="row">
+					    		<div id="selected-column-5" class="droppedFields col-sm-6"></div>
+					    		<div id="selected-column-6" class="droppedFields col-sm-6"></div>
+							</div>
+							<div class="row">
+					    		<div id="selected-column-7" class="droppedFields col-sm-6"></div>
+					    		<div id="selected-column-8" class="droppedFields col-sm-6"></div>
+							</div>
+							<div class="row">
+					    		<div id="selected-column-9" class="droppedFields col-sm-6"></div>
+					    		<div id="selected-column-10" class="droppedFields col-sm-6"></div>
+							</div>
+							<div class="row">
+					    		<div id="selected-column-11" class="droppedFields col-sm-6"></div>
+					    		<div id="selected-column-12" class="droppedFields col-sm-6"></div>
+							</div>
 						@else
 							{{ $form->build }}
 						@endif
