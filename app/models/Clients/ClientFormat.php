@@ -92,12 +92,23 @@ class ClientFormat extends Facade{
 		return $this->address_line_1.' '.$this->address_line_2.' '.$this->town.' '.$this->county.' '.( $long ? $this->postcode:' ');
 	}
 
+	public function displayHtmlAddress(){
+		$address = '<address>';
+		$address .= $this->address_line_1.'<br>';
+		$address .= (!empty($this->address_line_2)) ? $this->address_line_2.'<br>':'';
+		$address .= $this->town.'<br>';
+		$address .= (!empty($this->county)) ? $this->county.'<br>':'';
+		$address .= $this->postcode.'<br>';
+		$address .= '</address>';
+		return $address;
+	}
+
 	public function displayGoogleMapLink(){
-		return "http://maps.google.co.uk/maps?hl=en&safe=off&q=".$this->displayCustomerAddress();
+		return "http://maps.google.co.uk/maps?hl=en&safe=off&q=".$this->postcode;
 	}
 
 	public function displayGoogleMapDirectionLink(){
-		return "http://maps.google.co.uk/maps?daddr=".$this->displayCustomerAddress();
+		return "http://maps.google.co.uk/maps?daddr=".$this->postcode;
 	}
 
 	public function parseDate($value, $dateFormat = 'Y-m-d'){

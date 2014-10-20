@@ -51,7 +51,7 @@
 			array(
 				'class'=>'form-control input-sm input-sm',
 				'data-provide'=>'datepicker',
-				'data-date-format'=>'yyyy-mm-dd'
+				'data-date-format'=>'dd/mm/yyyy'
 			)
 		);
 	}}

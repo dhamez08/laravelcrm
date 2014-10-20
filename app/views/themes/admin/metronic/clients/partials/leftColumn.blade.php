@@ -63,12 +63,12 @@
 								</p>
 							@endforeach
 						@endif
-						<address>{{$currentClient->displayCustomerAddress()}}</address>
+						{{$currentClient->displayHtmlAddress()}}
 						<p class="form-control-static">
 							<a href="{{$currentClient->displayGoogleMapLink()}}" target="_blank">show on map</a>
 							| <a href="{{$currentClient->displayGoogleMapDirectionLink()}}" target="_blank">get directions</a>
 						</p>
-						<p class="form-control-static">Date of Birth: <strong>{{$currentClient->displayDob('l jS \\of F Y')}}</strong></p>
+						<p class="form-control-static">Date of Birth: <strong>{{$currentClient->displayDob('d/m/Y')}}</strong></p>
 						<p class="form-control-static">Smoker: <strong>{{($currentClient->smoker == 1) ? 'Yes':'No'}}</strong></p>
 						<p class="form-control-static">Marital Status: <strong>{{$currentClient->marital_status}}</strong></p>
 						<p class="form-control-static">Living Status: <strong>{{$currentClient->living_status}}</strong></p>

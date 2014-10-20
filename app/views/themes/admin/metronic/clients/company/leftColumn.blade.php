@@ -45,7 +45,7 @@
 								</p>
 							@endforeach
 						@endif
-						<address>{{$currentClient->displayCustomerAddress()}}</address>
+						{{$currentClient->displayHtmlAddress()}}
 						<p class="form-control-static">
 							<a href="{{$currentClient->displayGoogleMapLink()}}" target="_blank">show on map</a>
 							| <a href="{{$currentClient->displayGoogleMapDirectionLink()}}" target="_blank">get directions</a>

@@ -47,9 +47,11 @@
 	{{
 		Form::text(
 			'dob',
-			($customer->dob == '0000-00-00' ) ? '':null,
+			($customer->dob == '0000-00-00' ) ? '':\Clients\ClientEntity::get_instance()->convertDate($customer->dob),
 			array(
-				'class'=>'form-control input-sm input-sm dob',
+				'class'=>'form-control input-sm',
+				'data-provide'=>'datepicker',
+				'data-date-format'=>'dd/mm/yyyy'
 			)
 		);
 	}}

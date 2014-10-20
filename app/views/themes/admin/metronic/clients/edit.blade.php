@@ -139,6 +139,7 @@
 				deleteURL.init();
 				deleteEmail.init();
 				deletePerson.init();
+				addPartner.init();
 			});
 		</script>
 	@stop

@@ -63,6 +63,7 @@
 							($customer->dob == '0000-00-00' ) ? '':null,
 							array(
 								'class'=>'form-control input-sm input-sm dob',
+								'data-date-format'=>'dd/mm/yyyy'
 							)
 						);
 					}}

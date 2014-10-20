@@ -134,12 +134,17 @@ class ClientEntity extends \Eloquent{
 		return $clients;
 	}
 
-	public function convertDate($value = 0, $dateFormat = 'Y-m-d'){
+	public function convertDate($value = 0, $dateFormat = 'd/m/Y'){
 		if( $value != 0 ){
 			return \Carbon\Carbon::parse( $value )->format($dateFormat);
 		}else{
 			return "0000-00-00";
 		}
+	}
+
+	public function convertToMysqlDate($dateValue){
+		$date = \Carbon\Carbon::createFromFormat('d/m/Y',$dateValue);
+		return $date->instance($date)->toDateString();
 	}
 
 	public function getCustomerList($belongsTo, $arrayType = array()){
@@ -236,9 +241,9 @@ class ClientEntity extends \Eloquent{
 			if($parse_val->type == 2){
 				$typehead[] = array('id'=>$parse_val->id,'Name'=>$parse_val->company_name);
 			}else{
-				$typehead[] = array('id'=>$parse_val->id,'Name'=>$parse_val->first_name . $parse_val->last_name);	
+				$typehead[] = array('id'=>$parse_val->id,'Name'=>$parse_val->first_name . $parse_val->last_name);
 			}
-			
+
 		}
 		return json_encode($typehead);
 	}

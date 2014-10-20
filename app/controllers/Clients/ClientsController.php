@@ -335,7 +335,7 @@ class ClientsController extends \BaseController {
 	public function postCreateClient(){
 		\Input::merge(
 			array(
-				'dob' => \Clients\ClientEntity::get_instance()->convertDate(\Input::get('dob')),
+				'dob' => \Clients\ClientEntity::get_instance()->convertToMysqlDate(\Input::get('dob')),
 				'ref' => \Auth::id().time(),
 				'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
 				'belongs_user' => \Auth::id(),
@@ -378,8 +378,11 @@ class ClientsController extends \BaseController {
 
 		if ( $validator->passes() ) {
 			\Input::merge(
-				array('type'=>1)
+				array(
+					'type'=>1,
+				)
 			);
+
 			$customer = \Clients\ClientEntity::get_instance()->createOrUpdate();
 
 			//check if customer went in
@@ -389,7 +392,7 @@ class ClientsController extends \BaseController {
 					\Input::merge(
 						array(
 							'type'=>1,
-							'partner_dob' => \Clients\ClientEntity::get_instance()->convertDate(\Input::get('partner_dob')),
+							'partner_dob' => \Clients\ClientEntity::get_instance()->convertToMysqlDate(\Input::get('partner_dob')),
 							'ref' => \Auth::id().time(),
 							'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
 							'belongs_user' => \Auth::id(),
@@ -425,7 +428,7 @@ class ClientsController extends \BaseController {
 						if( trim($val['firstname']) != '' ){
 							\Input::merge(
 								array(
-									'dob' => \Clients\ClientEntity::get_instance()->convertDate($val['dob']),
+									'dob' => \Clients\ClientEntity::get_instance()->convertToMysqlDate($val['dob']),
 									'ref' => \Auth::id() . time() . rand(1,9),
 									'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
 									'belongs_user' => \Auth::id(),
@@ -519,7 +522,7 @@ class ClientsController extends \BaseController {
 	public function putClientUpdate($clientId){
 		\Input::merge(
 			array(
-				'dob' => \Clients\ClientEntity::get_instance()->convertDate(\Input::get('dob')),
+				'dob' => \Clients\ClientEntity::get_instance()->convertToMysqlDate(\Input::get('dob')),
 				'ref' => \Auth::id().time(),
 				'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
 				'belongs_user' => \Auth::id(),
@@ -1231,7 +1234,7 @@ class ClientsController extends \BaseController {
 			if (\Input::get('relationship')=="Spouse/Partner") {
 				\Input::merge(
 					array(
-						'dob' => \Clients\ClientEntity::get_instance()->convertDate(\Input::get('dob')),
+						'dob' => \Clients\ClientEntity::get_instance()->convertToMysqlDate(\Input::get('dob')),
 						'ref' => \Auth::id() . time() . rand(1,9),
 						'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
 						'belongs_user' => \Auth::id(),
@@ -1243,14 +1246,14 @@ class ClientsController extends \BaseController {
 						'partner_title' => \Input::get('title'),
 						'partner_first_name' => \Input::get('first_name'),
 						'partner_last_name' => \Input::get('last_name'),
-						'partner_dob' => \Clients\ClientEntity::get_instance()->convertDate(\Input::get('dob')),
+						'partner_dob' => \Clients\ClientEntity::get_instance()->convertToMysqlDate(\Input::get('dob')),
 						'type' => 3,
 					)
 				);
 			} else {
 				\Input::merge(
 					array(
-						'dob' => \Clients\ClientEntity::get_instance()->convertDate(\Input::get('dob')),
+						'dob' => \Clients\ClientEntity::get_instance()->convertToMysqlDate(\Input::get('dob')),
 						'ref' => \Auth::id() . time() . rand(1,9),
 						'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
 						'belongs_user' => \Auth::id(),
@@ -1311,7 +1314,7 @@ class ClientsController extends \BaseController {
 		if (\Input::get('relationship')=="Spouse/Partner") {
 			\Input::merge(
 				array(
-					'dob' => \Clients\ClientEntity::get_instance()->convertDate(\Input::get('dob')),
+					'dob' => \Clients\ClientEntity::get_instance()->convertToMysqlDate(\Input::get('dob')),
 					'ref' => \Auth::id() . time() . rand(1,9),
 					'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
 					'belongs_user' => \Auth::id(),
@@ -1323,14 +1326,14 @@ class ClientsController extends \BaseController {
 					'partner_title' => \Input::get('title'),
 					'partner_first_name' => \Input::get('first_name'),
 					'partner_last_name' => \Input::get('last_name'),
-					'partner_dob' => \Clients\ClientEntity::get_instance()->convertDate(\Input::get('dob')),
+					'partner_dob' => \Clients\ClientEntity::get_instance()->convertToMysqlDate(\Input::get('dob')),
 					'type' => 3,
 				)
 			);
 		} else {
 			\Input::merge(
 				array(
-					'dob' => \Clients\ClientEntity::get_instance()->convertDate(\Input::get('dob')),
+					'dob' => \Clients\ClientEntity::get_instance()->convertToMysqlDate(\Input::get('dob')),
 					'ref' => \Auth::id() . time() . rand(1,9),
 					'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
 					'belongs_user' => \Auth::id(),
