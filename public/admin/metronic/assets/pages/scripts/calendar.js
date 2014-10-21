@@ -20,10 +20,11 @@ var TaskCalendar = function () {
                 defaultView: 'month',
                 slotMinutes: 30,
                 eventLimit: true,
+                height: 550,
                 header: {
-                        left: 'prev,next today',
-                        center: 'title',
-                        right: 'month,agendaWeek,agendaDay',
+                        left: 'title',
+                        center: '',
+                        right: 'prev,next,today,month,agendaWeek,agendaDay',
                 },
                 events: {
                     url: $url + '/calendar/task-calendar',
