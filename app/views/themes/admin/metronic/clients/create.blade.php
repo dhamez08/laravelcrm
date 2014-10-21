@@ -33,29 +33,40 @@
 			array(
 					'action' => array('Clients\ClientsController@postCreateClient'),
 					'method' => 'POST',
+					'class' => 'form-horizontal',
 					'role'=>'form',
 				)
 			)
 		}}
-		<div class="form-body">
-			<div class="col-md-12">
-				{{Form::submit('Add Client',array('class'=>"btn blue"))}}
-				<a class="btn {{{$dashboard_css or 'blue'}}}" href="{{url('clients')}}">Cancel</a>
-			</div>
+		<div class="form-actions">
 			<div class="row">
-				<div class="col-md-6">
-					<h3 class="form-section">Person Info</h3>
-					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.personalInput' )
+				<div class="col-md-12">
+					<div class="row">
+						<div class="col-md-12">
+							{{Form::submit('Add Client',array('class'=>"btn blue"))}}
+							<a class="btn {{{$dashboard_css or 'blue'}}}" href="{{url('clients')}}">Cancel</a>
+						</div>
+					</div>
 				</div>
 				<div class="col-md-6">
+				</div>
+			</div>
+		</div>
+		<div class="form-body">
+			<div class="row">
+				<div class="col-md-6 left-form">
+					<h3 class="form-section">Personal Info</h3>
+					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.personalInput' )
+				</div>
+				<div class="col-md-6 right-form">
 					<h3 class="form-section">Address</h3>
 					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.addressInput' )
 				</div>
 			</div>
-			<div id="partner_details" class="hide">
+			<div class="hide" id="partner_details">
 				<div class="row">
 					<div class="col-md-12">
-						<h3 class="form-section">Partner Details</h3>
+						<h3 class="form-section">Partner Info</h3>
 						@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.partnerInput' )
 					</div>
 				</div>
@@ -68,20 +79,41 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-md-6">
-					<h3 class="form-section">Telephone Number</h3>
-					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.contactInput' )
-				</div>
-				<div class="col-md-6">
-					<h3 class="form-section">Email</h3>
-					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.emailInput' )
+			<div id="telephone-email-container">
+				<div class="row">
+					<div class="col-md-6">
+						<h3 class="form-section">Telephone Number</h3>
+						@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.contactInput' )
+					</div>
+					<div class="col-md-6">
+						<h3 class="form-section">Email</h3>
+						@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.emailInput' )
+					</div>
 				</div>
 			</div>
+			<div id="website-customfields-container">
+				<div class="row">
+					<div class="col-md-6">
+						<h3 class="form-section">Website</h3>
+						@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.urlInput' )
+					</div>
+					<div class="col-md-6">
+						<h3 class="form-section">Custom Fields</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-actions">
 			<div class="row">
 				<div class="col-md-12">
-					<h3 class="form-section">Website</h3>
-					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.urlInput' )
+					<div class="row">
+						<div class="col-md-12">
+							{{Form::submit('Add Client',array('class'=>"btn blue"))}}
+							<a class="btn {{{$dashboard_css or 'blue'}}}" href="{{url('clients')}}">Cancel</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
 				</div>
 			</div>
 		</div>
@@ -97,6 +129,7 @@
 	<script type="text/javascript" src="{{$asset_path}}/pages/scripts/client.js"></script>
 	<script>
 		jQuery(document).ready(function() {
+			Index.init();
 			addPhone.init();
 			addEmail.init();
 			addPartner.init();

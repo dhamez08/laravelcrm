@@ -21,19 +21,23 @@ var addPhone = function () {
 				}
 				if(x < max_fields){ //max input box allowed
 					x++; //text box increment
-					var content = '<div class="row phone-wrapper">'
-						+'<div class="col-xs-4">'
-							+'<div class="form-group">'
-								+'<input type="text" name="telephone['+x+'][number]" class="form-control input-sm"/>'
-							+'</div>'
-						+'</div>'
-						+'<div class="col-xs-4">'
-							+'<div class="form-group">'
-								+ '<select name="telephone['+x+'][for]" class="form-control input-sm"/>'
-								+ '</select>'
-							+'</div>'
-						+'</div>'
-						+'<a href="#" class="remove_field">Remove</a>'
+					var content = '<div class="phone-wrapper">'
+						+'<div class="well">'
+								+'<div class="form-group">'
+									+'<label class="control-label col-md-3">Number</label>'
+									+'<div class="col-md-8">'
+										+'<input type="text" name="telephone['+x+'][number]" class="form-control input-sm"/>'
+									+'</div>'
+								+'</div>'
+								+'<div class="form-group">'
+									+'<label class="control-label col-md-3">Type</label>'
+									+'<div class="col-md-4">'
+										+ '<select name="telephone['+x+'][for]" class="form-control input-sm"/>'
+										+ '</select>'
+									+'</div>'
+								+'</div>'
+							+'<a href="#" class="btn btn-danger btn-xs remove_field pull-right" style="bottom:6px;margin-bottom: 10px;position:relative;right:9%;">Remove</a>'
+						+'</div>';
 					+'</div>';
 
 					jQuery(wrapper).append(content); //add input box
@@ -71,19 +75,23 @@ var addEmail = function () {
 				}
 				if(x < max_fields){ //max input box allowed
 					x++; //text box increment
-					var content = '<div class="row email-wrapper">'
-						+'<div class="col-xs-4">'
-							+'<div class="form-group">'
-								+'<input type="text" name="emails['+x+'][mail]" class="form-control input-sm"/>'
-							+'</div>'
-						+'</div>'
-						+'<div class="col-xs-4">'
-							+'<div class="form-group">'
-								+ '<select name="emails['+x+'][for]" class="form-control input-sm"/>'
-								+ '</select>'
-							+'</div>'
-						+'</div>'
-						+'<a href="#" class="remove_field">Remove</a>'
+					var content = '<div class="email-wrapper">'
+						+'<div class="well">'
+								+'<div class="form-group">'
+									+'<label class="control-label col-md-3">Email</label>'
+									+'<div class="col-md-8">'
+										+'<input type="text" name="emails['+x+'][mail]" class="form-control input-sm"/>'
+									+'</div>'
+								+'</div>'
+								+'<div class="form-group">'
+									+'<label class="control-label col-md-3">Type</label>'
+									+'<div class="col-md-8">'
+										+ '<select name="emails['+x+'][for]" class="form-control input-sm"/>'
+										+ '</select>'
+									+'</div>'
+								+'</div>'
+							+'<a href="#" class="btn btn-danger btn-xs remove_field pull-right" style="bottom:6px;margin-bottom: 10px;position:relative;right:9%;">Remove</a>'
+						+'</div>';
 					+'</div>';
 
 					jQuery(wrapper).append(content); //add input box
@@ -121,25 +129,30 @@ var addWebsite = function () {
 				}
 				if(x < max_fields){ //max input box allowed
 					x++; //text box increment
-					var content = '<div class="row website-wrapper">'
-						+'<div class="col-xs-4">'
+					var content = '<div class="website-wrapper">'
+						+'<div class="well">'
 							+'<div class="form-group">'
-								+'<input type="text" name="urls['+x+'][url]" class="form-control input-sm"/>'
+								+'<label class="control-label col-md-3">URL</label>'
+								+'<div class="col-md-9">'
+									+'<input type="text" name="urls['+x+'][url]" class="form-control input-sm"/>'
+								+'</div>'
 							+'</div>'
-						+'</div>'
-						+'<div class="col-xs-2">'
 							+'<div class="form-group">'
-								+ '<select name="urls['+x+'][for]" class="form-control input-sm"/>'
-								+ '</select>'
+								+'<label class="control-label col-md-3">Reference</label>'
+								+'<div class="col-md-9">'
+									+ '<select name="urls['+x+'][for]" class="form-control input-sm"/>'
+									+ '</select>'
+								+'</div>'
 							+'</div>'
-						+'</div>'
-						+'<div class="col-xs-2">'
 							+'<div class="form-group">'
+								+'<label class="control-label col-md-3">Type</label>'
+								+'<div class="col-md-9">'
 								+ '<select name="urls['+x+'][is]" class="form-control input-sm"/>'
 								+ '</select>'
 							+'</div>'
-						+'</div>'
+							+'</div>'
 						+'<a href="#" class="remove_field">Remove</a>'
+						+'</div>'
 					+'</div>';
 
 					jQuery(wrapper).append(content); //add input box
@@ -193,33 +206,43 @@ var addPartner = function () {
 var addChildren = function () {
 
 	var content = function(incrementId) {
-        return '<div class="row children-wrapper">'
-			+'<div class="col-xs-3">'
-				+'<div class="form-group">'
-				+'<label class="control-label">First Name</label>'
-				+'<input type="text" name="children['+incrementId+'][firstname]" class="form-control input-sm">'
-				+'</div>'
-			+'</div>'
-			+'<div class="col-xs-3">'
-				+'<div class="form-group">'
-				+'<label class="control-label">Last Name</label>'
-				+'<input type="text" name="children['+incrementId+'][lastname]" class="form-control input-sm">'
-				+'</div>'
-			+'</div>'
-			+'<div class="col-xs-2">'
-				+'<div class="form-group">'
-				+'<label class="control-label">Date of Birth</label>'
-				+'<input type="text" name="children['+incrementId+'][dob]" data-date-format="dd/mm/yyyy" data-provide="datepicker" class="form-control input-sm">'
-				+'</div>'
-			+'</div>'
-			+'<div class="col-xs-2">'
-				+'<div class="form-group">'
-				+'<label class="control-label">Relation To Client</label>'
-				+'<select name="children['+incrementId+'][relation_to_client]" class="form-control input-sm">'
-				+'</select>'
-				+'</div>'
-			+'</div>'
-		+'</div>';
+        return '<div class="well">'
+					+ '<div class="row children-wrapper">'
+						+'<div class="col-md-6">'
+							+'<div class="form-group">'
+								+'<label class="control-label col-md-3">First Name</label>'
+								+'<div class="col-md-9">'
+									+'<input type="text" name="children['+incrementId+'][firstname]" class="form-control input-sm">'
+								+'</div>'
+							+'</div>'
+						+'</div>'
+						+'<div class="col-md-6">'
+							+'<div class="form-group">'
+								+'<label class="control-label col-md-3">Last Name</label>'
+								+'<div class="col-md-9">'
+									+'<input type="text" name="children['+incrementId+'][lastname]" class="form-control input-sm">'
+								+'</div>'
+							+'</div>'
+						+'</div>'
+						+'<div class="col-md-6">'
+							+'<div class="form-group">'
+								+'<label class="control-label col-md-3">Date of Birth</label>'
+								+'<div class="col-md-9">'
+									+'<input type="text" name="children['+incrementId+'][dob]" data-date-format="dd/mm/yyyy" data-provide="datepicker" placeholder="dd/mm/yyyy" class="form-control input-sm inputdatepicker">'
+								+'</div>'
+							+'</div>'
+						+'</div>'
+						+'<div class="col-md-6">'
+							+'<div class="form-group">'
+							+'<label class="control-label col-md-3">Relation To Client</label>'
+								+'<div class="col-md-9">'
+									+'<select name="children['+incrementId+'][relation_to_client]" class="form-control input-sm">'
+									+'</select>'
+								+'</div>'
+							+'</div>'
+						+'</div>'
+					+'</div>';
+				+'</div>';
     }
 
     // public functions
@@ -250,7 +273,9 @@ var addChildren = function () {
 				}else{
 					children_details.switchClass('show','hide');
 				}
-
+				jQuery('.inputdatepicker').datepicker({
+					autoclose:true,
+				});
 			});
         }
     };
@@ -260,34 +285,43 @@ var addChildren = function () {
 var addRowChildren = function () {
 
 	var content = function(incrementId) {
-        return '<div class="row children-wrapper">'
-			+'<div class="col-xs-3">'
-				+'<div class="form-group">'
-				+'<label class="control-label">First Name</label>'
-				+'<input type="text" name="children['+incrementId+'][firstname]" class="form-control input-sm">'
-				+'</div>'
-			+'</div>'
-			+'<div class="col-xs-3">'
-				+'<div class="form-group">'
-				+'<label class="control-label">Last Name</label>'
-				+'<input type="text" name="children['+incrementId+'][lastname]" class="form-control input-sm">'
-				+'</div>'
-			+'</div>'
-			+'<div class="col-xs-2">'
-				+'<div class="form-group">'
-				+'<label class="control-label">Date of Birth</label>'
-				+'<input type="text" name="children['+incrementId+'][dob]" data-date-format="dd/mm/yyyy" data-provide="datepicker" class="form-control input-sm">'
-				+'</div>'
-			+'</div>'
-			+'<div class="col-xs-2">'
-				+'<div class="form-group">'
-				+'<label class="control-label">Relation To Client</label>'
-				+'<select name="children['+incrementId+'][relation_to_client]" class="form-control input-sm">'
-				+'</select>'
-				+'</div>'
-			+'</div>'
-			+'<a href="#" class="remove_field">Remove</a>'
-		+'</div>';
+        return '<div class="well">'
+					+ '<div class="row children-wrapper">'
+						+'<div class="col-md-6">'
+							+'<div class="form-group">'
+								+'<label class="control-label col-md-3">First Name</label>'
+								+'<div class="col-md-9">'
+									+'<input type="text" name="children['+incrementId+'][firstname]" class="form-control input-sm">'
+								+'</div>'
+							+'</div>'
+						+'</div>'
+						+'<div class="col-md-6">'
+							+'<div class="form-group">'
+								+'<label class="control-label col-md-3">Last Name</label>'
+								+'<div class="col-md-9">'
+									+'<input type="text" name="children['+incrementId+'][lastname]" class="form-control input-sm">'
+								+'</div>'
+							+'</div>'
+						+'</div>'
+						+'<div class="col-md-6">'
+							+'<div class="form-group">'
+								+'<label class="control-label col-md-3">Date of Birth</label>'
+								+'<div class="col-md-9">'
+									+'<input type="text" name="children['+incrementId+'][dob]" data-date-format="dd/mm/yyyy" data-provide="datepicker" placeholder="dd/mm/yyyy" class="form-control input-sm inputdatepicker">'
+								+'</div>'
+							+'</div>'
+						+'</div>'
+						+'<div class="col-md-6">'
+							+'<div class="form-group">'
+							+'<label class="control-label col-md-3">Relation To Client</label>'
+								+'<div class="col-md-9">'
+									+'<select name="children['+incrementId+'][relation_to_client]" class="form-control input-sm">'
+									+'</select>'
+								+'</div>'
+							+'</div>'
+						+'</div>'
+					+'</div>';
+				+'</div>';
     }
 
     // public functions
