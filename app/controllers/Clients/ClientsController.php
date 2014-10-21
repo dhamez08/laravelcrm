@@ -333,16 +333,6 @@ class ClientsController extends \BaseController {
 	}
 
 	public function postCreateClient(){
-		\Input::merge(
-			array(
-				'dob' => \Clients\ClientEntity::get_instance()->convertToMysqlDate(\Input::get('dob')),
-				'ref' => \Auth::id().time(),
-				'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
-				'belongs_user' => \Auth::id(),
-				'email' => '',
-			)
-		);
-
 		$rules = array(
 			'title' => 'required',
 			'first_name' => 'required|min:3',
@@ -378,6 +368,16 @@ class ClientsController extends \BaseController {
 		$validator = \Validator::make(\Input::all(), $rules, $messages);
 
 		if ( $validator->passes() ) {
+			\Input::merge(
+				array(
+					'dob' => \Clients\ClientEntity::get_instance()->convertToMysqlDate(\Input::get('dob')),
+					'ref' => \Auth::id().time(),
+					'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
+					'belongs_user' => \Auth::id(),
+					'email' => '',
+				)
+			);
+
 			\Input::merge(
 				array(
 					'type'=>1,
@@ -521,34 +521,6 @@ class ClientsController extends \BaseController {
 	}
 
 	public function putClientUpdate($clientId){
-		\Input::merge(
-			array(
-				'dob' => \Clients\ClientEntity::get_instance()->convertToMysqlDate(\Input::get('dob')),
-				'ref' => \Auth::id().time(),
-				'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
-				'belongs_user' => \Auth::id(),
-			)
-		);
-
-		if( \Input::has('associated') ){
-			\Input::merge(
-				array(
-					'type'=>1,
-					'ref' => \Auth::id().time(),
-					'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
-					'belongs_user' => \Auth::id(),
-					'title' => \Input::get('title'),
-					'first_name' => \Input::get('first_name'),
-					'last_name' => \Input::get('last_name'),
-					'job_title' => \Input::get('job_title'),
-					'living_status' => \Input::get('living_status'),
-					'employment_status' => \Input::get('employment_status'),
-					'associated' => \Input::get('associated'),
-					'relationship' => 'Spouse/Partner',
-					'email' => '',
-				)
-			);
-		}
 		$rules = array(
 			'title' => 'required',
 			'first_name' => 'required|min:3',
@@ -569,6 +541,34 @@ class ClientsController extends \BaseController {
 
 		$validator = \Validator::make(\Input::all(), $rules, $messages);
 		if ( $validator->passes() ) {
+			\Input::merge(
+				array(
+					'dob' => \Clients\ClientEntity::get_instance()->convertToMysqlDate(\Input::get('dob')),
+					'ref' => \Auth::id().time(),
+					'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
+					'belongs_user' => \Auth::id(),
+				)
+			);
+
+			if( \Input::has('associated') ){
+				\Input::merge(
+					array(
+						'type'=>1,
+						'ref' => \Auth::id().time(),
+						'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
+						'belongs_user' => \Auth::id(),
+						'title' => \Input::get('title'),
+						'first_name' => \Input::get('first_name'),
+						'last_name' => \Input::get('last_name'),
+						'job_title' => \Input::get('job_title'),
+						'living_status' => \Input::get('living_status'),
+						'employment_status' => \Input::get('employment_status'),
+						'associated' => \Input::get('associated'),
+						'relationship' => 'Spouse/Partner',
+						'email' => '',
+					)
+				);
+			}
 			//check if customer went in
 			if( $clientId ){
 				$customer = \Clients\ClientEntity::get_instance()->createOrUpdate($clientId);
