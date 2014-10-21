@@ -35,43 +35,53 @@
 				'action' => array('Clients\ClientsController@putClientUpdate', $customer->id),
 				'method' => 'PUT',
 				'role'=>'form',
-				'class'=>'horizontal-form'
+				'class' =>'form-horizontal'
 			))
 		}}
-		<div class="form-body">
-			<div class="col-md-12">
-				{{Form::submit('Update Client',array('class'=>"btn blue btn-sm"))}}
-				<a class="btn {{{$dashboard_css or 'blue'}}} btn-sm" href="{{url('clients/client-summary/' . $customer->id)}}">Go back to Client Summary</a>
-			</div>
+		<div class="form-actions">
 			<div class="row">
+				<div class="col-md-12">
+					<div class="row">
+						<div class="col-md-12">
+							{{Form::submit('Update Client',array('class'=>"btn blue btn-sm"))}}
+							<a class="btn {{{$dashboard_css or 'blue'}}} btn-sm" href="{{url('clients/client-summary/' . $customer->id)}}">Go back to Client Summary</a>
+						</div>
+					</div>
+				</div>
 				<div class="col-md-6">
-					<h3 class="form-section">Person Info </h3>
+				</div>
+			</div>
+		</div>
+		<div class="form-body">
+			<div class="row">
+				<div class="col-md-6 left-form">
+					<h3 class="form-section">Personal Info</h3>
 					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.EditPersonalInput' )
+				</div>
+				<div class="col-md-6 right-form">
+					<h3 class="form-section">Address</h3>
+					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.EditaddressInput' )
+				</div>
+				{{
+					Form::hidden(
+						'type',
+						null,
+						array(
+							'class'=>'form-control input-sm'
+						)
+					);
+				}}
+				@if( $belongToPartner && $belongToPartner->id )
 					{{
 						Form::hidden(
-							'type',
-							null,
+							'associated',
+							$belongToPartner->id,
 							array(
 								'class'=>'form-control input-sm'
 							)
 						);
 					}}
-					@if( $belongToPartner && $belongToPartner->id )
-						{{
-							Form::hidden(
-								'associated',
-								$belongToPartner->id,
-								array(
-									'class'=>'form-control input-sm'
-								)
-							);
-						}}
-					@endif
-				</div>
-				<div class="col-md-6">
-					<h3 class="form-section">Address</h3>
-					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.addressInput' )
-				</div>
+				@endif
 			</div>
 			<div class="row">
 				<div class="col-md-6">
@@ -97,17 +107,36 @@
 					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.emailInput' )
 				</div>
 			</div>
+			<div id="website-customfields-container">
+				<div class="row">
+					<div class="col-md-6">
+						<h3 class="form-section">Website</h3>
+						@if( isset($url) )
+							<?php $urlIdx = 0; ?>
+							@foreach( $url->get() as $val )
+								@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.EditUrlInput' )
+								<?php $urlIdx++; ?>
+							@endforeach
+						@endif
+						@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.urlInput' )
+					</div>
+					<div class="col-md-6">
+						<h3 class="form-section">Custom Fields</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-actions">
 			<div class="row">
 				<div class="col-md-12">
-					<h3 class="form-section">Website</h3>
-					@if( isset($url) )
-						<?php $urlIdx = 0; ?>
-						@foreach( $url->get() as $val )
-							@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.EditUrlInput' )
-							<?php $urlIdx++; ?>
-						@endforeach
-					@endif
-					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.urlInput' )
+					<div class="row">
+						<div class="col-md-12">
+							{{Form::submit('Update Client',array('class'=>"btn blue btn-sm"))}}
+							<a class="btn {{{$dashboard_css or 'blue'}}} btn-sm" href="{{url('clients/client-summary/' . $customer->id)}}">Go back to Client Summary</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
 				</div>
 			</div>
 		</div>
@@ -126,7 +155,7 @@
 			jQuery(document).ready(function() {
 				jQuery('.dob').datepicker({
 				    autoclose:true,
-				    format: 'yyyy-mm-dd'
+				    format: 'dd/mm/yyyy'
 				});
 				addPhone.init();
 				addEmail.init();
