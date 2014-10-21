@@ -60,7 +60,7 @@
 				</div>
 				<div class="col-md-6 right-form">
 					<h3 class="form-section">Address</h3>
-					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.addressInput' )
+					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.EditaddressInput' )
 				</div>
 				{{
 					Form::hidden(

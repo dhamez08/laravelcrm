@@ -4,7 +4,7 @@
 		{{
 			Form::text(
 				'address_line_2',
-				null,
+				isset($customer->address()->first()->address_line_2) ? $customer->address()->first()->address_line_2:null,
 				array(
 					'class'=>'form-control input-sm',
 					'id'=>'address_line_2'
@@ -19,7 +19,7 @@
 		{{
 			Form::text(
 				'postcode',
-				null,
+				isset($customer->address()->first()->postcode) ? $customer->address()->first()->postcode:null,
 				array(
 					'class'=>'form-control input-sm',
 					'id'=>'postcode'
@@ -34,7 +34,7 @@
 		{{
 			Form::textarea(
 				'address_line_1',
-				null,
+				isset($customer->address()->first()->address_line_1) ? $customer->address()->first()->address_line_1:null,
 				array(
 					'class'=>'form-control input-sm',
 					'rows'=>5,
@@ -52,7 +52,7 @@
 		{{
 			Form::text(
 				'town',
-				null,
+				isset($customer->address()->first()->town) ? $customer->address()->first()->town:null,
 				array(
 					'class'=>'form-control input-sm',
 					'id'=>'town'
@@ -67,7 +67,7 @@
 		{{
 			Form::text(
 				'county',
-				null,
+				isset($customer->address()->first()->county) ? $customer->address()->first()->county:null,
 				array(
 					'class'=>'form-control input-sm',
 					'id'=>'county'
@@ -83,7 +83,7 @@
 		Form::select(
 			'address_type',
 			$addressType,
-			null,
+			isset($customer->address()->first()->address_type) ? $customer->address()->first()->address_type:null,
 			array(
 				'class'=>'form-control input-sm',
 				'id'=>'address_type'
@@ -92,3 +92,6 @@
 	}}
 	</div>
 </div>
+@if( isset($customer) )
+{{Form::hidden('address_id', $customer->address()->first()->id)}}
+@endif
