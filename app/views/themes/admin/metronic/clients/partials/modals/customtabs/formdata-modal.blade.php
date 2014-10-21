@@ -12,10 +12,10 @@
         <div class="modal-body">
         	
   	      	<div class="col-md-12" id="content-form-data">
-              asdasdasdasdas      
+              <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate" id="content-form-spinner"></span>    
   	      	</div>
 
-        	<div class="row" style="margin-top:15px">
+        	<div class="row" style="margin-top:15px" id="content-form-action">
   	      	<div class="col-md-12">
   	      		<button type="button" class="btn blue">Save as PDF</button>
   	      	</div>
