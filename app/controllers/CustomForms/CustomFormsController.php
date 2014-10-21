@@ -282,13 +282,15 @@ class CustomFormsController extends \BaseController {
 
 		foreach($inputs as $input) {
 
+			$input_name = str_replace(" ", "_", $input->getAttribute('name'));
+
 			if($input->nodeName=='input' && $input->getAttribute('type')=='text') {
-				$input->setAttribute('value', $data[$input->getAttribute('name')]);
+				$input->setAttribute('value', $data[$input_name]);
 				$input->setAttribute('disabled', "disabled");
 			} elseif($input->nodeName=='select' && !$input->hasAttribute('multiple')) {
 				$nodes = $input->childNodes;
 				foreach ($nodes as $node) {
-					if(strtolower($node->nodeValue)==strtolower($data[$input->getAttribute('name')])) {
+					if(strtolower($node->nodeValue)==strtolower($data[$input_name])) {
 						$node->setAttribute('selected', 'selected');
 
 					}
@@ -297,21 +299,21 @@ class CustomFormsController extends \BaseController {
 				$input->setAttribute('disabled', "disabled");
 
 			} elseif($input->nodeName=='input' && $input->getAttribute('type')=='radio') {
-				if($input->getAttribute('value')==$data[$input->getAttribute('name')]) {
+				if($input->getAttribute('value')==$data[$input_name]) {
 					$input->setAttribute('checked','checked');
 				}
 				$input->setAttribute('disabled', "disabled");
 			} elseif($input->nodeName=='textarea') {
-				$input->nodeValue = $data[$input->getAttribute('name')];
+				$input->nodeValue = $data[$input_name];
 				$input->setAttribute('disabled', "disabled");
 			} elseif($input->nodeName=='input' && $input->getAttribute('type')=='checkbox') {
-				$input_name = str_replace("[]", "", $input->getAttribute('name'));
+				$input_name = str_replace("[]", "", $input_name);
 
 				if(in_array($input->getAttribute('value'), $data[$input_name])) {
 					$input->setAttribute('checked','checked');
 				}
 			} elseif($input->nodeName=='select' && $input->hasAttribute('multiple')) {
-				$input_name = str_replace("[]", "", $input->getAttribute('name'));
+				$input_name = str_replace("[]", "", $input_name);
 				$input->setAttribute('size',count($data[$input_name]));
 				$nodes = $input->childNodes;
 				foreach ($nodes as $node) { 

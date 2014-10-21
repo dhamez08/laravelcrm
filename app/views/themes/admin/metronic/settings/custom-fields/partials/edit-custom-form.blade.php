@@ -310,24 +310,21 @@
 					    		<div id="selected-column-2" class="droppedFields col-sm-6"></div>
 							</div>
 							<div class="row">
-					    		<div id="selected-column-3" class="droppedFields col-sm-6"></div>
-					    		<div id="selected-column-4" class="droppedFields col-sm-6"></div>
+					    		<div id="selected-column-3" class="droppedFields col-sm-12"></div>
 							</div>
 							<div class="row">
+					    		<div id="selected-column-4" class="droppedFields col-sm-6"></div>
 					    		<div id="selected-column-5" class="droppedFields col-sm-6"></div>
-					    		<div id="selected-column-6" class="droppedFields col-sm-6"></div>
+							</div>
+							<div class="row">
+					    		<div id="selected-column-6" class="droppedFields col-sm-12"></div>
 							</div>
 							<div class="row">
 					    		<div id="selected-column-7" class="droppedFields col-sm-6"></div>
 					    		<div id="selected-column-8" class="droppedFields col-sm-6"></div>
 							</div>
 							<div class="row">
-					    		<div id="selected-column-9" class="droppedFields col-sm-6"></div>
-					    		<div id="selected-column-10" class="droppedFields col-sm-6"></div>
-							</div>
-							<div class="row">
-					    		<div id="selected-column-11" class="droppedFields col-sm-6"></div>
-					    		<div id="selected-column-12" class="droppedFields col-sm-6"></div>
+					    		<div id="selected-column-9" class="droppedFields col-sm-12"></div>
 							</div>
 						@else
 							{{ $form->build }}

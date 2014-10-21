@@ -299,6 +299,7 @@
 	function save_customize_changes(e, obj) {
 		//console.log('save clicked', arguments);
 		var formValues = {};
+		var regex = /^[0-9a-zA-Z _]+$/;
 		var val=null;
 		var new_field_name="";
 		var old_field_name="";
@@ -328,8 +329,9 @@
 				}
 			});
 		}
-
-		if(exists>0) {
+		if(!new_field_name.match(regex)) {
+			alert('Field name must only contains letters, numbers, spaces and underscores.');
+		} else if(exists>0) {
 			alert('Field name already exists. Please choose another!');
 		} else {
 			save_changes.common(formValues);

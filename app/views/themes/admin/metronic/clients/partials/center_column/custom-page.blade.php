@@ -94,7 +94,7 @@
 								@foreach($results as $result)
 									<tr>
 										<td>
-											{{ $result->name }} - {{ date("m/d/Y H:i",strtotime($result->created_at)) }}
+											{{ $result->name }} - {{ date("d/m/Y H:i",strtotime($result->created_at)) }}
 										</td>
 										<td align="right">
 										<a href="#" class="btn btn-circle blue-madison btn-sm view-data-form" data-ref-id="{{ $result->ref_id }}" data-form-name="{{ $result->name }}">View</a>
@@ -207,7 +207,7 @@
 							<table class="table">
 								@foreach($results as $result)
 									<tr>
-										<td>{{ $result->name }} - {{ date("m/d/Y H:i",strtotime($result->created_at)) }}</td>
+										<td>{{ $result->name }} - {{ date("d/m/Y H:i",strtotime($result->created_at)) }}</td>
 										<td align="right">
 										<a href="#" class="btn btn-circle blue-madison btn-sm view-data-form" data-ref-id="{{ $result->ref_id }}" data-form-name="{{ $result->name }}">View</a>
 										<a href="#" class="btn btn-circle red-intense btn-sm"><i class="fa fa-times"></i> Delete</a>
@@ -319,7 +319,7 @@
 							<table class="table">
 								@foreach($results as $result)
 									<tr>
-										<td>{{ $result->name }} - {{ date("m/d/Y H:i",strtotime($result->created_at)) }}</td>
+										<td>{{ $result->name }} - {{ date("d/m/Y H:i",strtotime($result->created_at)) }}</td>
 										<td align="right">
 										<a href="#" class="btn btn-circle blue-madison btn-sm view-data-form" data-ref-id="{{ $result->ref_id }}" data-form-name="{{ $result->name }}">View</a>
 										<a href="#" class="btn btn-circle red-intense btn-sm"><i class="fa fa-times"></i> Delete</a>
@@ -431,7 +431,7 @@
 							<table class="table">
 								@foreach($results as $result)
 									<tr>
-										<td>{{ $result->name }} - {{ date("m/d/Y H:i",strtotime($result->created_at)) }}</td>
+										<td>{{ $result->name }} - {{ date("d/m/Y H:i",strtotime($result->created_at)) }}</td>
 										<td align="right">
 										<a href="#" class="btn btn-circle blue-madison btn-sm view-data-form" data-ref-id="{{ $result->ref_id }}" data-form-name="{{ $result->name }}">View</a>
 										<a href="#" class="btn btn-circle red-intense btn-sm">Delete</a>
