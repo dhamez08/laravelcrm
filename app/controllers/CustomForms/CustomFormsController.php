@@ -335,4 +335,17 @@ class CustomFormsController extends \BaseController {
 		//dd($form->build);
 	}
 
+	public function getDeleteFormData($ref_id) {
+		$formDataEntity = new \CustomFormData\CustomFormDataEntity;
+
+		$data = $formDataEntity->where('ref_id', $ref_id)->forceDelete();
+
+		if($data) {
+			\Session::flash('message', 'Successfully deleted!');
+			return \Redirect::back();
+		}
+
+		return \Redirect::back()->withErrors(['There was a problem deleting the form data, please try again']);
+	}
+
 }

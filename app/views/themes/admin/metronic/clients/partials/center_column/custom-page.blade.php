@@ -98,7 +98,7 @@
 										</td>
 										<td align="right">
 										<a href="#" class="btn btn-circle blue-madison btn-sm view-data-form" data-ref-id="{{ $result->ref_id }}" data-form-name="{{ $result->name }}">View</a>
-										<a href="#" class="btn btn-circle red-intense btn-sm"><i class="fa fa-times"></i> Delete</a>
+										<a href="{{ url('settings/custom-forms/delete-form-data/'.$result->ref_id) }}" class="btn btn-circle red-intense btn-sm" onclick="return confirm('Are you sure you want to delete?')"><i class="fa fa-times"></i> Delete</a>
 										</td>
 									</tr>
 								@endforeach
