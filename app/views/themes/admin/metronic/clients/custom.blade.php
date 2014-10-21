@@ -7,6 +7,26 @@
 		<link href="{{$asset_path}}/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" type="text/css"/>
 		<link href="{{$asset_path}}/global/plugins/star-rating/css/star-rating.css" rel="stylesheet" type="text/css"/>
 		<style>
+		span#content-form-spinner {
+		    -animation: spin .7s infinite linear;
+		    -webkit-animation: spin2 .7s infinite linear;
+		    font-size: 50px;
+			margin-left: auto;
+			left: 50%;
+			color: gray;
+			margin-top: 50px;
+			margin-bottom: 50px;
+		}
+
+		@-webkit-keyframes spin2 {
+		    from { -webkit-transform: rotate(0deg);}
+		    to { -webkit-transform: rotate(360deg);}
+		}
+
+		@keyframes spin {
+		    from { transform: scale(1) rotate(0deg);}
+		    to { transform: scale(1) rotate(360deg);}
+		}
 		.portlet.light.bordered > .portlet-title {
 			border: 0px;
 		}
@@ -86,10 +106,14 @@
 			$(".view-data-form").on("click", function(e) {
 				e.preventDefault();
 				$this = $(this);
+
+				$("#form-data-modal #content-form-action").hide();
+				$("#form-data-modal").modal("show");
+
 				$.get("{{ url('settings/custom-forms/form-data') }}/"+$this.attr("data-ref-id"), function(responce) {
 					$("#form-data-modal #content-form-data").html(responce);
 					$("#form-data-modal #content-form-name").html($this.attr("data-form-name"));
-					$("#form-data-modal").modal("show");
+					$("#form-data-modal #content-form-action").show();
 				});
 			});
 		});
