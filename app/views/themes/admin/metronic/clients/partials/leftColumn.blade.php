@@ -68,13 +68,13 @@
 							<a href="{{$currentClient->displayGoogleMapLink()}}" target="_blank">show on map</a>
 							| <a href="{{$currentClient->displayGoogleMapDirectionLink()}}" target="_blank">get directions</a>
 						</p>
-						<p class="form-control-static">Date of Birth: <strong>{{$currentClient->displayDob('d/m/Y')}}</strong></p>
-						<p class="form-control-static">Smoker: <strong>{{($currentClient->smoker == 1) ? 'Yes':'No'}}</strong></p>
-						<p class="form-control-static">Marital Status: <strong>{{$currentClient->marital_status}}</strong></p>
-						<p class="form-control-static">Living Status: <strong>{{$currentClient->living_status}}</strong></p>
-						<p class="form-control-static">Employment Status: <strong>{{$currentClient->employment_status}}</strong></p>
-						<p class="form-control-static">Occupation: <strong>{{$currentClient->job_title}}</strong></p>
-						<p class="form-control-static"><a href="{{action('Clients\ClientsController@getEdit',array('clientId'=>$customer->id))}}">Edit client information</a></p>
+						<p class="form-control-static">Date of Birth: <br><strong>{{$currentClient->displayDob('d/m/Y')}}</strong></p>
+						<p class="form-control-static">Smoker: <br><strong>{{($currentClient->smoker == 1) ? 'Yes':'No'}}</strong></p>
+						<p class="form-control-static">Marital Status: <br><strong>{{$currentClient->marital_status}}</strong></p>
+						<p class="form-control-static">Living Status: <br><strong>{{$currentClient->living_status}}</strong></p>
+						<p class="form-control-static">Employment Status: <br><strong>{{$currentClient->employment_status}}</strong></p>
+						<p class="form-control-static">Occupation: <br><strong>{{$currentClient->job_title}}</strong></p>
+						<p class="form-control-static"><br><a href="{{action('Clients\ClientsController@getEdit',array('clientId'=>$customer->id))}}">Edit client information</a></p>
 		 			</div>
 		 		</div>
 		 	</div>
