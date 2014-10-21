@@ -38,18 +38,23 @@
 						<p></p>
 						@if( $url->count() > 0 )
 							@foreach($url->get() as $urls)
-								<p>
-									<i class="fa fa-cloud"></i>
-									<a href="{{$urls->url}}" target="_blank">{{$urls->url}}</a>
-									<span class="label label-info" style="font-size:9px;">{{$urls->type}}</span>
-								</p>
+								@if( in_array($urls->website,array_flatten(\Config::get('crm.website_for'))))
+									<a href="{{$urls->url}}" target="_blank">
+										@if(strtolower($urls->website) == 'website')
+											<i class="fa fa-cloud fa-2x"></i>
+										@else
+											<i class="fa fa-{{strtolower($urls->website)}} fa-2x"></i>
+										@endif
+
+
+									</a>
+								@endif
 							@endforeach
 						@endif
 						@if( $email->count() > 0 )
 							@foreach($email->get() as $mail)
 								<p>
-									<i class="fa fa-envelope"></i>
-									<a href="mailto:{{$mail->email}}" target="_blank">
+									<a href="mailto:{{$mail->email}}?bcc=dropbox.13554456@123crm.co.uk&subject= **enter your subject here** [REF:{{$customer->ref}}]" target="_blank">
 										@if( strlen($mail->email) > 15 )
 											{{substr($mail->email,0,15)}}...
 										@else
