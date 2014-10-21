@@ -342,6 +342,7 @@ class ClientsController extends \BaseController {
 				'email' => '',
 			)
 		);
+
 		$rules = array(
 			'title' => 'required',
 			'first_name' => 'required|min:3',
