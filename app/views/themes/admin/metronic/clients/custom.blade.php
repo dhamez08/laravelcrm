@@ -111,6 +111,8 @@
 				$("#form-data-modal").modal("show");
 
 				$.get("{{ url('settings/custom-forms/form-data') }}/"+$this.attr("data-ref-id"), function(responce) {
+					$("#form-data-modal input.content-hidden-form").val(responce);
+					$("#form-data-modal input.title-hidden-form").val($this.attr("data-form-name"));
 					$("#form-data-modal #content-form-data").html(responce);
 					$("#form-data-modal #content-form-name").html($this.attr("data-form-name"));
 					$("#form-data-modal #content-form-action").show();

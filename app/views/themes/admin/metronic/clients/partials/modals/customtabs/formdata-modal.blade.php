@@ -17,7 +17,18 @@
 
         	<div class="row" style="margin-top:15px" id="content-form-action">
   	      	<div class="col-md-12">
-  	      		<button type="button" class="btn blue">Save as PDF</button>
+              <form action="{{ url('settings/custom-forms/preview-form-data') }}" target="_blank" method="post" style="float:left;margin-right:20px">
+                {{ \Form::token() }}
+                <input type="hidden" class="title-hidden-form" name="title" />
+                <input type="hidden" class="content-hidden-form" name="content" />
+                <button type="submit" class="btn blue">View as PDF</button>
+              </form>
+              <form action="{{ url('settings/custom-forms/save-form-data') }}" method="post" style="float:left">
+                {{ \Form::token() }}
+                <input type="hidden" class="title-hidden-form" name="title" />
+                <input type="hidden" class="content-hidden-form" name="content" />
+  	      		 <button type="submit" class="btn blue">Save as PDF</button>
+              </form>
   	      	</div>
         	</div>
         </div>

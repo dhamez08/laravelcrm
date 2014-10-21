@@ -348,4 +348,95 @@ class CustomFormsController extends \BaseController {
 		return \Redirect::back()->withErrors(['There was a problem deleting the form data, please try again']);
 	}
 
+	public function postPreviewFormData() {
+
+		
+
+		$content = '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>';
+		$content.= '<link href="'.$this->data_view['asset_path'].'/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>';
+		$content.= '<link href="'.$this->data_view['asset_path'].'/global/plugins/star-rating/css/star-rating.css" rel="stylesheet" type="text/css"/>';
+		$content.= '
+		<style id="content-styles">
+		/* Styles that are also copied for Preview */
+		body {
+			margin: 10px 0 0 10px;
+		}
+		
+		.control-label {
+			display: inline-block !important;
+			padding-top: 5px;
+			text-align: right;
+			vertical-align: baseline;
+			padding-right: 10px;
+		}
+		
+		.droppedField {
+			padding-left:5px;
+		}
+
+		.droppedField > input,select, button, .checkboxgroup, .selectmultiple, .radiogroup {
+			margin-top: 10px;
+			
+			margin-right: 10px;
+			margin-bottom: 10px;
+		}
+
+		.action-bar .droppedField {
+			float: left;
+			padding-left:5px;
+		}
+
+		.radio input[type=radio] {
+			position: relative;
+			float:left;
+		}
+
+		.checkbox input[type=checkbox] {
+			position: relative;
+			float:left;
+		}
+
+		
+		.col-sm-6 {
+			width: 50%;
+			float:left;
+		}
+
+		.checkbox input[type=checkbox] {
+			position: relative;
+			float:left;
+		}
+
+		input[type="text"] {
+			border:0px;
+			font-weight: bold;
+		}
+		select {
+		    -webkit-appearance: none;
+		    -moz-appearance: none;
+		    text-indent: 1px;
+		    text-overflow: \'\';
+		}
+		.form-control[disabled] {
+			background: none;
+			cursor: default;
+			border: 0px;
+			font-weight: bold;
+			padding-left: 0px;
+		}
+
+		</style>';
+
+		$content.= '</head><body>';
+		$content.= '<legend>'.\Input::get('title').'</legend>';
+		$content.= \Input::get('content');
+		$content.= '</body></html>';
+
+		$pdf = \PDF::make();
+
+	    $pdf->addPage($content);
+
+	    $pdf->send();
+	}
+
 }
