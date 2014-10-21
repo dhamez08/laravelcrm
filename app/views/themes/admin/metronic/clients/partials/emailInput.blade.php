@@ -1,31 +1,35 @@
 <div id="clone-email">
-	<div class="row email-wrapper">
-		<div class="col-xs-4">
+	<div class="email-wrapper">
+		<div class="well">
 			<div class="form-group">
-			{{
-				Form::email(
-					'emails[0][mail]',
-					null,
-					array(
-						'class'=>'form-control input-sm'
-					)
-				);
-			}}
+				<label class="control-label col-md-3">Email</label>
+				<div class="col-md-8">
+					{{
+						Form::email(
+							'emails[0][mail]',
+							null,
+							array(
+								'class'=>'form-control input-sm'
+							)
+						);
+					}}
+				</div>
 			</div>
-		</div>
-		<div class="col-xs-4">
 			<div class="form-group">
-			{{
-				Form::select(
-					'emails[0][for]',
-					$emailFor,
-					null,
-					array(
-						'class'=>'form-control input-sm',
-						'id'=>'baseEmail'
-					)
-				);
-			}}
+				<label class="control-label col-md-3">Type</label>
+				<div class="col-md-4">
+					{{
+						Form::select(
+							'emails[0][for]',
+							$emailFor,
+							null,
+							array(
+								'class'=>'form-control input-sm',
+								'id'=>'baseEmail'
+							)
+						);
+					}}
+				</div>
 			</div>
 		</div>
 	</div>

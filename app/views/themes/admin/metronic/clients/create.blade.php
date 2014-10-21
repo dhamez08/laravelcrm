@@ -79,6 +79,29 @@
 					</div>
 				</div>
 			</div>
+			<div id="telephone-email-container">
+				<div class="row">
+					<div class="col-md-6">
+						<h3 class="form-section">Telephone Number</h3>
+						@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.contactInput' )
+					</div>
+					<div class="col-md-6">
+						<h3 class="form-section">Email</h3>
+						@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.emailInput' )
+					</div>
+				</div>
+			</div>
+			<div id="website-customfields-container">
+				<div class="row">
+					<div class="col-md-6">
+						<h3 class="form-section">Website</h3>
+						@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.urlInput' )
+					</div>
+					<div class="col-md-6">
+						<h3 class="form-section">Custom Fields</h3>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div class="form-actions">
 			<div class="row">

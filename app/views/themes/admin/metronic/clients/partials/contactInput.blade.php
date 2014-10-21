@@ -1,35 +1,39 @@
 <div id="clone-phone">
-	<div class="row phone-wrapper">
-		<div class="col-xs-4">
+	<div class="phone-wrapper">
+		<div class="well">
 			<div class="form-group">
-			{{
-				Form::text(
-					'telephone[0][number]',
-					null,
-					array(
-						'class'=>'form-control input-sm'
-					)
-				);
-			}}
+				<label class="control-label col-md-3">Number</label>
+				<div class="col-md-8">
+				{{
+					Form::text(
+						'telephone[0][number]',
+						null,
+						array(
+							'class'=>'form-control input-sm'
+						)
+					);
+				}}
+				</div>
 			</div>
-		</div>
-		<div class="col-xs-4">
 			<div class="form-group">
-			{{
-				Form::select(
-					'telephone[0][for]',
-					$phoneFor,
-					null,
-					array(
-						'class'=>'form-control input-sm',
-						'id'=>'basePhone'
-					)
-				);
-			}}
+				<label class="control-label col-md-3">Type</label>
+				<div class="col-md-4">
+				{{
+					Form::select(
+						'telephone[0][for]',
+						$phoneFor,
+						null,
+						array(
+							'class'=>'form-control input-sm',
+							'id'=>'basePhone'
+						)
+					);
+				}}
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<div class="col-xs-12">
+<div class="col-md-12">
 	<button class="btn green btn-xs add-phone" type="button">Add Phone number</button>
 </div>
