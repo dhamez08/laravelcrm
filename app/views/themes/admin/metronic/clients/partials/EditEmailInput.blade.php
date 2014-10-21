@@ -1,34 +1,36 @@
 <div id="edit-clone-email">
-	<div class="row email-wrapper">
-		<div class="col-xs-4">
+	<div class="email-wrapper">
+		<div class="well">
 			<div class="form-group">
-			{{
-				Form::email(
-					'edit_emails['.$emailIdx.'][mail]',
-					$val->email,
-					array(
-						'class'=>'form-control input-sm'
-					)
-				);
-			}}
+				<label class="control-label col-md-3">Email</label>
+				<div class="col-md-8">
+				{{
+					Form::email(
+						'edit_emails['.$emailIdx.'][mail]',
+						$val->email,
+						array(
+							'class'=>'form-control input-sm'
+						)
+					);
+				}}
+				</div>
 			</div>
-		</div>
-		<div class="col-xs-4">
+
 			<div class="form-group">
-			{{
-				Form::select(
-					'edit_emails['.$emailIdx.'][for]',
-					$emailFor,
-					$val->type,
-					array(
-						'class'=>'form-control input-sm',
-					)
-				);
-			}}
-			</div>
-		</div>
-		<div class="col-xs-4">
-			<div class="form-group">
+				<label class="control-label col-md-3">Type</label>
+				<div class="col-md-4">
+				{{
+					Form::select(
+						'edit_emails['.$emailIdx.'][for]',
+						$emailFor,
+						$val->type,
+						array(
+							'class'=>'form-control input-sm',
+						)
+					);
+				}}
+				</div>
+				<div class="col-md-4">
 				<a
 					href="{{
 						action('Clients\ClientsController@getConfirmMailDelete',
@@ -44,6 +46,7 @@
 				>
 					<i class="fa fa-trash-o fa-5x"></i>
 				</a>
+				</div>
 			</div>
 		</div>
 		{{Form::hidden('edit_emails['.$emailIdx.'][id]',$val->id)}}
