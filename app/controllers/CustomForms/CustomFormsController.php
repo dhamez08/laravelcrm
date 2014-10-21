@@ -348,10 +348,7 @@ class CustomFormsController extends \BaseController {
 		return \Redirect::back()->withErrors(['There was a problem deleting the form data, please try again']);
 	}
 
-	public function postPreviewFormData() {
-
-		
-
+	private function _formTemplate() {
 		$content = '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>';
 		$content.= '<link href="'.$this->data_view['asset_path'].'/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>';
 		$content.= '<link href="'.$this->data_view['asset_path'].'/global/plugins/star-rating/css/star-rating.css" rel="stylesheet" type="text/css"/>';
@@ -428,6 +425,29 @@ class CustomFormsController extends \BaseController {
 		</style>';
 
 		$content.= '</head><body>';
+
+		return $content;
+	}
+
+	public function postPreviewFormData() {
+
+		$content = $this->_formTemplate();
+
+		$content.= '<legend>'.\Input::get('title').'</legend>';
+		$content.= \Input::get('content');
+		$content.= '</body></html>';
+
+		$pdf = \PDF::make();
+
+	    $pdf->addPage($content);
+
+	    $pdf->send();
+	}
+
+	public function postSaveFormData() {
+
+		$content = $this->_formTemplate();
+		
 		$content.= '<legend>'.\Input::get('title').'</legend>';
 		$content.= \Input::get('content');
 		$content.= '</body></html>';
