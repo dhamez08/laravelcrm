@@ -49,7 +49,13 @@
 							@foreach($email->get() as $mail)
 								<p>
 									<i class="fa fa-envelope"></i>
-									<a href="mailto:{{$mail->email}}" target="_blank">{{$mail->email}}</a>
+									<a href="mailto:{{$mail->email}}" target="_blank">
+										@if( strlen($mail->email) > 15 )
+											{{substr($mail->email,0,15)}}...
+										@else
+											{{$mail->email}}
+										@endif
+									</a>
 									<span class="label label-info" style="font-size:9px;">{{$mail->type}}</span>
 								</p>
 							@endforeach
@@ -117,7 +123,7 @@
 												- {{$currentClient->parseDate($family->partner_dob)}} - {{$family->relationship}}
 										@else
 												<strong>{{$family->first_name.' '.$family->last_name}}</strong>
-												- {{$currentClient->parseDate($family->dob)}} - {{$family->relationship}}
+												- {{$currentClient->parseDate($family->dob,'d/m/Y')}} - {{$family->relationship}}
 										@endif
 									<td>
 									<td>
