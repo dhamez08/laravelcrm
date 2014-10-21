@@ -92,6 +92,6 @@
 	}}
 	</div>
 </div>
-@if( isset($customer) )
-{{Form::hidden('address_id', isset($customer->address()->first()->id) ? $customer->address()->first()->id:null)}}
+@if( isset($customer && isset($customer->address()->first()->id)) )
+{{Form::hidden('address_id', $customer->address()->first()->id}}
 @endif
