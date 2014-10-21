@@ -18,6 +18,12 @@ var Index = function () {
 		});
 	}
 
+	var inputDatePicker = function(){
+		jQuery('.inputdatepicker').datepicker({
+			autoclose:true,
+		});
+	}
+
     // public functions
     return {
 
@@ -25,6 +31,7 @@ var Index = function () {
         init: function () {
 			modalEvent();
 			slimScroll();
+			inputDatePicker();
         },
 
     };

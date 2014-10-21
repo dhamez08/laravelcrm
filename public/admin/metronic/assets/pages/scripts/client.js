@@ -193,33 +193,43 @@ var addPartner = function () {
 var addChildren = function () {
 
 	var content = function(incrementId) {
-        return '<div class="row children-wrapper">'
-			+'<div class="col-xs-3">'
-				+'<div class="form-group">'
-				+'<label class="control-label">First Name</label>'
-				+'<input type="text" name="children['+incrementId+'][firstname]" class="form-control input-sm">'
-				+'</div>'
-			+'</div>'
-			+'<div class="col-xs-3">'
-				+'<div class="form-group">'
-				+'<label class="control-label">Last Name</label>'
-				+'<input type="text" name="children['+incrementId+'][lastname]" class="form-control input-sm">'
-				+'</div>'
-			+'</div>'
-			+'<div class="col-xs-2">'
-				+'<div class="form-group">'
-				+'<label class="control-label">Date of Birth</label>'
-				+'<input type="text" name="children['+incrementId+'][dob]" data-date-format="dd/mm/yyyy" data-provide="datepicker" class="form-control input-sm">'
-				+'</div>'
-			+'</div>'
-			+'<div class="col-xs-2">'
-				+'<div class="form-group">'
-				+'<label class="control-label">Relation To Client</label>'
-				+'<select name="children['+incrementId+'][relation_to_client]" class="form-control input-sm">'
-				+'</select>'
-				+'</div>'
-			+'</div>'
-		+'</div>';
+        return '<div class="well">'
+					+ '<div class="row children-wrapper">'
+						+'<div class="col-md-6">'
+							+'<div class="form-group">'
+								+'<label class="control-label col-md-3">First Name</label>'
+								+'<div class="col-md-9">'
+									+'<input type="text" name="children['+incrementId+'][firstname]" class="form-control input-sm">'
+								+'</div>'
+							+'</div>'
+						+'</div>'
+						+'<div class="col-md-6">'
+							+'<div class="form-group">'
+								+'<label class="control-label col-md-3">Last Name</label>'
+								+'<div class="col-md-9">'
+									+'<input type="text" name="children['+incrementId+'][lastname]" class="form-control input-sm">'
+								+'</div>'
+							+'</div>'
+						+'</div>'
+						+'<div class="col-md-6">'
+							+'<div class="form-group">'
+								+'<label class="control-label col-md-3">Date of Birth</label>'
+								+'<div class="col-md-9">'
+									+'<input type="text" name="children['+incrementId+'][dob]" data-date-format="dd/mm/yyyy" data-provide="datepicker" placeholder="dd/mm/yyyy" class="form-control input-sm inputdatepicker">'
+								+'</div>'
+							+'</div>'
+						+'</div>'
+						+'<div class="col-md-6">'
+							+'<div class="form-group">'
+							+'<label class="control-label col-md-3">Relation To Client</label>'
+								+'<div class="col-md-9">'
+									+'<select name="children['+incrementId+'][relation_to_client]" class="form-control input-sm">'
+									+'</select>'
+								+'</div>'
+							+'</div>'
+						+'</div>'
+					+'</div>';
+				+'</div>';
     }
 
     // public functions
@@ -250,7 +260,9 @@ var addChildren = function () {
 				}else{
 					children_details.switchClass('show','hide');
 				}
-
+				jQuery('.inputdatepicker').datepicker({
+					autoclose:true,
+				});
 			});
         }
     };
@@ -260,34 +272,43 @@ var addChildren = function () {
 var addRowChildren = function () {
 
 	var content = function(incrementId) {
-        return '<div class="row children-wrapper">'
-			+'<div class="col-xs-3">'
-				+'<div class="form-group">'
-				+'<label class="control-label">First Name</label>'
-				+'<input type="text" name="children['+incrementId+'][firstname]" class="form-control input-sm">'
-				+'</div>'
-			+'</div>'
-			+'<div class="col-xs-3">'
-				+'<div class="form-group">'
-				+'<label class="control-label">Last Name</label>'
-				+'<input type="text" name="children['+incrementId+'][lastname]" class="form-control input-sm">'
-				+'</div>'
-			+'</div>'
-			+'<div class="col-xs-2">'
-				+'<div class="form-group">'
-				+'<label class="control-label">Date of Birth</label>'
-				+'<input type="text" name="children['+incrementId+'][dob]" data-date-format="dd/mm/yyyy" data-provide="datepicker" class="form-control input-sm">'
-				+'</div>'
-			+'</div>'
-			+'<div class="col-xs-2">'
-				+'<div class="form-group">'
-				+'<label class="control-label">Relation To Client</label>'
-				+'<select name="children['+incrementId+'][relation_to_client]" class="form-control input-sm">'
-				+'</select>'
-				+'</div>'
-			+'</div>'
-			+'<a href="#" class="remove_field">Remove</a>'
-		+'</div>';
+        return '<div class="well">'
+					+ '<div class="row children-wrapper">'
+						+'<div class="col-md-6">'
+							+'<div class="form-group">'
+								+'<label class="control-label col-md-3">First Name</label>'
+								+'<div class="col-md-9">'
+									+'<input type="text" name="children['+incrementId+'][firstname]" class="form-control input-sm">'
+								+'</div>'
+							+'</div>'
+						+'</div>'
+						+'<div class="col-md-6">'
+							+'<div class="form-group">'
+								+'<label class="control-label col-md-3">Last Name</label>'
+								+'<div class="col-md-9">'
+									+'<input type="text" name="children['+incrementId+'][lastname]" class="form-control input-sm">'
+								+'</div>'
+							+'</div>'
+						+'</div>'
+						+'<div class="col-md-6">'
+							+'<div class="form-group">'
+								+'<label class="control-label col-md-3">Date of Birth</label>'
+								+'<div class="col-md-9">'
+									+'<input type="text" name="children['+incrementId+'][dob]" data-date-format="dd/mm/yyyy" data-provide="datepicker" placeholder="dd/mm/yyyy" class="form-control input-sm inputdatepicker">'
+								+'</div>'
+							+'</div>'
+						+'</div>'
+						+'<div class="col-md-6">'
+							+'<div class="form-group">'
+							+'<label class="control-label col-md-3">Relation To Client</label>'
+								+'<div class="col-md-9">'
+									+'<select name="children['+incrementId+'][relation_to_client]" class="form-control input-sm">'
+									+'</select>'
+								+'</div>'
+							+'</div>'
+						+'</div>'
+					+'</div>';
+				+'</div>';
     }
 
     // public functions
