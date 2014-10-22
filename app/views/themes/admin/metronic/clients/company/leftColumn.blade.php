@@ -6,10 +6,10 @@
 	-->
 	<div class="panel-body">
 		 <div class="row">
-		 	<div class="col-md-3">
+		 	<div class="col-md-12">
 		 		<img src="{{$asset_path . '/global/img/summary_comp.png'}}" alt="profile pic" class="profilePic"/>
 		 	</div>
-		 	<div class="col-md-9">
+		 	<div class="col-md-12">
 		 		<p>{{$customer->company_name}}</p>
 		 	</div>
 		 </div>
@@ -20,19 +20,28 @@
 		 			<div class="form-group">
 						<p></p>
 						@if( $url->count() > 0 )
-								@foreach($url->get() as $urls)
-									<p>
-										<i class="fa fa-cloud"></i>
-										<a href="{{$urls->url}}" target="_blank">{{$urls->url}}</a>
-										<span class="label label-info" style="font-size:9px;">{{$urls->type}}</span>
-									</p>
-								@endforeach
+							@foreach($url->get() as $urls)
+								@if( in_array($urls->website,array_flatten(\Config::get('crm.website_for'))))
+									<a href="{{$urls->url}}" target="_blank">
+										@if(strtolower($urls->website) == 'website')
+											<i class="fa fa-cloud fa-2x"></i>
+										@else
+											<i class="fa fa-{{strtolower($urls->website)}} fa-2x"></i>
+										@endif
+									</a>
+								@endif
+							@endforeach
 						@endif
 						@if( $email->count() > 0 )
 							@foreach($email->get() as $mail)
 								<p>
-									<i class="fa fa-envelope"></i>
-									<a href="mailto:{{$mail->email}}" target="_blank">{{$mail->email}}</a>
+									<a href="mailto:{{$mail->email}}?bcc=dropbox.13554456@123crm.co.uk&subject= **enter your subject here** [REF:{{$customer->ref}}]" target="_blank">
+										@if( strlen($mail->email) > 15 )
+											{{substr($mail->email,0,15)}}...
+										@else
+											{{$mail->email}}
+										@endif
+									</a>
 									<span class="label label-info" style="font-size:9px;">{{$mail->type}}</span>
 								</p>
 							@endforeach
