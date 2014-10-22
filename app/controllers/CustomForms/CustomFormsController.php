@@ -456,7 +456,26 @@ class CustomFormsController extends \BaseController {
 
 	    $pdf->addPage($content);
 
-	    $pdf->send();
+	    $new_file = \Auth::id() . '_' . time() . '_' . rand(1,9) . '.pdf';
+
+		\Input::merge(
+			array(
+				'customer_id' => \Input::get('customer-hidden-form'),
+				'added_date' => date('Y-m-d H:i:s'),
+				'filename' => $new_file,
+				'name' => \Input::get('title'),
+				'type' => '1'
+			)
+		);
+
+	    if(\CustomerFiles\CustomerFilesEntity::get_instance()->createOrUpdate()) {
+	    	$pdf->saveAs(public_path('documents/'.$new_file));
+
+	    	\Session::flash('message', 'Form Successfully saved!');
+			return \Redirect::back();
+	    }
+
+	    return \Redirect::back()->withErrors(['There was a problem saving the form, please try again']);
 	}
 
 }

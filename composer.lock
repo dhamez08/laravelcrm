@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e65a51a075a8532d75975f334d516aa7",
+    "hash": "65b550f80cac0d69e9b899a029c0be5a",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -147,16 +147,16 @@
         },
         {
             "name": "h4cc/wkhtmltopdf-amd64",
-            "version": "0.12.1",
+            "version": "0.11.0-RC1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/h4cc/wkhtmltopdf-amd64.git",
-                "reference": "f5bb1877134ed0cd522eedf71bbc6e3c42f10964"
+                "reference": "de1ed65ae2e50b9802cba61bd515fefc33b5a457"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/h4cc/wkhtmltopdf-amd64/zipball/f5bb1877134ed0cd522eedf71bbc6e3c42f10964",
-                "reference": "f5bb1877134ed0cd522eedf71bbc6e3c42f10964",
+                "url": "https://api.github.com/repos/h4cc/wkhtmltopdf-amd64/zipball/de1ed65ae2e50b9802cba61bd515fefc33b5a457",
+                "reference": "de1ed65ae2e50b9802cba61bd515fefc33b5a457",
                 "shasum": ""
             },
             "bin": [
@@ -173,17 +173,9 @@
                     "email": "github@h4cc.de"
                 }
             ],
-            "description": "Convert html to pdf using webkit (qtwebkit). Static linked linux binary for amd64 systems.",
-            "homepage": "http://wkhtmltopdf.org/",
-            "keywords": [
-                "binary",
-                "convert",
-                "pdf",
-                "snapshot",
-                "thumbnail",
-                "wkhtmltopdf"
-            ],
-            "time": "2014-07-07 06:00:35"
+            "description": "Convert html to pdf using webkit (qtwebkit)",
+            "homepage": "https://code.google.com/p/wkhtmltopdf/",
+            "time": "2013-09-06 12:54:18"
         },
         {
             "name": "h4cc/wkhtmltopdf-i386",
@@ -1805,21 +1797,13 @@
             "time": "2014-09-23 05:25:11"
         }
     ],
-    "packages-dev": [
-
-    ],
-    "aliases": [
-
-    ],
+    "packages-dev": [],
+    "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [
-
-    ],
+    "stability-flags": {
+        "h4cc/wkhtmltopdf-amd64": 5
+    },
     "prefer-stable": false,
-    "platform": [
-
-    ],
-    "platform-dev": [
-
-    ]
+    "platform": [],
+    "platform-dev": []
 }

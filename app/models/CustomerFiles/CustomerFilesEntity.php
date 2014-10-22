@@ -44,10 +44,10 @@ class CustomerFilesEntity extends \Eloquent{
 			//update
 			$files = \CustomerFiles\CustomerFiles::find($id);
 		}
-		$files->customer_id = \Input('customer_id',\Auth::id());
-		$files->filename = \Input('filename','');
-		$files->name = \Input('name','');
-		$files->type = \Input('type','');
+		$files->customer_id = \Input::get('customer_id',\Auth::id());
+		$files->filename = \Input::get('filename','');
+		$files->name = \Input::get('name','');
+		$files->type = \Input::get('type','');
 		$files->save();
 		return $files;
 	}

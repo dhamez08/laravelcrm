@@ -25,6 +25,7 @@
               </form>
               <form action="{{ url('settings/custom-forms/save-form-data') }}" method="post" style="float:left">
                 {{ \Form::token() }}
+                <input type="hidden" class="customer-hidden-form" name="customer-hidden-form" value="{{ $customer->id }}" />
                 <input type="hidden" class="title-hidden-form" name="title" />
                 <input type="hidden" class="content-hidden-form" name="content" />
   	      		 <button type="submit" class="btn blue">Save as PDF</button>
