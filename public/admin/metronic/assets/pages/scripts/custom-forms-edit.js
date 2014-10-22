@@ -248,6 +248,7 @@
 			var label = $(label_template).clone().text($.trim(o))
 			var radio = $(radio_template).clone();
 			radio[0].name = values.name;
+			radio[0].value = $.trim(o);
 			label.append(radio);
 			$(ctrl).append(label);
 		});
@@ -329,7 +330,7 @@
 				}
 			});
 		}
-		if(!new_field_name.match(regex)) {
+		if(!new_field_name.match(regex) && new_field_name!='') {
 			alert('Field name must only contains letters, numbers, spaces and underscores.');
 		} else if(exists>0) {
 			alert('Field name already exists. Please choose another!');
