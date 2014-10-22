@@ -45,8 +45,6 @@
 										@else
 											<i class="fa fa-{{strtolower($urls->website)}} fa-2x"></i>
 										@endif
-
-
 									</a>
 								@endif
 							@endforeach

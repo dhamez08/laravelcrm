@@ -1,6 +1,6 @@
-<div class="col-xs-{{!isset($customer) ? 5:12}}">
-	<div class="form-group">
-	<label class="control-label">Company Name</label>
+<div class="form-group">
+	<label class="control-label col-md-3">Company Name</label>
+	<div class="col-md-9">
 	{{
 		Form::text(
 			'company_name',
@@ -15,24 +15,27 @@
 	</div>
 </div>
 @if( !isset($customer) )
-	<div class="col-xs-5">
-		<div class="form-group">
-			<label class="control-label">&nbsp;</label>
-			<button id="searchCompanyInfo" class="btn btn-primary" type="button">search company information</button>
-		</div>
+<div class="form-group">
+	<label class="control-label col-md-3"></label>
+	<div class="col-md-4">
+		<button id="searchCompanyInfo" class="btn btn-primary btn-md" type="button">search company information</button>
 	</div>
-	<div class="col-xs-12">
-		<div class="form-group">
-			<div id="company_lookup_results">
-				<select style="width:500px;" class="form-control" multiple="multiple" id="company_lookup_results_list">
-				</select>
-			</div>
-		</div>
-	</div>
+</div>
 @endif
-<div class="col-xs-6">
-	<div class="form-group">
-	<label class="control-label">Company Registration Number</label>
+@if( !isset($customer) )
+<div class="form-group">
+	<label class="control-label col-md-3">&nbsp;</label>
+	<div class="col-md-9">
+		<div id="company_lookup_results">
+			<select style="width:100%;" class="form-control" multiple="multiple" id="company_lookup_results_list">
+			</select>
+		</div>
+	</div>
+</div>
+@endif
+<div class="form-group">
+	<label class="control-label col-md-3">Company Registration Number</label>
+	<div class="col-md-9">
 	{{
 		Form::text(
 			'companyreg',
@@ -45,9 +48,9 @@
 	}}
 	</div>
 </div>
-<div class="col-xs-6">
-	<div class="form-group">
-	<label class="control-label">Number Employees</label>
+<div class="form-group">
+	<label class="control-label col-md-3">Number Employees</label>
+	<div class="col-md-9">
 	{{
 		Form::text(
 			'companyemployee',
@@ -60,9 +63,9 @@
 	}}
 	</div>
 </div>
-<div class="col-xs-6">
-	<div class="form-group">
-	<label class="control-label">Company Industry Sector:</label>
+<div class="form-group">
+	<label class="control-label col-md-3">Company Industry Sector:</label>
+	<div class="col-md-9">
 	{{
 		Form::text(
 			'sector',
