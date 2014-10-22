@@ -129,6 +129,7 @@
 	<script type="text/javascript" src="{{$asset_path}}/pages/scripts/client.js"></script>
 	<script>
 		jQuery(document).ready(function() {
+			Metronic.init();
 			Index.init();
 			addPhone.init();
 			addEmail.init();
