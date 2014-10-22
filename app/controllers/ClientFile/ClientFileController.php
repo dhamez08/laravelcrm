@@ -69,11 +69,11 @@ class ClientFileController extends \BaseController {
 		$data['belongToPartner']	= \Clients\ClientEntity::get_instance()->getPartnerBelong($data['customer']);
 		$data['associate']			= \Clients\ClientEntity::get_instance()->setAssociateCustomer($clientId);
 		$data['partner']			= \Clients\ClientEntity::get_instance()->getCustomerPartner();
-		$data['center_column_view']	= 'dashboard';
+		$data['center_column_view']	= 'files';
 		$data['customerId']			= $clientId;
 		$data['belongsTo']			= \Auth::id();
 		$data 						= array_merge($data,$dashboard_data);
-		return \View::make( $data['view_path'] . '.clients.summary', $data );
+		return \View::make( $data['view_path'] . '.files.summary', $data );
 	}
 
 }
