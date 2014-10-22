@@ -28,7 +28,11 @@
 			</li>
 			<!-- BEGIN FRONTEND THEME LINKS -->
 			<li>
+				@if(isset($customer))
 				<a href="{{ url('clients/opportunities/'.$customer->id) }}">
+				@else
+				<a href="javascript:;">
+				@endif
 				<i class="icon-star"></i>
 				<span class="title">Opportunities</span>
 				<span class="arrow">
@@ -57,6 +61,7 @@
 				<span class="arrow "></span>
 				</a>
 			</li>
+			@if(isset($customer))
 			@foreach(Auth::user()->customtabs as $tab)
 			<li>
 				<a href="{{ url('clients/custom/'.$customer->id.'?custom='.$tab->id) }}">
@@ -66,7 +71,7 @@
 				</a>
 			</li>
 			@endforeach
-			
+			@endif
 		</ul>
 		<!-- END SIDEBAR MENU -->
 	</div>
