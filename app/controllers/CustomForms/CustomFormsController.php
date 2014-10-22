@@ -351,7 +351,6 @@ class CustomFormsController extends \BaseController {
 	private function _formTemplate() {
 		$content = '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>';
 		$content.= '<link href="'.$this->data_view['asset_path'].'/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>';
-		$content.= '<link href="'.$this->data_view['asset_path'].'/global/plugins/star-rating/css/star-rating.css" rel="stylesheet" type="text/css"/>';
 		$content.= '
 		<style id="content-styles">
 		/* Styles that are also copied for Preview */
@@ -420,6 +419,66 @@ class CustomFormsController extends \BaseController {
 			border: 0px;
 			font-weight: bold;
 			padding-left: 0px;
+		}
+
+		.star-cb-group {
+		  /* remove inline-block whitespace */
+		  font-size: 0;
+		  /* flip the order so we can use the + and ~ combinators */
+		  unicode-bidi: bidi-override;
+		  direction: rtl;
+		  /* the hidden clearer */
+		  /* this is gross, I threw this in to override the starred
+		     buttons when hovering. */
+		}
+		.star-cb-group * {
+		  font-size: 21px;
+		}
+		.star-cb-group > [type*="radio"] {
+		  display: none;
+		}
+		.star-cb-group > [type*="radio"] + label {
+		  /* only enough room for the star */
+		  display: inline-block;
+		  overflow: hidden;
+		  text-indent: 9999px;
+		  width: 1em;
+		  height: 1.4em;
+		  white-space: nowrap;
+		}
+		.star-cb-group > [type*="radio"] + label:before {
+		  display: inline-block;
+		  text-indent: -9999px;
+		  content: "\2606";
+		  /* WHITE STAR */
+		  color: #888;
+		}
+		.star-cb-group > [type*="radio"]:checked ~ label:before, .star-cb-group > [type*="radio"] + label:hover ~ label:before, .star-cb-group > [type*="radio"] + label:hover:before {
+		  content: "\2605";
+		  /* BLACK STAR */
+		  color: #FFBF00;
+		  text-shadow: 0 0 1px #333;
+		}
+		.star-cb-group > .star-cb-clear[type*="radio"] + label {
+		  text-indent: -9999px;
+		  width: .5em;
+		  margin-left: -.5em;
+		}
+		.star-cb-group > .star-cb-clear[type*="radio"] + label:before {
+		  width: .5em;
+		  height: 1.4em;
+		}
+		.star-cb-group:hover > [type*="radio"] + label:before {
+		  content: "\2606";
+		  /* WHITE STAR */
+		  color: #888;
+		  text-shadow: none;
+		}
+		.star-cb-group:hover > [type*="radio"] + label:hover ~ label:before, .star-cb-group:hover > [type*="radio"] + label:hover:before {
+		  content: "\2605";
+		  /* BLACK STAR */
+		  color: #FFBF00;
+		  text-shadow: 0 0 1px #333;
 		}
 
 		</style>';
