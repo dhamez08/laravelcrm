@@ -29,6 +29,8 @@ Route::group(array('before' => 'auth'), function()
 		Route::controller( 'task' , 'Task\TaskController');
 		Route::controller( 'calendar' , 'Calendar\CalendarController');
 		Route::controller( 'notes' , 'Notes\NotesController');
+		//Route::controller( 'clientfile' , 'ClientFile\ClientFileController');
+		Route::get( 'clientfile/{id}' , 'ClientFile\ClientFileController@getIndex' );
 	//});
 
 	Route::get( 'settings' , 'Settings\SettingsController@getIndex' );
@@ -78,6 +80,7 @@ Route::group(array('before' => 'auth'), function()
 	});
 
 	Route::controller('custom-tab','CustomTab\CustomTabController');
+
 });
 
 Route::get('testmail', function()
