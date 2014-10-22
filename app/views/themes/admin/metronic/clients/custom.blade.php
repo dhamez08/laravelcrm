@@ -66,10 +66,6 @@
 	@section('left-sidebar')
 		@include($view_path.'.clients.partials.leftSidebar')
 	@stop
-	@section('pagebar')
-		@parent
-		@include($view_path.'.clients.partials.subPagebar')
-	@stop
 	@section('innerpage-page-title')
 		&nbsp;
 	@show

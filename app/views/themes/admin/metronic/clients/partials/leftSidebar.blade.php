@@ -28,7 +28,7 @@
 			</li>
 			<!-- BEGIN FRONTEND THEME LINKS -->
 			<li>
-				<a href="javascript:;">
+				<a href="{{ url('clients/opportunities/'.$customer->id) }}">
 				<i class="icon-star"></i>
 				<span class="title">Opportunities</span>
 				<span class="arrow">
@@ -57,33 +57,16 @@
 				<span class="arrow "></span>
 				</a>
 			</li>
+			@foreach(Auth::user()->customtabs as $tab)
 			<li>
-				<a href="javascript:;">
+				<a href="{{ url('clients/custom/'.$customer->id.'?custom='.$tab->id) }}">
 				<i class="icon-logout"></i>
-				<span class="title">Custom Tab 1</span>
+				<span class="title">{{ $tab->name }}</span>
 				<span class="arrow "></span>
 				</a>
 			</li>
-			<li>
-				<a href="javascript:;">
-				<i class="icon-envelope-open"></i>
-				<span class="title">Custom Tab 2</span>
-				<span class="arrow "></span>
-				</a>
-			</li>
-			<li>
-				<a href="javascript:;">
-				<i class="icon-docs"></i>
-				<span class="title">Custom Tab 3</span>
-				<span class="arrow "></span>
-				</a>
-			</li>
-			<li class="last ">
-				<a href="charts.html">
-				<i class="icon-bar-chart"></i>
-				<span class="title">Custom Tab 4</span>
-				</a>
-			</li>
+			@endforeach
+			
 		</ul>
 		<!-- END SIDEBAR MENU -->
 	</div>

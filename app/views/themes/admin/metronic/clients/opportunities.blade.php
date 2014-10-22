@@ -11,15 +11,11 @@
 	@section('left-sidebar')
 		@include($view_path.'.clients.partials.leftSidebar')
 	@stop
-	@section('pagebar')
-		@parent
-		@include($view_path.'.clients.partials.subPagebar')
-	@stop
 	@section('innerpage-page-title')
 		&nbsp;
 	@show
 	@section('innerpage-content')
-		<div class="col-md-3">
+		<div class="col-md-2 col-summary">
 			<!-- CLIENT LEFT SIDEBAR -->
 			@if( $customer->type == 2 )
 				@include($view_path.'.clients.company.leftColumn')
@@ -29,13 +25,13 @@
 
 			<!-- END CLIENT LEFT SIDEBAR -->
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-8 col-summary">
 			<!-- CENTER COLUMN -->
 			@include($view_path.'.clients.partials.center_column.'.$center_column_view)
 			<!-- END CENTER COLUMN -->
 			@include($view_path.'.clients.partials.modals.add-opportunity-form-modal')
 		</div>
-		<div class="col-md-3">
+		<div class="col-md-2 col-summary">
 			<!-- ADS -->
 			@include($view_path.'.clients.partials.rightColumn')
 			<!-- END ADS -->

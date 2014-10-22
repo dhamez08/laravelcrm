@@ -1362,13 +1362,17 @@ class ClientsController extends \BaseController {
 	 * */
 	public function getOpportunities($client_id) {
 
+		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+		$dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
+		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed');
+
 		$data = \CustomerOpportunities\CustomerOpportunitiesController::get_instance()->getOpportunities($client_id);
 
 		$data1 = $this->_getClientData($client_id);
 
 		$data['center_column_view']	= 'opportunities';
-
-		$data 	= array_merge($data,$data1);
+		
+		$data 	= array_merge($data,$data1,$dashboard_data);
 
 		return \View::make( $data['view_path'] . '.clients.opportunities', $data );
 
