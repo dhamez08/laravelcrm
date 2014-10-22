@@ -1,6 +1,6 @@
 <div class="form-group">
 	<label class="control-label col-md-3">House Number</label>
-	<div class="col-md-9">
+	<div class="col-md-4">
 	{{
 		Form::text(
 			'address_line_2',
@@ -15,11 +15,11 @@
 </div>
 <div class="form-group">
 	<label class="control-label col-md-3">Post Code</label>
-	<div class="col-md-9">
+	<div class="col-md-4">
 		{{
 			Form::text(
 				'postcode',
-				null,
+				isset($postcode) ? $postcode:null,
 				array(
 					'class'=>'form-control input-sm',
 					'id'=>'postcode'
@@ -28,22 +28,23 @@
 		}}
 	</div>
 </div>
+
 <div class="form-group">
 	<label class="control-label col-md-3">Address</label>
 	<div class="col-md-9">
-	{{
-		Form::textarea(
-			'address_line_1',
-			null,
-			array(
-				'class'=>'form-control input-sm',
-				'rows'=>5,
-				'cols'=>8,
-				'style'=>'resize:none;',
-				'id'=>'address1'
-			)
-		);
-	}}
+		{{
+			Form::textarea(
+				'address_line_1',
+				null,
+				array(
+					'class'=>'form-control input-sm',
+					'rows'=>5,
+					'cols'=>8,
+					'style'=>'resize:none;',
+					'id'=>'address1'
+				)
+			);
+		}}
 	</div>
 </div>
 <div class="form-group">

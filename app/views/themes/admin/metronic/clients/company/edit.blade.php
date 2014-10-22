@@ -36,6 +36,7 @@
 					'action' => array('Clients\ClientsController@putUpdateClientCompany', $customer->id),
 					'method' => 'PUT',
 					'role'=>'form',
+					'class' => 'form-horizontal',
 				)
 			)
 		}}
@@ -51,7 +52,7 @@
 				</div>
 				<div class="col-md-6">
 					<h3 class="form-section">Address</h3>
-					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.companyAddressInput' )
+					@include( \DashboardEntity::get_instance()->getView() . '.clients.company.EditcompanyAddressInput' )
 				</div>
 			</div>
 			<div id="partner_details" class="hide">

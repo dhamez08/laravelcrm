@@ -1,6 +1,6 @@
-<div class="col-xs-2">
-	<div class="form-group">
-	<label class="control-label">Title</label>
+<div class="form-group">
+	<label class="control-label col-md-3">Title</label>
+	<div class="col-md-2">
 	{{
 		Form::select(
 			'title',
@@ -13,9 +13,9 @@
 	}}
 	</div>
 </div>
-<div class="col-xs-4">
-	<div class="form-group">
-	<label class="control-label">First Name</label>
+<div class="form-group">
+	<label class="control-label col-md-3">First Name</label>
+	<div class="col-md-4">
 	{{
 		Form::text(
 			'first_name',
@@ -27,9 +27,9 @@
 	}}
 	</div>
 </div>
-<div class="col-xs-4">
-	<div class="form-group">
-	<label class="control-label">Surname</label>
+<div class="form-group">
+	<label class="control-label col-md-3">Surname</label>
+	<div class="col-md-4">
 	{{
 		Form::text(
 			'last_name',
@@ -41,9 +41,9 @@
 	}}
 	</div>
 </div>
-<div class="col-xs-4">
-	<div class="form-group">
-	<label class="control-label">Job Title</label>
+<div class="form-group">
+	<label class="control-label col-md-3">Job Title</label>
+	<div class="col-md-4">
 	{{
 		Form::text(
 			'job_title',
@@ -55,9 +55,9 @@
 	}}
 	</div>
 </div>
-<div class="col-xs-4">
-	<div class="form-group">
-	<label class="control-label">Email Address</label>
+<div class="form-group">
+	<label class="control-label col-md-3">Email Address</label>
+	<div class="col-md-4">
 	{{
 		Form::text(
 			'contact_email',
@@ -69,9 +69,9 @@
 	}}
 	</div>
 </div>
-<div class="col-xs-4">
-	<div class="form-group">
-	<label class="control-label">Telephone Number</label>
+<div class="form-group">
+	<label class="control-label col-md-3">Telephone Number</label>
+	<div class="col-md-4">
 	{{
 		Form::text(
 			'contact_phone',

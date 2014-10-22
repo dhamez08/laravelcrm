@@ -34,14 +34,25 @@
 					'action' => array('Clients\ClientsController@postCreateClientCompany'),
 					'method' => 'POST',
 					'role'=>'form',
+					'class' => 'form-horizontal',
 				)
 			)
 		}}
-		<div class="form-body">
-			<div class="col-md-12">
-				{{Form::submit('Add Company Client',array('class'=>"btn blue"))}}
-				<a class="btn {{{$dashboard_css or 'blue'}}}" href="{{url('clients')}}">Cancel</a>
+		<div class="form-actions">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="row">
+						<div class="col-md-12">
+							{{Form::submit('Add Company Client',array('class'=>"btn blue"))}}
+							<a class="btn {{{$dashboard_css or 'blue'}}}" href="{{url('clients')}}">Cancel</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+				</div>
 			</div>
+		</div>
+		<div class="form-body">
 			<div class="row">
 				<div class="col-md-6">
 					<h3 class="form-section">Organisation Info</h3>
@@ -49,7 +60,7 @@
 				</div>
 				<div class="col-md-6">
 					<h3 class="form-section">Address</h3>
-					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.companyAddressInput' )
+					@include( \DashboardEntity::get_instance()->getView() . '.clients.company.companyAddressInput' )
 				</div>
 			</div>
 			<div id="partner_details" class="hide">
