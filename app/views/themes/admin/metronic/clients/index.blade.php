@@ -13,7 +13,7 @@
 @section('body-content')
 	@parent
 	@section('left-sidebar')
-		@include($view_path.'.clients.partials.leftSidebar')
+
 	@stop
 	@section('pagebar')
 

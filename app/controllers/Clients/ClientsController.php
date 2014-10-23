@@ -509,6 +509,7 @@ class ClientsController extends \BaseController {
 		$data['partner']			= \Clients\ClientEntity::get_instance()->getCustomerPartner();
 		$data['center_column_view']	= 'dashboard';
 		$data['customerId']			= $clientId;
+		$data['clientId']			= $clientId;
 		$data['belongsTo']			= \Auth::id();
 		/*$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getCustomerTasks($clientId)
 		->status(1)->with('label');*/

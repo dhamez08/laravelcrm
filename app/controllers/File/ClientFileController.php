@@ -80,8 +80,12 @@ class ClientFileController extends \BaseController {
 		$data['file2']				= \Auth::user()->files_2;
 		$data['file3']				= \Auth::user()->files_3;
 		$data['file4']				= \Auth::user()->files_4;
+		$data['file5']				= \Auth::user()->files_5;
+		$data['file6']				= \Auth::user()->files_6;
 		$data['customerId']			= $clientId;
 		$data['belongsTo']			= \Auth::id();
+		$data['customerFiles']		= \CustomerFiles\CustomerFiles::customerFile($clientId);
+		$data['clientId']			= $clientId;
 		$data 						= array_merge($data,$dashboard_data);
 		return \View::make( $data['view_path'] . '.files.summary', $data );
 	}
@@ -113,12 +117,19 @@ class ClientFileController extends \BaseController {
 				$fileName = $this->_doUpload($file);
 				$data = array(
 					'customer_id' => $customer_id,
-					'filename' => \Input::get('caption')[$file->getClientOriginalName()],
-					'name' => $fileName,
+					'filename' => $fileName,
+					'name' => \Input::get('caption')[$file->getClientOriginalName()],
 					'type' => $file_id
 				);
 				\CustomerFiles\CustomerFilesEntity::get_instance()->createOrUpdate($data);
-				return \Response::json(array('success'=>true,'msg'=>''));
+
+				return \Response::json(
+					array(
+						'success'=>true,
+						'msg'=>'',
+						'redirect'=>url('file/client-file/' . $customer_id),
+					)
+				);
 			}
 		}else{
 			return \Response::json(array('success'=>false,'msg'=>'Cannot upload, file.'));

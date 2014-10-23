@@ -13,7 +13,9 @@
 @section('body-content')
 	@parent
 	@section('left-sidebar')
-		@include($view_path.'.clients.partials.leftSidebar')
+		@if( isset($clientId) )
+			@include($view_path.'.clients.partials.leftSidebar')
+		@endif
 	@stop
 	@section('pagebar')
 		@parent
@@ -53,7 +55,7 @@
 		<script src="{{$asset_path}}/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
 		<script type="text/javascript" src="{{$asset_path}}/pages/scripts/client.js"></script>
 		<script type="text/javascript" src="{{$asset_path}}/pages/scripts/notes.js"></script>
-		
+
 		<script>
         jQuery(document).ready(function() {
         	deletePhone.init();

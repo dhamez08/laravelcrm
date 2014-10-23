@@ -17,7 +17,7 @@ var FormFileUpload = function () {
 				}).bind('fileuploaddone', function (e, data) {
 					//$('#msg').html('');
 					if(data.result.success == true) {
-						//window.location.replace(data.result.url + '/dashboard/website/show/' + data.result.websiteid + '/#' + 'slider');
+						window.location.replace(data.result.redirect);
 						/*$.get( data.result.listurl + "/" + data.result.websiteid , function(html) {
 							$('#slideritems').html(html);
 						});*/
@@ -54,7 +54,7 @@ var FormFileUpload = function () {
 					//xhrFields: {withCredentials: true},
 					url: $(this).fileupload('option', 'url'),
 					dataType: 'json',
-					context: $('#fileupload')[0]
+					context: $(this)[0]
 				}).always(function () {
 					$(this).removeClass('fileupload-processing');
 				}).done(function (result) {

@@ -19,11 +19,12 @@
 	<div class="portlet-body tabbable-line">
 		<div class="tab-content">
 			<div class="tab-pane active list_files{{$id}}" id="">
-					<h4>List Files</h4>
-					<p>
-						 ...
-					</p>
-
+				<h4>List Files</h4>
+				@foreach($customerFiles->get()	as $files)
+					@if($files->type == $id)
+						<p>{{$files->filename}} - {{$files->name}}</p>
+					@endif
+				@endforeach
 			</div>
 			<div class="tab-pane add_new{{$id}}" id="">
 					<!-- BEGIN PAGE CONTENT-->

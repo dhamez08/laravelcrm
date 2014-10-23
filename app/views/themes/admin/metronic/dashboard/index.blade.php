@@ -96,7 +96,7 @@
 	<script src="{{$asset_path}}/global/plugins/ckeditor/adapters/jquery.js"></script>
 	<script>
 		jQuery(document).ready(function() {
-			Summary.init();
+			//Summary.init();
 		});
 	</script>
 	@stop

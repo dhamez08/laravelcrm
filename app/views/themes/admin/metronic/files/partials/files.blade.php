@@ -34,3 +34,21 @@
 		</div>
 	</div>
 </div>
+<div class="col-md-12 col-summary">
+	<div class="row">
+		<div class="col-md-6 col-summary">
+			<!-- FILES -->
+			@if( trim($file5) != '' )
+				@include($view_path.'.files.partials.widget',array('title'=>$file5,'id'=>'5'))
+			@endif
+			<!-- FILES -->
+		</div>
+		<div class="col-md-6 col-summary">
+			<!-- FEEDS -->
+			@if( trim($file6) != '' )
+				@include($view_path.'.files.partials.widget',array('title'=>$file6,'id'=>'6'))
+			@endif
+			<!-- END FEEDS -->
+		</div>
+	</div>
+</div>
