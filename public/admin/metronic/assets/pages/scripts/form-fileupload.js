@@ -6,12 +6,12 @@ var FormFileUpload = function () {
 				 // Initialize the jQuery File Upload widget:
 				$(this).fileupload({
 					dropZone: $(this),
-					disableImageResize: false,
+					disableImageResize: true,
 					autoUpload: false,
 					disableImageResize: /Android(?!.*Chrome)|Opera/.test(window.navigator.userAgent),
 					maxFileSize: 500000,
 					maxNumberOfFiles: 5,
-					acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
+					acceptFileTypes: /(\.|\/)(gif|jpe?g|png|pdf|doc|docx)$/i
 					// Uncomment the following to send cross-domain cookies:
 					//xhrFields: {withCredentials: true},
 				}).bind('fileuploaddone', function (e, data) {

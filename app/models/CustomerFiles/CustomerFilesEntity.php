@@ -36,20 +36,21 @@ class CustomerFilesEntity extends \Eloquent{
 	 * 												#1 would be active
 	 * @return db last insert id
 	 * */
-	public function createOrUpdate($id = null){
+	public function createOrUpdate($arrayData = array(), $id = null){
 		if( is_null($id) ) {
 			//create
-			$files = new \CustomerFiles\CustomerFiles;
+			$obj = new \CustomerFiles\CustomerFiles;
 		}else{
 			//update
-			$files = \CustomerFiles\CustomerFiles::find($id);
+			$obj = \CustomerFiles\CustomerFiles::find($id);
 		}
-		$files->customer_id = \Input::get('customer_id',\Auth::id());
-		$files->filename = \Input::get('filename','');
-		$files->name = \Input::get('name','');
-		$files->type = \Input::get('type','');
-		$files->save();
-		return $files;
+		if( count($arrayData) > 0 ){
+			foreach($arrayData as $key=>$val){
+				$obj->$key = $val;
+			}
+			$obj->save();
+			return $obj;
+		}
 	}
 
 }

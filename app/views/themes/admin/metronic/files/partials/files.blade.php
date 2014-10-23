@@ -2,12 +2,16 @@
 	<div class="row">
 		<div class="col-md-6 col-summary">
 			<!-- BEGIN TASKS -->
-			@include($view_path.'.files.partials.widget')
+			@if( trim($file1) != '' )
+				@include($view_path.'.files.partials.widget', array('title'=>$file1,'id'=>'1'))
+			@endif
 			<!-- END TASKS -->
 		</div>
 		<div class="col-md-6 col-summary">
 			<!-- BEGIN ACTIVITY -->
-			@include($view_path.'.files.partials.widget')
+			@if( trim($file2) != '' )
+				@include($view_path.'.files.partials.widget',array('title'=>$file2,'id'=>'2'))
+			@endif
 			<!-- END ACTIVITY -->
 		</div>
 	</div>
@@ -16,13 +20,16 @@
 	<div class="row">
 		<div class="col-md-6 col-summary">
 			<!-- FILES -->
-			{{--@include($view_path.'.files.partials.widget')--}}
+			@if( trim($file3) != '' )
+				@include($view_path.'.files.partials.widget',array('title'=>$file3,'id'=>'3'))
+			@endif
 			<!-- FILES -->
 		</div>
-
 		<div class="col-md-6 col-summary">
 			<!-- FEEDS -->
-			{{--@include($view_path.'.files.partials.widget')--}}
+			@if( trim($file4) != '' )
+				@include($view_path.'.files.partials.widget',array('title'=>$file4,'id'=>'4'))
+			@endif
 			<!-- END FEEDS -->
 		</div>
 	</div>

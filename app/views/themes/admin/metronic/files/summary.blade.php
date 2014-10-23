@@ -95,6 +95,7 @@
 						{% } %}
 					</p>
 					<strong class="error text-danger label label-danger"></strong>
+					{{ Form::textarea('caption[{%=file.name%}]',null,array('class'=>'form-control','placeholder'=>'Add Description','style'=>'resize:none;height:100px;')) }}
 					<div>
 						<p class="size">Processing...</p>
 						<div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
@@ -102,6 +103,12 @@
 						</div>
 					</div>
 					<div>
+						{% if (!i && !o.options.autoUpload) { %}
+							<button class="btn btn-sm blue start hidden" disabled>
+								<i class="fa fa-upload"></i>
+								<span>Start</span>
+							</button>
+						{% } %}
 						{% if (!i) { %}
 							<button class="btn btn-sm red cancel">
 								<i class="fa fa-ban"></i>

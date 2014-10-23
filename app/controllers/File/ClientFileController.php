@@ -30,6 +30,7 @@ class ClientFileController extends \BaseController {
 		$this->data_view 					= parent::setupThemes();
 		$this->data_view['client_index'] 	= $this->data_view['view_path'] . '.clients.index';
 		$this->data_view['html_body_class'] = 'page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed';
+		$this->fileFolder 	 	= public_path() . '/documents';
 	}
 
 	/**
@@ -75,14 +76,53 @@ class ClientFileController extends \BaseController {
 		$data['associate']			= \Clients\ClientEntity::get_instance()->setAssociateCustomer($clientId);
 		$data['partner']			= \Clients\ClientEntity::get_instance()->getCustomerPartner();
 		$data['center_column_view']	= 'files';
+		$data['file1']				= \Auth::user()->files_1;
+		$data['file2']				= \Auth::user()->files_2;
+		$data['file3']				= \Auth::user()->files_3;
+		$data['file4']				= \Auth::user()->files_4;
 		$data['customerId']			= $clientId;
 		$data['belongsTo']			= \Auth::id();
 		$data 						= array_merge($data,$dashboard_data);
 		return \View::make( $data['view_path'] . '.files.summary', $data );
 	}
 
-	public function postAjaxUploadFile(){
-		var_dump(\Input::all());
+	/**
+	 * This is a helper to upload logo
+	 *
+	 * @param	$groupID	int		id of the group
+	 * @see method updateLogo
+	 * @return filename
+	 * */
+	private function _doUpload($fileName){
+		// set the file name
+		// prefix first
+		// group id
+		// time
+		$file_name = rand(9,99) . '_' . time() . '.' . $fileName->getClientOriginalExtension();
+		// upload
+		$upload_success = $fileName->move($this->fileFolder, $file_name);
+		if($upload_success ){
+			return $file_name;
+		}
+	}
+
+	public function postAjaxUploadFile($file_id, $customer_id){
+		$belongs_to = \Auth::id();
+		if( \Input::hasFile('files') ){
+			foreach(\Input::file('files') as $file){
+				$fileName = $this->_doUpload($file);
+				$data = array(
+					'customer_id' => $customer_id,
+					'filename' => \Input::get('caption')[$file->getClientOriginalName()],
+					'name' => $fileName,
+					'type' => $file_id
+				);
+				\CustomerFiles\CustomerFilesEntity::get_instance()->createOrUpdate($data);
+				return \Response::json(array('success'=>true,'msg'=>''));
+			}
+		}else{
+			return \Response::json(array('success'=>false,'msg'=>'Cannot upload, file.'));
+		}
 	}
 
 }
