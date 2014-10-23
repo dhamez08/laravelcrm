@@ -34,7 +34,7 @@
 									'data-name'=>'name',
 									'data-type'=>'text',
 									'data-url'=>url('file/ajax-update-name'),
-									'data-title'=>'Update Description',
+									'data-title'=>'Update Category',
 								)
 								);
 							}}
