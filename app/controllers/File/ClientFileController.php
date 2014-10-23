@@ -136,4 +136,12 @@ class ClientFileController extends \BaseController {
 		}
 	}
 
+	public function postAjaxUpdateName(){
+		$data = array(
+			'name' => \Input::get('value')
+		);
+		\CustomerFiles\CustomerFilesEntity::get_instance()->createOrUpdate($data, \Input::get('pk'));
+		return \Response::json(array('result'=>true,'message'=>'Success'));
+	}
+
 }

@@ -36,6 +36,7 @@
 			<link href="{{$asset_path}}/global/plugins/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet" type="text/css"/>
 			<link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/typeahead/typeahead.css">
 			<link rel="stylesheet" type="text/css" href="{{$asset_path}}/admin/pages/css/tasks.css">
+			<link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/bootstrap-editable/bootstrap-editable/css/bootstrap-editable.css"/>
 			<!-- END PAGE LEVEL STYLES -->
 
 			<!-- BEGIN THEME STYLES -->
@@ -134,6 +135,7 @@
 		<script src="{{$asset_path}}/pages/scripts/tasks.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/pages/scripts/crm.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/global/plugins/typeahead/typeahead.bundle.min.js" type="text/javascript"></script>
+		<script type="text/javascript" src="{{$asset_path}}/global/plugins/bootstrap-editable/bootstrap-editable/js/bootstrap-editable.js"></script>
 		<!-- END PAGE LEVEL SCRIPTS -->
 		<script type='text/javascript'>
 			var baseURL 			= "{{url('/')}}";

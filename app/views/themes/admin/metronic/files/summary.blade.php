@@ -130,6 +130,23 @@
 				e.preventDefault();
 			});
         	FormFileUpload.init();
+        	jQuery('a.clientFiles').each(function(){
+				jQuery(this).editable({
+					send:'always',
+					ajaxOptions: {
+						dataType: 'json'
+					},
+					success: function(response, newValue) {
+						if(!response) {
+							return "Unknown error!";
+						}
+
+						if(response.result === false) {
+							 return response.message;
+						}
+					}
+				});
+			});
         });
 		</script>
 	@stop

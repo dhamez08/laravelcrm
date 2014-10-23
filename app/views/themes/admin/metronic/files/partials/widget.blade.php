@@ -22,7 +22,23 @@
 				<h4>List Files</h4>
 				@foreach($customerFiles->get()	as $files)
 					@if($files->type == $id)
-						<p>{{$files->filename}} - {{$files->name}}</p>
+						<p>
+						<a href="{{asset('public/documents/' . $files->filename)}}" target="_blank">{{$files->filename}}</a>
+						-
+						{{link_to(
+							'#',
+							$files->name,
+							array(
+								'class'=>'clientFiles editable editable-click',
+								'data-pk'=>$files->id,
+								'data-name'=>'name',
+								'data-type'=>'text',
+								'data-url'=>url('file/ajax-update-name'),
+								'data-title'=>'Update Category',
+							)
+							);
+						}}
+						</p>
 					@endif
 				@endforeach
 			</div>
