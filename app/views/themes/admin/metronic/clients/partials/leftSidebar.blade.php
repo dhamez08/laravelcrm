@@ -13,7 +13,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="{{url('file/client-file/'.$clientId)}}">
+				<a href="{{url('file/client-file/'.$customer->id)}}">
 				<i class="icon-basket"></i>
 				<span class="title">Files</span>
 				<span class="arrow "></span>
