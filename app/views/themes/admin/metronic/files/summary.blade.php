@@ -48,7 +48,7 @@
 @section('script-footer')
 	@parent
 	@section('footer-custom-js')
-
+	@parent
 
 		<!-- BEGIN:File Upload Plugin JS files-->
 		<!-- The Templates plugin is included to render the upload/download listings -->

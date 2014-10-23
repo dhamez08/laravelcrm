@@ -8,7 +8,6 @@
 		<link href="{{$asset_path}}/global/plugins/jquery-file-upload/blueimp-gallery/blueimp-gallery.min.css" rel="stylesheet"/>
 		<link href="{{$asset_path}}/global/plugins/jquery-file-upload/css/jquery.fileupload.css" rel="stylesheet"/>
 		<link href="{{$asset_path}}/global/plugins/jquery-file-upload/css/jquery.fileupload-ui.css" rel="stylesheet"/>
-		<link href="{{$asset_path}}/pages/css/client_summary.css" rel="stylesheet"/>
 	@stop
 @stop
 @section('body-content')
@@ -53,9 +52,7 @@
 		<script src="{{$asset_path}}/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
 		<script type="text/javascript" src="{{$asset_path}}/pages/scripts/client.js"></script>
 		<script type="text/javascript" src="{{$asset_path}}/pages/scripts/notes.js"></script>
-		<script type="text/javascript" src="{{$asset_path}}/pages/scripts/client_summary.js"></script>
-		<script src="{{$asset_path}}/global/plugins/ckeditor/ckeditor.js"></script>
-		<script src="{{$asset_path}}/global/plugins/ckeditor/adapters/jquery.js"></script>
+		
 		<script>
         jQuery(document).ready(function() {
         	deletePhone.init();
@@ -63,7 +60,6 @@
         	deleteEmail.init();
         	deletePerson.init();
         	Notes.init();
-        	Summary.init();
         });
 
 		</script>

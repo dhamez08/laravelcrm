@@ -48,6 +48,7 @@
 @section('script-footer')
 	@parent
 	@section('footer-custom-js')
+	@parent
 		<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 		<script id="template-upload" type="text/x-tmpl">
 		{% for (var i=0, file; file=o.files[i]; i++) { %}

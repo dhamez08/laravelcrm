@@ -11,6 +11,7 @@
 	<link href="{{$asset_path}}/global/plugins/fullcalendar/fullcalendar/fullcalendar211.print.css" type="text/css">
 	<link href="{{$asset_path}}/global/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css"/>
 	<link href="{{$asset_path}}/layout/css/themes/darkblue.css" rel="stylesheet" type="text/css" id="style_color"/>
+	<link href="{{$asset_path}}/pages/css/client_summary.css" rel="stylesheet"/>
 	<!-- END PAGE LEVEL SCRIPTS -->
 	@stop
 @stop
@@ -90,9 +91,12 @@
 	@parent
 
 	@section('footer-custom-js')
+	<script type="text/javascript" src="{{$asset_path}}/pages/scripts/client_summary.js"></script>
+	<script src="{{$asset_path}}/global/plugins/ckeditor/ckeditor.js"></script>
+	<script src="{{$asset_path}}/global/plugins/ckeditor/adapters/jquery.js"></script>
 	<script>
 		jQuery(document).ready(function() {
-
+			Summary.init();
 		});
 	</script>
 	@stop
