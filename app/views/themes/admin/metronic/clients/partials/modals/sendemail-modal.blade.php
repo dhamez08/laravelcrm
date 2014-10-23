@@ -11,7 +11,7 @@
               </div>
             <div class="modal-body">
                 <div class="row">
-        	      	<div class="col-md-12" id="content-form-data">
+        	      	<div class="col-md-12">
                     <?php $templates = \EmailTemplate\EmailTemplateEntity::get_instance()->getTemplatesByLoggedUser(); ?>
 
                     @if(count($templates)>0)
@@ -60,14 +60,14 @@
                           @if(count($client_files)>0)
                             <optgroup label="Client Files">
                             @foreach($client_files as $file)
-                              <option value="documents/{{ $file->filename }}">{{ $file->name }}</option>
+                              <option value="documents/{{ $file->filename }}">{{ $file->name }} - {{ date('d/m/Y H:i',strtotime($file->created_at)) }}</option>
                             @endforeach
                             </optgroup>
                           @endif
                           @if(count($document_libraries)>0)
                             <optgroup label="Document Library">
                             @foreach($document_libraries as $file)
-                              <option value="document/library/own/{{ $file->filename }}">{{ $file->name }}</option>
+                              <option value="document/library/own/{{ $file->filename }}">{{ $file->name }} - {{ date('d/m/Y H:i',strtotime($file->created_at)) }}</option>
                             @endforeach
                             </optgroup>
                           @endif
