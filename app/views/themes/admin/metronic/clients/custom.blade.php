@@ -4,6 +4,7 @@
 	@parent
 	@section('head-page-level-css')
 		@parent
+		<link href="{{$asset_path}}/pages/css/client_summary.css" rel="stylesheet"/>
 		<link href="{{$asset_path}}/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" type="text/css"/>
 		<link href="{{$asset_path}}/global/plugins/star-rating/css/star-rating.css" rel="stylesheet" type="text/css"/>
 		<style>
@@ -96,7 +97,13 @@
 @section('script-footer')
 	@parent
 	@section('footer-custom-js')
-
+	<script src="{{$asset_path}}/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="{{$asset_path}}/pages/scripts/opportunities.js"></script>
+	<script type="text/javascript" src="{{$asset_path}}/pages/scripts/client.js"></script>
+	<script type="text/javascript" src="{{$asset_path}}/pages/scripts/notes.js"></script>
+	<script type="text/javascript" src="{{$asset_path}}/pages/scripts/client_summary.js"></script>
+	<script src="{{$asset_path}}/global/plugins/ckeditor/ckeditor.js"></script>
+	<script src="{{$asset_path}}/global/plugins/ckeditor/adapters/jquery.js"></script>
 	<script type="text/javascript">
 		$(document).on("ready", function() {
 			$(".view-data-form").on("click", function(e) {
@@ -114,6 +121,13 @@
 					$("#form-data-modal #content-form-action").show();
 				});
 			});
+
+			deletePhone.init();
+        	deleteURL.init();
+        	deleteEmail.init();
+        	deletePerson.init();
+        	Notes.init();
+        	Summary.init();
 		});
 	</script>
 

@@ -4,6 +4,7 @@
 	@parent
 	@section('head-page-level-css')
 		@parent
+		<link href="{{$asset_path}}/pages/css/client_summary.css" rel="stylesheet"/>
 	@stop
 @stop
 @section('body-content')
@@ -44,11 +45,24 @@
 	@section('footer-custom-js')
 	<!-- add here -->
 	@parent
+	<script src="{{$asset_path}}/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
 	<script type="text/javascript" src="{{$asset_path}}/pages/scripts/opportunities.js"></script>
+	<script type="text/javascript" src="{{$asset_path}}/pages/scripts/client.js"></script>
+	<script type="text/javascript" src="{{$asset_path}}/pages/scripts/notes.js"></script>
+	<script type="text/javascript" src="{{$asset_path}}/pages/scripts/client_summary.js"></script>
+	<script src="{{$asset_path}}/global/plugins/ckeditor/ckeditor.js"></script>
+	<script src="{{$asset_path}}/global/plugins/ckeditor/adapters/jquery.js"></script>
 	<script type="text/javascript">
 		jQuery(document).ready(function() {
 			UpdateModal.init();
 			$("a.hastooltip").tooltip();
+
+			deletePhone.init();
+        	deleteURL.init();
+        	deleteEmail.init();
+        	deletePerson.init();
+        	Notes.init();
+        	Summary.init();
 		});
 	</script>
 	@stop
