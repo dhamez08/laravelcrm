@@ -3,7 +3,7 @@
 		<div class="caption">
 			<i class="icon-pin font-yellow-lemon"></i>
 			<span class="caption-subject bold font-yellow-lemon uppercase">
-			Tabs </span>
+			{{$title}} </span>
 		</div>
 		<ul class="nav nav-tabs">
 			<li>
@@ -42,6 +42,8 @@
 									array(
 										'action' => array(
 											'File\ClientFileController@postAjaxUploadFile',
+											'file_id'=>$id,
+											'customer_id'=>$customer->id
 										),
 										'role'=>'form',
 										'files'=> true,
@@ -57,7 +59,7 @@
 										<i class="fa fa-plus"></i>
 										<span>
 										Add files... </span>
-										{{Form::file('images[]',array('multiple'=>true))}}
+										{{Form::file('files[]',array('multiple'=>true))}}
 										</span>
 										<button type="submit" class="btn blue start">
 										<i class="fa fa-upload"></i>
