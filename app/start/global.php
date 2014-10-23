@@ -79,5 +79,12 @@ App::down(function()
 |
 */
 
+App::missing(function($exception)
+{
+	// shows an error page (app/views/error.blade.php)
+	// returns a page not found error
+	//return Response::view('error', array(), 404);
+});
+
 require app_path().'/filters.php';
 require app_path().'/composers/client.php';

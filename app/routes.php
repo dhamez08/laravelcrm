@@ -10,31 +10,17 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-Route::get( '/' , 'HomeController@getIndex' );
-Route::get( 'login' , 'AuthController@getIndex' );
-Route::post( 'login' , 'AuthController@postAuth' );
-Route::get( 'logout' , 'AuthController@getLogout' );
-Route::get( 'confirmcode/{confirm_code}' , 'AuthController@getConfirmAuthCode' );
-Route::controller( 'register' , 'RegisterController' );
 Route::group(array('before' => 'auth'), function()
 {
-	//Route::group(array('prefix' => 'dashboard'), function()
-	//{
-		Route::get( 'dashboard' , 'Dashboard\DashboardController@getIndex' );
-
-		Route::controller( 'clients' , 'Clients\ClientsController');
-		Route::controller( 'profile' , 'Profile\ProfileController' );
-		Route::controller( 'document-library' , 'DocumentLibraries\DocumentLibrariesController' );
-		Route::controller( 'pipeline' , 'Pipeline\PipelineController' );
-		Route::controller( 'task' , 'Task\TaskController');
-		Route::controller( 'calendar' , 'Calendar\CalendarController');
-		Route::controller( 'notes' , 'Notes\NotesController');
-		//Route::controller( 'clientfile' , 'ClientFile\ClientFileController');
-		Route::get( 'clientfile/{id}' , 'ClientFile\ClientFileController@getIndex' );
-	//});
-
+	Route::controller( 'clients' , 'Clients\ClientsController');
+	Route::controller( 'profile' , 'Profile\ProfileController' );
+	Route::controller( 'document-library' , 'DocumentLibraries\DocumentLibrariesController' );
+	Route::controller( 'pipeline' , 'Pipeline\PipelineController' );
+	Route::controller( 'task' , 'Task\TaskController');
+	Route::controller( 'calendar' , 'Calendar\CalendarController');
+	Route::controller( 'notes' , 'Notes\NotesController');
+	Route::controller( 'file' , 'File\ClientFileController');
 	Route::get( 'settings' , 'Settings\SettingsController@getIndex' );
-
 	Route::group(array('prefix' => 'clients'), function()
 	{
 		Route::controller( '/' , 'Clients\ClientsController' );
@@ -80,9 +66,14 @@ Route::group(array('before' => 'auth'), function()
 	});
 
 	Route::controller('custom-tab','CustomTab\CustomTabController');
-
+	Route::get( 'dashboard' , 'Dashboard\DashboardController@getIndex' );
 });
-
+Route::get( '/' , 'HomeController@getIndex' );
+Route::get( 'login' , 'AuthController@getIndex' );
+Route::post( 'login' , 'AuthController@postAuth' );
+Route::get( 'logout' , 'AuthController@getLogout' );
+Route::get( 'confirmcode/{confirm_code}' , 'AuthController@getConfirmAuthCode' );
+Route::controller( 'register' , 'RegisterController' );
 Route::get('testmail', function()
 {
 	$data = array('to'=>'John Smith');
