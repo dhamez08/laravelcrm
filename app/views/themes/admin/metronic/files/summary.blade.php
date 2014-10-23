@@ -87,28 +87,28 @@
 		            <span class="preview"></span>
 		        </td>
 		        <td>
-		            <p class="name">{%=file.name%}</p>
-		            <strong class="error text-danger label label-danger"></strong>
-		        </td>
-		        <td>
-		            <p class="size">Processing...</p>
-		            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-		            <div class="progress-bar progress-bar-success" style="width:0%;"></div>
-		            </div>
-		        </td>
-		        <td>
-		            {% if (!i && !o.options.autoUpload) { %}
-		                <button class="btn btn-sm blue start" disabled>
-		                    <i class="fa fa-upload"></i>
-		                    <span>Start</span>
-		                </button>
-		            {% } %}
-		            {% if (!i) { %}
-		                <button class="btn btn-sm red cancel">
-		                    <i class="fa fa-ban"></i>
-		                    <span>Cancel</span>
-		                </button>
-		            {% } %}
+					<p class="name">
+						{% if( file.name.length > 17 ){ %}
+							...{%=file.name.slice(17)%}
+						{% }else{ %}
+							{%=file.name%}
+						{% } %}
+					</p>
+					<strong class="error text-danger label label-danger"></strong>
+					<div>
+						<p class="size">Processing...</p>
+						<div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+						<div class="progress-bar progress-bar-success" style="width:0%;"></div>
+						</div>
+					</div>
+					<div>
+						{% if (!i) { %}
+							<button class="btn btn-sm red cancel">
+								<i class="fa fa-ban"></i>
+								<span>Cancel</span>
+							</button>
+						{% } %}
+					</div>
 		        </td>
 		    </tr>
 		{% } %}
@@ -123,21 +123,21 @@
 			                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
 			                {% } %}
 			            </span>
-			        </td>
-			        <td>
-			            <p class="name">
-			                {% if (file.url) { %}
-			                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
-			                {% } else { %}
-			                    <span>{%=file.name%}</span>
-			                {% } %}
-			            </p>
-			            {% if (file.error) { %}
-			                <div><span class="label label-danger">Error</span> {%=file.error%}</div>
-			            {% } %}
-			        </td>
-			        <td>
-			            <span class="size">{%=o.formatFileSize(file.size)%}</span>
+			            <div>
+							<p class="name">
+								{% if (file.url) { %}
+									<a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+								{% } else { %}
+									<span>{%=file.name%}</span>
+								{% } %}
+							</p>
+							{% if (file.error) { %}
+								<div><span class="label label-danger">Error</span> {%=file.error%}</div>
+							{% } %}
+			            </div>
+			            <div>
+							<span class="size">{%=o.formatFileSize(file.size)%}</span>
+			            </div>
 			        </td>
 			        <td>
 			            {% if (file.deleteUrl) { %}

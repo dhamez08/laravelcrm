@@ -75,7 +75,6 @@
 									</div>
 									<!-- The global progress information -->
 									<div class="col-md-12 fileupload-progress fade">
-										<p>xx</p>
 										<!-- The global progress bar -->
 										<div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
 											<div class="progress-bar progress-bar-success" style="width:0%;">
@@ -87,16 +86,14 @@
 										</div>
 									</div>
 								</div>
-								<div class="row">
-									<div class="col-md-12">
-										<!-- The table listing the files available for upload/download -->
-										<table role="presentation" class="table table-striped table-responsive clearfix">
-											<tbody class="files">
-											</tbody>
-										</table>
-									</div>
+								<div class="well">
+									<h3>You can Drag and drop files here..</h3>
+									<!-- The table listing the files available for upload/download -->
+									<table role="presentation" style="width:auto !important;" class="table table-striped table-responsive clearfix">
+										<tbody class="files">
+										</tbody>
+									</table>
 								</div>
-
 							{{Form::close()}}
 						</div>
 					</div>
