@@ -33,4 +33,11 @@ class EmailSignatureEntity extends \Eloquent{
 		return self::$instance;
 	}
 
+	public function getEmailSignaturesByLoggedUser() {
+		return $this
+				->where('belongs_to', \Auth::id())
+				->orderBy('name')
+				->get();
+	}
+
 }

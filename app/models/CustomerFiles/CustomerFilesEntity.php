@@ -8,6 +8,8 @@ class CustomerFilesEntity extends \Eloquent{
 
 	protected static $instance = null;
 
+	protected $table = 'customer_files';
+
 	public function __construct(){
 
 	}
@@ -51,6 +53,14 @@ class CustomerFilesEntity extends \Eloquent{
 			$obj->save();
 			return $obj;
 		}
+	}
+
+	public function getFilesByClient($client_id) {
+		return $this
+				->where('customer_id', $client_id)
+				->whereNull('deleted_at')
+				->orderBy('created_at')
+				->get();
 	}
 
 }
