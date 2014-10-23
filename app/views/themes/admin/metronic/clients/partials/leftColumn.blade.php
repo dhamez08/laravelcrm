@@ -1,3 +1,7 @@
+<div class="sendemail">
+	<button class="btn btn-sm btn-success sendemail"><i class="fa fa-envelope-o"></i> Send Email</button>
+</div>
+@include($view_path.'.clients.partials.modals.sendemail-modal')
 <div class="panel panel-default">
 	<!--
 	<div class="panel-heading">
