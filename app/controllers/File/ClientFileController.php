@@ -144,4 +144,20 @@ class ClientFileController extends \BaseController {
 		return \Response::json(array('result'=>true,'message'=>'Success'));
 	}
 
+	public function getDeleteFile($id, $customerid){
+		$file = \CustomerFiles\CustomerFiles::find($id);
+		if( \File::exists(public_path('documents')) ){
+			if( \File::isFile( public_path('documents/' . $file->filename) ) ){
+				\File::delete(public_path('documents/' . $file->filename));
+			}
+		}
+		if( $file->delete() ){
+			\Session::flash('message', 'Successfully Deleted File');
+			return \Redirect::to('file/client-file/' . $customerid);
+		}else{
+			\Session::flash('message', 'Error cannot delete file');
+			return \Redirect::to('file/client-file/' . $customerid);
+		}
+	}
+
 }

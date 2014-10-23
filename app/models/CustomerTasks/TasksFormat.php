@@ -57,10 +57,12 @@ class TasksFormat extends Facade{
 	}
 
 	public function displayTaskFullName(){
-		if( $this->client->type == 2 ){
-			return $this->client->company_name;
-		}else{
-			return $this->client->title . ' ' . $this->client->first_name . ' ' .$this->client->last_name;
+		if( isset($this->client) ){
+			if( $this->client->type == 2 ){
+				return $this->client->company_name;
+			}else{
+				return $this->client->title . ' ' . $this->client->first_name . ' ' .$this->client->last_name;
+			}
 		}
 	}
 

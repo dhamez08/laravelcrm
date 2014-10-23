@@ -69,3 +69,17 @@ var FormFileUpload = function () {
     };
 
 }();
+
+var deleteFiles = function() {
+	return {
+		init:function(){
+			jQuery('.deleteFile').click(function(e){
+				e.preventDefault();
+				var _link = jQuery(this);
+				bootbox.confirm("Are you Sure want to delete this File?", function (confirmation) {
+					confirmation && document.location.assign(_link.attr('href'));
+				});
+			});
+		}
+	};
+}();

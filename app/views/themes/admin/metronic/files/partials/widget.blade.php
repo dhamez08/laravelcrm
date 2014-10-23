@@ -23,21 +23,35 @@
 				@foreach($customerFiles->get()	as $files)
 					@if($files->type == $id)
 						<p>
-						<a href="{{asset('public/documents/' . $files->filename)}}" target="_blank">{{$files->filename}}</a>
-						-
-						{{link_to(
-							'#',
-							$files->name,
-							array(
-								'class'=>'clientFiles editable editable-click',
-								'data-pk'=>$files->id,
-								'data-name'=>'name',
-								'data-type'=>'text',
-								'data-url'=>url('file/ajax-update-name'),
-								'data-title'=>'Update Category',
-							)
-							);
-						}}
+							<a href="{{asset('public/documents/' . $files->filename)}}" target="_blank">{{$files->filename}}</a>
+							-
+							{{link_to(
+								'#',
+								$files->name,
+								array(
+									'class'=>'clientFiles editable editable-click',
+									'data-pk'=>$files->id,
+									'data-name'=>'name',
+									'data-type'=>'text',
+									'data-url'=>url('file/ajax-update-name'),
+									'data-title'=>'Update Category',
+								)
+								);
+							}}
+							-
+							<a 	class="btn red btn-sm deleteFile"
+								href="{{
+									action(
+										'File\ClientFileController@getDeleteFile',
+										array(
+											'id'=>$files->id,
+											'customerid'=>$files->customer_id
+										)
+									)
+								}}"
+							>
+								<i class="fa fa-trash-o fa-5x"></i>
+							</a>
 						</p>
 					@endif
 				@endforeach

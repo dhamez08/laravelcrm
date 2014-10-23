@@ -130,6 +130,7 @@
 				e.preventDefault();
 			});
         	FormFileUpload.init();
+        	deleteFiles.init();
         	jQuery('a.clientFiles').each(function(){
 				jQuery(this).editable({
 					send:'always',
