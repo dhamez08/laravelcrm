@@ -6,26 +6,26 @@
 			{{$title}} </span>
 		</div>
 		<ul class="nav nav-tabs">
-			<li>
-				<a href=".portlet_tab2" data-toggle="tab">
-				Tab 2 </a>
+			<li  class="active">
+				<a href=".list_files{{$id}}" data-toggle="tab">
+				Files </a>
 			</li>
-			<li class="active">
-				<a href=".portlet_tab1" data-toggle="tab">
-				Tab 1 </a>
+			<li>
+				<a href=".add_new{{$id}}" data-toggle="tab">
+				Add New </a>
 			</li>
 		</ul>
 	</div>
 	<div class="portlet-body tabbable-line">
 		<div class="tab-content">
-			<div class="tab-pane active portlet_tab1" id="">
-					<h4>Tab 1 Content</h4>
+			<div class="tab-pane active list_files{{$id}}" id="">
+					<h4>List Files</h4>
 					<p>
-						 Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.ut laoreet dolore magna ut laoreet dolore magna. ut laoreet dolore magna. ut laoreet dolore magna.
+						 ...
 					</p>
 
 			</div>
-			<div class="tab-pane portlet_tab2" id="">
+			<div class="tab-pane add_new{{$id}}" id="">
 					<!-- BEGIN PAGE CONTENT-->
 					<div class="row">
 						<div class="col-md-12">
