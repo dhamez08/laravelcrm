@@ -33,7 +33,6 @@
 								<p style="font-size:16px">
 									 File Upload widget with multiple file selection.<br>
 									 The maximum file size for uploads is 5 MB<br>
-									 Only image files (JPG, GIF, PNG) are allowed <br>
 								</p>
 							</blockquote>
 							<br>
@@ -89,7 +88,7 @@
 									</div>
 								</div>
 								<div class="well">
-									<h3>You can Drag and drop files here..</h3>
+									<h3>You can Drop files here or Click "Add Files"..</h3>
 									<!-- The table listing the files available for upload/download -->
 									<table role="presentation" style="width:auto !important;" class="table table-striped table-responsive clearfix">
 										<tbody class="files">
