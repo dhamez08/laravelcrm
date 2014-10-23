@@ -10,11 +10,40 @@
               	  <h4 class="modal-title">Send Email</h4>
               </div>
             <div class="modal-body">
-      	      	<div class="col-md-12" id="content-form-data">
-                  asdasdasdasda   
-      	      	</div>
-
-              	<div class="row" style="margin-top:15px" id="content-form-action">
+                <div class="row">
+        	      	<div class="col-md-12" id="content-form-data">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label for="email_to" class="control-label">To:</label>
+                          <input type="text" name="email_to" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                          <label for="email_subject" class="control-label">Subject:</label>
+                          <input type="text" name="email_subject" class="form-control" />
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <label for="email_body" class="control-label">Email Body:</label>
+                          {{ 
+                            Form::textarea
+                            (
+                              'email_body', '', array('class' => 'form-control', 'required' => 'required')
+                            ) 
+                          }}
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label for="email_files" class="control-label">Attach Files:</label>
+                          <select name="email_files" class="form-control">
+                            <option></option>
+                          </select>
+                        </div>
+                      </div>
+        	      	</div>
+                </div>
+              	<div class="row" style="margin-top:15px;">
           	      	<div class="col-md-12">
                         <button type="button" class="btn blue" data-dismiss="modal">Cancel</button>
               	      	<button type="button" class="btn blue">Send</button>
