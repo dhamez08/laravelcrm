@@ -16,13 +16,13 @@
 	<div class="row">
 		<div class="col-md-6 col-summary">
 			<!-- FILES -->
-			@include($view_path.'.files.partials.widget')
+			{{--@include($view_path.'.files.partials.widget')--}}
 			<!-- FILES -->
 		</div>
 
 		<div class="col-md-6 col-summary">
 			<!-- FEEDS -->
-			@include($view_path.'.files.partials.widget')
+			{{--@include($view_path.'.files.partials.widget')--}}
 			<!-- END FEEDS -->
 		</div>
 	</div>

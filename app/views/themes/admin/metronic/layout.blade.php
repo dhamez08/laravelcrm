@@ -143,7 +143,7 @@
 				Layout.init(); // init layout
 				GetClient.init('get-clients', '.getclient', url, '#customer_id', 'Name');
 				CreateTask.init('.openModal','.ajaxModal');
-				Index.init();
+				Metronic.init();
 			});
 		</script>
 	@show

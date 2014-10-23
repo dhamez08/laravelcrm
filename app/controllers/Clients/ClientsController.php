@@ -1371,7 +1371,7 @@ class ClientsController extends \BaseController {
 		$data1 = $this->_getClientData($client_id);
 
 		$data['center_column_view']	= 'opportunities';
-		
+
 		$data 	= array_merge($data,$data1,$dashboard_data);
 
 		return \View::make( $data['view_path'] . '.clients.opportunities', $data );
