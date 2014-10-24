@@ -97,14 +97,14 @@ var ClientEmail = function () {
         $('#fileupload').fileupload({
             // Uncomment the following to send cross-domain cookies:
             //xhrFields: {withCredentials: true},
-            url: '../../assets/global/plugins/jquery-file-upload/server/php/',
+            url: ASSET_PATH_PUBLIC+'/global/plugins/jquery-file-upload/server/php/index.php',
             autoUpload: true
         });
 
         // Upload server status check for browsers with CORS support:
         if ($.support.cors) {
             $.ajax({
-                url: '../../assets/global/plugins/jquery-file-upload/server/php/',
+                url: ASSET_PATH_PUBLIC+'/global/plugins/jquery-file-upload/server/php/index.php',
                 type: 'HEAD'
             }).fail(function () {
                 $('<span class="alert alert-error"/>')
@@ -313,6 +313,11 @@ var ClientEmail = function () {
                 handleBCCInput();
             });
 
+            $('.cancel-btn').on('click', function(e) {
+                e.preventDefault();
+                history.back(-1);
+            });
+
             //handle loading content based on URL parameter
             if (Metronic.getURLParameter("a") === "view") {
                 loadMessage();
@@ -323,7 +328,7 @@ var ClientEmail = function () {
             }
 
             initWysihtml5();
-
+            initFileupload();
         }
 
     };

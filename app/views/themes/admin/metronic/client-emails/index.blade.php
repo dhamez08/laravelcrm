@@ -43,10 +43,10 @@
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<form class="inbox-compose form-horizontal" id="fileupload" action="#" method="POST" enctype="multipart/form-data">
+							{{ Form::token() }}
 								<div class="inbox-compose-btn">
 									<button class="btn blue"><i class="fa fa-check"></i>Send</button>
-									<button class="btn inbox-discard-btn">Discard</button>
-									<button class="btn">Draft</button>
+									<button onclick="history.back(-1)" class="btn inbox-discard-btn cancel-btn">Cancel</button>
 								</div>
 								<div class="inbox-form-group mail-to">
 									<label class="control-label">To:</label>
@@ -150,8 +150,7 @@
 								</script>
 								<div class="inbox-compose-btn">
 									<button class="btn blue"><i class="fa fa-check"></i>Send</button>
-									<button class="btn">Discard</button>
-									<button class="btn">Draft</button>
+									<button onclick="history.back(-1)" class="btn inbox-discard-btn cancel-btn">Cancel</button>
 								</div>
 							</form>
 						</div>
@@ -205,6 +204,7 @@
 
 	<script>
 	var ASSET_PATH = '{{$asset_path}}';
+	var ASSET_PATH_PUBLIC = '{{ url('public/admin/metronic/assets') }}';
 	</script>
 
 	<script src="{{$asset_path}}/pages/scripts/client-email.js" type="text/javascript"></script>
