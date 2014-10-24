@@ -213,4 +213,9 @@ class EmailController extends \BaseController {
 		return \Redirect::to('settings/email');		
 	}
 
+	public function getTemplate($id) {
+		$emailTemplate = \EmailTemplate\EmailTemplate::find($id);
+		return \Response::json($emailTemplate);
+	}
+
 }

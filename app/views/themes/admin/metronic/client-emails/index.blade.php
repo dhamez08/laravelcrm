@@ -137,7 +137,7 @@
 								</div>
 								@endif
 								<div class="inbox-form-group">
-									<textarea class="inbox-editor inbox-wysihtml5 form-control" name="message" rows="12"></textarea>
+									<textarea class="inbox-editor inbox-wysihtml5 form-control" name="message" rows="12">asdasdasd</textarea>
 								</div>
 								<div class="inbox-compose-attachment">
 									<!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
@@ -257,6 +257,7 @@
 	<script src="{{$asset_path}}/global/plugins/jquery-file-upload/js/jquery.fileupload-ui.js"></script>
 
 	<script>
+	var BASE_URL = '{{ url('/') }}';
 	var ASSET_PATH = '{{$asset_path}}';
 	var ASSET_PATH_PUBLIC = '{{ url('public/admin/metronic/assets') }}';
 	</script>
