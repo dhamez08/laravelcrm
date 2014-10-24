@@ -95,7 +95,7 @@
 						{% } %}
 					</p>
 					<strong class="error text-danger label label-danger"></strong>
-					{{ Form::textarea('caption[{%=file.name%}]',null,array('class'=>'form-control','placeholder'=>'Add Description','style'=>'resize:none;height:100px;')) }}
+					{{ Form::text('caption[{%=file.name%}]',null,array('class'=>'form-control','placeholder'=>'Add Description')) }}
 					<div>
 						<p class="size">Processing...</p>
 						<div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
