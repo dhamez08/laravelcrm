@@ -96,7 +96,16 @@ class EmailController extends \BaseController {
 	}
 
 	public function postClient($clientId) {
-		dd(\Input::all());
+
+		$data = array(
+			'name'=>'Elias Mamalias'
+		);
+
+		\Mail::send('emails.clients.index', $data, function($message) use ($data)
+		{
+			$message->from('mamalias23@gmail.com', 'Elias Mamalias - Sender');
+			$message->to('mamalias23@gmail.com', 'Elias Mamalias - Receiver')->subject('Welcome!');
+		});
 	}
 
 }

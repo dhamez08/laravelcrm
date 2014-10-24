@@ -128,7 +128,7 @@
 									<label class="control-label">Signature:</label>
 									<div class="controls">
 										<select id="email_signature" name="email_signature" class="form-control">
-				                            <option value="">No signature required</option>
+				                            <option value="">Select Signature (applied when sent)</option>
 				                            @foreach($emailsignatures as $signature)
 				                            <option value="{{ $signature->id }}">{{ $signature->name }}</option>
 				                            @endforeach
@@ -137,7 +137,7 @@
 								</div>
 								@endif
 								<div class="inbox-form-group">
-									<textarea class="inbox-editor inbox-wysihtml5 form-control" name="message" rows="12">asdasdasd</textarea>
+									<textarea class="inbox-editor inbox-wysihtml5 form-control" name="message" rows="12"></textarea>
 								</div>
 								<div class="inbox-compose-attachment">
 									<!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
