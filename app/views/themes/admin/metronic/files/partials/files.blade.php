@@ -3,7 +3,7 @@
 		<div class="col-md-6 col-summary">
 			<!-- BEGIN TASKS -->
 			@if( trim($file1) != '' )
-				@include($view_path.'.files.partials.widget', array('title'=>$file1,'id'=>'1'))
+				@include($view_path.'.files.partials.customforms', array('title'=>$file1,'id'=>'1'))
 			@endif
 			<!-- END TASKS -->
 		</div>
