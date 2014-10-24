@@ -57,4 +57,8 @@ class EmailController extends \BaseController {
 		echo "...";
 	}
 
+	public function getClient($client_id) {
+		echo "asdasdas";
+	}
+
 }

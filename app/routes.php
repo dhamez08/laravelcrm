@@ -12,6 +12,7 @@
 */
 Route::group(array('before' => 'auth'), function()
 {
+	
 	Route::controller( 'clients' , 'Clients\ClientsController');
 	Route::controller( 'profile' , 'Profile\ProfileController' );
 	Route::controller( 'document-library' , 'DocumentLibraries\DocumentLibrariesController' );
@@ -20,6 +21,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::controller( 'calendar' , 'Calendar\CalendarController');
 	Route::controller( 'notes' , 'Notes\NotesController');
 	Route::controller( 'file' , 'File\ClientFileController');
+	Route::controller( 'email', 'Email\EmailController');
 	Route::get( 'settings' , 'Settings\SettingsController@getIndex' );
 	Route::group(array('prefix' => 'clients'), function()
 	{
@@ -46,7 +48,6 @@ Route::group(array('before' => 'auth'), function()
 
 	Route::group(array('prefix' => 'settings/email'), function()
 	{
-		//Route::controller('/', 'Email\EmailController');
 		Route::controller('/', 'Settings\EmailController');
 	});
 
