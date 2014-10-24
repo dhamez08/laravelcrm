@@ -102,7 +102,8 @@ class ClientFileController extends \BaseController {
 		// prefix first
 		// group id
 		// time
-		$file_name = rand(9,99) . '_' . time() . '.' . $fileName->getClientOriginalExtension();
+		//$file_name = rand(9,99) . '_' . time() . '.' . $fileName->getClientOriginalExtension();
+		$file_name = $fileName->getClientOriginalName();
 		// upload
 		$upload_success = $fileName->move($this->fileFolder, $file_name);
 		if($upload_success ){
@@ -118,7 +119,7 @@ class ClientFileController extends \BaseController {
 				$data = array(
 					'customer_id' => $customer_id,
 					'filename' => $fileName,
-					'name' => \Input::get('caption')[$file->getClientOriginalName()],
+					'name' => $file->getClientOriginalName(),
 					'type' => $file_id
 				);
 				\CustomerFiles\CustomerFilesEntity::get_instance()->createOrUpdate($data);
