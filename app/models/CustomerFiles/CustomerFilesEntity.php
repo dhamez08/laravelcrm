@@ -63,4 +63,17 @@ class CustomerFilesEntity extends \Eloquent{
 				->get();
 	}
 
+	public function saveFormDataFromCustomTab() {
+		
+		$form = new $this;
+
+		$form->customer_id = \Input::get('customer_id');
+		$form->filename = \Input::get('filename');
+		$form->name = \Input::get('name');
+		$form->type = 1;
+		$form->save();
+
+		return $form;
+	}
+
 }

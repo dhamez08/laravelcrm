@@ -527,7 +527,8 @@ class CustomFormsController extends \BaseController {
 			)
 		);
 
-	    if(\CustomerFiles\CustomerFilesEntity::get_instance()->createOrUpdate()) {
+	    if(\CustomerFiles\CustomerFilesEntity::get_instance()->saveFormDataFromCustomTab()) {
+
 	    	$pdf->saveAs(public_path('documents/'.$new_file));
 
 	    	\Session::flash('message', 'Form Successfully saved!');
