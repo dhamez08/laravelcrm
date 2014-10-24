@@ -394,7 +394,7 @@ Inbox Page
   text-align: right;
 }
 
-.inbox-compose .controls > input {
+.inbox-compose .controls > input, .inbox-compose .controls > select {
   border: none !important;
 }
 

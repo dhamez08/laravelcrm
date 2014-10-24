@@ -51,7 +51,7 @@
 								<div class="inbox-form-group mail-to">
 									<label class="control-label">To:</label>
 									<div class="controls controls-to">
-										<input type="text" class="form-control" name="to">
+										<input type="text" value="{{ $client_email }}" class="form-control" name="to">
 										<span class="inbox-cc-bcc">
 										<span class="inbox-cc">
 										Cc </span>
@@ -83,6 +83,60 @@
 									</div>
 								</div>
 								<div class="inbox-form-group">
+									<label class="control-label">Files:</label>
+									<div class="controls">
+										<select id="client_files" name="client_files" class="form-control">
+				                            <option value="">Select Files</option>
+				                            <?php 
+					                        $client_files = \CustomerFiles\CustomerFilesEntity::get_instance()->getFilesByClient(isset($customer) ? $customer->id:'');
+					                        $document_libraries = \DocumentLibrary\DocumentLibraryEntity::get_instance()->documents();
+					                        ?>
+					                        @if(count($client_files)>0)
+					                            <optgroup label="Client Files">
+					                            @foreach($client_files as $file)
+					                              <option value="documents/{{ $file->filename }}">{{ $file->name }} - {{ date('d/m/Y H:i',strtotime($file->created_at)) }}</option>
+					                            @endforeach
+					                            </optgroup>
+					                        @endif
+					                        @if(count($document_libraries)>0)
+					                            <optgroup label="Document Library">
+					                            @foreach($document_libraries as $file)
+					                              <option value="document/library/own/{{ $file->filename }}">{{ $file->name }} - {{ date('d/m/Y H:i',strtotime($file->created_at)) }}</option>
+					                            @endforeach
+					                            </optgroup>
+					                        @endif
+				                        </select>
+									</div>
+								</div>
+								<?php $templates = \EmailTemplate\EmailTemplateEntity::get_instance()->getTemplatesByLoggedUser(); ?>
+								@if(count($templates)>0)
+								<div class="inbox-form-group">
+									<label class="control-label">Template:</label>
+									<div class="controls">
+										<select id="email_template" name="email_template" class="form-control">
+				                            <option value="">No template required</option>
+				                            @foreach($templates as $template)
+				                            <option value="{{ $template->id }}">{{ $template->name }}</option>
+				                            @endforeach
+				                        </select>
+									</div>
+								</div>
+								@endif
+								<?php $emailsignatures = \EmailSignature\EmailSignatureEntity::get_instance()->getEmailSignaturesByLoggedUser(); ?>
+								@if(count($emailsignatures)>0)
+								<div class="inbox-form-group">
+									<label class="control-label">Signature:</label>
+									<div class="controls">
+										<select id="email_signature" name="email_signature" class="form-control">
+				                            <option value="">No signature required</option>
+				                            @foreach($emailsignatures as $signature)
+				                            <option value="{{ $signature->id }}">{{ $signature->name }}</option>
+				                            @endforeach
+				                        </select>
+									</div>
+								</div>
+								@endif
+								<div class="inbox-form-group">
 									<textarea class="inbox-editor inbox-wysihtml5 form-control" name="message" rows="12"></textarea>
 								</div>
 								<div class="inbox-compose-attachment">
@@ -90,7 +144,7 @@
 									<span class="btn green fileinput-button">
 									<i class="fa fa-plus"></i>
 									<span>
-									Add files... </span>
+									Add local files... </span>
 									<input type="file" name="files[]" multiple>
 									</span>
 									<!-- The table listing the files available for upload/download -->

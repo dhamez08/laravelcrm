@@ -88,12 +88,15 @@ class EmailController extends \BaseController {
 
 		$data 						= $this->_getClientData($clientId);
 		$data 						= array_merge($data,$dashboard_data);
-		dd($data['customer']);
+		$data['client_email'] = "";
+		if($data['customer']->emails()->count() > 0) {
+			$data['client_email'] = $data['customer']->emails()->first()->email;
+		}
 		return \View::make( $data['view_path'] . '.client-emails.index', $data );
 	}
 
 	public function postClient($clientId) {
-		dd(\Input::file('files'));
+		dd(\Input::all());
 	}
 
 }

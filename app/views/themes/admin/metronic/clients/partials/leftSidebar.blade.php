@@ -13,7 +13,11 @@
 				</a>
 			</li>
 			<li>
+				@if(isset($customer))
 				<a href="{{url('file/client-file/'.$customer->id)}}">
+				@else
+				<a href="javascript:;">
+				@endif
 				<i class="icon-basket"></i>
 				<span class="title">Files</span>
 				<span class="arrow "></span>
