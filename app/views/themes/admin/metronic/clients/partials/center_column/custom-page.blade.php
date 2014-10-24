@@ -2,7 +2,7 @@
 	<!--section 1-->
 
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-6">
 			<div class="portlet light bordered">
 				<div class="portlet-title" style="border-bottom:0px">
 					@if($customtab->section1)
@@ -29,7 +29,7 @@
 					</div>
 				</div>
 				<div class="portlet-body">
-					<div class="" style="position: relative; overflow-y: auto; width: auto; height: 200px;">
+					<div class="scroller" style="height: 200px;">
 					@if($customtab->section1)
 						@if($customtab->section1==1)
 							<?php
@@ -112,12 +112,8 @@
 				</div>
 			</div>
 		</div>
-	</div>
-
 @include($view_path.'.clients.partials.modals.customtabs.section1-modals')
-
-	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-6">
 			<div class="portlet light bordered">
 				<div class="portlet-title" style="border-bottom:0px">
 					@if($customtab->section2)
@@ -143,7 +139,7 @@
 					</div>
 				</div>
 				<div class="portlet-body">
-					<div class="" style="position: relative; overflow-y: auto; width: auto; height: 200px;">
+					<div class="scroller" style="height: 200px;">
 					@if($customtab->section2)
 						@if($customtab->section2==1)
 							<?php
@@ -229,7 +225,7 @@
 @include($view_path.'.clients.partials.modals.customtabs.section2-modals')
 
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-6">
 			<div class="portlet light bordered">
 				<div class="portlet-title" style="border-bottom:0px">
 					@if($customtab->section3)
@@ -255,7 +251,7 @@
 					</div>
 				</div>
 				<div class="portlet-body">
-					<div class="" style="position: relative; overflow-y: auto; width: auto; height: 200px;">
+					<div class="scroller" style="height: 200px;">
 					@if($customtab->section3)
 						@if($customtab->section3==1)
 							<?php
@@ -336,12 +332,8 @@
 				</div>
 			</div>
 		</div>
-	</div>
-
 @include($view_path.'.clients.partials.modals.customtabs.section3-modals')
-
-	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-6">
 			<div class="portlet light bordered">
 				<div class="portlet-title" style="border-bottom:0px">
 					@if($customtab->section4)
@@ -367,7 +359,7 @@
 					</div>
 				</div>
 				<div class="portlet-body">
-					<div class="" style="position: relative; overflow-y: auto; width: auto; height: 200px;">
+					<div class="scroller" style="height: 200px;">
 					@if($customtab->section4)
 						@if($customtab->section4==1)
 							<?php
