@@ -124,6 +124,7 @@ class EmailController extends \BaseController {
 			$data['bcc'] = 0;
 
 			$data['to_name'] = \Input::get('to_name');
+			$data['client_ref'] = \Input::get('client_ref');
 			$data['to_email'] = \Input::get('to');
 			$data['subject'] = \Input::get('subject');
 			$data['body'] = \Input::get('message');
@@ -152,7 +153,7 @@ class EmailController extends \BaseController {
 					$message->bcc($data['bcc']);
 
 				$message->replyTo('dropbox.13554456@123crm.co.uk', $from_name);
-				$message->to($data['to_email'], $data['to_name'])->subject($data['subject']);
+				$message->to($data['to_email'], $data['to_name'])->subject($data['subject'] . ' ' . $data['client_ref']);
 			});
 
 			\Session::flash('message', 'Email successfully sent');
