@@ -157,7 +157,7 @@ class EmailController extends \BaseController {
 				if($data['bcc'])
 					$message->bcc($data['bcc']);
 				if($data['client_files']) {
-					$message->attach(url('/') . '/' . $data['client_files']);
+					$message->attach(url('/') . '/public/' . $data['client_files']);
 				}
 				$message->replyTo('dropbox.13554456@123crm.co.uk', $from_name);
 				$message->to($data['to_email'], $data['to_name'])->subject($data['subject'] . ' ' . $data['client_ref']);
