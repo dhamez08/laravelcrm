@@ -69,6 +69,9 @@ Route::group(array('before' => 'auth'), function()
 	Route::controller('custom-tab','CustomTab\CustomTabController');
 	Route::get( 'dashboard' , 'Dashboard\DashboardController@getIndex' );
 });
+
+Route::post('pass-email-data','Email\EmailController@sendData');
+
 Route::get( '/' , 'HomeController@getIndex' );
 Route::get( 'login' , 'AuthController@getIndex' );
 Route::post( 'login' , 'AuthController@postAuth' );

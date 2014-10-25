@@ -203,7 +203,7 @@ class EmailController extends \BaseController {
 		$upload_handler = new \UploadHandler($options);
 	}
 
-	public function postSendData() {
+	public function sendData() {
 		return 'asdasdasd';
 	}
 
