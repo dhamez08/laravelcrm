@@ -119,16 +119,44 @@ class EmailController extends \BaseController {
 
 			$from_name = \Auth::user()->first_name . ' ' . \Auth::user()->last_name;
 			$from_email = \Auth::user()->email;
-			$data = array(
-				'name'=>'Elias Mamalias'
-			);
 
-			\Mail::send('emails.clients.index', $data, function($message) use ($data)
+			$data['cc'] = 0;
+			$data['bcc'] = 0;
+
+			$data['to_name'] = \Input::get('to_name');
+			$data['to_email'] = \Input::get('to');
+			$data['subject'] = \Input::get('subject');
+			$data['body'] = \Input::get('message');
+			if(\Input::get('email_signature')!=='') {
+				$signature = \EmailSignature\EmailSignature::find(\Input::get('email_signature'));
+				if($signature) {
+					$data['footer'] = $signature->body;
+				}
+			}
+
+			if(\Input::get('cc') && \Input::get('cc')!=='') {
+				$data['cc'] = \Input::get('cc');
+			}
+
+			if(\Input::get('bcc') && \Input::get('bcc')!=='') {
+				$data['bcc'] = \Input::get('bcc');
+			}
+
+			
+			\Mail::send('emails.clients.index', $data, function($message) use ($data, $from_name, $from_email)
 			{
 				$message->from($from_email, $from_name);
+				if($data['cc'])
+					$message->cc($data['cc']);
+				if($data['bcc'])
+					$message->bcc($data['bcc']);
+
 				$message->replyTo('dropbox.13554456@123crm.co.uk', $from_name);
-				$message->to('mamalias23@gmail.com', 'Elias Mamalias - Receiver')->subject('Welcome!');
+				$message->to($data['to_email'], $data['to_name'])->subject($data['subject']);
 			});
+
+			\Session::flash('message', 'Email successfully sent');
+			return \Redirect::back();
 
 		} else {
 
@@ -136,7 +164,7 @@ class EmailController extends \BaseController {
 			return \Redirect::back()
 			->withErrors($validator)
 			->withInput();
-			
+
 		}
 	}
 

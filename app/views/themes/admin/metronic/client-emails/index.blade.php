@@ -44,6 +44,7 @@
 						<div class="panel-body">
 							<form class="inbox-compose form-horizontal" id="fileupload" action="#" method="POST" enctype="multipart/form-data">
 							{{ Form::token() }}
+							<input type="hidden" name="to_name" value="{{ $customer->first_name . ' ' . $customer->last_name }}" />
 								<div class="inbox-compose-btn">
 									<button class="btn blue"><i class="fa fa-check"></i>Send</button>
 									<button onclick="history.back(-1)" class="btn inbox-discard-btn cancel-btn">Cancel</button>
