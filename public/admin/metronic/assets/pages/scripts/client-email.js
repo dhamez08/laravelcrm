@@ -97,14 +97,14 @@ var ClientEmail = function () {
         $('#fileupload').fileupload({
             // Uncomment the following to send cross-domain cookies:
             //xhrFields: {withCredentials: true},
-            url: ASSET_PATH_PUBLIC+'/global/plugins/jquery-file-upload/server/php/index.php',
+            url: '/email/upload-handler',
             autoUpload: true
         });
 
         // Upload server status check for browsers with CORS support:
         if ($.support.cors) {
             $.ajax({
-                url: ASSET_PATH_PUBLIC+'/global/plugins/jquery-file-upload/server/php/index.php',
+                url: '/email/upload-handler',
                 type: 'HEAD'
             }).fail(function () {
                 $('<span class="alert alert-error"/>')

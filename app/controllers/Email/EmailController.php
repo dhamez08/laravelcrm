@@ -22,7 +22,7 @@ class EmailController extends \BaseController {
 	 * auto setup initialize object
 	 * */
 	public function __construct(){
-		parent::__construct();
+		//parent::__construct();
 		//$this->data_view = \Dashboard\DashboardController::get_instance()->getSetupThemes();
 		$this->data_view = parent::setupThemes();
 		$this->data_view['settings_index'] 	= $this->data_view['view_path'] . '.settings.index';
@@ -106,6 +106,19 @@ class EmailController extends \BaseController {
 			$message->from('mamalias23@gmail.com', 'Elias Mamalias - Sender');
 			$message->to('mamalias23@gmail.com', 'Elias Mamalias - Receiver')->subject('Welcome!');
 		});
+	}
+
+
+	public function getUploadHandler() {
+		$upload_handler = new \UploadHandler();
+	}
+
+	public function postUploadHandler() {
+		$options = array(
+			'upload_dir' => public_path() . '/documents/email/files/',
+			'upload_url' => url('/') . '/public/documents/email/files/'
+		);
+		$upload_handler = new \UploadHandler($options);
 	}
 
 }
