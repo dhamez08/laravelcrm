@@ -175,6 +175,8 @@ class EmailController extends \BaseController {
 				'to' => $data['to_email']
 			);
 
+			\Message\Message::create($new_message);
+
 			\Session::flash('message', 'Email successfully sent');
 			return \Redirect::back();
 
