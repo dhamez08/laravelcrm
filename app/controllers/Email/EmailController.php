@@ -163,6 +163,18 @@ class EmailController extends \BaseController {
 				$message->to($data['to_email'], $data['to_name'])->subject($data['subject'] . ' ' . $data['client_ref']);
 			});
 
+			// build array to have message
+			$new_message = array(
+				'subject' => $data['subject'],
+				'body' => $data['body'],
+				'sender' => $from_name,
+				'direction' => '1',
+				'type' => '0',
+				'added_date' => date('Y-m-d H:i:s'),
+				'customer_id' => \Input::get('customer_id'),
+				'to' => $data['to_email']
+			);
+
 			\Session::flash('message', 'Email successfully sent');
 			return \Redirect::back();
 
