@@ -141,20 +141,19 @@
 								<div class="inbox-form-group">
 									<textarea class="inbox-editor inbox-wysihtml5 form-control" name="message" rows="12"></textarea>
 								</div>
+								<!--
 								<div class="inbox-compose-attachment">
-									<!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
 									<span class="btn green fileinput-button">
 									<i class="fa fa-plus"></i>
 									<span>
 									Add local files... </span>
 									<input type="file" name="files[]" multiple>
 									</span>
-									<!-- The table listing the files available for upload/download -->
 									<table role="presentation" class="table table-striped margin-top-10">
 									<tbody class="files">
 									</tbody>
 									</table>
-								</div>
+								</div> -->
 								<script id="template-upload" type="text/x-tmpl">
 								{% for (var i=0, file; file=o.files[i]; i++) { %}
 							    <tr class="template-upload fade">
