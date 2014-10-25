@@ -122,6 +122,7 @@ class EmailController extends \BaseController {
 
 			$data['cc'] = 0;
 			$data['bcc'] = 0;
+			$data['client_files'] = 0;
 
 			$data['to_name'] = \Input::get('to_name');
 			$data['client_ref'] = \Input::get('client_ref');
@@ -143,6 +144,10 @@ class EmailController extends \BaseController {
 				$data['bcc'] = \Input::get('bcc');
 			}
 
+			if(\Input::get('client_files') && \Input::get('client_files')!=='') {
+				$data['client_files'] = \Input::get('client_files');
+			}
+
 			
 			\Mail::send('emails.clients.index', $data, function($message) use ($data, $from_name, $from_email)
 			{
@@ -151,7 +156,9 @@ class EmailController extends \BaseController {
 					$message->cc($data['cc']);
 				if($data['bcc'])
 					$message->bcc($data['bcc']);
-
+				if($data['client_files']) {
+					$message->attach(url('/') . '/' . $data['client_files']);
+				}
 				$message->replyTo('dropbox.13554456@123crm.co.uk', $from_name);
 				$message->to($data['to_email'], $data['to_name'])->subject($data['subject'] . ' ' . $data['client_ref']);
 			});
