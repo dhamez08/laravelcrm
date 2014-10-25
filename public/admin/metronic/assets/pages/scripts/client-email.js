@@ -334,6 +334,7 @@ var ClientEmail = function () {
                 $this = $(this);
                 $.get(BASE_URL+'/settings/email/template/'+$this.val(), function(response) {
                     $(".inbox-wysihtml5").data('wysihtml5').editor.setValue(response.body);
+                    $("input#email_subject").val(response.subject);
                 });
             });
         }

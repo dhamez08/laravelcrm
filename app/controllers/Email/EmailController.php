@@ -97,15 +97,47 @@ class EmailController extends \BaseController {
 
 	public function postClient($clientId) {
 
-		$data = array(
-			'name'=>'Elias Mamalias'
+		$rules = array(
+			'to' => 'required|email',
+			'cc' => 'email',
+			'bcc' => 'email',
+			'subject' => 'required',
+			'message' => 'required'
+		);
+		$messages = array(
+			'to.required'=>'To Email is required',
+			'to.email'=>'To Email is not valid',
+			'cc.email'=>'CC Email is not valid',
+			'bcc.email'=>'BCC Email is not valid',
+			'subject.required'=>'Subject is required',
+			'message.required'=>'Message is required'
 		);
 
-		\Mail::send('emails.clients.index', $data, function($message) use ($data)
-		{
-			$message->from('mamalias23@gmail.com', 'Elias Mamalias - Sender');
-			$message->to('mamalias23@gmail.com', 'Elias Mamalias - Receiver')->subject('Welcome!');
-		});
+		$validator = \Validator::make(\Input::all(), $rules, $messages);
+
+		if($validator->passes()) {
+
+			$from_name = \Auth::user()->first_name . ' ' . \Auth::user()->last_name;
+			$from_email = \Auth::user()->email;
+			$data = array(
+				'name'=>'Elias Mamalias'
+			);
+
+			\Mail::send('emails.clients.index', $data, function($message) use ($data)
+			{
+				$message->from($from_email, $from_name);
+				$message->replyTo('dropbox.13554456@123crm.co.uk', $from_name);
+				$message->to('mamalias23@gmail.com', 'Elias Mamalias - Receiver')->subject('Welcome!');
+			});
+
+		} else {
+
+			\Input::flash();
+			return \Redirect::back()
+			->withErrors($validator)
+			->withInput();
+			
+		}
 	}
 
 

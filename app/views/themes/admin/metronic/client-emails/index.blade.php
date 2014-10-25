@@ -79,7 +79,7 @@
 								<div class="inbox-form-group">
 									<label class="control-label">Subject:</label>
 									<div class="controls">
-										<input type="text" class="form-control" name="subject">
+										<input type="text" class="form-control" name="subject" id="email_subject">
 									</div>
 								</div>
 								<div class="inbox-form-group">
