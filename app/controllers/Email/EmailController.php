@@ -203,4 +203,8 @@ class EmailController extends \BaseController {
 		$upload_handler = new \UploadHandler($options);
 	}
 
+	public function postSendData() {
+		return 'asdasdasd';
+	}
+
 }
