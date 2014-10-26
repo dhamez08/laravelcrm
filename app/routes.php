@@ -22,6 +22,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::controller( 'notes' , 'Notes\NotesController');
 	Route::controller( 'file' , 'File\ClientFileController');
 	Route::controller( 'email', 'Email\EmailController');
+	Route::controller( 'messages', 'Messages\MessagesController' );
 	Route::get( 'settings' , 'Settings\SettingsController@getIndex' );
 	Route::group(array('prefix' => 'clients'), function()
 	{

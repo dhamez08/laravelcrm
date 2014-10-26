@@ -109,7 +109,7 @@
 		<!-- END NOTIFICATION DROPDOWN -->
 		<!-- BEGIN INBOX DROPDOWN -->
 		<li id="header_inbox_bar" class="dropdown dropdown-extended dropdown-inbox">
-			<a data-close-others="true" data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle" href="#">
+			<a data-close-others="true" data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle" href="{{ url('messages') }}">
 			<i class="icon-envelope-open"></i>
 			<span class="badge badge-default">
 			4 </span>
@@ -201,7 +201,7 @@
 					</ul><div class="slimScrollBar" style="background: none repeat scroll 0% 0% rgb(187, 187, 187); width: 7px; position: absolute; top: 0px; opacity: 0.4; border-radius: 7px; z-index: 99; right: 1px; display: block;"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: none repeat scroll 0% 0% rgb(234, 234, 234); opacity: 0.2; z-index: 90; right: 1px;"></div></div>
 				</li>
 				<li class="external">
-					<a href="inbox.html">
+					<a href="{{ url('messages') }}">
 					See all messages <i class="m-icon-swapright"></i>
 					</a>
 				</li>
