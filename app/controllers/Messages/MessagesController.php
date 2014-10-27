@@ -55,36 +55,73 @@ class MessagesController extends \BaseController {
 		return \Dashboard\DashboardController::get_instance()->getSetupThemes();
 	}
 
+	private function _messageCommon() {
+		$data['UnreadMessagesCount'] 	= \Message\MessageEntity::get_instance()->getUnreadMessagesCount();
+		$data['messages'] 				= \Message\MessageEntity::get_instance()->listAllMessages();
+
+		return $data;
+	}
+
 	/**
 	 * Index of settings
 	 * @return View
 	 * */
 	public function getIndex(){
-		$data 						= $this->data_view;
-		$data['pageTitle'] 			= 'Messages';
-		$data['portlet_title']		= 'Messages';
-		$data 						= array_merge($data,$this->getSetupThemes());
+		$data 							= $this->data_view;
+		$data['pageTitle'] 				= 'Messages';
+		$dataMessages 					= $this->_messageCommon();
+		$data['portlet_title']			= 'Messages';
+		$data 							= array_merge($data,$this->getSetupThemes(), $dataMessages);
 
 		return \View::make( $data['view_path'] . '.messages.index', $data );
 	}
 
 	public function getInbox(){
 		$data = $this->data_view;
+		$dataMessages 	= $this->_messageCommon();
+		$data 	= array_merge($data, $dataMessages);
+		return \View::make( $data['view_path'] . '.messages.partials.inbox', $data );
+	}
+
+	public function getSent(){
+		$data = $this->data_view;
+		//$dataMessages 	= $this->_messageCommon();
+		$data['messages'] = \Message\MessageEntity::get_instance()->listAllSentMessages();
+		return \View::make( $data['view_path'] . '.messages.partials.inbox', $data );
+	}
+
+	public function getDraft(){
+		$data = $this->data_view;
+		//$dataMessages 	= $this->_messageCommon();
+		$data['messages'] = \Message\MessageEntity::get_instance()->listAllDraftMessages();
+		return \View::make( $data['view_path'] . '.messages.partials.inbox', $data );
+	}
+
+	public function getTrash(){
+		$data = $this->data_view;
+		//$dataMessages 	= $this->_messageCommon();
+		$data['messages'] = \Message\MessageEntity::get_instance()->listAllTrashMessages();
 		return \View::make( $data['view_path'] . '.messages.partials.inbox', $data );
 	}
 
 	public function getCompose(){
 		$data = $this->data_view;
+		$dataMessages 	= $this->_messageCommon();
+		$data 	= array_merge($data, $dataMessages);
 		return \View::make( $data['view_path'] . '.messages.partials.compose', $data );
 	}
 
 	public function getView(){
 		$data = $this->data_view;
+		$dataMessages 	= $this->_messageCommon();
+		$data 	= array_merge($data, $dataMessages);
 		return \View::make( $data['view_path'] . '.messages.partials.inbox_view', $data );
 	}
 
 	public function getReply(){
 		$data = $this->data_view;
+		$dataMessages 	= $this->_messageCommon();
+		$data 	= array_merge($data, $dataMessages);
 		return \View::make( $data['view_path'] . '.messages.partials.reply', $data );
 	}
 }

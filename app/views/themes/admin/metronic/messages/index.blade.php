@@ -31,7 +31,12 @@
 						</li>
 						<li class="inbox active">
 							<a href="javascript:;" class="btn" data-title="Inbox">
-							Inbox(3) </a>
+							@if($UnreadMessagesCount)
+								Inbox({{ $UnreadMessagesCount }})
+							@else
+								Inbox
+							@endif
+							</a>
 							<b></b>
 						</li>
 						<li class="sent">

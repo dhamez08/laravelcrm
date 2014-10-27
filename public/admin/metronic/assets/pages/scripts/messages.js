@@ -5,7 +5,14 @@ var Messages = function () {
     var listListing = '';
 
     var loadInbox = function (el, name) {
-        var url = BASE_URL+'/messages/inbox';
+        if(name=='inbox')
+            var url = BASE_URL+'/messages/inbox';
+        else if(name=='sent')
+            var url = BASE_URL+'/messages/sent';
+        else if(name=='draft')
+            var url = BASE_URL+'/messages/draft';
+        else if(name=='trash')
+            var url = BASE_URL+'/messages/trash';
         var title = $('.inbox-nav > li.' + name + ' a').attr('data-title');
         listListing = name;
 

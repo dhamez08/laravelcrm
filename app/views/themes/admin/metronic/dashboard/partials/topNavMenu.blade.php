@@ -137,7 +137,7 @@
 				@endif
 				@if(count(\Message\MessageEntity::get_instance()->listAllMessages())>0)
 				<li>
-					<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 250px;"><ul style="overflow: hidden; width: auto; height: 250px;" class="dropdown-menu-list scroller" data-initialized="1">
+					<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: auto; max-height:250px"><ul style="overflow: hidden; width: auto; height: auto;" class="dropdown-menu-list scroller" data-initialized="1">
 					@foreach(\Message\MessageEntity::get_instance()->listAllMessages() as $message)
 						<li>
 							<a href="#">
