@@ -1,4 +1,5 @@
 <?php
+namespace helpers;
 /**
  * Textlocal API2 Wrapper Class
  *

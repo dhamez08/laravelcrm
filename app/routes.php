@@ -12,7 +12,7 @@
 */
 Route::group(array('before' => 'auth'), function()
 {
-	
+
 	Route::controller( 'clients' , 'Clients\ClientsController');
 	Route::controller( 'profile' , 'Profile\ProfileController' );
 	Route::controller( 'document-library' , 'DocumentLibraries\DocumentLibrariesController' );
@@ -23,6 +23,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::controller( 'file' , 'File\ClientFileController');
 	Route::controller( 'email', 'Email\EmailController');
 	Route::controller( 'messages', 'Messages\MessagesController' );
+	Route::controller( 'sms', 'SMS\SMSController' );
 	Route::get( 'settings' , 'Settings\SettingsController@getIndex' );
 	Route::group(array('prefix' => 'clients'), function()
 	{
