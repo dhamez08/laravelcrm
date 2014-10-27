@@ -113,15 +113,14 @@ class MessagesController extends \BaseController {
 
 	public function getView(){
 		$data = $this->data_view;
-		$dataMessages 	= $this->_messageCommon();
-		$data 	= array_merge($data, $dataMessages);
+		$data['message'] = \Message\MessageEntity::get_instance()->getMessageDetails(\Input::get('message_id'))[0];
 		return \View::make( $data['view_path'] . '.messages.partials.inbox_view', $data );
 	}
 
 	public function getReply(){
 		$data = $this->data_view;
-		$dataMessages 	= $this->_messageCommon();
-		$data 	= array_merge($data, $dataMessages);
+		$data['message'] = \Message\MessageEntity::get_instance()->getMessageDetails(\Input::get('message_id'))[0];
+
 		return \View::make( $data['view_path'] . '.messages.partials.reply', $data );
 	}
 }

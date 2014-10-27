@@ -86,5 +86,12 @@ class MessageEntity extends \Eloquent{
 		return count($query);
 	}
 
+	function getMessageDetails($id) {
+		$sql = "SELECT c.*,m.*, m.added_date as messagedate FROM messages m, customer c WHERE m.customer_id=c.id AND c.belongs_user=? AND m.id=? LIMIT 1";		
+		$query = \DB::select($sql, array(\Auth::id(), $id));
+
+		return $query;
+	}
+
 
 }

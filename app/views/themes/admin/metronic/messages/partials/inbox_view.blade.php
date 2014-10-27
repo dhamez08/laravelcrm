@@ -1,7 +1,4 @@
 <div class="inbox-header inbox-view-header">
-	<h1 class="pull-left">New server for datacenter needed <a href="#">
-	Inbox </a>
-	</h1>
 	<div class="pull-right">
 		<i class="fa fa-print"></i>
 	</div>
@@ -9,25 +6,23 @@
 <div class="inbox-view-info">
 	<div class="row">
 		<div class="col-md-7">
-			<img src="../../assets/admin/layout/img/avatar1_small.jpg">
-			<span class="bold">
-			Petronas IT </span>
-			<span>
-			&#60;support@go.com&#62; </span>
+			<img src="{{$asset_path}}/layout/img/avatar1_small.jpg">
+			<span class="bold">{{ $message->first_name . " " . $message->last_name }}</span>
+			<span>&#60;{{ $message->sender }}&#62;</span>
 			to <span class="bold">
 			me </span>
-			on 08:20PM 29 JAN 2013
+			on {{ date("h:iA d/m/Y",strtotime($message->added_date)) }}
 		</div>
 		<div class="col-md-5 inbox-info-btn">
 			<div class="btn-group">
-				<button class="btn blue reply-btn">
+				<button class="btn blue reply-btn" data-messageid="{{ $message->id }}">
 				<i class="fa fa-reply"></i> Reply </button>
 				<button class="btn blue dropdown-toggle" data-toggle="dropdown">
 				<i class="fa fa-angle-down"></i>
 				</button>
 				<ul class="dropdown-menu pull-right">
 					<li>
-						<a href="#">
+						<a href="#" data-messageid="{{ $message->id }}">
 						<i class="fa fa-reply reply-btn"></i> Reply </a>
 					</li>
 					<li>
@@ -54,22 +49,9 @@
 			</div>
 		</div>
 		<div class="inbox-view">
-			<p>
-				<strong>Lorem ipsum</strong>dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-			</p>
-			<p>
-				 Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et <a href="#">
-				iusto odio dignissim </a>
-				qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem.
-			</p>
-			<p>
-				 Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius.
-			</p>
-			<p>
-				 Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.
-			</p>
+			{{ $message->body }}
 		</div>
-		<hr>
+		<!-- <hr>
 		<div class="inbox-attached">
 			<div class="margin-bottom-15">
 				<span>
@@ -115,4 +97,4 @@
 					Download </a>
 				</div>
 			</div>
-		</div>
+		</div> -->

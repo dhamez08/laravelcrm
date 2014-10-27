@@ -7,21 +7,21 @@
 	<div class="inbox-form-group mail-to">
 		<label class="control-label">To:</label>
 		<div class="controls controls-to">
-			<input type="text" class="form-control" name="to" value="fiona.stone@arthouse.com, lisa.wong@pixel.com, jhon.doe@gmail.com">
+			<input type="text" class="form-control" name="to" value="{{ $message->direction==2 ? $message->sender:$message->to }}">
 			<span class="inbox-cc-bcc">
-			<span class="inbox-cc " style="display:none">
+			<span class="inbox-cc">
 			Cc </span>
 			<span class="inbox-bcc">
 			Bcc </span>
 			</span>
 		</div>
 	</div>
-	<div class="inbox-form-group input-cc">
+	<div class="inbox-form-group input-cc display-hide">
 		<a href="javascript:;" class="close">
 		</a>
 		<label class="control-label">Cc:</label>
 		<div class="controls controls-cc">
-			<input type="text" name="cc" class="form-control" value="jhon.doe@gmail.com, kevin.larsen@gmail.com">
+			<input type="text" name="cc" class="form-control">
 		</div>
 	</div>
 	<div class="inbox-form-group input-bcc display-hide">
@@ -35,7 +35,7 @@
 	<div class="inbox-form-group">
 		<label class="control-label">Subject:</label>
 		<div class="controls">
-			<input type="text" class="form-control" name="subject" value="Urgent - Financial Report for May, 2013">
+			<input type="text" class="form-control" name="subject" value="{{ $message->subject }}">
 		</div>
 	</div>
 	<div class="inbox-form-group">
@@ -47,30 +47,23 @@
 				<br>
 				<br>
 				<blockquote>
-					 Consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. <br>
-					<br>
-					 Consectetuer adipiscing elit, sed diam nonummy nibh euismod exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. <br>
-					<br>
-					 All the best,<br>
-					 Lisa Nilson, CEO, Pixel Inc.
+					{{ $message->body }}
 				</blockquote>
 			</div>
 		</div>
 	</div>
-	<div class="inbox-compose-attachment">
-		<!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+	<!-- <div class="inbox-compose-attachment">
 		<span class="btn green fileinput-button">
 		<i class="fa fa-plus"></i>
 		<span>
 		Add files... </span>
 		<input type="file" name="files[]" multiple>
 		</span>
-		<!-- The table listing the files available for upload/download -->
 		<table role="presentation" class="table table-striped margin-top-10">
 		<tbody class="files">
 		</tbody>
 		</table>
-	</div>
+	</div> -->
 	<script id="template-upload" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-upload fade">

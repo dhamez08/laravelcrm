@@ -163,6 +163,8 @@ var Messages = function () {
     var loadReply = function (el) {
         var url = BASE_URL+'/messages/reply';
 
+        var message_id = el.attr("data-messageid");  
+
         loading.show();
         content.html('');
         toggleButton(el);
@@ -173,6 +175,7 @@ var Messages = function () {
             cache: false,
             url: url,
             dataType: "html",
+            data: {'message_id': message_id},
             success: function(res) 
             {
                 toggleButton(el);
@@ -184,7 +187,7 @@ var Messages = function () {
                 content.html(res);
                 $('[name="message"]').val($('#reply_email_content_body').html());
 
-                handleCCInput(); // init "CC" input field
+                //handleCCInput(); // init "CC" input field
 
                 initFileupload();
                 initWysihtml5();
