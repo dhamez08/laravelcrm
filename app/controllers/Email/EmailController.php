@@ -159,7 +159,7 @@ class EmailController extends \BaseController {
 				if($data['client_files']) {
 					$message->attach(url('/') . '/public/' . $data['client_files']);
 				}
-				$message->replyTo('dropbox.13554456@zeromyexcess.co.uk', $from_name);
+				$message->replyTo('dropbox.13554457@one23.co.uk', $from_name);
 				$message->to($data['to_email'], $data['to_name'])->subject($data['subject'] . ' ' . $data['client_ref']);
 			});
 
@@ -204,7 +204,25 @@ class EmailController extends \BaseController {
 	}
 
 	public function sendData() {
-		return 'asdasdasd';
+		$ref = \Input::get('ref');
+		$sender = \Input::get('sender');
+		$subject = \Input::get('subject');
+		$body = \Input::get('body');
+
+		//check if ref exists
+		$client = \Clients\Clients::where('ref', $ref)->get();
+		if($client->count()>0) {
+			$new_message = array(
+				'subject' => $subject,
+				'body' => $body,
+				'sender' => $sender,
+				'direction' => '2',
+				'added_date' => date('Y-m-d H:i:s'),
+				'customer_id' => $client->first()->id
+			);
+
+			\Message\Message::create($new_message);
+		}
 	}
 
 }
