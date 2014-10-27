@@ -48,5 +48,19 @@ class MessageEntity extends \Eloquent{
 		return self::$instance;
 	}
 
+	public function listAllMessages() {
+		$rows = array();
+		$sql = "SELECT m.id, m.sender, m.to, m.subject, m.added_date, m.read_status, m.direction, c.belongs_to, CONCAT(c.company_name, ' ', c.first_name, ' ', c.last_name) as client, c.id as clientid FROM messages m, customer c WHERE m.customer_id=c.id AND c.belongs_to=? ORDER BY m.added_date DESC";		
+		$query = \DB::select($sql, array(\Session::get('group_id')));
+
+		return $query;
+	}
+
+	public function getUnreadMessagesCount() {
+		$sql = "SELECT * FROM messages m, customer c WHERE m.customer_id=c.id AND c.belongs_user=? AND m.read_status='0' AND direction='2'";
+		$query = \DB::select($sql, array(\Auth::id()));
+		return count($query);
+	}
+
 
 }

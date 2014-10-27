@@ -111,19 +111,34 @@
 		<li id="header_inbox_bar" class="dropdown dropdown-extended dropdown-inbox">
 			<a data-close-others="true" data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle" href="{{ url('messages') }}">
 			<i class="icon-envelope-open"></i>
-			<span class="badge badge-default">
-			4 </span>
+			@if(\Message\MessageEntity::get_instance()->getUnreadMessagesCount())
+			<span class="badge badge-default">{{ \Message\MessageEntity::get_instance()->getUnreadMessagesCount() }}</span>
+			@endif
 			</a>
 			<ul class="dropdown-menu">
+				@if(\Message\MessageEntity::get_instance()->getUnreadMessagesCount())
 				<li>
 					<p>
-						 You have 12 new messages
-						 <button class="btn btn-info btn-xs pull-right"><i class="fa fa-plus"></i></button>
+						 You have {{ \Message\MessageEntity::get_instance()->getUnreadMessagesCount() }} new messages
 					</p>
 				</li>
+				@elseif(count(\Message\MessageEntity::get_instance()->listAllMessages())>0)
+				<li>
+					<p>
+						 You have {{ count(\Message\MessageEntity::get_instance()->listAllMessages()) }} messages
+					</p>
+				</li>
+				@else
+				<li>
+					<p>
+						 You have no message yet
+					</p>
+				</li>
+				@endif
+				@if(count(\Message\MessageEntity::get_instance()->listAllMessages())>0)
 				<li>
 					<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 250px;"><ul style="overflow: hidden; width: auto; height: 250px;" class="dropdown-menu-list scroller" data-initialized="1">
-						<li>
+						<!-- <li>
 							<a href="inbox.html?a=view">
 							<span class="photo">
 							<img alt="" src="../../assets/admin/layout/img/avatar2.jpg">
@@ -137,69 +152,10 @@
 							<span class="message">
 							Vivamus sed auctor nibh congue nibh. auctor nibh auctor nibh... </span>
 							</a>
-						</li>
-						<li>
-							<a href="inbox.html?a=view">
-							<span class="photo">
-							<img alt="" src="../../assets/admin/layout/img/avatar3.jpg">
-							</span>
-							<span class="subject">
-							<span class="from">
-							Richard Doe </span>
-							<span class="time">
-							16 mins </span>
-							</span>
-							<span class="message">
-							Vivamus sed congue nibh auctor nibh congue nibh. auctor nibh auctor nibh... </span>
-							</a>
-						</li>
-						<li>
-							<a href="inbox.html?a=view">
-							<span class="photo">
-							<img alt="" src="../../assets/admin/layout/img/avatar1.jpg">
-							</span>
-							<span class="subject">
-							<span class="from">
-							Bob Nilson </span>
-							<span class="time">
-							2 hrs </span>
-							</span>
-							<span class="message">
-							Vivamus sed nibh auctor nibh congue nibh. auctor nibh auctor nibh... </span>
-							</a>
-						</li>
-						<li>
-							<a href="inbox.html?a=view">
-							<span class="photo">
-							<img alt="" src="../../assets/admin/layout/img/avatar2.jpg">
-							</span>
-							<span class="subject">
-							<span class="from">
-							Lisa Wong </span>
-							<span class="time">
-							40 mins </span>
-							</span>
-							<span class="message">
-							Vivamus sed auctor 40% nibh congue nibh... </span>
-							</a>
-						</li>
-						<li>
-							<a href="inbox.html?a=view">
-							<span class="photo">
-							<img alt="" src="../../assets/admin/layout/img/avatar3.jpg">
-							</span>
-							<span class="subject">
-							<span class="from">
-							Richard Doe </span>
-							<span class="time">
-							46 mins </span>
-							</span>
-							<span class="message">
-							Vivamus sed congue nibh auctor nibh congue nibh. auctor nibh auctor nibh... </span>
-							</a>
-						</li>
+						</li> -->
 					</ul><div class="slimScrollBar" style="background: none repeat scroll 0% 0% rgb(187, 187, 187); width: 7px; position: absolute; top: 0px; opacity: 0.4; border-radius: 7px; z-index: 99; right: 1px; display: block;"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: none repeat scroll 0% 0% rgb(234, 234, 234); opacity: 0.2; z-index: 90; right: 1px;"></div></div>
 				</li>
+				@endif
 				<li class="external">
 					<a href="{{ url('messages') }}">
 					See all messages <i class="m-icon-swapright"></i>
