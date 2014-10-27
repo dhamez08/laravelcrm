@@ -50,6 +50,7 @@ class SMSController extends \BaseController {
 
 	public function getApiTextlocalUsers(){
 		$users = \Textlocal\TextlocalEntity::get_instance()->apiTextlocal();
+		//var_dump($users);
 		var_dump($users->getUsers());
 	}
 

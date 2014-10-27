@@ -7,7 +7,7 @@ namespace Textlocal;
 class TextlocalEntity extends \Eloquent{
 	protected static $instance = null;
 
-	protected $textlocal_api;
+	public $textlocal_api;
 
 	protected $textlocal_login;
 
@@ -34,7 +34,9 @@ class TextlocalEntity extends \Eloquent{
 	}
 
 	public function apiTextlocal(){
+		//$this->textlocal_api = new \helpers\Textlocal($this->textlocal_login, $this->textlocal_hash);
 		$this->textlocal_api = new \helpers\Textlocal($this->textlocal_login, $this->textlocal_hash);
+		return $this;
 	}
 
 	public function getObjectResult(){
