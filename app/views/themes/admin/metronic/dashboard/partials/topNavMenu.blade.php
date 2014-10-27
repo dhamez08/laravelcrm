@@ -138,21 +138,20 @@
 				@if(count(\Message\MessageEntity::get_instance()->listAllMessages())>0)
 				<li>
 					<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 250px;"><ul style="overflow: hidden; width: auto; height: 250px;" class="dropdown-menu-list scroller" data-initialized="1">
-						<!-- <li>
-							<a href="inbox.html?a=view">
+					@foreach(\Message\MessageEntity::get_instance()->listAllMessages() as $message)
+						<li>
+							<a href="#">
 							<span class="photo">
-							<img alt="" src="../../assets/admin/layout/img/avatar2.jpg">
+							<img alt="" src="{{$asset_path}}/layout/img/avatar2.jpg">
 							</span>
 							<span class="subject">
-							<span class="from">
-							Lisa Wong </span>
-							<span class="time">
-							Just Now </span>
+							<span class="from">{{ $message->sender }}</span>
+							<span class="time">{{ date('d/m/Y h:i A', strtotime($message->added_date)) }}</span>
 							</span>
-							<span class="message">
-							Vivamus sed auctor nibh congue nibh. auctor nibh auctor nibh... </span>
+							<span class="message">{{ \Str::words($message->body,10) }}</span>
 							</a>
-						</li> -->
+						</li>
+					@endforeach
 					</ul><div class="slimScrollBar" style="background: none repeat scroll 0% 0% rgb(187, 187, 187); width: 7px; position: absolute; top: 0px; opacity: 0.4; border-radius: 7px; z-index: 99; right: 1px; display: block;"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: none repeat scroll 0% 0% rgb(234, 234, 234); opacity: 0.2; z-index: 90; right: 1px;"></div></div>
 				</li>
 				@endif
