@@ -303,6 +303,44 @@ var Messages = function () {
 
             initFileupload();
             initWysihtml5();
+
+            jQuery('body').on('change', '.mail-group-checkbox', function () {
+                var set = jQuery('.mail-checkbox');
+                var checked = jQuery(this).is(":checked");
+                jQuery(set).each(function () {
+                    $(this).attr("checked", checked);
+                });
+                jQuery.uniform.update(set);
+            });
+
+
+            jQuery("a#message_read").on("click", function(e) {
+                e.preventDefault();
+                jQuery("form#inboxForm input#action_type").val("message_read");
+                jQuery("form#inboxForm").submit();
+            });
+            jQuery("a#message_unread").on("click", function(e) {
+                e.preventDefault();
+                jQuery("form#inboxForm input#action_type").val("message_unread");
+                jQuery("form#inboxForm").submit();
+            });
+            jQuery("a#message_delete").on("click", function(e) {
+                e.preventDefault();
+                jQuery("form#inboxForm input#action_type").val("message_delete");
+                jQuery("form#inboxForm").submit();
+            });
+
+            jQuery("a#message_restore").on("click", function(e) {
+                e.preventDefault();
+                jQuery("form#inboxForm input#action_type").val("message_restore");
+                jQuery("form#inboxForm").submit();
+            });
+            jQuery("a#message_force_delete").on("click", function(e) {
+                e.preventDefault();
+                jQuery("form#inboxForm input#action_type").val("message_force_delete");
+                jQuery("form#inboxForm").submit();
+            });
+
         }
 
     };

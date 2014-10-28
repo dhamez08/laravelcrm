@@ -86,6 +86,28 @@ class MessagesController extends \BaseController {
 		return \View::make( $data['view_path'] . '.messages.index', $data );
 	}
 
+	public function postInbox() {
+		$messageids = \Input::get('messageid');
+		$action = \Input::get('action_type');
+		if(count($messageids)>0) {
+			foreach ($messageids as $mid) {
+				$message = \Message\MessageEntity::find($mid);
+				if($action=='message_read') {
+					$message->read_status = 1;
+					$message->save();
+				} elseif($action=='message_unread') {
+					$message->read_status = 0;
+					$message->save();
+				} elseif($action=='message_delete') {
+					$message->delete();
+				}
+				
+			}
+		}
+
+		return \Redirect::back();
+	}
+
 	public function getSent(){
 		$data = $this->data_view;
 		$data['center_view'] = 'inbox';
@@ -108,12 +130,30 @@ class MessagesController extends \BaseController {
 
 	public function getTrash(){
 		$data = $this->data_view;
-		$data['center_view'] = 'inbox';
+		$data['center_view'] = 'trash';
 		$data['message_title'] = 'Trash';
 		$data['UnreadMessagesCount'] 	= \Message\MessageEntity::get_instance()->getUnreadMessagesCount();
 		$data['messages'] = \Message\MessageEntity::get_instance()->listAllTrashMessages();
 		$data 	= array_merge($data,$this->getSetupThemes());
 		return \View::make( $data['view_path'] . '.messages.index', $data );
+	}
+
+	public function postTrash() {
+		$messageids = \Input::get('messageid');
+		$action = \Input::get('action_type');
+		if(count($messageids)>0) {
+			foreach ($messageids as $mid) {
+				$message = \Message\MessageEntity::find($mid);
+				if($action=='message_restore') {
+					$message->restore();
+				} elseif($action=='message_force_delete') {
+					$message->forceDelete();
+				}
+				
+			}
+		}
+
+		return \Redirect::back();
 	}
 
 	public function getCompose(){
@@ -128,6 +168,12 @@ class MessagesController extends \BaseController {
 	public function getView(){
 		$data = $this->data_view;
 		$data['message'] = \Message\MessageEntity::get_instance()->getMessageDetails(\Input::get('message_id'))[0];
+
+		//update the read status to 1
+		$message = \Message\MessageEntity::find($data['message']->id);
+		$message->read_status = 1;
+		$message->save();
+
 		$data['center_view'] = 'inbox_view';
 		$data['message_title'] = 'View Message';
 		$dataMessages 					= $this->_messageCommon();

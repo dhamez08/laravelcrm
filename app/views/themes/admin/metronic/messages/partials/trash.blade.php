@@ -1,4 +1,4 @@
-<form action="{{ url('messages/inbox') }}" method="POST" id="inboxForm">
+<form action="{{ url('messages/trash') }}" method="POST" id="inboxForm">
 {{ Form::token() }}
 <input type="hidden" name="action_type" id="action_type" value="" />
 <table class="table table-striped table-advance table-hover">
@@ -12,18 +12,12 @@
 			</a>
 			<ul class="dropdown-menu">
 				<li>
-					<a href="#" id="message_read">
-					<i class="fa fa-pencil"></i> Mark as Read </a>
+					<a href="#" id="message_restore">
+					<i class="fa fa-reply"></i> Restore </a>
 				</li>
 				<li>
-					<a href="#" id="message_unread">
-					<i class="fa fa-pencil"></i> Mark as Un-Read </a>
-				</li>
-				<li class="divider">
-				</li>
-				<li>
-					<a href="#" id="message_delete">
-					<i class="fa fa-trash-o"></i> Move to Trash </a>
+					<a href="#" id="message_force_delete" onclick="return confirm('Are you sure you want to delete?')">
+					<i class="fa fa-trash-o"></i> Empty </a>
 				</li>
 			</ul>
 		</div>
@@ -48,18 +42,26 @@
 			<input type="checkbox" class="mail-checkbox" name="messageid[]" value="{{ $message->id }}">
 		</td>
 		<td class="inbox-small-cells">
-			<i class="fa fa-star"></i>
+			<a class="btn btn-sm btn-default" style="padding:3px;font-size:9px;">
+			@if($message->direction=='1')
+				SENT
+			@elseif($message->direction=='2')
+				INBOX
+			@elseif($message->direction=='3')
+				DRAFT
+			@endif
+			</a>
 		</td>
-		<td class="view-message hidden-xs" style="width:300px;">
+		<td class="hidden-xs" style="width:300px;">
 			 {{ $message->sender }}
 		</td>
-		<td class="view-message ">
+		<td class="">
 			 {{ $message->subject }}
 		</td>
-		<td class="view-message inbox-small-cells">
+		<td class="inbox-small-cells">
 			<!-- <i class="fa fa-paperclip"></i> -->
 		</td>
-		<td class="view-message text-right" style="min-width:200px;">
+		<td class="text-right" style="min-width:200px;">
 			{{ date('d/m/Y h:i A',strtotime($message->added_date)) }}
 		</td>
 	</tr>

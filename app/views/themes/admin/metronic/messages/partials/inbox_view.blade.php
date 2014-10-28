@@ -29,16 +29,16 @@
 						<a href="#">
 						<i class="fa fa-arrow-right reply-btn"></i> Forward </a>
 					</li>
-					<li>
+					<!-- <li>
 						<a href="#">
 						<i class="fa fa-print"></i> Print </a>
-					</li>
+					</li> -->
 					<li class="divider">
 					</li>
-					<li>
+					<!-- <li>
 						<a href="#">
 						<i class="fa fa-ban"></i> Spam </a>
-					</li>
+					</li> -->
 					<li>
 						<a href="#">
 						<i class="fa fa-trash-o"></i> Delete </a>
