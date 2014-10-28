@@ -25,10 +25,10 @@
 						<a href="{{ url('messages/reply?message_id='.$message->id) }}" data-messageid="{{ $message->id }}">
 						<i class="fa fa-reply reply-btn"></i> Reply </a>
 					</li>
-					<li>
+					<!-- <li>
 						<a href="#">
 						<i class="fa fa-arrow-right reply-btn"></i> Forward </a>
-					</li>
+					</li> -->
 					<!-- <li>
 						<a href="#">
 						<i class="fa fa-print"></i> Print </a>
@@ -40,8 +40,8 @@
 						<i class="fa fa-ban"></i> Spam </a>
 					</li> -->
 					<li>
-						<a href="#">
-						<i class="fa fa-trash-o"></i> Delete </a>
+						<a href="{{ url('messages/delete/'.$message->id) }}">
+						<i class="fa fa-trash-o"></i> Move to Trash </a>
 					</li>
 					<li>
 					</div>

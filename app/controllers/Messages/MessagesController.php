@@ -190,4 +190,14 @@ class MessagesController extends \BaseController {
 		$data 							= array_merge($data,$this->getSetupThemes(), $dataMessages);
 		return \View::make( $data['view_path'] . '.messages.index', $data );
 	}
+
+	public function getDelete($id) {
+		$message = \Message\MessageEntity::find($id);
+		if($message) {
+			$message->delete();
+			return \Redirect::to('messages/trash');
+		}
+
+		return \Redirect::back();
+	}
 }
