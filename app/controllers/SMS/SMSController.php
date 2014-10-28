@@ -122,7 +122,7 @@ class SMSController extends \BaseController {
 
 		// get the response from paypal
 		$response = \helpers\Paypal::request('SetExpressCheckout', $params);
-		var_dump($params);
+		var_dump($response);
 	}
 
 	public function getCreateSmsCredit(){
