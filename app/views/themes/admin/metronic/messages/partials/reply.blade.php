@@ -40,7 +40,7 @@
 	</div>
 	<div class="inbox-form-group">
 		<div class="controls-row">
-			<textarea class="inbox-editor inbox-wysihtml5 form-control" name="message" rows="12"><br><br><blockquote>{{ $message->body }}</blockquote></textarea>
+			<textarea class="inbox-editor inbox-wysihtml5 form-control" name="message" rows="12"><br><br><blockquote>{{ nl2br($message->body) }}</blockquote></textarea>
 		</div>
 	</div>
 	<!-- <div class="inbox-compose-attachment">
