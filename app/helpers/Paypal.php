@@ -9,8 +9,8 @@ class Paypal {
 	public static function request($method, $requestParams) {
 
 		// the paypal endpoint
-		//$paypal_url = "https://api-3t.sandbox.paypal.com/nvp";
-		$paypal_url = "https://api-3t.paypal.com/nvp";
+		$paypal_url = "https://api-3t.sandbox.paypal.com/nvp";
+		//$paypal_url = "https://api-3t.paypal.com/nvp";
 
 		$parms = array(
 			'USER' => 'steve.warden_api1.123-insureme.co.uk',
