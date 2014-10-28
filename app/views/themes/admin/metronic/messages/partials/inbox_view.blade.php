@@ -49,7 +49,7 @@
 			</div>
 		</div>
 		<div class="inbox-view">
-			{{ $message->body }}
+			{{ nl2br($message->body) }}
 		</div>
 		<!-- <hr>
 		<div class="inbox-attached">
