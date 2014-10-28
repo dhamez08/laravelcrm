@@ -85,6 +85,9 @@ class SMSController extends \BaseController {
 		if( array_key_exists($sms_credit,$sms_price_credit) ){
 			$sms_price = array_get($sms_price_credit,$sms_credit);
 			switch($sms_credit){
+				case 0:
+					$sms_name = "0 SMS Credits";
+				break;
 				case 20:
 					$sms_name = "20 SMS Credits";
 				break;
