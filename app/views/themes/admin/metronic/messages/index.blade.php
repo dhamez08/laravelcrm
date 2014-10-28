@@ -13,7 +13,17 @@
 		<!-- END:File Upload Plugin CSS files-->
 		<!-- BEGIN PAGE LEVEL STYLES -->
 		<link href="{{$asset_path}}/pages/css/inbox.css" rel="stylesheet" type="text/css"/>
+
+		<link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/bootstrap-select/bootstrap-select.min.css"/>
+		<link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/select2/select2.css"/>
+		<link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/jquery-multi-select/css/multi-select.css"/>
 		<!-- END PAGE LEVEL STYLES -->
+
+		<style type="text/css">
+		.select2-container-multi .select2-choices {
+			border: 0px !important;
+		}
+		</style>
 	@stop
 @stop
 
@@ -115,6 +125,12 @@
 	<!-- The File Upload user interface plugin -->
 	<script src="{{$asset_path}}/global/plugins/jquery-file-upload/js/jquery.fileupload-ui.js"></script>
 
+
+	<script type="text/javascript" src="{{$asset_path}}/global/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+	<script type="text/javascript" src="{{$asset_path}}/global/plugins/select2/select2.min.js"></script>
+	<script type="text/javascript" src="{{$asset_path}}/global/plugins/jquery-multi-select/js/jquery.multi-select.js"></script>
+	<script src="{{$asset_path}}/pages/scripts/components-dropdowns.js"></script>
+
 	<script>
 	var BASE_URL = '{{ url('/') }}';
 	var ASSET_PATH = '{{$asset_path}}';
@@ -126,6 +142,7 @@
 	<script type="text/javascript">
 		jQuery(document).ready(function() {
 		   Messages.init();
+		   ComponentsDropdowns.init();
 		});
 	</script>
 	@stop

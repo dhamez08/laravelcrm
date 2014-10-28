@@ -1,13 +1,18 @@
 <form class="inbox-compose form-horizontal" id="fileupload" action="#" method="POST" enctype="multipart/form-data">
+{{ Form::token() }}
 	<div class="inbox-compose-btn">
 		<button class="btn blue"><i class="fa fa-check"></i>Send</button>
-		<button class="btn inbox-discard-btn">Discard</button>
-		<button class="btn">Draft</button>
+		<!-- <button class="btn inbox-discard-btn">Discard</button>
+		<button class="btn">Draft</button> -->
 	</div>
 	<div class="inbox-form-group mail-to">
 		<label class="control-label">To:</label>
 		<div class="controls controls-to">
-			<input type="text" class="form-control" name="to">
+			<select id="select2_user" name="to[]" class="form-control select2" multiple>
+			@foreach($customers->get() as $customer)
+				<option value="{{ $customer->id }}">{{ $customer->first_name . " " . $customer->last_name }}</option>
+			@endforeach
+			</select>
 			<span class="inbox-cc-bcc">
 			<span class="inbox-cc">
 			Cc </span>
@@ -35,9 +40,63 @@
 	<div class="inbox-form-group">
 		<label class="control-label">Subject:</label>
 		<div class="controls">
-			<input type="text" class="form-control" name="subject">
+			<input type="text" class="form-control" name="subject" id="email_subject">
 		</div>
 	</div>
+	<div class="inbox-form-group">
+		<label class="control-label">Files:</label>
+		<div class="controls">
+			<select id="client_files" name="client_files" class="form-control">
+	            <option value="">Select Files</option>
+	            <?php 
+	            $client_files = \CustomerFiles\CustomerFilesEntity::get_instance()->getFilesByClient(isset($customer) ? $customer->id:'');
+	            $document_libraries = \DocumentLibrary\DocumentLibraryEntity::get_instance()->documents();
+	            ?>
+	            @if(count($client_files)>0)
+	                <optgroup label="Client Files">
+	                @foreach($client_files as $file)
+	                  <option value="documents/{{ $file->filename }}">{{ $file->name }} - {{ date('d/m/Y H:i',strtotime($file->created_at)) }}</option>
+	                @endforeach
+	                </optgroup>
+	            @endif
+	            @if(count($document_libraries)>0)
+	                <optgroup label="Document Library">
+	                @foreach($document_libraries as $file)
+	                  <option value="document/library/own/{{ $file->filename }}">{{ $file->name }} - {{ date('d/m/Y H:i',strtotime($file->created_at)) }}</option>
+	                @endforeach
+	                </optgroup>
+	            @endif
+	        </select>
+		</div>
+	</div>
+	<?php $templates = \EmailTemplate\EmailTemplateEntity::get_instance()->getTemplatesByLoggedUser(); ?>
+	@if(count($templates)>0)
+	<div class="inbox-form-group">
+		<label class="control-label">Template:</label>
+		<div class="controls">
+			<select id="email_template" name="email_template" class="form-control">
+	            <option value="">No template required</option>
+	            @foreach($templates as $template)
+	            <option value="{{ $template->id }}">{{ $template->name }}</option>
+	            @endforeach
+	        </select>
+		</div>
+	</div>
+	@endif
+	<?php $emailsignatures = \EmailSignature\EmailSignatureEntity::get_instance()->getEmailSignaturesByLoggedUser(); ?>
+	@if(count($emailsignatures)>0)
+	<div class="inbox-form-group">
+		<label class="control-label">Signature:</label>
+		<div class="controls">
+			<select id="email_signature" name="email_signature" class="form-control">
+	            <option value="">Select Signature (applied when sent)</option>
+	            @foreach($emailsignatures as $signature)
+	            <option value="{{ $signature->id }}">{{ $signature->name }}</option>
+	            @endforeach
+	        </select>
+		</div>
+	</div>
+	@endif
 	<div class="inbox-form-group">
 		<textarea class="inbox-editor inbox-wysihtml5 form-control" name="message" rows="12"></textarea>
 	</div>
@@ -104,7 +163,7 @@
 	</script>
 	<div class="inbox-compose-btn">
 		<button class="btn blue"><i class="fa fa-check"></i>Send</button>
-		<button class="btn">Discard</button>
-		<button class="btn">Draft</button>
+		<!-- <button class="btn">Discard</button>
+		<button class="btn">Draft</button> -->
 	</div>
 </form>
