@@ -122,7 +122,23 @@ class SMSController extends \BaseController {
 
 		// get the response from paypal
 		$response = \helpers\Paypal::request('SetExpressCheckout', $params);
-		var_dump($response);
+		$token = $response['TOKEN'];
+		// save stuff in purchase table
+		$group_id	= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+		$save_details = array(
+			'group_id' => $group_id,
+			'credits' => $sms_credit,
+			'price' => $sms_price,
+			'sms_ref' => $sms_name,
+			'paypal_token' => $token,
+			'created' => date("Y-m-d H:i:s")
+		);
+		/**
+		 * purchase history
+		* $this->settings_model->saveSMSPurchase($save_details);
+		* */
+		//header('Location: https://www.paypal.com/webscr?cmd=_express-checkout&token=' . urlencode($token));
+		\Redirect::to('https://www.paypal.com/webscr?cmd=_express-checkout&token=' . urlencode($token));
 	}
 
 	public function getCreateSmsCredit(){
