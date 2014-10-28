@@ -14,7 +14,17 @@
 		<!-- END:File Upload Plugin CSS files-->
 		<!-- BEGIN PAGE LEVEL STYLES -->
 		<link href="{{$asset_path}}/pages/css/inbox.css" rel="stylesheet" type="text/css"/>
+		
+		<link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/bootstrap-select/bootstrap-select.min.css"/>
+		<link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/select2/select2.css"/>
+		<link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/jquery-multi-select/css/multi-select.css"/>
 		<!-- END PAGE LEVEL STYLES -->
+
+		<style type="text/css">
+		.select2-container-multi .select2-choices {
+			border: 0px !important;
+		}
+		</style>
 	@stop
 @stop
 @section('body-content')
@@ -54,7 +64,11 @@
 								<div class="inbox-form-group mail-to">
 									<label class="control-label">To:</label>
 									<div class="controls controls-to">
-										<input type="text" value="{{ $client_email }}" class="form-control" name="to">
+										<select id="select2_user" name="to[]" class="form-control select2" multiple>
+										@foreach($customers->get() as $customer1)
+											<option value="{{ $customer1->id }}" {{ $customer->id==$customer1->id ? 'selected="selected"':'' }}>{{ $customer1->first_name . " " . $customer1->last_name }}</option>
+										@endforeach
+										</select>
 										<span class="inbox-cc-bcc">
 										<span class="inbox-cc">
 										Cc </span>
@@ -258,6 +272,11 @@
 	<!-- The File Upload user interface plugin -->
 	<script src="{{$asset_path}}/global/plugins/jquery-file-upload/js/jquery.fileupload-ui.js"></script>
 
+	<script type="text/javascript" src="{{$asset_path}}/global/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+	<script type="text/javascript" src="{{$asset_path}}/global/plugins/select2/select2.min.js"></script>
+	<script type="text/javascript" src="{{$asset_path}}/global/plugins/jquery-multi-select/js/jquery.multi-select.js"></script>
+	<script src="{{$asset_path}}/pages/scripts/components-dropdowns.js"></script>
+
 	<script>
 	var BASE_URL = '{{ url('/') }}';
 	var ASSET_PATH = '{{$asset_path}}';
@@ -266,9 +285,12 @@
 
 	<script src="{{$asset_path}}/pages/scripts/client-email.js" type="text/javascript"></script>
 
+
+
 	<script type="text/javascript">
 		jQuery(document).ready(function() {
 		   ClientEmail.init();
+		   ComponentsDropdowns.init();
 		});
 	</script>
 	@stop

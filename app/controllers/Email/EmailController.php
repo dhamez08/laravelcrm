@@ -18,6 +18,8 @@ class EmailController extends \BaseController {
 	 * */
 	protected $data_view;
 
+	private $get_customer_type;
+
 	/**
 	 * auto setup initialize object
 	 * */
@@ -27,6 +29,7 @@ class EmailController extends \BaseController {
 		$this->data_view = parent::setupThemes();
 		$this->data_view['settings_index'] 	= $this->data_view['view_path'] . '.settings.index';
 		$this->data_view['master_view'] 	= $this->data_view['view_path'] . '.dashboard.index';
+		$this->get_customer_type = array(1,2,3);
 	}
 
 	/**
@@ -92,20 +95,22 @@ class EmailController extends \BaseController {
 		if($data['customer']->emails()->count() > 0) {
 			$data['client_email'] = $data['customer']->emails()->first()->email;
 		}
+
+		$data['customers']		= \Clients\ClientEntity::get_instance()->getCustomerList($group_id,$this->get_customer_type);
 		return \View::make( $data['view_path'] . '.client-emails.index', $data );
 	}
 
 	public function postClient($clientId) {
 
 		$rules = array(
-			'to' => 'required|email',
+			'to' => 'required',
 			'cc' => 'email',
 			'bcc' => 'email',
 			'subject' => 'required',
 			'message' => 'required'
 		);
 		$messages = array(
-			'to.required'=>'To Email is required',
+			'to.required'=>'Customer is required',
 			'to.email'=>'To Email is not valid',
 			'cc.email'=>'CC Email is not valid',
 			'bcc.email'=>'BCC Email is not valid',
@@ -124,9 +129,8 @@ class EmailController extends \BaseController {
 			$data['bcc'] = 0;
 			$data['client_files'] = 0;
 
-			$data['to_name'] = \Input::get('to_name');
-			$data['client_ref'] = \Input::get('client_ref');
-			$data['to_email'] = \Input::get('to');
+			$customers = \Input::get('to');
+
 			$data['subject'] = \Input::get('subject');
 			$data['body'] = \Input::get('message');
 			if(\Input::get('email_signature')!=='') {
@@ -148,34 +152,55 @@ class EmailController extends \BaseController {
 				$data['client_files'] = \Input::get('client_files');
 			}
 
-			
-			\Mail::send('emails.clients.index', $data, function($message) use ($data, $from_name, $from_email)
-			{
-				$message->from($from_email, $from_name);
-				if($data['cc'])
-					$message->cc($data['cc']);
-				if($data['bcc'])
-					$message->bcc($data['bcc']);
-				if($data['client_files']) {
-					$message->attach(url('/') . '/public/' . $data['client_files']);
+			foreach($customers as $customer) {
+
+				$custObj = \Clients\Clients::find($customer);
+
+				if($custObj->emails()->count() > 0) {
+
+					$data['to_email'] = $custObj->emails()->first()->email;
+					$data['to_name'] = $custObj->first_name . " " . $custObj->last_name;
+					$data['client_ref'] = "[REF:".$custObj->ref."]";
+
+					\Mail::send('emails.clients.index', $data, function($message) use ($data, $from_name, $from_email)
+					{
+						$message->from($from_email, $from_name);
+						if($data['cc'])
+							$message->cc($data['cc']);
+						if($data['bcc'])
+							$message->bcc($data['bcc']);
+						if($data['client_files']) {
+							$message->attach(url('/') . '/public/' . $data['client_files']);
+						}
+						$message->replyTo('dropbox.13554457@one23.co.uk', $from_name);
+						$message->to($data['to_email'], $data['to_name'])->subject($data['subject'] . ' ' . $data['client_ref']);
+					});
+
+					// build array to have message
+					$new_message = array(
+						'subject' => $data['subject'],
+						'body' => $data['body'],
+						'sender' => $from_name,
+						'direction' => '1',
+						'type' => '0',
+						'added_date' => date('Y-m-d H:i:s'),
+						'customer_id' => $customer,
+						'to' => $data['to_email']
+					);
+
+					$smessage = \Message\Message::create($new_message);
+
+					if($data['client_files']) {
+						$new_attachment = array(
+							'message_id' => $smessage->id,
+							'file' => $data['client_files']
+						);
+
+						$smessageattach = \MessageAttachment\MessageAttachment::create($new_attachment);
+					}
+
 				}
-				$message->replyTo('dropbox.13554457@one23.co.uk', $from_name);
-				$message->to($data['to_email'], $data['to_name'])->subject($data['subject'] . ' ' . $data['client_ref']);
-			});
-
-			// build array to have message
-			$new_message = array(
-				'subject' => $data['subject'],
-				'body' => $data['body'],
-				'sender' => $from_name,
-				'direction' => '1',
-				'type' => '0',
-				'added_date' => date('Y-m-d H:i:s'),
-				'customer_id' => \Input::get('customer_id'),
-				'to' => $data['to_email']
-			);
-
-			\Message\Message::create($new_message);
+			}
 
 			\Session::flash('message', 'Email successfully sent');
 			return \Redirect::back();
