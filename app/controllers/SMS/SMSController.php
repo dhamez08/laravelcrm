@@ -138,7 +138,7 @@ class SMSController extends \BaseController {
 		* $this->settings_model->saveSMSPurchase($save_details);
 		* */
 		//header('Location: https://www.paypal.com/webscr?cmd=_express-checkout&token=' . urlencode($token));
-		\Redirect::to('https://www.paypal.com/webscr?cmd=_express-checkout&token=' . urlencode($token));
+		return \Redirect::to('https://www.paypal.com/webscr?cmd=_express-checkout&token=' . urlencode($token));
 	}
 
 	public function getCreateSmsCredit(){
