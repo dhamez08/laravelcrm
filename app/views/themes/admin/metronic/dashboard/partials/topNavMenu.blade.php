@@ -140,7 +140,7 @@
 					<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: auto; max-height:250px"><ul style="overflow: hidden; width: auto; height: auto;" class="dropdown-menu-list scroller" data-initialized="1">
 					@foreach(\Message\MessageEntity::get_instance()->listAllMessages() as $message)
 						<li>
-							<a href="#">
+							<a href="{{ url('messages/view?message_id='.$message->id) }}">
 							<span class="photo">
 							<img alt="" src="{{$asset_path}}/layout/img/avatar2.jpg">
 							</span>
@@ -156,7 +156,7 @@
 				</li>
 				@endif
 				<li class="external">
-					<a href="{{ url('messages') }}">
+					<a href="{{ url('messages/inbox') }}">
 					See all messages <i class="m-icon-swapright"></i>
 					</a>
 				</li>

@@ -57,7 +57,7 @@ class MessagesController extends \BaseController {
 
 	private function _messageCommon() {
 		$data['UnreadMessagesCount'] 	= \Message\MessageEntity::get_instance()->getUnreadMessagesCount();
-		$data['messages'] 				= \Message\MessageEntity::get_instance()->listAllMessages();
+		
 
 		return $data;
 	}
@@ -78,49 +78,70 @@ class MessagesController extends \BaseController {
 
 	public function getInbox(){
 		$data = $this->data_view;
+		$data['center_view'] = 'inbox';
+		$data['message_title'] = 'Inbox';
+		$data['messages'] 	= \Message\MessageEntity::get_instance()->listAllMessages();
 		$dataMessages 	= $this->_messageCommon();
-		$data 	= array_merge($data, $dataMessages);
-		return \View::make( $data['view_path'] . '.messages.partials.inbox', $data );
+		$data 	= array_merge($data,$this->getSetupThemes(),$dataMessages);
+		return \View::make( $data['view_path'] . '.messages.index', $data );
 	}
 
 	public function getSent(){
 		$data = $this->data_view;
-		//$dataMessages 	= $this->_messageCommon();
+		$data['center_view'] = 'inbox';
+		$data['message_title'] = 'Sent';
+		$data['UnreadMessagesCount'] 	= \Message\MessageEntity::get_instance()->getUnreadMessagesCount();
 		$data['messages'] = \Message\MessageEntity::get_instance()->listAllSentMessages();
-		return \View::make( $data['view_path'] . '.messages.partials.inbox', $data );
+		$data 	= array_merge($data,$this->getSetupThemes());
+		return \View::make( $data['view_path'] . '.messages.index', $data );
 	}
 
 	public function getDraft(){
 		$data = $this->data_view;
-		//$dataMessages 	= $this->_messageCommon();
+		$data['center_view'] = 'inbox';
+		$data['message_title'] = 'Draft';
+		$data['UnreadMessagesCount'] 	= \Message\MessageEntity::get_instance()->getUnreadMessagesCount();
 		$data['messages'] = \Message\MessageEntity::get_instance()->listAllDraftMessages();
-		return \View::make( $data['view_path'] . '.messages.partials.inbox', $data );
+		$data 	= array_merge($data,$this->getSetupThemes());
+		return \View::make( $data['view_path'] . '.messages.index', $data );
 	}
 
 	public function getTrash(){
 		$data = $this->data_view;
-		//$dataMessages 	= $this->_messageCommon();
+		$data['center_view'] = 'inbox';
+		$data['message_title'] = 'Trash';
+		$data['UnreadMessagesCount'] 	= \Message\MessageEntity::get_instance()->getUnreadMessagesCount();
 		$data['messages'] = \Message\MessageEntity::get_instance()->listAllTrashMessages();
-		return \View::make( $data['view_path'] . '.messages.partials.inbox', $data );
+		$data 	= array_merge($data,$this->getSetupThemes());
+		return \View::make( $data['view_path'] . '.messages.index', $data );
 	}
 
 	public function getCompose(){
 		$data = $this->data_view;
+		$data['center_view'] = 'compose';
+		$data['message_title'] = 'Compose';
 		$dataMessages 	= $this->_messageCommon();
-		$data 	= array_merge($data, $dataMessages);
-		return \View::make( $data['view_path'] . '.messages.partials.compose', $data );
+		$data 	= array_merge($data,$this->getSetupThemes(),$dataMessages);
+		return \View::make( $data['view_path'] . '.messages.index', $data );
 	}
 
 	public function getView(){
 		$data = $this->data_view;
 		$data['message'] = \Message\MessageEntity::get_instance()->getMessageDetails(\Input::get('message_id'))[0];
-		return \View::make( $data['view_path'] . '.messages.partials.inbox_view', $data );
+		$data['center_view'] = 'inbox_view';
+		$data['message_title'] = 'View Message';
+		$dataMessages 					= $this->_messageCommon();
+		$data 							= array_merge($data,$this->getSetupThemes(), $dataMessages);
+		return \View::make( $data['view_path'] . '.messages.index', $data );
 	}
 
 	public function getReply(){
 		$data = $this->data_view;
 		$data['message'] = \Message\MessageEntity::get_instance()->getMessageDetails(\Input::get('message_id'))[0];
-
-		return \View::make( $data['view_path'] . '.messages.partials.reply', $data );
+		$data['center_view'] = 'reply';
+		$data['message_title'] = 'Reply';
+		$dataMessages 					= $this->_messageCommon();
+		$data 							= array_merge($data,$this->getSetupThemes(), $dataMessages);
+		return \View::make( $data['view_path'] . '.messages.index', $data );
 	}
 }

@@ -26,11 +26,11 @@
 				<div class="col-md-2">
 					<ul class="inbox-nav margin-bottom-10">
 						<li class="compose-btn">
-							<a href="javascript:;" data-title="Compose" class="btn green">
+							<a href="{{ url('messages/compose') }}" data-title="Compose" class="btn green">
 							<i class="fa fa-edit"></i> Compose </a>
 						</li>
-						<li class="inbox active">
-							<a href="javascript:;" class="btn" data-title="Inbox">
+						<li class="inbox {{ $message_title=='Inbox' ? 'active':'' }}">
+							<a href="{{ url('messages/inbox') }}" class="btn" data-title="Inbox">
 							@if($UnreadMessagesCount)
 								Inbox({{ $UnreadMessagesCount }})
 							@else
@@ -39,18 +39,18 @@
 							</a>
 							<b></b>
 						</li>
-						<li class="sent">
-							<a class="btn" href="javascript:;" data-title="Sent">
+						<li class="sent {{ $message_title=='Sent' ? 'active':'' }}">
+							<a class="btn" href="{{ url('messages/sent') }}" data-title="Sent">
 							Sent </a>
 							<b></b>
 						</li>
-						<li class="draft">
-							<a class="btn" href="javascript:;" data-title="Draft">
+						<li class="draft {{ $message_title=='Draft' ? 'active':'' }}">
+							<a class="btn" href="{{ url('messages/draft') }}" data-title="Draft">
 							Draft </a>
 							<b></b>
 						</li>
-						<li class="trash">
-							<a class="btn" href="javascript:;" data-title="Trash">
+						<li class="trash {{ $message_title=='Trash' ? 'active':'' }}">
+							<a class="btn" href="{{ url('messages/trash') }}" data-title="Trash">
 							Trash </a>
 							<b></b>
 						</li>
@@ -58,7 +58,7 @@
 				</div>
 				<div class="col-md-10">
 					<div class="inbox-header">
-						<h1 class="pull-left">Inbox</h1>
+						<h1 class="pull-left">{{ $message_title }}</h1>
 						<form class="form-inline pull-right" action="index.html">
 							<div class="input-group input-medium">
 								<input type="text" class="form-control" placeholder="Password">
@@ -72,6 +72,7 @@
 						 Loading...
 					</div>
 					<div class="inbox-content">
+						@include($view_path.'.messages.partials.'.$center_view)
 					</div>
 				</div>
 			</div>

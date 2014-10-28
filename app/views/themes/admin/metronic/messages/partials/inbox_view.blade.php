@@ -15,14 +15,14 @@
 		</div>
 		<div class="col-md-5 inbox-info-btn">
 			<div class="btn-group">
-				<button class="btn blue reply-btn" data-messageid="{{ $message->id }}">
+				<button class="btn blue reply-btn" onclick="window.location='{{ url('messages/reply?message_id='.$message->id) }}'">
 				<i class="fa fa-reply"></i> Reply </button>
 				<button class="btn blue dropdown-toggle" data-toggle="dropdown">
 				<i class="fa fa-angle-down"></i>
 				</button>
 				<ul class="dropdown-menu pull-right">
 					<li>
-						<a href="#" data-messageid="{{ $message->id }}">
+						<a href="{{ url('messages/reply?message_id='.$message->id) }}" data-messageid="{{ $message->id }}">
 						<i class="fa fa-reply reply-btn"></i> Reply </a>
 					</li>
 					<li>

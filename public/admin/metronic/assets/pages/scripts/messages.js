@@ -272,45 +272,10 @@ var Messages = function () {
         //main function to initiate the module
         init: function () {
 
-            // handle compose btn click
-            $('.inbox').on('click', '.compose-btn a', function () {
-                loadCompose($(this));
-            });
-
-            // handle discard btn
-            $('.inbox').on('click', '.inbox-discard-btn', function(e) {
-                e.preventDefault();
-                loadInbox($(this), listListing);
-            });
-
-            // handle reply and forward button click
-            $('.inbox').on('click', '.reply-btn', function () {
-                loadReply($(this));
-            });
-
             // handle view message
             $('.inbox-content').on('click', '.view-message', function () {
-                loadMessage($(this));
-            });
-
-            // handle inbox listing
-            $('.inbox-nav > li.inbox > a').click(function () {
-                loadInbox($(this), 'inbox');
-            });
-
-            // handle sent listing
-            $('.inbox-nav > li.sent > a').click(function () {
-                loadInbox($(this), 'sent');
-            });
-
-            // handle draft listing
-            $('.inbox-nav > li.draft > a').click(function () {
-                loadInbox($(this), 'draft');
-            });
-
-            // handle trash listing
-            $('.inbox-nav > li.trash > a').click(function () {
-                loadInbox($(this), 'trash');
+                var message_id = $(this).parent('tr').attr("data-messageid");
+                location.href=BASE_URL+'/messages/view?message_id='+message_id;
             });
 
             //handle compose/reply cc input toggle
@@ -328,15 +293,6 @@ var Messages = function () {
                 history.back(-1);
             });
 
-            //handle loading content based on URL parameter
-            if (Metronic.getURLParameter("a") === "view") {
-                loadMessage();
-            } else if (Metronic.getURLParameter("a") === "compose") {
-                loadCompose();
-            } else {
-               $('.inbox-nav > li.inbox > a').click();
-            }
-
             $("select#email_template").live("change", function() {
                 $this = $(this);
                 $.get(BASE_URL+'/settings/email/template/'+$this.val(), function(response) {
@@ -344,6 +300,9 @@ var Messages = function () {
                     $("input#email_subject").val(response.subject);
                 });
             });
+
+            initFileupload();
+            initWysihtml5();
         }
 
     };

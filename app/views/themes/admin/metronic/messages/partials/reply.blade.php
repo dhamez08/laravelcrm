@@ -40,16 +40,7 @@
 	</div>
 	<div class="inbox-form-group">
 		<div class="controls-row">
-			<textarea class="inbox-editor inbox-wysihtml5 form-control" name="message" rows="12"></textarea>
-			<!--blockquote content for reply message, the inner html of reply_email_content_body element will be appended into wysiwyg body. Please refer Inbox.js loadReply() function. -->
-			<div id="reply_email_content_body" class="hide">
-				<input type="text">
-				<br>
-				<br>
-				<blockquote>
-					{{ $message->body }}
-				</blockquote>
-			</div>
+			<textarea class="inbox-editor inbox-wysihtml5 form-control" name="message" rows="12"><br><br><blockquote>{{ $message->body }}</blockquote></textarea>
 		</div>
 	</div>
 	<!-- <div class="inbox-compose-attachment">
