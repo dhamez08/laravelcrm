@@ -255,4 +255,30 @@ return array(
 			'login'=>'steve.warden1@btopenworld.com'
 		),
 	),
+	'currency'=>array(
+		'symbol'=>'&pound;',
+	),
+	'sms'=>array(
+		'purchase' => array(
+			'20' => '3.00',
+			'50' => '6.00',
+			'100' => '10.00',
+			'200' => '16.00'
+		),
+	),
+	'paypal'=>array(
+		'api'=>array(
+			'classic'=>array(
+				'USER' => 'steve.warden_api1.123-insureme.co.uk',
+				'PWD' => '9H8LC2GW97LB8MD6',
+				'SIGNATURE' => 'An5ns1Kso7MWUdW4ErQKJJJ4qi4-AtTZdUQHqgcSI1dFjsSryxxe38Nj',
+				'VERSION' => '98.0',
+				'CARTBORDERCOLOR' => 'DE4681',
+				'BRANDNAME' => 'One23 CRM',
+				'URL' => "https://api-3t.paypal.com/nvp"
+			),
+			'rest'=>array(
+			),
+		),
+	),
 );

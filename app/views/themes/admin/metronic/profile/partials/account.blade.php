@@ -21,6 +21,10 @@
 						<a data-toggle="tab" href="#tab_privacy_settings">
 						<i class="fa fa-eye"></i> Privacity Settings </a>
 					</li>
+					<li>
+						<a data-toggle="tab" href="#tab_sms">
+						<i class="fa fa-eye"></i> SMS Account </a>
+					</li>
 				</ul>
 			</div>
 			<div class="col-md-9">
@@ -297,57 +301,18 @@
 							</div>
 						{{Form::close()}}
 					</div>
-					<div id="tab_privacy_settings" class="tab-pane">
+					<div id="tab_sms" class="tab-pane">
 						<form action="#">
-							<table class="table table-bordered table-striped">
-							<tr>
-								<td>
-									 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus..
-								</td>
-								<td>
-									<label class="uniform-inline">
-									<input type="radio" name="optionsRadios1" value="option1"/>
-									Yes </label>
-									<label class="uniform-inline">
-									<input type="radio" name="optionsRadios1" value="option2" checked/>
-									No </label>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									 Enim eiusmod high life accusamus terry richardson ad squid wolf moon
-								</td>
-								<td>
-									<label class="uniform-inline">
-									<input type="checkbox" value=""/> Yes </label>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									 Enim eiusmod high life accusamus terry richardson ad squid wolf moon
-								</td>
-								<td>
-									<label class="uniform-inline">
-									<input type="checkbox" value=""/> Yes </label>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									 Enim eiusmod high life accusamus terry richardson ad squid wolf moon
-								</td>
-								<td>
-									<label class="uniform-inline">
-									<input type="checkbox" value=""/> Yes </label>
-								</td>
-							</tr>
-							</table>
-							<!--end profile-settings-->
-							<div class="margin-top-10">
-								<a href="#" class="btn green">
-								Save Changes </a>
-								<a href="#" class="btn default">
-								Cancel </a>
-							</div>
+							<h2>SMS</h2>
+							<ul class="list-group">
+							@if( count($get_sms_purchase) > 0 )
+								@foreach($get_sms_purchase as $key_sms => $sms_purchase)
+									<li class="list-group-item">
+										<a href="{{action('SMS\SMSController@getPurchaseSms',$key_sms)}}" class="btn btn-primary btn-lg" role="button">Purchase {{$key_sms}} SMS Credits - {{$get_currency}}{{$sms_purchase}}</a>
+									</li>
+								@endforeach
+							@endif
+							</ul>
 						</form>
 					</div>
 				</div>

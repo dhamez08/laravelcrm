@@ -155,13 +155,13 @@ class Textlocal {
 	public function sendSms($numbers, $message, $sender, $sched=null, $test= false, $receiptURL=null, $custom=null,$optouts=false, $simpleReplyService=false) {
 
 		if(!is_array($numbers))
-			throw new Exception('Invalid $numbers format. Must be an array');
+			throw new \Exception('Invalid $numbers format. Must be an array');
 		if(empty($message))
-			throw new Exception('Empty message');
+			throw new \Exception('Empty message');
 		if(empty($sender))
-			throw new Exception('Empty sender name');
+			throw new \Exception('Empty sender name');
 		if(!is_null($sched) && !is_numeric($sched))
-			throw new Exception('Invalid date format. Use numeric epoch format');
+			throw new \Exception('Invalid date format. Use numeric epoch format');
 
 		$params = array(
 			'message' => urlencode($message),

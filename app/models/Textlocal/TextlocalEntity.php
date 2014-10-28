@@ -34,7 +34,6 @@ class TextlocalEntity extends \Eloquent{
 	}
 
 	public function apiTextlocal(){
-		//$this->textlocal_api = new \helpers\Textlocal($this->textlocal_login, $this->textlocal_hash);
 		$this->textlocal_api = new \helpers\Textlocal($this->textlocal_login, $this->textlocal_hash);
 		return $this;
 	}
@@ -45,6 +44,87 @@ class TextlocalEntity extends \Eloquent{
 
 	public function getUsers(){
 		 return $this->getObjectResult()->getUsers();
+	}
+
+	/**
+	 * Send an SMS to one or more comma separated numbers
+	 * @param $numbers
+	 * @param $message
+	 * @param $sender
+	 * @param null $sched
+     * @param false $test
+     * @param null $receiptURL
+     * @param numm $custom
+     * @param false $optouts
+     * @param false $simpleReplyService
+	 * @return array|mixed
+	 * @throws Exception
+	 */
+	public function getSMSCost(
+		$numbers,
+		$message,
+		$sender,
+		$sched=null,
+		$test = true,
+		$receiptURL=null,
+		$custom=null,
+		$optouts=false,
+		$simpleReplyService=false
+	){
+		$get_costs = $this->sendSms(
+			$numbers,
+			$message,
+			$sender,
+			$sched,
+			$test,
+			$receiptURL,
+			$custom,
+			$optouts,
+			$simpleReplyService
+		);
+		if( $get_costs->status == 'success' ){
+			return $get_costs->cost;
+		}else{
+			return false;
+		}
+	}
+
+	/**
+	 * Send an SMS to one or more comma separated numbers
+	 * @param $numbers
+	 * @param $message
+	 * @param $sender
+	 * @param null $sched
+     * @param false $test
+     * @param null $receiptURL
+     * @param numm $custom
+     * @param false $optouts
+     * @param false $simpleReplyService
+	 * @return array|mixed
+	 * @throws Exception
+	 */
+	public function sendSMS(
+		$numbers,
+		$message,
+		$sender,
+		$sched=null,
+		$test = false,
+		$receiptURL=null,
+		$custom=null,
+		$optouts=false,
+		$simpleReplyService=false
+	){
+		 return $this->getObjectResult()->sendSms(
+			$numbers,
+			$message,
+			$sender,
+			$sched,
+			$test,
+			$receiptURL,
+			$custom,
+			$optouts,
+			$simpleReplyService
+		);
 	}
 
 }
