@@ -142,7 +142,7 @@ class SMSController extends \BaseController {
 				return \Redirect::to('https://www.paypal.com/webscr?cmd=_express-checkout&token=' . urlencode($token));
 			}
 		}else{
-			return \Redirect::to('profile')->with('message', 'Error processing your payment request, please contact support.');
+			return \Redirect::to('profile')->withErrors('Error processing your payment request, please contact support.');
 		}
 	}
 
@@ -151,7 +151,7 @@ class SMSController extends \BaseController {
 		$payer = \Input::get("PayerID");
 		$purchase_details = \SMSPurchaseHistory\SMSPurchaseHistoryEntity::get_instance()->getSmsPurchase($token)->get()->first();
 
-		if ($purchase_details->count()) {
+		if ($purchase_details) {
 			// params to send over to paypal
 			$params = array(
 				'TOKEN' => $token,
@@ -168,9 +168,13 @@ class SMSController extends \BaseController {
 				if( $add_sms ){
 					\SMSPurchaseHistory\SMSPurchaseHistoryEntity::get_instance()->updateSMSPurchaseStatus($purchase_details->id, 1);
 				}
+				\Session::flash('message', 'Successfully Delete Phone Customer');
+				return \Redirect::to('profile');
+			}else{
+				return \Redirect::to('profile')->withErrors('Error processing your payment request, please contact support.');
 			}
 		}else{
-			return \Redirect::to('profile')->with('message', 'Error processing your payment request, please contact support.');
+			return \Redirect::to('profile')->withErrors('Error processing your payment request, please contact support.');
 		}
 	}
 
