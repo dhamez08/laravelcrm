@@ -25,4 +25,13 @@ class SMSPurchaseHistory extends \Eloquent{
 	public function __construct(){
 
 	}
+
+	public function scopePaypalToken($query, $paypal_token){
+		return $query->where('paypal_token', '=', $paypal_token);
+	}
+
+	public function scopeStatus($query, $status = 0){
+		return $query->where('status', '=', $status);
+	}
+
 }
