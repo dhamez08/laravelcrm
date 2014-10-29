@@ -431,4 +431,68 @@ class MessagesController extends \BaseController {
 
 		return \Redirect::back();
 	}
+
+	public function getResend() {
+		$id = \Input::get('message_id');
+		$message = \Message\MessageEntity::find($id);
+		if($message) {
+
+			$from_name = \Auth::user()->first_name . ' ' . \Auth::user()->last_name;
+			$from_email = \Auth::user()->email;
+
+			$custObj = \Clients\Clients::find($message->customer_id);
+
+			if($custObj->emails()->count() > 0) {
+
+				$data['to_email'] = $custObj->emails()->first()->email;
+				$data['to_name'] = $custObj->first_name . " " . $custObj->last_name;
+				$data['client_ref'] = "[REF:".$custObj->ref."]";
+				$data['body'] = $message->body;
+				$message_attachments = \MessageAttachment\MessageAttachment::where('message_id',$message->id)->get();
+
+				\Mail::send('emails.clients.index', $data, function($m) use ($data, $from_name, $from_email, $message_attachments, $message)
+				{
+					$m->from($from_email, $from_name);
+					
+					if(count($message_attachments)>0) {
+						foreach($message_attachments as $attachment) {
+							$m->attach(url('/') . '/public/' . $attachment->file);
+						}
+					}
+					$m->replyTo('dropbox.13554457@one23.co.uk', $from_name);
+					$m->to($data['to_email'], $data['to_name'])->subject($message->subject);
+				});
+
+				// build array to have message
+				$new_message = array(
+					'subject' => $message->subject,
+					'body' => $message->body,
+					'sender' => $from_name,
+					'direction' => '1',
+					'type' => '0',
+					'added_date' => date('Y-m-d H:i:s'),
+					'customer_id' => $message->customer_id,
+					'to' => $data['to_email']
+				);
+
+				$smessage = \Message\Message::create($new_message);
+
+				if(count($message_attachments)>0) {
+					foreach($message_attachments as $attachment) {
+						$new_attachment = array(
+							'message_id' => $smessage->id,
+							'file' => $attachment->file
+						);
+
+						$smessageattach = \MessageAttachment\MessageAttachment::create($new_attachment);
+					}
+				}
+
+				\Session::flash('message', 'Email successfully sent');
+				return \Redirect::back();
+			}
+		}
+
+		return \Redirect::back();
+	}
 }

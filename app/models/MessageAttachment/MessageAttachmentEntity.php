@@ -38,4 +38,8 @@ class MessageAttachmentEntity extends \Eloquent{
 		return self::$instance;
 	}
 
+	public function message() {
+		return $this->belongsTo('\Message\MessageEntity','id');
+	}
+
 }

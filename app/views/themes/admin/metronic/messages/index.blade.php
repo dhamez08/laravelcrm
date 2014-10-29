@@ -74,9 +74,9 @@
 						<h1 class="pull-left">{{ $message_title }}</h1>
 						<form class="form-inline pull-right" action="index.html">
 							<div class="input-group input-medium">
-								<input type="text" class="form-control" placeholder="Password">
+								<input type="text" class="form-control" placeholder="Search...">
 								<span class="input-group-btn">
-								<button type="submit" class="btn green"><i class="fa fa-search"></i></button>
+								<button type="button" class="btn green"><i class="fa fa-search"></i></button>
 								</span>
 							</div>
 						</form>

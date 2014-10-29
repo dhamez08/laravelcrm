@@ -57,7 +57,9 @@
 			 {{ $message->subject }}
 		</td>
 		<td class="view-message inbox-small-cells">
-			<!-- <i class="fa fa-paperclip"></i> -->
+		@if(count(\MessageAttachment\MessageAttachmentEntity::where('message_id',$message->id)->get())>0)
+			<i class="fa fa-paperclip"></i>
+		@endif
 		</td>
 		<td class="view-message text-right" style="min-width:200px;">
 			{{ date('d/m/Y h:i A',strtotime($message->added_date)) }}

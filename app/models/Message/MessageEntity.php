@@ -93,5 +93,7 @@ class MessageEntity extends \Eloquent{
 		return $query;
 	}
 
-
+	public function attachments() {
+		return $this->hasMany('\MessageAttachment\MessageAttachmentEntity','message_id');
+	}
 }
