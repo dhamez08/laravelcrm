@@ -109,7 +109,7 @@ class SMSController extends \BaseController {
 		// params to send over to paypal
 		$params = array(
 			'RETURNURL' => url('sms/create-sms-credit'),
-			'CANCELURL' => url('sms'),
+			'CANCELURL' => url('profile'),
 			'PAYMENTREQUEST_0_AMT' => $sms_price,
 			'PAYMENTREQUEST_0_ITEMAMT' => $sms_price,
 			'L_PAYMENTREQUEST_0_NAME0' => $sms_name,
