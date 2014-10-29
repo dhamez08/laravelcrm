@@ -36,6 +36,32 @@ class CustomerTagsEntity extends \Eloquent{
 	 * 												#1 would be active
 	 * @return db last insert id
 	 * */
+	public function objCreateOrUpdate($arrayData = array(), $id = null){
+		if( is_null($id) ) {
+			//create
+			$obj = new \CustomerTags\CustomerTags;
+		}else{
+			//update
+			$obj = \CustomerTags\CustomerTags::find($id);
+		}
+		if( count($arrayData) > 0 ){
+			foreach($arrayData as $key=>$val){
+				$obj->$key = $val;
+			}
+			$obj->save();
+			return $obj;
+		}
+	}
+
+	/**
+	 * This is use to create user or update
+	 * this is full field, mainly use in register
+	 *
+	 * @param 	$id		int		default null		if there is id then update, else create
+	 * @param	$active	int		default 2			#2 means not active
+	 * 												#1 would be active
+	 * @return db last insert id
+	 * */
 	public function createOrUpdate($id = null){
 		if( is_null($id) ) {
 			//create

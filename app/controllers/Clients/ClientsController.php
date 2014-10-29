@@ -511,13 +511,8 @@ class ClientsController extends \BaseController {
 		$data['customerId']			= $clientId;
 		$data['clientId']			= $clientId;
 		$data['belongsTo']			= \Auth::id();
-		/*$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getCustomerTasks($clientId)
-		->status(1)->with('label');*/
-		//$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser($clientId,\Auth::id());
-
+		$data['tag_widget']			= \ClientTags\ClientTagsController::get_instance()->getClientTagWidget($clientId);
 		$data 						= array_merge($data,$dashboard_data);
-		//var_dump($data['tasks']['data']);
-		//exit();
 		return \View::make( $data['view_path'] . '.clients.summary', $data );
 	}
 

@@ -12,6 +12,7 @@ class ClientTagsController extends \BaseController {
 	protected static $instance = null;
 
 	protected $clientTagEntity;
+
 	protected $opportunityTagEntity;
 
 	/**
@@ -117,6 +118,41 @@ class ClientTagsController extends \BaseController {
 	        return \Response::json(array('status'=>1));
 	    else
 	        return \Response::json(array('status'=>0));
+	}
+
+	public function getClientTag($customer_id){
+	}
+
+	public function getClientTagWidget($client_id){
+		$data = $this->data_view;
+		$data['client_tag_path'] = $data['view_path'] . '.clients.tags.widget';
+		$data['tags']			 = \ClientTag\ClientTagEntity::get_instance()->getTagsByLoggedUser();
+		$data['client_id']		 = $client_id;
+		$data['client_tag']		 = \CustomerTags\CustomerTags::customerId($client_id)->with('tags');
+		$data = array_merge($data,$this->getSetupThemes());
+		return \View::make( $data['client_tag_path'], $data )->render();
+	}
+
+	public function postAddTagToClient($client_id = null){
+		if( !is_null($client_id) && \Input::get('tag_id') != 0){
+			$data = array(
+				'customer_id'=>$client_id,
+				'tag_id'=>\Input::get('tag_id')
+			);
+			$client_tag = \CustomerTags\CustomerTagsEntity::get_instance()->objCreateOrUpdate($data);
+			if( $client_tag ){
+				\Session::flash('message', 'Successfully Added Tag');
+				return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>$client_id));
+			}else{
+				return \Redirect::to('clients/client-summary/' . $client_id)->withErrors('Error cannot add tag to the customer.');
+			}
+		}else{
+			return \Redirect::to('clients/client-summary/' . $client_id)->withErrors('Error cannot add tag to the customer.');
+		}
+	}
+
+	public function getConfirmClientTagDelete($id, $client_id){
+		echo $id.'-'.$client_id;
 	}
 
 }

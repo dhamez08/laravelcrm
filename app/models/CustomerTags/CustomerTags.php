@@ -13,4 +13,12 @@ class CustomerTags extends \Eloquent{
 	 */
 	protected $table = 'customer_tags';
 
+	public function tags(){
+		return $this->belongsTo('\ClientTag\ClientTag','tag_id','id');
+	}
+
+	public function scopeCustomerId($query, $customer_id){
+		return $query->where('customer_id', '=', $customer_id);
+	}
+
 }

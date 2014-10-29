@@ -93,15 +93,16 @@
 		 	</div>
 		 </div>
 		 <hr/>
-		 <div class="row">
-		 	<div class="col-md-12">
-		 		<div class="form-body client-detail">
-		 			<div class="form-group">
-		 				<p class="form-control-static">Something: <strong>Something</strong></p>
-		 			</div>
-		 		</div>
-		 	</div>
-		 </div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-body client-detail">
+					<div class="form-group">
+						<h4>Tags</h4>
+						{{$tag_widget}}
+					</div>
+				</div>
+			</div>
+		</div>
 		 <hr/>
 		 <div class="row">
 		 	<div class="col-md-12">

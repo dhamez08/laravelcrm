@@ -8,7 +8,7 @@ class MessageEntity extends \Eloquent{
 	use SoftDeletingTrait;
 
 	protected $table = 'messages';
-	
+
 	protected static $instance = null;
 
 	protected $dates = ['deleted_at'];
@@ -30,7 +30,7 @@ class MessageEntity extends \Eloquent{
 
 	public function __construct()
 	{
-	
+
 	}
 
 	/**
@@ -38,7 +38,7 @@ class MessageEntity extends \Eloquent{
 	 *
 	 * @return    object    A single instance of this class.
 	 */
-	public static function get_instance() 
+	public static function get_instance()
 	{
 		// If the single instance hasn't been set, set it now.
 		if ( null == self::$instance ) {
@@ -50,7 +50,7 @@ class MessageEntity extends \Eloquent{
 
 	public function listAllMessages() {
 		$rows = array();
-		$sql = "SELECT m.id, m.sender, m.to, m.subject, m.body, m.added_date, m.read_status, m.direction, c.belongs_to, CONCAT(c.company_name, ' ', c.first_name, ' ', c.last_name) as client, c.id as clientid FROM messages m, customer c WHERE m.customer_id=c.id AND c.belongs_to=? AND m.direction='2' AND m.deleted_at IS NULL ORDER BY m.read_status, m.added_date DESC";		
+		$sql = "SELECT m.id, m.sender, m.to, m.subject, m.body, m.added_date, m.read_status, m.direction, c.belongs_to, CONCAT(c.company_name, ' ', c.first_name, ' ', c.last_name) as client, c.id as clientid FROM messages m, customer c WHERE m.customer_id=c.id AND c.belongs_to=? AND m.direction='2' AND m.deleted_at IS NULL ORDER BY m.read_status, m.added_date DESC";
 		$query = \DB::select($sql, array(\Session::get('group_id')));
 
 		return $query;
@@ -58,7 +58,7 @@ class MessageEntity extends \Eloquent{
 
 	public function listAllSentMessages() {
 		$rows = array();
-		$sql = "SELECT m.id, m.sender, m.to, m.subject, m.body, m.added_date, m.read_status, m.direction, c.belongs_to, CONCAT(c.company_name, ' ', c.first_name, ' ', c.last_name) as client, c.id as clientid FROM messages m, customer c WHERE m.customer_id=c.id AND c.belongs_to=? AND m.direction='1' AND m.deleted_at IS NULL ORDER BY m.read_status,m.added_date DESC";		
+		$sql = "SELECT m.id, m.sender, m.to, m.subject, m.body, m.added_date, m.read_status, m.direction, c.belongs_to, CONCAT(c.company_name, ' ', c.first_name, ' ', c.last_name) as client, c.id as clientid FROM messages m, customer c WHERE m.customer_id=c.id AND c.belongs_to=? AND m.direction='1' AND m.deleted_at IS NULL ORDER BY m.read_status,m.added_date DESC";
 		$query = \DB::select($sql, array(\Session::get('group_id')));
 
 		return $query;
@@ -66,7 +66,7 @@ class MessageEntity extends \Eloquent{
 
 	public function listAllDraftMessages() {
 		$rows = array();
-		$sql = "SELECT m.id, m.sender, m.to, m.subject, m.body, m.added_date, m.read_status, m.direction, c.belongs_to, CONCAT(c.company_name, ' ', c.first_name, ' ', c.last_name) as client, c.id as clientid FROM messages m, customer c WHERE m.customer_id=c.id AND c.belongs_to=? AND m.direction='3' AND m.deleted_at IS NULL ORDER BY m.read_status,m.added_date DESC";		
+		$sql = "SELECT m.id, m.sender, m.to, m.subject, m.body, m.added_date, m.read_status, m.direction, c.belongs_to, CONCAT(c.company_name, ' ', c.first_name, ' ', c.last_name) as client, c.id as clientid FROM messages m, customer c WHERE m.customer_id=c.id AND c.belongs_to=? AND m.direction='3' AND m.deleted_at IS NULL ORDER BY m.read_status,m.added_date DESC";
 		$query = \DB::select($sql, array(\Session::get('group_id')));
 
 		return $query;
@@ -74,7 +74,7 @@ class MessageEntity extends \Eloquent{
 
 	public function listAllTrashMessages() {
 		$rows = array();
-		$sql = "SELECT m.id, m.sender, m.to, m.subject, m.body, m.added_date, m.read_status, m.direction, c.belongs_to, CONCAT(c.company_name, ' ', c.first_name, ' ', c.last_name) as client, c.id as clientid FROM messages m, customer c WHERE m.customer_id=c.id AND c.belongs_to=? AND m.deleted_at IS NOT NULL ORDER BY m.read_status,m.added_date DESC";		
+		$sql = "SELECT m.id, m.sender, m.to, m.subject, m.body, m.added_date, m.read_status, m.direction, c.belongs_to, CONCAT(c.company_name, ' ', c.first_name, ' ', c.last_name) as client, c.id as clientid FROM messages m, customer c WHERE m.customer_id=c.id AND c.belongs_to=? AND m.deleted_at IS NOT NULL ORDER BY m.read_status,m.added_date DESC";
 		$query = \DB::select($sql, array(\Session::get('group_id')));
 
 		return $query;
@@ -87,7 +87,7 @@ class MessageEntity extends \Eloquent{
 	}
 
 	function getMessageDetails($id) {
-		$sql = "SELECT c.*,m.*, m.added_date as messagedate FROM messages m, customer c WHERE m.customer_id=c.id AND c.belongs_user=? AND m.id=? LIMIT 1";		
+		$sql = "SELECT c.*,m.*, m.added_date as messagedate FROM messages m, customer c WHERE m.customer_id=c.id AND c.belongs_user=? AND m.id=? LIMIT 1";
 		$query = \DB::select($sql, array(\Auth::id(), $id));
 
 		return $query;

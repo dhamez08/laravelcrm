@@ -32,6 +32,7 @@ class ClientTagEntity extends \Eloquent{
 		return self::$instance;
 	}
 
+
 	public function saveTag($data) {
 
 		$this->tag = $data['tag'];
