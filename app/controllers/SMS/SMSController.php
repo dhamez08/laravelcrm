@@ -104,7 +104,6 @@ class SMSController extends \BaseController {
 					//redirect
 				break;
 			}
-			echo $sms_price.'-'.$sms_name;
 		}
 
 		// params to send over to paypal
