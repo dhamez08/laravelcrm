@@ -22,7 +22,7 @@
 				<i class="fa fa-reply"></i> Reply </button>
 				@else
 				<button class="btn blue reply-btn" onclick="window.location='{{ url('messages/resend?message_id='.$message->id) }}'">
-				<i class="fa fa-refresh"></i> Resend </button>
+				<i class="fa fa-refresh"></i> {{ $message->direction==1 ? 'Resend':'Send' }} </button>
 				@endif
 				<button class="btn blue dropdown-toggle" data-toggle="dropdown">
 				<i class="fa fa-angle-down"></i>
@@ -36,13 +36,13 @@
 				@else
 					<li>
 						<a href="{{ url('messages/resend?message_id='.$message->id) }}" data-messageid="{{ $message->id }}">
-						<i class="fa fa-refresh reply-btn"></i> Resend </a>
+						<i class="fa fa-refresh reply-btn"></i> {{ $message->direction==1 ? 'Resend':'Send' }}</a>
 					</li>
 				@endif
-					<!-- <li>
-						<a href="#">
+					<li>
+						<a href="javascript:;" id="forwardEmailLink">
 						<i class="fa fa-arrow-right reply-btn"></i> Forward </a>
-					</li> -->
+					</li>
 					<!-- <li>
 						<a href="#">
 						<i class="fa fa-print"></i> Print </a>
@@ -81,50 +81,27 @@
 			@endforeach
 		</div>
 		@endif
-		<!-- <hr>
-		<div class="inbox-attached">
-			<div class="margin-bottom-15">
-				<span>
-				3 attachments — </span>
-				<a href="#">
-				Download all attachments </a>
-				<a href="#">
-				View all images </a>
-			</div>
-			<div class="margin-bottom-25">
-				<img src="../../assets/admin/pages/media/gallery/image4.jpg">
-				<div>
-					<strong>image4.jpg</strong>
-					<span>
-					173K </span>
-					<a href="#">
-					View </a>
-					<a href="#">
-					Download </a>
+
+		<div style="margin-top:30px;display:none" id="forwardEmailContainer">
+			<div class="panel panel-default">
+				<div class="panel-heading"><i class="glyphicon glyphicon-arrow-right"></i> Forward</div>
+				<div class="panel-body">
+				<form class="form-horizontal" action="" method="POST">
+				{{ Form::token() }}
+					<div class="inbox-form-group mail-to">
+						<div class="controls controls-to">
+							<select id="select2_user" name="to[]" class="form-control select2" multiple>
+							@foreach($customers->get() as $customer)
+								<option value="{{ $customer->id }}">{{ $customer->first_name . " " . $customer->last_name }}</option>
+							@endforeach
+							</select>
+						</div>
+					</div>
+					<div class="inbox-compose-btn">
+						<button type="submit" name="btn_action" value="send" class="btn blue"><i class="fa fa-check"></i>Send</button>
+						<button type="button" class="btn inbox-discard-btn" id="forwardEmailCancel">Cancel</button>
+					</div>
+				</form>
 				</div>
 			</div>
-			<div class="margin-bottom-25">
-				<img src="../../assets/admin/pages/media/gallery/image3.jpg">
-				<div>
-					<strong>IMAG0705.jpg</strong>
-					<span>
-					14K </span>
-					<a href="#">
-					View </a>
-					<a href="#">
-					Download </a>
-				</div>
-			</div>
-			<div class="margin-bottom-25">
-				<img src="../../assets/admin/pages/media/gallery/image5.jpg">
-				<div>
-					<strong>test.jpg</strong>
-					<span>
-					132K </span>
-					<a href="#">
-					View </a>
-					<a href="#">
-					Download </a>
-				</div>
-			</div>
-		</div> -->
+		</div>

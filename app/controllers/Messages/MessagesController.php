@@ -303,6 +303,113 @@ class MessagesController extends \BaseController {
 		return \View::make( $data['view_path'] . '.messages.index', $data );
 	}
 
+	public function postView() {
+
+
+		// $test = "Re:Test [REF:12342352351234123]";
+
+		// preg_match('/Re:(.*?)\[REF:\d+\]/',$test, $display);
+
+		// if(!empty($display) && isset($display[1])) {
+		// 	echo $display[1];exit;
+		// } else {
+		// 	echo 'no match!';exit;
+		// }
+
+		$message = \Message\MessageEntity::get_instance()->getMessageDetails(\Input::get('message_id'))[0];
+		preg_match('/Re:(.*?)\[REF:\d+\]/',$message->subject, $match);
+
+		$rules = array(
+			'to' => 'required'
+		);
+		$messages = array(
+			'to.required'=>'Customer is required'
+		);
+
+		$validator = \Validator::make(\Input::all(), $rules, $messages);
+
+		if($validator->passes()) {
+
+			$from_name = \Auth::user()->first_name . ' ' . \Auth::user()->last_name;
+			$from_email = \Auth::user()->email;
+
+			$customers = \Input::get('to');
+
+			$data['body'] = $message->body;
+			$message_attachments = \MessageAttachment\MessageAttachment::where('message_id',$message->id)->get();
+			foreach($customers as $customer) {
+
+				$custObj = \Clients\Clients::find($customer);
+
+				if($custObj->emails()->count() > 0) {
+
+					$data['to_email'] = $custObj->emails()->first()->email;
+					$data['to_name'] = $custObj->first_name . " " . $custObj->last_name;
+					$data['client_ref'] = "[REF:".$custObj->ref."]";
+
+					$subject = "";
+
+					if(!empty($match) && isset($match[1])) {
+						$subject = trim($match[1]);
+					} else {
+						$subject = trim($message->subject);
+					}
+
+					$data['subject'] = $subject;
+
+					\Mail::send('emails.clients.index', $data, function($m) use ($data, $from_name, $from_email, $message_attachments, $message, $subject)
+					{
+						$m->from($from_email, $from_name);
+						
+						if(count($message_attachments)>0) {
+							foreach($message_attachments as $attachment) {
+								$m->attach(url('/') . '/public/' . $attachment->file);
+							}
+						}
+						$m->replyTo('dropbox.13554457@one23.co.uk', $from_name);
+						$m->to($data['to_email'], $data['to_name'])->subject($subject . ' ' . $data['client_ref']);
+					});
+
+					// build array to have message
+					$new_message = array(
+						'subject' => $subject,
+						'body' => $data['body'],
+						'sender' => $from_name,
+						'direction' => '1',
+						'type' => '0',
+						'added_date' => date('Y-m-d H:i:s'),
+						'customer_id' => $customer,
+						'to' => $data['to_email']
+					);
+
+					$smessage = \Message\Message::create($new_message);
+
+					if(count($message_attachments)>0) {
+						foreach($message_attachments as $attachment) {
+							$new_attachment = array(
+								'message_id' => $smessage->id,
+								'file' => $attachment->file
+							);
+
+							$smessageattach = \MessageAttachment\MessageAttachment::create($new_attachment);
+						}
+					}
+				}
+			}
+
+			\Session::flash('message', 'Email successfully sent');
+			return \Redirect::back();
+
+		} else {
+
+			\Input::flash();
+			return \Redirect::back()
+			->withErrors($validator)
+			->withInput();
+
+		}
+	}
+
 	public function getReply(){
 		$data = $this->data_view;
 		$data['message'] = \Message\MessageEntity::get_instance()->getMessageDetails(\Input::get('message_id'))[0];

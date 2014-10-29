@@ -140,7 +140,7 @@
 	var ASSET_PATH_PUBLIC = '{{ url('public/admin/metronic/assets') }}';
 	</script>
 
-	<script src="{{$asset_path}}/pages/scripts/messages.js?v=0.2" type="text/javascript"></script>
+	<script src="{{$asset_path}}/pages/scripts/messages.js?v=0.3" type="text/javascript"></script>
 
 	<script type="text/javascript">
 		jQuery(document).ready(function() {

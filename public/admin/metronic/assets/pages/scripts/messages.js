@@ -340,6 +340,14 @@ var Messages = function () {
                 jQuery("form#inboxForm input#action_type").val("message_force_delete");
                 jQuery("form#inboxForm").submit();
             });
+            jQuery("a#forwardEmailLink").on("click", function(e) {
+                e.preventDefault();
+                jQuery("div#forwardEmailContainer").show();
+            });
+            jQuery("button#forwardEmailCancel").on("click", function(e) {
+                e.preventDefault();
+                jQuery("div#forwardEmailContainer").hide();
+            });
 
         }
 
