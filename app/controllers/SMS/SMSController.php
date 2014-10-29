@@ -122,25 +122,28 @@ class SMSController extends \BaseController {
 
 		// get the response from paypal
 		$response = \helpers\Paypal::request('SetExpressCheckout', $params);
-		$token = $response['TOKEN'];
-		// save stuff in purchase table
-		$group_id	= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
-		$save_details = array(
-			'group_id' => $group_id,
-			'credits' => $sms_credit,
-			'price' => $sms_price,
-			'sms_ref' => $sms_name,
-			'paypal_token' => $token,
-			'created' => date("Y-m-d H:i:s")
-		);
-		var_dump($response);
-		var_dump($save_details);
-		/**
-		 * purchase history
-		* $this->settings_model->saveSMSPurchase($save_details);
-		* */
-		//header('Location: https://www.paypal.com/webscr?cmd=_express-checkout&token=' . urlencode($token));
-		//return \Redirect::to('https://www.paypal.com/webscr?cmd=_express-checkout&token=' . urlencode($token));
+		if(is_array($response) && $response['ACK'] == 'Success') { //Request successful
+			$token = $response['TOKEN'];
+			// save stuff in purchase table
+			$group_id	= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+			$save_details = array(
+				'user_id' => \Auth::id(),
+				'credits' => $sms_credit,
+				'sms_ref' => $sms_name,
+				'paypal_token' => $token,
+				'price' => $sms_price,
+				'status' => 0
+			);
+			/**
+			 * purchase history
+			 * */
+			$sms_purchase_history = \SMSPurchaseHistory\SMSPurchaseHistoryEntity::get_instance()->createOrUpdate($save_details);
+			if( $sms_purchase_history ){
+				return \Redirect::to('https://www.paypal.com/webscr?cmd=_express-checkout&token=' . urlencode($token));
+			}
+		}else{
+			return \Redirect::to('profile')->with('message', 'Error processing your payment request, please contact support.');
+		}
 	}
 
 	public function getCreateSmsCredit(){
