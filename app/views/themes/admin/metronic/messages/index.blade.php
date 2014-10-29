@@ -23,6 +23,9 @@
 		.select2-container-multi .select2-choices {
 			border: 0px !important;
 		}
+		.select2-container-multi.select2-container-disabled .select2-choices {
+			background-color: #fff !important;
+		}
 		</style>
 	@stop
 @stop

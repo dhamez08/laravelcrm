@@ -292,7 +292,7 @@ class MessagesController extends \BaseController {
 		$message->save();
 
 		$data['center_view'] = 'inbox_view';
-		$data['message_title'] = 'View Message';
+		$data['message_title'] = $message->subject;
 		$dataMessages 					= $this->_messageCommon();
 		$data 							= array_merge($data,$this->getSetupThemes(), $dataMessages);
 		return \View::make( $data['view_path'] . '.messages.index', $data );
@@ -306,6 +306,120 @@ class MessagesController extends \BaseController {
 		$dataMessages 					= $this->_messageCommon();
 		$data 							= array_merge($data,$this->getSetupThemes(), $dataMessages);
 		return \View::make( $data['view_path'] . '.messages.index', $data );
+	}
+
+	public function postReply() {
+		$rules = array(
+			'to' => 'required',
+			'cc' => 'email',
+			'bcc' => 'email',
+			'subject' => 'required',
+			'message' => 'required'
+		);
+		$messages = array(
+			'to.required'=>'Customer is required',
+			'to.email'=>'To Email is not valid',
+			'cc.email'=>'CC Email is not valid',
+			'bcc.email'=>'BCC Email is not valid',
+			'subject.required'=>'Subject is required',
+			'message.required'=>'Message is required'
+		);
+
+		$validator = \Validator::make(\Input::all(), $rules, $messages);
+
+		if($validator->passes()) {
+
+			$from_name = \Auth::user()->first_name . ' ' . \Auth::user()->last_name;
+			$from_email = \Auth::user()->email;
+
+			$data['cc'] = 0;
+			$data['bcc'] = 0;
+			$data['client_files'] = 0;
+
+			$customers = \Input::get('to');
+
+			$data['subject'] = \Input::get('subject');
+			$data['body'] = \Input::get('message');
+			if(\Input::get('email_signature')!=='') {
+				$signature = \EmailSignature\EmailSignature::find(\Input::get('email_signature'));
+				if($signature) {
+					$data['footer'] = $signature->body;
+				}
+			}
+
+			if(\Input::get('cc') && \Input::get('cc')!=='') {
+				$data['cc'] = \Input::get('cc');
+			}
+
+			if(\Input::get('bcc') && \Input::get('bcc')!=='') {
+				$data['bcc'] = \Input::get('bcc');
+			}
+
+			if(\Input::get('client_files') && \Input::get('client_files')!=='') {
+				$data['client_files'] = \Input::get('client_files');
+			}
+
+			foreach($customers as $customer) {
+
+				$custObj = \Clients\Clients::find($customer);
+
+				if($custObj->emails()->count() > 0) {
+
+					$data['to_email'] = $custObj->emails()->first()->email;
+					$data['to_name'] = $custObj->first_name . " " . $custObj->last_name;
+					$data['client_ref'] = "[REF:".$custObj->ref."]";
+
+					\Mail::send('emails.clients.index', $data, function($message) use ($data, $from_name, $from_email)
+					{
+						$message->from($from_email, $from_name);
+						if($data['cc'])
+							$message->cc($data['cc']);
+						if($data['bcc'])
+							$message->bcc($data['bcc']);
+						if($data['client_files']) {
+							$message->attach(url('/') . '/public/' . $data['client_files']);
+						}
+						$message->replyTo('dropbox.13554457@one23.co.uk', $from_name);
+						$message->to($data['to_email'], $data['to_name'])->subject($data['subject']);
+					});
+
+					// build array to have message
+					$new_message = array(
+						'subject' => $data['subject'],
+						'body' => $data['body'],
+						'sender' => $from_name,
+						'direction' => '1',
+						'type' => '0',
+						'added_date' => date('Y-m-d H:i:s'),
+						'customer_id' => $customer,
+						'to' => $data['to_email']
+					);
+
+					$smessage = \Message\Message::create($new_message);
+
+					if($data['client_files']) {
+						$new_attachment = array(
+							'message_id' => $smessage->id,
+							'file' => $data['client_files']
+						);
+
+						$smessageattach = \MessageAttachment\MessageAttachment::create($new_attachment);
+					}
+
+				}
+			}
+
+			\Session::flash('message', 'Email successfully sent');
+			return \Redirect::back();
+
+		} else {
+
+			\Input::flash();
+			return \Redirect::back()
+			->withErrors($validator)
+			->withInput();
+
+		}
 	}
 
 	public function getDelete($id) {
