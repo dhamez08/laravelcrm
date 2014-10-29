@@ -118,8 +118,6 @@ class SMSController extends \BaseController {
 			'PAYMENTREQUEST_0_DESC' => $sms_name,
 			'PAYMENTREQUEST_0_PAYMENTACTION' => 'Sale',
 			'NOSHIPPING' => '1'
-			//'L_BILLINGTYPE0' => 'RecurringPayments',
-			//'L_BILLINGAGREEMENTDESCRIPTION0' => 'Monthly subscription to crm system.'
 		);
 
 		// get the response from paypal
@@ -135,12 +133,14 @@ class SMSController extends \BaseController {
 			'paypal_token' => $token,
 			'created' => date("Y-m-d H:i:s")
 		);
+		var_dump($response);
+		var_dump($save_details);
 		/**
 		 * purchase history
 		* $this->settings_model->saveSMSPurchase($save_details);
 		* */
 		//header('Location: https://www.paypal.com/webscr?cmd=_express-checkout&token=' . urlencode($token));
-		return \Redirect::to('https://www.paypal.com/webscr?cmd=_express-checkout&token=' . urlencode($token));
+		//return \Redirect::to('https://www.paypal.com/webscr?cmd=_express-checkout&token=' . urlencode($token));
 	}
 
 	public function getCreateSmsCredit(){
