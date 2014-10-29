@@ -1,7 +1,7 @@
 <?php
-namespace SMSPurchaseHistory;
+namespace SMSCredit;
 
-class SMSPurchaseHistoryEntity extends \Eloquent{
+class SMSCreditEntity extends \Eloquent{
 
 	protected static $instance = null;
 
@@ -10,16 +10,11 @@ class SMSPurchaseHistoryEntity extends \Eloquent{
 	 *
 	 * @var string
 	 */
-	protected $table = 'sms_purchase_history';
+	protected $table = 'sms_credits';
 
 	protected $fillable = array(
 		'user_id',
-		'sms_username',
-		'credits',
-		'sms_ref',
-		'paypal_token',
-		'price',
-		'status'
+		'credits'
 	);
 
 	public function __construct(){
@@ -53,10 +48,10 @@ class SMSPurchaseHistoryEntity extends \Eloquent{
 	public function createOrUpdate($arrayData = array(), $id = null){
 		if( is_null($id) ) {
 			//create
-			$obj = new \SMSPurchaseHistory\SMSPurchaseHistory;
+			$obj = new \SMSCredit\SMSCredit;
 		}else{
 			//update
-			$obj = \SMSPurchaseHistory\SMSPurchaseHistory::find($id);
+			$obj = \SMSCredit\SMSCredit::find($id);
 		}
 		if( count($arrayData) > 0 ){
 			foreach($arrayData as $key=>$val){
@@ -67,13 +62,22 @@ class SMSPurchaseHistoryEntity extends \Eloquent{
 		}
 	}
 
-	public function updateSMSPurchaseStatus($id, $status){
-		$data = array('status' => $status);
-		return $this->createOrUpdate($data, $id);
-	}
-
-	public function getSmsPurchase($token){
-		return \SMSPurchaseHistory\SMSPurchaseHistory::paypalToken($token)->status(0);
+	public function addSMSCredits($user_id, $credits){
+		// if there isnt a record for the credits we need to created on .... or we can update it
+		$check_credit = \SMSCredit\SMSCredit::userId($user_id)->get()->first();
+		if( !$check_credit ){
+			$data = array(
+				'user_id' => $user_id,
+				'credits' => $credits
+			);
+			$credit = $this->createOrUpdate($data);
+		}else{
+			$data = array(
+				'credits' => ( $credits + $check_credit->credits )
+			);
+			$credit = $this->createOrUpdate($data, $check_credit->id);
+		}
+		return $credit;
 	}
 
 }

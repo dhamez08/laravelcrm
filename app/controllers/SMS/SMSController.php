@@ -147,6 +147,31 @@ class SMSController extends \BaseController {
 	}
 
 	public function getCreateSmsCredit(){
+		$token = \Input::get("token");
+		$payer = \Input::get("PayerID");
+		$purchase_details = \SMSPurchaseHistory\SMSPurchaseHistoryEntity::get_instance()->getSmsPurchase($token)->get()->first();
+
+		if ($purchase_details->count()) {
+			// params to send over to paypal
+			$params = array(
+				'TOKEN' => $token,
+				'PAYERID' => $payer,
+				'PAYMENTREQUEST_0_AMT' => $purchase_details->price,
+				'PAYMENTREQUEST_0_CURRENCYCODE' => 'GBP',
+				'PAYMENTREQUEST_0_PAYMENTACTION' => 'Sale'
+			);
+			$response = \helpers\Paypal::request('DoExpressCheckoutPayment', $params);
+			if(is_array($response) && $response['ACK'] == 'Success') {
+				// add the credits to the account
+				$add_sms = \SMSCredit\SMSCreditEntity::get_instance()->addSMSCredits( $purchase_details->user_id, $purchase_details->credits );
+				// set history to used status
+				if( $add_sms ){
+					\SMSPurchaseHistory\SMSPurchaseHistoryEntity::get_instance()->updateSMSPurchaseStatus($purchase_details->id, 1);
+				}
+			}
+		}else{
+			return \Redirect::to('profile')->with('message', 'Error processing your payment request, please contact support.');
+		}
 	}
 
 }
