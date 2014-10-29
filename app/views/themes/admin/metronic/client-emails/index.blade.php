@@ -24,6 +24,9 @@
 		.select2-container-multi .select2-choices {
 			border: 0px !important;
 		}
+		.select2-container-multi.select2-container-disabled .select2-choices {
+			background-color: #fff !important;
+		}
 		</style>
 	@stop
 @stop
@@ -58,17 +61,19 @@
 							<input type="hidden" name="client_ref" value="[REF:{{ $customer->ref }}]" />
 							<input type="hidden" name="customer_id" value="{{ $customer->id }}" />
 								<div class="inbox-compose-btn">
-									<button class="btn blue"><i class="fa fa-check"></i>Send</button>
-									<button onclick="history.back(-1)" class="btn inbox-discard-btn cancel-btn">Cancel</button>
+									<button type="submit" name="btn_action" value="send" class="btn blue"><i class="fa fa-check"></i>Send</button>
+									<button type="button" onclick="history.back(-1);" class="btn inbox-discard-btn">Discard</button>
+									<button type="submit" name="btn_action" value="draft" class="btn">Draft</button>
 								</div>
 								<div class="inbox-form-group mail-to">
 									<label class="control-label">To:</label>
 									<div class="controls controls-to">
-										<select id="select2_user" name="to[]" class="form-control select2" multiple>
+										<select id="select2_user" class="form-control select2" multiple disabled>
 										@foreach($customers->get() as $customer1)
 											<option value="{{ $customer1->id }}" {{ $customer->id==$customer1->id ? 'selected="selected"':'' }}>{{ $customer1->first_name . " " . $customer1->last_name }}</option>
 										@endforeach
 										</select>
+										<input type="hidden" name="to[]" value="{{ $customer->id }}" />
 										<span class="inbox-cc-bcc">
 										<span class="inbox-cc">
 										Cc </span>
@@ -219,8 +224,9 @@
 							{% } %}
 								</script>
 								<div class="inbox-compose-btn">
-									<button class="btn blue"><i class="fa fa-check"></i>Send</button>
-									<button onclick="history.back(-1)" class="btn inbox-discard-btn cancel-btn">Cancel</button>
+									<button type="submit" name="btn_action" value="send" class="btn blue"><i class="fa fa-check"></i>Send</button>
+									<button type="button" onclick="history.back(-1);" class="btn inbox-discard-btn">Discard</button>
+									<button type="submit" name="btn_action" value="draft" class="btn">Draft</button>
 								</div>
 							</form>
 						</div>

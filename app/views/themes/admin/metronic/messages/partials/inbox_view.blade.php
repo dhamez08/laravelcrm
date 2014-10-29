@@ -70,7 +70,7 @@
 		<hr>
 		<div class="inbox-attached">
 			<div class="margin-bottom-15">
-				<span>{{ count($message_attachments) }} attachments</span>
+				<span>{{ count($message_attachments) }} attachment{{ count($message_attachments)>1 ? 's':'' }}</span>
 			</div>
 			@foreach($message_attachments as $attachment)
 				<div class="margin-bottom-25">

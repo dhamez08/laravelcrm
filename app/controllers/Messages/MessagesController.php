@@ -169,6 +169,7 @@ class MessagesController extends \BaseController {
 	}
 
 	public function postCompose() {
+		$btn_action = \Input::get('btn_action');
 		$rules = array(
 			'to' => 'required',
 			'cc' => 'email',
@@ -229,26 +230,27 @@ class MessagesController extends \BaseController {
 					$data['to_name'] = $custObj->first_name . " " . $custObj->last_name;
 					$data['client_ref'] = "[REF:".$custObj->ref."]";
 
-					\Mail::send('emails.clients.index', $data, function($message) use ($data, $from_name, $from_email)
-					{
-						$message->from($from_email, $from_name);
-						if($data['cc'])
-							$message->cc($data['cc']);
-						if($data['bcc'])
-							$message->bcc($data['bcc']);
-						if($data['client_files']) {
-							$message->attach(url('/') . '/public/' . $data['client_files']);
-						}
-						$message->replyTo('dropbox.13554457@one23.co.uk', $from_name);
-						$message->to($data['to_email'], $data['to_name'])->subject($data['subject'] . ' ' . $data['client_ref']);
-					});
-
+					if($btn_action=='send') {
+						\Mail::send('emails.clients.index', $data, function($message) use ($data, $from_name, $from_email)
+						{
+							$message->from($from_email, $from_name);
+							if($data['cc'])
+								$message->cc($data['cc']);
+							if($data['bcc'])
+								$message->bcc($data['bcc']);
+							if($data['client_files']) {
+								$message->attach(url('/') . '/public/' . $data['client_files']);
+							}
+							$message->replyTo('dropbox.13554457@one23.co.uk', $from_name);
+							$message->to($data['to_email'], $data['to_name'])->subject($data['subject'] . ' ' . $data['client_ref']);
+						});
+					}
 					// build array to have message
 					$new_message = array(
 						'subject' => $data['subject'],
 						'body' => $data['body'],
 						'sender' => $from_name,
-						'direction' => '1',
+						'direction' => $btn_action=='send' ? '1':'3',
 						'type' => '0',
 						'added_date' => date('Y-m-d H:i:s'),
 						'customer_id' => $customer,
@@ -269,7 +271,10 @@ class MessagesController extends \BaseController {
 				}
 			}
 
-			\Session::flash('message', 'Email successfully sent');
+			if($btn_action=='send')
+				\Session::flash('message', 'Email successfully sent');
+			else
+				\Session::flash('message', 'Email successfully saved to draft');
 			return \Redirect::back();
 
 		} else {
