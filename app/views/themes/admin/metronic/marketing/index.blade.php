@@ -23,7 +23,34 @@
 			<div class="portlet-tabs">
 				<div class="tab-content">
 					@section('portlet-content')
-
+						<h1>Form</h1>
+						@if( $list_customer->count() > 0 )
+						{{ Form::open(
+							array(
+									'action' => array('Marketing\MarketingController@postSendSms'),
+									'method' => 'POST',
+									'class' => 'form-horizontal',
+									'role'=>'form',
+								)
+							)
+						}}
+							<ul class="">
+								@foreach( $list_customer->get() as $val_customer)
+									@if( $val_customer->telephone->count() == 1 )
+										<li>
+											<input type="checkbox" name="sendsms[{{$val_customer->id}}][clientid][]" value="{{$val_customer->id}}" />
+											{{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}
+											@foreach($val_customer->telephone as $phone)
+												<input type="hidden" name="sendsms[{{$val_customer->id}}][number][]" value="{{'44' . substr($phone->number, 1)}}" />
+												- {{'44' . substr($phone->number, 1)}}
+											@endforeach
+										</li>
+									@endif
+								@endforeach
+							</ul>
+							{{Form::submit('Next Step',array('class'=>"btn blue"))}}
+						{{ Form::close()}}
+						@endif
 					@show
 				</div>
 			</div>

@@ -21,4 +21,8 @@ class CustomerTags extends \Eloquent{
 		return $query->where('customer_id', '=', $customer_id);
 	}
 
+	public function scopeTagId($query, $tag_id){
+		return $query->where('tag_id', '=', $tag_id);
+	}
+
 }

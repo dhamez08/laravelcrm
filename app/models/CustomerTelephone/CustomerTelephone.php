@@ -12,7 +12,7 @@ class CustomerTelephone extends \Eloquent{
 	 * @var string
 	 */
 	protected $table = 'customer_telephone';
-	
+
 	protected $fillable = array(
 		'customer_id',
 		'number',
@@ -21,6 +21,10 @@ class CustomerTelephone extends \Eloquent{
 
 	public function client(){
 		return $this->belongsTo('\Clients\Clients','customer_id','id');
+	}
+
+	public function scopePhoneType($query, $type){
+		return $query->where('type', '=', $type);
 	}
 
 }

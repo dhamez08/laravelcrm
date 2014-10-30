@@ -52,12 +52,16 @@ class Clients extends \Eloquent{
 		return $this->hasMany('\CustomerNotes\CustomerNotes','customer_id','id');
 	}
 
+	public function myTag(){
+		return $this->hasMany('\CustomerTags\CustomerTags','customer_id','id');
+	}
+
 	public function scopeClientId($query, $id){
 		return $query->where('id','=',$id);
 	}
 
 	public function scopeCustomerType($query, $arrayType){
-		return $query->whereIn('type',$arrayType);
+		return $query->whereIn('type', $arrayType);
 	}
 
 	public function scopeCustomerBelongsTo($query, $belongsTo){
