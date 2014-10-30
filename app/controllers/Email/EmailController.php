@@ -95,7 +95,6 @@ class EmailController extends \BaseController {
 		if($data['customer']->emails()->count() > 0) {
 			$data['client_email'] = $data['customer']->emails()->first()->email;
 		}
-
 		$data['customers']		= \Clients\ClientEntity::get_instance()->getCustomerList($group_id,$this->get_customer_type);
 		return \View::make( $data['view_path'] . '.client-emails.index', $data );
 	}

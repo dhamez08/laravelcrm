@@ -511,7 +511,7 @@ class ClientsController extends \BaseController {
 		$data['customerId']			= $clientId;
 		$data['clientId']			= $clientId;
 		$data['belongsTo']			= \Auth::id();
-		$data['tag_widget']			= \ClientTags\ClientTagsController::get_instance()->getClientTagWidget($clientId);
+		//$data['tag_widget']			= \ClientTags\ClientTagsController::get_instance()->getClientTagWidget($clientId);
 		$data 						= array_merge($data,$dashboard_data);
 		return \View::make( $data['view_path'] . '.clients.summary', $data );
 	}
