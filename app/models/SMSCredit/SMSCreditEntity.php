@@ -64,8 +64,11 @@ class SMSCreditEntity extends \Eloquent{
 
 	public function addSMSCredits($user_id, $credits){
 		// if there isnt a record for the credits we need to created on .... or we can update it
-		$check_credit = \SMSCredit\SMSCredit::userId($user_id);
-		if( !$check_credit->count() ){
+		$credit = false;
+
+		$check_credit = $this->getSMSCredit($user_id);
+
+		if( !$check_credit ){
 			$data = array(
 				'user_id' => $user_id,
 				'credits' => $credits
@@ -73,11 +76,30 @@ class SMSCreditEntity extends \Eloquent{
 			$credit = $this->createOrUpdate($data);
 		}else{
 			$data = array(
-				'credits' => ( $credits + $check_credit->first()->credits )
+				'credits' => ( $credits + $check_credit->credits )
 			);
 			$credit = $this->createOrUpdate($data, $check_credit->first()->id);
 		}
+
 		return $credit;
+	}
+
+	public function getSMSCredit($user_id){
+		$check_credit = \SMSCredit\SMSCredit::userId($user_id);
+		if(  $check_credit->count() ){
+			return $check_credit->first();
+		}else{
+			return false;
+		}
+	}
+
+	public function spendCredit($user_id, $credit){
+		$sms_credit = $this->getSMSCredit($user_id);
+		$credits = ($sms_credit->credits - $credit);
+		$data = array(
+			'credits' => $credits
+		);
+		return $this->createOrUpdate($data, $sms_credit->id);
 	}
 
 }

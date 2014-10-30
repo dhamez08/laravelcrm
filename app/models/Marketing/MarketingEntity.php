@@ -47,9 +47,24 @@ class MarketingEntity{
 	}
 
 	public function getSMSCredit($user_id){
-		//\SMSCredit\SMSCredit::userId($user_id)
 		$check_credit = \SMSCredit\SMSCredit::userId($user_id)->get();
-		echo ($check_credit) ? 'y':'n';
+		return $check_credit;
+	}
+
+	public function sendSMS($number, $message, $user_id, $test = false){
+		$characters 	= strlen($message);
+		$used_credits 	= ceil($characters/160);
+		if( \SMSCredit\SMSCreditEntity::get_instance()->spendCredit($used_credits, $user_id) ){
+			$sms = \Textlocal\TextlocalEntity::get_instance()->apiTextlocal();
+			$numbers = array($number);
+			$message = $message;
+			$sender = \Auth::user()->sms;
+			$response = $sms->sendSMS($numbers, $message, $sender, null, $test);
+
+			return $response;
+		}else{
+			return false;
+		}
 	}
 
 }

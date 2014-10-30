@@ -70,14 +70,129 @@ class MarketingController extends \BaseController {
 		return \View::make( $data['view_path'] . '.marketing.index', $data );
 	}
 
+	public function postSendSmsMessage(){
+		\Session::forget('session_sendsms');
+		\Session::forget('sms_session');
+		if( count(\Input::get('sendsms')) > 0 ){
+			\Session::put('session_sendsms',\Input::get('sendsms'));
+			if( \SMSCredit\SMSCreditEntity::get_instance()->getSMSCredit(\Auth::id()) ){
+				return \Redirect::to('marketing/message-sms');
+			}else{
+				return \Redirect::to('marketing')->withErrors('Sorry you do not have enough credits.');
+			}
+		}else{
+			return \Redirect::to('marketing')->withErrors('Choose customer first');
+		}
+	}
+
+	public function getMessageSms(){
+		$data = $this->data_view;
+		$data['pageTitle'] 			= 'SMS Marketing';
+		$data['contentClass'] 		= 'no-gutter';
+		$data['portlet_body_class']	= 'form';
+		$data['portlet_title']		= 'Person\'s Name and Mobile Number';
+		$data['fa_icons']			= 'user';
+		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+		$data['center_column_view'] = 'dashboard';
+		$data['list_number']		= \Session::get('session_sendsms');
+		$data 						= array_merge($data,$this->getSetupThemes());
+		return \View::make( $data['view_path'] . '.marketing.message', $data );
+	}
+
+	public function postSendSmsVerify(){
+
+		if (trim(\Input::get('message')) == '') {
+			$this->session->set_flashdata('error', '<div class="alert alert-danger">You must enter a message.</div>');
+			return \Redirect::to('marketing/message-sms')->withErrors('You must enter a message');
+		}else{
+			$message = trim(\Input::get('message'));
+			$personalized = \Input::has('personalised');
+			$message_characters = strlen($message);
+			$sms_count = 0;
+			// loop every message to total the credits needed
+			$numbers = \Session::get('session_sendsms');
+			foreach ($numbers as $key => $val) {
+				$characters = 0;
+				// get the number and the name
+				if ($personalized) {
+					$characters += strlen('Hi '. $message .'. ');
+				}
+				$characters += $message_characters;
+				$sms_count += ceil($characters/160);
+			}
+			$cred = \SMSCredit\SMSCreditEntity::get_instance()->getSMSCredit(\Auth::id());
+
+			if( $cred->credits >= $sms_count ){
+				$sms_session = array(
+					'message' => $message,
+					'personalised' => $personalized,
+					'required_credits' => $sms_count,
+					'current_credits' => $cred->credits
+				);
+				\Session::forget('sms_session');
+				\Session::put('sms_session',$sms_session);
+				return \Redirect::to('marketing/summary');
+			}else{
+				\Session::forget('session_sendsms');
+				\Session::forget('sms_session');
+				return \Redirect::to('marketing')->withErrors('Sorry you do not have enough credits.');
+			}
+
+		}
+	}
+
+	public function getSummary(){
+		$data = $this->data_view;
+		$data['pageTitle'] 			= 'SMS Marketing';
+		$data['contentClass'] 		= 'no-gutter';
+		$data['portlet_body_class']	= 'form';
+		$data['portlet_title']		= 'Message Summary';
+		$data['fa_icons']			= 'user';
+		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+		$data['center_column_view'] = 'dashboard';
+		$data['index_num']			= 1;
+		$data['list_number']		= \Session::get('session_sendsms');
+		$data['sms_session']		= \Session::get('sms_session');
+		$data 						= array_merge($data,$this->getSetupThemes());
+		return \View::make( $data['view_path'] . '.marketing.summary', $data );
+	}
+
 	public function postSendSms(){
-		echo '<pre>';
-		print_r(\Input::all());
-		$check_credit = \SMSCredit\SMSCredit::userId(22);
-		echo (!$check_credit->count()) ? 'create':'update';
-		echo $check_credit->first()->credits;
-		echo $check_credit->first()->id;
-		echo '</pre>';
+		$list_number = \Session::get('session_sendsms');
+		$sms_session = \Session::get('sms_session');
+
+		$success = false;
+		$number_not_success = array();
+
+		if (count($list_number) > 0) {
+			$messagetosend = "";
+			//$explode_data = explode("|", $recipients[0]);
+			foreach ($list_number as $key => $val) {
+				if ($sms_session['personalised']) {
+					$messagetosend = 'Hi '. $val['name'] .'. '. $sms_session['message'];
+				} else {
+					$messagetosend = $sms_session['message'];
+				}
+				$txt_local = \Marketing\MarketingEntity::get_instance()->sendSMS(
+					$val['number'],
+					$messagetosend,
+					\Auth::id(),
+					true
+				);
+				if( !$txt_local->status == 'success' ){
+					//input number
+					$number_not_success[] = $val['number'];
+				}
+			}
+			//if( count($number_not_success) > 0 ){
+				\Session::forget('session_sendsms');
+				\Session::forget('sms_session');
+				//return \Redirect::to('marketing')->withErrors('Sorry something wrong.');
+			//}else{
+				\Session::flash('message', 'Successfully SMS Send Message');
+				return \Redirect::to('marketing');
+			//}
+		}
 	}
 
 }

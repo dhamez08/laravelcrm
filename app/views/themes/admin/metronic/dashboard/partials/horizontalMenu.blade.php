@@ -50,8 +50,12 @@
 			</a>
 		</li>
 		<li class="classic-menu-dropdown">
-			<a href="#">
+			<a href="{{url('marketing')}}">
 			<i class="fa fa-bullseye"></i>  Marketing
+				@if( \Request::is('marketing*') )
+					<span class="selected">
+					</span>
+				@endif
 			</a>
 		</li>
 		<li class="classic-menu-dropdown">
