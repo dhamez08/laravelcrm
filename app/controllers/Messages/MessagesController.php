@@ -607,4 +607,10 @@ class MessagesController extends \BaseController {
 
 		return \Redirect::back();
 	}
+
+	public function getMessagesByCustomer($clientId) {
+		$data = $this->data_view;
+		$data['recent_messages']	= \Message\MessageEntity::get_instance()->summaryRecentMessages($clientId);
+		return \View::make( $data['view_path'] . '.messages.partials.messages_by_customer', $data );
+	}
 }
