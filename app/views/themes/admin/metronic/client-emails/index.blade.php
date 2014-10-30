@@ -6,6 +6,7 @@
 		@parent
 		<link href="{{$asset_path}}/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" type="text/css"/>
 		<link href="{{$asset_path}}/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css" rel="stylesheet" type="text/css"/>
+		<link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/bootstrap-summernote/summernote.css">
 		<link href="{{$asset_path}}/global/plugins/fancybox/source/jquery.fancybox.css" rel="stylesheet"/>
 		<!-- BEGIN:File Upload Plugin CSS files-->
 		<link href="{{$asset_path}}/global/plugins/jquery-file-upload/blueimp-gallery/blueimp-gallery.min.css" rel="stylesheet"/>
@@ -159,7 +160,8 @@
 								</div>
 								@endif
 								<div class="inbox-form-group">
-									<textarea class="inbox-editor inbox-wysihtml5 form-control" name="message" rows="12"></textarea>
+									<!-- <textarea class="inbox-editor inbox-wysihtml5 form-control" name="message" rows="12"></textarea> -->
+									<textarea name="message" id="message"></textarea>
 								</div>
 								<!--
 								<div class="inbox-compose-attachment">
@@ -250,6 +252,7 @@
 	<script src="{{$asset_path}}/global/plugins/fancybox/source/jquery.fancybox.pack.js" type="text/javascript"></script>
 	<script src="{{$asset_path}}/global/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js" type="text/javascript"></script>
 	<script src="{{$asset_path}}/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js" type="text/javascript"></script>
+	<script src="{{$asset_path}}/global/plugins/bootstrap-summernote/summernote.min.js" type="text/javascript"></script>
 	<!-- BEGIN:File Upload Plugin JS files-->
 	<!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
 	<script src="{{$asset_path}}/global/plugins/jquery-file-upload/js/vendor/jquery.ui.widget.js"></script>
@@ -290,13 +293,14 @@
 	</script>
 
 	<script src="{{$asset_path}}/pages/scripts/client-email.js" type="text/javascript"></script>
-
+	<script src="{{$asset_path}}/pages/scripts/components-editors.js" type="text/javascript"></script>
 
 
 	<script type="text/javascript">
 		jQuery(document).ready(function() {
 		   ClientEmail.init();
 		   ComponentsDropdowns.init();
+		   ComponentsEditors.init();
 		});
 	</script>
 	@stop

@@ -6,7 +6,7 @@
 <div class="inbox-view-info">
 	<div class="row">
 		<div class="col-md-7">
-			<img src="{{$asset_path}}/layout/img/avatar1_small.jpg">
+			<img src="{{$asset_path}}/global/img/summary_person.png" height="40px">
 			<span class="bold">{{ $message->first_name . " " . $message->last_name }}</span>
 			@if($message->direction=='2')
 				<span>&#60;{{ $message->sender }}&#62;</span>

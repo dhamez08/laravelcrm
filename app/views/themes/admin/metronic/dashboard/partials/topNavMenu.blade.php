@@ -142,7 +142,7 @@
 						<li>
 							<a href="{{ url('messages/view?message_id='.$message->id) }}">
 							<span class="photo">
-							<img alt="" src="{{$asset_path}}/layout/img/avatar2.jpg">
+							<img alt="" src="{{$asset_path}}/global/img/summary_person.png">
 							</span>
 							<span class="subject">
 							<span class="from">{{ $message->sender }}</span>
