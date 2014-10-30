@@ -65,8 +65,19 @@ class MarketingController extends \BaseController {
 		$data['fa_icons']			= 'user';
 		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
 		$data['center_column_view'] = 'dashboard';
+		$data['list_customer']		= \Marketing\MarketingEntity::get_instance()->getCustomerList();
 		$data 						= array_merge($data,$this->getSetupThemes());
 		return \View::make( $data['view_path'] . '.marketing.index', $data );
+	}
+
+	public function postSendSms(){
+		echo '<pre>';
+		print_r(\Input::all());
+		$check_credit = \SMSCredit\SMSCredit::userId(22);
+		echo (!$check_credit->count()) ? 'create':'update';
+		echo $check_credit->first()->credits;
+		echo $check_credit->first()->id;
+		echo '</pre>';
 	}
 
 }
