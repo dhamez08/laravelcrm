@@ -296,7 +296,8 @@ var Messages = function () {
             $("select#email_template").live("change", function() {
                 $this = $(this);
                 $.get(BASE_URL+'/settings/email/template/'+$this.val(), function(response) {
-                    $(".inbox-wysihtml5").data('wysihtml5').editor.setValue(response.body);
+                    // $(".inbox-wysihtml5").data('wysihtml5').editor.setValue(response.body);
+                    $("#message").code(response.body);
                     $("input#email_subject").val(response.subject);
                 });
             });

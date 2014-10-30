@@ -98,7 +98,8 @@
 	</div>
 	@endif
 	<div class="inbox-form-group">
-		<textarea class="inbox-editor inbox-wysihtml5 form-control" name="message" rows="12"></textarea>
+		<!-- <textarea class="inbox-editor inbox-wysihtml5 form-control" name="message" rows="12"></textarea> -->
+		<textarea name="message" id="message"></textarea>
 	</div>
 	<!-- <div class="inbox-compose-attachment">
 		<span class="btn green fileinput-button">
