@@ -322,6 +322,8 @@ var Messages = function () {
                     $("#fields_container table tbody").append(row);
 
                     Metronic.unblockUI('#fields_container');
+                }).error(function() {
+                    Metronic.unblockUI('#fields_container');
                 });
             });
 

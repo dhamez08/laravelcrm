@@ -53,6 +53,9 @@
 
 		@yield('head-custom-css')
 		@yield('head-custom-js')
+		<script>
+			var ASSET_PATH_PUBLIC = '{{ url('public/admin/metronic/assets') }}';
+		</script>
 	</head>
 	<!-- END HEAD -->
 @show
