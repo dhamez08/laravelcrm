@@ -159,9 +159,32 @@
 									</div>
 								</div>
 								@endif
-								<div class="inbox-form-group">
+								<div class="inbox-form-group row">
 									<!-- <textarea class="inbox-editor inbox-wysihtml5 form-control" name="message" rows="12"></textarea> -->
-									<textarea name="message" id="message"></textarea>
+									<div class="col-md-9">
+										<textarea name="message" id="message"></textarea>
+									</div>
+									<div class="col-md-3" style="padding:0px;padding-right:30px;">
+										<h2>Dynamic Fields</h2>
+										<select id="custom_form" class="form-control">
+				                            <option value="0">Choose a Custom Form</option>
+				                        <?php
+				                        $forms = \CustomForm\CustomFormEntity::get_instance()->getFormsByLoggedUser();
+				                        ?>
+				                        @foreach($forms as $form)
+				                        	<option value="{{ $form->id }}">{{ $form->name }}</option>
+				                        @endforeach
+				                        </select>
+
+				                        <div id="fields_container" style="margin-top:15px;min-height:230px;">
+				                        	<div class="scroller" style="height:230px" data-always-visible="0" data-rail-visible="0" data-rail-color="red" data-handle-color="green">
+				                        	<table class="table table-bordered table-hover">
+												<tbody>
+												</tbody>
+											</table>
+				                        	</div>
+				                        </div>
+									</div>
 								</div>
 								<!--
 								<div class="inbox-compose-attachment">
@@ -253,6 +276,8 @@
 	<script src="{{$asset_path}}/global/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js" type="text/javascript"></script>
 	<script src="{{$asset_path}}/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js" type="text/javascript"></script>
 	<script src="{{$asset_path}}/global/plugins/bootstrap-summernote/summernote.min.js" type="text/javascript"></script>
+	<script src="{{$asset_path}}/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+
 	<!-- BEGIN:File Upload Plugin JS files-->
 	<!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
 	<script src="{{$asset_path}}/global/plugins/jquery-file-upload/js/vendor/jquery.ui.widget.js"></script>
@@ -285,6 +310,7 @@
 	<script type="text/javascript" src="{{$asset_path}}/global/plugins/select2/select2.min.js"></script>
 	<script type="text/javascript" src="{{$asset_path}}/global/plugins/jquery-multi-select/js/jquery.multi-select.js"></script>
 	<script src="{{$asset_path}}/pages/scripts/components-dropdowns.js"></script>
+	<script src="{{$asset_path}}/pages/scripts/ui-blockui.js"></script>
 
 	<script>
 	var BASE_URL = '{{ url('/') }}';

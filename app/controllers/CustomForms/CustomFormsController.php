@@ -538,4 +538,20 @@ class CustomFormsController extends \BaseController {
 	    return \Redirect::back()->withErrors(['There was a problem saving the form, please try again']);
 	}
 
+	public function getFields($form_id) {
+
+		$form = \CustomForm\CustomFormEntity::find($form_id);
+
+		$formbuild = \CustomFormBuild\CustomFormBuildEntity::where('form_id',$form_id)->get();
+
+		if($formbuild) {
+			return \Response::json(
+						array(
+							'form'=>$form->toArray(),
+							'build'=>$formbuild->toArray()
+						)
+					);
+		}
+	}
+
 }

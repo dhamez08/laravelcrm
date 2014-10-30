@@ -102,6 +102,7 @@
 	<script src="{{$asset_path}}/global/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js" type="text/javascript"></script>
 	<script src="{{$asset_path}}/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js" type="text/javascript"></script>
 	<script src="{{$asset_path}}/global/plugins/bootstrap-summernote/summernote.min.js" type="text/javascript"></script>
+	<script src="{{$asset_path}}/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
 	<!-- BEGIN:File Upload Plugin JS files-->
 	<!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
 	<script src="{{$asset_path}}/global/plugins/jquery-file-upload/js/vendor/jquery.ui.widget.js"></script>
@@ -135,6 +136,7 @@
 	<script type="text/javascript" src="{{$asset_path}}/global/plugins/select2/select2.min.js"></script>
 	<script type="text/javascript" src="{{$asset_path}}/global/plugins/jquery-multi-select/js/jquery.multi-select.js"></script>
 	<script src="{{$asset_path}}/pages/scripts/components-dropdowns.js"></script>
+	<script src="{{$asset_path}}/pages/scripts/ui-blockui.js"></script>
 
 	<script>
 	var BASE_URL = '{{ url('/') }}';
@@ -142,7 +144,7 @@
 	var ASSET_PATH_PUBLIC = '{{ url('public/admin/metronic/assets') }}';
 	</script>
 
-	<script src="{{$asset_path}}/pages/scripts/messages.js?v=0.4" type="text/javascript"></script>
+	<script src="{{$asset_path}}/pages/scripts/messages.js?v=0.5" type="text/javascript"></script>
 	<script src="{{$asset_path}}/pages/scripts/components-editors.js" type="text/javascript"></script>
 
 	<script type="text/javascript">

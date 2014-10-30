@@ -99,10 +99,31 @@
 		</div>
 	</div>
 	@endif
-	<div class="inbox-form-group">
-		<div class="controls-row">
-			<!-- <textarea class="inbox-editor inbox-wysihtml5 form-control" name="message" rows="12"><br><br><blockquote>{{ nl2br($message->body) }}</blockquote></textarea> -->
-			<textarea name="message" id="message"><br><br><blockquote>{{ nl2br($message->body) }}</blockquote></textarea>
+	<div class="inbox-form-group row">
+		<!-- <textarea class="inbox-editor inbox-wysihtml5 form-control" name="message" rows="12"></textarea> -->
+		<div class="col-md-9">
+			<textarea name="message" id="message"></textarea>
+		</div>
+		<div class="col-md-3" style="padding:0px;padding-right:30px;">
+			<h2>Dynamic Fields</h2>
+			<select id="custom_form" class="form-control">
+                <option value="0">Choose a Custom Form</option>
+            <?php
+            $forms = \CustomForm\CustomFormEntity::get_instance()->getFormsByLoggedUser();
+            ?>
+            @foreach($forms as $form)
+            	<option value="{{ $form->id }}">{{ $form->name }}</option>
+            @endforeach
+            </select>
+
+            <div id="fields_container" style="margin-top:15px;min-height:230px;">
+            	<div class="scroller" style="height:230px" data-always-visible="0" data-rail-visible="0" data-rail-color="red" data-handle-color="green">
+            	<table class="table table-bordered table-hover">
+					<tbody>
+					</tbody>
+				</table>
+            	</div>
+            </div>
 		</div>
 	</div>
 	<!-- <div class="inbox-compose-attachment">
