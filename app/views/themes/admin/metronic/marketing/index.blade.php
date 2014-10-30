@@ -27,7 +27,7 @@
 						@if( $list_customer->count() > 0 )
 						{{ Form::open(
 							array(
-									'action' => array('Marketing\MarketingController@postSendSms'),
+									'action' => array('Marketing\MarketingController@postSendSmsMessage'),
 									'method' => 'POST',
 									'class' => 'form-horizontal',
 									'role'=>'form',
@@ -38,10 +38,11 @@
 								@foreach( $list_customer->get() as $val_customer)
 									@if( $val_customer->telephone->count() == 1 )
 										<li>
-											<input type="checkbox" name="sendsms[{{$val_customer->id}}][clientid][]" value="{{$val_customer->id}}" />
+											<input type="checkbox" name="sendsms[{{$val_customer->id}}][clientid]" value="{{$val_customer->id}}" />
 											{{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}
 											@foreach($val_customer->telephone as $phone)
-												<input type="hidden" name="sendsms[{{$val_customer->id}}][number][]" value="{{'44' . substr($phone->number, 1)}}" />
+												<input type="hidden" name="sendsms[{{$val_customer->id}}][number]" value="{{'44' . substr($phone->number, 1)}}" />
+												<input type="hidden" name="sendsms[{{$val_customer->id}}][name]" value="{{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}" />
 												- {{'44' . substr($phone->number, 1)}}
 											@endforeach
 										</li>
