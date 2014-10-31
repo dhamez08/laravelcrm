@@ -66,7 +66,7 @@ class MarketingController extends \BaseController {
 		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
 		$data['center_column_view'] = 'dashboard';
 		$data['tag_id']				= \Input::has('tags') ? (\Input::get('tags') != 0 ) ? \Input::get('tags'):null:null;
-		$data['list_customer']		= \Marketing\MarketingEntity::get_instance()->getCustomerList();
+		$data['list_customer']		= \Marketing\MarketingEntity::get_instance()->getCustomerList($data['tag_id']);
 		$data['tags']			 	= \ClientTag\ClientTagEntity::get_instance()->getTagsByLoggedUser();
 		$data 						= array_merge($data,$this->getSetupThemes());
 		return \View::make( $data['view_path'] . '.marketing.index', $data );
