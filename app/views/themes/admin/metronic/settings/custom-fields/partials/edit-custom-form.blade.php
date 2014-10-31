@@ -169,9 +169,9 @@
 				<li>
 					<a href="#multiple" data-toggle="tab">Radio/Checkbox/List</a>
 				</li>
-				<li>
+				<!-- <li>
 					<a href="#rating" data-toggle="tab">Rating</a>
-				</li>
+				</li> -->
 				<li>
 					<a href="#labels" data-toggle="tab">Labels</a>
 				</li>
