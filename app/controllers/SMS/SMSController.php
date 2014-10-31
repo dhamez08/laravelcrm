@@ -51,13 +51,21 @@ class SMSController extends \BaseController {
 	public function getIndex(){
 	}
 
-	//test
+	//test getUsers
 	public function getApiTextlocalUsers(){
 		$users = \Textlocal\TextlocalEntity::get_instance()->apiTextlocal();
 		//var_dump($users);
 		var_dump($users->getUsers());
 	}
-	//test
+	//test Inbox
+	public function getApiTextlocalInbox(){
+		$inbox = \Textlocal\TextlocalEntity::get_instance()->apiTextlocal();
+		echo '<pre>';
+		print_r($inbox);
+		echo '</pre>';
+		//var_dump($inbox->getInboxes());
+	}
+	//test Sms Cost
 	public function getSmsCost(){
 		$sms = \Textlocal\TextlocalEntity::get_instance()->apiTextlocal();
 		$numbers = array('+639162604002');
@@ -67,7 +75,7 @@ class SMSController extends \BaseController {
 		$response = $sms->getSMSCost($numbers, $message, $sender, null, $test);
 		var_dump($response);
 	}
-	//test
+	//test Send Sms
 	public function getSendSmsApi(){
 		$sms = \Textlocal\TextlocalEntity::get_instance()->apiTextlocal();
 		$numbers = array('+639162604002');
@@ -77,6 +85,7 @@ class SMSController extends \BaseController {
 		$response = $sms->sendSMS($numbers, $message, $sender, null, $test);
 		var_dump($response);
 	}
+	// end test
 
 	public function getPurchaseSms($sms_credit){
 		$sms_price = 0;

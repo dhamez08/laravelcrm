@@ -25,33 +25,48 @@
 					@section('portlet-content')
 						<h1>Form</h1>
 						@if( $list_customer->count() > 0 )
-						{{ Form::open(
-							array(
-									'action' => array('Marketing\MarketingController@postSendSmsMessage'),
-									'method' => 'POST',
-									'class' => 'form-horizontal',
-									'role'=>'form',
+							{{Form::open()}}
+								@if( $tags )
+									{{
+										Form::select(
+											'tags',
+											array_merge(array('0'=>'select'),$tags->lists('tag','id')),
+											null
+										);
+									}}
+								@endif
+								{{Form::submit('Filter by tag',array('class'=>"btn blue"))}}
+							{{Form::close()}}
+
+							{{ Form::open(
+								array(
+										'action' => array('Marketing\MarketingController@postSendSmsMessage'),
+										'method' => 'POST',
+										'class' => 'form-horizontal',
+										'role'=>'form',
+									)
 								)
-							)
-						}}
-							<ul class="">
-								@foreach( $list_customer->get() as $val_customer)
-									@if( $val_customer->telephone->count() == 1 )
-										<li>
-											<input type="checkbox" name="sendsms[{{$val_customer->id}}][clientid]" value="{{$val_customer->id}}" />
-											{{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}
-											@foreach($val_customer->telephone as $phone)
-												<input type="hidden" name="sendsms[{{$val_customer->id}}][number]" value="{{'44' . substr($phone->number, 1)}}" />
-												<input type="hidden" name="sendsms[{{$val_customer->id}}][name]" value="{{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}" />
-												- {{'44' . substr($phone->number, 1)}}
-											@endforeach
-										</li>
-									@endif
-								@endforeach
-							</ul>
-							{{Form::submit('Next Step',array('class'=>"btn blue"))}}
-						{{ Form::close()}}
-						@endif
+							}}
+								<ul class="">
+									@foreach( $list_customer->get() as $val_customer)
+										@if( $val_customer->telephone->count() == 1 )
+											<li>
+												{{var_dump($val_customer->my_tag->toArray())}}
+												{{$val_customer->id}} - {{$tag_id}}
+												<input type="checkbox" name="sendsms[{{$val_customer->id}}][clientid]" value="{{$val_customer->id}}" />
+												{{$tag_id}} - {{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}
+												@foreach($val_customer->telephone as $phone)
+													<input type="hidden" name="sendsms[{{$val_customer->id}}][number]" value="{{'44' . substr($phone->number, 1)}}" />
+													<input type="hidden" name="sendsms[{{$val_customer->id}}][name]" value="{{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}" />
+													- {{'44' . substr($phone->number, 1)}}
+												@endforeach
+											</li>
+										@endif
+									@endforeach
+								</ul>
+								{{Form::submit('Next Step',array('class'=>"btn blue"))}}
+							{{ Form::close()}}
+							@endif
 					@show
 				</div>
 			</div>
