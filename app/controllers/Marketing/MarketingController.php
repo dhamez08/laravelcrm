@@ -56,7 +56,7 @@ class MarketingController extends \BaseController {
 		return \Dashboard\DashboardController::get_instance()->getSetupThemes();
 	}
 
-	public function getIndex($tag_id = null){
+	public function getIndex(){
 		$data = $this->data_view;
 		$data['pageTitle'] 			= 'SMS Marketing';
 		$data['contentClass'] 		= 'no-gutter';
@@ -65,11 +65,10 @@ class MarketingController extends \BaseController {
 		$data['fa_icons']			= 'user';
 		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
 		$data['center_column_view'] = 'dashboard';
-		$data['tag_id']				= $tag_id;
+		$data['tag_id']				= \Input::has('tags') ? (\Input::get('tags') != 0 ) ? \Input::get('tags'):null:null;
 		$data['list_customer']		= \Marketing\MarketingEntity::get_instance()->getCustomerList();
 		$data['tags']			 	= \ClientTag\ClientTagEntity::get_instance()->getTagsByLoggedUser();
 		$data 						= array_merge($data,$this->getSetupThemes());
-		//var_dump($data['list_customer']->get()->toArray());
 		return \View::make( $data['view_path'] . '.marketing.index', $data );
 	}
 
