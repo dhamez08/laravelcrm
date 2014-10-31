@@ -60,8 +60,8 @@ class TaskController extends \BaseController {
 		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(null, \Auth::id());
 		$data['redirectURL']		= url('task');
 		$data 						= array_merge($data,$dashboard_data);
-		//var_dump($tasks->get()->toArray());
-		return \View::make( $data['view_path'] . '.tasks.index', $data );
+		var_dump($data['tasks']);
+		//return \View::make( $data['view_path'] . '.tasks.index', $data );
 	}
 
 	public function displayButtonModalCreateTask(){
