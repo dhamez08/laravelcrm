@@ -61,6 +61,7 @@ class TaskController extends \BaseController {
 		$data['redirectURL']		= url('task');
 		$data 						= array_merge($data,$dashboard_data);
 		//var_dump($data['tasks']);
+		echo \Auth::id();
 		return \View::make( $data['view_path'] . '.tasks.index', $data );
 	}
 
