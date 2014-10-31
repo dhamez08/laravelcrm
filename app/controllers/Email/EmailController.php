@@ -132,6 +132,7 @@ class EmailController extends \BaseController {
 
 			$data['subject'] = \Input::get('subject');
 			$data['body'] = \Input::get('message');
+
 			if(\Input::get('email_signature')!=='') {
 				$signature = \EmailSignature\EmailSignature::find(\Input::get('email_signature'));
 				if($signature) {
@@ -152,6 +153,30 @@ class EmailController extends \BaseController {
 			}
 
 			foreach($customers as $customer) {
+
+				preg_match_all("/\[((?:\w|\d|\s)+):((?:\w|\d|\s)+)\]/", $data['body'], $matches);
+
+				if(!empty($matches)) {
+					$data_matches = array();
+					$no_of_matches = count($matches[0]);
+					for($x=0; $x<$no_of_matches; $x++) {
+						$data_matches[$x][] = $matches[0][$x];
+						$data_matches[$x][] = $matches[1][$x];
+						$data_matches[$x][] = $matches[2][$x];
+					}
+
+					foreach($data_matches as $key=>$dm) {
+						$form_name = $dm[1];
+						$field_name = str_replace(" ", "_", $dm[2]);
+
+						$fieldValues = \Message\MessageEntity::get_instance()->getFormDataByFormNameAndFieldNameAndCustomer($form_name, $field_name, $customer);
+						if(count($fieldValues)>0) {
+							foreach($fieldValues as $fv) {
+								$data['body'] = str_replace($dm[0], $fv->value, $data['body']);
+							}
+						}
+					}
+				}
 
 				$custObj = \Clients\Clients::find($customer);
 

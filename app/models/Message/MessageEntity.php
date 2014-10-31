@@ -126,6 +126,13 @@ class MessageEntity extends \Eloquent{
 		return $query;
 	}
 
+	public function getFormDataByFormNameAndFieldNameAndCustomer($form_name, $field_name, $customer_id) {
+		$sql="SELECT f.name, fd.* FROM users_custom_forms f, users_custom_forms_data fd WHERE f.id=fd.form_id AND f.name=? AND fd.customer_id=? AND fd.field_name=?";
+		$query = \DB::select($sql, array($form_name, $customer_id, $field_name));
+
+		return $query;
+	}
+
 	public function attachments() {
 		return $this->hasMany('\MessageAttachment\MessageAttachmentEntity','message_id');
 	}
