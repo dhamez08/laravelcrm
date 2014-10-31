@@ -55,7 +55,7 @@
 										'role'=>'form',
 									)
 								)}}
-										@if( $tags )
+										@if( isset($tags) )
 											{{
 												Form::select(
 													'tags',
