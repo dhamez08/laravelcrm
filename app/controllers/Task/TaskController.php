@@ -61,7 +61,7 @@ class TaskController extends \BaseController {
 		$data['redirectURL']		= url('task');
 		$data 						= array_merge($data,$dashboard_data);
 		//var_dump($data['tasks']);
-		echo \Auth::id();
+		//echo \Auth::id();
 		return \View::make( $data['view_path'] . '.tasks.index', $data );
 	}
 
@@ -228,7 +228,8 @@ class TaskController extends \BaseController {
 				'status' 		=> '1',
 				'remind' 		=> $remind_time,
 				'remind_mins' 	=> \Input::get('remind_mins'),
-				'belongs_to' 	=> \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id
+				'belongs_to' 	=> \Auth::id()
+				//'belongs_to' 	=> \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id
 			);
 			$task = \CustomerTasks\CustomerTasksEntity::get_instance()->createOrUpdate($data);
 
