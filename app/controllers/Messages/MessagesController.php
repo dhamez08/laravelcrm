@@ -65,18 +65,48 @@ class MessagesController extends \BaseController {
 		return $data;
 	}
 
+	private function _getClientData($clientId) {
+		$data 						= $this->data_view;
+		$data['pageTitle'] 			= 'Client';
+		$data['contentClass'] 		= '';
+		$data['portlet_body_class']	= 'form';
+		$data['portlet_title']		= 'Client';
+		$data['fa_icons']			= 'user';
+		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+		$data['customer']			= \Clients\Clients::find($clientId);
+		$data['currentClient']		= \Clients\ClientEntity::get_instance()->bindCustomer($data['customer']);
+		$data['telephone']			= $data['customer']->telephone();
+		$data['email']				= $data['customer']->emails();
+		$data['url']				= $data['customer']->url();
+		$data['profileImg']			= $data['customer']->profileImage();
+		$data['belongToPartner']	= \Clients\ClientEntity::get_instance()->getPartnerBelong($data['customer']);
+		$data['associate']			= \Clients\ClientEntity::get_instance()->setAssociateCustomer($clientId);
+		$data['partner']			= \Clients\ClientEntity::get_instance()->getCustomerPartner();
+
+		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getCustomerTasks($clientId)
+		->status(1)->with('label');
+
+		return $data;
+	}
+
 	/**
 	 * Index of settings
 	 * @return View
 	 * */
-	public function getIndex(){
-		$data = $this->data_view;
-		$data['center_view'] = 'inbox';
-		$data['message_title'] = 'Inbox';
-		$data['messages'] 	= \Message\MessageEntity::get_instance()->listAllMessages();
-		$dataMessages 	= $this->_messageCommon();
-		$data 	= array_merge($data,$this->getSetupThemes(),$dataMessages);
-		return \View::make( $data['view_path'] . '.messages.index', $data );
+	public function getIndex($client_id){
+		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+		$dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
+		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed');
+
+		$data['messages'] = \Message\MessageEntity::get_instance()->getCustomerMessages($client_id);
+
+		$data1 = $this->_getClientData($client_id);
+
+		$data['center_column_view']	= 'messages';
+
+		$data 	= array_merge($data,$data1,$dashboard_data);
+
+		return \View::make( $data['view_path'] . '.clients.messages', $data );
 	}
 
 	public function getInbox(){
@@ -586,7 +616,13 @@ class MessagesController extends \BaseController {
 		$message = \Message\MessageEntity::find($id);
 		if($message) {
 			$message->delete();
-			return \Redirect::to('messages/trash');
+			if(\Input::get('back') && \Input::get('back')=='yes') {
+				\Session::flash('message', 'Message Successfully moved to trash.');
+				return \Redirect::back();
+			}
+			else {
+				return \Redirect::to('messages/trash');	
+			}
 		}
 
 		return \Redirect::back();

@@ -24,7 +24,11 @@
 				</a>
 			</li>
 			<li>
-				<a href="{{url('messages')}}">
+				@if(isset($customer))
+				<a href="{{url('client-messages/'.$customer->id)}}">
+				@else
+				<a href="javascript:;">
+				@endif
 				<i class="icon-rocket"></i>
 				<span class="title">Messages</span>
 				<span class="arrow "></span>

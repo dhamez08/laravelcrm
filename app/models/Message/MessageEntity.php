@@ -133,6 +133,13 @@ class MessageEntity extends \Eloquent{
 		return $query;
 	}
 
+	public function getCustomerMessages($id) {
+		$sql = "SELECT * FROM messages WHERE customer_id=? AND (direction='1' OR direction='2') AND deleted_at IS NULL ORDER BY added_date DESC";
+		$query = \DB::select($sql, array($id));
+
+		return $query;
+	}
+
 	public function attachments() {
 		return $this->hasMany('\MessageAttachment\MessageAttachmentEntity','message_id');
 	}
