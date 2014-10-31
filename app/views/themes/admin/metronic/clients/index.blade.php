@@ -116,7 +116,7 @@
 													Delete </a>
 												</td>
 											@else
-												@if( in_array($tag_id,$customers['my_tag_object']->lists('id')) )
+												@if( in_array($tag_id,$customers['my_tag_object']->lists('tag_id')) )
 													<td>
 														Photo here
 													</td>
