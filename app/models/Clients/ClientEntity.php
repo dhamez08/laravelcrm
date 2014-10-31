@@ -169,7 +169,9 @@ class ClientEntity extends \Eloquent{
 
 	public function getCustomerHead($belongsTo, $arrayType = array()){
 		$arrayCustomer = array();
-		$dataCustomer = \Clients\Clients::customerType($arrayType)->customerBelongsTo($belongsTo);
+		$dataCustomer = \Clients\Clients::customerType($arrayType)
+		->customerBelongsTo($belongsTo)
+		->with('myTag');
 		if( $dataCustomer->count() > 0 ){
 			foreach($dataCustomer->get() as $val){
 				$arrayCustomer[$val->id]['customer_id'] = $val->id;
@@ -181,6 +183,8 @@ class ClientEntity extends \Eloquent{
 				$arrayCustomer[$val->id]['type'] = $val->type;
 				$arrayCustomer[$val->id]['company_name'] = $val->company_name;
 				$arrayCustomer[$val->id]['organisation'] = $val->organisation;
+				$arrayCustomer[$val->id]['my_tag_object'] = $val->my_tag;
+				$arrayCustomer[$val->id]['my_tag'] = $val->my_tag->lists('id');
 			}
 			return $arrayCustomer;
 		}
@@ -235,8 +239,7 @@ class ClientEntity extends \Eloquent{
 
 	public function typeaheadJson($data){
 		$typehead 	= array();
-
-		foreach($data->get() as $parse_key => $parse_val)
+		foreach($data as $parse_key => $parse_val)
 		{
 			if($parse_val->type == 2){
 				$typehead[] = array('id'=>$parse_val->id,'Name'=>$parse_val->company_name);

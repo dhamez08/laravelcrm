@@ -56,7 +56,7 @@ var Notes = function () {
         jQuery('body').on('loaded.bs.modal', '.modal', function () {
 			 var redirectUrl = jQuery(location).attr('href');
 			 jQuery(this).find('#redirect').val(redirectUrl);
-
+			 jQuery(this).removeData('bs.modal');
 			 createNotes();
 		});
     }

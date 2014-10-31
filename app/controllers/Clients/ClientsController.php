@@ -184,8 +184,10 @@ class ClientsController extends \BaseController {
 		$data['portlet_body_class']	= 'form';
 		$data['portlet_title']		= 'Client';
 		$data['fa_icons']			= 'user';
+		$data['tag_id']				= \Input::has('tags') ? (\Input::get('tags') != 0 ) ? \Input::get('tags'):null:null;
 		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
-		$data['array_customer']		= \Clients\ClientEntity::get_instance()->getCustomerHead($group_id,$this->get_customer_type);
+		$data['array_customer']		= \Clients\ClientEntity::get_instance()->getCustomerHead($group_id, $this->get_customer_type);
+		$data['tags']			 	= \ClientTag\ClientTagEntity::get_instance()->getTagsByLoggedUser();
 		$data['center_column_view'] = 'dashboard';
 		$data 						= array_merge($data,$this->getSetupThemes());
 		return \View::make( $data['view_path'] . '.clients.index', $data );
@@ -1447,9 +1449,9 @@ class ClientsController extends \BaseController {
 
 	public function getTypeaheadClient(){
 		$currentUserId 	= \Auth::id();
-		$customer 		= \Clients\Clients::find($currentUserId);
-		if( $customer->customerBelongsUser($customer->id)->count() > 0 ){
-			echo \Clients\ClientEntity::get_instance()->typeaheadJson($customer->customerBelongsUser($customer->id));
+		$customer 		= \Clients\Clients::customerBelongsUser(\Auth::id());
+		if( $customer->count() > 0 ){
+			echo \Clients\ClientEntity::get_instance()->typeaheadJson($customer->get());
 		}
 	}
 

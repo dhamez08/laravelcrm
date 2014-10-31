@@ -96,6 +96,7 @@ var CreateTask = (function(){
 	return{
 		init:function($selector, $modalSelector){
             jQuery('body').on('loaded.bs.modal', '.modal', function () {
+				jQuery(this).removeData('bs.modal');
             	jQuery('#task_date').datepicker({
 				    autoclose:true,
 				    //startDate: '+0d',
