@@ -109,7 +109,7 @@
 		<!-- END NOTIFICATION DROPDOWN -->
 		<!-- BEGIN INBOX DROPDOWN -->
 		<li id="header_inbox_bar" class="dropdown dropdown-extended dropdown-inbox">
-			<a data-close-others="true" data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle" href="{{ url('messages') }}">
+			<a data-close-others="true" data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle" onclick="window.location='{{ url('messages/inbox') }}'">
 			<i class="icon-envelope-open"></i>
 			@if(\Message\MessageEntity::get_instance()->getUnreadMessagesCount())
 			<span class="badge badge-default">{{ \Message\MessageEntity::get_instance()->getUnreadMessagesCount() }}</span>
