@@ -27,8 +27,8 @@ class MessagesController extends \BaseController {
 	 * auto setup initialize object
 	 * */
 	public function __construct(){
-		parent::__construct();		
-		$this->data_view = parent::setupThemes();		
+		parent::__construct();
+		$this->data_view = parent::setupThemes();
 		$this->data_view['master_view'] 	= $this->data_view['view_path'] . '.dashboard.index';
 		$this->destination_path = "/public/document/library/own/";
 		$this->get_customer_type = array(1,2,3);
@@ -70,12 +70,12 @@ class MessagesController extends \BaseController {
 	 * @return View
 	 * */
 	public function getIndex(){
-		$data 							= $this->data_view;
-		$data['pageTitle'] 				= 'Messages';
-		$dataMessages 					= $this->_messageCommon();
-		$data['portlet_title']			= 'Messages';
-		$data 							= array_merge($data,$this->getSetupThemes(), $dataMessages);
-
+		$data = $this->data_view;
+		$data['center_view'] = 'inbox';
+		$data['message_title'] = 'Inbox';
+		$data['messages'] 	= \Message\MessageEntity::get_instance()->listAllMessages();
+		$dataMessages 	= $this->_messageCommon();
+		$data 	= array_merge($data,$this->getSetupThemes(),$dataMessages);
 		return \View::make( $data['view_path'] . '.messages.index', $data );
 	}
 
@@ -104,7 +104,7 @@ class MessagesController extends \BaseController {
 				} elseif($action=='message_delete') {
 					$message->delete();
 				}
-				
+
 			}
 		}
 
@@ -152,7 +152,7 @@ class MessagesController extends \BaseController {
 				} elseif($action=='message_force_delete') {
 					$message->forceDelete();
 				}
-				
+
 			}
 		}
 
@@ -360,7 +360,7 @@ class MessagesController extends \BaseController {
 					\Mail::send('emails.clients.index', $data, function($m) use ($data, $from_name, $from_email, $message_attachments, $message, $subject)
 					{
 						$m->from($from_email, $from_name);
-						
+
 						if(count($message_attachments)>0) {
 							foreach($message_attachments as $attachment) {
 								$m->attach(url('/') . '/public/' . $attachment->file);
@@ -565,7 +565,7 @@ class MessagesController extends \BaseController {
 				\Mail::send('emails.clients.index', $data, function($m) use ($data, $from_name, $from_email, $message_attachments, $message)
 				{
 					$m->from($from_email, $from_name);
-					
+
 					if(count($message_attachments)>0) {
 						foreach($message_attachments as $attachment) {
 							$m->attach(url('/') . '/public/' . $attachment->file);

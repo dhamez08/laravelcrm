@@ -100,7 +100,6 @@ class MarketingController extends \BaseController {
 	}
 
 	public function postSendSmsVerify(){
-
 		if (trim(\Input::get('message')) == '') {
 			$this->session->set_flashdata('error', '<div class="alert alert-danger">You must enter a message.</div>');
 			return \Redirect::to('marketing/message-sms')->withErrors('You must enter a message');
@@ -166,22 +165,41 @@ class MarketingController extends \BaseController {
 
 		if (count($list_number) > 0) {
 			$messagetosend = "";
-			//$explode_data = explode("|", $recipients[0]);
 			foreach ($list_number as $key => $val) {
+				//personalize the message
 				if ($sms_session['personalised']) {
 					$messagetosend = 'Hi '. $val['name'] .'. '. $sms_session['message'];
 				} else {
 					$messagetosend = $sms_session['message'];
 				}
+				//send sms thru textlocal gateway
 				$txt_local = \Marketing\MarketingEntity::get_instance()->sendSMS(
 					$val['number'],
 					$messagetosend,
 					\Auth::id(),
 					true
 				);
+
 				if( !$txt_local->status == 'success' ){
 					//input number
+					/*
+					 * this will be the list of unsuccessful sent number
+					 * in time we can display this
+					 * */
 					$number_not_success[] = $val['number'];
+				}else{
+					//insert in the message table
+					$message_data = array(
+						'customer_id' => $key,
+						'sender' => \Auth::user()->title.' '.\Auth::user()->first_name.' '.\Auth::user()->last_name,
+						'body' => $messagetosend,
+						'to' => $val['number'],
+						'subject' => 'Text message sent to client - ' . $val['name'],
+						'direction' => 1,
+						'method' => 2,
+						'ref' => 'SMS_' . time()
+					);
+					\Message\MessageEntity::get_instance()->createOrUpdate($message_data);
 				}
 			}
 			//if( count($number_not_success) > 0 ){

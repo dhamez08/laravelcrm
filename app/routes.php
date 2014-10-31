@@ -12,7 +12,6 @@
 */
 Route::group(array('before' => 'auth'), function()
 {
-
 	Route::controller( 'clients' , 'Clients\ClientsController');
 	Route::controller( 'profile' , 'Profile\ProfileController' );
 	Route::controller( 'document-library' , 'DocumentLibraries\DocumentLibrariesController' );

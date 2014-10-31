@@ -48,6 +48,32 @@ class MessageEntity extends \Eloquent{
 		return self::$instance;
 	}
 
+	/**
+	 * This is use to create user or update
+	 * this is full field, mainly use in register
+	 *
+	 * @param 	$id		int		default null		if there is id then update, else create
+	 * @param	$active	int		default 2			#2 means not active
+	 * 												#1 would be active
+	 * @return db last insert id
+	 * */
+	public function createOrUpdate($arrayData = array(), $id = null){
+		if( is_null($id) ) {
+			//create
+			$obj = new \Message\Message;
+		}else{
+			//update
+			$obj = \Message\Message::find($id);
+		}
+		if( count($arrayData) > 0 ){
+			foreach($arrayData as $key=>$val){
+				$obj->$key = $val;
+			}
+			$obj->save();
+			return $obj;
+		}
+	}
+
 	public function listAllMessages() {
 		$rows = array();
 		$sql = "SELECT m.id, m.sender, m.to, m.subject, m.body, m.added_date, m.read_status, m.direction, c.belongs_to, CONCAT(c.company_name, ' ', c.first_name, ' ', c.last_name) as client, c.id as clientid FROM messages m, customer c WHERE m.customer_id=c.id AND c.belongs_to=? AND m.direction='2' AND m.deleted_at IS NULL ORDER BY m.read_status, m.added_date DESC";

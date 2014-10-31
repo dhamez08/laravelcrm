@@ -24,7 +24,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="javascript:;">
+				<a href="{{url('messages')}}">
 				<i class="icon-rocket"></i>
 				<span class="title">Messages</span>
 				<span class="arrow "></span>
