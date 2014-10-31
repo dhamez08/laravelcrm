@@ -98,7 +98,7 @@
 				<div class="form-body client-detail">
 					<div class="form-group">
 						<h4>Tags</h4>
-						{{\ClientTags\ClientTagsController::get_instance()->getClientTagWidget($clientId)}}
+						{{\ClientTags\ClientTagsController::get_instance()->getClientTagWidget($customer->id)}}
 					</div>
 				</div>
 			</div>
