@@ -179,7 +179,7 @@ class MarketingController extends \BaseController {
 					$val['number'],
 					$messagetosend,
 					\Auth::id(),
-					true
+					false
 				);
 
 				if( !$txt_local->status == 'success' ){
