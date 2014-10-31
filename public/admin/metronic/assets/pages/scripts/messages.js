@@ -316,7 +316,7 @@ var Messages = function () {
                 $.get(BASE_URL+'/settings/custom-forms/fields/'+$this.val(), function(response) {
                     var form_name = response.form.name;
                     $.each(response.build, function(i, item) {
-                        row+='<tr><td>['+form_name+':'+item.field_name+']</td></tr>';
+                        row+='<tr><td><input type="text" value="['+form_name+':'+item.field_name+']" class="form-control" style="border:0px" /></td></tr>';
                     });
 
                     $("#fields_container table tbody").append(row);
