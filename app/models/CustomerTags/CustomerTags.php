@@ -17,6 +17,14 @@ class CustomerTags extends \Eloquent{
 		return $this->belongsTo('\ClientTag\ClientTag','tag_id','id');
 	}
 
+	public function customer(){
+		return $this->belongsTo('\Clients\Clients','customer_id','id');
+	}
+
+	public function telephone(){
+		return $this->hasMany('\CustomerTelephone\CustomerTelephone','customer_id','id');
+	}
+
 	public function scopeCustomerId($query, $customer_id){
 		return $query->where('customer_id', '=', $customer_id);
 	}

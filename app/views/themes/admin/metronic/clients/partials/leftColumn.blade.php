@@ -93,16 +93,16 @@
 		 	</div>
 		 </div>
 		 <hr/>
-		<div class="row">
+		 <div class="row">
 			<div class="col-md-12">
 				<div class="form-body client-detail">
 					<div class="form-group">
 						<h4>Tags</h4>
-						{{\ClientTags\ClientTagsController::get_instance()->getClientTagWidget($currentClient->id)}}
+						{{\ClientTags\ClientTagsController::get_instance()->getClientTagWidget($clientId)}}
 					</div>
 				</div>
 			</div>
-		</div>
+		 </div>
 		 <hr/>
 		 <div class="row">
 		 	<div class="col-md-12">

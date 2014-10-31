@@ -61,11 +61,13 @@ class MarketingController extends \BaseController {
 		$data['pageTitle'] 			= 'SMS Marketing';
 		$data['contentClass'] 		= 'no-gutter';
 		$data['portlet_body_class']	= 'form';
-		$data['portlet_title']		= 'Person\'s Name and Mobile Number';
+		$data['portlet_title']		= 'Send SMS';
 		$data['fa_icons']			= 'user';
 		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
 		$data['center_column_view'] = 'dashboard';
+		$data['tag_id']				= \Input::has('tags') ? (\Input::get('tags') != 0 ) ? \Input::get('tags'):null:null;
 		$data['list_customer']		= \Marketing\MarketingEntity::get_instance()->getCustomerList();
+		$data['tags']			 	= \ClientTag\ClientTagEntity::get_instance()->getTagsByLoggedUser();
 		$data 						= array_merge($data,$this->getSetupThemes());
 		return \View::make( $data['view_path'] . '.marketing.index', $data );
 	}

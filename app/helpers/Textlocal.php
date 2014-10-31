@@ -75,7 +75,7 @@ class Textlocal {
 			foreach($result->errors as $error) {
 				switch($error->code) {
 					default:
-						throw new Exception($error->message);
+						throw new \Exception($error->message);
 				}
 			}
 		}
@@ -111,9 +111,9 @@ class Textlocal {
 		curl_close($ch);
 
 		if($rawResponse === false) {
-			throw new Exception('Failed to connect to the Textlocal service: '.$error);
+			throw new \Exception('Failed to connect to the Textlocal service: '.$error);
 		} elseif($httpCode != 200) {
-			throw new Exception('Bad response from the Textlocal service: HTTP code '.$httpCode);
+			throw new \Exception('Bad response from the Textlocal service: HTTP code '.$httpCode);
 		}
 
 		return $rawResponse;
@@ -126,7 +126,7 @@ class Textlocal {
 	 * @throws Exception
 	 */
 	private function _sendRequestFopen($command, $params) {
-		throw new Exception('Unsupported transfer method');
+		throw new \Exception('Unsupported transfer method');
 	}
 
 	/**
@@ -195,13 +195,13 @@ class Textlocal {
 	public function sendSmsGroup($groupId, $message, $sender=null, $sched =null, $test=false, $receiptURL=null, $custom=null,$optouts=false, $simpleReplyService=false) {
 
 		if(!is_numeric($groupId))
-			throw new Exception('Invalid $groupId format. Must be a numeric group ID');
+			throw new \Exception('Invalid $groupId format. Must be a numeric group ID');
 		if(empty($message))
-			throw new Exception('Empty message');
+			throw new \Exception('Empty message');
 		if(empty($sender))
-			throw new Exception('Empty sender name');
+			throw new \Exception('Empty sender name');
 		if(!is_null($sched) && !is_numeric($sched))
-			throw new Exception('Invalid date format. Use numeric epoch format');
+			throw new \Exception('Invalid date format. Use numeric epoch format');
 
 		$params = array(
 			'message' => urlencode($message),
@@ -233,13 +233,13 @@ class Textlocal {
 	public function sendMms($numbers, $fileSource, $message, $sched=null, $test=false, $optouts=false) {
 
 		if(!is_array($numbers))
-			throw new Exception('Invalid $numbers format. Must be an array');
+			throw new \Exception('Invalid $numbers format. Must be an array');
 		if(empty($message))
-			throw new Exception('Empty message');
+			throw new \Exception('Empty message');
 		if(empty($fileSource))
-			throw new Exception('Empty file source');
+			throw new \Exception('Empty file source');
 		if(!is_null($sched) && !is_numeric($sched))
-			throw new Exception('Invalid date format. Use numeric epoch format');
+			throw new \Exception('Invalid date format. Use numeric epoch format');
 
 		$params = array(
 			'message' => urlencode($message),
@@ -271,13 +271,13 @@ class Textlocal {
 	public function sendMmsGroup($groupId, $fileSource, $message, $sched=null, $test=false, $optouts=false) {
 
 		if(!is_numeric($groupId))
-			throw new Exception('Invalid $groupId format. Must be a numeric group ID');
+			throw new \Exception('Invalid $groupId format. Must be a numeric group ID');
 		if(empty($message))
-			throw new Exception('Empty message');
+			throw new \Exception('Empty message');
 		if(empty($fileSource))
-			throw new Exception('Empty file source');
+			throw new \Exception('Empty file source');
 		if(!is_null($sched) && !is_numeric($sched))
-			throw new Exception('Invalid date format. Use numeric epoch format');
+			throw new \Exception('Invalid date format. Use numeric epoch format');
 
 		$params = array(
 			'message' => urlencode($message),
@@ -315,13 +315,13 @@ class Textlocal {
 	public function transferCredits($user, $credits){
 
 	if(!is_numeric($credits))
-	throw new Exception('Invalid credits format');
+	throw new \Exception('Invalid credits format');
 	if(!is_numeric($user))
-	throw new Exception('Invalid user');
+	throw new \Exception('Invalid user');
 	if(empty($user))
-	throw new Exception('No user specified');
+	throw new \Exception('No user specified');
 	if(empty($credits))
-	throw new Exception('No credits specified');
+	throw new \Exception('No credits specified');
 
 	if(is_int($user)){
 	$params = array(
@@ -377,11 +377,11 @@ class Textlocal {
 	public function getContacts($groupId, $limit, $startPos=0) {
 
 		if(!is_numeric($groupId))
-			throw new Exception('Invalid $groupId format. Must be a numeric group ID');
+			throw new \Exception('Invalid $groupId format. Must be a numeric group ID');
 		if(!is_numeric($startPos) || $startPos < 0)
-			throw new Exception('Invalid $startPos format. Must be a numeric start position, 0 or above');
+			throw new \Exception('Invalid $startPos format. Must be a numeric start position, 0 or above');
 		if(!is_numeric($limit) || $limit < 1)
-			throw new Exception('Invalid $limit format. Must be a numeric limit value, 1 or above');
+			throw new \Exception('Invalid $limit format. Must be a numeric limit value, 1 or above');
 
 		$params = array(
 			'group_id' => $groupId,

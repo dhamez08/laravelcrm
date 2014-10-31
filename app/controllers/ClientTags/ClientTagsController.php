@@ -128,7 +128,7 @@ class ClientTagsController extends \BaseController {
 		$data['client_tag_path'] = $data['view_path'] . '.clients.tags.widget';
 		$data['tags']			 = \ClientTag\ClientTagEntity::get_instance()->getTagsByLoggedUser();
 		$data['client_id']		 = $client_id;
-		$data['client_tag']		 = \CustomerTags\CustomerTags::customerId($client_id)->with('tags');
+		$data['client_tag']		 = \CustomerTags\CustomerTags::customerId($client_id);
 		$data = array_merge($data,$this->getSetupThemes());
 		return \View::make( $data['client_tag_path'], $data )->render();
 	}
