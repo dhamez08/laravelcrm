@@ -34,7 +34,7 @@
 					<div class="actions">
 						@section('portlet-actions')
 							<a class="btn btn-default btn-sm" href="{{url('clients/create')}}">
-							<i class="fa fa-plus"></i> Add Client Person</a>
+							<i class="fa fa-plus"></i> Add Client</a>
 							<a class="btn btn-default btn-sm" href="{{action('Clients\ClientsController@getCreateClientCompany')}}">
 							<i class="fa fa-plus"></i> Add Company</a>
 							<a class="btn btn-default btn-sm" href="{{action('Clients\ClientsController@getImportPerson')}}">
@@ -46,6 +46,9 @@
 				<div class="portlet-body {{{$portlet_body_class or ''}}}">
 					@section('portlet-content')
 						<div class="client-list" style="padding:10px;">
+							<div>
+								<p>Filter By</p>
+							</div>
 							<table class="table table-striped table-advance table-hover">
 								<thead>
 									<tr>

@@ -93,7 +93,7 @@
 		 	</div>
 		 </div>
 		 <hr/>
-		<div class="row">
+		 <div class="row">
 			<div class="col-md-12">
 				<div class="form-body client-detail">
 					<div class="form-group">
@@ -102,7 +102,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		 </div>
 		 <hr/>
 		 <div class="row">
 		 	<div class="col-md-12">

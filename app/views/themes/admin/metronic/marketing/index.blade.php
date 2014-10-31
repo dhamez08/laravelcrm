@@ -23,7 +23,6 @@
 			<div class="portlet-tabs">
 				<div class="tab-content">
 					@section('portlet-content')
-						<h1>Form</h1>
 						@if( $list_customer->count() > 0 )
 							{{Form::open(
 								array(
@@ -42,9 +41,9 @@
 										);
 									}}
 								@endif
-								{{Form::submit('Filter by tag',array('class'=>"btn blue btn-sm"))}}
+								{{Form::submit('Filter Client by tag',array('class'=>"btn blue btn-sm"))}}
 							{{Form::close()}}
-
+							<p></p>
 							{{ Form::open(
 								array(
 										'action' => array('Marketing\MarketingController@postSendSmsMessage'),
@@ -54,35 +53,46 @@
 									)
 								)
 							}}
-								<ul class="">
-									@foreach( $list_customer->get() as $val_customer)
-										@if( $val_customer->telephone->count() == 1 )
-											@if( is_null($tag_id) )
-												<li>
-													<input type="checkbox" name="sendsms[{{$val_customer->id}}][clientid]" value="{{$val_customer->id}}" />
-													{{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}
-													@foreach($val_customer->telephone as $phone)
-														<input type="hidden" name="sendsms[{{$val_customer->id}}][number]" value="{{'44' . substr($phone->number, 1)}}" />
-														<input type="hidden" name="sendsms[{{$val_customer->id}}][name]" value="{{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}" />
-														- {{'44' . substr($phone->number, 1)}}
-													@endforeach
-												</li>
-											@else
-												@if( in_array($tag_id,$val_customer->my_tag->lists('tag_id')) )
-													<li>
-														<input type="checkbox" name="sendsms[{{$val_customer->id}}][clientid]" value="{{$val_customer->id}}" />
-														{{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}
-														@foreach($val_customer->telephone as $phone)
-															<input type="hidden" name="sendsms[{{$val_customer->id}}][number]" value="{{'44' . substr($phone->number, 1)}}" />
-															<input type="hidden" name="sendsms[{{$val_customer->id}}][name]" value="{{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}" />
-															- {{'44' . substr($phone->number, 1)}}
-														@endforeach
-													</li>
-												@endif
+								<table class="table table-striped table-advance table-hover">
+									<thead>
+										<tr>
+											<th>
+												Person's Name and Mobile Number
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach( $list_customer->get() as $val_customer)
+											@if( $val_customer->telephone->count() == 1 )
+												<tr>
+													<td>
+														@if( is_null($tag_id) )
+
+																<input type="checkbox" name="sendsms[{{$val_customer->id}}][clientid]" value="{{$val_customer->id}}" />
+																{{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}
+																@foreach($val_customer->telephone as $phone)
+																	<input type="hidden" name="sendsms[{{$val_customer->id}}][number]" value="{{'44' . substr($phone->number, 1)}}" />
+																	<input type="hidden" name="sendsms[{{$val_customer->id}}][name]" value="{{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}" />
+																	- {{'44' . substr($phone->number, 1)}}
+																@endforeach
+														@else
+															@if( in_array($tag_id,$val_customer->my_tag->lists('tag_id')) )
+																	<input type="checkbox" name="sendsms[{{$val_customer->id}}][clientid]" value="{{$val_customer->id}}" />
+																	{{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}
+																	@foreach($val_customer->telephone as $phone)
+																		<input type="hidden" name="sendsms[{{$val_customer->id}}][number]" value="{{'44' . substr($phone->number, 1)}}" />
+																		<input type="hidden" name="sendsms[{{$val_customer->id}}][name]" value="{{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}" />
+																		- {{'44' . substr($phone->number, 1)}}
+																	@endforeach
+
+															@endif
+														@endif
+													</td>
+												</tr>
 											@endif
-										@endif
-									@endforeach
-								</ul>
+										@endforeach
+									</tbody>
+								</table>
 								{{Form::submit('Next Step',array('class'=>"btn blue"))}}
 							{{ Form::close()}}
 							@endif
