@@ -1449,9 +1449,9 @@ class ClientsController extends \BaseController {
 
 	public function getTypeaheadClient(){
 		$currentUserId 	= \Auth::id();
-		$customer 		= \Clients\Clients::find($currentUserId);
-		if( $customer->customerBelongsUser($customer->id)->count() > 0 ){
-			echo \Clients\ClientEntity::get_instance()->typeaheadJson($customer->customerBelongsUser($customer->id));
+		$customer 		= \Clients\Clients::customerBelongsUser(\Auth::id());
+		if( $customer->count() > 0 ){
+			echo \Clients\ClientEntity::get_instance()->typeaheadJson($customer->get());
 		}
 	}
 

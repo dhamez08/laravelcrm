@@ -239,8 +239,7 @@ class ClientEntity extends \Eloquent{
 
 	public function typeaheadJson($data){
 		$typehead 	= array();
-
-		foreach($data->get() as $parse_key => $parse_val)
+		foreach($data as $parse_key => $parse_val)
 		{
 			if($parse_val->type == 2){
 				$typehead[] = array('id'=>$parse_val->id,'Name'=>$parse_val->company_name);
