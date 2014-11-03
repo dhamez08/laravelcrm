@@ -23,6 +23,11 @@
 
 		@section('head-css')
 			<!-- BEGIN GLOBAL MANDATORY STYLES -->
+			@if(!\Request::is('login'))
+				<script src="{{$asset_path}}/global/plugins/pace/pace.min.js" type="text/javascript"></script>
+				<link href="{{$asset_path}}/global/plugins/pace/themes/pace-theme-flash.css" rel="stylesheet" type="text/css"/>
+				<!-- <link href="{{$asset_path}}/global/plugins/pace/themes/pace-theme-barber-shop.css" rel="stylesheet" type="text/css"/> -->
+			@endif
 			<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
 			<link href="{{$asset_path}}/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 			<link href="{{$asset_path}}/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css"/>

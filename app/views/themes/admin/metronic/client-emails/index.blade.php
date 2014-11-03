@@ -63,7 +63,7 @@
 							<input type="hidden" name="customer_id" value="{{ $customer->id }}" />
 								<div class="inbox-compose-btn">
 									<button type="submit" name="btn_action" value="send" class="btn blue"><i class="fa fa-check"></i>Send</button>
-									<button type="button" onclick="history.back(-1);" class="btn inbox-discard-btn">Discard</button>
+									<button type="button" onclick="history.back(-1);" class="btn inbox-discard-btn">Cancel</button>
 									<button type="submit" name="btn_action" value="draft" class="btn">Draft</button>
 								</div>
 								<div class="inbox-form-group mail-to">
@@ -250,7 +250,7 @@
 								</script>
 								<div class="inbox-compose-btn">
 									<button type="submit" name="btn_action" value="send" class="btn blue"><i class="fa fa-check"></i>Send</button>
-									<button type="button" onclick="history.back(-1);" class="btn inbox-discard-btn">Discard</button>
+									<button type="button" onclick="history.back(-1);" class="btn inbox-discard-btn">Cancel</button>
 									<button type="submit" name="btn_action" value="draft" class="btn">Draft</button>
 								</div>
 							</form>
