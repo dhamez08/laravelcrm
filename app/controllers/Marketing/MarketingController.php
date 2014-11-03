@@ -235,20 +235,20 @@ class MarketingController extends \BaseController {
 	}
 
 	public function getSmsReceipt(){
-		if(
+		/*if(
 			\Input::has('number') ||
 			\Input::has('status') ||
 			\Input::has('customID') ||
 			\Input::has('datetime')
-		){
+		){*/
 			$data = array(
-				\Input::get('number') ,
-				\Input::get('status') ,
-				\Input::get('customID') ,
-				\Input::get('datetime')
+				$_REQUEST['number'] ,
+				$_REQUEST['status'] ,
+				$_REQUEST['customID'] ,
+				$_REQUEST['datetime']
 			);
 			\SMSDelivery\SMSDeliveryReceipts::get_instance()->createOrUpdate($data);
-		}
+		//}
 	}
 
 }
