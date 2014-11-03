@@ -28,12 +28,7 @@
 								</div>
 								<div class="form-group">
 									{{ Form::label('signature_body', 'Signature Body') }}
-									{{ 
-										Form::textarea
-										(
-											'signature_body', '', array('class' => 'form-control', 'required' => 'required')
-										) 
-									}}																		
+									<textarea name="signature_body" id="signature_body"></textarea>																
 								</div>
 							</div>
 						

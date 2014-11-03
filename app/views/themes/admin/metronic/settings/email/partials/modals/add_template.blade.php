@@ -37,12 +37,7 @@
 								</div>
 								<div class="form-group">
 									{{ Form::label('template_body', 'Template Body') }}
-									{{ 
-										Form::textarea
-										(
-											'template_body', '', array('class' => 'form-control', 'required' => 'required')
-										) 
-									}}																		
+									<textarea name="template_body" id="template_body"></textarea>																	
 								</div>
 								<!--
 								@foreach(range(1,5) as $i)
