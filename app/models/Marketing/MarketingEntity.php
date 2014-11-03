@@ -51,7 +51,7 @@ class MarketingEntity{
 		return $check_credit;
 	}
 
-	public function sendSMS($number, $message, $user_id, $test = false){
+	public function sendSMS($number, $message, $user_id){
 		$characters 	= strlen($message);
 		$used_credits 	= ceil($characters/160);
 		if( \SMSCredit\SMSCreditEntity::get_instance()->spendCredit($used_credits, $user_id) ){
@@ -59,7 +59,7 @@ class MarketingEntity{
 			$numbers = array($number);
 			$message = $message;
 			$sender = \Auth::user()->sms;
-			$response = $sms->sendSMS($numbers, $message, $sender, null, $test);
+			$response = $sms->sendSMS($numbers, $message, $sender, null);
 			return $response;
 		}else{
 			return false;

@@ -76,8 +76,18 @@ class MarketingController extends \BaseController {
 		\Session::forget('session_sendsms');
 		\Session::forget('sms_session');
 		if( count(\Input::get('sendsms')) > 0 ){
-			\Session::put('session_sendsms',\Input::get('sendsms'));
 			if( \SMSCredit\SMSCreditEntity::get_instance()->getSMSCredit(\Auth::id()) ){
+				$send_sms = array();
+				foreach(\Input::get('sendsms') as $key=>$val){
+					if( isset($val['clientid'])){
+						$send_sms[$key] = array(
+							'clientid' => $val['clientid'],
+							'number' => $val['number'],
+							'name' => $val['name']
+						);
+					}
+				}
+				\Session::put('session_sendsms',$send_sms);
 				return \Redirect::to('marketing/message-sms');
 			}else{
 				return \Redirect::to('marketing')->withErrors('Sorry you do not have enough credits.');
@@ -88,6 +98,7 @@ class MarketingController extends \BaseController {
 	}
 
 	public function getMessageSms(){
+
 		$data = $this->data_view;
 		$data['pageTitle'] 			= 'SMS Marketing';
 		$data['contentClass'] 		= 'no-gutter';
@@ -178,10 +189,9 @@ class MarketingController extends \BaseController {
 				$txt_local = \Marketing\MarketingEntity::get_instance()->sendSMS(
 					$val['number'],
 					$messagetosend,
-					\Auth::id(),
-					false
+					\Auth::id()
 				);
-
+				//var_dump($txt_local);
 				if( !$txt_local->status == 'success' ){
 					//input number
 					/*
@@ -213,6 +223,10 @@ class MarketingController extends \BaseController {
 				return \Redirect::to('marketing');
 			//}
 		}
+	}
+
+	public function getSmsReceipt(){
+		var_dump(\Input::all());
 	}
 
 }
