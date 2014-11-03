@@ -26,7 +26,8 @@
 					@foreach($tasks['data'] as $task)
 						<li class="">
 							<div class="task-title">
-								{{$task->displayHtmlTaskDue()}}
+								{{--$task->displayHtmlTaskDue()--}}
+								{{\Carbon\Carbon::parse($task->created_at)->toDateString()}}
 								&nbsp;
 								<span class="task-title-sp">
 									<a class="openModal" data-toggle="modal" data-target=".ajaxModal" href="{{action('Task\TaskController@getEditClientTask',array('id'=>$task->id,'customerid'=>$task->customer_id,'redirect'=>'task'))}}">
