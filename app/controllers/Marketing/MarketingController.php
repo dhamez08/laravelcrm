@@ -212,6 +212,14 @@ class MarketingController extends \BaseController {
 						'ref' => 'SMS_' . time()
 					);
 					\Message\MessageEntity::get_instance()->createOrUpdate($message_data);
+
+					$sms_sent = array(
+						'textlocal_msg_id'=>$txt_local->messages[0]->id,
+						'textlocal_msg_recipient'=>$txt_local->messages[0]->recipient,
+						'user_id'=>\Auth::id(),
+						'customer_id'=>$val['clientid'],
+					);
+					\SMSSent\SMSSentEntity::get_instance()->createOrUpdate($sms_sent);
 				}
 			}
 			//if( count($number_not_success) > 0 ){
@@ -226,7 +234,20 @@ class MarketingController extends \BaseController {
 	}
 
 	public function getSmsReceipt(){
-		var_dump(\Input::all());
+		if(
+			\Input::has('number') ||
+			\Input::has('status') ||
+			\Input::has('customID') ||
+			\Input::has('datetime')
+		){
+			$data = array(
+				\Input::get('number') ,
+				\Input::get('status') ,
+				\Input::get('customID') ,
+				\Input::get('datetime')
+			);
+			\SMSDelivery\SMSDeliveryReceipts::get_instance()->createOrUpdate($data);
+		}
 	}
 
 }
