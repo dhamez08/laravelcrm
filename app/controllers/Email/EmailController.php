@@ -133,6 +133,22 @@ class EmailController extends \BaseController {
 			$data['subject'] = \Input::get('subject');
 			$data['body'] = \Input::get('message');
 
+			//TODO
+
+			// preg_match_all('/src="([^"]*)"/', $data['body'], $matchesimage);
+
+			// dd($matchesimage);
+
+			// $imagematchsrc = $matchesimage[1][0];
+			// list($type, $imagematchsrc) = explode(';', $imagematchsrc);
+			// list(, $imagematchsrc)      = explode(',', $imagematchsrc);
+			// $imagematchsrc = base64_decode($imagematchsrc);
+
+			//dd($imagematchsrc);
+
+			//file_put_contents(public_path().'/documents/test.jpg', $imagematchsrc);
+			//echo '<img src="'.url('/public/documents/test.jpg').'">';
+			//exit;
 			if(\Input::get('email_signature')!=='') {
 				$signature = \EmailSignature\EmailSignature::find(\Input::get('email_signature'));
 				if($signature) {
