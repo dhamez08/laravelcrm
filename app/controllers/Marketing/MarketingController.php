@@ -211,13 +211,14 @@ class MarketingController extends \BaseController {
 						'method' => 2,
 						'ref' => 'SMS_' . time()
 					);
-					\Message\MessageEntity::get_instance()->createOrUpdate($message_data);
+					$msg = \Message\MessageEntity::get_instance()->createOrUpdate($message_data);
 
 					$sms_sent = array(
 						'textlocal_msg_id'=>$txt_local->messages[0]->id,
 						'textlocal_msg_recipient'=>$txt_local->messages[0]->recipient,
 						'user_id'=>\Auth::id(),
 						'customer_id'=>$val['clientid'],
+						'messages_id'=>$msg->id,
 					);
 					\SMSSent\SMSSentEntity::get_instance()->createOrUpdate($sms_sent);
 				}
