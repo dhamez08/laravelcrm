@@ -1,4 +1,11 @@
 @extends( $settings_index )
+@section('begin-head')
+	@parent
+	@section('head-page-level-css')
+		@parent
+		<link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/bootstrap-summernote/summernote.css">
+	@stop
+@stop
 @section('body-content')
 	@parent
 
@@ -40,14 +47,34 @@
 											) 
 										}}									
 									</div>
-									<div class="form-group">
-										{{ Form::label('template_body', 'Template Body') }}
-										{{ 
-											Form::textarea
-											(
-												'template_body', $body, array('class' => 'form-control', 'required' => 'required')
-											) 
-										}}																		
+									<div class="row">
+										<div class="col-md-9">
+											<div class="form-group">
+											{{ Form::label('template_body', 'Template Body') }}
+											<textarea name="template_body" id="template_body">{{ $body }}</textarea>
+											</div>
+										</div>
+										<div class="col-md-3" style="padding:0px;padding-right:30px;">
+											<h2>Dynamic Fields</h2>
+											<select id="custom_form" class="form-control">
+					                            <option value="0">Choose a Custom Form</option>
+					                        <?php
+					                        $forms = \CustomForm\CustomFormEntity::get_instance()->getFormsByLoggedUser();
+					                        ?>
+					                        @foreach($forms as $form)
+					                        	<option value="{{ $form->id }}">{{ $form->name }}</option>
+					                        @endforeach
+					                        </select>
+
+					                        <div id="fields_container" style="margin-top:15px;min-height:230px;">
+					                        	<div class="scroller" style="height:230px" data-always-visible="0" data-rail-visible="0" data-rail-color="red" data-handle-color="green">
+					                        	<table class="table table-bordered table-hover">
+													<tbody>
+													</tbody>
+												</table>
+					                        	</div>
+					                        </div>
+										</div>															
 									</div>
 									<div class="pull-right">
 										<button type="submit" class="btn green">Update</button>
@@ -67,28 +94,47 @@
 	@stop
 @stop
 
-@section('footer-custom-js')
-	<script src="{{$asset_path}}/global/plugins/ckeditor/ckeditor.js"></script>
-	<script src="{{$asset_path}}/global/plugins/ckeditor/adapters/jquery.js"></script>
+@section('script-footer')
+	@parent
+	@section('footer-custom-js')
+	@parent
+	<script src="{{$asset_path}}/global/plugins/bootstrap-summernote/summernote.min.js" type="text/javascript"></script>
 	<script>
-		CKEDITOR.replace('template_body');
-		CKEDITOR.config.toolbarGroups = [		    
-		    { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
-		    { name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
-		    { name: 'links' },
-		    { name: 'insert' },
-		];
-		/*
-		$.fn.modal.Constructor.prototype.enforceFocus = function () {
-		    modal_this = this
-		    $(document).on('focusin.modal', function (e) {
-		        if (modal_this.$element[0] !== e.target && !modal_this.$element.has(e.target).length
-		        &&
-		        !$(e.target.parentNode).hasClass('cke_dialog_ui_input_select') && !$(e.target.parentNode).hasClass('cke_dialog_ui_input_text')) {
-		            modal_this.$element.focus()
-		        }
-		    })
-		};
-		*/	
+	var BASE_URL = '{{ url('/') }}';
+	var ASSET_PATH = '{{$asset_path}}';
+	var ASSET_PATH_PUBLIC = '{{ url('public/admin/metronic/assets') }}';
 	</script>
+	<script src="{{$asset_path}}/pages/scripts/components-editors.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		jQuery(document).ready(function() {
+		   $('#template_body').summernote({height: 300});
+		   $('#signature_body').summernote({height: 300});
+
+		   $("select#custom_form").live("change", function() {
+                $this = $(this);
+                $("#fields_container table tbody").html('');
+                //show loading
+                Metronic.blockUI({
+                    target: '#fields_container',
+                    boxed: true,
+                    message: 'Processing...'
+                });
+
+                var row='';
+                $.get(BASE_URL+'/settings/custom-forms/fields/'+$this.val(), function(response) {
+                    var form_name = response.form.name;
+                    $.each(response.build, function(i, item) {
+                        row+='<tr><td><input type="text" value="['+form_name+':'+item.field_name+']" class="form-control" style="border:0px" /></td></tr>';
+                    });
+
+                    $("#fields_container table tbody").append(row);
+
+                    Metronic.unblockUI('#fields_container');
+                }).error(function() {
+                    Metronic.unblockUI('#fields_container');
+                });
+            });
+		});
+	</script>
+	@stop
 @stop

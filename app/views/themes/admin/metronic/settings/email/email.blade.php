@@ -125,6 +125,31 @@
 		jQuery(document).ready(function() {
 		   $('#template_body').summernote({height: 300});
 		   $('#signature_body').summernote({height: 300});
+
+		   $("select#custom_form").live("change", function() {
+                $this = $(this);
+                $("#fields_container table tbody").html('');
+                //show loading
+                Metronic.blockUI({
+                    target: '#fields_container',
+                    boxed: true,
+                    message: 'Processing...'
+                });
+
+                var row='';
+                $.get(BASE_URL+'/settings/custom-forms/fields/'+$this.val(), function(response) {
+                    var form_name = response.form.name;
+                    $.each(response.build, function(i, item) {
+                        row+='<tr><td><input type="text" value="['+form_name+':'+item.field_name+']" class="form-control" style="border:0px" /></td></tr>';
+                    });
+
+                    $("#fields_container table tbody").append(row);
+
+                    Metronic.unblockUI('#fields_container');
+                }).error(function() {
+                    Metronic.unblockUI('#fields_container');
+                });
+            });
 		});
 	</script>
 	@stop

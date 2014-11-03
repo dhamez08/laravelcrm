@@ -35,9 +35,34 @@
 										) 
 									}}									
 								</div>
-								<div class="form-group">
-									{{ Form::label('template_body', 'Template Body') }}
-									<textarea name="template_body" id="template_body"></textarea>																	
+								<div class="row">
+									<div class="col-md-9">
+										<div class="form-group">
+										{{ Form::label('template_body', 'Template Body') }}
+										<textarea name="template_body" id="template_body"></textarea>
+										</div>
+									</div>
+									<div class="col-md-3" style="padding:0px;padding-right:30px;">
+										<h2>Dynamic Fields</h2>
+										<select id="custom_form" class="form-control">
+				                            <option value="0">Choose a Custom Form</option>
+				                        <?php
+				                        $forms = \CustomForm\CustomFormEntity::get_instance()->getFormsByLoggedUser();
+				                        ?>
+				                        @foreach($forms as $form)
+				                        	<option value="{{ $form->id }}">{{ $form->name }}</option>
+				                        @endforeach
+				                        </select>
+
+				                        <div id="fields_container" style="margin-top:15px;min-height:230px;">
+				                        	<div class="scroller" style="height:230px" data-always-visible="0" data-rail-visible="0" data-rail-color="red" data-handle-color="green">
+				                        	<table class="table table-bordered table-hover">
+												<tbody>
+												</tbody>
+											</table>
+				                        	</div>
+				                        </div>
+									</div>															
 								</div>
 								<!--
 								@foreach(range(1,5) as $i)

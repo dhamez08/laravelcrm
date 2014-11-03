@@ -1,4 +1,11 @@
 @extends( $settings_index )
+@section('begin-head')
+	@parent
+	@section('head-page-level-css')
+		@parent
+		<link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/bootstrap-summernote/summernote.css">
+	@stop
+@stop
 @section('body-content')
 	@parent
 
@@ -58,28 +65,47 @@
 	@stop
 @stop
 
-@section('footer-custom-js')
-	<script src="{{$asset_path}}/global/plugins/ckeditor/ckeditor.js"></script>
-	<script src="{{$asset_path}}/global/plugins/ckeditor/adapters/jquery.js"></script>
+@section('script-footer')
+	@parent
+	@section('footer-custom-js')
+	@parent
+	<script src="{{$asset_path}}/global/plugins/bootstrap-summernote/summernote.min.js" type="text/javascript"></script>
 	<script>
-		CKEDITOR.replace('signature_body');
-		CKEDITOR.config.toolbarGroups = [		    
-		    { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
-		    { name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
-		    { name: 'links' },
-		    { name: 'insert' },
-		];
-		/*
-		$.fn.modal.Constructor.prototype.enforceFocus = function () {
-		    modal_this = this
-		    $(document).on('focusin.modal', function (e) {
-		        if (modal_this.$element[0] !== e.target && !modal_this.$element.has(e.target).length
-		        &&
-		        !$(e.target.parentNode).hasClass('cke_dialog_ui_input_select') && !$(e.target.parentNode).hasClass('cke_dialog_ui_input_text')) {
-		            modal_this.$element.focus()
-		        }
-		    })
-		};
-		*/	
+	var BASE_URL = '{{ url('/') }}';
+	var ASSET_PATH = '{{$asset_path}}';
+	var ASSET_PATH_PUBLIC = '{{ url('public/admin/metronic/assets') }}';
 	</script>
+	<script src="{{$asset_path}}/pages/scripts/components-editors.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		jQuery(document).ready(function() {
+		   $('#template_body').summernote({height: 300});
+		   $('#signature_body').summernote({height: 300});
+
+		   $("select#custom_form").live("change", function() {
+                $this = $(this);
+                $("#fields_container table tbody").html('');
+                //show loading
+                Metronic.blockUI({
+                    target: '#fields_container',
+                    boxed: true,
+                    message: 'Processing...'
+                });
+
+                var row='';
+                $.get(BASE_URL+'/settings/custom-forms/fields/'+$this.val(), function(response) {
+                    var form_name = response.form.name;
+                    $.each(response.build, function(i, item) {
+                        row+='<tr><td><input type="text" value="['+form_name+':'+item.field_name+']" class="form-control" style="border:0px" /></td></tr>';
+                    });
+
+                    $("#fields_container table tbody").append(row);
+
+                    Metronic.unblockUI('#fields_container');
+                }).error(function() {
+                    Metronic.unblockUI('#fields_container');
+                });
+            });
+		});
+	</script>
+	@stop
 @stop
