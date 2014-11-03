@@ -10,6 +10,12 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+Route::get( '/' , 'HomeController@getIndex' );
+Route::get( 'login' , 'AuthController@getIndex' );
+Route::post( 'login' , 'AuthController@postAuth' );
+Route::get( 'logout' , 'AuthController@getLogout' );
+Route::get( 'confirmcode/{confirm_code}' , 'AuthController@getConfirmAuthCode' );
+Route::controller( 'register' , 'RegisterController' );
 Route::get( 'marketing/sms-receipt' , 'Marketing\MarketingController@getSmsReceipt' );
 Route::group(array('before' => 'auth'), function()
 {
@@ -75,13 +81,6 @@ Route::group(array('before' => 'auth'), function()
 	Route::get( 'dashboard' , 'Dashboard\DashboardController@getIndex' );
 });
 Route::post('pass-email-data','Email\EmailController@sendData');
-
-Route::get( '/' , 'HomeController@getIndex' );
-Route::get( 'login' , 'AuthController@getIndex' );
-Route::post( 'login' , 'AuthController@postAuth' );
-Route::get( 'logout' , 'AuthController@getLogout' );
-Route::get( 'confirmcode/{confirm_code}' , 'AuthController@getConfirmAuthCode' );
-Route::controller( 'register' , 'RegisterController' );
 Route::get('testmail', function()
 {
 	$data = array('to'=>'John Smith');

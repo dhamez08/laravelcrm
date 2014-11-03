@@ -101,6 +101,7 @@ class MessagesController extends \BaseController {
 		$data['messages'] = \Message\MessageEntity::get_instance()->getCustomerMessages($client_id);
 
 		$data1 = $this->_getClientData($client_id);
+		$data['clientId'] = $client_id;
 
 		$data['center_column_view']	= 'messages';
 
@@ -621,7 +622,7 @@ class MessagesController extends \BaseController {
 				return \Redirect::back();
 			}
 			else {
-				return \Redirect::to('messages/trash');	
+				return \Redirect::to('messages/trash');
 			}
 		}
 

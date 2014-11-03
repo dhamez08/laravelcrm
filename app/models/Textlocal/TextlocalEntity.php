@@ -61,6 +61,19 @@ class TextlocalEntity extends \Eloquent{
 		 return $this->getObjectResult()->getUsers();
 	}
 
+	public function getHistoryMSG(){
+		$min_time = time(); // Get sends between now
+		$max_time = strtotime('-1 month'); // and a month ago
+		$limit = 1000;
+		$start = 0;
+		//echo $max_time;
+		return $this->getObjectResult()->getAPIMessageHistory($start, $limit, $min_time, $max_time);
+	}
+
+	public function getHistoryID($id){
+		return $this->getObjectResult()->getMessageStatus($id);
+	}
+
 	/**
 	 * Send an SMS to one or more comma separated numbers
 	 * @param $numbers
