@@ -154,6 +154,7 @@
 				GetClient.init('get-clients', '.getclient', url, '#customer_id', 'Name');
 				CreateTask.init('.openModal','.ajaxModal');
 				Metronic.init();
+				Index.init();
 			});
 		</script>
 	@show

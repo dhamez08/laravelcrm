@@ -4,6 +4,9 @@ Custom module for you to write your own javascript functions
 var Index = function () {
 
 	var modalEvent = function(){
+		jQuery('body').on('show.bs.modal', '.modal', function () {
+			jQuery(this).removeData('bs.modal');
+		});
 		jQuery('body').on('loaded.bs.modal', '.modal', function () {
 			jQuery(this).removeData('bs.modal');
 		});
