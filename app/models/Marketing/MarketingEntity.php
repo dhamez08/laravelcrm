@@ -60,7 +60,6 @@ class MarketingEntity{
 			$message = $message;
 			$sender = \Auth::user()->sms;
 			$response = $sms->sendSMS($numbers, $message, $sender, null, $test);
-
 			return $response;
 		}else{
 			return false;

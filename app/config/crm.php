@@ -252,7 +252,8 @@ return array(
 	'textlocal'=>array(
 		'api' => array(
 			'hashcode'=>'ea940442105f12c00f8c1172ee78f8352ebdc27d',
-			'login'=>'steve.warden1@btopenworld.com'
+			'login'=>'steve.warden1@btopenworld.com',
+			'test' => true,
 		),
 	),
 	'currency'=>array(

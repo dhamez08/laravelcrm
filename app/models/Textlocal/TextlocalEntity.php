@@ -13,9 +13,12 @@ class TextlocalEntity extends \Eloquent{
 
 	protected $textlocal_hash;
 
+	protected $textlocal_sendsms_test;
+
 	public function __construct(){
 		$this->textlocal_login = \Config::get('crm.textlocal.api.login');
 		$this->textlocal_hash = \Config::get('crm.textlocal.api.hashcode');
+		$this->textlocal_sendsms_test = \Config::get('crm.textlocal.api.test');
 	}
 
 	/**
@@ -31,6 +34,18 @@ class TextlocalEntity extends \Eloquent{
 		}
 
 		return self::$instance;
+	}
+
+	public function setSendSmsTest($test = null){
+		if( is_null( $test ) ){
+			return $this->textlocal_sendsms_test;
+		}else{
+			return $test_send_sms;
+		}
+	}
+
+	public function getSendSmsTest(){
+		return $this->textlocal_sendsms_test;
 	}
 
 	public function apiTextlocal(){
@@ -107,8 +122,8 @@ class TextlocalEntity extends \Eloquent{
 		$numbers,
 		$message,
 		$sender,
-		$sched=null,
-		$test = false,
+		$sched = null,
+		$test = $this->getSendSmsTest(),
 		$receiptURL=null,
 		$custom=null,
 		$optouts=false,
