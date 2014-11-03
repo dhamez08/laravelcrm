@@ -100,12 +100,13 @@ class MessagesController extends \BaseController {
 
 		$data['messages'] = \Message\MessageEntity::get_instance()->getCustomerMessages($client_id);
 
-		$data1 = $this->_getClientData($client_id);
+		$clientData = $this->_getClientData($client_id); //get clients data
+
 		$data['clientId'] = $client_id;
 
 		$data['center_column_view']	= 'messages';
 
-		$data 	= array_merge($data,$data1,$dashboard_data);
+		$data 	= array_merge($data,$clientData,$dashboard_data);
 
 		return \View::make( $data['view_path'] . '.clients.messages', $data );
 	}
