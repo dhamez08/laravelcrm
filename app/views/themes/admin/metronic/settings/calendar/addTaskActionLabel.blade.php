@@ -1,4 +1,17 @@
 @extends( $settings_index )
+@section('begin-head')
+	@parent
+	@section('head-page-level-css')
+		@parent
+		<!-- BEGIN PAGE LEVEL STYLES -->
+		<link href="{{$asset_path}}/pages/css/inbox.css" rel="stylesheet" type="text/css"/>
+		
+		<link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/bootstrap-select/bootstrap-select.min.css"/>
+		<link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/select2/select2.css"/>
+		<link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/jquery-multi-select/css/multi-select.css"/>
+		<!-- END PAGE LEVEL STYLES -->
+	@stop
+@stop
 @section('body-content')
 	@parent
 	@section('innerpage-content')
@@ -38,5 +51,28 @@
 				</div>
 			{{Form::close()}}
 		@stop
+	@stop
+@stop
+@section('script-footer')
+	@parent
+	@section('footer-custom-js')
+	@parent
+	<script type="text/javascript" src="{{$asset_path}}/global/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+	<script type="text/javascript" src="{{$asset_path}}/global/plugins/select2/select2.min.js"></script>
+	<script type="text/javascript" src="{{$asset_path}}/global/plugins/jquery-multi-select/js/jquery.multi-select.js"></script>
+	<script src="{{$asset_path}}/pages/scripts/components-dropdowns.js"></script>
+	<script src="{{$asset_path}}/pages/scripts/ui-blockui.js"></script>
+
+	<script>
+	var BASE_URL = '{{ url('/') }}';
+	var ASSET_PATH = '{{$asset_path}}';
+	var ASSET_PATH_PUBLIC = '{{ url('public/admin/metronic/assets') }}';
+	</script>
+
+	<script type="text/javascript">
+		jQuery(document).ready(function() {
+		   ComponentsDropdowns.init();
+		});
+	</script>
 	@stop
 @stop
