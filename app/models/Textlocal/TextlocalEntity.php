@@ -80,12 +80,14 @@ class TextlocalEntity extends \Eloquent{
 		$message,
 		$sender,
 		$sched=null,
-		$test = true,
+		$test = null,
 		$receiptURL=null,
 		$custom=null,
 		$optouts=false,
 		$simpleReplyService=false
 	){
+		$test = $this->getSendSmsTest();
+		$receiptURL = url('marketing/sms-receipt');
 		$get_costs = $this->sendSms(
 			$numbers,
 			$message,
@@ -123,12 +125,14 @@ class TextlocalEntity extends \Eloquent{
 		$message,
 		$sender,
 		$sched = null,
-		$test = $this->getSendSmsTest(),
+		$test = null,
 		$receiptURL=null,
 		$custom=null,
 		$optouts=false,
 		$simpleReplyService=false
 	){
+		 $test = $this->getSendSmsTest();
+		 $receiptURL = url('marketing/sms-receipt');
 		 return $this->getObjectResult()->sendSms(
 			$numbers,
 			$message,

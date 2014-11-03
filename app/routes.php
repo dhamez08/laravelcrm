@@ -10,6 +10,7 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+Route::get( 'marketing/sms-receipt' , 'Marketing\MarketingController@getSmsReceipt' );
 Route::group(array('before' => 'auth'), function()
 {
 	Route::controller( 'clients' , 'Clients\ClientsController');
@@ -73,7 +74,6 @@ Route::group(array('before' => 'auth'), function()
 	Route::controller('custom-tab','CustomTab\CustomTabController');
 	Route::get( 'dashboard' , 'Dashboard\DashboardController@getIndex' );
 });
-
 Route::post('pass-email-data','Email\EmailController@sendData');
 
 Route::get( '/' , 'HomeController@getIndex' );
