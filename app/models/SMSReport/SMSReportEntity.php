@@ -5,8 +5,15 @@ class SMSReportEntity extends \Eloquent{
 
 	protected static $instance = null;
 
-	public function __construct(){
+	protected $status;
 
+	public function __construct(){
+		$this->status = array(
+			'D' => 'Delivered',
+			'U' => 'Undelivered',
+			'I' => 'Phone number is Invalid',
+			'?' => 'Unknown',
+		);
 	}
 
 	/**
@@ -22,6 +29,14 @@ class SMSReportEntity extends \Eloquent{
 		}
 
 		return self::$instance;
+	}
+
+	public function getStatus(){
+		return $this->status;
+	}
+
+	public function getMsgStatus($msg_status){
+		return $this->status[$msg_status];
 	}
 
 	/**

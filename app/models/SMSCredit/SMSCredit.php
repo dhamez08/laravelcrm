@@ -21,6 +21,10 @@ class SMSCredit extends \Eloquent{
 
 	}
 
+	public function user(){
+		return $this->belongsTo('\User\User');
+	}
+
 	public function scopeUserId($query, $userId){
 		return $query->where('user_id', '=', $userId);
 	}

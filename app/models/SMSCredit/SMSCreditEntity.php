@@ -84,6 +84,10 @@ class SMSCreditEntity extends \Eloquent{
 		return $credit;
 	}
 
+	public function getCurrentUserCredit(){
+		return \Auth::user()->with('sms');
+	}
+
 	public function getSMSCredit($user_id){
 		$check_credit = \SMSCredit\SMSCredit::userId($user_id);
 		if(  $check_credit->count() ){

@@ -40,4 +40,12 @@ class SMSReport extends \Eloquent{
 		return self::$instance;
 	}
 
+	public function scopeUserId($query, $userId){
+		return $query->where('user_id', '=', $userId);
+	}
+
+	public function scopeCustomerId($query, $customerId){
+		return $query->where('customer_id', '=', $customerId);
+	}
+
 }

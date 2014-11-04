@@ -23,80 +23,33 @@
 			<div class="portlet-tabs">
 				<div class="tab-content">
 					@section('portlet-content')
-						@if( $list_customer->count() > 0 )
-							{{Form::open(
-								array(
-									'action' => array('Marketing\MarketingController@getIndex'),
-									'method' => 'GET',
-									'class' => 'form-horizontal',
-									'role'=>'form',
-								)
-							)}}
-								@if( $tags )
-									{{
-										Form::select(
-											'tags',
-											array_merge(array('0'=>'Select All'),$tags->lists('tag','id')),
-											isset($tag_id) ? $tag_id:null
-										);
-									}}
-								@endif
-								{{Form::submit('Filter Client by tag',array('class'=>"btn blue btn-sm"))}}
-							{{Form::close()}}
-							<p></p>
-							{{ Form::open(
-								array(
-										'action' => array('Marketing\MarketingController@postSendSmsMessage'),
-										'method' => 'POST',
-										'class' => 'form-horizontal',
-										'role'=>'form',
-									)
-								)
-							}}
-								<table class="table table-striped table-advance table-hover">
-									<thead>
+						<h3>Current SMS credit : {{$sms_credit}}</h3>
+						<table class="table table-striped table-advance table-hover">
+							<thead>
+								<tr>
+									<th>Date</th>
+									<th>To</th>
+									<th>From</th>
+									<th>Message</th>
+									<th>Status</th>
+								</tr>
+							</thead>
+							<tbody>
+								@if( $report->count() > 0 )
+									@foreach($report->get() as $report_item)
 										<tr>
-											<th>
-												Person's Name and Mobile Number
-											</th>
+											<td>{{$report_item->created_at}}</td>
+											<td>{{$report_item->to}}</td>
+											<td>{{$report_item->from}}</td>
+											<td>{{$report_item->message}}</td>
+											<td>{{\SMSReport\SMSReportEntity::get_instance()->getMsgStatus($report_item->status)}}</td>
 										</tr>
-									</thead>
-									<tbody>
-										@foreach( $list_customer->get() as $val_customer)
-											@if( $val_customer->telephone->count() == 1 )
-												<tr>
-													<td>
-														@if( is_null($tag_id) )
-
-																<input type="checkbox" name="sendsms[{{$val_customer->id}}][clientid]" value="{{$val_customer->id}}" />
-																{{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}
-																@foreach($val_customer->telephone as $phone)
-																	<input type="hidden" name="sendsms[{{$val_customer->id}}][number]" value="{{'44' . substr($phone->number, 1)}}" />
-																	<input type="hidden" name="sendsms[{{$val_customer->id}}][name]" value="{{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}" />
-																	- {{'44' . substr($phone->number, 1)}}
-																@endforeach
-														@else
-															@if( in_array($tag_id,$val_customer->my_tag->lists('tag_id')) )
-																	<input type="checkbox" name="sendsms[{{$val_customer->id}}][clientid]" value="{{$val_customer->id}}" />
-																	{{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}
-																	@foreach($val_customer->telephone as $phone)
-																		<input type="hidden" name="sendsms[{{$val_customer->id}}][number]" value="{{'44' . substr($phone->number, 1)}}" />
-																		<input type="hidden" name="sendsms[{{$val_customer->id}}][name]" value="{{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}" />
-																		- {{'44' . substr($phone->number, 1)}}
-																	@endforeach
-
-															@endif
-														@endif
-													</td>
-												</tr>
-											@endif
-										@endforeach
-									</tbody>
-								</table>
-								{{Form::submit('Next Step',array('class'=>"btn blue"))}}
-							{{ Form::close()}}
-							@endif
+									@endforeach
+								@endif
+							</tbody>
+						</table>
 					@show
+					<a href="{{url('marketing/send-client-sms')}}" class="btn btn-primary">Send SMS</a>
 				</div>
 			</div>
 		</div>

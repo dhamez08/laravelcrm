@@ -58,6 +58,24 @@ class MarketingController extends \BaseController {
 
 	public function getIndex(){
 		$data = $this->data_view;
+		$data['pageTitle'] 			= 'SMS Report';
+		$data['contentClass'] 		= 'no-gutter';
+		$data['portlet_body_class']	= 'form';
+		$data['portlet_title']		= 'Message Report';
+		$data['fa_icons']			= 'user';
+		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+		$data['center_column_view'] = 'dashboard';
+		$data['tag_id']				= \Input::has('tags') ? (\Input::get('tags') != 0 ) ? \Input::get('tags'):null:null;
+		$data['list_customer']		= \Marketing\MarketingEntity::get_instance()->getCustomerList($data['tag_id']);
+		$data['tags']			 	= \ClientTag\ClientTagEntity::get_instance()->getTagsByLoggedUser();
+		$data['report']			 	= \SMSReport\SMSReport::userId( \Auth::id() );
+		$data['sms_credit']			= \SMSCredit\SMSCreditEntity::get_instance()->getSMSCredit(\Auth::id())->pluck('credits');
+		$data 						= array_merge($data,$this->getSetupThemes());
+		return \View::make( $data['view_path'] . '.marketing.index', $data );
+	}
+
+	public function getSendClientSms(){
+		$data = $this->data_view;
 		$data['pageTitle'] 			= 'SMS Marketing';
 		$data['contentClass'] 		= 'no-gutter';
 		$data['portlet_body_class']	= 'form';
@@ -69,7 +87,7 @@ class MarketingController extends \BaseController {
 		$data['list_customer']		= \Marketing\MarketingEntity::get_instance()->getCustomerList($data['tag_id']);
 		$data['tags']			 	= \ClientTag\ClientTagEntity::get_instance()->getTagsByLoggedUser();
 		$data 						= array_merge($data,$this->getSetupThemes());
-		return \View::make( $data['view_path'] . '.marketing.index', $data );
+		return \View::make( $data['view_path'] . '.marketing.send_sms', $data );
 	}
 
 	public function postSendSmsMessage(){
@@ -130,7 +148,7 @@ class MarketingController extends \BaseController {
 					$characters += strlen('Hi '. $message .'. ');
 				}
 				$characters += $message_characters;
-				$sms_count += ceil($characters/160);
+				$sms_count  += ceil($characters/160);
 			}
 			$cred = \SMSCredit\SMSCreditEntity::get_instance()->getSMSCredit(\Auth::id());
 
@@ -180,6 +198,7 @@ class MarketingController extends \BaseController {
 			$messagetosend = "";
 			foreach ($list_number as $key => $val) {
 				//personalize the message
+				$client_id = $key;
 				if ($sms_session['personalised']) {
 					$messagetosend = 'Hi '. $val['name'] .'. '. $sms_session['message'];
 				} else {
@@ -192,7 +211,7 @@ class MarketingController extends \BaseController {
 					\Auth::id()
 				);
 				//var_dump($txt_local);
-				if( !$txt_local->status == 'success' ){
+				if( $txt_local->status != 'success' ){
 					//input number
 					/*
 					 * this will be the list of unsuccessful sent number
@@ -202,7 +221,7 @@ class MarketingController extends \BaseController {
 				}else{
 					//insert in the message table
 					$message_data = array(
-						'customer_id' => $key,
+						'customer_id' => $val['clientid'],
 						'sender' => \Auth::user()->title.' '.\Auth::user()->first_name.' '.\Auth::user()->last_name,
 						'body' => $messagetosend,
 						'to' => $val['number'],
@@ -232,7 +251,9 @@ class MarketingController extends \BaseController {
 						'from' => \Auth::user()->title.' '.\Auth::user()->first_name.' '.\Auth::user()->last_name,
 						'client_name' => $val['name'],
 						'message' => $messagetosend,
-						'status' => $msg_status->message->status
+						'status' => $msg_status->message->status,
+						'customer_id' => $val['clientid'],
+						'user_id' => \Auth::id()
 					);
 					\SMSReport\SMSReportEntity::get_instance()->createOrUpdate($sms_report);
 				}
