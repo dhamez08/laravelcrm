@@ -102,7 +102,7 @@
 	<div class="inbox-form-group row">
 		<!-- <textarea class="inbox-editor inbox-wysihtml5 form-control" name="message" rows="12"></textarea> -->
 		<div class="col-md-9">
-			<textarea name="message" id="message"></textarea>
+			<textarea name="message" id="message"><blockquote>{{ nl2br($message->body) }}</blockquote></textarea>
 		</div>
 		<div class="col-md-3" style="padding:0px;padding-right:30px;">
 			<h2>Dynamic Fields</h2>
