@@ -1,7 +1,7 @@
 <?php
-namespace SMSSent;
+namespace SMSReport;
 
-class SMSSent extends \Eloquent{
+class SMSReport extends \Eloquent{
 
 	protected static $instance = null;
 
@@ -10,13 +10,15 @@ class SMSSent extends \Eloquent{
 	 *
 	 * @var string
 	 */
-	protected $table = 'sms_sent';
+	protected $table = 'sms_report';
 
 	protected $fillable = array(
-		'textlocal_msg_id',
-		'textlocal_msg_recipient',
-		'user_id',
-		'customer_id'
+		'sms_sent_id',
+		'to',
+		'from',
+		'client_name',
+		'message',
+		'status'
 	);
 
 	public function __construct(){
@@ -36,10 +38,6 @@ class SMSSent extends \Eloquent{
 		}
 
 		return self::$instance;
-	}
-
-	public function message(){
-		return $this->belongsTo('\Message\Message','messages_id');
 	}
 
 }

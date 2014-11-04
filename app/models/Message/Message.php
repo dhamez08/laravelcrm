@@ -19,4 +19,8 @@ class Message extends \Eloquent{
 		'ref',
 		'read_status'
 	);
+
+	public function sms(){
+		return $this->hasOne('\SMSSent\SMSSent');
+	}
 }

@@ -213,6 +213,7 @@ class MarketingController extends \BaseController {
 					);
 					$msg = \Message\MessageEntity::get_instance()->createOrUpdate($message_data);
 
+					// create data in sending sms
 					$sms_sent = array(
 						'textlocal_msg_id'=>$txt_local->messages[0]->id,
 						'textlocal_msg_recipient'=>$txt_local->messages[0]->recipient,
@@ -220,17 +221,18 @@ class MarketingController extends \BaseController {
 						'customer_id'=>$val['clientid'],
 						'messages_id'=>$msg->id,
 					);
-					\SMSSent\SMSSentEntity::get_instance()->createOrUpdate($sms_sent);
+					$obj_sms_sent = \SMSSent\SMSSentEntity::get_instance()->createOrUpdate($sms_sent);
+
+					//create data for report purpose
+					$sms_report = array(
+
+					);
 				}
 			}
-			//if( count($number_not_success) > 0 ){
-				\Session::forget('session_sendsms');
-				\Session::forget('sms_session');
-				//return \Redirect::to('marketing')->withErrors('Sorry something wrong.');
-			//}else{
-				\Session::flash('message', 'Successfully SMS Send Message');
-				return \Redirect::to('marketing');
-			//}
+			\Session::forget('session_sendsms');
+			\Session::forget('sms_session');
+			\Session::flash('message', 'Successfully SMS Send Message');
+			return \Redirect::to('marketing');
 		}
 	}
 
@@ -242,9 +244,9 @@ class MarketingController extends \BaseController {
 			\Input::has('datetime')
 		){*/
 			$data = array(
-				$_REQUEST['number'] ,
-				$_REQUEST['status'] ,
-				$_REQUEST['customID'] ,
+				$_REQUEST['number'],
+				$_REQUEST['status'],
+				$_REQUEST['customID'],
 				$_REQUEST['datetime']
 			);
 			\SMSDelivery\SMSDeliveryReceipts::get_instance()->createOrUpdate($data);
