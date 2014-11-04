@@ -1030,6 +1030,7 @@ class ClientsController extends \BaseController {
 		$data['websiteType']		= $this->getWebsiteFor();
 		$data['websiteIs']			= $this->getWebsiteIs();
 		$data['center_column_view']	= 'dashboard';
+		$data['clientId']			= $clientId;
 		$data 						= array_merge($data,$dashboard_data);
 		//var_dump($data['belongToPartner']);
 		//exit();

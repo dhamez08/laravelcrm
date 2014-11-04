@@ -69,7 +69,12 @@ class MarketingController extends \BaseController {
 		$data['list_customer']		= \Marketing\MarketingEntity::get_instance()->getCustomerList($data['tag_id']);
 		$data['tags']			 	= \ClientTag\ClientTagEntity::get_instance()->getTagsByLoggedUser();
 		$data['report']			 	= \SMSReport\SMSReport::userId( \Auth::id() );
-		$data['sms_credit']			= \SMSCredit\SMSCreditEntity::get_instance()->getSMSCredit(\Auth::id())->pluck('credits');
+		$get_credit					= \SMSCredit\SMSCreditEntity::get_instance()->getSMSCredit(\Auth::id());
+		if( $get_credit->count() > 0 ){
+			$data['sms_credit']			= \SMSCredit\SMSCreditEntity::get_instance()->getSMSCredit(\Auth::id())->pluck('credits');
+		}else{
+			$data['sms_credit'] = 0;
+		}
 		$data 						= array_merge($data,$this->getSetupThemes());
 		return \View::make( $data['view_path'] . '.marketing.index', $data );
 	}
