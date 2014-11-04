@@ -70,7 +70,7 @@ class TextlocalEntity extends \Eloquent{
 		return $this->getObjectResult()->getAPIMessageHistory($start, $limit, $min_time, $max_time);
 	}
 
-	public function getHistoryID($id){
+	public function getMsgStatusID($id){
 		return $this->getObjectResult()->getMessageStatus($id);
 	}
 

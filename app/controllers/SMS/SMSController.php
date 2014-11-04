@@ -62,7 +62,7 @@ class SMSController extends \BaseController {
 	public function getApiTextlocalHistoryId($id){
 		$history_msg = \Textlocal\TextlocalEntity::get_instance()->apiTextlocal();
 		//var_dump($users);
-		var_dump($history_msg->getHistoryID($id));
+		var_dump($history_msg->getMsgStatusID($id));
 	}
 	//test getUsers
 	public function getApiTextlocalUsers(){

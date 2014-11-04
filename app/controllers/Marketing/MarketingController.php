@@ -223,10 +223,18 @@ class MarketingController extends \BaseController {
 					);
 					$obj_sms_sent = \SMSSent\SMSSentEntity::get_instance()->createOrUpdate($sms_sent);
 
-					//create data for report purpose
+					// create data for report purpose
+					// get the api message response
+					$msg_status = \Textlocal\TextlocalEntity::get_instance()->getMsgStatusID($txt_local->messages[0]->id);
 					$sms_report = array(
-
+						'sms_sent_id' => $obj_sms_sent->id,
+						'to' => $txt_local->messages[0]->recipient ,
+						'from' => \Auth::user()->title.' '.\Auth::user()->first_name.' '.\Auth::user()->last_name,
+						'client_name' => $val['name'],
+						'message' => $messagetosend,
+						'status' => $msg_status->message->status
 					);
+					\SMSReport\SMSReportEntity::get_instance()->createOrUpdate($sms_report);
 				}
 			}
 			\Session::forget('session_sendsms');
