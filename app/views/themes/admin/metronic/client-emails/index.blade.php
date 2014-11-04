@@ -318,7 +318,7 @@
 	var ASSET_PATH_PUBLIC = '{{ url('public/admin/metronic/assets') }}';
 	</script>
 
-	<script src="{{$asset_path}}/pages/scripts/client-email.js" type="text/javascript"></script>
+	<script src="{{$asset_path}}/pages/scripts/client-email.js?v=0.1" type="text/javascript"></script>
 	<script src="{{$asset_path}}/pages/scripts/components-editors.js" type="text/javascript"></script>
 
 

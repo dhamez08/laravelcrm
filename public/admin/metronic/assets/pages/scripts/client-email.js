@@ -353,7 +353,8 @@ var ClientEmail = function () {
                 $.get(BASE_URL+'/settings/custom-forms/fields/'+$this.val(), function(response) {
                     var form_name = response.form.name;
                     $.each(response.build, function(i, item) {
-                        row+='<tr><td><input type="text" value="['+form_name+':'+item.field_name+']" class="form-control" style="border:0px" /></td></tr>';
+                        //row+='<tr><td><input type="text" value="['+form_name+':'+item.field_name+']" class="form-control" style="border:0px" /></td></tr>';
+                        row+='<tr><td><a href="javascript:void(0)" class="custom_form_link">['+form_name+':'+item.field_name+']</a></td></tr>';
                     });
 
                     $("#fields_container table tbody").append(row);
@@ -362,6 +363,10 @@ var ClientEmail = function () {
                 }).error(function() {
                     Metronic.unblockUI('#fields_container');
                 });
+            });
+
+            $("a.custom_form_link").live("click", function() {
+                $("#message").code($("#message").code()+'<p>'+$(this).html()+'</p>');
             });
         }
 
