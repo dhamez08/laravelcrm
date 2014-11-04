@@ -22,6 +22,7 @@
 		<div class="portlet-body {{{$portlet_body_class or ''}}}">
 			<div class="portlet-tabs">
 				<div class="tab-content">
+					<h3>Current SMS credit : {{$sms_credit}}</h3>
 					@section('portlet-content')
 						@if( $list_customer->count() > 0 )
 							{{Form::open(

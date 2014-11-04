@@ -22,8 +22,8 @@
 		<div class="portlet-body {{{$portlet_body_class or ''}}}">
 			<div class="portlet-tabs">
 				<div class="tab-content">
+					<h3>Current SMS credit : {{$sms_credit}}</h3>
 					@section('portlet-content')
-						<h3>Current SMS credit : {{$sms_credit}}</h3>
 						<table class="table table-striped table-advance table-hover">
 							<thead>
 								<tr>
