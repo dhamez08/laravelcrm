@@ -94,7 +94,9 @@
 										@endforeach
 									</tbody>
 								</table>
-								{{Form::submit('Next Step',array('class'=>"btn blue"))}}
+								@if( $sms_credit > 0 )
+									{{Form::submit('Next Step',array('class'=>"btn blue"))}}
+								@endif
 							{{ Form::close()}}
 							@endif
 					@show
