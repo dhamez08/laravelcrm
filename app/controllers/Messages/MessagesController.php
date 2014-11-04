@@ -233,6 +233,30 @@ class MessagesController extends \BaseController {
 
 			$data['subject'] = \Input::get('subject');
 			$data['body'] = \Input::get('message');
+
+			//code below is to replace the base64 image to real url so that it would be considered on the email provider
+
+			preg_match_all('/img src="([^"]*)"/', $data['body'], $matchesimage);
+
+			if(count($matchesimage[0])>0) {
+				foreach($matchesimage[1] as $matchImage) {
+					if(preg_match('/(data:image\/(?:.*)+)/i', $matchImage)>0) {
+						//valid image base64
+						//so we need to upload it on the server and replace to the valid url
+						$imagematchsrc = $matchImage;
+						list($type, $imagematchsrc) = explode(';', $imagematchsrc);
+						list(, $imagematchsrc)      = explode(',', $imagematchsrc);
+						$imagematchsrc = base64_decode($imagematchsrc);
+						$imageSavedName = \Auth::id().'_'.time().'.jpg';
+						file_put_contents(public_path().'/documents/'.$imageSavedName, $imagematchsrc);
+
+						$data['body'] = str_replace($matchImage, url('/public/documents/'.$imageSavedName), $data['body']);
+					}
+				}
+			}
+
+			//end replacement for base64 images
+
 			if(\Input::get('email_signature')!=='') {
 				$signature = \EmailSignature\EmailSignature::find(\Input::get('email_signature'));
 				if($signature) {
@@ -508,6 +532,30 @@ class MessagesController extends \BaseController {
 
 			$data['subject'] = \Input::get('subject');
 			$data['body'] = \Input::get('message');
+
+			//code below is to replace the base64 image to real url so that it would be considered on the email provider
+
+			preg_match_all('/img src="([^"]*)"/', $data['body'], $matchesimage);
+
+			if(count($matchesimage[0])>0) {
+				foreach($matchesimage[1] as $matchImage) {
+					if(preg_match('/(data:image\/(?:.*)+)/i', $matchImage)>0) {
+						//valid image base64
+						//so we need to upload it on the server and replace to the valid url
+						$imagematchsrc = $matchImage;
+						list($type, $imagematchsrc) = explode(';', $imagematchsrc);
+						list(, $imagematchsrc)      = explode(',', $imagematchsrc);
+						$imagematchsrc = base64_decode($imagematchsrc);
+						$imageSavedName = \Auth::id().'_'.time().'.jpg';
+						file_put_contents(public_path().'/documents/'.$imageSavedName, $imagematchsrc);
+
+						$data['body'] = str_replace($matchImage, url('/public/documents/'.$imageSavedName), $data['body']);
+					}
+				}
+			}
+
+			//end replacement for base64 images
+
 			if(\Input::get('email_signature')!=='') {
 				$signature = \EmailSignature\EmailSignature::find(\Input::get('email_signature'));
 				if($signature) {
