@@ -182,7 +182,7 @@ class MessagesController extends \BaseController {
 				if($action=='message_restore') {
 					$message->restore();
 				} elseif($action=='message_force_delete') {
-					$message->forceDelete();
+					\Message\MessageEntity::get_instance()->force_delete($mid);
 				}
 
 			}

@@ -143,4 +143,10 @@ class MessageEntity extends \Eloquent{
 	public function attachments() {
 		return $this->hasMany('\MessageAttachment\MessageAttachmentEntity','message_id');
 	}
+
+	public function force_delete($mid) {
+		$sql = "DELETE FROM messages WHERE id=?";
+		$query = \DB::statement($sql, array($mid));
+
+	}
 }
