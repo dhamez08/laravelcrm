@@ -161,4 +161,13 @@ class ClientFileController extends \BaseController {
 		}
 	}
 
+	public function getMediaWidget($client_id, $user_id = null){
+		if( is_null($user_id) ){
+			$user_id = \Auth::id();
+		}
+		$data = $this->data_view;
+		var_dump($data);
+		//return \View::make()->render();
+	}
+
 }

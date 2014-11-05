@@ -61,6 +61,7 @@
 								</div>
 							</div>
 							{{Form::submit('Send Message',array('class'=>"btn blue"))}}
+							{{(\Textlocal\TextlocalEntity::get_instance()->getSendSmsTest()) ? 'Test mode':''}}
 						{{ Form::close()}}
 						@endif
 					@show

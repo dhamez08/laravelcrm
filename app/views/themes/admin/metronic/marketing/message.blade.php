@@ -48,6 +48,12 @@
 									<p id="sms_message_counter"></p>
 								</div>
 							</div>
+
+							<div class="row-fluid">
+								<div class="span12 well">
+									<h5 style="margin-top:0px;">Attach File</h5>
+								</div>
+							</div>
 							{{Form::submit('Next Step',array('class'=>"btn blue"))}}
 						{{ Form::close()}}
 						@endif

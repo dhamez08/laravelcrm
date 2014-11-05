@@ -13,6 +13,10 @@ class CustomerFiles extends \Eloquent{
 	 */
 	protected $table = 'customer_files';
 
+	public function user(){
+		return $this->belongsTo('\User\User');
+	}
+
 	public function scopeFileType($query, $type){
 		return $query->where('type','=',$type);
 	}

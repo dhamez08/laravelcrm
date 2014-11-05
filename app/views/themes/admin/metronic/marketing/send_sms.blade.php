@@ -23,6 +23,7 @@
 			<div class="portlet-tabs">
 				<div class="tab-content">
 					<h3>Current SMS credit : {{$sms_credit}}</h3>
+					{{(\Textlocal\TextlocalEntity::get_instance()->getSendSmsTest()) ? 'Test mode':''}}
 					@section('portlet-content')
 						@if( $list_customer->count() > 0 )
 							{{Form::open(
