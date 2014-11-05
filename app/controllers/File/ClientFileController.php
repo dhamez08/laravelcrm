@@ -49,6 +49,14 @@ class ClientFileController extends \BaseController {
 		return self::$instance;
 	}
 
+	/**
+	 * get themes
+	 * @return	array
+	 * */
+	public function getSetupThemes(){
+		return \Dashboard\DashboardController::get_instance()->getSetupThemes();
+	}
+
 	public function getIndex(){
 		//var_dump($data['view_path'] . '.files.index');
 	}
@@ -118,6 +126,7 @@ class ClientFileController extends \BaseController {
 				$fileName = $this->_doUpload($file);
 				$data = array(
 					'customer_id' => $customer_id,
+					'user_id' => \Auth::id(),
 					'filename' => $fileName,
 					'name' => $file->getClientOriginalName(),
 					'type' => $file_id
@@ -135,6 +144,33 @@ class ClientFileController extends \BaseController {
 		}else{
 			return \Response::json(array('success'=>false,'msg'=>'Cannot upload, file.'));
 		}
+	}
+
+	public function postMediaAjaxUploadFile(){
+		/*$belongs_to = \Auth::id();
+		if( \Input::hasFile('files') ){
+			foreach(\Input::file('files') as $file){
+				$fileName = $this->_doUpload($file);
+				$data = array(
+					'customer_id' => $customer_id,
+					'user_id' => \Auth::id(),
+					'filename' => $fileName,
+					'name' => $file->getClientOriginalName(),
+					'type' => $file_id
+				);
+				\CustomerFiles\CustomerFilesEntity::get_instance()->createOrUpdate($data);
+
+				return \Response::json(
+					array(
+						'success'=>true,
+						'msg'=>'',
+						'redirect'=>url('file/client-file/' . $customer_id),
+					)
+				);
+			}
+		}else{
+			return \Response::json(array('success'=>false,'msg'=>'Cannot upload, file.'));
+		}*/
 	}
 
 	public function postAjaxUpdateName(){
@@ -161,13 +197,10 @@ class ClientFileController extends \BaseController {
 		}
 	}
 
-	public function getMediaWidget($client_id, $user_id = null){
-		if( is_null($user_id) ){
-			$user_id = \Auth::id();
-		}
+	public function getMediaWidget($user_id, $customer_id = null){
 		$data = $this->data_view;
-		var_dump($data);
-		//return \View::make()->render();
+		$data = array_merge($data,$this->getSetupThemes());
+		return \View::make($data['view_path'] . '.files.partials.media')->render();
 	}
 
 }
