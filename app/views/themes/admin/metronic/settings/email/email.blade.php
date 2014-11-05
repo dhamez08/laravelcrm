@@ -184,21 +184,25 @@
             $(".note-image-dialog .close").live("click", function() {
             	$(".note-image-dialog").removeClass("in").hide();
             	$('.modal-backdrop').remove();
+            	$(this).closest(".note-editor").find(".note-editable").focus();
             });
 
 			$(".note-video-dialog .close").live("click", function() {
             	$(".note-video-dialog").removeClass("in").hide();
             	$('.modal-backdrop').remove();
+            	$(this).closest(".note-editor").find(".note-editable").focus();
             });
 
 			$(".note-link-dialog .close").live("click", function() {
             	$(".note-link-dialog").removeClass("in").hide();
             	$('.modal-backdrop').remove();
+            	$(this).closest(".note-editor").find(".note-editable").focus();
             });
 
             $(".note-help-dialog .modal-close").live("click", function() {
             	$(".note-help-dialog").removeClass("in").hide();
             	$('.modal-backdrop').remove();
+            	$(this).closest(".note-editor").find(".note-editable").focus();
             });
 
             

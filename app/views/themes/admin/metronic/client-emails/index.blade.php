@@ -326,28 +326,32 @@
 	<script type="text/javascript">
 		jQuery(document).ready(function() {
 			ComponentsEditors.init();
-		   ClientEmail.init();
+		    ClientEmail.init();
 		   
 		   ComponentsDropdowns.init();
 
-		   $(".note-image-dialog .close").bind("click", function() {
+		    $(".note-image-dialog .close").bind("click", function() {
 	        	$(".note-image-dialog").removeClass("in").hide();
 	        	$('.modal-backdrop').remove();
+	        	$(this).closest(".note-editor").find(".note-editable").focus();
 	        });
 
 			$(".note-video-dialog .close").bind("click", function() {
 	        	$(".note-video-dialog").removeClass("in").hide();
 	        	$('.modal-backdrop').remove();
+	        	$(this).closest(".note-editor").find(".note-editable").focus();
 	        });
 
 			$(".note-link-dialog .close").bind("click", function() {
 	        	$(".note-link-dialog").removeClass("in").hide();
 	        	$('.modal-backdrop').remove();
+	        	$(this).closest(".note-editor").find(".note-editable").focus();
 	        });
 
 	        $(".note-help-dialog .modal-close").bind("click", function() {
 	        	$(".note-help-dialog").removeClass("in").hide();
 	        	$('.modal-backdrop').remove();
+	        	$(this).closest(".note-editor").find(".note-editable").focus();
 	        });
 		});
 
