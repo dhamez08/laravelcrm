@@ -55,7 +55,7 @@
 				                        </select>
 
 				                        <div id="fields_container" style="margin-top:15px;min-height:230px;">
-				                        	<div class="scroller" style="height:230px" data-always-visible="0" data-rail-visible="0" data-rail-color="red" data-handle-color="green">
+				                        	<div style="height:230px;overflow-y:scroll" data-always-visible="0" data-rail-visible="0" data-rail-color="red" data-handle-color="green">
 				                        	<table class="table table-bordered table-hover">
 												<tbody>
 												</tbody>
