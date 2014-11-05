@@ -236,7 +236,7 @@ class MessagesController extends \BaseController {
 
 			//code below is to replace the base64 image to real url so that it would be considered on the email provider
 
-			preg_match_all('/img src="([^"]*)"/', $data['body'], $matchesimage);
+			preg_match_all('/src="([^"]*)"/', $data['body'], $matchesimage);
 
 			if(count($matchesimage[0])>0) {
 				foreach($matchesimage[1] as $matchImage) {
@@ -535,7 +535,7 @@ class MessagesController extends \BaseController {
 
 			//code below is to replace the base64 image to real url so that it would be considered on the email provider
 
-			preg_match_all('/img src="([^"]*)"/', $data['body'], $matchesimage);
+			preg_match_all('/src="([^"]*)"/', $data['body'], $matchesimage);
 
 			if(count($matchesimage[0])>0) {
 				foreach($matchesimage[1] as $matchImage) {
