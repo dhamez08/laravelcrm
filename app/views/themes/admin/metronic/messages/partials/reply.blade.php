@@ -57,14 +57,14 @@
 	            @if(count($client_files)>0)
 	                <optgroup label="Client Files">
 	                @foreach($client_files as $file)
-	                  <option value="documents/{{ $file->filename }}">{{ $file->name }} - {{ date('d/m/Y H:i',strtotime($file->created_at)) }}</option>
+	                  <option value="{{ $file->name }}|documents/{{ $file->filename }}">{{ $file->name }} - {{ date('d/m/Y H:i',strtotime($file->created_at)) }}</option>
 	                @endforeach
 	                </optgroup>
 	            @endif
 	            @if(count($document_libraries)>0)
 	                <optgroup label="Document Library">
 	                @foreach($document_libraries as $file)
-	                  <option value="document/library/own/{{ $file->filename }}">{{ $file->name }} - {{ date('d/m/Y H:i',strtotime($file->created_at)) }}</option>
+	                  <option value="{{ $file->name }}|document/library/own/{{ $file->filename }}">{{ $file->name }} - {{ date('d/m/Y H:i',strtotime($file->created_at)) }}</option>
 	                @endforeach
 	                </optgroup>
 	            @endif
