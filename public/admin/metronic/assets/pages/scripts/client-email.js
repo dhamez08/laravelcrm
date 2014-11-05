@@ -365,8 +365,33 @@ var ClientEmail = function () {
                 });
             });
 
+            var isValid = 0;
+
+            $("#message").next().children('.note-editable').live("click", function() {
+                isValid = 1;
+            });
+
+            $(document).click(function(event) { 
+                if(!$(event.target).closest('.note-editor').length) {
+                    isValid = 0;
+                }        
+            });
+
             $("a.custom_form_link").live("click", function() {
-                $("#message").code($("#message").code()+'<p>'+$(this).html()+'</p>');
+                if(isValid==1) {
+                    var selection = document.getSelection();
+                    var cursorPos = selection.anchorOffset;
+                    var oldContent = selection.anchorNode.nodeValue;
+                    var toInsert = $(this).html();
+                    if(oldContent!=null) {
+                        var newContent = oldContent.substring(0, cursorPos) + toInsert + oldContent.substring(cursorPos);
+                        selection.anchorNode.nodeValue = newContent;
+                    } else {
+                        $("#message").code($("#message").code()+''+toInsert+'');
+                    }
+                } else {
+                    alert('please click/focus on the editor to insert the dynamic field!');
+                }
             });
         }
 

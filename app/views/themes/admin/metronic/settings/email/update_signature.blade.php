@@ -105,6 +105,26 @@
                     Metronic.unblockUI('#fields_container');
                 });
             });
+
+			$(".note-image-dialog .close").live("click", function() {
+            	$(".note-image-dialog").removeClass("in").hide();
+            	$('.modal-backdrop').remove();
+            });
+
+			$(".note-video-dialog .close").live("click", function() {
+            	$(".note-video-dialog").removeClass("in").hide();
+            	$('.modal-backdrop').remove();
+            });
+
+			$(".note-link-dialog .close").live("click", function() {
+            	$(".note-link-dialog").removeClass("in").hide();
+            	$('.modal-backdrop').remove();
+            });
+
+            $(".note-help-dialog .modal-close").live("click", function() {
+            	$(".note-help-dialog").removeClass("in").hide();
+            	$('.modal-backdrop').remove();
+            });
 		});
 	</script>
 	@stop

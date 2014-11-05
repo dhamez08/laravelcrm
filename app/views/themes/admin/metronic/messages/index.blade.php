@@ -144,7 +144,7 @@
 	var ASSET_PATH_PUBLIC = '{{ url('public/admin/metronic/assets') }}';
 	</script>
 
-	<script src="{{$asset_path}}/pages/scripts/messages.js?v=0.6" type="text/javascript"></script>
+	<script src="{{$asset_path}}/pages/scripts/messages.js?v=0.7" type="text/javascript"></script>
 	<script src="{{$asset_path}}/pages/scripts/components-editors.js" type="text/javascript"></script>
 
 	<script type="text/javascript">
@@ -152,6 +152,23 @@
 		   Messages.init();
 		   ComponentsDropdowns.init();
 		   ComponentsEditors.init();
+
+		   $(".note-image-dialog .close").live("click", function() {
+            	$(".note-image-dialog").removeClass("in").hide();
+            });
+
+			$(".note-video-dialog .close").live("click", function() {
+            	$(".note-video-dialog").removeClass("in").hide();
+            });
+
+			$(".note-link-dialog .close").live("click", function() {
+            	$(".note-link-dialog").removeClass("in").hide();
+            });
+
+            $(".note-help-dialog .modal-close").live("click", function() {
+            	$(".note-help-dialog").removeClass("in").hide();
+            });
+		  
 		});
 	</script>
 	@stop
