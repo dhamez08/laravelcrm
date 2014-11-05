@@ -39,7 +39,7 @@
 													</div>
 													<div class="cont-col2">
 														<div class="desc">
-															<a href="{{ $path.$document->filename }}" target="_blank">{{ $document->name }}</a>
+															<a href="{{ $path.'/'.$document->filename }}" target="_blank">{{ $document->name }}</a>
 														</div>
 													</div>
 												</div>
