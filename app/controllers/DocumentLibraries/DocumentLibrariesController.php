@@ -28,7 +28,7 @@ class DocumentLibrariesController extends \BaseController {
 		parent::__construct();		
 		$this->data_view = parent::setupThemes();		
 		$this->data_view['master_view'] 	= $this->data_view['view_path'] . '.dashboard.index';
-		$this->destination_path = "/public/document/library/own/";
+		$this->destination_path = public_path()."/document/library/own/";
 	}
 
 	/**

@@ -275,7 +275,7 @@
 	<script src="{{$asset_path}}/global/plugins/fancybox/source/jquery.fancybox.pack.js" type="text/javascript"></script>
 	<script src="{{$asset_path}}/global/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js" type="text/javascript"></script>
 	<script src="{{$asset_path}}/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js" type="text/javascript"></script>
-	<script src="{{$asset_path}}/global/plugins/bootstrap-summernote/summernote.min.js" type="text/javascript"></script>
+	
 	<script src="{{$asset_path}}/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
 
 	<!-- BEGIN:File Upload Plugin JS files-->
@@ -319,14 +319,16 @@
 	</script>
 
 	<script src="{{$asset_path}}/pages/scripts/client-email.js?v=0.2" type="text/javascript"></script>
+	<script src="{{$asset_path}}/global/plugins/bootstrap-summernote/summernote.min.js" type="text/javascript"></script>
 	<script src="{{$asset_path}}/pages/scripts/components-editors.js" type="text/javascript"></script>
 
 
 	<script type="text/javascript">
 		jQuery(document).ready(function() {
+			ComponentsEditors.init();
 		   ClientEmail.init();
+		   
 		   ComponentsDropdowns.init();
-		   ComponentsEditors.init();
 
 		   $(".note-image-dialog .close").bind("click", function() {
 	        	$(".note-image-dialog").removeClass("in").hide();

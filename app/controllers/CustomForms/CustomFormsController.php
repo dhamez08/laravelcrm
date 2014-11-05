@@ -540,17 +540,31 @@ class CustomFormsController extends \BaseController {
 
 	public function getFields($form_id) {
 
-		$form = \CustomForm\CustomFormEntity::find($form_id);
-
-		$formbuild = \CustomFormBuild\CustomFormBuildEntity::where('form_id',$form_id)->get();
-
-		if($formbuild) {
+		if($form_id=="customer") {
 			return \Response::json(
 						array(
-							'form'=>$form->toArray(),
-							'build'=>$formbuild->toArray()
+							'form'  => array('name'=>'Customer'),
+							'build' => array(
+										array('field_name'=>'Title'),
+										array('field_name'=>'Firstname'),
+										array('field_name'=>'Lastname'),
+										array('field_name'=>'Email')
+									)
 						)
 					);
+		} else {
+			$form = \CustomForm\CustomFormEntity::find($form_id);
+
+			$formbuild = \CustomFormBuild\CustomFormBuildEntity::where('form_id',$form_id)->get();
+
+			if($formbuild) {
+				return \Response::json(
+							array(
+								'form'=>$form->toArray(),
+								'build'=>$formbuild->toArray()
+							)
+						);
+			}
 		}
 	}
 
