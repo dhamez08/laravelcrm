@@ -2,21 +2,21 @@
 	<div class="portlet-title tabbable-line">
 		<ul class="nav nav-tabs">
 			<li  class="active">
-				<a href=".list_files{{$id}}" data-toggle="tab">
+				<a href=".list_files" data-toggle="tab">
 				Files </a>
 			</li>
 			<li>
-				<a href=".add_new{{$id}}" data-toggle="tab">
+				<a href=".add_new" data-toggle="tab">
 				Add New </a>
 			</li>
 		</ul>
 	</div>
 	<div class="portlet-body tabbable-line">
 		<div class="tab-content">
-			<div class="tab-pane active list_files{{$id}}" id="">
+			<div class="tab-pane active list_files" id="">
 				<h4>List Files</h4>
 			</div>
-			<div class="tab-pane add_new{{$id}}" id="">
+			<div class="tab-pane add_new" id="">
 					<!-- BEGIN PAGE CONTENT-->
 					<div class="row">
 						<div class="col-md-12">
@@ -27,22 +27,20 @@
 								</p>
 							</blockquote>
 							<br>
-							{{
-								Form::open(
+							{{Form::open(
 									array(
 										'action' => array(
-											'File\ClientFileController@postAjaxUploadFile',
-											'file_id'=>$id,
-											'customer_id'=>$customer->id
+											'File\ClientFileController@postMediaAjaxUploadFile'
 										),
 										'role'=>'form',
 										'files'=> true,
-										'class'=>'fileupload form-horizontal'
+										'class'=>'form-horizontal',
+										'id'=>'media-fileupload'
 									)
 								)
 							}}
 								<!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
-								<div class="row fileupload-buttonbar">
+								<div class="row media-fileupload-buttonbar">
 									<div class="col-md-12">
 										<!-- The fileinput-button span is used to style the file input field as button -->
 										<span class="btn green fileinput-button">
@@ -62,11 +60,11 @@
 										Cancel upload </span>
 										</button>
 										<!-- The global file processing state -->
-										<span class="fileupload-process">
+										<span class="media-fileupload-process">
 										</span>
 									</div>
 									<!-- The global progress information -->
-									<div class="col-md-12 fileupload-progress fade">
+									<div class="col-md-12 media-fileupload-progress fade">
 										<!-- The global progress bar -->
 										<div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
 											<div class="progress-bar progress-bar-success" style="width:0%;">
@@ -94,5 +92,3 @@
 		</div>
 	</div>
 </div>
-
-

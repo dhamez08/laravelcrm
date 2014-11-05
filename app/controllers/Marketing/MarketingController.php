@@ -137,7 +137,7 @@ class MarketingController extends \BaseController {
 		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
 		$data['center_column_view'] = 'dashboard';
 		$data['list_number']		= \Session::get('session_sendsms');
-		//$data['media_widget']		= \File\ClientFileController::get_instance()->getMediaWidget();
+		//$data['media_widget']		= \File\ClientFileController::get_instance()->getMediaWidget(\Auth::id());
 		$data 						= array_merge($data,$this->getSetupThemes());
 		return \View::make( $data['view_path'] . '.marketing.message', $data );
 	}
