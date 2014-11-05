@@ -327,7 +327,29 @@
 		   ClientEmail.init();
 		   ComponentsDropdowns.init();
 		   ComponentsEditors.init();
+
+		   $(".note-image-dialog .close").bind("click", function() {
+	        	$(".note-image-dialog").removeClass("in").hide();
+	        	$('.modal-backdrop').remove();
+	        });
+
+			$(".note-video-dialog .close").bind("click", function() {
+	        	$(".note-video-dialog").removeClass("in").hide();
+	        	$('.modal-backdrop').remove();
+	        });
+
+			$(".note-link-dialog .close").bind("click", function() {
+	        	$(".note-link-dialog").removeClass("in").hide();
+	        	$('.modal-backdrop').remove();
+	        });
+
+	        $(".note-help-dialog .modal-close").bind("click", function() {
+	        	$(".note-help-dialog").removeClass("in").hide();
+	        	$('.modal-backdrop').remove();
+	        });
 		});
+
+
 	</script>
 	@stop
 @stop
