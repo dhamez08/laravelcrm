@@ -29,12 +29,12 @@ return array(
 	'connections' => array(
 
 		'production' => array(
-			'host'      => '',
-			'username'  => '',
-			'password'  => '',
+			'host'      => 'zeromyexcess.co.uk',
+			'username'  => 'zeromyexcessco',
+			'password'  => 'D~.ET7w2ceki',
 			'key'       => '',
 			'keyphrase' => '',
-			'root'      => '/var/www',
+			'root'      => '/htdocs/laravelcrm',
 		),
 
 	),
