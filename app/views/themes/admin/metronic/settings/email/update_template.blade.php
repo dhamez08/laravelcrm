@@ -57,7 +57,8 @@
 										<div class="col-md-3" style="padding:0px;padding-right:30px;">
 											<h2>Dynamic Fields</h2>
 											<select id="custom_form" class="form-control">
-					                            <option value="0">Choose a Custom Form</option>
+					                            <option value="0">Choose a Form</option>
+					                            <option value="customer">---Customer Information---</option>
 					                        <?php
 					                        $forms = \CustomForm\CustomFormEntity::get_instance()->getFormsByLoggedUser();
 					                        ?>
@@ -127,7 +128,10 @@
                     var form_name = response.form.name;
                     $.each(response.build, function(i, item) {
                         //row+='<tr><td><input type="text" value="['+form_name+':'+item.field_name+']" class="form-control" style="border:0px" /></td></tr>';
-                    	row+='<tr><td><a href="javascript:void(0)" class="custom_form_link">['+form_name+':'+item.field_name+']</a></td></tr>';
+                    	if($this.val()=='customer')
+                    		row+='<tr><td><a href="javascript:void(0)" class="custom_form_link">{'+item.field_name+'}</a></td></tr>';	
+                    	else
+                    		row+='<tr><td><a href="javascript:void(0)" class="custom_form_link">['+form_name+':'+item.field_name+']</a></td></tr>';
                     });
 
                     $("#fields_container table tbody").append(row);

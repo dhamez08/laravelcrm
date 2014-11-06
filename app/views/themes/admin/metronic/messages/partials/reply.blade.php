@@ -107,7 +107,8 @@
 		<div class="col-md-3" style="padding:0px;padding-right:30px;">
 			<h2>Dynamic Fields</h2>
 			<select id="custom_form" class="form-control">
-                <option value="0">Choose a Custom Form</option>
+                <option value="0">Choose a Form</option>
+                <option value="customer">---Customer Information---</option>
             <?php
             $forms = \CustomForm\CustomFormEntity::get_instance()->getFormsByLoggedUser();
             ?>

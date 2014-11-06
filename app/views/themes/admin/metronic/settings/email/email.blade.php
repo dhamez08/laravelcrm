@@ -126,6 +126,7 @@
 		   $('#template_body').summernote({height: 300});
 		   $('#signature_body').summernote({height: 300});
 
+		   var isValid = 0;
 		   $("select#custom_form").live("change", function() {
                 $this = $(this);
                 $("#fields_container table tbody").html('');
@@ -135,24 +136,31 @@
                     boxed: true,
                     message: 'Processing...'
                 });
-
+                isValid = 1;
                 var row='';
                 $.get(BASE_URL+'/settings/custom-forms/fields/'+$this.val(), function(response) {
                     var form_name = response.form.name;
                     $.each(response.build, function(i, item) {
                         //row+='<tr><td><input type="text" value="['+form_name+':'+item.field_name+']" class="form-control" style="border:0px" /></td></tr>';
-                    	row+='<tr><td><a href="javascript:void(0)" class="custom_form_link">['+form_name+':'+item.field_name+']</a></td></tr>';
+                    	if($this.val()=='customer')
+                    		row+='<tr><td><a href="javascript:void(0)" class="custom_form_link">{'+item.field_name+'}</a></td></tr>';	
+                    	else
+                    		row+='<tr><td><a href="javascript:void(0)" class="custom_form_link">['+form_name+':'+item.field_name+']</a></td></tr>';
                     });
 
                     $("#fields_container table tbody").append(row);
 
                     Metronic.unblockUI('#fields_container');
+                    $(".note-editable").focus();
                 }).error(function() {
                     Metronic.unblockUI('#fields_container');
                 });
+
+
+
             });
 
-			var isValid = 0;
+			
 
 			$("#template_body").next().children('.note-editable').live("click", function() {
 				isValid = 1;
@@ -165,7 +173,7 @@
 			});
 
             $("a.custom_form_link").live("click", function() {
-            	if(isValid==1) {
+            	if(isValid==1 && $("#template_body").code()!='') {
 	                var selection = document.getSelection();
 					var cursorPos = selection.anchorOffset;
 					var oldContent = selection.anchorNode.nodeValue;
@@ -173,8 +181,10 @@
 					if(oldContent!=null) {
 						var newContent = oldContent.substring(0, cursorPos) + toInsert + oldContent.substring(cursorPos);
 						selection.anchorNode.nodeValue = newContent;
+					} else if($("#template_body").code()=='') {
+						$("#template_body").code(toInsert);
 					} else {
-						$("#template_body").code($("#template_body").code()+'<p>'+toInsert+'</p>');
+						$("#template_body").code($("#template_body").code()+toInsert);
 					}
 				} else {
 					alert('please click/focus on the editor to insert the dynamic field!');

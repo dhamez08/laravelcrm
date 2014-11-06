@@ -545,10 +545,34 @@ class CustomFormsController extends \BaseController {
 						array(
 							'form'  => array('name'=>'Customer'),
 							'build' => array(
+										array('field_name'=>'ReferenceNo'),
 										array('field_name'=>'Title'),
 										array('field_name'=>'Firstname'),
 										array('field_name'=>'Lastname'),
-										array('field_name'=>'Email')
+										array('field_name'=>'Email:Home'),
+										array('field_name'=>'Email:Work'),
+										array('field_name'=>'Gender'),
+										array('field_name'=>'Birthdate'),
+										array('field_name'=>'Marital-Status'),
+										array('field_name'=>'Living-Status'),
+										array('field_name'=>'Employment-Status'),
+										array('field_name'=>'Address:Work:Line1'),
+										array('field_name'=>'Address:Work:HouseNumber'),
+										array('field_name'=>'Address:Work:Postcode'),
+										array('field_name'=>'Address:Work:Town'),
+										array('field_name'=>'Address:Work:County'),
+										array('field_name'=>'Address:Home:Line1'),
+										array('field_name'=>'Address:Home:HouseNumber'),
+										array('field_name'=>'Address:Home:Postcode'),
+										array('field_name'=>'Address:Home:Town'),
+										array('field_name'=>'Address:Home:County'),
+										array('field_name'=>'ContactNumber:Home'),
+										array('field_name'=>'ContactNumber:Work'),
+										array('field_name'=>'ContactNumber:Direct'),
+										array('field_name'=>'ContactNumber:Mobile'),
+										array('field_name'=>'ContactNumber:Fax'),
+										array('field_name'=>'Website:Home'),
+										array('field_name'=>'Website:Work'),
 									)
 						)
 					);

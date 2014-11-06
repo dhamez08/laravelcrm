@@ -167,7 +167,8 @@
 									<div class="col-md-3" style="padding:0px;padding-right:30px;">
 										<h2>Dynamic Fields</h2>
 										<select id="custom_form" class="form-control">
-				                            <option value="0">Choose a Custom Form</option>
+				                            <option value="0">Choose a Form</option>
+				                            <option value="customer">---Customer Information---</option>
 				                        <?php
 				                        $forms = \CustomForm\CustomFormEntity::get_instance()->getFormsByLoggedUser();
 				                        ?>
@@ -318,7 +319,7 @@
 	var ASSET_PATH_PUBLIC = '{{ url('public/admin/metronic/assets') }}';
 	</script>
 
-	<script src="{{$asset_path}}/pages/scripts/client-email.js?v=0.2" type="text/javascript"></script>
+	<script src="{{$asset_path}}/pages/scripts/client-email.js?v=0.3" type="text/javascript"></script>
 	<script src="{{$asset_path}}/global/plugins/bootstrap-summernote/summernote.min.js" type="text/javascript"></script>
 	<script src="{{$asset_path}}/pages/scripts/components-editors.js" type="text/javascript"></script>
 
