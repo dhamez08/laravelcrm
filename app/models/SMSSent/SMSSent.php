@@ -42,4 +42,8 @@ class SMSSent extends \Eloquent{
 		return $this->belongsTo('\Message\Message','messages_id');
 	}
 
+	public function scopeUserId($query, $user_id){
+		return $query->where('user_id', '=', $user_id);
+	}
+
 }

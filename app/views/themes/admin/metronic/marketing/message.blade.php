@@ -2,9 +2,10 @@
 @section('begin-head')
 	@parent
 	@section('head-page-level-css')
-	@parent
-	<!-- BEGIN PAGE LEVEL STYLES -->
-	<!-- END PAGE LEVEL SCRIPTS -->
+		@parent
+		<link href="{{$asset_path}}/global/plugins/jquery-file-upload/blueimp-gallery/blueimp-gallery.min.css" rel="stylesheet"/>
+		<link href="{{$asset_path}}/global/plugins/jquery-file-upload/css/jquery.fileupload.css" rel="stylesheet"/>
+		<link href="{{$asset_path}}/global/plugins/jquery-file-upload/css/jquery.fileupload-ui.css" rel="stylesheet"/>
 	@stop
 @stop
 

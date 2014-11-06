@@ -57,21 +57,14 @@ class TextlocalEntity extends \Eloquent{
 		return $this->textlocal_api;
 	}
 
-	public function getUsers(){
-		 return $this->getObjectResult()->getUsers();
-	}
-
-	public function getHistoryMSG(){
-		$min_time = time(); // Get sends between now
-		$max_time = strtotime('-1 month'); // and a month ago
-		$limit = 1000;
-		$start = 0;
-		//echo $max_time;
-		return $this->getObjectResult()->getAPIMessageHistory($start, $limit, $min_time, $max_time);
-	}
-
 	public function getMsgStatusID($id){
-		return $this->getObjectResult()->getMessageStatus($id);
+		$msg = $this->apiTextlocal();
+		$status = $msg->getObjectResult()->getMessageStatus($id);
+		if( $status ){
+			return $status->message->status;
+		}else{
+			return false;
+		}
 	}
 
 	/**

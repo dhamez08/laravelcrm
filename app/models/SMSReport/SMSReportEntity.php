@@ -36,7 +36,11 @@ class SMSReportEntity extends \Eloquent{
 	}
 
 	public function getMsgStatus($msg_status){
-		return $this->status[$msg_status];
+		if( isset($this->status[$msg_status]) ){
+			return $this->status[$msg_status];
+		}else{
+			return 'Unknown';
+		}
 	}
 
 	/**

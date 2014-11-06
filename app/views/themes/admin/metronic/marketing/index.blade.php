@@ -36,14 +36,18 @@
 								</tr>
 							</thead>
 							<tbody>
-								@if( $report->count() > 0 )
-									@foreach($report->get() as $report_item)
+								@if( $sms_sent->count() > 0 )
+									@foreach($sms_sent->get() as $report_item)
 										<tr>
 											<td>{{$report_item->created_at}}</td>
-											<td>{{$report_item->to}}</td>
-											<td>{{$report_item->from}}</td>
-											<td>{{$report_item->message}}</td>
-											<td>{{\SMSReport\SMSReportEntity::get_instance()->getMsgStatus($report_item->status)}}</td>
+											<td>{{$report_item->textlocal_msg_recipient}}</td>
+											<td>from</td>
+											<td>msg</td>
+											<td>
+												{{
+													\SMSReport\SMSReportEntity::get_instance()->getMsgStatus(\Textlocal\TextlocalEntity::get_instance()->getMsgStatusID($report_item->textlocal_msg_id))
+												}}
+											</td>
 										</tr>
 									@endforeach
 								@endif
