@@ -241,9 +241,10 @@ class EmailController extends \BaseController {
 					$smessage = \Message\Message::create($new_message);
 
 					if($data['client_files']) {
+						$file_attach = explode("|", $data['client_files']);
 						$new_attachment = array(
 							'message_id' => $smessage->id,
-							'file' => $data['client_files']
+							'file' => $file_attach[1]
 						);
 
 						$smessageattach = \MessageAttachment\MessageAttachment::create($new_attachment);
