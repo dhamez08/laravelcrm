@@ -54,7 +54,7 @@ class MarketingEntity{
 	public function sendSMS($number, $message, $user_id){
 		$characters 	= strlen($message);
 		$used_credits 	= ceil($characters/160);
-		if( \SMSCredit\SMSCreditEntity::get_instance()->spendCredit($used_credits, $user_id) ){
+		if( \SMSCredit\SMSCreditEntity::get_instance()->spendCredit($user_id,$used_credits) ){
 			$sms = \Textlocal\TextlocalEntity::get_instance()->apiTextlocal();
 			$numbers = array($number);
 			$message = $message;

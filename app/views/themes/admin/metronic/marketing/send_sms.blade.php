@@ -73,20 +73,17 @@
 																<input type="checkbox" name="sendsms[{{$val_customer->id}}][clientid]" value="{{$val_customer->id}}" />
 																{{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}
 																@foreach($val_customer->telephone as $phone)
-																	<input type="hidden" name="sendsms[{{$val_customer->id}}][number]" value="{{'44' . substr($phone->number, 1)}}" />
+																	<input type="hidden" name="sendsms[{{$val_customer->id}}][number]" value="{{$phone->number}}" />
 																	<input type="hidden" name="sendsms[{{$val_customer->id}}][name]" value="{{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}" />
-																	- {{'44' . substr($phone->number, 1)}}
 																@endforeach
 														@else
 															@if( in_array($tag_id,$val_customer->my_tag->lists('tag_id')) )
 																	<input type="checkbox" name="sendsms[{{$val_customer->id}}][clientid]" value="{{$val_customer->id}}" />
 																	{{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}
 																	@foreach($val_customer->telephone as $phone)
-																		<input type="hidden" name="sendsms[{{$val_customer->id}}][number]" value="{{'44' . substr($phone->number, 1)}}" />
+																		<input type="hidden" name="sendsms[{{$val_customer->id}}][number]" value="{{$phone->number}}" />
 																		<input type="hidden" name="sendsms[{{$val_customer->id}}][name]" value="{{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}" />
-																		- {{'44' . substr($phone->number, 1)}}
 																	@endforeach
-
 															@endif
 														@endif
 													</td>

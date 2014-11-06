@@ -63,6 +63,7 @@
         	deleteEmail.init();
         	deletePerson.init();
         	Notes.init();
+        	SendIndividualSMS.init();
         });
 
 		</script>

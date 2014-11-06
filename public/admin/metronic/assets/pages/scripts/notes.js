@@ -2,9 +2,7 @@
 Custom module for you to write your own javascript functions
 **/
 var Notes = function () {
-
     // private functions & variables
-
 	var createNotes = function() {
 		jQuery('#createNote').on('submit',function(e){
 	    	e.preventDefault();

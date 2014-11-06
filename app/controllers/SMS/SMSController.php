@@ -30,6 +30,10 @@ class SMSController extends \BaseController {
 		$this->data_view 					= parent::setupThemes();
 		$this->data_view['client_index'] 	= $this->data_view['view_path'] . '.clients.index';
 		$this->data_view['html_body_class'] = 'page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed';
+		$this->data_view['include'] 		= $this->data_view['view_path'] . '.sms';
+		$this->noteFolder 	 				= public_path() . '/documents';
+		//'pdf|doc|docx|gif|jpg|png'
+		$this->prefixNoteFileName = \Auth::id();
 	}
 
 	/**
@@ -201,6 +205,126 @@ class SMSController extends \BaseController {
 		}else{
 			return \Redirect::to('profile')->withErrors('Error processing your payment request, please contact support.');
 		}
+	}
+
+	public function getAjaxIndividualSendSms($customerId, $mobile_number){
+		$dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
+		$data 						= $this->data_view;
+		$data['customerFiles']		= \CustomerFiles\CustomerFiles::customerFile($customerId);
+		$data['customerId'] 		= $customerId;
+		$data['mobile_number'] 		= $mobile_number;
+		$data['pageTitle'] 			= 'Send SMS';
+		$data['contentClass'] 		= '';
+		$data['portlet_body_class']	= '';
+		$data['portlet_title']		= 'SMS';
+		$data['fa_icons']			= 'cog';
+		$data 						= array_merge($data,$dashboard_data);
+		return \View::make( $data['include'] . '.partials.modal-create', $data )->render();
+	}
+
+	public function postAjaxSendIndividualSms($client_id){
+		$rules = array(
+			'note' => 'required',
+			'notefile' => 'mimes:pdf,doc,docx,gif,jpg,png,jpeg',
+		);
+		$messages = array(
+			'note.required'=>'Message is required',
+			'notefile.mimes'=>'File format is invalid',
+		);
+
+		$validator = \Validator::make(\Input::all(), $rules, $messages);
+
+		if($validator->passes()){
+			$sms_count = 0;
+			$cred = \SMSCredit\SMSCreditEntity::get_instance()->getSMSCredit(\Auth::id());
+
+			//var_dump( \Input::all() );
+			// upload the file first
+			// if there is
+			// then grab the filename
+			$fileName = '';
+			if( \Input::hasFile('smsfile') ){
+				if( \Input::file('smsfile')->getSize() > 0 ){
+					$file_name = \Auth::id() .'_'.str_replace(' ','_',strtolower(\Input::file('smsfile')->getClientOriginalName()));
+					$orignal_file_name = str_replace(' ','_',strtolower(\Input::file('smsfile')->getClientOriginalName()));
+					$upload_success = \Input::file('smsfile')->move(public_path() . '/documents', $file_name);
+					if($upload_success ){
+						$fileName = url('/public/documents/' . $file_name);
+						$data = array(
+							'customer_id' => \Input::get('customerid'),
+							'user_id' => \Auth::id(),
+							'filename' => $file_name,
+							'name' => \Input::file('smsfile')->getClientOriginalName(),
+							'type' => 4
+						);
+						\CustomerFiles\CustomerFilesEntity::get_instance()->createOrUpdate($data);
+					}
+				}
+			}
+			$sms_client_file = '';
+			// grab the client files
+			if( \Input::get('attach_file') != 0 ){
+				$client_file = \CustomerFiles\CustomerFiles::find(\Input::get('attach_file'));
+				//$sms_client_file = "\n\n ". "<a href=".url('/public/documents/' . $client_file->filename).">".$client_file->filename."</a>";
+				$sms_client_file = "\n\n ". url('/public/documents/' . $client_file->filename);
+			}
+
+			// re-structure the message body
+			// include the attachment link
+			$sms_msg = trim( \Input::get('note') );
+			$sms_msg .= "\n\n";
+			$sms_msg .= "Attach file \n\n";
+			//$sms_msg .= "<a href=".$fileName.">".$orignal_file_name."</a>";
+			$sms_msg .= $fileName;
+			$sms_msg .= $sms_client_file;
+
+			$message_characters = strlen($sms_msg);
+
+			$characters = $message_characters;
+			$sms_count  = ceil($characters/160);
+
+			if( $cred->credits >= $sms_count ){
+				if( \SMSCredit\SMSCreditEntity::get_instance()->spendCredit(\Auth::id(), $sms_count) ){
+					$sms = \Textlocal\TextlocalEntity::get_instance()->apiTextlocal();
+					$numbers = array(\Input::get('mobile_number'));
+					$message = $sms_msg;
+					$sender = \Auth::user()->sms;
+					$response = $sms->sendSMS($numbers, $message, $sender, null);
+					//return $response;
+					$client = \Clients\Clients::find(\Input::get('customerid')	);
+					// insert into msg database
+					$msg = array(
+						'customer_id' => \Input::get('customerid'),
+						'sender'=>\Auth::user()->title . ' ' . \Auth::user()->first_name . ' ' .\Auth::user()->last_name,
+						'to' => \Input::get('mobile_number'),
+						'subject' => 'Text message sent to client - ' . $client->title.' '.$client->first_name.' '.$client->last_name,
+						'body' => $sms_msg,
+						'direction' => 1,
+						'method' => 2,
+						'ref' => $response->messages[0]->id,
+						'read_status' => 0
+					);
+					\Message\MessageEntity::get_instance()->createOrUpdate($msg);
+					return \Response::json(
+						array(
+							'result'=>true,
+							'redirect'=>\Input::get('redirect')
+						)
+					);
+				}else{
+					$msg = '<li class="list-group-item list-group-item-danger">Sorry you do not have enough credits.</li>';
+					return \Response::json(array('result'=>false,'message'=>$msg));
+				}
+
+			}else{
+				$msg = '<li class="list-group-item list-group-item-danger">Sorry you do not have enough credits.</li>';
+				return \Response::json(array('result'=>false,'message'=>$msg));
+			}
+		}else{
+			$msg = $validator->messages()->all('<li class="list-group-item list-group-item-danger">:message</li>');
+			return \Response::json(array('result'=>false,'message'=>$msg));
+		}
+		die();
 	}
 
 }

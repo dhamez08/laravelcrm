@@ -72,7 +72,19 @@
 								<p>
 									<i class="fa fa-phone"></i>
 									{{$phone->number}}
-									<span class="label label-info" style="font-size:9px;">{{$phone->type}}</span>
+									@if( $phone->type == 'Mobile' )
+										<a
+											class="openModal"
+											data-toggle="modal"
+											data-target=".ajaxModal"
+											href="{{action('SMS\SMSController@getAjaxIndividualSendSms', array('customerid'=>$customerId,'mobile_number'=>$phone->number))}}"
+										>
+											<span class="label label-info" style="font-size:9px;">{{$phone->type}}</span>
+										</a>
+									@else
+										<span class="label label-info" style="font-size:9px;">{{$phone->type}}</span>
+									@endif
+
 								</p>
 							@endforeach
 						@endif

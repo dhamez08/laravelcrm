@@ -45,7 +45,14 @@ class CustomerTelephoneEntity extends \Eloquent{
 			$obj = \CustomerTelephone\CustomerTelephone::find($id);
 		}
 		$obj->customer_id 	= \Input::get('customer_id',\Auth::id());
-		$obj->number 		= \Input::get('number','');
+
+		if (substr(\Input::get('number'), 0, 2)=="07") {
+			$mob_number = '44' . substr(\Input::get('number'), 1);
+		} else {
+			$mob_number = \Input::get('number','');
+		}
+
+		$obj->number 		= $mob_number;
 		$obj->type 			= \Input::get('type','');
 		$obj->save();
 		return $obj;

@@ -248,7 +248,9 @@ class MarketingController extends \BaseController {
 						'textlocal_msg_recipient'=>$txt_local->messages[0]->recipient,
 						'user_id'=>\Auth::id(),
 						'customer_id'=>$val['clientid'],
-						'messages_id'=>$msg->id,
+						'message'=>$messagetosend,
+						'from' => \Auth::user()->title.' '.\Auth::user()->first_name.' '.\Auth::user()->last_name,
+						'client_name'=>$val['name'],
 					);
 					$obj_sms_sent = \SMSSent\SMSSentEntity::get_instance()->createOrUpdate($sms_sent);
 
