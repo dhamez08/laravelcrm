@@ -68,7 +68,7 @@ class MarketingController extends \BaseController {
 		$data['tag_id']				= \Input::has('tags') ? (\Input::get('tags') != 0 ) ? \Input::get('tags'):null:null;
 		$data['list_customer']		= \Marketing\MarketingEntity::get_instance()->getCustomerList($data['tag_id']);
 		$data['tags']			 	= \ClientTag\ClientTagEntity::get_instance()->getTagsByLoggedUser();
-		$data['report']			 	= \SMSReport\SMSReport::userId( \Auth::id() );
+		$data['sms_sent']			= \SMSSent\SMSSent::userId( \Auth::id() );
 		$get_credit					= \SMSCredit\SMSCreditEntity::get_instance()->getSMSCredit(\Auth::id());
 		if( $get_credit ){
 			$data['sms_credit']			= \SMSCredit\SMSCreditEntity::get_instance()->getSMSCredit(\Auth::id())->pluck('credits');
@@ -255,7 +255,7 @@ class MarketingController extends \BaseController {
 					// create data for report purpose
 					// get the api message response
 					$msg_status = \Textlocal\TextlocalEntity::get_instance()->getMsgStatusID($txt_local->messages[0]->id);
-					$sms_report = array(
+					/*$sms_report = array(
 						'sms_sent_id' => $obj_sms_sent->id,
 						'to' => $txt_local->messages[0]->recipient ,
 						'from' => \Auth::user()->title.' '.\Auth::user()->first_name.' '.\Auth::user()->last_name,
@@ -265,7 +265,7 @@ class MarketingController extends \BaseController {
 						'customer_id' => $val['clientid'],
 						'user_id' => \Auth::id()
 					);
-					\SMSReport\SMSReportEntity::get_instance()->createOrUpdate($sms_report);
+					\SMSReport\SMSReportEntity::get_instance()->createOrUpdate($sms_report);*/
 				}
 			}
 			\Session::forget('session_sendsms');

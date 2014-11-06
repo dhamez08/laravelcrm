@@ -75,7 +75,8 @@ class Textlocal {
 			foreach($result->errors as $error) {
 				switch($error->code) {
 					default:
-						throw new \Exception($error->message);
+						//throw new \Exception($error->message);
+						return false;
 				}
 			}
 		}
