@@ -541,6 +541,7 @@ class CustomFormsController extends \BaseController {
 	public function getFields($form_id) {
 
 		if($form_id=="customer") {
+
 			return \Response::json(
 						array(
 							'form'  => array('name'=>'Customer'),
@@ -571,8 +572,26 @@ class CustomFormsController extends \BaseController {
 										array('field_name'=>'ContactNumber:Direct'),
 										array('field_name'=>'ContactNumber:Mobile'),
 										array('field_name'=>'ContactNumber:Fax'),
-										array('field_name'=>'Website:Home'),
+										array('field_name'=>'Website:Personal'),
 										array('field_name'=>'Website:Work'),
+										array('field_name'=>'Twitter:Personal'),
+										array('field_name'=>'Twitter:Work'),
+										array('field_name'=>'Skype:Personal'),
+										array('field_name'=>'Skype:Work'),
+										array('field_name'=>'Xing:Personal'),
+										array('field_name'=>'Xing:Work'),
+										array('field_name'=>'Google+:Personal'),
+										array('field_name'=>'Google+:Work'),
+										array('field_name'=>'Facebook:Personal'),
+										array('field_name'=>'Facebook:Work'),
+										array('field_name'=>'YouTube:Personal'),
+										array('field_name'=>'YouTube:Work'),
+										array('field_name'=>'GitHub:Personal'),
+										array('field_name'=>'GitHub:Work'),
+										array('field_name'=>'LinkedIn:Personal'),
+										array('field_name'=>'LinkedIn:Work'),
+										array('field_name'=>'Blog:Personal'),
+										array('field_name'=>'Blog:Work'),
 									)
 						)
 					);

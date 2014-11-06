@@ -304,6 +304,8 @@ class MessagesController extends \BaseController {
 
 				$custObj = \Clients\Clients::find($customer);
 
+				$data['body'] = \EmailShortCodeReplacement::get_instance()->replace($custObj, $data['body']);
+
 				if($custObj->emails()->count() > 0) {
 
 					$data['to_email'] = $custObj->emails()->first()->email;
@@ -603,6 +605,8 @@ class MessagesController extends \BaseController {
 				}
 
 				$custObj = \Clients\Clients::find($customer);
+
+				$data['body'] = \EmailShortCodeReplacement::get_instance()->replace($custObj, $data['body']);
 
 				if($custObj->emails()->count() > 0) {
 
