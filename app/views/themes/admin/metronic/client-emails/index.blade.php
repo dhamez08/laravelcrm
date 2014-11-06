@@ -102,7 +102,16 @@
 								<div class="inbox-form-group">
 									<label class="control-label">Subject:</label>
 									<div class="controls">
-										<input type="text" class="form-control" name="subject" id="email_subject">
+									{{
+										Form::text(
+											'subject',
+											null,
+											array(
+												'class'=>'form-control',
+												'id'=>'email_subject'
+											)
+										);
+									}}
 									</div>
 								</div>
 								<div class="inbox-form-group">
@@ -162,7 +171,16 @@
 								<div class="inbox-form-group row">
 									<!-- <textarea class="inbox-editor inbox-wysihtml5 form-control" name="message" rows="12"></textarea> -->
 									<div class="col-md-9">
-										<textarea name="message" id="message"></textarea>
+									{{
+										Form::textarea(
+											'message',
+											null,
+											array(
+												'class'=>'form-control',
+												'id'=>'message'
+											)
+										);
+									}}
 									</div>
 									<div class="col-md-3" style="padding:0px;padding-right:30px;">
 										<h2>Dynamic Fields</h2>

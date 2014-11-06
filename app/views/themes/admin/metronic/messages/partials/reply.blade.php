@@ -42,7 +42,17 @@
 	<div class="inbox-form-group">
 		<label class="control-label">Subject:</label>
 		<div class="controls">
-			<input type="text" class="form-control" name="subject" value="{{ $message->subject }}" readonly="readonly">
+		{{
+			Form::text(
+				'subject',
+				$message->subject,
+				array(
+					'class'=>'form-control',
+					'id'=>'subject',
+					'readonly'=>'readonly'
+				)
+			);
+		}}
 		</div>
 	</div>
 	<div class="inbox-form-group">
