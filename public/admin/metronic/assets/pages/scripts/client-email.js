@@ -375,7 +375,7 @@ var ClientEmail = function () {
             });
 
             $(document).click(function(event) { 
-                if(!$(event.target).closest('.note-editor').length) {
+                if(!$(event.target).closest('.note-editor').length && event.target!="javascript:void(0)") {
                     isValid = 0;
                 }        
             });

@@ -337,12 +337,7 @@ var Messages = function () {
                 isValid = 1;
             });
 
-            $(document).click(function(event) { 
-                if(!$(event.target).closest('.note-editor').length) {
-                    isValid = 0;
-                }        
-            });
-
+            
             $("a.custom_form_link").live("click", function() {
                 if(isValid==1) {
                     var selection = document.getSelection();
@@ -355,9 +350,16 @@ var Messages = function () {
                     } else {
                         $("#message").code($("#message").code()+''+toInsert+'');
                     }
+                    isValid = 1;
                 } else {
                     alert('please click/focus on the editor to insert the dynamic field!');
                 }
+            });
+
+            $(document).click(function(event) { 
+                if(!$(event.target).closest('.note-editor').length && event.target!="javascript:void(0)") {
+                    isValid = 0;
+                }        
             });
 
             initFileupload();
