@@ -10,8 +10,10 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-\Log::info('textlocal handling receipt ' . \Input::all());
-\Log::info('textlocal handling receipt ' . print_r(\Input::all()));
+if( \Input::has('datetime') ){
+	\Log::info('textlocal handling receipt ' . \Input::all());
+	\Log::info('textlocal handling receipt ' . print_r(\Input::all()));
+}
 Route::get( '/' , 'HomeController@getIndex' );
 Route::get( 'login' , 'AuthController@getIndex' );
 Route::post( 'login' , 'AuthController@postAuth' );
