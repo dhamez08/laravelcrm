@@ -266,14 +266,14 @@ class SMSController extends \BaseController {
 			if( \Input::get('attach_file') != 0 ){
 				$client_file = \CustomerFiles\CustomerFiles::find(\Input::get('attach_file'));
 				//$sms_client_file = "\n\n ". "<a href=".url('/public/documents/' . $client_file->filename).">".$client_file->filename."</a>";
-				$sms_client_file = "\n\n ". url('/public/documents/' . $client_file->filename);
+				$sms_client_file = "<br>". url('/public/documents/' . $client_file->filename);
 			}
 
 			// re-structure the message body
 			// include the attachment link
 			$sms_msg = trim( \Input::get('note') );
-			$sms_msg .= "\n\n";
-			$sms_msg .= "Attach file \n\n";
+			$sms_msg .= "<br>";
+			$sms_msg .= "Attach file <br>";
 			//$sms_msg .= "<a href=".$fileName.">".$orignal_file_name."</a>";
 			$sms_msg .= $fileName;
 			$sms_msg .= $sms_client_file;
