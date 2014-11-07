@@ -306,6 +306,7 @@ class MarketingController extends \BaseController {
 			\SMSDelivery\SMSDeliveryReceipts::get_instance()->createOrUpdate($data);*/
 		//}
 		\Log::info('textlocal handling receipt ' . \Input::all());
+		\Log::info('textlocal handling receipt ' . print_r(\Input::all()));
 	}
 
 }
