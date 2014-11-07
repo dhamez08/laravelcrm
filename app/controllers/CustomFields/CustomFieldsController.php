@@ -87,7 +87,7 @@ class CustomFieldsController extends \BaseController {
 	public function postAddField() {
 		$rules = array(
 			'label' 		=> 'required|min:3',
-			'name' 			=> 'required|min:3'
+			'name' 			=> 'required|min:3|unique:users_custom_fields'
 		);
 
 		$messages = array(
@@ -95,6 +95,7 @@ class CustomFieldsController extends \BaseController {
 			'label.min'=>'Label must have atleast 3 characters',
 			'name.required' => 'Field name is required.',
 			'name.min'=>'Field name must have atleast 3 characters',
+			'name.unique'=>'Field name has already taken',
 		);
 
 		$validator = \Validator::make(\Input::all(), $rules, $messages);
@@ -109,6 +110,44 @@ class CustomFieldsController extends \BaseController {
 			return \Redirect::to('settings/user-custom-fields')
 			->withErrors($validator)
 			->withInput();
+		}
+	}
+
+	public function postEditField() {
+		$rules = array(
+			'label' 		=> 'required|min:3',
+			'name' 			=> 'required|min:3|unique:users_custom_fields,name,'.\Input::get('field_id') //ignore the current id for unique validation
+		);
+
+		$messages = array(
+			'label.required' => 'Label is required.',
+			'label.min'=>'Label must have atleast 3 characters',
+			'name.required' => 'Field name is required.',
+			'name.min'=>'Field name must have atleast 3 characters',
+			'name.unique'=>'Field name has already taken',
+		);
+
+		$validator = \Validator::make(\Input::all(), $rules, $messages);
+		if ( $validator->passes() ) {
+
+			$this->customFieldEntity->saveField(\Input::all());
+
+			\Session::flash('message', 'The Field was successfully updated');
+			return \Redirect::to('settings/user-custom-fields');
+		}else{
+			\Input::flash();
+			return \Redirect::to('settings/user-custom-fields')
+			->withErrors($validator)
+			->withInput();
+		}
+	}
+
+	public function getDelete($id) {
+		$field = $this->customFieldEntity->find($id);
+		if($field) {
+			$field->delete();
+			\Session::flash('message', 'The Field was successfully deleted');
+			return \Redirect::to('settings/user-custom-fields');
 		}
 	}
 

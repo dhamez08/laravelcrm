@@ -1,16 +1,16 @@
 <?php
 namespace CustomField;
 
-use \Illuminate\Database\Eloquent\SoftDeletingTrait;
+//use \Illuminate\Database\Eloquent\SoftDeletingTrait;
 
 class CustomFieldEntity extends \Eloquent{
 
-	use SoftDeletingTrait;
+	//use SoftDeletingTrait;
 
 	protected $table = 'users_custom_fields';
 	protected static $instance = null;
 
-	protected $dates = ['deleted_at'];
+	//protected $dates = ['deleted_at'];
 
 	public function __construct(){
 	}
@@ -40,7 +40,11 @@ class CustomFieldEntity extends \Eloquent{
 	}
 
 	public function saveField($data) {
-		$field = new $this;
+		if(isset($data['field_id']))
+			$field = $this->find($data['field_id']);
+		else
+			$field = new $this;
+		
 		$field->name 			= $data['name'];
 		$field->label 			= $data['label'];
 		$field->placeholder 	= $data['placeholder'];

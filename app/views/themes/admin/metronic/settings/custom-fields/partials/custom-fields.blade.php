@@ -14,16 +14,32 @@
 			</div>
 			<br>
 			@else
-			<table class="table">
+			<table class="table table-striped table-bordered table-advance table-hover">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Label</th>
+						<th>Placeholder</th>
+						<th></th>
+					</tr>
+				</thead>
 				<tbody>
 					@foreach($clientFields as $field)
 					<tr>
-						<td>
-							{{ $field->name }}
+						<td class="highlight">
+							<div class="info"></div>
+							<a href="#" class="edit-field" field-id="{{ $field->id }}">
+								{{ $field->name }}
+							</a>
+							<input type="hidden" value="{{ $field->name }}" id="hidden_field_name-{{ $field->id }}" />
+							<input type="hidden" value="{{ $field->label }}" id="hidden_field_label-{{ $field->id }}" />
+							<input type="hidden" value="{{ $field->placeholder }}" id="hidden_field_placeholder-{{ $field->id }}" />
 						</td>
+						<td>{{ $field->label }}</td>
+						<td>{{ $field->placeholder }}</td>
 						<td class="text-right">
-							 <a href="#" class="btn btn-sm blue"><i class="fa fa-edit"></i> Edit</a>
-							 <a href="#" class="btn btn-sm red" onclick="return confirm('Are you sure you want to delete?')"><i class="fa fa-times"></i> Remove</a>
+							 <a href="#" class="btn default btn-xs purple edit-field" field-id="{{ $field->id }}"><i class="fa fa-edit"></i> Edit</a>
+							 <a href="{{ url('settings/user-custom-fields/delete/'.$field->id) }}" class="btn default btn-xs black" onclick="return confirm('Are you sure you want to delete?')"><i class="fa fa-trash-o"></i> Remove</a>
 						</td>
 					</tr>
 					@endforeach
@@ -40,3 +56,26 @@
 </div>
 
 @include( \DashboardEntity::get_instance()->getView() . '.settings.custom-fields.partials.modals.add-custom-field' )
+@include( \DashboardEntity::get_instance()->getView() . '.settings.custom-fields.partials.modals.edit-custom-field' )
+
+@section('script-footer')
+	@parent
+	@section('footer-custom-js')
+	@parent
+	<script>
+	$(document).ready(function() {
+		$("a.edit-field").on("click", function(e) {
+			e.preventDefault();
+			var field_id = $(this).attr("field-id");
+
+			$("#edit-custom-field-modal input#field_id").val(field_id);
+			$("#edit-custom-field-modal input#field-name").val($("#hidden_field_name-"+field_id).val());
+			$("#edit-custom-field-modal input#field-label").val($("#hidden_field_label-"+field_id).val());
+			$("#edit-custom-field-modal input#field-placeholder").val($("#hidden_field_placeholder-"+field_id).val());
+
+			$("#edit-custom-field-modal").modal("show");
+		});
+	});
+	</script>
+	@stop
+@stop
