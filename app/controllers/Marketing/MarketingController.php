@@ -152,7 +152,7 @@ class MarketingController extends \BaseController {
 			if( $files && count($files) > 0 ){
 				$str_files = '';
 				foreach($files as $file){
-					$str_files .= $file.'<br>';
+					$str_files .= $file."\n";
 				}
 				$str_files = 'Attach file : ' . $str_files;
 			}
