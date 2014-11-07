@@ -143,19 +143,29 @@ class MarketingController extends \BaseController {
 	}
 
 	public function postSendSmsVerify(){
-		var_dump(\Input::all());
-		$files = \SMSFIles\SMSFIles::fileInId( \Input::get('attach_file') );
-		var_dump($files->get()->toArray());
-		exit();
 		if (trim(\Input::get('message')) == '') {
 			return \Redirect::to('marketing/message-sms')->withErrors('You must enter a message');
 		}else{
-			$message = trim(\Input::get('message'));
-			$personalized = \Input::has('personalised');
+			// files attach
+			$files = \SMSFIles\SMSFIlesEntity::get_instance()->getFileAndConvertToURL( \Input::get('attach_file') );
+			$str_files = '';
+			if( $files && count($files) > 0 ){
+				$str_files = '';
+				foreach($files as $file){
+					$str_files .= $file.'<br>';
+				}
+				$str_files = 'Attach file : ' . $str_files;
+			}
+			// files attach
+
+			$message 			= trim(\Input::get('message'));
+			$message 			.= ' ' . trim($str_files);
+			$personalized 		= \Input::has('personalised');
 			$message_characters = strlen($message);
 			$sms_count = 0;
 			// loop every message to total the credits needed
 			$numbers = \Session::get('session_sendsms');
+
 			foreach ($numbers as $key => $val) {
 				$characters = 0;
 				// get the number and the name
@@ -181,7 +191,6 @@ class MarketingController extends \BaseController {
 				\Session::forget('sms_session');
 				return \Redirect::to('marketing')->withErrors('Sorry you do not have enough credits.');
 			}
-
 		}
 	}
 
@@ -288,14 +297,15 @@ class MarketingController extends \BaseController {
 			\Input::has('customID') ||
 			\Input::has('datetime')
 		){*/
-			$data = array(
+			/*$data = array(
 				$_REQUEST['number'],
 				$_REQUEST['status'],
 				$_REQUEST['customID'],
 				$_REQUEST['datetime']
 			);
-			\SMSDelivery\SMSDeliveryReceipts::get_instance()->createOrUpdate($data);
+			\SMSDelivery\SMSDeliveryReceipts::get_instance()->createOrUpdate($data);*/
 		//}
+		\Log::info('textlocal handling receipt ' . \Input::all());
 	}
 
 }

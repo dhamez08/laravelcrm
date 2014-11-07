@@ -57,9 +57,14 @@ class SMSFIlesEntity extends \Eloquent{
 		$url = array();
 		if( is_array($id) ){
 			$files = \SMSFIles\SMSFIles::fileInId( $id );
+			foreach($files->get() as $file){
+				$url[] = url('/public/documents/' . $file->file);
+			}
 		}else{
 			$files = \SMSFIles\SMSFIles::find( $id );
+			$url[] = url('/public/documents/' . $files->file);
 		}
+		return $url;
 	}
 
 }
