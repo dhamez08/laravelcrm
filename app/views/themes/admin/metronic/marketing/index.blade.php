@@ -41,12 +41,12 @@
 										<tr>
 											<td>{{$report_item->created_at}}</td>
 											<td>{{$report_item->textlocal_msg_recipient}}</td>
-											<td>from</td>
-											<td>msg</td>
+											<td>{{$report_item->from}}</td>
+											<td>{{$report_item->message}}</td>
 											<td>
-												{{
+												{{--
 													\SMSReport\SMSReportEntity::get_instance()->getMsgStatus(\Textlocal\TextlocalEntity::get_instance()->getMsgStatusID($report_item->textlocal_msg_id))
-												}}
+												--}}
 											</td>
 										</tr>
 									@endforeach

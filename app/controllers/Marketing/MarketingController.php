@@ -68,7 +68,7 @@ class MarketingController extends \BaseController {
 		$data['tag_id']				= \Input::has('tags') ? (\Input::get('tags') != 0 ) ? \Input::get('tags'):null:null;
 		$data['list_customer']		= \Marketing\MarketingEntity::get_instance()->getCustomerList($data['tag_id']);
 		$data['tags']			 	= \ClientTag\ClientTagEntity::get_instance()->getTagsByLoggedUser();
-		$data['sms_sent']			= \SMSSent\SMSSent::userId( \Auth::id() );
+		$data['sms_sent']			= \SMSSent\SMSSent::userId( \Auth::id() )->orderBy('created_at','desc');
 		$get_credit					= \SMSCredit\SMSCreditEntity::get_instance()->getSMSCredit(\Auth::id());
 		if( $get_credit ){
 			$data['sms_credit']		= \SMSCredit\SMSCreditEntity::get_instance()->getSMSCredit(\Auth::id());
@@ -76,6 +76,7 @@ class MarketingController extends \BaseController {
 			$data['sms_credit'] = 0;
 		}
 		$data 						= array_merge($data,$this->getSetupThemes());
+		//var_dump($data['sms_sent']->get()->toArray());
 		return \View::make( $data['view_path'] . '.marketing.index', $data );
 	}
 
