@@ -73,6 +73,7 @@
 																<input type="checkbox" name="sendsms[{{$val_customer->id}}][clientid]" value="{{$val_customer->id}}" />
 																{{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}
 																@foreach($val_customer->telephone as $phone)
+																	{{$phone->number}}
 																	<input type="hidden" name="sendsms[{{$val_customer->id}}][number]" value="{{$phone->number}}" />
 																	<input type="hidden" name="sendsms[{{$val_customer->id}}][name]" value="{{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}" />
 																@endforeach
@@ -81,6 +82,7 @@
 																	<input type="checkbox" name="sendsms[{{$val_customer->id}}][clientid]" value="{{$val_customer->id}}" />
 																	{{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}
 																	@foreach($val_customer->telephone as $phone)
+																		{{$phone->number}}
 																		<input type="hidden" name="sendsms[{{$val_customer->id}}][number]" value="{{$phone->number}}" />
 																		<input type="hidden" name="sendsms[{{$val_customer->id}}][name]" value="{{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}" />
 																	@endforeach

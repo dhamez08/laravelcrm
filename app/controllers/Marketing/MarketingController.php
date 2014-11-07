@@ -136,8 +136,8 @@ class MarketingController extends \BaseController {
 		$data['fa_icons']			= 'user';
 		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
 		$data['center_column_view'] = 'dashboard';
+		$data['sms_files']			= \SMSFIles\SMSFIles::userId(\Auth::id())->orderBy('created_at','desc');
 		$data['list_number']		= \Session::get('session_sendsms');
-		//$data['media_widget']		= \File\ClientFileController::get_instance()->getMediaWidget(\Auth::id());
 		$data 						= array_merge($data,$this->getSetupThemes());
 		return \View::make( $data['view_path'] . '.marketing.message', $data );
 	}
@@ -146,12 +146,26 @@ class MarketingController extends \BaseController {
 		if (trim(\Input::get('message')) == '') {
 			return \Redirect::to('marketing/message-sms')->withErrors('You must enter a message');
 		}else{
-			$message = trim(\Input::get('message'));
-			$personalized = \Input::has('personalised');
+			// files attach
+			$files = \SMSFIles\SMSFIlesEntity::get_instance()->getFileAndConvertToURL( \Input::get('attach_file') );
+			$str_files = '';
+			if( $files && count($files) > 0 ){
+				$str_files = '';
+				foreach($files as $file){
+					$str_files .= $file.'<br>';
+				}
+				$str_files = 'Attach file : ' . $str_files;
+			}
+			// files attach
+
+			$message 			= trim(\Input::get('message'));
+			$message 			.= ' ' . trim($str_files);
+			$personalized 		= \Input::has('personalised');
 			$message_characters = strlen($message);
 			$sms_count = 0;
 			// loop every message to total the credits needed
 			$numbers = \Session::get('session_sendsms');
+
 			foreach ($numbers as $key => $val) {
 				$characters = 0;
 				// get the number and the name
@@ -177,7 +191,6 @@ class MarketingController extends \BaseController {
 				\Session::forget('sms_session');
 				return \Redirect::to('marketing')->withErrors('Sorry you do not have enough credits.');
 			}
-
 		}
 	}
 
@@ -284,14 +297,15 @@ class MarketingController extends \BaseController {
 			\Input::has('customID') ||
 			\Input::has('datetime')
 		){*/
-			$data = array(
+			/*$data = array(
 				$_REQUEST['number'],
 				$_REQUEST['status'],
 				$_REQUEST['customID'],
 				$_REQUEST['datetime']
 			);
-			\SMSDelivery\SMSDeliveryReceipts::get_instance()->createOrUpdate($data);
+			\SMSDelivery\SMSDeliveryReceipts::get_instance()->createOrUpdate($data);*/
 		//}
+		\Log::info('textlocal handling receipt ' . \Input::all());
 	}
 
 }

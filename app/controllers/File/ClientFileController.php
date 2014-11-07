@@ -198,9 +198,10 @@ class ClientFileController extends \BaseController {
 	}
 
 	public function getMediaWidget($user_id, $customer_id = null){
-		$data = $this->data_view;
-		$data = array_merge($data,$this->getSetupThemes());
-		return \View::make($data['view_path'] . '.files.partials.media')->render();
+		$data 				= $this->data_view;
+		$data['sms_files']	= \SMSFIles\SMSFIles::userId(\Auth::id());
+		$data 				= array_merge($data,$this->getSetupThemes());
+		return \View::make($data['view_path'] . '.files.partials.media', $data)->render();
 	}
 
 }
