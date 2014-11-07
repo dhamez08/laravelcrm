@@ -71,7 +71,7 @@ class MarketingController extends \BaseController {
 		$data['sms_sent']			= \SMSSent\SMSSent::userId( \Auth::id() );
 		$get_credit					= \SMSCredit\SMSCreditEntity::get_instance()->getSMSCredit(\Auth::id());
 		if( $get_credit ){
-			$data['sms_credit']		= \SMSCredit\SMSCreditEntity::get_instance()->getSMSCredit(\Auth::id())->pluck('credits');
+			$data['sms_credit']		= \SMSCredit\SMSCreditEntity::get_instance()->getSMSCredit(\Auth::id());
 		}else{
 			$data['sms_credit'] = 0;
 		}
@@ -93,7 +93,7 @@ class MarketingController extends \BaseController {
 		$data['tags']			 	= \ClientTag\ClientTagEntity::get_instance()->getTagsByLoggedUser();
 		$get_credit					= \SMSCredit\SMSCreditEntity::get_instance()->getSMSCredit(\Auth::id());
 		if( $get_credit ){
-			$data['sms_credit']		= \SMSCredit\SMSCreditEntity::get_instance()->getSMSCredit(\Auth::id())->pluck('credits');
+			$data['sms_credit']		= \SMSCredit\SMSCreditEntity::get_instance()->getSMSCredit(\Auth::id());
 		}else{
 			$data['sms_credit'] = 0;
 		}
@@ -176,12 +176,12 @@ class MarketingController extends \BaseController {
 				$sms_count  += ceil($characters/160);
 			}
 			$cred = \SMSCredit\SMSCreditEntity::get_instance()->getSMSCredit(\Auth::id());
-			if( $cred->credits >= $sms_count ){
+			if( $cred >= $sms_count ){
 				$sms_session = array(
 					'message' => $message,
 					'personalised' => $personalized,
 					'required_credits' => $sms_count,
-					'current_credits' => $cred->credits
+					'current_credits' => $cred
 				);
 				\Session::forget('sms_session');
 				\Session::put('sms_session',$sms_session);

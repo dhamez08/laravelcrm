@@ -91,19 +91,19 @@ class SMSCreditEntity extends \Eloquent{
 	public function getSMSCredit($user_id){
 		$check_credit = \SMSCredit\SMSCredit::userId($user_id);
 		if(  $check_credit->count() ){
-			return $check_credit;
+			return $check_credit->first()->credits;
 		}else{
-			return false;
+			return 0;
 		}
 	}
 
 	public function spendCredit($user_id, $credit){
-		$sms_credit = $this->getSMSCredit($user_id);
-		$credits = ($sms_credit->credits - $credit);
+		$sms_credit = \SMSCredit\SMSCredit::userId($user_id);
+		$credits = ($sms_credit->first()->credits - $credit);
 		$data = array(
 			'credits' => $credits
 		);
-		return $this->createOrUpdate($data, $sms_credit->id);
+		return $this->createOrUpdate($data, $sms_credit->first()->id);
 	}
 
 }

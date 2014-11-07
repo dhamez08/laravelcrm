@@ -283,7 +283,7 @@ class SMSController extends \BaseController {
 			$characters = $message_characters;
 			$sms_count  = ceil($characters/160);
 
-			if( $cred->credits >= $sms_count ){
+			if( $cred >= $sms_count ){
 				if( \SMSCredit\SMSCreditEntity::get_instance()->spendCredit(\Auth::id(), $sms_count) ){
 					$sms = \Textlocal\TextlocalEntity::get_instance()->apiTextlocal();
 					$numbers = array(\Input::get('mobile_number'));
