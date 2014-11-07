@@ -71,7 +71,7 @@ class MarketingController extends \BaseController {
 		$data['sms_sent']			= \SMSSent\SMSSent::userId( \Auth::id() );
 		$get_credit					= \SMSCredit\SMSCreditEntity::get_instance()->getSMSCredit(\Auth::id());
 		if( $get_credit ){
-			$data['sms_credit']			= \SMSCredit\SMSCreditEntity::get_instance()->getSMSCredit(\Auth::id())->pluck('credits');
+			$data['sms_credit']		= \SMSCredit\SMSCreditEntity::get_instance()->getSMSCredit(\Auth::id())->pluck('credits');
 		}else{
 			$data['sms_credit'] = 0;
 		}

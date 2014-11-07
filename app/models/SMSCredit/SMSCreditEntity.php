@@ -91,7 +91,7 @@ class SMSCreditEntity extends \Eloquent{
 	public function getSMSCredit($user_id){
 		$check_credit = \SMSCredit\SMSCredit::userId($user_id);
 		if(  $check_credit->count() ){
-			return $check_credit->first();
+			return $check_credit;
 		}else{
 			return false;
 		}
