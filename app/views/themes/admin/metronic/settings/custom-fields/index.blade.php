@@ -25,6 +25,10 @@
 						<a href="#tab_custom_forms" data-toggle="tab">
 						Custom Forms </a>
 					</li>
+					<li class="{{ $tabActive=='user-custom-fields' ? 'active':'' }}">
+						<a href="#tab_custom_fields" data-toggle="tab">
+						Custom Fields </a>
+					</li>
 				</ul>
 				<div class="tab-content">
 					<div class="tab-pane {{ $tabActive=='custom-tabs' ? 'active':'' }}" id="tab_custom_tabs">
@@ -41,6 +45,14 @@
 						<div class="container-fluid">
 							<div class="row">
 								@include( \DashboardEntity::get_instance()->getView() . '.settings.custom-fields.partials.custom-forms' )
+							</div>
+						</div>
+					</div>
+
+					<div class="tab-pane {{ $tabActive=='user-custom-fields' ? 'active':'' }}" id="tab_custom_fields">
+						<div class="container-fluid">
+							<div class="row">
+								@include( \DashboardEntity::get_instance()->getView() . '.settings.custom-fields.partials.custom-fields' )
 							</div>
 						</div>
 					</div>

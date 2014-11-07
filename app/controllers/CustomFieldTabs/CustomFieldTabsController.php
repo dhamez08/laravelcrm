@@ -14,6 +14,7 @@ class CustomFieldTabsController extends \BaseController {
 	protected $userEntity;
 	protected $userTabEntity;
 	protected $customFormEntity;
+	protected $customFieldEntity;
 
 	/**
 	 * hold the view essentials like
@@ -36,6 +37,7 @@ class CustomFieldTabsController extends \BaseController {
 		$this->userEntity = new \User\UserEntity;
 		$this->userTabEntity = new \UserTab\UserTabEntity;
 		$this->customFormEntity = new \CustomForm\CustomFormEntity;
+		$this->customFieldEntity = new \CustomField\CustomFieldEntity;
 	}
 
 	/**
@@ -72,6 +74,7 @@ class CustomFieldTabsController extends \BaseController {
 		$data['clientFileRows']	= $this->userEntity->find(\Auth::id())->getClientFiles();
 		$data['customTabs']		= $this->customFieldTabEntity->getTabsByLoggedUser();
 		$data['clientForms']	= $this->customFormEntity->getFormsByLoggedUser();
+		$data['clientFields']	= $this->customFieldEntity->getFieldsByLoggedUser();
 		$data['pageSubTitle'] 	= '';
 		$data['contentClass'] 	= 'settings';
 
