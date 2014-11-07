@@ -136,13 +136,17 @@ class MarketingController extends \BaseController {
 		$data['fa_icons']			= 'user';
 		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
 		$data['center_column_view'] = 'dashboard';
+		$data['sms_files']			= \SMSFIles\SMSFIles::userId(\Auth::id())->orderBy('created_at','desc');
 		$data['list_number']		= \Session::get('session_sendsms');
-		//$data['media_widget']		= \File\ClientFileController::get_instance()->getMediaWidget(\Auth::id());
 		$data 						= array_merge($data,$this->getSetupThemes());
 		return \View::make( $data['view_path'] . '.marketing.message', $data );
 	}
 
 	public function postSendSmsVerify(){
+		var_dump(\Input::all());
+		$files = \SMSFIles\SMSFIles::fileInId( \Input::get('attach_file') );
+		var_dump($files->get()->toArray());
+		exit();
 		if (trim(\Input::get('message')) == '') {
 			return \Redirect::to('marketing/message-sms')->withErrors('You must enter a message');
 		}else{

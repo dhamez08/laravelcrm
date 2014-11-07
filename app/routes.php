@@ -34,6 +34,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::get( 'settings' , 'Settings\SettingsController@getIndex' );
 	Route::controller('client-tag', 'ClientTags\ClientTagsController');
 	Route::controller('marketing', 'Marketing\MarketingController');
+	Route::controller('smsfile', 'SMSFiles\SMSFilesController');
 	Route::group(array('prefix' => 'clients'), function()
 	{
 		Route::controller( '/' , 'Clients\ClientsController' );
