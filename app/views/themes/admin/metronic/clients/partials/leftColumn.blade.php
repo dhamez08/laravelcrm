@@ -77,7 +77,7 @@
 											class="openModal"
 											data-toggle="modal"
 											data-target=".ajaxModal"
-											href="{{action('SMS\SMSController@getAjaxIndividualSendSms', array('customerid'=>$customerId,'mobile_number'=>$phone->number))}}"
+											href="{{action('SMS\SMSController@getAjaxIndividualSendSms', array('customerid'=>$customer->id,'mobile_number'=>$phone->number))}}"
 										>
 											<span class="label label-info" style="font-size:9px;">{{$phone->type}}</span>
 										</a>
