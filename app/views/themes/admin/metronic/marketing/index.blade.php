@@ -39,8 +39,7 @@
 									@foreach($sms_sent->get() as $report_item)
 										<tr>
 											<td>{{$report_item->created_at}}</td>
-											<td>{{$report_item->textlocal_msg_recipient}}</td>
-											<td>{{$report_item->from}}</td>
+											<td>{{$report_item->textlocal_msg_recipient}} - {{$report_item->client_name}}</td>
 											<td>{{$report_item->message}}</td>
 											<td>
 												{{
