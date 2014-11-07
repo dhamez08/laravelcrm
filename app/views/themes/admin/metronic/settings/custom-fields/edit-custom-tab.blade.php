@@ -26,6 +26,10 @@
 						<a href="{{ url('settings/custom-forms') }}">
 						Custom Forms </a>
 					</li>
+					<li>
+						<a href="{{ url('settings/user-custom-fields') }}">
+						Custom Fields </a>
+					</li>
 				</ul>
 				<div class="tab-content">
 					<div class="tab-pane active" id="tab_custom_tabs">

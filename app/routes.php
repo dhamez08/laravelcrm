@@ -72,6 +72,11 @@ Route::group(array('before' => 'auth'), function()
 		Route::controller('/', 'CustomForms\CustomFormsController');
 	});
 
+	Route::group(array('prefix' => 'settings/user-custom-fields'), function()
+	{
+		Route::controller('/', 'CustomFields\CustomFieldsController');
+	});
+
 	Route::group(array('prefix' => 'settings/task-label'), function()
 	{
 		Route::controller('/', 'Settings\TaskLabelController');
