@@ -153,7 +153,13 @@ class MarketingController extends \BaseController {
 			if( $files && count($files) > 0 ){
 				$str_files = '';
 				foreach($files as $file){
-					$str_files .= $file."\n";
+					$tinyurl = \helpers\TinyURL::tinyurl($file);
+					if( $tinyurl && $tinyurl->state == 'ok' ){
+						$sms_attach = $tinyurl->shorturl;
+					}else{
+						$sms_attach = $file;
+					}
+					$str_files .= $sms_attach."\n";
 				}
 				$str_files = 'Attach file : ' . $str_files;
 			}

@@ -11,6 +11,13 @@
 |
 */
 Route::get( '/' , 'HomeController@getIndex' );
+Route::get('tinyurl', function()
+{
+	$url = 'http://stackoverflow.com/questions/22636826/notice-trying-to-get-property-of-non-object-errorm';
+	$tinyurl = \helpers\TinyURL::tinyurl($url);
+	var_dump($tinyurl);
+	//var_dump($tinyurl->state);
+});
 Route::get( 'login' , 'AuthController@getIndex' );
 Route::post( 'login' , 'AuthController@postAuth' );
 Route::get( 'logout' , 'AuthController@getLogout' );

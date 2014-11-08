@@ -250,6 +250,13 @@ class SMSController extends \BaseController {
 					$upload_success = \Input::file('smsfile')->move(public_path() . '/documents', $file_name);
 					if($upload_success ){
 						$fileName = url('/public/documents/' . $file_name);
+
+						// shorten the url
+						$tinyurl = \helpers\TinyURL::tinyurl($fileName);
+						if( $tinyurl && $tinyurl->state == 'ok' ){
+							$fileName = $tinyurl->shorturl;
+						}
+
 						$data = array(
 							'customer_id' => \Input::get('customerid'),
 							'user_id' => \Auth::id(),
@@ -266,7 +273,13 @@ class SMSController extends \BaseController {
 			if( \Input::get('attach_file') != 0 ){
 				$client_file = \CustomerFiles\CustomerFiles::find(\Input::get('attach_file'));
 				//$sms_client_file = "\n\n ". "<a href=".url('/public/documents/' . $client_file->filename).">".$client_file->filename."</a>";
-				$sms_client_file = "\n". url('/public/documents/' . $client_file->filename);
+				$sms_client_file = url('/public/documents/' . $client_file->filename);
+
+				// shorten the url
+				$tinyurl = \helpers\TinyURL::tinyurl(url('/public/documents/' . $client_file->filename));
+				if( $tinyurl && $tinyurl->state == 'ok' ){
+					$sms_client_file = $tinyurl->shorturl;
+				}
 			}
 
 			// re-structure the message body
@@ -276,7 +289,7 @@ class SMSController extends \BaseController {
 			$sms_msg .= "Attach file \n";
 			//$sms_msg .= "<a href=".$fileName.">".$orignal_file_name."</a>";
 			$sms_msg .= $fileName;
-			$sms_msg .= $sms_client_file;
+			$sms_msg .= "\n".$sms_client_file;
 
 			$message_characters = strlen($sms_msg);
 
