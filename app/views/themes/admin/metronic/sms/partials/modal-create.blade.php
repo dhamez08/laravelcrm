@@ -68,7 +68,7 @@
 				<label>Choose File to attach</label>
 				<div class="file-list">
 					@if( $customerFiles->count() )
-						<select name="attach_file">
+						<select name="attach_file" style="width:80%;">
 							<option value="0">Select File</option>
 							@foreach($customerFiles->get() as $files)
 								<option value="{{$files->id}}">{{$files->filename}}</option>

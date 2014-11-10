@@ -104,13 +104,13 @@
 					</div>
 					<div>
 						{% if (!i && !o.options.autoUpload) { %}
-							<button class="btn btn-sm blue start hidden" disabled>
+							<button class="btn btn-xs blue start hidden" disabled>
 								<i class="fa fa-upload"></i>
 								<span>Start</span>
 							</button>
 						{% } %}
 						{% if (!i) { %}
-							<button class="btn btn-sm red cancel">
+							<button class="btn btn-xs red cancel">
 								<i class="fa fa-ban"></i>
 								<span>Cancel</span>
 							</button>

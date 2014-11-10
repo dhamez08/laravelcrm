@@ -147,7 +147,7 @@ class ClientFileController extends \BaseController {
 	}
 
 	public function postMediaAjaxUploadFile(){
-		/*$belongs_to = \Auth::id();
+		$belongs_to = \Auth::id();
 		if( \Input::hasFile('files') ){
 			foreach(\Input::file('files') as $file){
 				$fileName = $this->_doUpload($file);
@@ -170,7 +170,8 @@ class ClientFileController extends \BaseController {
 			}
 		}else{
 			return \Response::json(array('success'=>false,'msg'=>'Cannot upload, file.'));
-		}*/
+		}
+		die();
 	}
 
 	public function postAjaxUpdateName(){

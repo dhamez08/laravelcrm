@@ -336,12 +336,9 @@ class SMSController extends \BaseController {
 						'read_status' => 0
 					);
 					\Message\MessageEntity::get_instance()->createOrUpdate($msg);
-					return \Response::json(
-						array(
-							'result'=>true,
-							'redirect'=>\Input::get('redirect')
-						)
-					);
+
+					\Session::flash('message', 'Successfully Send SMS');
+					return \Redirect::to(\Input::get('redirect'));
 				}else{
 					$msg = '<li class="list-group-item list-group-item-danger">Sorry you do not have enough credits.</li>';
 					return \Response::json(array('result'=>false,'message'=>$msg));

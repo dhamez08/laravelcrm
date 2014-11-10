@@ -61,7 +61,6 @@ class SMSFilesController extends \BaseController {
 	}
 
 	public function postMediaAjaxUploadFile(){
-		//var_dump( \Input::all() );
 		if( \Input::hasFile('files') ){
 			if( \Input::file('files')->getSize() > 0 ){
 				$mime_type = \Input::file('files')->getMimeType();

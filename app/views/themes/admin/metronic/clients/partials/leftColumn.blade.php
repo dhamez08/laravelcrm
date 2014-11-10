@@ -1,5 +1,5 @@
 <div class="sendemail">
-	<a href="{{ url('email/client/'.$customer->id.'?back='.Request::url()) }}" class="btn btn-sm btn-success sendemail"><i class="fa fa-envelope-o"></i> Send Email</a>
+	<a href="{{ url('email/client/'.$customer->id.'?back='.Request::url()) }}" class="btn btn-xs btn-success sendemail"><i class="fa fa-envelope-o"></i> Send Email</a>
 </div>
 @include($view_path.'.clients.partials.modals.sendemail-modal')
 <div class="panel panel-default">
@@ -162,7 +162,7 @@
 										@endif
 									<td>
 									<td>
-										<a 	class="btn red btn-sm deletePerson"
+										<a 	class="btn red btn-xs deletePerson"
 											href="{{
 												action(
 													'Clients\ClientsController@getConfirmPersonDelete',

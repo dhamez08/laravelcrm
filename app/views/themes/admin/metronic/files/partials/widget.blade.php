@@ -24,7 +24,7 @@
 					@if($files->type == $id)
 						<p>
 							<a href="{{asset('public/documents/' . $files->filename)}}" target="_blank">{{$files->filename}}</a>
-							<a 	class="btn red btn-sm deleteFile"
+							<a 	class="btn red btn-xs deleteFile"
 								href="{{
 									action(
 										'File\ClientFileController@getDeleteFile',
