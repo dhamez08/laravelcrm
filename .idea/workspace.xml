@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="41d470cb-9915-4cd7-b6a8-4c45aa5d9ee1" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/ClientFile/ClientFileController.php" afterPath="$PROJECT_DIR$/app/controllers/ClientFile/ClientFileController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/File/ClientFileController.php" afterPath="$PROJECT_DIR$/app/controllers/File/ClientFileController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/Clients/ClientsController.php" afterPath="$PROJECT_DIR$/app/controllers/Clients/ClientsController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/Email/EmailController.php" afterPath="$PROJECT_DIR$/app/controllers/Email/EmailController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/Messages/MessagesController.php" afterPath="$PROJECT_DIR$/app/controllers/Messages/MessagesController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/themes/admin/metronic/clients/partials/leftColumn.blade.php" afterPath="$PROJECT_DIR$/app/views/themes/admin/metronic/clients/partials/leftColumn.blade.php" />
     </list>
     <ignored path="laravelcrm.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,6 +21,7 @@
   <component name="DaemonCodeAnalyzer">
     <disable_hints />
   </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
     <favorites_list name="laravelcrm" />
   </component>
@@ -41,21 +37,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClientsController.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ClientsController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/Clients/ClientsController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="41618" max-vertical-offset="42952">
-              <caret line="1506" column="35" selection-start-line="1506" selection-start-column="35" selection-end-line="1506" selection-end-column="35" />
+            <state vertical-scroll-proportion="1.0718057" vertical-offset="32921" max-vertical-offset="42980">
+              <caret line="1212" column="61" selection-start-line="1212" selection-start-column="61" selection-end-line="1212" selection-end-column="61" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EmailController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="EmailController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/Email/EmailController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7083333" vertical-offset="1532" max-vertical-offset="8876">
-              <caret line="79" column="76" selection-start-line="79" selection-start-column="76" selection-end-line="79" selection-end-column="76" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1448" max-vertical-offset="8876">
+              <caret line="79" column="8" selection-start-line="79" selection-start-column="8" selection-end-line="79" selection-end-column="76" />
               <folding />
             </state>
           </provider>
@@ -157,8 +153,8 @@
         <option value="$PROJECT_DIR$/app/controllers/ClientFile/ClientFileController.php" />
         <option value="$PROJECT_DIR$/app/controllers/File/ClientFileController.php" />
         <option value="$PROJECT_DIR$/app/controllers/Messages/MessagesController.php" />
-        <option value="$PROJECT_DIR$/app/controllers/Clients/ClientsController.php" />
         <option value="$PROJECT_DIR$/app/controllers/Email/EmailController.php" />
+        <option value="$PROJECT_DIR$/app/controllers/Clients/ClientsController.php" />
       </list>
     </option>
   </component>
@@ -717,6 +713,7 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="LayoutCode.rearrangeEntriesPHP" value="false" />
+    <property name="SearchEverywhereHistoryKey" value="AddFa&#9;null&#9;null" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
@@ -1162,18 +1159,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/Clients/ClientsController.php">
+    <entry file="file://$PROJECT_DIR$/app/controllers/Email/EmailController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="41618" max-vertical-offset="42952">
-          <caret line="1506" column="35" selection-start-line="1506" selection-start-column="35" selection-end-line="1506" selection-end-column="35" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1448" max-vertical-offset="8876">
+          <caret line="79" column="8" selection-start-line="79" selection-start-column="8" selection-end-line="79" selection-end-column="76" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/Email/EmailController.php">
+    <entry file="file://$PROJECT_DIR$/app/controllers/Clients/ClientsController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7083333" vertical-offset="1532" max-vertical-offset="8876">
-          <caret line="79" column="76" selection-start-line="79" selection-start-column="76" selection-end-line="79" selection-end-column="76" />
+        <state vertical-scroll-proportion="1.0718057" vertical-offset="32921" max-vertical-offset="42980">
+          <caret line="1212" column="61" selection-start-line="1212" selection-start-column="61" selection-end-line="1212" selection-end-column="61" />
           <folding />
         </state>
       </provider>
