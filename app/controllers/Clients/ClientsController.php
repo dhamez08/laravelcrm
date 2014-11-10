@@ -627,6 +627,11 @@ class ClientsController extends \BaseController {
 					$address = \CustomerAddress\CustomerAddressController::get_instance()->postAddressWrapper($arrayAddress);
 				}
 
+                //custom fields
+                if(\Input::has('custom_field')) {
+                    \CustomFieldData\CustomFieldDataEntity::get_instance()->saveFieldData(\Input::get('custom_field'), $clientId);
+                }
+
 
 			}
 			if( $customer ){

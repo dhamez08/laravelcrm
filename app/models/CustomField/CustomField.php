@@ -1,17 +1,23 @@
 <?php
 namespace CustomField;
+class CustomField extends \Eloquent {
 
-//use \Illuminate\Database\Eloquent\SoftDeletingTrait;
+    protected $table = 'users_custom_fields';
 
-class CustomField extends \Eloquent{
+    public function user()
+    {
+        return $this->belongsTo('\User\User', 'user_id', 'id')->whereNull('deleted_at');
+    }
 
-	//use SoftDeletingTrait;
+    public function fieldData()
+    {
+        return $this->hasMany('\CustomFieldData\CustomFieldData', 'field_id', 'id')->get();
+    }
 
-	//protected $dates = ['deleted_at'];
-
-	protected $table = 'users_custom_fields';
-
-	public function user() {
-		return $this->belongsTo('\User\User','user_id','id')->whereNull('deleted_at');
-	}
+    public function fieldDataByCustomerAndField($customer_id, $field_id) {
+        return $this->hasMany('\CustomFieldData\CustomFieldData', 'field_id', 'id')
+            ->where('customer_id', $customer_id)
+            ->where('field_id', $field_id)
+            ->first();
+    }
 }

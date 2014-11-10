@@ -122,6 +122,28 @@
 					</div>
 					<div class="col-md-6">
 						<h3 class="form-section">Custom Fields</h3>
+						<?php
+						$customFields = \CustomField\CustomField::all();
+						?>
+						@if(count($customFields) > 0)
+						    @foreach($customFields as $cfield)
+						    <?php $field_data = $cfield->fieldDataByCustomerAndField($customer->id, $cfield->id); ?>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">{{ $cfield->label }}</label>
+                                    <div class="col-md-9">
+                                        {{
+                                            Form::text(
+                                                'custom_field['.$cfield->id.']',
+                                                 $field_data ? $field_data->value:null,
+                                                array(
+                                                    'class'=>'form-control input-sm'
+                                                )
+                                            );
+                                        }}
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endif
 					</div>
 				</div>
 			</div>
