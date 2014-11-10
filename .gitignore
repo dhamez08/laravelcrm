@@ -2,3 +2,5 @@
 app/storage/
 wkhtmltopdf-windows/
 .idea/
+public/document/
+public/documents/
