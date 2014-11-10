@@ -464,6 +464,11 @@ class ClientsController extends \BaseController {
 					$customer->id
 				);
 
+                //custom fields
+                if(\Input::has('custom_field')) {
+                    \CustomFieldData\CustomFieldDataEntity::get_instance()->saveFieldData(\Input::get('custom_field'), $customer->id);
+                }
+
 				// update dashboard
 				\Updates\UpdatesController::get_instance()->postUpdateWrapper(
 					\User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
@@ -509,6 +514,7 @@ class ClientsController extends \BaseController {
 		$data['belongToPartner']	= \Clients\ClientEntity::get_instance()->getPartnerBelong($data['customer']);
 		$data['associate']			= \Clients\ClientEntity::get_instance()->setAssociateCustomer($clientId);
 		$data['partner']			= \Clients\ClientEntity::get_instance()->getCustomerPartner();
+        $data['customFields']       = $data['customer']->customFieldsData();
 		$data['center_column_view']	= 'dashboard';
 		$data['customerId']			= $clientId;
 		$data['clientId']			= $clientId;

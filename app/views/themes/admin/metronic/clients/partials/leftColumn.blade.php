@@ -99,6 +99,21 @@
 						<p class="form-control-static">Living Status: <br><strong>{{$currentClient->living_status}}</strong></p>
 						<p class="form-control-static">Employment Status: <br><strong>{{$currentClient->employment_status}}</strong></p>
 						<p class="form-control-static">Occupation: <br><strong>{{$currentClient->job_title}}</strong></p>
+                    </div>
+                </div>
+            </div>
+		 </div>
+		 <div class="row">
+		    <div class="col-md-12">
+		        <div class="form-body client-detail">
+		            <h5><strong>Custom Fields</strong></h5>
+		            <hr />
+		            @if($customFields->get()->count()>0)
+		                @foreach($customFields->get() as $field)
+		                    <p class="">{{ $field->field->label }}: <br><strong>{{ $field->value }}</strong></p>
+		                @endforeach
+		            @endif
+		            <div class="form-group">
 						<p class="form-control-static"><br><a href="{{action('Clients\ClientsController@getEdit',array('clientId'=>$customer->id))}}">Edit client information</a></p>
 		 			</div>
 		 		</div>

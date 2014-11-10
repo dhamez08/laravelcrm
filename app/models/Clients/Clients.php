@@ -56,6 +56,10 @@ class Clients extends \Eloquent{
 		return $this->hasMany('\CustomerTags\CustomerTags','customer_id','id');
 	}
 
+    public function customFieldsData() {
+        return $this->hasMany('\CustomFieldData\CustomFieldData','customer_id','id');
+    }
+
 	public function scopeClientId($query, $id){
 		return $query->where('id','=',$id);
 	}

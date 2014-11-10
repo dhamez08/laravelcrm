@@ -123,7 +123,7 @@
 					<div class="col-md-6">
 						<h3 class="form-section">Custom Fields</h3>
 						<?php
-						$customFields = \CustomField\CustomField::all();
+						$customFields = \CustomField\CustomField::where('user_id',\Auth::id())->get();
 						?>
 						@if(count($customFields) > 0)
 						    @foreach($customFields as $cfield)

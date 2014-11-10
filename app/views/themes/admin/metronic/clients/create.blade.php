@@ -99,6 +99,27 @@
 					</div>
 					<div class="col-md-6">
 						<h3 class="form-section">Custom Fields</h3>
+						<?php
+                        $customFields = \CustomField\CustomField::where('user_id',\Auth::id())->get();
+                        ?>
+                        @if(count($customFields) > 0)
+                            @foreach($customFields as $cfield)
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">{{ $cfield->label }}</label>
+                                    <div class="col-md-9">
+                                        {{
+                                            Form::text(
+                                                'custom_field['.$cfield->id.']',
+                                                 null,
+                                                array(
+                                                    'class'=>'form-control input-sm'
+                                                )
+                                            );
+                                        }}
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endif
 					</div>
 				</div>
 			</div>
