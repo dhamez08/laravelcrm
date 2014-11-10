@@ -52,6 +52,14 @@ class SMSController extends \BaseController {
 		return self::$instance;
 	}
 
+	/**
+	 * get themes
+	 * @return	array
+	 * */
+	public function getSetupThemes(){
+		return \Dashboard\DashboardController::get_instance()->getSetupThemes();
+	}
+
 	public function getIndex(){
 	}
 
@@ -222,6 +230,45 @@ class SMSController extends \BaseController {
 		return \View::make( $data['include'] . '.partials.modal-create', $data )->render();
 	}
 
+	public function postAjaxUploadFile(){
+		if( \Input::hasFile('smsfile') ){
+			if( \Input::file('smsfile')->getSize() > 0 ){
+				$file_name 			= \Auth::id() .'_'.str_replace(' ','_',strtolower(\Input::file('smsfile')->getClientOriginalName()));
+				$orignal_file_name 	= str_replace(' ','_',strtolower(\Input::file('smsfile')->getClientOriginalName()));
+				$upload_success 	= \Input::file('smsfile')->move(public_path() . '/documents', $file_name);
+				if($upload_success ){
+					$data = array(
+						'customer_id' => \Input::get('customerid'),
+						'user_id' => \Auth::id(),
+						'filename' => $file_name,
+						'name' => \Input::file('smsfile')->getClientOriginalName(),
+						'type' => 4
+					);
+					\CustomerFiles\CustomerFilesEntity::get_instance()->createOrUpdate($data);
+					return \Response::json(
+						array(
+							'result'=>true
+						)
+					);
+				}else{
+					$msg = '<li class="list-group-item list-group-item-danger">Fail to add file.</li>';
+					return \Response::json(array('result'=>false,'message'=>$msg));
+				}
+			}else{
+				$msg = '<li class="list-group-item list-group-item-danger">Fail to add file.</li>';
+				return \Response::json(array('result'=>false,'message'=>$msg));
+			}
+		}
+		die();
+	}
+
+	public function getAjaxFiles($customer_id){
+		$data 					= $this->data_view;
+		$data['customerFiles']	= \CustomerFiles\CustomerFiles::customerFile($customer_id)->orderBy('created_at','desc');
+		$data 					= array_merge($data,$this->getSetupThemes());
+		return \View::make($data['view_path'] . '.sms.partials.ajax-list-files', $data)->render();
+	}
+
 	public function postAjaxSendIndividualSms($client_id){
 		$rules = array(
 			'note' => 'required',
@@ -239,35 +286,6 @@ class SMSController extends \BaseController {
 			$cred = \SMSCredit\SMSCreditEntity::get_instance()->getSMSCredit(\Auth::id());
 
 			//var_dump( \Input::all() );
-			// upload the file first
-			// if there is
-			// then grab the filename
-			$fileName = '';
-			if( \Input::hasFile('smsfile') ){
-				if( \Input::file('smsfile')->getSize() > 0 ){
-					$file_name = \Auth::id() .'_'.str_replace(' ','_',strtolower(\Input::file('smsfile')->getClientOriginalName()));
-					$orignal_file_name = str_replace(' ','_',strtolower(\Input::file('smsfile')->getClientOriginalName()));
-					$upload_success = \Input::file('smsfile')->move(public_path() . '/documents', $file_name);
-					if($upload_success ){
-						$fileName = url('/public/documents/' . $file_name);
-
-						// shorten the url
-						$tinyurl = \helpers\TinyURL::tinyurl($fileName);
-						if( $tinyurl && $tinyurl->state == 'ok' ){
-							$fileName = $tinyurl->shorturl;
-						}
-
-						$data = array(
-							'customer_id' => \Input::get('customerid'),
-							'user_id' => \Auth::id(),
-							'filename' => $file_name,
-							'name' => \Input::file('smsfile')->getClientOriginalName(),
-							'type' => 4
-						);
-						\CustomerFiles\CustomerFilesEntity::get_instance()->createOrUpdate($data);
-					}
-				}
-			}
 			$sms_client_file = '';
 			// grab the client files
 			if( \Input::get('attach_file') != 0 ){
@@ -288,7 +306,7 @@ class SMSController extends \BaseController {
 			$sms_msg .= "\n";
 			$sms_msg .= "Attach file \n";
 			//$sms_msg .= "<a href=".$fileName.">".$orignal_file_name."</a>";
-			$sms_msg .= $fileName;
+			//$sms_msg .= $fileName;
 			$sms_msg .= "\n".$sms_client_file;
 
 			$message_characters = strlen($sms_msg);

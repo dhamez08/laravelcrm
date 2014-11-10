@@ -5,6 +5,35 @@
 <div class="modal-body">
 	<div class="row">
 		<div class="col-md-12">
+			{{Form::open(
+					array(
+						'action' => array(
+							'SMS\SMSController@postAjaxUploadFile'
+						),
+						'role'=>'form',
+						'files'=> true,
+						'class'=>'form-horizontalx',
+						'id'=>'sms-file-upload'
+					)
+				)
+			}}
+				<!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+				<div class="row">
+					<div class="col-xs-12 col-sm-12">
+						<div class="form-group">
+							{{Form::file('smsfile')}}
+							<span class="help-block">You can upload file here if its not available in the "file attach dropdown"</span>
+							<button type="submit" class="btn btn-primary btn-xs" id="sendIndividualSMS">Upload File</button>
+							<div class="ajax-container-msg hide" >
+								<ul class="list-group ajax-error-msg">
+									<li class="list-group-item list-group-item-danger">asd</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				{{Form::hidden('customerid',$customerId,array('id'=>'customerid'))}}
+			{{Form::close()}}
 			{{ Form::open(
 				array(
 						'action' => array(
@@ -13,7 +42,6 @@
 						),
 						'method' => 'POST',
 						'role'=>'form',
-						'files' => true,
 						'id'=>'sendIndividualSMS'
 					)
 				)
@@ -38,18 +66,16 @@
 			</div>
 			<div class="form-group">
 				<label>Choose File to attach</label>
-				@if( $customerFiles->count() )
-					<select name="attach_file">
-						<option value="0">Select File</option>
-						@foreach($customerFiles->get() as $files)
-							<option value="{{$files->id}}">{{$files->filename}}</option>
-						@endforeach
-					</select>
-				@endif
-			</div>
-			<div class="form-group">
-				<label>Attach File</label>
-				{{Form::file('smsfile')}}
+				<div class="file-list">
+					@if( $customerFiles->count() )
+						<select name="attach_file">
+							<option value="0">Select File</option>
+							@foreach($customerFiles->get() as $files)
+								<option value="{{$files->id}}">{{$files->filename}}</option>
+							@endforeach
+						</select>
+					@endif
+				</div>
 			</div>
 			<button type="submit" class="btn btn-primary" id="sendIndividualSMS">Send SMS</button>
 			<div class="ajax-container-msg hide" >
@@ -65,8 +91,10 @@
 <div class="modal-footer">
 	<button data-dismiss="modal" class="btn default" type="button">Close</button>
 </div>
+<script type="text/javascript" src="{{$asset_path}}/pages/scripts/sms-files.js"></script>
 <script>
 jQuery(document).ready(function(){
+	SMSFileUpload.init(baseURL + '/sms/ajax-files/' + '<?php echo $customerId; ?>');
 	jQuery("#message").keyup(function() {
 		var smsCount = jQuery("#message").val().length;
 		var smsNeeded = Math.ceil(smsCount/160);
