@@ -112,7 +112,8 @@
                                                 'custom_field['.$cfield->id.']',
                                                  null,
                                                 array(
-                                                    'class'=>'form-control input-sm'
+                                                    'class'=>'form-control input-sm',
+                                                    'placeholder'=>$cfield->placeholder
                                                 )
                                             );
                                         }}
