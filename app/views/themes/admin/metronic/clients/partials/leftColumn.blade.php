@@ -106,9 +106,9 @@
 		 <div class="row">
 		    <div class="col-md-12">
 		        <div class="form-body client-detail">
-		            <h5><strong>Custom Fields</strong></h5>
-		            <hr />
 		            @if($customFields->get()->count()>0)
+		            <h5><strong>Custom Fields</strong></h5>
+                    <hr />
 		                @foreach($customFields->get() as $field)
 		                    <p class="">{{ $field->field->label }}: <br><strong>{{ $field->value }}</strong></p>
 		                @endforeach

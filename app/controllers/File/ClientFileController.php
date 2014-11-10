@@ -82,6 +82,7 @@ class ClientFileController extends \BaseController {
 		$data['belongToPartner']	= \Clients\ClientEntity::get_instance()->getPartnerBelong($data['customer']);
 		$data['associate']			= \Clients\ClientEntity::get_instance()->setAssociateCustomer($clientId);
 		$data['partner']			= \Clients\ClientEntity::get_instance()->getCustomerPartner();
+        $data['customFields']       = $data['customer']->customFieldsData();
 		$data['center_column_view']	= 'files';
 		$data['file1']				= \Auth::user()->files_1;
 		$data['file2']				= \Auth::user()->files_2;
