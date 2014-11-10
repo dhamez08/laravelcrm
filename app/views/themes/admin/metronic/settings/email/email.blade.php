@@ -122,6 +122,13 @@
 	</script>
 	<script src="{{$asset_path}}/pages/scripts/components-editors.js" type="text/javascript"></script>
 	<script type="text/javascript">
+	    (function($){
+            $.fn.setCursorToTextEnd = function() {
+                var $initialVal = this.val();
+                this.val($initialVal);
+            };
+        })(jQuery);
+
 		jQuery(document).ready(function() {
 		   $('#template_body').summernote({height: 300});
 		   $('#signature_body').summernote({height: 300});
@@ -154,6 +161,7 @@
                     $(".note-editable").focus();
                 }).error(function() {
                     Metronic.unblockUI('#fields_container');
+                    $(".note-editable").focus();
                 });
 
 
@@ -181,8 +189,9 @@
 					if(oldContent!=null) {
 						var newContent = oldContent.substring(0, cursorPos) + toInsert + oldContent.substring(cursorPos);
 						selection.anchorNode.nodeValue = newContent;
-					} else if($("#template_body").code()=='') {
+					} else if($("#template_body").code()=='<p><br></p>') {
 						$("#template_body").code(toInsert);
+						$("#template_body").setCursorToTextEnd();
 					} else {
 						$("#template_body").code($("#template_body").code()+toInsert);
 					}

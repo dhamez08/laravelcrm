@@ -1,4 +1,4 @@
-<div class="modal fade" id="add-signature-modal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="add-signature-modal" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-full">
 		<div class="modal-content">
 			{{

@@ -257,6 +257,10 @@ class EmailController extends \BaseController {
 				\Session::flash('message', 'Email successfully sent');
 			else
 				\Session::flash('message', 'Email successfully saved to draft');
+
+            if(\Input::get('back'))
+                return \Redirect::to(\Input::get('back'));
+
 			return \Redirect::back();
 
 		} else {
