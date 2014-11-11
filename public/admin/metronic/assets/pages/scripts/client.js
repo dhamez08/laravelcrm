@@ -606,9 +606,9 @@ var SendIndividualSMS = function () {
 				}else{
 					jQuery('.ajax-error-msg li').remove();
 					jQuery('.ajax-container-msg').switchClass('show','hide');
-					//if (typeof msg.redirect != 'undefined') {
+					if (typeof msg.redirect != 'undefined') {
 					    window.location.href = msg.redirect;
-					//}
+					}
 				}
 			});
 	    });

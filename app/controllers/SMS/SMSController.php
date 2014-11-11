@@ -260,7 +260,7 @@ class SMSController extends \BaseController {
 				return \Response::json(array('result'=>false,'message'=>$msg));
 			}
 		}else{
-			$msg = '<li class="list-group-item list-group-item-danger">Fail to add file.</li>';
+			$msg = '<li class="list-group-item list-group-item-danger">Please choose files to upload first.</li>';
 			return \Response::json(array('result'=>false,'message'=>$msg));
 		}
 		die();

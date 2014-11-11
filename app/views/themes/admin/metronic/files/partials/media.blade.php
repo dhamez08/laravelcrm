@@ -6,7 +6,8 @@
 			<div class="col-md-12">
 				<blockquote>
 					<p style="font-size:16px">
-						 Upload the file first, and you can choose files in the "Files" tab<br>
+						Add file here for quick upload, incase your file was not in the "file attach" select<br>
+						After that you can choose files in the "Attach File"<br>
 					</p>
 				</blockquote>
 				<br>
@@ -26,8 +27,12 @@
 					<div class="row media-fileupload-buttonbar">
 						<div class="col-md-12">
 							{{Form::file('files')}}
-							<button type="submit" class="btn btn-primary" id="sendIndividualSMS">Upload File</button>
-							<div class="ajax-container-msg hide" >
+							<button type="submit" data-loading-text="Please wait file is uploading..." autocomplete="off" class="btn btn-primary btn-xs file-attach">Upload File</button>
+							<div class="alert alert-success success-file-attach alert-dismissible hide" role="alert">
+							  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+							  <strong>Success!</strong> <p class="success-msg"></p>
+							</div>
+							<div class="ajax-container-msg-file-attach hide" >
 								<ul class="list-group ajax-error-msg">
 								</ul>
 							</div>

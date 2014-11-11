@@ -26,7 +26,6 @@
 							<button type="submit" data-loading-text="Please wait file is uploading..." autocomplete="off" class="btn btn-primary btn-xs file-attach">Upload File</button>
 							<div class="ajax-container-msg-file-attach hide" >
 								<ul class="list-group ajax-error-msg">
-									<li class="list-group-item list-group-item-danger">asd</li>
 								</ul>
 							</div>
 						</div>

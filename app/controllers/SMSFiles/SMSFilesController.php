@@ -73,12 +73,20 @@ class SMSFilesController extends \BaseController {
 						'file_mimetype' => $mime_type
 					);
 					\SMSFIles\SMSFIlesEntity::get_instance()->createOrUpdate($data);
+
+					return \Response::json(
+						array(
+							'result'=>true,
+							'message'=>'Files has been uploaded successfully, select file to attach'
+						)
+					);
+				}else{
+					$msg = '<li class="list-group-item list-group-item-danger">Fail to add file.</li>';
+					return \Response::json(array('result'=>false,'message'=>$msg));
 				}
-				return \Response::json(
-					array(
-						'result'=>true
-					)
-				);
+			}else{
+				$msg = '<li class="list-group-item list-group-item-danger">Fail to add file.</li>';
+				return \Response::json(array('result'=>false,'message'=>$msg));
 			}
 		}else{
 			$msg = '<li class="list-group-item list-group-item-danger">Please choose files to upload first.</li>';
