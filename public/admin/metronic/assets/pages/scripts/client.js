@@ -576,7 +576,12 @@ var SendIndividualSMS = function () {
 		jQuery('#sendIndividualSMS').on('submit',function(e){
 	    	e.preventDefault();
 	    	var _postUrl 	= jQuery(this).attr('action');
-	    	var _formInput 	= jQuery(this).serialize();
+	    	var _formInput 		= jQuery(this).serialize();
+			var _button_send 	= 	jQuery('.send-individual-sms');
+			var _msg_status 	= 	jQuery('.ajax-container-msg');
+
+			_button_send.button('loading');
+			_button_send.attr('disabled','disabled');
 
             jQuery.ajaxSetup({
                 headers: {
@@ -601,9 +606,9 @@ var SendIndividualSMS = function () {
 				}else{
 					jQuery('.ajax-error-msg li').remove();
 					jQuery('.ajax-container-msg').switchClass('show','hide');
-					if (typeof msg.redirect != 'undefined') {
+					//if (typeof msg.redirect != 'undefined') {
 					    window.location.href = msg.redirect;
-					}
+					//}
 				}
 			});
 	    });

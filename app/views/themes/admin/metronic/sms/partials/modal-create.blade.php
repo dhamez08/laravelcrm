@@ -23,8 +23,8 @@
 						<div class="form-group">
 							{{Form::file('smsfile')}}
 							<span class="help-block">You can upload file here if its not available in the "file attach dropdown"</span>
-							<button type="submit" class="btn btn-primary btn-xs" id="sendIndividualSMS">Upload File</button>
-							<div class="ajax-container-msg hide" >
+							<button type="submit" data-loading-text="Please wait file is uploading..." autocomplete="off" class="btn btn-primary btn-xs file-attach">Upload File</button>
+							<div class="ajax-container-msg-file-attach hide" >
 								<ul class="list-group ajax-error-msg">
 									<li class="list-group-item list-group-item-danger">asd</li>
 								</ul>
@@ -64,6 +64,10 @@
 				}}
 				<p id="sms_message_counter"></p>
 			</div>
+			<div class="alert alert-success success-file-attach alert-dismissible hide" role="alert">
+			  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+			  <strong>Success!</strong> <p class="success-msg"></p>
+			</div>
 			<div class="form-group">
 				<label>Choose File to attach</label>
 				<div class="file-list">
@@ -77,7 +81,7 @@
 					@endif
 				</div>
 			</div>
-			<button type="submit" class="btn btn-primary" id="sendIndividualSMS">Send SMS</button>
+			<button type="submit" class="btn btn-primary send-individual-sms" data-loading-text="Please wait sending SMS..." autocomplete="off">Send SMS</button>
 			<div class="ajax-container-msg hide" >
 			  	<ul class="list-group ajax-error-msg">
 			  	</ul>

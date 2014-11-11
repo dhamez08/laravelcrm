@@ -15,8 +15,16 @@ var SMSFileUpload = function () {
 	var ajaxUpload = function(_url) {
 		jQuery('#sms-file-upload').on('submit',function(e){
 	    	e.preventDefault();
-	    	var _postUrl 	= jQuery(this).attr('action');
-	    	var _formInput 	= jQuery(this).serialize();
+	    	var _postUrl 			= jQuery(this).attr('action');
+	    	var _formInput 			= jQuery(this).serialize();
+			var _button_file_upload = 	jQuery('.file-attach');
+			var _msg_status 		= 	jQuery('.ajax-container-msg-file-attach');
+			var _msg_success_status	= 	jQuery('.success-file-attach');
+			var _msg_success_msg	= 	jQuery('.success-msg');
+
+			_button_file_upload.button('loading');
+			_button_file_upload.attr('disabled','disabled');
+			_msg_success_msg.html('');
 
             jQuery.ajaxSetup({
                 headers: {
@@ -37,12 +45,18 @@ var SMSFileUpload = function () {
 				if( !msg.result ){
 					jQuery('.ajax-error-msg li').remove();
 					jQuery('.ajax-error-msg').append(msg.message);
-					jQuery('.ajax-container-msg').switchClass('hide','show');
+					_msg_status.switchClass('hide','show');
+					_button_file_upload.button('reset');
+					_button_file_upload.attr('disabled','disabled');
 				}else{
 					jQuery('.ajax-error-msg li').remove();
-					jQuery('.ajax-container-msg').switchClass('show','hide');
+					_msg_status.switchClass('show','hide');
 					// open file tab
 					jQuery('#sms-file-upload')[0].reset();
+					_button_file_upload.button('reset');
+					_button_file_upload.attr('disabled','disabled');
+					_msg_success_msg.html(msg.message);
+					_msg_success_status.switchClass('hide','show');
 					ajaxGetFile(_url);
 				}
 			});

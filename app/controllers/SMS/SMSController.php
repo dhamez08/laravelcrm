@@ -247,7 +247,8 @@ class SMSController extends \BaseController {
 					\CustomerFiles\CustomerFilesEntity::get_instance()->createOrUpdate($data);
 					return \Response::json(
 						array(
-							'result'=>true
+							'result'=>true,
+							'message'=>'Files has been uploaded successfully, select file to attach'
 						)
 					);
 				}else{
@@ -258,6 +259,9 @@ class SMSController extends \BaseController {
 				$msg = '<li class="list-group-item list-group-item-danger">Fail to add file.</li>';
 				return \Response::json(array('result'=>false,'message'=>$msg));
 			}
+		}else{
+			$msg = '<li class="list-group-item list-group-item-danger">Fail to add file.</li>';
+			return \Response::json(array('result'=>false,'message'=>$msg));
 		}
 		die();
 	}
@@ -338,7 +342,7 @@ class SMSController extends \BaseController {
 					\Message\MessageEntity::get_instance()->createOrUpdate($msg);
 
 					\Session::flash('message', 'Successfully Send SMS');
-					return \Redirect::to(\Input::get('redirect'));
+					return \Response::json(array('result'=>true,'redirect'=>\Input::get('redirect')));
 				}else{
 					$msg = '<li class="list-group-item list-group-item-danger">Sorry you do not have enough credits.</li>';
 					return \Response::json(array('result'=>false,'message'=>$msg));
