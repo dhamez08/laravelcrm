@@ -43,7 +43,7 @@
 										);
 									}}
 								@endif
-								{{Form::submit('Filter Client by tag',array('class'=>"btn blue btn-sm"))}}
+								{{Form::submit('Filter Client by tag',array('class'=>"btn blue btn-xs"))}}
 							{{Form::close()}}
 							<p></p>
 							{{ Form::open(
