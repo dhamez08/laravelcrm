@@ -23,6 +23,26 @@
 					@include( \DashboardEntity::get_instance()->getView() . '.settings.partials.nav' )
 					<div class="tab-content">
 						@section('portlet-content')
+							<div class="row">
+								<div class="col-md-6 col-sm-12">
+									@include( \DashboardEntity::get_instance()->getView() . '.settings.partials.box-calendar-task-setting' )
+								</div>
+								<div class="col-md-6 col-sm-12">
+									@include( \DashboardEntity::get_instance()->getView() . '.settings.partials.user-setting' )
+								</div>
+								<div class="col-md-6 col-sm-12">
+									@include( \DashboardEntity::get_instance()->getView() . '.settings.partials.email-setting' )
+								</div>
+								<div class="col-md-6 col-sm-12">
+									@include( \DashboardEntity::get_instance()->getView() . '.settings.partials.tags-setting' )
+								</div>
+								<div class="col-md-6 col-sm-12">
+									@include( \DashboardEntity::get_instance()->getView() . '.settings.partials.custom-fields-setting' )
+								</div>
+								<div class="col-md-6 col-sm-12">
+									@include( \DashboardEntity::get_instance()->getView() . '.settings.partials.screen-setting' )
+								</div>
+							</div>
 						@show
 					</div>
 				</div>
