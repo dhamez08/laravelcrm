@@ -598,7 +598,19 @@ class CustomFormsController extends \BaseController {
 									)
 						)
 					);
-		} else {
+		} elseif($form_id=="custom_fields") {
+            $fields = \CustomField\CustomFieldEntity::get_instance()->getFieldsByLoggedUser();
+            $data_fields = array();
+            foreach($fields as $field) {
+                $data_fields[] = array('field_name'=>$field->name);
+            }
+            return \Response::json(
+                array(
+                    'form'  => array('name'=>'CustomField'),
+                    'build' => $data_fields,
+                )
+            );
+        } else {
 			$form = \CustomForm\CustomFormEntity::find($form_id);
 
 			$formbuild = \CustomFormBuild\CustomFormBuildEntity::where('form_id',$form_id)->get();

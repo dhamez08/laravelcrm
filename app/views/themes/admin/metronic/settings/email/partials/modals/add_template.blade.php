@@ -47,6 +47,7 @@
 										<select id="custom_form" class="form-control">
 				                            <option value="0">Choose a Form</option>
 				                            <option value="customer">---Customer Information---</option>
+				                            <option value="custom_fields">---Custom Fields---</option>
 				                        <?php
 				                        $forms = \CustomForm\CustomFormEntity::get_instance()->getFormsByLoggedUser();
 				                        ?>
