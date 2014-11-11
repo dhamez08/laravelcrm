@@ -65,12 +65,11 @@ class EmailShortCodeReplacement {
 		}
 
         //custom fields
-        $customFieldsData = \CustomField\CustomFieldEntity::get_instance()->fieldDataByCustomer();
+        $customFieldsData = \CustomFieldData\CustomFieldDataEntity::get_instance()->getFieldsDataByCustomer($custObj->id);
         foreach($customFieldsData as $cFieldData) {
             $customField = \CustomField\CustomField::find($cFieldData->field_id);
             $data['body'] = str_replace("{CustomField:".$customField->name."}", $cFieldData->value, $data['body']);
         }
-
 		return $data['body'];
 	}
 

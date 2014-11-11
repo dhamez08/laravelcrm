@@ -29,8 +29,7 @@ class CustomFieldDataEntity extends \Eloquent {
      */
     public function getFieldsDataByCustomer($id)
     {
-        $data = $this->where('customer_id', '=', $id)
-            ->whereNull('deleted_at');
+        $data = $this->where('customer_id', '=', $id);
         return $data->get();
     }
 
