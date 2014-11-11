@@ -22,52 +22,6 @@ class EmailShortCodeReplacement {
 	}
 
 	public function replace($custObj, $body) {
-		// array('field_name'=>'ReferenceNo'),
-		// array('field_name'=>'Title'),
-		// array('field_name'=>'Firstname'),
-		// array('field_name'=>'Lastname'),
-		// array('field_name'=>'Email:Home'),
-		// array('field_name'=>'Email:Work'),
-		// array('field_name'=>'Gender'),
-		// array('field_name'=>'Birthdate'),
-		// array('field_name'=>'Marital-Status'),
-		// array('field_name'=>'Living-Status'),
-		// array('field_name'=>'Employment-Status'),
-		// array('field_name'=>'Address:Work:Line1'),
-		// array('field_name'=>'Address:Work:HouseNumber'),
-		// array('field_name'=>'Address:Work:Postcode'),
-		// array('field_name'=>'Address:Work:Town'),
-		// array('field_name'=>'Address:Work:County'),
-		// array('field_name'=>'Address:Home:Line1'),
-		// array('field_name'=>'Address:Home:HouseNumber'),
-		// array('field_name'=>'Address:Home:Postcode'),
-		// array('field_name'=>'Address:Home:Town'),
-		// array('field_name'=>'Address:Home:County'),
-		// array('field_name'=>'ContactNumber:Home'),
-		// array('field_name'=>'ContactNumber:Work'),
-		// array('field_name'=>'ContactNumber:Direct'),
-		// array('field_name'=>'ContactNumber:Mobile'),
-		// array('field_name'=>'ContactNumber:Fax'),
-		// array('field_name'=>'Website:Personal'),
-		// array('field_name'=>'Website:Work'),
-		// array('field_name'=>'Twitter:Personal'),
-		// array('field_name'=>'Twitter:Work'),
-		// array('field_name'=>'Skype:Personal'),
-		// array('field_name'=>'Skype:Work'),
-		// array('field_name'=>'Xing:Personal'),
-		// array('field_name'=>'Xing:Work'),
-		// array('field_name'=>'Google+:Personal'),
-		// array('field_name'=>'Google+:Work'),
-		// array('field_name'=>'Facebook:Personal'),
-		// array('field_name'=>'Facebook:Work'),
-		// array('field_name'=>'YouTube:Personal'),
-		// array('field_name'=>'YouTube:Work'),
-		// array('field_name'=>'GitHub:Personal'),
-		// array('field_name'=>'GitHub:Work'),
-		// array('field_name'=>'LinkedIn:Personal'),
-		// array('field_name'=>'LinkedIn:Work'),
-		// array('field_name'=>'Blog:Personal'),
-		// array('field_name'=>'Blog:Work'),
 
 		$data['body'] = $body;
 
@@ -109,6 +63,13 @@ class EmailShortCodeReplacement {
 				$data['body'] = str_replace("{".$url->website.":".$url->type."}", $url->url, $data['body']);
 			}
 		}
+
+        //custom fields
+        $customFieldsData = \CustomField\CustomFieldEntity::get_instance()->fieldDataByCustomer();
+        foreach($customFieldsData as $cFieldData) {
+            $customField = \CustomField\CustomField::find($cFieldData->field_id);
+            $data['body'] = str_replace("{CustomField:".$customField->name."}", $cFieldData->value, $data['body']);
+        }
 
 		return $data['body'];
 	}

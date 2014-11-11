@@ -355,7 +355,9 @@ var ClientEmail = function () {
                     $.each(response.build, function(i, item) {
                         //row+='<tr><td><input type="text" value="['+form_name+':'+item.field_name+']" class="form-control" style="border:0px" /></td></tr>';
                         if($this.val()=='customer')
-                            row+='<tr><td><a href="javascript:void(0)" class="custom_form_link">{'+item.field_name+'}</a></td></tr>';   
+                            row+='<tr><td><a href="javascript:void(0)" class="custom_form_link">{'+item.field_name+'}</a></td></tr>';
+                        else if($this.val()=='custom_fields')
+                            row+='<tr><td><a href="javascript:void(0)" class="custom_form_link">{'+form_name+':'+item.field_name+'}</a></td></tr>';
                         else
                             row+='<tr><td><a href="javascript:void(0)" class="custom_form_link">['+form_name+':'+item.field_name+']</a></td></tr>';
                     });

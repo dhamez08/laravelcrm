@@ -338,7 +338,7 @@
 	var ASSET_PATH_PUBLIC = '{{ url('public/admin/metronic/assets') }}';
 	</script>
 
-	<script src="{{$asset_path}}/pages/scripts/client-email.js?v=0.3" type="text/javascript"></script>
+	<script src="{{$asset_path}}/pages/scripts/client-email.js?v=0.4" type="text/javascript"></script>
 	<script src="{{$asset_path}}/global/plugins/bootstrap-summernote/summernote.min.js" type="text/javascript"></script>
 	<script src="{{$asset_path}}/pages/scripts/components-editors.js" type="text/javascript"></script>
 
