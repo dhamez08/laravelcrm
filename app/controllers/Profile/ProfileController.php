@@ -185,4 +185,32 @@ class ProfileController extends \BaseController {
 		}
 	}
 
+	public function putUpdateUrlAccount($user_id){
+		if( \Input::has('meta') ){
+			$meta = \Input::get('meta');
+			foreach($meta as $key_meta => $val_meta){
+				if( trim($val_meta) != '' ){
+					$get_meta = \UserMeta\UserMetaEntity::get_instance()->getUserMeta($user_id,$key_meta);
+					if( $get_meta ){
+						//update
+						$data = array(
+							'meta_value'=>$val_meta
+						);
+						\UserMeta\UserMetaEntity::get_instance()->createOrUpdate($data,$get_meta['id']);
+					}else{
+						//insert
+						$data = array(
+							'users_id'=>$user_id,
+							'meta_key'=>$key_meta,
+							'meta_value'=>$val_meta
+						);
+						\UserMeta\UserMetaEntity::get_instance()->createOrUpdate($data);
+					}
+				}
+			}
+			\Session::flash('message', 'Successfully updated URL account');
+			return \Redirect::to('profile');
+		}
+	}
+
 }

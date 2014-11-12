@@ -48,7 +48,7 @@
 		<script type="text/javascript" src="{{$asset_path}}/pages/scripts/calendar.js"></script>
 		<script>
 	    jQuery(document).ready(function() {
-	    	TaskCalendar.init(baseURL);
+	    	TaskCalendar.init(baseURL, '{{$google_calendar}}');
 	    });
 		</script>
 	@stop

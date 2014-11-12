@@ -199,4 +199,9 @@ class UserEntity extends \Eloquent implements UserInterface, RemindableInterface
 		return $this->select('files_1','files_2','files_3','files_4','files_5','files_6')->first();
 	}
 
+	public function getGoogleCalendarFeedURL(){
+		$get_meta = \UserMeta\UserMetaEntity::get_instance()->getUserMeta(\Auth::id(),'google_calendar_feed', true);
+		return $get_meta;
+	}
+
 }

@@ -10,7 +10,7 @@ var TaskCalendar = function () {
 
     return {
         //main function to initiate the module
-        init: function ($url) {
+        init: function ($url, $gcal_url) {
             var objCalendar = jQuery('#taskcalendar');
             objCalendar.fullCalendar({
                 timeFormat: 'h:mm T',
@@ -26,12 +26,18 @@ var TaskCalendar = function () {
                         center: '',
                         right: 'prev,next,today,month,agendaWeek,agendaDay',
                 },
-                events: {
-                    url: $url + '/calendar/task-calendar',
-                    error: function() {
-                        alert('there was an error while fetching events!');
+                eventSources:[
+					{
+						url: $url + '/calendar/task-calendar',
+							error: function() {
+								alert('there was an error while fetching events!');
+							}
                     },
-                },
+                    {
+						url:$gcal_url,
+						className: 'gcal-event'
+					}
+                ],
                 eventRender: function(event, element, calEvent) {
                     element.find(".fc-time").before($('<span class="fc-icons" style="margin-right:5px;"><i class="fa '+ event.icon + ' fa-lg"></i></span>'));
                     if( event.customer_name != null ){
@@ -39,8 +45,14 @@ var TaskCalendar = function () {
                     }
                 },
                 eventClick: function(calEvent, jsEvent, view) {
-                    var $remoteurl = $url + '/calendar/edit-task' + '/' + calEvent.id + '/' + calEvent.customerId + '/calendar';
-                    openModal($remoteurl);
+                    if( calEvent.source.dataType == 'gcal' ){
+						window.open(calEvent.url, 'gcalevent', 'width=700,height=600');
+						return false;
+					}else{
+						var $remoteurl = $url + '/calendar/edit-task' + '/' + calEvent.id + '/' + calEvent.customerId + '/calendar';
+						openModal($remoteurl);
+					}
+					return false;
                 },
                 dayClick: function(date, jsEvent, view) {
                     var view = objCalendar.fullCalendar('getView');

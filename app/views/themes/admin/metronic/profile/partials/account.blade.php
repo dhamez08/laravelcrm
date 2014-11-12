@@ -18,12 +18,12 @@
 						<i class="fa fa-lock"></i> Change Password </a>
 					</li>
 					<li>
-						<a data-toggle="tab" href="#tab_privacy_settings">
-						<i class="fa fa-eye"></i> Privacity Settings </a>
+						<a data-toggle="tab" href="#url_account">
+						<i class="fa fa-cloud"></i> URL Account </a>
 					</li>
 					<li>
 						<a data-toggle="tab" href="#tab_sms">
-						<i class="fa fa-eye"></i> SMS Account </a>
+						<i class="fa fa-mobile-phone"></i> SMS Account </a>
 					</li>
 				</ul>
 			</div>
@@ -182,7 +182,7 @@
 							<div class="form-group">
 								<label class="control-label">SMS Display Name</label>
 								<div class="controls">
-										{{
+									{{
 										Form::text(
 											'sms',
 											null,
@@ -298,6 +298,36 @@
 								{{Form::submit('Change Password',array('class'=>'btn green'))}}
 								<a href="#" class="btn default">
 								Cancel </a>
+							</div>
+						{{Form::close()}}
+					</div>
+					<div id="url_account" class="tab-pane">
+						<h2>URL Accounts</h2>
+						{{
+							Form::model(
+								$user,
+								array(
+									'action' => array('Profile\ProfileController@putUpdateUrlAccount', $user->id),
+									'method' => 'PUT'
+								)
+							)
+						}}
+							<div class="form-group">
+								<label class="control-label">Google Calendar Feed</label>
+								<div class="controls">
+									{{
+										Form::text(
+											'meta[google_calendar_feed]',
+											\User\UserEntity::get_instance()->getGoogleCalendarFeedURL() ? \User\UserEntity::get_instance()->getGoogleCalendarFeedURL():null,
+											array(
+												'class'=>'form-control placeholder-no-fix',
+											)
+										);
+									}}
+								</div>
+							</div>
+							<div class="margiv-top-10">
+								{{Form::submit('Save Changes',array('class'=>'btn green'))}}
 							</div>
 						{{Form::close()}}
 					</div>

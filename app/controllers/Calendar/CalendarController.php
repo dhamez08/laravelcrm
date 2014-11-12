@@ -56,8 +56,8 @@ class CalendarController extends \BaseController {
 		$data['portlet_body_class']	= '';
 		$data['portlet_title']		= 'Calendar';
 		$data['fa_icons']			= 'calendar';
+		$data['google_calendar']	= \User\UserEntity::get_instance()->getGoogleCalendarFeedURL();
 		$data 						= array_merge($data,$dashboard_data);
-
 		return \View::make( $data['view_path'] . '.calendar.index', $data );
 	}
 
