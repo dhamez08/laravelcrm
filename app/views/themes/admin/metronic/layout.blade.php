@@ -42,6 +42,7 @@
 			<link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/typeahead/typeahead.css">
 			<link rel="stylesheet" type="text/css" href="{{$asset_path}}/admin/pages/css/tasks.css">
 			<link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/bootstrap-editable/bootstrap-editable/css/bootstrap-editable.css"/>
+			<link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/jquery-tags-input/jquery.tagsinput.css"/>
 			<!-- END PAGE LEVEL STYLES -->
 
 			<!-- BEGIN THEME STYLES -->
@@ -146,6 +147,8 @@
 		<script src="{{$asset_path}}/global/plugins/typeahead/typeahead.bundle.min.js" type="text/javascript"></script>
 		<script type="text/javascript" src="{{$asset_path}}/global/plugins/bootstrap-editable/bootstrap-editable/js/bootstrap-editable.js"></script>
 		<!-- END PAGE LEVEL SCRIPTS -->
+		<script src="{{$asset_path}}/global/plugins/jquery-tags-input/jquery.tagsinput.min.js" type="text/javascript"></script>
+		<script type="text/javascript" src="{{$asset_path}}/pages/scripts/client-profile-link-toggle.js"></script>
 		<script type='text/javascript'>
 			var baseURL 			= "{{url('/')}}";
 			var dateClientFormat 	= "{{\Config::get('crm.date.bootstrap_date_picker.format')}}";
@@ -156,6 +159,7 @@
 				CreateTask.init('.openModal','.ajaxModal');
 				Metronic.init();
 				Index.init();
+        		profileLink.init();
 			});
 		</script>
 	@show

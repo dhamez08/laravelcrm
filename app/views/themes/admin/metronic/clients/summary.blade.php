@@ -25,7 +25,7 @@
 		&nbsp;
 	@show
 	@section('innerpage-content')
-		<div class="col-md-12 col-summary client-tags">
+		<div id="client-tags-dis" class="col-md-12 col-summary client-tags">
 			<p>
 				<i class="icon-tag"></i>
 				<span>Building and Contents</span>, 
@@ -35,7 +35,10 @@
 				<span>Google Lead</span>.
 				<a href="#">Edit Tags</a>
 			</p>
-		</div>
+			<p class="col-md-12">
+				<input id="tags_1" type="text" class="form-control tags" value="Building and Contents,Web Desing,SEO,Graphic Design,Google Lead"/>
+			</p>	
+		</div>		
 		<div class="col-md-2 col-summary">
 			<!-- CLIENT LEFT SIDEBAR -->
 			@if( $customer->type == 2 )
@@ -66,7 +69,6 @@
 		<script src="{{$asset_path}}/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
 		<script type="text/javascript" src="{{$asset_path}}/pages/scripts/client.js"></script>
 		<script type="text/javascript" src="{{$asset_path}}/pages/scripts/notes.js"></script>
-		<script type="text/javascript" src="{{$asset_path}}/pages/scripts/client-profile-link-toggle.js"></script>
 
 		<script> 
         jQuery(document).ready(function() {
@@ -76,7 +78,6 @@
         	deletePerson.init();
         	Notes.init();
         	SendIndividualSMS.init();
-        	profileLink.init();
         });
 
 		</script>

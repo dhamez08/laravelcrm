@@ -49,7 +49,7 @@
 			 			<i class="icon-emoticon-smile"></i>
 			 			Personal Information
 			 	</a>
-			 	<div id="personalinformation" class="hide">
+			 	<div id="personalinformation" class="collapse-profile-menu hide">
 			 		<div class="row">
 					 	<div class="col-md-12">
 					 		<div class="form-body client-detail">
@@ -116,7 +116,7 @@
 			 			<i class="icon-heart"></i>
 			 			Family
 			 	</a>
-			 	<div id="family" class="hide">
+			 	<div id="family" class="collapse-profile-menu hide">
 			 		<div class="row">
 					 	<div class="col-md-12">
 					 		<div class="form-body client-detail">
@@ -176,7 +176,7 @@
 			 			<i class="icon-note"></i>
 			 			Custom Fields
 			 	</a>
-			 	<div id="customfields" class="hide">
+			 	<div id="customfields" class="collapse-profile-menu hide">
 			 		<div class="row">
 					    <div class="col-md-12">
 					        <div class="form-body client-detail">
@@ -195,7 +195,7 @@
 			 			<i class="icon-list"></i>
 			 			Tasks
 			 	</a>
-			 	<div id="tasklist" class="hide">
+			 	<div id="tasklist" class="collapse-profile-menu hide">
 
 			 	</div>
 		 	</div>
