@@ -354,7 +354,8 @@ var Messages = function () {
                     }
                     isValid = 1;
                 } else {
-                    alert('please click/focus on the editor to insert the dynamic field!');
+                    $("#template_body").setCursorToTextEnd();
+                    //alert('please click/focus on the editor to insert the dynamic field!');
                 }
             });
 

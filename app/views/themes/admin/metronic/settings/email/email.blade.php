@@ -130,7 +130,9 @@
         })(jQuery);
 
 		jQuery(document).ready(function() {
-		   $('#template_body').summernote({height: 300});
+		   $('#template_body').summernote({
+		        height: 300
+		   });
 		   $('#signature_body').summernote({height: 300});
 
 		   var isValid = 0;
@@ -191,14 +193,17 @@
 					if(oldContent!=null) {
 						var newContent = oldContent.substring(0, cursorPos) + toInsert + oldContent.substring(cursorPos);
 						selection.anchorNode.nodeValue = newContent;
+						$("#template_body").setCursorToTextEnd();
 					} else if($("#template_body").code()=='<p><br></p>') {
 						$("#template_body").code(toInsert);
 						$("#template_body").setCursorToTextEnd();
 					} else {
 						$("#template_body").code($("#template_body").code()+toInsert);
+						$("#template_body").setCursorToTextEnd();
 					}
 				} else {
-					alert('please click/focus on the editor to insert the dynamic field!');
+				    $("#template_body").setCursorToTextEnd();
+					//alert('please click/focus on the editor to insert the dynamic field!');
 				}
             });
 
