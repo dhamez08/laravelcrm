@@ -28,14 +28,16 @@
 		<div id="client-tags-dis" class="col-md-12 col-summary client-tags">
 			<p>
 				<i class="icon-tag"></i>
-				<span>Building and Contents</span>, 
-				<span>Web Desing</span>, 
-				<span>SEO</span>,
-				<span>Graphic Design</span>,
-				<span>Google Lead</span>.
-				<a href="#">Edit Tags</a>
+				<span id="client-profile-tags-list">
+					<span>Building and Contents</span>, 
+					<span>Web Desing</span>, 
+					<span>SEO</span>,
+					<span>Graphic Design</span>,
+					<span>Google Lead</span>
+				</span>
+				<a href="#" id="edit-tags-button">Edit Tags</a>
 			</p>
-			<p class="col-md-12">
+			<p id="edit-tags-inputs" class="col-md-12 hide">
 				<input id="tags_1" type="text" class="form-control tags" value="Building and Contents,Web Desing,SEO,Graphic Design,Google Lead"/>
 			</p>	
 		</div>		

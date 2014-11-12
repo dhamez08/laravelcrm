@@ -30,20 +30,20 @@ div.sendemail {
 }
 
 .round-10 {
-  border-top-right-radius: 50px !important;
-  border-top-left-radius: 50px !important;
-  border-bottom-left-radius: 50px !important;
-  border-bottom-right-radius: 50px !important;
+  border-top-right-radius: 10px !important;
+  border-top-left-radius: 10px !important;
+  border-bottom-left-radius: 10px !important;
+  border-bottom-right-radius: 10px !important;
 
-  -webkit-border-top-left-radius: 50px !important;
-  -webkit-border-top-right-radius: 50px !important;
-  -webkit-border-bottom-right-radius: 50px !important;
-  -webkit-border-bottom-left-radius: 50px !important;
+  -webkit-border-top-left-radius: 10px !important;
+  -webkit-border-top-right-radius: 10px !important;
+  -webkit-border-bottom-right-radius: 10px !important;
+  -webkit-border-bottom-left-radius: 10px !important;
 
-  -moz-border-radius-topleft: 50px !important;
-  -moz-border-radius-topright: 50px !important;
-  -moz-border-radius-bottomright: 50px !important;
-  -moz-border-radius-bottomleft: 50px !important;
+  -moz-border-radius-topleft: 10px !important;
+  -moz-border-radius-topright: 10px !important;
+  -moz-border-radius-bottomright: 10px !important;
+  -moz-border-radius-bottomleft: 10px !important;
 }
 .description p,
 .description span,
@@ -147,4 +147,21 @@ p.form-control-static:first-child{
 
 .client-tags span{
 	margin-left: 10px;
+}
+
+div.tagsinput {
+	padding: 0px !important;
+}
+div.tagsinput span.tag {
+	border: 1px solid #a5d24a !important;
+	background: #cde69c !important;
+	color: #638421 !important;
+	border-radius: 1px !important;
+	-webkit-border-radius: 1px !important;
+	-moz-border-radius: 1px !important;
+	margin: 1px !important;
+}
+
+#client-profile-tags-list {
+	border: 1px solid #000;
 }
