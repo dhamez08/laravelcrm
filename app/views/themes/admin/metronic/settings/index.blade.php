@@ -12,6 +12,7 @@
 	@section('innerpage-content')
 		<div class="portlet box {{{$dashboard_class or 'blue'}}} tabbable">
 			<div class="portlet-title">
+
 				<div class="caption">
 					@section('portlet-captions')
 						<i class="fa fa-{{{$fa_icons or 'cog'}}}"></i>{{{$portlet_title or 'Portlet Title'}}}
@@ -20,7 +21,7 @@
 			</div>
 			<div class="portlet-body {{{$portlet_body_class or ''}}}">
 				<div class="tabbable portlet-tabs">
-					@include( \DashboardEntity::get_instance()->getView() . '.settings.partials.nav' )
+                    @include( \DashboardEntity::get_instance()->getView() . '.settings.partials.nav' )
 					<div class="tab-content">
 						@section('portlet-content')
 							<div class="row">
