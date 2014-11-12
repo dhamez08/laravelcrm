@@ -4,6 +4,13 @@
 	<div class="page-sidebar navbar-collapse collapse" style="">
 		<!-- BEGIN SIDEBAR MENU -->
 		<ul data-slide-speed="200" data-auto-scroll="true" class="page-sidebar-menu page-sidebar-menu-light page-sidebar-menu-hover-submenu page-sidebar-menu-closed">
+			<!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
+			<li class="sidebar-toggler-wrapper">
+				<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+				<div class="sidebar-toggler">
+				</div>
+				<!-- END SIDEBAR TOGGLER BUTTON -->
+			</li>
 			<li class="start active open">
 				<a href="javascript:;">
 				<i class="icon-home"></i>
@@ -82,5 +89,5 @@
 			@endif
 		</ul>
 		<!-- END SIDEBAR MENU -->
-	</div>
+	</div> 
 </div>

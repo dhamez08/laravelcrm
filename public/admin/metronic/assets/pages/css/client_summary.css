@@ -1,3 +1,150 @@
 div.sendemail {
 	float:right;
 }
+
+.summary-profile-pic{
+	padding: 0px;
+}
+
+.summary-profile-pic .profilePic{
+	margin: auto;
+	width: 100px;
+	height: 100px;
+}
+
+.round-50 {
+  border-top-right-radius: 50px !important;
+  border-top-left-radius: 50px !important;
+  border-bottom-left-radius: 50px !important;
+  border-bottom-right-radius: 50px !important;
+
+  -webkit-border-top-left-radius: 50px !important;
+  -webkit-border-top-right-radius: 50px !important;
+  -webkit-border-bottom-right-radius: 50px !important;
+  -webkit-border-bottom-left-radius: 50px !important;
+
+  -moz-border-radius-topleft: 50px !important;
+  -moz-border-radius-topright: 50px !important;
+  -moz-border-radius-bottomright: 50px !important;
+  -moz-border-radius-bottomleft: 50px !important;
+}
+
+.round-10 {
+  border-top-right-radius: 50px !important;
+  border-top-left-radius: 50px !important;
+  border-bottom-left-radius: 50px !important;
+  border-bottom-right-radius: 50px !important;
+
+  -webkit-border-top-left-radius: 50px !important;
+  -webkit-border-top-right-radius: 50px !important;
+  -webkit-border-bottom-right-radius: 50px !important;
+  -webkit-border-bottom-left-radius: 50px !important;
+
+  -moz-border-radius-topleft: 50px !important;
+  -moz-border-radius-topright: 50px !important;
+  -moz-border-radius-bottomright: 50px !important;
+  -moz-border-radius-bottomleft: 50px !important;
+}
+.description p,
+.description span,
+.description a{
+	float: left;
+	width: 100%;
+}
+.description{
+	margin-top: 5px;
+}
+
+.btnprofile{
+	padding: 10px 0px;
+}
+
+.btnprofile a{
+	padding: 5px 20px;
+}
+
+.description p{
+	font-weight: bolder;
+	text-align: center;
+}
+
+.description span{
+	font-weight: bolder;
+	text-align: center;
+	text-transform: uppercase;
+	font-size: 10px;
+}
+
+.description a{
+	text-align: center;
+}
+
+.profilemenu {
+	margin-bottom: 0px !important;
+}
+.profilemenu a.client_menu{
+	float: left;
+	width: 100%;
+	font-size: 12px !important;
+	font-weight: bold;
+	padding:0px;
+	cursor: pointer;
+	padding: 5px 10px;
+	border-top: 1px solid #eeeeee;
+	text-decoration: none;
+}
+
+.profilemenu a.client_menu:hover{
+	background: #f1f3fa;
+}
+
+.profilemenu a.client_menu i{
+	padding-right: 5px;
+	margin-right: 5px !important;
+}
+.counter{
+	float: left;
+	width: 100%;
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.counter_label{
+	float: left;
+	width: 100%;
+	font-weight: bold;
+	font-size: 11px;
+}
+
+.profile-social-links{
+	list-style: none;
+	padding: 0px !important; 
+}
+
+.client-detail p{
+	float:left;
+	width: 100%;
+}
+
+.client-detail address{
+	padding: 5px 15px;
+	margin-bottom: 0px !important;
+}
+
+p.form-control-static:first-child{
+	margin-top: 0px !important;
+	padding-top: 0px !important; 
+}
+
+.client-tags i{
+	margin-right: 5px;
+}
+
+.client-tags a{
+	font-weight: bolder;
+	margin-left: 10px;
+}
+
+.client-tags span{
+	margin-left: 10px;
+}
