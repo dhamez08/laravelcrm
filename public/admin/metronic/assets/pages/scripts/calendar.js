@@ -30,7 +30,7 @@ var TaskCalendar = function () {
 					{
 						url: $url + '/calendar/task-calendar',
 							error: function() {
-								alert('there was an error while fetching events!');
+								//alert('there was an error while fetching events!');
 							}
                     },
                     {

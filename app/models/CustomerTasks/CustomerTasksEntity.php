@@ -66,28 +66,38 @@ class CustomerTasksEntity extends \Eloquent{
 		->endDate($end_date)
 		->with('label')
 		->with('client');
-
-		foreach($tasks->get() as $row){
-			$parseEndTime = \Carbon\Carbon::parse($row->end_time);
-			if( $parseEndTime->hour == '00' && $parseEndTime->minute == '00' ){
-				$endhr = $parseEndTime->toDateString() . ' 23:00:00';
-			}else{
-				$endhr = $row->end_time;
+		if( $tasks ){
+			foreach($tasks->get() as $row){
+				$parseEndTime = \Carbon\Carbon::parse($row->end_time);
+				if( $parseEndTime->hour == '00' && $parseEndTime->minute == '00' ){
+					$endhr = $parseEndTime->toDateString() . ' 23:00:00';
+				}else{
+					$endhr = $row->end_time;
+				}
+				$type = '';
+				$customer_name = '';
+				if( $row->client ){
+					if( $row->client->type == 2 ){
+						$customer_name = $row->client->company_name;
+					}else{
+						$customer_name = $row->client->title . ' ' .$row->client->first_name . ' ' . $row->client->last_name;
+					}
+				}
+				$task[] = array(
+					 'id' => $row->id,
+					 'title' => $row->name,
+					 'start' => $row->date,
+					 'end' => $endhr,
+					 'url' => "",
+					 'color'=> $row->label->color,
+					 'icon' => $row->label->icons,
+					 'customer_id' =>$row->customer_id,
+					 'customer_name' => $customer_name,
+					 'allDay' => false,
+					 'belongsTo' => $row->belongs_to,
+					 'customerId' => $row->customer_id,
+				);
 			}
-			$task[] = array(
-				 'id' => $row->id,
-				 'title' => $row->name,
-				 'start' => $row->date,
-				 'end' => $endhr,
-				 'url' => "",
-				 'color'=> $row->label->color,
-				 'icon' => $row->label->icons,
-				 'customer_id' =>$row->customer_id,
-				 'customer_name' => ( $row->client->type == 2 )  ? $row->client->company_name : $row->client->title . ' ' .$row->client->first_name . ' ' . $row->client->last_name,
-				 'allDay' => false,
-				 'belongsTo' => $row->belongs_to,
-				 'customerId' => $row->customer_id,
-			);
 		}
 		echo json_encode($task);
 	}
