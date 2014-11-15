@@ -149,6 +149,119 @@
 		<!-- END PAGE LEVEL SCRIPTS -->
 		<script src="{{$asset_path}}/global/plugins/jquery-tags-input/jquery.tagsinput.min.js" type="text/javascript"></script>
 		<script type="text/javascript" src="{{$asset_path}}/pages/scripts/client-profile-link-toggle.js"></script>
+		<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+		<script id="template-upload" type="text/x-tmpl">
+		{% for (var i=0, file; file=o.files[i]; i++) { %}
+			<tr class="template-upload fade">
+				<td>
+					<span class="preview"></span>
+				</td>
+				<td>
+					<p class="name">{%=file.name%}</p>
+					<strong class="error text-danger label label-danger"></strong>
+				</td>
+				<td>
+					<p class="size">Processing...</p>
+					<div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+					<div class="progress-bar progress-bar-success" style="width:0%;"></div>
+					</div>
+				</td>
+				<td>
+					{% if (!i && !o.options.autoUpload) { %}
+						<button class="btn btn-sm blue start" disabled>
+							<i class="fa fa-upload"></i>
+							<span>Start</span>
+						</button>
+					{% } %}
+					{% if (!i) { %}
+						<button class="btn btn-sm red cancel">
+							<i class="fa fa-ban"></i>
+							<span>Cancel</span>
+						</button>
+					{% } %}
+				</td>
+			</tr>
+		{% } %}
+		</script>
+		<!-- The template to display files available for download -->
+		<script id="template-download" type="text/x-tmpl">
+			{% for (var i=0, file; file=o.files[i]; i++) { %}
+				<tr class="template-download fade">
+					<td>
+						<span class="preview">
+							{% if (file.thumbnailUrl) { %}
+								<a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+							{% } %}
+						</span>
+					</td>
+					<td>
+						<p class="name">
+							{% if (file.url) { %}
+								<a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+							{% } else { %}
+								<span>{%=file.name%}</span>
+							{% } %}
+						</p>
+						{% if (file.error) { %}
+							<div><span class="label label-danger">Error</span> {%=file.error%}</div>
+						{% } %}
+					</td>
+					<td>
+						<span class="size">{%=o.formatFileSize(file.size)%}</span>
+					</td>
+					<td>
+						{% if (file.deleteUrl) { %}
+							<button class="btn red delete btn-sm" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+								<i class="fa fa-trash-o"></i>
+								<span>Delete</span>
+							</button>
+							<input type="checkbox" name="delete" value="1" class="toggle">
+						{% } else { %}
+							<button class="btn yellow cancel btn-sm">
+								<i class="fa fa-ban"></i>
+								<span>Cancel</span>
+							</button>
+						{% } %}
+					</td>
+				</tr>
+			{% } %}
+		</script>
+		<!-- dropbox -->
+		<script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="owrn86c4qgdillj"></script>
+		<script>
+			var options = {
+
+				// Required. Called when a user selects an item in the Chooser.
+				success: function(files) {
+					alert("Here's the file link: " + files[0].link)
+				},
+
+				// Optional. Called when the user closes the dialog without selecting a file
+				// and does not include any parameters.
+				cancel: function() {
+
+				},
+
+				// Optional. "preview" (default) is a preview link to the document for sharing,
+				// "direct" is an expiring link to download the contents of the file. For more
+				// information about link types, see Link types below.
+				linkType: "preview", // or "direct"
+
+				// Optional. A value of false (default) limits selection to a single file, while
+				// true enables multiple file selection.
+				multiselect: false, // or true
+
+				// Optional. This is a list of file extensions. If specified, the user will
+				// only be able to select files with these extensions. You may also specify
+				// file types, such as "video" or "images" in the list. For more information,
+				// see File types below. By default, all extensions are allowed.
+				extensions: ['.pdf', '.doc', '.docx'],
+			};
+
+			var button = Dropbox.createChooseButton(options);
+			document.getElementById("dropbox-container").appendChild(button);
+		</script>
+		<!-- dropbox -->
 		<script type='text/javascript'>
 			var baseURL 			= "{{url('/')}}";
 			var dateClientFormat 	= "{{\Config::get('crm.date.bootstrap_date_picker.format')}}";
@@ -160,6 +273,7 @@
 				Metronic.init();
 				Index.init();
         		profileLink.init();
+        		FormFileUpload.init();
 			});
 		</script>
 	@show
