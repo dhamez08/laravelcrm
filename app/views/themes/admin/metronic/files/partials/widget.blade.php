@@ -20,6 +20,7 @@
 		<div class="tab-content">
 			<div class="tab-pane active list_files{{$id}}" id="">
 				<h4>List Files</h4>
+				{{\MediaLibrary\MediaLibraryController::get_instance()->getDisplay($customer->id);}}
 				@foreach($customerFiles->get()	as $files)
 					@if($files->type == $id)
 						<p>
