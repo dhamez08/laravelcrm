@@ -102,6 +102,16 @@ class ClientFormat extends Facade{
 		$address .= '</address>';
 		return $address;
 	}
+	
+	public function displayCurrentAddress(){
+		$address = '';
+		$address .= $this->address_line_1.', ';
+		$address .= (!empty($this->address_line_2)) ? $this->address_line_2.', ':'';
+		$address .= $this->town.', ';
+		$address .= (!empty($this->county)) ? $this->county.', ':'';
+		$address .= $this->postcode;
+		return $address;
+	}
 
 	public function displayGoogleMapLink(){
 		return "http://maps.google.co.uk/maps?hl=en&safe=off&q=".$this->postcode;

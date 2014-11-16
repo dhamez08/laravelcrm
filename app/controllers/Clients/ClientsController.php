@@ -285,6 +285,11 @@ class ClientsController extends \BaseController {
 		$data 						= array_merge($data,$this->getSetupThemes());
 		$data['html_body_class'] 	= $this->data_view['html_body_class'];
 		$data['center_column_view'] = 'dashboard';
+		
+		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser($clientId, \Auth::id());
+		$data['customer_files']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->get();
+		$data['files_count']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->count();
+		
 		return \View::make( $data['view_path'] . '.clients.create', $data );
 	}
 
@@ -320,6 +325,10 @@ class ClientsController extends \BaseController {
 		$data 						= array_merge($data,$this->getSetupThemes());
 		$data['html_body_class'] 	= $this->data_view['html_body_class'];
 		$data['center_column_view'] = 'dashboard';
+		
+		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser($clientId, \Auth::id());
+		$data['customer_files']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->get();
+		$data['files_count']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->count();
 		return \View::make( $data['view_path'] . '.clients.edit', $data );
 	}
 
@@ -519,6 +528,11 @@ class ClientsController extends \BaseController {
 		$data['customerId']			= $clientId;
 		$data['clientId']			= $clientId;
 		$data['belongsTo']			= \Auth::id();
+		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser($clientId, \Auth::id());
+		$data['customer_files']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->limit(10)->orderBy('id','desc')->get();
+		$data['files_count']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->count();
+		$data['tags']				= \CustomerTags\CustomerTags::CustomerTag()->where('customer_id','=',$clientId)->get();
+		
 		//$data['tag_widget']			= \ClientTags\ClientTagsController::get_instance()->getClientTagWidget($clientId);
 		$data 						= array_merge($data,$dashboard_data);
 		return \View::make( $data['view_path'] . '.clients.summary', $data );
@@ -676,6 +690,9 @@ class ClientsController extends \BaseController {
 		$data['associate']			= \Clients\ClientEntity::get_instance()->setAssociateCustomer($clientId);
 		$data['partner']			= \Clients\ClientEntity::get_instance()->getCustomerPartner();
 		$data['center_column_view']	= 'dashboard';
+		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser($clientId, \Auth::id());
+		$data['customer_files']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->get();
+		$data['files_count']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->count();
 		$data 						= array_merge($data,$dashboard_data);
 		//var_dump($data['partner']->partner_id);
 		//echo ($data['customer']->customerAssociatedTo($clientId)->get());
@@ -704,6 +721,9 @@ class ClientsController extends \BaseController {
 		$data['associate']			= \Clients\ClientEntity::get_instance()->setAssociateCustomer($clientId);
 		$data['partner']			= \Clients\ClientEntity::get_instance()->getCustomerPartner();
 		$data['center_column_view']	= 'dashboard';
+		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser($clientId, \Auth::id());
+		$data['customer_files']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->get();
+		$data['files_count']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->count();
 		$data 						= array_merge($data,$dashboard_data);
 		//var_dump($data['partner']);
 		//var_dump($data['customer']->customerAssociatedTo($clientId)->get()->toArray());
@@ -736,6 +756,9 @@ class ClientsController extends \BaseController {
 		$data['addressType']		= $this->getAddressType();
 		$data['websiteType']		= $this->getWebsiteFor();
 		$data['websiteIs']			= $this->getWebsiteIs();
+		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser($clientId, \Auth::id());
+		$data['customer_files']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->get();
+		$data['files_count']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->count();
 		$data 						= array_merge($data,$this->getSetupThemes());
 		$data['html_body_class'] 	= $this->data_view['html_body_class'];
 		$data['center_column_view'] = 'dashboard';
@@ -768,6 +791,9 @@ class ClientsController extends \BaseController {
 		$data['telephone']			= $data['customer']->telephone();
 		$data['email']				= $data['customer']->emails();
 		$data['url']				= $data['customer']->url();
+		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser($clientId, \Auth::id());
+		$data['customer_files']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->get();
+		$data['files_count']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->count();
 		$data 						= array_merge($data,$this->getSetupThemes());
 
 		/*var_dump($data['contactPerson']->get()->toArray());
@@ -1042,6 +1068,9 @@ class ClientsController extends \BaseController {
 		$data['websiteIs']			= $this->getWebsiteIs();
 		$data['center_column_view']	= 'dashboard';
 		$data['clientId']			= $clientId;
+		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser($clientId, \Auth::id());
+		$data['customer_files']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->get();
+		$data['files_count']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->count();
 		$data 						= array_merge($data,$dashboard_data);
 		//var_dump($data['belongToPartner']);
 		//exit();
@@ -1216,6 +1245,9 @@ class ClientsController extends \BaseController {
         $data['customFields']       = $data['customer']->customFieldsData();
 		$data['peopleRelationship']	= $this->getPeopleRelationship();
 		$data['center_column_view']	= 'dashboard';
+		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser($clientId, \Auth::id());
+		$data['customer_files']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->get();
+		$data['files_count']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->count();
 		$data 						= array_merge($data,$dashboard_data);
 		//var_dump($data['partner']->partner_id);
 		//exit();
@@ -1312,6 +1344,9 @@ class ClientsController extends \BaseController {
 		$data['associate']			= \Clients\ClientEntity::get_instance()->setAssociateCustomer($clientId);
 		$data['partner']			= \Clients\ClientEntity::get_instance()->getCustomerPartner();
 		$data['peopleRelationship']	= $this->getPeopleRelationship();
+		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser($clientId, \Auth::id());
+		$data['customer_files']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->get();
+		$data['files_count']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->count();
 		$data['center_column_view']	= 'dashboard';
 		$data 						= array_merge($data,$dashboard_data);
 		//var_dump($data['belongToPartner']);
@@ -1382,9 +1417,13 @@ class ClientsController extends \BaseController {
 		$data1 = $this->_getClientData($client_id);
 
 		$data['center_column_view']	= 'opportunities';
-
+		
 		$data 	= array_merge($data,$data1,$dashboard_data);
 
+		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser($client_id, \Auth::id());
+		$data['customer_files']		= \CustomerFiles\CustomerFiles::CustomerFile($client_id)->get();
+		$data['files_count']		= \CustomerFiles\CustomerFiles::CustomerFile($client_id)->count();
+		
 		return \View::make( $data['view_path'] . '.clients.opportunities', $data );
 
 	}
@@ -1504,8 +1543,9 @@ class ClientsController extends \BaseController {
 		$data['associate']			= \Clients\ClientEntity::get_instance()->setAssociateCustomer($clientId);
 		$data['partner']			= \Clients\ClientEntity::get_instance()->getCustomerPartner();
         $data['customFields']       = $data['customer']->customFieldsData();
-		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getCustomerTasks($clientId)
-		->status(1)->with('label');
+		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser($clientId, \Auth::id());
+		$data['customer_files']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->get();
+		$data['files_count']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->count();
 
 		return $data;
 	}
@@ -1523,6 +1563,9 @@ class ClientsController extends \BaseController {
 		$data['center_column_view']	= 'custom-page';
 		$data['customtab'] 			= \CustomFieldTab\CustomFieldTab::find(\Input::get('custom'));
 		$data 						= array_merge($data,$dashboard_data);
+		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser($clientId, \Auth::id());
+		$data['customer_files']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->get();
+		$data['files_count']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->count();
 
 		return \View::make( $data['view_path'] . '.clients.custom', $data );
 	}

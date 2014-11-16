@@ -94,6 +94,8 @@ class ClientFileController extends \BaseController {
 		$data['belongsTo']			= \Auth::id();
 		$data['customerFiles']		= \CustomerFiles\CustomerFiles::customerFile($clientId);
 		$data['clientId']			= $clientId;
+		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser($data['customerId'], $data['belongsTo']);
+		$data['files_count']		= \CustomerFiles\CustomerFiles::CustomerFile($data['clientId'])->count();
 		$data 						= array_merge($data,$dashboard_data);
 		return \View::make( $data['view_path'] . '.files.summary', $data );
 	}
@@ -119,7 +121,7 @@ class ClientFileController extends \BaseController {
 		}
 	}
 
-	public function postAjaxUploadFile($file_id, $customer_id){
+	public function postAjaxUploadFile($file_id, $customer_id, $page = ""){
 		$belongs_to = \Auth::id();
 		if( \Input::hasFile('files') ){
 			foreach(\Input::file('files') as $file){
@@ -133,6 +135,16 @@ class ClientFileController extends \BaseController {
 				);
 				\CustomerFiles\CustomerFilesEntity::get_instance()->createOrUpdate($data);
 
+				if(!empty($page) && $page == "client_summary"){
+					return \Response::json(
+						array(
+							'success'=>true,
+							'msg'=>'',
+							'redirect'=>url('clients/client-summary/' . $customer_id),
+						)
+					);
+				}
+				
 				return \Response::json(
 					array(
 						'success'=>true,
@@ -204,5 +216,32 @@ class ClientFileController extends \BaseController {
 		$data 				= array_merge($data,$this->getSetupThemes());
 		return \View::make($data['view_path'] . '.files.partials.media', $data)->render();
 	}
-
+	
+	public function getSearch($client){
+		$input = \Input::get('file_search_value');
+		$sql = \CustomerFiles\CustomerFiles::CustomerFile($client);
+		if(!empty($input) && $input != ''){
+			$sql = $sql->where("filename","like","%$input%");
+		}
+		$sql = $sql->orderBy('id','desc')->get();
+		
+		return \Response::json($sql);
+	}
+	
+	public function getDeleteFileSummary($id, $customerid){
+		$file = \CustomerFiles\CustomerFiles::find($id);
+		
+		if( \File::exists(public_path('documents')) ){
+			if( \File::isFile( public_path('documents/' . $file->filename) ) ){
+				\File::delete(public_path('documents/' . $file->filename));
+			}
+		}
+		if( $file->delete() ){
+			\Session::flash('message', 'Successfully Deleted File');
+			return \Redirect::to('client/client-summary/' . $customerid);
+		}else{
+			\Session::flash('message', 'Error cannot delete file');
+			return \Redirect::to('client/client-summary/' . $customerid);
+		}
+	}
 }

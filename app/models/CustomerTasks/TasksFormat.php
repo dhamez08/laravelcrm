@@ -49,7 +49,7 @@ class TasksFormat extends Facade{
 	}
 
 	public function displayHtmlLabelIcon(){
-		$html  = '<span class="label label-sm" style="background-color:'.$this->displayColor().'">';
+		$html  = '<span class="label label-sm" style="padding:3px;background-color:'.$this->displayColor().'">';
 			$html .= $this->displayAction();
 			$html .= '<i class="fa '.$this->displayIcon().'"></i>';
 		$html .= '</span>';
@@ -144,4 +144,15 @@ class TasksFormat extends Facade{
 		return \Carbon\Carbon::parse($this->date)->diffForHumans();
 	}
 
+	public function isReminded(){
+		if($this->remind_mins > 0 && \Carbon\Carbon::parse($this->remind) <= \Carbon\Carbon::now()){
+			return TRUE;
+		}
+		
+		if(\Carbon\Carbon::parse($this->date) <= \Carbon\Carbon::now()){
+			return TRUE;
+		}
+		
+		return FALSE;
+	} 
 }

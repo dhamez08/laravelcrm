@@ -12,7 +12,7 @@
 				<!-- END SIDEBAR TOGGLER BUTTON -->
 			</li>
 			<li class="start active open">
-				<a href="javascript:;">
+				<a href="{{url('clients/client-summary/'.$customer->id)}}">
 				<i class="icon-home"></i>
 				<span class="title">Client Dashboard</span>
 				<span class="selected"></span>

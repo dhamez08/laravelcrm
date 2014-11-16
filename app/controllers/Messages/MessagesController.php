@@ -107,7 +107,11 @@ class MessagesController extends \BaseController {
 		$data['center_column_view']	= 'messages';
 
 		$data 	= array_merge($data,$clientData,$dashboard_data);
-
+		
+		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser($client_id, \Auth::id());
+		$data['customer_files']		= \CustomerFiles\CustomerFiles::CustomerFile($client_id)->get();
+		$data['files_count']		= \CustomerFiles\CustomerFiles::CustomerFile($client_id)->count();
+		
 		return \View::make( $data['view_path'] . '.clients.messages', $data );
 	}
 

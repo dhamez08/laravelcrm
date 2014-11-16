@@ -33,4 +33,8 @@ class CustomerTags extends \Eloquent{
 		return $query->where('tag_id', '=', $tag_id);
 	}
 
+	public function scopeCustomerTag($query){
+		return $this->leftJoin('tags',$this->table.'.tag_id','=','tags.id')->select('tag_id as id','tag as text');
+	}
+	
 }

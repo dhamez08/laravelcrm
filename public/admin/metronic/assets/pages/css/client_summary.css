@@ -8,25 +8,25 @@ div.sendemail {
 
 .summary-profile-pic .profilePic{
 	margin: auto;
-	width: 100px;
-	height: 100px;
+	width: 140px;
+	height: 150px;
 }
 
 .round-50 {
-  border-top-right-radius: 50px !important;
-  border-top-left-radius: 50px !important;
-  border-bottom-left-radius: 50px !important;
-  border-bottom-right-radius: 50px !important;
+  border-top-right-radius: 85px !important;
+  border-top-left-radius: 85px !important;
+  border-bottom-left-radius: 85px !important;
+  border-bottom-right-radius: 85px !important;
 
-  -webkit-border-top-left-radius: 50px !important;
-  -webkit-border-top-right-radius: 50px !important;
-  -webkit-border-bottom-right-radius: 50px !important;
-  -webkit-border-bottom-left-radius: 50px !important;
+  -webkit-border-top-left-radius: 85px !important;
+  -webkit-border-top-right-radius: 85px !important;
+  -webkit-border-bottom-right-radius: 85px !important;
+  -webkit-border-bottom-left-radius: 85px !important;
 
-  -moz-border-radius-topleft: 50px !important;
-  -moz-border-radius-topright: 50px !important;
-  -moz-border-radius-bottomright: 50px !important;
-  -moz-border-radius-bottomleft: 50px !important;
+  -moz-border-radius-topleft: 85px !important;
+  -moz-border-radius-topright: 85px !important;
+  -moz-border-radius-bottomright: 85px !important;
+  -moz-border-radius-bottomleft: 85px !important;
 }
 
 .round-10 {
@@ -159,9 +159,57 @@ div.tagsinput span.tag {
 	border-radius: 1px !important;
 	-webkit-border-radius: 1px !important;
 	-moz-border-radius: 1px !important;
-	margin: 1px !important;
+	margin: 2px !important;
+}
+
+#edit-tags-inputs .select2-container{
+	padding: 0px !important;
+}
+
+#edit-tags-inputs .select2-container .select2-choices{
+	margin-left: 0px !important;
+}
+#edit-tags-inputs .select2-container .select2-choices .select2-search-choice a{
+	left: 1px !important;
+}
+#edit-tags-inputs .select2-container .select2-choices .select2-search-choice div{
+	margin-left: 5px !important;	
+}
+#edit-tags-inputs .select2-container .select2-choices .select2-search-choice{
+	border: 1px solid #a5d24a !important;
+	background: #cde69c !important;
+	color: #638421 !important;
+	border-radius: 1px !important;
+	-webkit-border-radius: 1px !important;
+	-moz-border-radius: 1px !important;
+	margin: 2px !important;
 }
 
 #client-profile-tags-list {
 	
+}
+
+.hide-in{
+	height: 0px !important;
+	display:none;
+}
+
+#gmap_geocoding{
+	width: 100%;
+}
+
+#tasklistview ul{
+	list-style: none;
+	padding:0px;
+}
+
+#tasklistview ul li{
+	border-bottom: 1px solid #dddddd;	
+	padding: 4px 3px;
+}
+
+.taskto{
+	float: left;
+	width: 100%;
+	height: 25px;
 }

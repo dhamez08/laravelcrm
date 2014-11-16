@@ -167,130 +167,44 @@
 		<li id="header_task_bar" class="dropdown dropdown-extended dropdown-tasks">
 			<a data-close-others="true" data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle" href="#">
 			<i class="icon-calendar"></i>
-			<span class="badge badge-default">
-			3 </span>
+			@if(\CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(((isset($clientId))? $clientId :NULL),\Auth::id())['due']->all > 0)
+			 	<span class="badge badge-default">
+			 		{{\CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser()['due']->all}}
+				</span>	
+			@endif
 			</a>
 			<ul class="dropdown-menu extended tasks">
 				<li>
 					<p>
-						 You have 12 pending tasks
-						 <button class="btn btn-info btn-xs pull-right"><i class="fa fa-plus"></i></button>
+						@if(\CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(((isset($clientId))? $clientId :NULL),\Auth::id())['due']->all > 0)
+						 You have {{\CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(((isset($clientId))? $clientId :NULL),\Auth::id())['due']->all}} tasks reminder
+						@else
+						 You dont have a pending tasks.	
+						@endif
 					</p>
 				</li>
 				<li>
-					<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 250px;"><ul style="overflow: hidden; width: auto; height: 250px;" class="dropdown-menu-list scroller" data-initialized="1">
-						<li>
-							<a href="#">
-							<span class="task">
-							<span class="desc">
-							New release v1.2 </span>
-							<span class="percent">
-							30% </span>
-							</span>
-							<span class="progress">
-							<span aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" class="progress-bar progress-bar-success" style="width: 40%;">
-							<span class="sr-only">
-							40% Complete </span>
-							</span>
-							</span>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-							<span class="task">
-							<span class="desc">
-							Application deployment </span>
-							<span class="percent">
-							65% </span>
-							</span>
-							<span class="progress progress-striped">
-							<span aria-valuemax="100" aria-valuemin="0" aria-valuenow="65" class="progress-bar progress-bar-danger" style="width: 65%;">
-							<span class="sr-only">
-							65% Complete </span>
-							</span>
-							</span>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-							<span class="task">
-							<span class="desc">
-							Mobile app release </span>
-							<span class="percent">
-							98% </span>
-							</span>
-							<span class="progress">
-							<span aria-valuemax="100" aria-valuemin="0" aria-valuenow="98" class="progress-bar progress-bar-success" style="width: 98%;">
-							<span class="sr-only">
-							98% Complete </span>
-							</span>
-							</span>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-							<span class="task">
-							<span class="desc">
-							Database migration </span>
-							<span class="percent">
-							10% </span>
-							</span>
-							<span class="progress progress-striped">
-							<span aria-valuemax="100" aria-valuemin="0" aria-valuenow="10" class="progress-bar progress-bar-warning" style="width: 10%;">
-							<span class="sr-only">
-							10% Complete </span>
-							</span>
-							</span>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-							<span class="task">
-							<span class="desc">
-							Web server upgrade </span>
-							<span class="percent">
-							58% </span>
-							</span>
-							<span class="progress progress-striped">
-							<span aria-valuemax="100" aria-valuemin="0" aria-valuenow="58" class="progress-bar progress-bar-info" style="width: 58%;">
-							<span class="sr-only">
-							58% Complete </span>
-							</span>
-							</span>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-							<span class="task">
-							<span class="desc">
-							Mobile development </span>
-							<span class="percent">
-							85% </span>
-							</span>
-							<span class="progress progress-striped">
-							<span aria-valuemax="100" aria-valuemin="0" aria-valuenow="85" class="progress-bar progress-bar-success" style="width: 85%;">
-							<span class="sr-only">
-							85% Complete </span>
-							</span>
-							</span>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-							<span class="task">
-							<span class="desc">
-							New UI release </span>
-							<span class="percent">
-							18% </span>
-							</span>
-							<span class="progress progress-striped">
-							<span aria-valuemax="100" aria-valuemin="0" aria-valuenow="18" class="progress-bar progress-bar-important" style="width: 18%;">
-							<span class="sr-only">
-							18% Complete </span>
-							</span>
-							</span>
-							</a>
-						</li>
+					<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: auto;"><ul style="overflow: hidden; width: auto; height: auto;" class="dropdown-menu-list scroller" data-initialized="1">
+						@if(\CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(((isset($clientId))? $clientId :NULL),\Auth::id())['due']->all > 0)
+							@foreach(\CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(((isset($clientId))? $clientId :NULL),\Auth::id())['data'] as $dueTasks)
+								@if($dueTasks->isReminded())
+									<li>
+										<a class="openModal" data-toggle="modal" data-target=".ajaxModal" href="{{action('Task\TaskController@getEditClientTask',array('id'=>$dueTasks->id,'customerid'=>$dueTasks->customer_id,'redirect'=>'task'))}}">
+										<span class="task">
+											<span class="desc">	
+												{{$dueTasks->displayHtmlTaskDue()}}
+												{{$dueTasks->displayHtmlLabelIcon()}}
+												<br />
+												{{$dueTasks->displayName()}}
+												<br />
+												{{$dueTasks->displayTaskFullName()}}
+											</span>
+										</span>
+										</a>
+									</li>
+								@endif
+							@endforeach
+						@endif
 					</ul><div class="slimScrollBar" style="background: none repeat scroll 0% 0% rgb(187, 187, 187); width: 7px; position: absolute; top: 0px; opacity: 0.4; border-radius: 7px; z-index: 99; right: 1px; display: block;"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: none repeat scroll 0% 0% rgb(234, 234, 234); opacity: 0.2; z-index: 90; right: 1px;"></div></div>
 				</li>
 				<li class="external">

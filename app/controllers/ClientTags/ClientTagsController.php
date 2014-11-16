@@ -120,7 +120,55 @@ class ClientTagsController extends \BaseController {
 	        return \Response::json(array('status'=>0));
 	}
 
-	public function getClientTag($customer_id){
+	public function getClientTag($client_id){
+		$tag = \ClientTag\ClientTag::where('belongs_to','=',$client_id)->select('id','tag as text')->get();
+		
+		
+		return \Response::json($tag);
+	}
+	
+	public function getCustomerTag($customer_id){
+		$tag = \CustomerTags\CustomerTags::CustomerTag()->where('customer_id','=',$customer_id)->get();
+		
+		return \Response::json($tag);
+	}
+	
+	public function getSaveCustomerTags($customer_id,$tag_id){
+		$response = \ClientTag\ClientTag::where('id','=',$tag_id)->select('id','tag as text')->first();
+		if(count($response) <= 0){
+			return \Response::json(array('status'=> FALSE ,'ERROR' => 'TAG_NOT_EXISTS'));
+		}
+		
+		$check = \CustomerTags\CustomerTags::where('customer_id','=',$customer_id)->where('tag_id','=',$tag_id)->first();
+		if(count($check) > 0){
+			return \Response::json(array('status'=> FALSE ,'ERROR' => 'TAG_EXISTS'));
+		}
+		
+		$tag = \CustomerTags\CustomerTagsEntity::get_instance()->objCreateOrUpdate(
+			array(
+					'customer_id' => $customer_id,
+					'tag_id' => $tag_id
+				)
+			);
+			
+		
+		return \Response::json(array('status'=> TRUE, 'item' => $response));
+		
+	}
+	
+	public function getDeleteCustomerTags($customer_id,$tag_id){
+		$response = \CustomerTags\CustomerTags::where('customer_id','=',$customer_id)->where('tag_id','=',$tag_id)->first();
+		if(count($response) <= 0){
+			return \Response::json(array('status'=> FALSE));
+		}
+		
+		$tag = \CustomerTags\CustomerTags::where('customer_id','=',$customer_id)->where('tag_id','=',$tag_id)->delete();
+			
+		if($tag){
+			return \Response::json(array('status'=> TRUE));
+		} else {
+			return \Response::json(array('status'=> FALSE));
+		}
 	}
 
 	public function getClientTagWidget($client_id){

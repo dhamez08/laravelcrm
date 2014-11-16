@@ -43,6 +43,8 @@
 			<link rel="stylesheet" type="text/css" href="{{$asset_path}}/admin/pages/css/tasks.css">
 			<link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/bootstrap-editable/bootstrap-editable/css/bootstrap-editable.css"/>
 			<link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/jquery-tags-input/jquery.tagsinput.css"/>
+			<link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/bootstrap-select/bootstrap-select.min.css"/>
+			<link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/select2/select2.css"/>
 			<!-- END PAGE LEVEL STYLES -->
 
 			<!-- BEGIN THEME STYLES -->
@@ -145,10 +147,19 @@
 		<script src="{{$asset_path}}/pages/scripts/tasks.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/pages/scripts/crm.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/global/plugins/typeahead/typeahead.bundle.min.js" type="text/javascript"></script>
-		<script type="text/javascript" src="{{$asset_path}}/global/plugins/bootstrap-editable/bootstrap-editable/js/bootstrap-editable.js"></script>
+		<script src="{{$asset_path}}/global/plugins/bootstrap-editable/bootstrap-editable/js/bootstrap-editable.js" type="text/javascript"></script>
+		<script src="{{$asset_path}}/global/plugins/bootstrap-select/bootstrap-select.min.js" type="text/javascript"></script>
+		<script src="{{$asset_path}}/global/plugins/select2/select2.min.js" type="text/javascript"></script>
 		<!-- END PAGE LEVEL SCRIPTS -->
 		<script src="{{$asset_path}}/global/plugins/jquery-tags-input/jquery.tagsinput.min.js" type="text/javascript"></script>
-		<script type="text/javascript" src="{{$asset_path}}/pages/scripts/client-profile-link-toggle.js"></script>
+		<script src="{{$asset_path}}/pages/scripts/client-profile-link-toggle.js" type="text/javascript"></script>
+		<script src="{{$asset_path}}/pages/scripts/portlet-draggable.js"></script>
+		<!-- BEGIN PAGE LEVEL PLUGINS -->
+		<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+		<script src="{{$asset_path}}/global/plugins/gmaps/gmaps.min.js" type="text/javascript"></script>
+		<script src="{{$asset_path}}/pages/scripts/google-maps.js" type="text/javascript"></script>
+		<script src="{{$asset_path}}/pages/scripts/client-file-search.js" type="text/javascript"></script>
+		<!-- END PAGE LEVEL PLUGINS -->
 		<script type='text/javascript'>
 			var baseURL 			= "{{url('/')}}";
 			var dateClientFormat 	= "{{\Config::get('crm.date.bootstrap_date_picker.format')}}";
@@ -159,7 +170,12 @@
 				CreateTask.init('.openModal','.ajaxModal');
 				Metronic.init();
 				Index.init();
-        		profileLink.init();
+				@if(isset($clientId))
+        		profileLink.init('{{\Auth::id()}}','{{$clientId}}');
+        		@endif
+        		PortletDraggable.init();
+        		HandleMapsGoogle.init();
+        		clientFileSearch.init(baseURL);
 			});
 		</script>
 	@show

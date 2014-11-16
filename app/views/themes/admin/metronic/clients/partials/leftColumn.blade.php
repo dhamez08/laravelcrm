@@ -3,7 +3,7 @@
 	<div class="panel-body" style="padding-bottom:0px;">
 		 <div class="row">
 		 	<div class="col-md-12">
-			 	<a href="#" class="pull-left" title="">
+			 	<a href="#" class="pull-left" title="Tags" id="toggle-client-tags">
 					<i class="icon-tag"></i>
 				</a>
 				<a href="{{action('Clients\ClientsController@getEdit',array('clientId'=>$customer->id))}}" class="pull-right" title="Edit Profile Information">
@@ -49,10 +49,23 @@
 			 			<i class="icon-emoticon-smile"></i>
 			 			Personal Information
 			 	</a>
-			 	<div id="personalinformation" class="collapse-profile-menu hide">
+			 	<div id="personalinformation" class="collapse-profile-menu">
 			 		<div class="row">
 					 	<div class="col-md-12">
 					 		<div class="form-body client-detail">
+					 			<div>
+									<span class="label label-info" style="font-size:9px;">{{$currentClient->type}} Address</span>
+									{{$currentClient->displayHtmlAddress()}}
+									
+									<p class="form-control-static text-center">
+										<a href="{{$currentClient->displayGoogleMapLink()}}" target="_blank">show on map</a>
+										| 
+										<a href="{{$currentClient->displayGoogleMapDirectionLink()}}" target="_blank">get directions</a>
+									</p>
+								</div>
+								
+								<hr style="padding:5px;" />
+								
 					 			<div class="form-group">
 									@if( $email->count() > 0 )
 										@foreach($email->get() as $mail)
@@ -89,34 +102,22 @@
 											</p>
 										@endforeach
 									@endif
-									<div>
-										<span class="label label-info" style="font-size:9px;">{{$currentClient->type}} Address</span>
-										{{$currentClient->displayHtmlAddress()}}
-
-										<p class="form-control-static text-center">
-											<a href="{{$currentClient->displayGoogleMapLink()}}" target="_blank">show on map</a>
-											| 
-											<a href="{{$currentClient->displayGoogleMapDirectionLink()}}" target="_blank">get directions</a>
-										</p>
-									</div>
+									<hr style="padding:5px;" />
 									<div class="col-md-12">
-										<p class="form-control-static">Date of Birth: <br><strong>{{$currentClient->displayDob('d/m/Y')}}</strong></p>
-										<p class="form-control-static">Smoker: <br><strong>{{($currentClient->smoker == 1) ? 'Yes':'No'}}</strong></p>
-										<p class="form-control-static">Marital Status: <br><strong>{{$currentClient->marital_status}}</strong></p>
-										<p class="form-control-static">Living Status: <br><strong>{{$currentClient->living_status}}</strong></p>
-										<p class="form-control-static">Employment Status: <br><strong>{{$currentClient->employment_status}}</strong></p>
-										<p class="form-control-static">Occupation: <br><strong>{{$currentClient->job_title}}</strong></p>
+										<p class="form-control-static">Date of Birth: <strong>{{$currentClient->displayDob('d/m/Y')}}</strong></p>
+										<p class="form-control-static">Smoker: <strong>{{($currentClient->smoker == 1) ? 'Yes':'No'}}</strong></p>
+										<p class="form-control-static">Marital Status: <strong>{{$currentClient->marital_status}}</strong></p>
+										<p class="form-control-static">Living Status: <strong>{{$currentClient->living_status}}</strong></p>
+										<p class="form-control-static">Employment Status: <strong>{{$currentClient->employment_status}}</strong></p>
+										<p class="form-control-static">Occupation: <strong>{{$currentClient->job_title}}</strong></p>
 			                    	</div>
 			                    </div>
 			                </div>
 			            </div>
 					 </div>
 			 	</div>
-			 	<a href="#family" class="client_menu">
-			 			<i class="icon-heart"></i>
-			 			Family
-			 	</a>
-			 	<div id="family" class="collapse-profile-menu hide">
+			 	<a href="#family" class="client_menu"><i class="icon-heart"></i>Family</a>
+			 	<div id="family" class="collapse-profile-menu">
 			 		<div class="row">
 					 	<div class="col-md-12">
 					 		<div class="form-body client-detail">
@@ -172,11 +173,8 @@
 					 	</div>
 					 </div>
 			 	</div>
-			 	<a href="#customfields" class="client_menu">
-			 			<i class="icon-note"></i>
-			 			Custom Fields
-			 	</a>
-			 	<div id="customfields" class="collapse-profile-menu hide">
+			 	<a href="#customfields" class="client_menu"><i class="icon-note"></i>Custom Fields</a>
+			 	<div id="customfields" class="collapse-profile-menu">
 			 		<div class="row">
 					    <div class="col-md-12">
 					        <div class="form-body client-detail">
@@ -191,13 +189,69 @@
 					 	</div>
 					 </div>
 			 	</div>
-			 	<a href="#tasklist" class="client_menu">
-			 			<i class="icon-list"></i>
-			 			Tasks
-			 	</a>
-			 	<div id="tasklist" class="collapse-profile-menu hide">
-
-			 	</div>
+			 	<a href="#tasklistview" class="client_menu"><i class="icon-list"></i>Tasks</a>
+			 	<div id="tasklistview" class="collapse-profile-menu">
+			 		<div class="row">
+						<div class="col-md-12">
+							<p class="text-center">
+								<a href="{{action(
+											'Clients\ClientsController@getCreateClientTask',
+											array(
+												'customerid'=>isset($customerId) ? $customerId:'')
+											)
+										}}"
+									data-target=".createTask"
+									data-toggle="modal"
+									class="openModal">
+								<i class="fa fa-plus"></i> Add new tasks</a>
+							</p>
+								<!-- START TASK LIST -->
+								<ul class="task-list">									
+									@if($tasks['total'] > 0)
+										@foreach($tasks['data'] as $task)
+											<li class="">
+												<div class="task-title">
+													{{$task->displayHtmlTaskDue()}}
+													{{$task->displayHtmlLabelIcon()}}
+													&nbsp;<br />
+													<span class="task-title-sp">
+														<a class="openModal" data-toggle="modal" data-target=".ajaxModal" href="{{action('Task\TaskController@getEditClientTask',array('id'=>$task->id,'customerid'=>$task->customer_id,'redirect'=>'task'))}}">
+															{{$task->displayName()}}
+														</a>
+														-
+														<a href="{{action('Clients\ClientsController@getClientSummary',array('id'=>$task->customer_id))}}">
+															{{$task->displayTaskFullName()}}
+														</a>
+													</span>
+													<div class="task-config">
+														<div class="task-config-btn btn-group hide">
+															<a class="btn btn-xs default" href="#" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+															<i class="fa fa-cog"></i><i class="fa fa-angle-down"></i>
+															</a>
+															<ul class="dropdown-menu pull-right">
+																<li>
+																	<a class="complete-task" href="{{action('Task\TaskController@getCompleteTask',array('id'=>$task->id,'customerid'=>$task->customer_id))}}">
+																	<i class="fa fa-check"></i> Complete </a>
+																</li>
+																<li>
+																	<a class="openModal" data-toggle="modal" data-target=".ajaxModal" href="{{action('Task\TaskController@getEditClientTask',array('id'=>$task->id,'customerid'=>$task->customer_id))}}">
+																	<i class="fa fa-pencil"></i> Edit </a>
+																</li>
+																<li>
+																	<a class="delete-task" href="{{action('Task\TaskController@getCancelTask',array('id'=>$task->id,'customerid'=>$task->customer_id))}}">
+																	<i class="fa fa-trash-o"></i> Cancel </a>
+																</li>
+															</ul>
+														</div>
+													</div>
+												 </div>	
+												</li>
+											@endforeach
+										@endif
+									</ul>
+							</div>
+						</div>	
+			 		</div>
 		 	</div>
 		 </div>
 	</div>
@@ -205,16 +259,16 @@
 <div class="panel panel-default">
 	<div class="panel-body">
 		<div class="row">
-			<a href="#" class="col-sm-4 text-center">
-				<div class="text-success counter text-center">3</div>
+			<a href="javscript;;" class="col-sm-4 text-center">
+				<div class="text-success counter text-center">0</div>
 				<div class="counter_label text-center">Projects</div>
 			</a>
-			<a href="#" class="col-sm-4 text-center">
-				<div class="text-success counter text-center">1</div>
+			<a href="javascript;;" class="col-sm-4 text-center">
+				<div class="text-success counter text-center">{{$tasks['total']}}</div>
 				<div class="counter_label text-center">Tasks</div>
 			</a>
-			<a href="#" class="col-sm-4 text-center">
-				<div class="text-success counter text-center">7</div>
+			<a href="{{url('file/client-file/'.$customer->id)}}" class="col-sm-4 text-center">
+				<div class="text-success counter text-center">{{$files_count}}</div>
 				<div class="counter_label text-center">Uploads</div>
 			</a>
 		</div>
@@ -247,6 +301,17 @@
 						@endforeach
 					@endif
 				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-body">
+		<div class="row">
+			<div class="col-md-12">
+				<input type="hidden" id="gmap_geocoding_address" value="{{$currentClient->displayCurrentAddress()}}" />
+				<div id="gmap_geocoding" class="gmaps"></div>
 			</div>
 		</div>
 	</div>

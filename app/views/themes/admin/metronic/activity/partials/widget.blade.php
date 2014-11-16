@@ -1,47 +1,107 @@
-<div class="portlet light">
+<div class="portlet portlet-sortable light bordered">
 	<div class="portlet-title tabbable-line">
 		<div class="caption">
 			<i class="icon-globe"></i>
-			<span class="caption-subject bold uppercase">
-			Activity </span>
-			<span class="caption-helper">more samples...</span>
+			<span class="caption-subject bold uppercase">Activity </span>
 		</div>
 		<ul class="nav nav-tabs">
 			<li class="active">
-				<a href="#notes" data-toggle="tab">
-				Notes </a>
+				<a href="#notes" data-toggle="tab">Notes </a>
 			</li>
 			<li class="">
-				<a href="#messages" data-toggle="tab">
-				Messages </a>
+				<a href="#messages" data-toggle="tab">Messages </a>
 			</li>
 			<li class="">
-				<a href="#invoices" data-toggle="tab">
-				Invoices </a>
+				<a href="#invoices" data-toggle="tab">Invoices </a>
 			</li>
 		</ul>
 	</div>
 	<div class="portlet-body tabbable-line">
 		<div class="tab-content">
 			<div class="tab-pane active" id="notes">
-				<div class="scroller" style="height: 260px;">
+				<div class="scroller" style="height:366px">
 					{{\Notes\NotesController::get_instance()->getIndex($customerId,'')}}
 				</div>
 			</div>
 			<div class="tab-pane" id="messages">
-				<div class="scroller" style="height: 260px;">
+				<div class="scroller" style="height:366px">
 					{{\Messages\MessagesController::get_instance()->getMessagesByCustomer($customerId)}}
 				</div>
 			</div>
+			<div class="tab-pane" id="recent-activity">
+				<div class="scroller" style="height:366px">
+					<ul class="feeds">
+						<li>
+							<div class="col1">
+								<div class="cont">
+									<div class="cont-col1">
+										<div class="label label-sm label-info">
+											<i class="fa fa-shopping-cart"></i>
+										</div>
+									</div>
+									<div class="cont-col2">
+										<div class="desc">
+											 New order received with <span class="label label-sm label-success">
+												Reference Number: DR23923 </span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col2">
+								<div class="date">
+									 30 min
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="col1">
+								<div class="cont">
+									<div class="cont-col1">
+										<div class="label label-sm label-info">
+											<i class="fa fa-bar-chart-o"></i>
+										</div>
+									</div>
+									<div class="cont-col2">
+										<div class="desc">
+											 Finance Report for year 2013 has been released.
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col2">
+								<div class="date">
+									 3 min
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
 			<div class="tab-pane" id="invoices">
-				<div class="scroller" style="height: 260px;">
-					<h4>Tab 3 Content</h4>
-					<p>
-						 Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.ut laoreet dolore magna ut laoreet dolore magna. ut laoreet dolore magna. ut laoreet dolore magna.
-					</p>
-					<p>
-						 Ut wisi enim ad m veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
-					</p>
+				<div class="scroller" style="height:366px">
+					<ul class="feeds">
+						<li>
+							<div class="col1">
+								<div class="cont">
+									<div class="cont-col1">
+										<div class="label label-sm label-info">
+											<i class="fa fa-shopping-cart"></i>
+										</div>
+									</div>
+									<div class="cont-col2">
+										<div class="desc">
+											 <a href="#" title="Open Invoice">1000000001</a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col2">
+								<div class="date">
+									 30 min
+								</div>
+							</div>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>
