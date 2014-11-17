@@ -285,11 +285,7 @@ class ClientsController extends \BaseController {
 		$data 						= array_merge($data,$this->getSetupThemes());
 		$data['html_body_class'] 	= $this->data_view['html_body_class'];
 		$data['center_column_view'] = 'dashboard';
-		
-		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser($clientId, \Auth::id());
-		$data['customer_files']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->get();
-		$data['files_count']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->count();
-		
+				
 		return \View::make( $data['view_path'] . '.clients.create', $data );
 	}
 
@@ -326,9 +322,6 @@ class ClientsController extends \BaseController {
 		$data['html_body_class'] 	= $this->data_view['html_body_class'];
 		$data['center_column_view'] = 'dashboard';
 		
-		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser($clientId, \Auth::id());
-		$data['customer_files']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->get();
-		$data['files_count']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->count();
 		return \View::make( $data['view_path'] . '.clients.edit', $data );
 	}
 
@@ -756,9 +749,7 @@ class ClientsController extends \BaseController {
 		$data['addressType']		= $this->getAddressType();
 		$data['websiteType']		= $this->getWebsiteFor();
 		$data['websiteIs']			= $this->getWebsiteIs();
-		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser($clientId, \Auth::id());
-		$data['customer_files']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->get();
-		$data['files_count']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->count();
+		
 		$data 						= array_merge($data,$this->getSetupThemes());
 		$data['html_body_class'] 	= $this->data_view['html_body_class'];
 		$data['center_column_view'] = 'dashboard';
