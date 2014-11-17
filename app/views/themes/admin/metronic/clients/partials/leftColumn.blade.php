@@ -33,7 +33,21 @@
 		 		</div>
 		 		<div class="row text-center btnprofile">
 		 			<div class="col-md-12">
-		 				<a href="#" class="btn btn-sm green-meadow round-10">SMS</a>
+		 				<?php $sms = ''; ?>
+		 				@if( $telephone->count() > 0 )
+							@foreach($telephone->get() as $phone)
+								@if( $phone->type == 'Mobile' )
+									<?php $sms = $phone->number; ?>
+								@endif
+							@endforeach
+						@endif
+		 				<a
+							class="openModal btn btn-sm green-meadow round-10"
+							data-toggle="modal"
+							data-target=".ajaxModal"
+							href="{{action('SMS\SMSController@getAjaxIndividualSendSms', array('customerid'=>$customer->id,'mobile_number'=>$sms))}}"
+						>
+		 				SMS</a>
 		 				<a href="{{ url('email/client/'.$customer->id.'?back='.Request::url()) }}" class="btn btn-sm red round-10">Email</a>
 		 			</div>
 		 		</div>
@@ -56,16 +70,16 @@
 					 			<div>
 									<span class="label label-info" style="font-size:9px;">{{$currentClient->type}} Address</span>
 									{{$currentClient->displayHtmlAddress()}}
-									
+
 									<p class="form-control-static text-center">
 										<a href="{{$currentClient->displayGoogleMapLink()}}" target="_blank">show on map</a>
-										| 
+										|
 										<a href="{{$currentClient->displayGoogleMapDirectionLink()}}" target="_blank">get directions</a>
 									</p>
 								</div>
-								
+
 								<hr style="padding:5px;" />
-								
+
 					 			<div class="form-group">
 									@if( $email->count() > 0 )
 										@foreach($email->get() as $mail)
@@ -206,7 +220,7 @@
 								<i class="fa fa-plus"></i> Add new tasks</a>
 							</p>
 								<!-- START TASK LIST -->
-								<ul class="task-list">									
+								<ul class="task-list">
 									@if($tasks['total'] > 0)
 										@foreach($tasks['data'] as $task)
 											<li class="">
@@ -244,13 +258,13 @@
 															</ul>
 														</div>
 													</div>
-												 </div>	
+												 </div>
 												</li>
 											@endforeach
 										@endif
 									</ul>
 							</div>
-						</div>	
+						</div>
 			 		</div>
 		 	</div>
 		 </div>
