@@ -21,3 +21,6 @@
 	</div>
 </div>
 @yield('additonal-pagebar')
+@if(isset($customer))
+	@include($view_path.'.clients.partials.CustomerTagWidget')
+@endif

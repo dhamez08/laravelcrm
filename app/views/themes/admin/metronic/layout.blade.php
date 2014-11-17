@@ -151,16 +151,18 @@
 		<script src="{{$asset_path}}/global/plugins/bootstrap-select/bootstrap-select.min.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/global/plugins/select2/select2.min.js" type="text/javascript"></script>
 		<!-- END PAGE LEVEL SCRIPTS -->
+		
+		<!-- BEGIN PAGE LEVEL PLUGINS -->
+		@if(isset($customer))
 		<script src="{{$asset_path}}/global/plugins/jquery-tags-input/jquery.tagsinput.min.js" type="text/javascript"></script>
-
 		<script src="{{$asset_path}}/pages/scripts/client-profile-link-toggle.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/pages/scripts/portlet-draggable.js"></script>
-		<!-- BEGIN PAGE LEVEL PLUGINS -->
 		<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
 		<script src="{{$asset_path}}/global/plugins/gmaps/gmaps.min.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/pages/scripts/google-maps.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/pages/scripts/client-file-search.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/pages/scripts/media-library.js" type="text/javascript"></script>
+		@endif
 		<!-- END PAGE LEVEL PLUGINS -->
 
 		<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
@@ -255,15 +257,13 @@
 				Metronic.init();
 				Index.init();
 
-				@if(isset($clientId))
-        		profileLink.init(baseURL,'{{\Auth::id()}}','{{$clientId}}');
-        		@endif
-        		PortletDraggable.init();
-        		HandleMapsGoogle.init();
-        		clientFileSearch.init(baseURL);
-
-        		FormFileUpload.init();
-				MediaLibrary.init(baseURL);
+				@if(isset($customer))
+        			profileLink.init(baseURL,'{{\Auth::id()}}','{{$customer->id}}');
+        			PortletDraggable.init();
+        			HandleMapsGoogle.init();
+        			clientFileSearch.init(baseURL);
+        			//FormFileUpload.init();
+				@endif
 			});
 		</script>
 	@show
