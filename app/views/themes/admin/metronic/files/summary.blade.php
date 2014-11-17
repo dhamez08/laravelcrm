@@ -80,6 +80,9 @@
 		<script src="{{$asset_path}}/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
 		<script type="text/javascript" src="{{$asset_path}}/pages/scripts/client.js"></script>
 		<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+		<script>
+			MediaLibrary.init(baseURL);
+		</script>
 		<script id="template-upload" type="text/x-tmpl">
 		{% for (var i=0, file; file=o.files[i]; i++) { %}
 		    <tr class="template-upload fade">

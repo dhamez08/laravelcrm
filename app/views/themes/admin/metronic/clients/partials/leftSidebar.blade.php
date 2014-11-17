@@ -12,7 +12,11 @@
 				<!-- END SIDEBAR TOGGLER BUTTON -->
 			</li>
 			<li class="start active open">
+				@if(isset($customer))
 				<a href="{{url('clients/client-summary/'.$customer->id)}}">
+				@else	
+				<a href="javascript:;">
+				@endif
 				<i class="icon-home"></i>
 				<span class="title">Client Dashboard</span>
 				<span class="selected"></span>

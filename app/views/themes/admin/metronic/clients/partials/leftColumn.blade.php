@@ -63,7 +63,7 @@
 			 			<i class="icon-emoticon-smile"></i>
 			 			Personal Information
 			 	</a>
-			 	<div id="personalinformation" class="collapse-profile-menu">
+			 	<div id="personalinformation" class="collapse-profile-menu hide">
 			 		<div class="row">
 					 	<div class="col-md-12">
 					 		<div class="form-body client-detail">
@@ -131,7 +131,7 @@
 					 </div>
 			 	</div>
 			 	<a href="#family" class="client_menu"><i class="icon-heart"></i>Family</a>
-			 	<div id="family" class="collapse-profile-menu">
+			 	<div id="family" class="collapse-profile-menu hide">
 			 		<div class="row">
 					 	<div class="col-md-12">
 					 		<div class="form-body client-detail">
@@ -188,7 +188,7 @@
 					 </div>
 			 	</div>
 			 	<a href="#customfields" class="client_menu"><i class="icon-note"></i>Custom Fields</a>
-			 	<div id="customfields" class="collapse-profile-menu">
+			 	<div id="customfields" class="collapse-profile-menu hide">
 			 		<div class="row">
 					    <div class="col-md-12">
 					        <div class="form-body client-detail">
@@ -204,7 +204,7 @@
 					 </div>
 			 	</div>
 			 	<a href="#tasklistview" class="client_menu"><i class="icon-list"></i>Tasks</a>
-			 	<div id="tasklistview" class="collapse-profile-menu">
+			 	<div id="tasklistview" class="collapse-profile-menu hide">
 			 		<div class="row">
 						<div class="col-md-12">
 							<p class="text-center">

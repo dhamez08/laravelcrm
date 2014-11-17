@@ -167,17 +167,17 @@
 		<li id="header_task_bar" class="dropdown dropdown-extended dropdown-tasks">
 			<a data-close-others="true" data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle" href="#">
 			<i class="icon-calendar"></i>
-			@if(\CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(((isset($clientId))? $clientId :NULL),\Auth::id())['due']->all > 0)
+			@if(\CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(((isset($clientId))? $clientId :NULL),\Auth::id())['due']->today > 0)
 			 	<span class="badge badge-default">
-			 		{{\CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser()['due']->all}}
+			 		{{\CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser()['due']->today}}
 				</span>	
 			@endif
 			</a>
 			<ul class="dropdown-menu extended tasks">
 				<li>
 					<p>
-						@if(\CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(((isset($clientId))? $clientId :NULL),\Auth::id())['due']->all > 0)
-						 You have {{\CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(((isset($clientId))? $clientId :NULL),\Auth::id())['due']->all}} tasks reminder
+						@if(\CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(((isset($clientId))? $clientId :NULL),\Auth::id())['due']->today > 0)
+						 You have {{\CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(((isset($clientId))? $clientId :NULL),\Auth::id())['due']->today}} tasks reminder
 						@else
 						 You dont have a pending tasks.	
 						@endif
@@ -185,7 +185,7 @@
 				</li>
 				<li>
 					<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: auto;"><ul style="overflow: hidden; width: auto; height: auto;" class="dropdown-menu-list scroller" data-initialized="1">
-						@if(\CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(((isset($clientId))? $clientId :NULL),\Auth::id())['due']->all > 0)
+						@if(\CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(((isset($clientId))? $clientId :NULL),\Auth::id())['due']->today > 0)
 							@foreach(\CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(((isset($clientId))? $clientId :NULL),\Auth::id())['data'] as $dueTasks)
 								@if($dueTasks->isReminded())
 									<li>

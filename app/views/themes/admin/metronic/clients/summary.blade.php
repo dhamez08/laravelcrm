@@ -25,7 +25,7 @@
 		&nbsp;
 	@show
 	@section('innerpage-content')
-		 @include($view_path.'.clients.partials.CustomerTagWidget')
+		 
 		<div class="col-md-3 col-summary">
 			<!-- CLIENT LEFT SIDEBAR -->
 			@if( $customer->type == 2 )

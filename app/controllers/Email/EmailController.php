@@ -91,6 +91,11 @@ class EmailController extends \BaseController {
 
 		$data 						= $this->_getClientData($clientId);
 		$data 						= array_merge($data,$dashboard_data);
+		
+		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser($clientId, \Auth::id());
+		$data['customer_files']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->get();
+		$data['files_count']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->count();
+		
 		$data['client_email'] = "";
 		if($data['customer']->emails()->count() > 0) {
 			$data['client_email'] = $data['customer']->emails()->first()->email;
