@@ -241,7 +241,7 @@
 			{% } %}
 		</script>
 		<!-- dropbox -->
-		<script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="owrn86c4qgdillj"></script>
+		<script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="89e7wicsu91yri4"></script>
 		<!-- dropbox -->
 
 		<script type='text/javascript'>
