@@ -179,7 +179,7 @@ class ClientFileController extends \BaseController {
 		}
 	}
 
-	public function _postAjaxUploadFile($file_id, $customer_id, $page = ""){
+	public function postOnAjaxUploadFile($file_id, $customer_id, $page = ""){
 		$belongs_to = \Auth::id();
 		if( \Input::hasFile('files') ){
 			foreach(\Input::file('files') as $file){

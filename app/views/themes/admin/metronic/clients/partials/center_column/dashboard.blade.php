@@ -39,7 +39,70 @@
 													<div class="cont">
 														<div class="cont-col1">
 															<div class="label label-sm label-info">
-																<i class="fa fa-file-o"></i>
+																<?php
+																$ext = explode(".",$files->filename);
+																$ext = strtolower(trim(end($ext)));
+																$file_type = "file";
+																switch($ext){
+																	case "pdf":
+																		$file_type = "file-pdf";
+																		break;
+																	case "doc":
+																	case "docx":
+																		$file_type = "file-word";
+																		break;
+																	case "png":
+																	case "jpg":
+																	case "jpeg":
+																	case "bmp":
+																	case "gif":
+																	case "tif":
+																		$file_type = "file-image";	
+																		break;
+																	case "ppt":
+																	case "pptx":
+																		$file_type = "file-powerpoint";
+																		break;
+																	case "xls":
+																	case "xlsx":
+																		$file_type = "file-excel";
+																		break;
+																	case "php":
+																	case "js":
+																	case "py":
+																	case "rb":
+																	case "cpp":
+																	case "c":
+																	case "sh":
+																	case "html":
+																	case "css":
+																	case "sass":
+																	case "less":
+																		$file_type = "file-code";
+																		break;
+																	case "mp3":
+																	case "mp4":
+																	case "acc":
+																	case "ogg":
+																		$file_type = "file-sound";
+																		break;	
+																	case "mkv":
+																	case "flv":
+																	case "avi":
+																	case "wmv":	
+																		$file_type = "file-video";
+																		break;	
+																	case "zip":
+																	case "rar":
+																	case "bz":
+																	case "gz":	
+																		$file_type = "file-zip";
+																		break;												
+																	default:
+																		$file_type = "file";		
+																}
+																?>
+																<i class="fa fa-{{$file_type}}-o"></i>
 															</div>
 														</div>
 														<div class="cont-col2">
@@ -257,7 +320,7 @@
 								Form::open(
 									array(
 										'action' => array(
-											'File\ClientFileController@postAjaxUploadFile',
+											'File\ClientFileController@postOnAjaxUploadFile',
 											'file_id'=>1,
 											'customer_id'=>$customer->id,
 											'page' => 'client_summary'
