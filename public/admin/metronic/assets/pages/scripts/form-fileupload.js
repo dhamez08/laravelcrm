@@ -10,6 +10,7 @@ var FormFileUpload = function () {
 					autoUpload: false,
 					disableImageResize: /Android(?!.*Chrome)|Opera/.test(window.navigator.userAgent),
 					maxFileSize: 30000000,
+					limitMultiFileUploads: 10,
 					acceptFileTypes: /(\.|\/)(gif|jpe?g|png|pdf|doc|docx|zip|rar|mpg|mp4|avi|xlsx|xls)$/i
 					// Uncomment the following to send cross-domain cookies:
 					//xhrFields: {withCredentials: true},

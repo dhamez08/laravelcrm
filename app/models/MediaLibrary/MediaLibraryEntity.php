@@ -41,7 +41,7 @@ class MediaLibraryEntity extends \Eloquent{
 	 * */
 	public function displayOptions(){
 		$options = array(
-			'show_files_tab' => true
+			'show_files_tab' => false
 		);
 		return (object)$options;
 	}

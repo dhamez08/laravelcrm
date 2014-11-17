@@ -121,7 +121,65 @@ class ClientFileController extends \BaseController {
 		}
 	}
 
-	public function postAjaxUploadFile($file_id, $customer_id, $page = ""){
+	public function postAjaxAddFileIntegration(){
+		$data = array(
+			'customer_id' => \Input::get('customer_id'),
+			'user_id' => \Auth::id(),
+			'filename' => \Input::get('filename'),
+			'name' => \Input::get('filename'),
+			'type' => \Input::get('file_type'),
+			'integration' => \Input::get('integrate')
+		);
+		\CustomerFiles\CustomerFilesEntity::get_instance()->createOrUpdate($data);
+		return \Response::json(
+			array(
+				'success'=>true,
+				'msg'=>'',
+				'redirect'=>url('file/client-file/' . \Input::get('customer_id')),
+			)
+		);
+		die();
+	}
+
+	public function postAjaxUploadFile($customer_id, $page = ""){
+		$belongs_to = \Auth::id();
+		if( \Input::hasFile('files') ){
+			$file_id = \Input::get('file_type');
+			foreach(\Input::file('files') as $file){
+				$fileName = $this->_doUpload($file);
+				$data = array(
+					'customer_id' => $customer_id,
+					'user_id' => \Auth::id(),
+					'filename' => $fileName,
+					'name' => $file->getClientOriginalName(),
+					'type' => $file_id
+				);
+				\CustomerFiles\CustomerFilesEntity::get_instance()->createOrUpdate($data);
+
+				if(!empty($page) && $page == "client_summary"){
+					return \Response::json(
+						array(
+							'success'=>true,
+							'msg'=>'',
+							'redirect'=>url('clients/client-summary/' . $customer_id),
+						)
+					);
+				}
+
+				return \Response::json(
+					array(
+						'success'=>true,
+						'msg'=>'',
+						'redirect'=>url('file/client-file/' . $customer_id),
+					)
+				);
+			}
+		}else{
+			return \Response::json(array('success'=>false,'msg'=>'Cannot upload, file.'));
+		}
+	}
+
+	public function _postAjaxUploadFile($file_id, $customer_id, $page = ""){
 		$belongs_to = \Auth::id();
 		if( \Input::hasFile('files') ){
 			foreach(\Input::file('files') as $file){
@@ -144,7 +202,7 @@ class ClientFileController extends \BaseController {
 						)
 					);
 				}
-				
+
 				return \Response::json(
 					array(
 						'success'=>true,
@@ -216,7 +274,7 @@ class ClientFileController extends \BaseController {
 		$data 				= array_merge($data,$this->getSetupThemes());
 		return \View::make($data['view_path'] . '.files.partials.media', $data)->render();
 	}
-	
+
 	public function getSearch($client){
 		$input = \Input::get('file_search_value');
 		$sql = \CustomerFiles\CustomerFiles::CustomerFile($client);
@@ -224,13 +282,13 @@ class ClientFileController extends \BaseController {
 			$sql = $sql->where("filename","like","%$input%");
 		}
 		$sql = $sql->orderBy('id','desc')->get();
-		
+
 		return \Response::json($sql);
 	}
-	
+
 	public function getDeleteFileSummary($id, $customerid){
 		$file = \CustomerFiles\CustomerFiles::find($id);
-		
+
 		if( \File::exists(public_path('documents')) ){
 			if( \File::isFile( public_path('documents/' . $file->filename) ) ){
 				\File::delete(public_path('documents/' . $file->filename));

@@ -8,13 +8,12 @@
 			</p>
 		</blockquote>
 		<br>
-		{{var_dump($customer_id)}}
 		{{
 			Form::open(
 				array(
 					'action' => array(
 						'File\ClientFileController@postAjaxUploadFile',
-						'customer_id'=>0
+						'customer_id' => (isset($customer_id)) ? $customer_id:0
 					),
 					'role'=>'form',
 					'files'=> true,
@@ -59,7 +58,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="well">
+			<div class="well" style="height: 200px;overflow: auto;">
 				<h3>You can Drop files here or Click "Add Files"..</h3>
 				<!-- The table listing the files available for upload/download -->
 				<table role="presentation" style="width:auto !important;" class="table table-striped table-responsive clearfix">
@@ -67,6 +66,7 @@
 					</tbody>
 				</table>
 			</div>
+			{{Form::hidden('file_type',null,array('id'=>'file_type'))}}
 		{{Form::close()}}
 	</div>
 </div>

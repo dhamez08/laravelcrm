@@ -53,17 +53,18 @@ class MediaLibraryController extends \BaseController {
 
 	}
 
-	public function getDisplay($customer_id = 0, $belongsToUser = null, $options = array()){
+	public function getDisplay($customer_id = 0, $file_id = 0, $belongsToUser = null, $options = array()){
 		if( is_null($belongsToUser) ){
 			$belongsToUser = \Auth::id();
 		}
-		$dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
-		$data 						= $this->data_view;
-		$belongsTo 					= \Auth::id();
-		$data['options']			= \MediaLibrary\MediaLibraryEntity::get_instance()->displayOptions();
-		$data['customer_id']		= $customer_id;
-		$data['modal']				= $this->_mediaLibraryModal($data);
-		$data 						= array_merge($data,$dashboard_data);
+		$dashboard_data 		= \Dashboard\DashboardController::get_instance()->getSetupThemes();
+		$data 					= $this->data_view;
+		$belongsTo 				= \Auth::id();
+		$data['file_id']		= $file_id;
+		$data['options']		= \MediaLibrary\MediaLibraryEntity::get_instance()->displayOptions();
+		$data['customer_id']	= $customer_id;
+		$data['modal']			= $this->_mediaLibraryModal($data);
+		$data 					= array_merge($data,$dashboard_data);
 		return \View::make( $data['include'] . '.display', $data )->render();
 	}
 
@@ -76,7 +77,7 @@ class MediaLibraryController extends \BaseController {
 	}
 
 	private function _mediaLibraryModal($data){
-		$data['upload']	= $this->_mediaLibraryUpload($data);
+		$data['upload']		= $this->_mediaLibraryUpload($data);
 		$data['dropbox']	= $this->_mediaLibraryDropBox($data);
 		return \View::make( $data['include'] . '.modal.modal', $data )->render();
 	}

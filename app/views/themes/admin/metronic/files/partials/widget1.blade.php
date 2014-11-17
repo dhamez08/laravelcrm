@@ -20,26 +20,14 @@
 		<div class="tab-content">
 			<div class="tab-pane active list_files{{$id}}" id="">
 				<h4>List Files</h4>
+
+				{{\MediaLibrary\MediaLibraryController::get_instance()->getDisplay($customer->id, $id);}}
+
 				@foreach($customerFiles->get()	as $files)
 					@if($files->type == $id)
 						<p>
 							<a href="{{asset('public/documents/' . $files->filename)}}" target="_blank">{{$files->filename}}</a>
-							-
-							{{link_to(
-								'#',
-								$files->name,
-								array(
-									'class'=>'clientFiles editable editable-click',
-									'data-pk'=>$files->id,
-									'data-name'=>'name',
-									'data-type'=>'text',
-									'data-url'=>url('file/ajax-update-name'),
-									'data-title'=>'Update Category',
-								)
-								);
-							}}
-							-
-							<a 	class="btn red btn-sm deleteFile"
+							<a 	class="btn red btn-xs deleteFile"
 								href="{{
 									action(
 										'File\ClientFileController@getDeleteFile',
