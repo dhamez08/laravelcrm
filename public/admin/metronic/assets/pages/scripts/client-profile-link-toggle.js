@@ -1,7 +1,7 @@
 /**
 Custom module to toggle client profile navigation bar
 **/
-var profileLink = function () {
+var profileLink = function () { 
     var handleTagsInput = function (baseURL,clientId,customerId) {
         jQuery.get(baseURL+"/settings/tags/clients/client-tag/"+clientId,function(response){
         	jQuery("#tags_1").select2({
