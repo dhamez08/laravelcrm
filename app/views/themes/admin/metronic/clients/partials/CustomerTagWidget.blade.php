@@ -1,4 +1,4 @@
-<div id="client-tags-dis" class="col-md-12 col-summary client-tags">
+<div id="client-tags-dis" class="col-md-12 col-summary client-tags hide">
 	<p>
 		<i class="icon-tag"></i>
 		<span id="client-profile-tags-list">
@@ -10,7 +10,7 @@
 		</span>
 		<a href="#" id="edit-tags-button">Edit Tags</a>
 	</p>
-	<p id="edit-tags-inputs" class="col-md-12">
+	<p id="edit-tags-inputs" class="col-md-12 hide">
 		<input id="tags_1" type="hidden" class="form-control select2" value="
 			@if(count($tags))
 				@foreach($tags as $tag)

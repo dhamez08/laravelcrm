@@ -256,7 +256,7 @@
 				Index.init();
 
 				@if(isset($clientId))
-        		profileLink.init('{{\Auth::id()}}','{{$clientId}}');
+        		profileLink.init(baseURL,'{{\Auth::id()}}','{{$clientId}}');
         		@endif
         		PortletDraggable.init();
         		HandleMapsGoogle.init();
