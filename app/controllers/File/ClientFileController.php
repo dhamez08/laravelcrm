@@ -127,7 +127,7 @@ class ClientFileController extends \BaseController {
 		$dropbox_base_file_name = basename($dropbox_file);
 		$file = strtolower($dropbox_base_file_name);
 		$file = preg_replace('/\s+/', '_', $file);
-		$rep_array('%20','%28','%27','%29');
+		$rep_array = array('%20','%28','%27','%29');
 		$file = str_replace($rep_array, '_', $file);
 		$new_file_name = \Auth::id() . '_' . $file;
 		$destination = $this->fileFolder . '/' . preg_replace('/\s+/', '_', $new_file_name);
