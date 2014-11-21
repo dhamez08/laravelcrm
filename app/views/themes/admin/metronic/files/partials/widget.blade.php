@@ -22,11 +22,7 @@
 				@foreach($customerFiles->get()	as $files)
 					@if($files->type == $id)
 						<p>
-							@if( $files->integration == '' )
-								<a href="{{asset('public/documents/' . $files->filename)}}" target="_blank">{{$files->filename}}</a>
-							@else
-								<a href="{{$files->filename}}" target="_blank">{{$files->filename}}</a>
-							@endif
+							<a href="{{asset('public/documents/' . $files->filename)}}" target="_blank">{{$files->filename}}</a>
 							<a 	class="btn red btn-xs deleteFile"
 								href="{{
 									action(
