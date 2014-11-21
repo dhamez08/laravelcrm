@@ -129,7 +129,7 @@ class ClientFileController extends \BaseController {
 		$new_file_name = \Auth::id() . '_' . $file;
 		$destination = $this->fileFolder . '/' . \Auth::id() . '_' . $new_file_name;
 
-		\CustomerFiles\CustomerFilesEntity::get_instance()->copyRemoteFile($file_name, $destination);
+		\CustomerFiles\CustomerFilesEntity::get_instance()->copyRemoteFile(\Input::get('filename'), $destination);
 
 		// save file
 		$data = array(
