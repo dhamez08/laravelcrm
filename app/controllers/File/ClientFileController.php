@@ -125,9 +125,9 @@ class ClientFileController extends \BaseController {
 		// copy file from file integration
 		$file_name = basename(\Input::get('filename'));
 		$file_name_parts = parse_url($file_name);
-		$file = str_replace(' ','_',strtolower($file_name_parts['path']));
+		$file = strtolower($file_name_parts['path']);
 		$new_file_name = \Auth::id() . '_' . $file;
-		$destination = $this->fileFolder . '/' . \Auth::id() . '_' . $new_file_name;
+		$destination = $this->fileFolder . '/' . preg_replace('/\s+/', '_', $new_file_name);
 
 		\CustomerFiles\CustomerFilesEntity::get_instance()->copyRemoteFile(\Input::get('filename'), $destination);
 
