@@ -77,11 +77,11 @@ class CustomerFilesEntity extends \Eloquent{
 	}
 
 
-	public function copyRemoteFile($remote_file, $destination){
+	public function _copyRemoteFile($remote_file, $destination){
 		copy($remote_file, $destination);
 	}
 
-	public function _copyRemoteFile($remote_file, $destination){
+	public function copyRemoteFile($remote_file, $destination){
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $remote_file);
 		curl_setopt($ch, CURLOPT_HEADER, 0);

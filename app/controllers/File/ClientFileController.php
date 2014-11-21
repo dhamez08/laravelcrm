@@ -123,13 +123,13 @@ class ClientFileController extends \BaseController {
 
 	public function postAjaxAddFileIntegration(){
 		// copy file from file integration
-		$file_name = basename(\Input::get('filename'));
-		$file_name_parts = parse_url($file_name);
-		$file = strtolower($file_name_parts['path']);
+		$dropbox_file = \Input::get('filename');
+		$dropbox_base_file_name = basename($dropbox_file);
+		$file = strtolower($dropbox_base_file_name);
 		$new_file_name = \Auth::id() . '_' . $file;
 		$destination = $this->fileFolder . '/' . preg_replace('/\s+/', '_', $new_file_name);
 
-		\CustomerFiles\CustomerFilesEntity::get_instance()->copyRemoteFile(\Input::get('filename'), $destination);
+		\CustomerFiles\CustomerFilesEntity::get_instance()->copyRemoteFile($dropbox_file, $destination);
 
 		// save file
 		$data = array(
