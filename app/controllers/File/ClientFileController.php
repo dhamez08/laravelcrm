@@ -92,7 +92,7 @@ class ClientFileController extends \BaseController {
 		$data['file6']				= \Auth::user()->files_6;
 		$data['customerId']			= $clientId;
 		$data['belongsTo']			= \Auth::id();
-		$data['customerFiles']		= \CustomerFiles\CustomerFiles::customerFile($clientId);
+		$data['customerFiles']		= \CustomerFiles\CustomerFiles::customerFile($clientId)->orderBy('created_at', 'desc');
 		$data['clientId']			= $clientId;
 		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser($data['customerId'], $data['belongsTo']);
 		$data['files_count']		= \CustomerFiles\CustomerFiles::CustomerFile($data['clientId'])->count();
@@ -154,7 +154,7 @@ class ClientFileController extends \BaseController {
 		die();
 	}
 
-	public function postAjaxUploadFile($customer_id, $page = ""){
+	public function postAjaxUploadFile($file_type, $customer_id, $page = ""){
 		$belongs_to = \Auth::id();
 		if( \Input::hasFile('files') ){
 			$file_id = \Input::get('file_type');
@@ -165,7 +165,7 @@ class ClientFileController extends \BaseController {
 					'user_id' => \Auth::id(),
 					'filename' => $fileName,
 					'name' => $file->getClientOriginalName(),
-					'type' => $file_id
+					'type' => $file_type
 				);
 				\CustomerFiles\CustomerFilesEntity::get_instance()->createOrUpdate($data);
 

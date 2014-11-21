@@ -59,7 +59,7 @@ class CustomerFilesEntity extends \Eloquent{
 		return $this
 				->where('customer_id', $client_id)
 				->whereNull('deleted_at')
-				->orderBy('created_at')
+				->orderBy('created_at', 'desc')
 				->get();
 	}
 

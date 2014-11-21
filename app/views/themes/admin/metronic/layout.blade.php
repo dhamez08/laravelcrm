@@ -151,7 +151,7 @@
 		<script src="{{$asset_path}}/global/plugins/bootstrap-select/bootstrap-select.min.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/global/plugins/select2/select2.min.js" type="text/javascript"></script>
 		<!-- END PAGE LEVEL SCRIPTS -->
-		
+
 		<!-- BEGIN PAGE LEVEL PLUGINS -->
 		@if(isset($customer))
 		<script src="{{$asset_path}}/global/plugins/jquery-tags-input/jquery.tagsinput.min.js" type="text/javascript"></script>
@@ -162,6 +162,7 @@
 		<script src="{{$asset_path}}/pages/scripts/google-maps.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/pages/scripts/client-file-search.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/pages/scripts/media-library.js" type="text/javascript"></script>
+		<script src="{{$asset_path}}/pages/scripts/dropbox-file.js" type="text/javascript"></script>
 		@endif
 		<!-- END PAGE LEVEL PLUGINS -->
 
@@ -173,16 +174,8 @@
 					<span class="preview"></span>
 				</td>
 				<td>
-					<p class="name">{%=file.name%}</p>
+					<p class="name">{%=file.name.slice(0,7)%}...</p>
 					<strong class="error text-danger label label-danger"></strong>
-				</td>
-				<td>
-					<p class="size">Processing...</p>
-					<div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-					<div class="progress-bar progress-bar-success" style="width:0%;"></div>
-					</div>
-				</td>
-				<td>
 					{% if (!i && !o.options.autoUpload) { %}
 						<button class="btn btn-sm blue start" disabled>
 							<i class="fa fa-upload"></i>
@@ -196,51 +189,18 @@
 						</button>
 					{% } %}
 				</td>
+				<td>
+					<p class="size">Processing...</p>
+					<div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+					<div class="progress-bar progress-bar-success" style="width:0%;"></div>
+					</div>
+				</td>
 			</tr>
 		{% } %}
 		</script>
 		<!-- The template to display files available for download -->
 		<script id="template-download" type="text/x-tmpl">
-			{% for (var i=0, file; file=o.files[i]; i++) { %}
-				<tr class="template-download fade">
-					<td>
-						<span class="preview">
-							{% if (file.thumbnailUrl) { %}
-								<a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
-							{% } %}
-						</span>
-					</td>
-					<td>
-						<p class="name">
-							{% if (file.url) { %}
-								<a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
-							{% } else { %}
-								<span>{%=file.name%}</span>
-							{% } %}
-						</p>
-						{% if (file.error) { %}
-							<div><span class="label label-danger">Error</span> {%=file.error%}</div>
-						{% } %}
-					</td>
-					<td>
-						<span class="size">{%=o.formatFileSize(file.size)%}</span>
-					</td>
-					<td>
-						{% if (file.deleteUrl) { %}
-							<button class="btn red delete btn-sm" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
-								<i class="fa fa-trash-o"></i>
-								<span>Delete</span>
-							</button>
-							<input type="checkbox" name="delete" value="1" class="toggle">
-						{% } else { %}
-							<button class="btn yellow cancel btn-sm">
-								<i class="fa fa-ban"></i>
-								<span>Cancel</span>
-							</button>
-						{% } %}
-					</td>
-				</tr>
-			{% } %}
+
 		</script>
 		<!-- dropbox -->
 		<script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="89e7wicsu91yri4"></script>
@@ -264,6 +224,12 @@
         			clientFileSearch.init(baseURL);
         			//FormFileUpload.init();
 				@endif
+				jQuery('.list_files_widget').slimScroll({
+					height:'550px'
+				});
+				jQuery('.file_upload_container').slimScroll({
+					height:'300px'
+				});
 			});
 		</script>
 	@show
