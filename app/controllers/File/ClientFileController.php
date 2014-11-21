@@ -122,15 +122,22 @@ class ClientFileController extends \BaseController {
 	}
 
 	public function postAjaxAddFileIntegration(){
+		// copy file from file integration
+		$file_name = basename(\Input::get('filename'));
+		$destination = $this->fileFolder . '/' . \Auth::id() . '_'. $file_name;
+		\CustomerFiles\CustomerFilesEntity::get_instance()->copyRemoteFile($file_name, $destination);
+
+		// save file
 		$data = array(
 			'customer_id' => \Input::get('customer_id'),
 			'user_id' => \Auth::id(),
 			'filename' => \Input::get('filename'),
-			'name' => \Input::get('filename'),
+			'name' => basename(\Input::get('filename')),
 			'type' => \Input::get('file_type'),
 			'integration' => \Input::get('integrate')
 		);
 		\CustomerFiles\CustomerFilesEntity::get_instance()->createOrUpdate($data);
+
 		return \Response::json(
 			array(
 				'success'=>true,

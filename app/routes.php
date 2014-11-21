@@ -10,6 +10,7 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+echo public_path();exit();
 Route::get( '/' , 'HomeController@getIndex' );
 Route::get('medialibrary', function()
 {

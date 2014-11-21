@@ -64,7 +64,7 @@ class CustomerFilesEntity extends \Eloquent{
 	}
 
 	public function saveFormDataFromCustomTab() {
-		
+
 		$form = new $this;
 
 		$form->customer_id = \Input::get('customer_id');
@@ -74,6 +74,33 @@ class CustomerFilesEntity extends \Eloquent{
 		$form->save();
 
 		return $form;
+	}
+
+	public function copyRemoteFile($remote_file, $destination){
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+
+		$data = curl_exec($ch);
+		curl_close($ch);
+
+		if ($data) {
+			$fp = fopen($destination, 'wb');
+
+			if ($fp) {
+				fwrite($fp, $data);
+				fclose($fp);
+			} else {
+				fclose($fp);
+				return false;
+			}
+		} else {
+			return false;
+		}
+
+		return true;
 	}
 
 }
