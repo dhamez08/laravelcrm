@@ -1,7 +1,7 @@
 var HandleMapsGoogle = function () {
 	var mapGoogleGeocoding = function () {
         var text = $.trim($('#gmap_geocoding_address').val());
-        
+
         var map = new GMaps({
             div: '#gmap_geocoding',
             zoom: 16,
@@ -19,14 +19,13 @@ var HandleMapsGoogle = function () {
                         lat: latlng.lat(),
                         lng: latlng.lng()
                     });
-                    Metronic.scrollTo($('#gmap_geocoding'));
                 }
             }
         });
-        
+
 
    };
-   
+
 	return {
 		init: function(){
 			mapGoogleGeocoding();

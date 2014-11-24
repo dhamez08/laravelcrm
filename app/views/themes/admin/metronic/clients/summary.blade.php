@@ -25,8 +25,8 @@
 		&nbsp;
 	@show
 	@section('innerpage-content')
-		 
-		<div class="col-md-3 col-summary">
+
+		<div class="col-md-2 col-summary">
 			<!-- CLIENT LEFT SIDEBAR -->
 			@if( $customer->type == 2 )
 				@include($view_path.'.clients.company.leftColumn')
@@ -36,7 +36,7 @@
 
 			<!-- END CLIENT LEFT SIDEBAR -->
 		</div>
-		<div class="col-md-9 col-summary">
+		<div class="col-md-10 col-summary">
 			<!-- CENTER COLUMN -->
 			@include($view_path.'.clients.partials.center_column.'.$center_column_view)
 			<!-- END CENTER COLUMN -->
@@ -48,7 +48,7 @@
 	@parent
 	@section('footer-custom-js')
 	@parent
-	
+
 <!-- BEGIN:File Upload Plugin JS files-->
 		<!-- The Templates plugin is included to render the upload/download listings -->
 		<script src="{{$asset_path}}/global/plugins/jquery-file-upload/js/vendor/tmpl.min.js"></script>
@@ -77,13 +77,13 @@
 
 		<script src="{{$asset_path}}/pages/scripts/form-fileupload.js"></script>
 		<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
-	
-	
+
+
 		<script src="{{$asset_path}}/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
 		<script type="text/javascript" src="{{$asset_path}}/pages/scripts/client.js"></script>
 		<script type="text/javascript" src="{{$asset_path}}/pages/scripts/notes.js"></script>
 
-		<script> 
+		<script>
         jQuery(document).ready(function() {
         	deletePhone.init();
         	deleteURL.init();

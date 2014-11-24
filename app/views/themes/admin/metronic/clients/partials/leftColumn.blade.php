@@ -11,8 +11,10 @@
 				</a>
 			</div>
 		 	<div class="col-md-12 summary-profile-pic text-center">
-		 		<img src="{{$asset_path . '/pages/media/profile/profile.jpg'}}" alt="profile pic" class="profilePic round-50"/>
-		 	</div>
+				<a href="#" data-target=".socialProfile" data-toggle="modal" class="openModal">
+		 			<img src="{{$asset_path . '/pages/media/profile/profile.jpg'}}" alt="profile pic" class="profilePic round-50"/>
+				</a>
+			</div>
 		 	<div class="col-md-12">
 		 		<div class="description">
 			 		<p>{{$currentClient->displayCustomerName()}}</p>
@@ -308,7 +310,13 @@
 										{{$urls->url}}
 									@else
 										<i class="fa fa-{{strtolower(trim($urls->website,'+'))}}"></i>
-										{{preg_replace("/([A-Za-z0-9]\.|)[A-Za-z0-9]+?\.([A-Za-z0-9]{3})/",".",$urls->url)}}
+										{{--preg_replace("/([A-Za-z0-9]\.|)[A-Za-z0-9]+?\.([A-Za-z0-9]{3})/","",str_ireplace("/posts","",$urls->url))--}}
+										@if(strtolower(trim($urls->website,'+')) == 'twitter')
+											{{'@'.trim(str_ireplace("/","",strrchr(str_ireplace("/posts","",$urls->url),"/")))}}
+										@else
+											{{trim(str_ireplace("/","",strrchr(str_ireplace("/posts","",$urls->url),"/")))}}
+										@endif
+
 									@endif
 								</a></li>
 							@endif
@@ -326,6 +334,33 @@
 			<div class="col-md-12">
 				<input type="hidden" id="gmap_geocoding_address" value="{{$currentClient->displayCurrentAddress()}}" />
 				<div id="gmap_geocoding" class="gmaps"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--Profile Model-->
+<div class="modal fade socialProfile ajaxModal" tabindex="-1" role="dialog" aria-labelledby="socialProfile" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title" id="ModalLabel">{{$currentClient->displayCustomerName()}}</h4>
+			</div>
+			<div class="modal-body">
+					TODO://Client Could Select Which Profile Picture he want to use
+					<div class="row">
+						@for($pic=0;$pic<10;$pic++)
+						<div class="col-sm-2 col-md-2 col-lg-2">
+							<a href="#" class="thumbnail">
+								<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4OSIgaGVpZ2h0PSIxODAiPjxyZWN0IHdpZHRoPSI4OSIgaGVpZ2h0PSIxODAiIGZpbGw9IiNlZWUiLz48dGV4dCB0ZXh0LWFuY2hvcj0ibWlkZGxlIiB4PSI0NC41IiB5PSI5MCIgc3R5bGU9ImZpbGw6I2FhYTtmb250LXdlaWdodDpib2xkO2ZvbnQtc2l6ZToxMnB4O2ZvbnQtZmFtaWx5OkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmO2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjg5eDE4MDwvdGV4dD48L3N2Zz4=" alt="100%x60" style="height: 60px; width: 100%; display: block;" data-src="holder.js/100%x60">
+							</a>
+						</div>
+						@endfor
+					</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
 	</div>
