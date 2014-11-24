@@ -29,7 +29,7 @@ $env = $app->detectEnvironment(array(
 	'local' => array('homestead','allanpc-System-Product-Name','allan-R439'),
 	'richard_local' => array('precise32'),
 	'elias_local' => array('mamalias23-PC','elias-mamalias'),
-	'dick_local' => array('BrixBrianLagz','BrixBrianLanz')
+	'dick_local' => array('BrixBrianLagz','BrixBrianLanz','BrixBrianLague')
 
 ));
 
