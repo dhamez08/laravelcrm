@@ -19,7 +19,7 @@ var DropBoxIntegrationFile = function() {
 		});
 
 		request.done(function( msg ) {
-		   if (typeof msg.redirect != 'undefined') {
+		   if (msg.success) {
 				window.location.href = msg.redirect;
 			}
 		});
