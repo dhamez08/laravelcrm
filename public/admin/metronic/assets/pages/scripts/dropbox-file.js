@@ -19,7 +19,8 @@ var DropBoxIntegrationFile = function() {
 		});
 
 		request.done(function( msg ) {
-		   if (msg.success) {
+			console.log(msg.success);
+			if (msg.success) {
 				window.location.href = msg.redirect;
 			}
 		});
