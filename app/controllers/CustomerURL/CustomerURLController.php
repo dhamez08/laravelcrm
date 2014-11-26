@@ -78,8 +78,14 @@ class CustomerURLController extends \BaseController {
 			)
 		);
 		if( is_null($id) ){
+			if($website == "Facebook"){
+				$image = \CustomerProfileImages\CustomerProfileImagesEntity::get_instance()->createOrUpdateFacebook();
+			}
 			return \CustomerUrl\CustomerUrlEntity::get_instance()->createOrUpdate();
 		}else{
+			if($website == "Facebook"){
+				$image = \CustomerProfileImages\CustomerProfileImagesEntity::get_instance()->createOrUpdateFacebook($id);
+			}
 			return \CustomerUrl\CustomerUrlEntity::get_instance()->createOrUpdate($id);
 		}
 
@@ -99,7 +105,7 @@ class CustomerURLController extends \BaseController {
 	* @return 	false | eloquent resource 	if $arrayInput is zero,
 	*										else return as eloquent resource
 	*/
-	public function iterateURLInput( 
+	public function iterateURLInput(
 		$arrayInput ,
 		$clientId
 	){
@@ -116,7 +122,7 @@ class CustomerURLController extends \BaseController {
 				}
 			}
 		}else{
-			return false;			
+			return false;
 		}
 	}
 

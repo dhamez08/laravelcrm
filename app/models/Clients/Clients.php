@@ -22,6 +22,7 @@ class Clients extends \Eloquent{
 		'last_name',
 		'title',
 		'company_name',
+		'profile_image'
 	);
 
 	public function address(){

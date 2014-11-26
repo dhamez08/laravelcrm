@@ -13,9 +13,9 @@
 		 	<div class="col-md-12 summary-profile-pic text-center">
 				<a href="#" data-target=".socialProfile" data-toggle="modal" class="openModal">
 					@if($customer->profile_image > 0)
-		 				<img src="{{$profileImg->where('id',$customer->profile_image)->first()->image}}" alt="profile pic" class="profilePic round-50"/>
+		 				<img id="main-profile-pic" src="{{$profileImg->where('id',$customer->profile_image)->first()->image}}" alt="profile pic" class="profilePic round-50"/>
 					@else
-						<img src="{{url('public/img/profile_images/profile.jpg')}}" alt="profile pic" class="profilePic round-50"/>
+						<img id="main-profile-pic" src="{{url('public/img/profile_images/profile.jpg')}}" alt="profile pic" class="profilePic round-50"/>
 					@endif
 				</a>
 			</div>

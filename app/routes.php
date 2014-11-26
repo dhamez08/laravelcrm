@@ -23,6 +23,7 @@ Route::controller( 'register' , 'RegisterController' );
 Route::get( 'marketing/sms-receipt' , 'Marketing\MarketingController@getSmsReceipt' );
 Route::group(array('before' => 'auth'), function()
 {
+	Route::controller( 'clientprofile' , 'ClientProfilePhoto\ClientProfilePhotoController');
 	Route::controller( 'clients' , 'Clients\ClientsController');
 	Route::controller( 'profile' , 'Profile\ProfileController' );
 	Route::controller( 'document-library' , 'DocumentLibraries\DocumentLibrariesController' );

@@ -170,7 +170,7 @@
 			@if(\CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(((isset($clientId))? $clientId :NULL),\Auth::id())['due']->today > 0)
 			 	<span class="badge badge-default">
 			 		{{\CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser()['due']->today}}
-				</span>	
+				</span>
 			@endif
 			</a>
 			<ul class="dropdown-menu extended tasks">
@@ -179,7 +179,7 @@
 						@if(\CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(((isset($clientId))? $clientId :NULL),\Auth::id())['due']->today > 0)
 						 You have {{\CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(((isset($clientId))? $clientId :NULL),\Auth::id())['due']->today}} tasks reminder
 						@else
-						 You dont have a pending tasks.	
+						 You dont have a pending tasks.
 						@endif
 					</p>
 				</li>
@@ -191,7 +191,7 @@
 									<li>
 										<a class="openModal" data-toggle="modal" data-target=".ajaxModal" href="{{action('Task\TaskController@getEditClientTask',array('id'=>$dueTasks->id,'customerid'=>$dueTasks->customer_id,'redirect'=>'task'))}}">
 										<span class="task">
-											<span class="desc">	
+											<span class="desc">
 												{{$dueTasks->displayHtmlTaskDue()}}
 												{{$dueTasks->displayHtmlLabelIcon()}}
 												<br />
@@ -218,9 +218,16 @@
 		<!-- BEGIN USER LOGIN DROPDOWN -->
 		<li class="dropdown dropdown-user">
 			<a data-close-others="true" data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle" href="#">
-			<img src="../../assets/admin/layout/img/avatar3_small.jpg" class="img-circle" alt="">
+
+			@if(isset($customer) && $customer->profile_image > 0)
+				<img src="{{\CustomerProfileImages\CustomerProfileImages::where('id',$customer->profile_image)->first()->image}}" alt="Avatar" class="img-circle round-50"/>
+			@else
+				<img src="{{url('public/img/profile_images/profile.jpg')}}" alt="Avatar" class="img-circle round-50"/>
+			@endif
+
 			<span class="username username-hide-on-mobile">
-			Bob </span>
+				{{isset($currentClient) ? $currentClient->displayCustomerName(): 'Bob'}}
+			</span>
 			<i class="fa fa-angle-down"></i>
 			</a>
 			<ul class="dropdown-menu">
