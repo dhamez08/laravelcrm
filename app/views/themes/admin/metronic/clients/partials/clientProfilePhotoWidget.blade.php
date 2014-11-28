@@ -17,7 +17,7 @@
             </a>
           </div>
           @if(isset($customer))
-            <?php $photo = \CustomerProfileImages\CustomerProfileImages::find($customer->id); ?>
+            <?php $photo = \CustomerProfileImages\CustomerProfileImages::where('customer_id','=',$customer->id); ?>
             @if($photo->count() > 0)
               @foreach($photo->get() as $pics)
                 <div style="width:100px;height:100px;min-width:100px;min-height:100px;max-width:100px;max-height:100px;float:left;">
