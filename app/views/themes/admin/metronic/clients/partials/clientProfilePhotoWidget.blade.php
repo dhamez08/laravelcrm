@@ -17,14 +17,16 @@
             </a>
           </div>
           @if(isset($customer))
-            <?php $photo = \CustomerProfileImages\CustomerProfileImages::find($customer->id)->get(); ?>
-            @foreach($photo as $pics)
-            <div style="width:100px;height:100px;min-width:100px;min-height:100px;max-width:100px;max-height:100px;float:left;">
-              <a href="#" class="thumbnail photo-select" data-photo-id="{{$pics->id}}">
-                <img src="{{$pics->image}}" title="" alt="" />
-              </a>
-            </div>
-            @endforeach
+            <?php $photo = \CustomerProfileImages\CustomerProfileImages::find($customer->id); ?>
+            @if($photo->count() > 0)
+              @foreach($photo->get() as $pics)
+                <div style="width:100px;height:100px;min-width:100px;min-height:100px;max-width:100px;max-height:100px;float:left;">
+                  <a href="#" class="thumbnail photo-select" data-photo-id="{{$pics->id}}">
+                    <img src="{{$pics->image}}" title="" alt="" />
+                  </a>
+                </div>
+              @endforeach
+            @endif
           @endif
         </div>
         <hr >
