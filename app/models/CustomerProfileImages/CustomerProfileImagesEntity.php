@@ -52,15 +52,6 @@ class CustomerProfileImagesEntity extends \Eloquent{
 
 	public function createOrUpdateFacebook($id = null){
 		try{
-			if( is_null($id) ) {
-				//create
-				$obj = new \CustomerProfileImages\CustomerProfileImages;
-			}else{
-				//update
-				$obj = \CustomerProfileImages\CustomerProfileImages::find($id);
-			}
-			$obj->customer_id = \Input::get('customer_id',\Auth::id());
-
 			$url = \Input::get('url','');
 			$username = trim(str_ireplace("/","",strrchr(str_ireplace("/posts","",$url),"/")));
 			if(is_numeric($username)){
@@ -74,6 +65,16 @@ class CustomerProfileImagesEntity extends \Eloquent{
 				$photo_200 = $this->_get_content("https://graph.facebook.com/v2.2/".$account_id."/picture?redirect=0&height=200&type=normal&width=200");
 				$photo_100 = $this->_get_content("https://graph.facebook.com/v2.2/".$account_id."/picture?redirect=0&height=100&type=normal&width=100");
 
+				$check = \CustomerProfileImages\CustomerProfileImages::where('reference_id','=',$account_id)->first();
+				if( count($check) <= 0) {
+					//create
+					$obj = new \CustomerProfileImages\CustomerProfileImages;
+				}else{
+					//update
+					$obj = \CustomerProfileImages\CustomerProfileImages::find($check->id);
+				}
+
+				$obj->customer_id = \Input::get('customer_id');
 				$obj->reference_name = "facebook";
 				$obj->reference_id = $account_id;
 				$obj->image = $photo_200['data']['url'];

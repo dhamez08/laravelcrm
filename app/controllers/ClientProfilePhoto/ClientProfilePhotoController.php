@@ -68,16 +68,16 @@ class ClientProfilePhotoController extends \BaseController {
       if ($photo->isValid())
       {
         $photo->move($distination, $filename);
-        $save = new \CustomerProfileImages\CustomerProfileImages();
-        $save->customer_id = $customer;
-        $save->image = asset('public/img/profile_images/'.$filename);
-        $save->reference_id = $customer;
-        $save->reference_name = 'site';
-        $save->image_thumbnails = asset('public/img/profile_images/'.$filename);
-        if($save->save()){
-          $change = \Clients\Clients::find($customer);
-          $change->profile_image = $save->id;
-          $change->save();
+        $savephoto = new \CustomerProfileImages\CustomerProfileImages();
+        $savephoto->customer_id = $customer;
+        $savephoto->image = asset('public/img/profile_images/'.$filename);
+        $savephoto->reference_id = $customer;
+        $savephoto->reference_name = 'site';
+        $savephoto->image_thumbnails = asset('public/img/profile_images/'.$filename);
+        if($savephoto->save()){
+          $changephoto = \Clients\Clients::find($customer);
+          $changephoto->profile_image = $savephoto->id;
+          $changephoto->save();
         }
       }
       \Session::flash('message', 'Profile Photo was successfully uploaded.');

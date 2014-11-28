@@ -77,6 +77,7 @@ class CustomerURLController extends \BaseController {
 				'type'=>$type,
 			)
 		);
+
 		if( is_null($id) ){
 			if($website == "Facebook"){
 				$image = \CustomerProfileImages\CustomerProfileImagesEntity::get_instance()->createOrUpdateFacebook();

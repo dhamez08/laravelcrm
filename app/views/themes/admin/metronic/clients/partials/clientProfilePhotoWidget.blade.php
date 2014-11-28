@@ -35,6 +35,7 @@
             <form action="{{url('clientprofile/upload')}}" method="POST" enctype="multipart/form-data">
               {{Form::token()}}
               <input type="hidden" name="url" value="{{\Request::url()}}" />
+              <input type="hidden" name="customer_id" value="{{isset($customer) ? $customer->id : \Auth::id()}}" />
               <div class="fileinput fileinput-new" data-provides="fileinput">
                 <div class="fileinput-new thumbnail" style="width: 100px; height: 100px;">
                   <img src="http://www.placehold.it/100x100/EFEFEF/AAAAAA&amp;text=no+image" alt=""/>
@@ -48,7 +49,7 @@
                     <input type="file" name="profile-photo-upload-file">
                   </span>
                   <a href="#" class="small btn red fileinput-exists" data-dismiss="fileinput">Remove</a>
-                  <input type="submit" class="small btn green fileinput-exists" name="save" value="Save Profile Pcture">
+                  <input type="submit" class="small btn green fileinput-exists" name="save" value="Save Profile Picture">
                 </div>
               </div>
               <div class="clearfix margin-top-10">
