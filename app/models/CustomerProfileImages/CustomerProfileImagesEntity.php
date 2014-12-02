@@ -91,6 +91,47 @@ class CustomerProfileImagesEntity extends \Eloquent{
 		}
 	}
 
+	public function createOrUpdateTwitter($id = null){
+		try{
+			$url = \Input::get('url','');
+			$username = trim(str_ireplace("/","",strrchr(str_ireplace("/posts","",$url),"/")));
+			if(is_numeric($username)){
+				$account_id = $username;
+			} else {
+				$account = \Twitter\Twitter::get_instance()->getProfile($username);
+				$account_id = (isset($account->id)) ? $account->id : '';
+			}
+
+			if(!empty($account_id) || trim($account_id) != ''){
+				$photo_200 = str_ireplace("_normal","",$account->profile_image_url);
+				$photo_100 = $account->profile_image_url;
+
+				$check = \CustomerProfileImages\CustomerProfileImages::where('reference_id','=',$account_id)->first();
+				if( count($check) <= 0) {
+					//create
+					$obj = new \CustomerProfileImages\CustomerProfileImages;
+				}else{
+					//update
+					$obj = \CustomerProfileImages\CustomerProfileImages::find($check->id);
+				}
+
+				$obj->customer_id = \Input::get('customer_id');
+				$obj->reference_name = "twitter";
+				$obj->reference_id = $account_id;
+				$obj->image = $photo_200;
+				$obj->image_thumbnails = $photo_100;
+
+				$obj->save();
+
+				return $obj;
+			} else {
+				return -1;
+			}
+		} catch(Exception $e){
+			return -1;
+		}
+	}
+
 	protected function _get_content($url){
 
 		$ch = curl_init();

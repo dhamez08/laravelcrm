@@ -118,7 +118,7 @@ div.sendemail {
 
 .profile-social-links{
 	list-style: none;
-	padding: 0px !important; 
+	padding: 0px !important;
 }
 
 .client-detail p{
@@ -133,7 +133,7 @@ div.sendemail {
 
 p.form-control-static:first-child{
 	margin-top: 0px !important;
-	padding-top: 0px !important; 
+	padding-top: 0px !important;
 }
 
 .client-tags i{
@@ -173,7 +173,7 @@ div.tagsinput span.tag {
 	left: 1px !important;
 }
 #edit-tags-inputs .select2-container .select2-choices .select2-search-choice div{
-	margin-left: 5px !important;	
+	margin-left: 5px !important;
 }
 #edit-tags-inputs .select2-container .select2-choices .select2-search-choice{
 	border: 1px solid #a5d24a !important;
@@ -186,7 +186,7 @@ div.tagsinput span.tag {
 }
 
 #client-profile-tags-list {
-	
+
 }
 
 .hide-in{
@@ -204,7 +204,7 @@ div.tagsinput span.tag {
 }
 
 #tasklistview ul li{
-	border-bottom: 1px solid #dddddd;	
+	border-bottom: 1px solid #dddddd;
 	padding: 4px 3px;
 }
 
@@ -216,4 +216,13 @@ div.tagsinput span.tag {
 
 #client-tags-dis{
 	margin-top:15px;
+}
+
+#twitter ul.feeds blockquote.twitter-tweet{
+	width: 100% !important;
+	font-size: 12px !important;
+}
+
+#twitter p.e-entry-title{
+	font-size: 12px;
 }

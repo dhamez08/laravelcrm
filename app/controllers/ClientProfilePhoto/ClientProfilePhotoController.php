@@ -83,5 +83,4 @@ class ClientProfilePhotoController extends \BaseController {
       \Session::flash('message', 'Profile Photo was successfully uploaded.');
       return \Redirect::to($url);
     }
-
 }

@@ -1,12 +1,12 @@
 <div class="col-md-12">
-	<div class="row" id="sortable_portlets">
-		<div class="col-md-6 column sortable">
+	<div class="row" id="portlets">
+		<div class="col-md-6 column">
 			<!-- BEGIN TASKS -->
 			{{\Task\TaskController::get_instance()->getWidgetDisplay($customerId,$belongsTo)}}
 			<!-- END TASKS -->
 
 			<!-- BEGIN FILE -->
-			<div class="portlet portlet-sortable light bordered">
+			<div class="portlet light bordered">
 				<div class="portlet-title tabbable-line">
 					<div class="caption font-green-sharp">
 						<i class="icon-doc font-green-sharp"></i>
@@ -57,7 +57,7 @@
 																	case "bmp":
 																	case "gif":
 																	case "tif":
-																		$file_type = "file-image";	
+																		$file_type = "file-image";
 																		break;
 																	case "ppt":
 																	case "pptx":
@@ -85,21 +85,21 @@
 																	case "acc":
 																	case "ogg":
 																		$file_type = "file-sound";
-																		break;	
+																		break;
 																	case "mkv":
 																	case "flv":
 																	case "avi":
-																	case "wmv":	
+																	case "wmv":
 																		$file_type = "file-video";
-																		break;	
+																		break;
 																	case "zip":
 																	case "rar":
 																	case "bz":
-																	case "gz":	
+																	case "gz":
 																		$file_type = "file-zip";
-																		break;												
+																		break;
 																	default:
-																		$file_type = "file";		
+																		$file_type = "file";
 																}
 																?>
 																<i class="fa fa-{{$file_type}}-o"></i>
@@ -121,7 +121,7 @@
 																		'customerid'=>$files->customer_id
 																	)
 																)
-															}}" 
+															}}"
 														class="pull-right" title="Delete File {{$files->filename}}"><i class="icon-trash"></i> </a>
 												</div>
 											</li>
@@ -163,7 +163,7 @@
 								<ul class="feeds" id="filesearchfeed"></ul>
 							</div>
 						</div>
-					</div>	
+					</div>
 				</div>
 				<div class="portlet-footer">
 					<a href="{{url('file/client-file/'.$customer->id)}}" class="pull-right">See all Files <i class="icon-arrow-right"></i></a>
@@ -172,9 +172,6 @@
 			</div>
 			<!-- END FILE -->
 
-			<!-- empty sortable porlet required for each columns! -->
-			<div class="portlet portlet-sortable-empty">
-			</div>
 		</div>
 		<div class="col-md-6 column sortable">
 			<!-- BEGIN ACTIVITY -->
@@ -182,17 +179,17 @@
 			<!-- END ACTIVITY -->
 
 			<!-- BEGIN FEED -->
-			<div class="portlet portlet-sortable light bordered">
+			<div class="portlet light bordered">
 				<div class="portlet-title tabbable-line">
 					<div class="caption font-green-sharp">
 						<i class="icon-feed font-green-sharp"></i>
 						<span class="caption-subject bold uppercase">FEEDS </span>
 					</div>
 					<ul class="nav nav-tabs">
-						<li class="active">
+						<li class="">
 							<a href="#facebook" data-toggle="tab"><i class="fa fa-facebook"></i> Facebook </a>
 						</li>
-						<li class="">
+						<li class="active">
 							<a href="#twitter" data-toggle="tab"><i class="fa fa-twitter"></i> Twitter </a>
 						</li>
 						<li class="">
@@ -202,7 +199,7 @@
 				</div>
 				<div class="portlet-body">
 					<div class="tab-content">
-						<div class="tab-pane active" id="facebook">
+						<div class="tab-pane" id="facebook">
 							<div class="scroller" style="height:350px" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd">
 								<ul class="feeds">
 									<li>
@@ -229,8 +226,8 @@
 								</ul>
 							</div>
 						</div>
-						<div class="tab-pane" id="twitter">
-							<div class="scroller" style="height:350px" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd">
+						<div class="tab-pane active" id="twitter">
+							<div style="overflow-y:auto;height:350px;min-height:350px;max-height:350px;" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd">
 								<ul class="feeds">
 									<li>
 										<div class="col1">
@@ -283,7 +280,7 @@
 								</ul>
 							</div>
 						</div>
-					</div>	
+					</div>
 				</div>
 				<div class="portlet-footer">
 					<a href="#" class="pull-right">See all Feeds <i class="icon-arrow-right"></i></a>
@@ -291,10 +288,6 @@
 				</div>
 			</div>
 			<!-- END FEED-->
-
-			<!-- empty sortable porlet required for each columns! -->
-			<div class="portlet portlet-sortable-empty">
-			</div>
 		</div>
 	</div>
 </div>
@@ -464,3 +457,16 @@
             </tr>
         {% } %}
     </script>
+
+@section('script-footer')
+	@parent
+		@section('footer-custom-js')
+			@parent
+				<script type="text/javascript" src="{{$asset_path}}/pages/scripts/twitter-feeds.js"></script>
+				<script>
+				jQuery(document).ready(function() {
+					TwitterFeeds.init("{{\Twitter\Twitter::get_instance()->getTwitterUsername($customer->id)}}");
+				});
+				</script>
+		@stop
+@stop

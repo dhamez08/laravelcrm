@@ -81,11 +81,15 @@ class CustomerURLController extends \BaseController {
 		if( is_null($id) ){
 			if($website == "Facebook"){
 				$image = \CustomerProfileImages\CustomerProfileImagesEntity::get_instance()->createOrUpdateFacebook();
+			} else if($website == "Twitter"){
+				$image = \CustomerProfileImages\CustomerProfileImagesEntity::get_instance()->createOrUpdateTwitter();
 			}
 			return \CustomerUrl\CustomerUrlEntity::get_instance()->createOrUpdate();
 		}else{
 			if($website == "Facebook"){
 				$image = \CustomerProfileImages\CustomerProfileImagesEntity::get_instance()->createOrUpdateFacebook($id);
+			} else if($website == "Twitter"){
+				$image = \CustomerProfileImages\CustomerProfileImagesEntity::get_instance()->createOrUpdateTwitter($id);
 			}
 			return \CustomerUrl\CustomerUrlEntity::get_instance()->createOrUpdate($id);
 		}
