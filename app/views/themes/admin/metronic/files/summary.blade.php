@@ -32,15 +32,10 @@
 
 			<!-- END CLIENT LEFT SIDEBAR -->
 		</div>
-		<div class="col-md-8 col-summary">
+		<div class="col-md-10 col-summary">
 			<!-- CENTER COLUMN -->
 			@include($view_path.'.files.partials.files')
 			<!-- END CENTER COLUMN -->
-		</div>
-		<div class="col-md-2 col-summary">
-			<!-- ADS -->
-			@include($view_path.'.clients.partials.rightColumn')
-			<!-- END ADS -->
 		</div>
 	@stop
 @stop

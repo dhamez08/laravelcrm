@@ -1,4 +1,4 @@
-<div class="portlet portlet-sortable light bordered" style="height:700px;">
+<div class="portlet portlet-sortable light bordered" style="min-height:500px;">
 	<div class="portlet-title tabbable-line">
 		<div class="caption">
 			<i class="icon-pin font-yellow-lemon"></i>
@@ -18,7 +18,7 @@
 	</div>
 	<div class="portlet-body tabbable-line">
 		<div class="tab-content">
-			<div class="tab-pane active list_files{{$id}}" style="max-height:500px;" id="">
+			<div class="tab-pane active list_files{{$id}}" style="max-height:400px;" id="">
 				<div class="list_files_widget">
 					@foreach($customerFiles->get()	as $files)
 						@if($files->type == $id)
@@ -130,4 +130,3 @@
 		</div>
 	</div>
 </div>
-

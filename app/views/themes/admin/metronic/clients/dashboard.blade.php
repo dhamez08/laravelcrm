@@ -33,11 +33,6 @@
 			@include($view_path.'.clients.partials.center_column.'.$center_column_view)
 			<!-- END CENTER COLUMN -->
 		</div>
-		<div class="col-md-2">
-			<!-- ADS -->
-			@include($view_path.'.clients.partials.rightColumn')
-			<!-- END ADS -->
-		</div>
 	@stop
 @stop
 

@@ -1,4 +1,4 @@
-<div class="portlet portlet-sortable light bordered" style="height:700px;">
+<div class="portlet portlet-sortable light bordered" style="height:500px;">
 	<div class="portlet-title tabbable-line">
 		<div class="caption">
 			<i class="icon-pin font-yellow-lemon"></i>
@@ -37,4 +37,3 @@
 		</div>
 	</div>
 </div>
-
