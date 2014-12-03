@@ -465,7 +465,7 @@
 				<script type="text/javascript" src="{{$asset_path}}/pages/scripts/twitter-feeds.js"></script>
 				<script>
 				jQuery(document).ready(function() {
-					TwitterFeeds.init("{{\Twitter\Twitter::get_instance()->getTwitterUsername($customer->id)}}");
+					TwitterFeeds.init("{{URL::to('/')}}","{{\Twitter\Twitter::get_instance()->getTwitterUsername($customer->id)}}");
 				});
 				</script>
 		@stop
