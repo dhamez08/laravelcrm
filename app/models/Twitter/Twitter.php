@@ -26,10 +26,10 @@ class Twitter{
   public function Authenticate(){
     $consumerkey = \Config::get('twitter.consumerkey');
     $consumersecret = \Config::get('twitter.consumersecret');
-    //$accesstoken = (\Session::has('access_token') && !empty(\Session::get('access_token')))? \Session::get('access_token')['oauth_token'] : \Config::get('twitter.accesstoken');
-    //$accesstokensecret = (\Session::has('access_token') && !empty(\Session::get('access_token')))? \Session::get('access_token')['oauth_token_secret'] : \Config::get('twitter.accesstokensecret');
-    $accesstoken = \Config::get('twitter.accesstoken');
-    $accesstokensecret = \Config::get('twitter.accesstokensecret');
+    $accesstoken = (\Session::has('access_token'))? \Session::get('access_token')['oauth_token'] : \Config::get('twitter.accesstoken');
+    $accesstokensecret = (\Session::has('access_token'))? \Session::get('access_token')['oauth_token_secret'] : \Config::get('twitter.accesstokensecret');
+    //$accesstoken = \Config::get('twitter.accesstoken');
+    //$accesstokensecret = \Config::get('twitter.accesstokensecret');
 
     $connection = new \Twitter\TwitterOAuth($consumerkey, $consumersecret, $accesstoken, $accesstokensecret);
 
@@ -69,7 +69,7 @@ class Twitter{
     if(!isset($tweets->errors)) {
       \Session::put('testimonial',$testimonial);
       return $testimonial;
-    } else if(\Session::has('testimonial') && !empty(\Session::get('testimonial'))){
+    } else if(\Session::has('testimonial')){
       return \Session::get('testimonial');
     }
   }
