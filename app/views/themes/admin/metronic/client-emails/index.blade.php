@@ -15,7 +15,7 @@
 		<!-- END:File Upload Plugin CSS files-->
 		<!-- BEGIN PAGE LEVEL STYLES -->
 		<link href="{{$asset_path}}/pages/css/inbox.css" rel="stylesheet" type="text/css"/>
-		
+
 		<link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/bootstrap-select/bootstrap-select.min.css"/>
 		<link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/select2/select2.css"/>
 		<link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/jquery-multi-select/css/multi-select.css"/>
@@ -50,7 +50,7 @@
 
 			<!-- END CLIENT LEFT SIDEBAR -->
 		</div>
-		<div class="col-md-8 col-summary">
+		<div class="col-md-10 col-summary">
 			<!-- CENTER COLUMN -->
 			<div class="row">
 				<div class="col-md-12">
@@ -119,7 +119,7 @@
 									<div class="controls">
 										<select id="client_files" name="client_files" class="form-control">
 				                            <option value="">Select Files</option>
-				                            <?php 
+				                            <?php
 					                        $client_files = \CustomerFiles\CustomerFilesEntity::get_instance()->getFilesByClient(isset($customer) ? $customer->id:'');
 					                        $document_libraries = \DocumentLibrary\DocumentLibraryEntity::get_instance()->documents();
 					                        ?>
@@ -280,11 +280,6 @@
 			</div>
 			<!-- END CENTER COLUMN -->
 		</div>
-		<div class="col-md-2 col-summary">
-			<!-- ADS -->
-			@include($view_path.'.clients.partials.rightColumn')
-			<!-- END ADS -->
-		</div>
 	@stop
 @stop
 
@@ -295,7 +290,7 @@
 	<script src="{{$asset_path}}/global/plugins/fancybox/source/jquery.fancybox.pack.js" type="text/javascript"></script>
 	<script src="{{$asset_path}}/global/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js" type="text/javascript"></script>
 	<script src="{{$asset_path}}/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js" type="text/javascript"></script>
-	
+
 	<script src="{{$asset_path}}/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
 
 	<!-- BEGIN:File Upload Plugin JS files-->
@@ -347,7 +342,7 @@
 		jQuery(document).ready(function() {
 			ComponentsEditors.init();
 		    ClientEmail.init();
-		   
+
 		   ComponentsDropdowns.init();
 
 		    $(".note-image-dialog .close").bind("click", function() {

@@ -4,7 +4,7 @@
       @parent
       <link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css"/>
     @stop
-    <div class="modal fade socialProfile ajaxModal" tabindex="-1" role="dialog" aria-labelledby="socialProfile" aria-hidden="true">
+    <div class="modal fade socialProfile" tabindex="-1" role="dialog" aria-labelledby="socialProfile" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
