@@ -1,5 +1,5 @@
 <!-- modal for sending email -->
-  <div class="modal fade" id="send-email-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal fade mySmallModalLabel" id="send-email-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
           <div class="modal-content container-fluid">
               <div class="modal-header">
@@ -40,11 +40,11 @@
                       <div class="row">
                         <div class="col-md-12">
                           <label for="email_body" class="control-label">Email Body:</label>
-                          {{ 
+                          {{
                             Form::textarea
                             (
                               'email_body', '', array('class' => 'form-control', 'required' => 'required')
-                            ) 
+                            )
                           }}
                         </div>
                       </div>
@@ -53,7 +53,7 @@
                           <label for="email_files" class="control-label">Attach Files:</label>
                           <select name="email_files" class="form-control">
                             <option></option>
-                          <?php 
+                          <?php
                           $client_files = \CustomerFiles\CustomerFilesEntity::get_instance()->getFilesByClient(isset($customer) ? $customer->id:'');
                           $document_libraries = \DocumentLibrary\DocumentLibraryEntity::get_instance()->documents();
                           ?>

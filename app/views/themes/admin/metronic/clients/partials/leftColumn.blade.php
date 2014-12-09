@@ -47,6 +47,8 @@
 								@endif
 							@endforeach
 						@endif
+
+						@if(!empty($sms))
 		 				<a
 							class="openModal btn btn-sm green-meadow round-10"
 							data-toggle="modal"
@@ -54,7 +56,8 @@
 							href="{{action('SMS\SMSController@getAjaxIndividualSendSms', array('customerid'=>$customer->id,'mobile_number'=>$sms))}}"
 						>
 		 				SMS</a>
-		 				<a href="{{ url('email/client/'.$customer->id.'?back='.Request::url()) }}" class="btn btn-sm red round-10">Email</a>
+						@endif
+						<a href="#" data-target=".emailMessage" data-toggle="modal" class="openModal btn btn-sm red round-10">Email</a>
 		 			</div>
 		 		</div>
 		 		<ul class="client-social-icons hide">
@@ -92,11 +95,7 @@
 											<p>
 												<span class="label label-info" style="font-size:9px;">{{$mail->type}}</span>
 												<a href="mailto:{{$mail->email}}?bcc=dropbox.13554456@123crm.co.uk&subject= **enter your subject here** [REF:{{$customer->ref}}]" target="_blank">
-													@if( strlen($mail->email) > 15 )
-														{{substr($mail->email,0,15)}}...
-													@else
 														{{$mail->email}}
-													@endif
 												</a>
 											</p>
 										@endforeach
@@ -345,3 +344,6 @@
 
 <!--Profile Model-->
 @include($view_path.'.clients.partials.clientProfilePhotoWidget')
+
+<!--Email Messaging Model-->
+@include($view_path.'.clients.partials.emailWidget')
