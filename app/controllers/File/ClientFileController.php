@@ -309,10 +309,10 @@ class ClientFileController extends \BaseController {
 		}
 		if( $file->delete() ){
 			\Session::flash('message', 'Successfully Deleted File');
-			return \Redirect::to('client/client-summary/' . $customerid);
+			return \Redirect::to('clients/client-summary/' . $customerid);
 		}else{
 			\Session::flash('message', 'Error cannot delete file');
-			return \Redirect::to('client/client-summary/' . $customerid);
+			return \Redirect::to('clients/client-summary/' . $customerid);
 		}
 	}
 }
