@@ -87,7 +87,7 @@ class ClientsController extends \BaseController {
 	public function __construct(){
 		parent::__construct();
 		$this->data_view 					= parent::setupThemes();
-		$this->data_view['html_body_class'] = 'page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo page-container-bg-solid page-full-width';
+		$this->data_view['html_body_class'] = 'page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-full-width';
 		$this->data_view['client_index'] 	= $this->data_view['view_path'] . '.clients.index';
 		$this->title 						= \Config::get('crm.person_title');
 		$this->marital_status 				= \Config::get('crm.marital_status');
@@ -498,7 +498,7 @@ class ClientsController extends \BaseController {
 	public function getClientSummary($clientId){
 		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
 		$dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
-		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed');
+		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid');
 
 		$data 											= $this->data_view;
 		$data['pageTitle'] 					= 'Client';
@@ -665,7 +665,7 @@ class ClientsController extends \BaseController {
 	public function getPeople($clientId){
 		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
 		$dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
-		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed');
+		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid');
 
 		$data 						= $this->data_view;
 		$data['pageTitle'] 			= 'Client';
@@ -696,7 +696,7 @@ class ClientsController extends \BaseController {
 	public function getEmployee($clientId){
 		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
 		$dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
-		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed');
+		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid');
 
 		$data 						= $this->data_view;
 		$data['pageTitle'] 			= 'Client';
@@ -1033,7 +1033,7 @@ class ClientsController extends \BaseController {
 
 		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
 		$dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
-		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed');
+		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid');
 
 		$data 						= $this->data_view;
 		$data['title']				= $this->getTitleClient();
@@ -1215,7 +1215,7 @@ class ClientsController extends \BaseController {
 
 		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
 		$dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
-		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed');
+		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid');
 
 		$data 						= $this->data_view;
 		$data['title']				= $this->getTitleClient();
@@ -1316,7 +1316,7 @@ class ClientsController extends \BaseController {
 	public function getEditFamilyPerson($clientId){
 		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
 		$dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
-		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed');
+		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid');
 
 		$data 						= $this->data_view;
 		$data['title']				= $this->getTitleClient();
@@ -1401,7 +1401,7 @@ class ClientsController extends \BaseController {
 
 		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
 		$dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
-		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed');
+		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid');
 
 		$data = \CustomerOpportunities\CustomerOpportunitiesController::get_instance()->getOpportunities($client_id);
 
@@ -1548,7 +1548,7 @@ class ClientsController extends \BaseController {
 
 		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
 		$dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
-		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed');
+		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid');
 
 		$data 						= $this->_getClientData($clientId);
 		$data['center_column_view']	= 'custom-page';

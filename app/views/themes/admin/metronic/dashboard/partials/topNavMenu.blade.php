@@ -226,7 +226,7 @@
 			@endif
 
 			<span class="username username-hide-on-mobile">
-				{{isset($currentClient) ? $currentClient->displayCustomerName(): 'Bob'}}
+				{{isset($currentClient) ? $currentClient->displayCustomerName(): 'Guest'}}
 			</span>
 			<i class="fa fa-angle-down"></i>
 			</a>

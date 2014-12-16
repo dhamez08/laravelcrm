@@ -29,7 +29,7 @@ class ClientFileController extends \BaseController {
 		parent::__construct();
 		$this->data_view 					= parent::setupThemes();
 		$this->data_view['client_index'] 	= $this->data_view['view_path'] . '.clients.index';
-		$this->data_view['html_body_class'] = 'page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed';
+		$this->data_view['html_body_class'] = 'page-header-fixed page-quick-sidebar-over-content page-container-bg-solid';
 	}
 
 	/**
@@ -51,7 +51,7 @@ class ClientFileController extends \BaseController {
 	public function getIndex($clientId){
 		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
 		$dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
-		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed');
+		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid');
 
 		$data 						= $this->data_view;
 		$data['pageTitle'] 			= 'Client';

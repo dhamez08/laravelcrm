@@ -179,7 +179,6 @@
 											</tr>
 										@endforeach
 					 				@endif
-									</tr>
 								  </tbody>
 								</table>
 								<p class="form-control-static text-center">

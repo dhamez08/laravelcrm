@@ -3,18 +3,17 @@
 	<!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
 	<div class="page-sidebar navbar-collapse collapse" style="">
 		<!-- BEGIN SIDEBAR MENU -->
-		<ul data-slide-speed="200" data-auto-scroll="true" class="page-sidebar-menu page-sidebar-menu-light page-sidebar-menu-hover-submenu page-sidebar-menu-closed">
+		<ul id="side-bar-page-nav" data-slide-speed="200" data-auto-scroll="true" class="page-sidebar-menu page-sidebar-menu-light page-sidebar-menu-hover-submenu">
 			<!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
 			<li class="sidebar-toggler-wrapper">
 				<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
-				<div class="sidebar-toggler">
-				</div>
+				<div class="sidebar-toggler"></div>
 				<!-- END SIDEBAR TOGGLER BUTTON -->
 			</li>
 			<li class="start active open">
 				@if(isset($customer))
 				<a href="{{url('clients/client-summary/'.$customer->id)}}">
-				@else	
+				@else
 				<a href="javascript:;">
 				@endif
 				<i class="icon-home"></i>
@@ -93,5 +92,35 @@
 			@endif
 		</ul>
 		<!-- END SIDEBAR MENU -->
-	</div> 
+	</div>
 </div>
+
+@section('script-footer')
+	@parent
+	@section('footer-custom-js')
+        @parent
+        <script>
+        $(function(){
+            var closed = $.cookie('sidebarClose');
+            if(closed == "page-sidebar-menu-closed"){
+                if(!$("ul#side-bar-page-nav").hasClass('page-sidebar-menu-closed')){
+                    $("ul#side-bar-page-nav").addClass('page-sidebar-menu-closed');
+                }
+            } else {
+                $("ul#side-bar-page-nav").removeClass('page-sidebar-menu-closed');
+            }
+        });
+        $(document).on("click",".sidebar-toggler",function(e){
+            e.preventDefault();
+
+            if($("#side-bar-page-nav").hasClass('page-sidebar-menu-closed')){
+                //save to cookie
+                $.cookie('sidebarClose', 'page-sidebar-menu-closed', { path: '/' });
+            } else {
+                //remove to cookie
+                $.removeCookie('sidebarClose', { path: '/' });
+            }
+        });
+        </script>
+    @stop
+@stop

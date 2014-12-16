@@ -96,7 +96,7 @@ class MessagesController extends \BaseController {
 	public function getIndex($client_id){
 		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
 		$dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
-		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed');
+		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid');
 
 		$data['messages'] = \Message\MessageEntity::get_instance()->getCustomerMessages($client_id);
 

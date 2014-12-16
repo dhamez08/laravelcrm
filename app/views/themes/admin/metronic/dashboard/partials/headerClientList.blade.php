@@ -4,7 +4,7 @@
 			@foreach($clientTopList->get() as $client)
 				<li>
 					<i class="fa fa-user"></i>
-					<a href="{{url('clients/client-summary') . '/' . $client->id}}">{{($client->type == 2) ? $client->company_name:$client->first_name}}...</a>
+					<a href="{{url('clients/client-summary') . '/' . $client->id}}">{{($client->type == 2) ? $client->company_name:$client->first_name ." ". $client->last_name}}</a>
 				</li>
 			@endforeach
 		@endif

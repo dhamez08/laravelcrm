@@ -38,3 +38,30 @@
 		</tbody>
 	</table>
 </div>
+<div class="scroller" style="height:366px">
+    <ul class="feeds">
+        @foreach($recent_messages as $message)
+        <li>
+            <div class="col1">
+                <div class="cont">
+                    <div class="cont-col1">
+                        <div class="label label-sm label-info">
+                            <i class="fa fa-envelope-o"></i>
+                        </div>
+                    </div>
+                    <div class="cont-col2">
+                        <div class="desc">
+                             <a href="{{ url('messages/view?message_id='.$message->id) }}">{{ $message->subject }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col2">
+                <div class="date">
+                     {{ date("d/m/y H:i",strtotime($message->added_date)) }}
+                </div>
+            </div>
+        </li>
+        @endforeach
+    </ul>
+</div>

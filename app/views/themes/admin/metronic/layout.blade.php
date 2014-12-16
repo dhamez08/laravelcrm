@@ -40,7 +40,9 @@
 			@yield('head-page-level-css')
 			<link href="{{$asset_path}}/global/plugins/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet" type="text/css"/>
 			<link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/typeahead/typeahead.css">
+			<!--
 			<link rel="stylesheet" type="text/css" href="{{$asset_path}}/admin/pages/css/tasks.css">
+			-->
 			<link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/bootstrap-editable/bootstrap-editable/css/bootstrap-editable.css"/>
 			<link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/jquery-tags-input/jquery.tagsinput.css"/>
 			<link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/bootstrap-select/bootstrap-select.min.css"/>
@@ -150,6 +152,7 @@
 		<script src="{{$asset_path}}/global/plugins/bootstrap-editable/bootstrap-editable/js/bootstrap-editable.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/global/plugins/bootstrap-select/bootstrap-select.min.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/global/plugins/select2/select2.min.js" type="text/javascript"></script>
+		<script src="{{$asset_path}}/global/scripts/jquery.cookie.js" type="text/javascript"></script>
 		<!-- END PAGE LEVEL SCRIPTS -->
 
 		<!-- BEGIN PAGE LEVEL PLUGINS -->
