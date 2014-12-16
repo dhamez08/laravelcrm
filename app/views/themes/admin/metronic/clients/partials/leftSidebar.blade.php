@@ -1,3 +1,6 @@
+<?php
+	$request_url = Request::segment(1);
+?>
 <div class="page-sidebar-wrapper">
 	<!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
 	<!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
@@ -10,7 +13,7 @@
 				<div class="sidebar-toggler"></div>
 				<!-- END SIDEBAR TOGGLER BUTTON -->
 			</li>
-			<li class="start active open">
+			<li{{(Request::is('clients/client-summary/*')) ? '  class="start active open"': ''}}>
 				@if(isset($customer))
 				<a href="{{url('clients/client-summary/'.$customer->id)}}">
 				@else
@@ -22,7 +25,7 @@
 				<span class="arrow open"></span>
 				</a>
 			</li>
-			<li>
+			<li{{(Request::is('file/client-file/*')) ? '  class="start active open"': ''}}>
 				@if(isset($customer))
 				<a href="{{url('file/client-file/'.$customer->id)}}">
 				@else
@@ -33,7 +36,7 @@
 				<span class="arrow "></span>
 				</a>
 			</li>
-			<li>
+			<li{{(Request::is('client-messages/*')) ? '  class="start active open"': ''}}>
 				@if(isset($customer))
 				<a href="{{url('client-messages/'.$customer->id)}}">
 				@else
@@ -45,7 +48,7 @@
 				</a>
 			</li>
 			<!-- BEGIN FRONTEND THEME LINKS -->
-			<li>
+			<li{{(Request::is('clients/opportunities/*')) ? '  class="start active open"': ''}}>
 				@if(isset($customer))
 				<a href="{{ url('clients/opportunities/'.$customer->id) }}">
 				@else
@@ -80,15 +83,15 @@
 				</a>
 			</li>
 			@if(isset($customer))
-			@foreach(Auth::user()->customtabs as $tab)
-			<li>
-				<a href="{{ url('clients/custom/'.$customer->id.'?custom='.$tab->id) }}">
-				<i class="icon-logout"></i>
-				<span class="title">{{ $tab->name }}</span>
-				<span class="arrow "></span>
-				</a>
-			</li>
-			@endforeach
+				@foreach(Auth::user()->customtabs as $tab)
+				<li{{(\Input::get('custom') == $tab->id) ? '  class="start active open"': ''}}>
+					<a href="{{ url('clients/custom/'.$customer->id.'?custom='.$tab->id) }}">
+					<i class="icon-logout"></i>
+					<span class="title">{{ $tab->name }}</span>
+					<span class="arrow "></span>
+					</a>
+				</li>
+				@endforeach
 			@endif
 		</ul>
 		<!-- END SIDEBAR MENU -->
