@@ -228,16 +228,16 @@ div.tagsinput span.tag {
 }
 
 .feeds li .col1{
-	width: 270px !important;
+	width: 70% !important;
 }
 
 .feeds li .col2 {
 	float: left;
-	width: 100px !important;
+	width: 30% !important;
 	margin-left: 0px !important;
 }
 .feeds li .col2 > .date {
-	padding: 3px !important;
+	padding: 4px !important;
 	text-align: right;
 	font-style: italic;
 	color: #c1cbd0;

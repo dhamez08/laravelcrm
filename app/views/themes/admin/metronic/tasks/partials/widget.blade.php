@@ -2,7 +2,7 @@
 <div class="portlet portlet-sortable light bordered">
 	<div class="portlet-title">
 		<div class="caption">
-			<i class="fa fa-cog"></i>Task
+			<i class="fa fa-tasks"></i>Task
 		</div>
 		<div class="actions">
 			<a href="{{action(

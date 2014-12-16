@@ -1,7 +1,7 @@
 <div class="portlet portlet-sortable light bordered">
 	<div class="portlet-title tabbable-line">
 		<div class="caption">
-			<i class="icon-globe"></i>
+			<i class="fa fa-book"></i>
 			<span class="caption-subject bold uppercase">Activity </span>
 		</div>
 		<ul class="nav nav-tabs">
