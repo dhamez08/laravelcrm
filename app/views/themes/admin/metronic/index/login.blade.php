@@ -34,7 +34,7 @@
 					)
 				)
 			}}
-				<h3 class="form-title">Login to your account</h3>
+				<h3 class="form-title">Login to your account [TEST EDIT]</h3>
 				<div class="alert alert-danger display-hide">
 					<button data-close="alert" class="close"></button>
 					<span>
