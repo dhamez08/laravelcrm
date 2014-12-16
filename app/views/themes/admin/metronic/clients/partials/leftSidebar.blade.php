@@ -39,9 +39,9 @@
 				@else
 				<a href="javascript:;">
 				@endif
-				<i class="icon-rocket"></i>
-				<span class="title">Messages</span>
-				<span class="arrow "></span>
+					<i class="icon-rocket"></i>
+					<span class="title">Messages</span>
+					<span class="arrow "></span>
 				</a>
 			</li>
 			<!-- BEGIN FRONTEND THEME LINKS -->

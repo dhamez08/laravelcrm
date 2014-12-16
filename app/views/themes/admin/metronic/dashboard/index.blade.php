@@ -81,7 +81,7 @@
 			</div>
 			<!-- END CONTENT -->
 			<!-- BEGIN QUICK SIDEBAR -->
-				@include( \DashboardEntity::get_instance()->getView() . '.dashboard.partials.quickSidebar' )
+			<!--	@include( \DashboardEntity::get_instance()->getView() . '.dashboard.partials.quickSidebar') -->
 			<!-- END QUICK SIDEBAR -->
 		</div>
 	@show

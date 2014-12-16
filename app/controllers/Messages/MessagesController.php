@@ -384,11 +384,21 @@ class MessagesController extends \BaseController {
 		$message->read_status = 1;
 		$message->save();
 
-		$data['center_view'] = 'inbox_view';
+		$dataMessages = $this->_messageCommon();
 		$data['message_title'] = $message->subject;
-		$dataMessages 					= $this->_messageCommon();
-		$data 							= array_merge($data,$this->getSetupThemes(), $dataMessages);
-		return \View::make( $data['view_path'] . '.messages.index', $data );
+
+		if(\Input::get('show') == "modal"){
+
+			$data = array_merge($data, $this->getSetupThemes(), $dataMessages);
+			return \View::make($data['view_path'] . '.messages.partials.messageWidgetView', $data);
+
+		} else {
+
+			$data['center_view'] = 'inbox_view';
+			$data = array_merge($data, $this->getSetupThemes(), $dataMessages);
+			return \View::make($data['view_path'] . '.messages.index', $data);
+
+		}
 	}
 
 	public function postView() {

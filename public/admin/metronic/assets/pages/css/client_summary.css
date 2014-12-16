@@ -226,3 +226,19 @@ div.tagsinput span.tag {
 #twitter p.e-entry-title{
 	font-size: 12px;
 }
+
+.feeds li .col1{
+	width: 270px !important;
+}
+
+.feeds li .col2 {
+	float: left;
+	width: 100px !important;
+	margin-left: 0px !important;
+}
+.feeds li .col2 > .date {
+	padding: 3px !important;
+	text-align: right;
+	font-style: italic;
+	color: #c1cbd0;
+}

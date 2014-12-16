@@ -144,8 +144,6 @@
 		<!-- BEGIN PAGE LEVEL SCRIPTS -->
 		<script src="{{$asset_path}}/global/scripts/metronic.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/layout/scripts/layout.js" type="text/javascript"></script>
-		<script src="{{$asset_path}}/layout/scripts/quick-sidebar.js" type="text/javascript"></script>
-		<script src="{{$asset_path}}/layout/scripts/quick-sidebar.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/pages/scripts/tasks.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/pages/scripts/crm.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/global/plugins/typeahead/typeahead.bundle.min.js" type="text/javascript"></script>

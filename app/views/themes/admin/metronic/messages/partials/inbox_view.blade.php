@@ -16,7 +16,7 @@
 			on {{ date("h:iA d/m/Y",strtotime($message->added_date)) }}
 		</div>
 		<div class="col-md-5 inbox-info-btn">
-			<div class="btn-group">
+			<div class="btn-group text-right">
 				@if($message->direction=='2')
 				<button class="btn blue reply-btn" onclick="window.location='{{ url('messages/reply?message_id='.$message->id) }}'">
 				<i class="fa fa-reply"></i> Reply </button>
@@ -58,7 +58,7 @@
 						<i class="fa fa-trash-o"></i> Move to Trash </a>
 					</li>
 					<li>
-					</div>
+					</ul>
 				</div>
 			</div>
 		</div>
