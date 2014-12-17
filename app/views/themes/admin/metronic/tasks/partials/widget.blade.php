@@ -1,8 +1,9 @@
 <!-- BEGIN Portlet PORTLET-->
 <div class="portlet portlet-sortable light bordered">
 	<div class="portlet-title">
-		<div class="caption">
-			<i class="fa fa-tasks"></i>Task
+		<div class="caption font-green-sharp">
+			<i class="fa fa-check-square-o font-green-sharp"></i>
+			<span class="caption-subject bold uppercase">Task</span>
 		</div>
 		<div class="actions">
 			<a href="{{action(

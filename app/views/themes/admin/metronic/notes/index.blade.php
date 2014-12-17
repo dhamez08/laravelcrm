@@ -1,6 +1,7 @@
+<!--
 <h4>Note</h4>
 <div style="margin-bottom:20px;">
-	<a
+ 	<a
 		class="btn btn-default btn-sm openModal"
 		data-toggle="modal"
 		data-target=".ajaxModal"
@@ -8,6 +9,7 @@
 	<i class="fa fa-plus"></i> Add </a>
 
 </div>
+ -->
 <div class="row">
 	<div class="col-md-12">
 		@if( $notes->count() > 0 )

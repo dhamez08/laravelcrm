@@ -16,6 +16,10 @@
 				)
 			}}
 			<div class="form-group">
+				<label>Subject</label>
+				{{ Form::text('subject', null, array('class' => 'form-control')) }}
+			</div>
+			<div class="form-group">
 				<label>Please enter a note to be added to the client account</label>
 				   {{Form::textarea('note',null,array('class'=>'form-control'))}}
 			</div>

@@ -1,8 +1,16 @@
 <div class="portlet portlet-sortable light bordered">
 	<div class="portlet-title tabbable-line">
-		<div class="caption">
-			<i class="fa fa-book"></i>
+		<div class="caption font-green-sharp">
+			<i class="fa fa-list font-green-sharp"></i>
 			<span class="caption-subject bold uppercase">Activity </span>
+		</div>
+		<div class="actions pull-left" style="margin-left: 5px;">
+			<a
+				class="btn btn-circle btn-sm green-meadow openModal"
+				data-toggle="modal"
+				data-target=".ajaxModal"
+				href="{{action('Notes\NotesController@getAjaxCreateInput', array('customerid'=>$customerId))}}">
+			<i class="fa fa-plus"></i> Add Note </a>
 		</div>
 		<ul class="nav nav-tabs">
 			<li class="">

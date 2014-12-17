@@ -104,10 +104,12 @@ class NotesController extends \BaseController {
 
 	public function postAjaxCreateNote($clientId){
 		$rules = array(
+			'subject' => 'required',
 			'note' => 'required',
 			'notefile' => 'mimes:pdf,doc,docx,gif,jpg,png,jpeg',
 		);
 		$messages = array(
+			'subject.required' => 'Subject is required',
 			'note.required'=>'Note is required',
 			'notefile.mimes'=>'File format is invalid',
 		);
@@ -123,6 +125,7 @@ class NotesController extends \BaseController {
 			}
 
 			$data = array(
+				'subject' => \Input::get('subject'),
 				'note' => \Input::get('note'),
 				'customer_id' => \Input::get('customerid'),
 				'added_by' => \Auth::id(),
