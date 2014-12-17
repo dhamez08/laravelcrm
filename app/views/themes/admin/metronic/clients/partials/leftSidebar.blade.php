@@ -19,7 +19,7 @@
 				@else
 				<a href="javascript:;">
 				@endif
-				<i class="icon-home"></i>
+				<i class="fa fa-home"></i>
 				<span class="title">Client Dashboard</span>
 				<span class="selected"></span>
 				<span class="arrow open"></span>
@@ -31,7 +31,7 @@
 				@else
 				<a href="javascript:;">
 				@endif
-				<i class="icon-basket"></i>
+				<i class="fa fa-file-o"></i>
 				<span class="title">Files</span>
 				<span class="arrow "></span>
 				</a>
@@ -42,7 +42,7 @@
 				@else
 				<a href="javascript:;">
 				@endif
-					<i class="icon-rocket"></i>
+					<i class="fa fa-envelope-o"></i>
 					<span class="title">Messages</span>
 					<span class="arrow "></span>
 				</a>
@@ -54,7 +54,7 @@
 				@else
 				<a href="javascript:;">
 				@endif
-				<i class="icon-star"></i>
+				<i class="fa fa-bar-chart-o"></i>
 				<span class="title">Opportunities</span>
 				<span class="arrow">
 				</span>
@@ -63,21 +63,21 @@
 			<!-- END FRONTEND THEME LINKS -->
 			<li>
 				<a href="javascript:;">
-				<i class="icon-diamond"></i>
+				<i class="fa fa-euro"></i>
 				<span class="title">Accounts</span>
 				<span class="arrow "></span>
 				</a>
 			</li>
 			<li>
 				<a href="javascript:;">
-				<i class="icon-puzzle"></i>
+				<i class="fa fa-check-square-o"></i>
 				<span class="title">Workflow/Tasks</span>
 				<span class="arrow "></span>
 				</a>
 			</li>
 			<li>
 				<a href="javascript:;">
-				<i class="icon-settings"></i>
+				<i class="fa fa-briefcase"></i>
 				<span class="title">Live Documents</span>
 				<span class="arrow "></span>
 				</a>
