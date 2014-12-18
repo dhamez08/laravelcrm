@@ -97,33 +97,3 @@
 		<!-- END SIDEBAR MENU -->
 	</div>
 </div>
-
-@section('script-footer')
-	@parent
-	@section('footer-custom-js')
-        @parent
-        <script>
-        $(function(){
-            var closed = $.cookie('sidebarClose');
-            if(closed == "page-sidebar-menu-closed"){
-                if(!$("ul#side-bar-page-nav").hasClass('page-sidebar-menu-closed')){
-                    $("ul#side-bar-page-nav").addClass('page-sidebar-menu-closed');
-                }
-            } else {
-                $("ul#side-bar-page-nav").removeClass('page-sidebar-menu-closed');
-            }
-        });
-        $(document).on("click",".sidebar-toggler",function(e){
-            e.preventDefault();
-
-            if($("#side-bar-page-nav").hasClass('page-sidebar-menu-closed')){
-                //save to cookie
-                $.cookie('sidebarClose', 'page-sidebar-menu-closed', { path: '/' });
-            } else {
-                //remove to cookie
-                $.removeCookie('sidebarClose', { path: '/' });
-            }
-        });
-        </script>
-    @stop
-@stop
