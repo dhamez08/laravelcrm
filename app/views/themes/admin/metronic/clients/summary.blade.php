@@ -47,9 +47,9 @@
 @section('script-footer')
 	@parent
 	@section('footer-custom-js')
-	@parent
+		@parent
 
-<!-- BEGIN:File Upload Plugin JS files-->
+		<!-- BEGIN:File Upload Plugin JS files-->
 		<!-- The Templates plugin is included to render the upload/download listings -->
 		<script src="{{$asset_path}}/global/plugins/jquery-file-upload/js/vendor/tmpl.min.js"></script>
 		<!-- The Load Image plugin is included for the preview images and image resizing functionality -->

@@ -184,7 +184,7 @@
 
   <script src="{{$asset_path}}/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
   <script type="text/javascript" src="{{$asset_path}}/global/plugins/bootstrap-select/bootstrap-select.min.js"></script>
-  <script type="text/javascript" src="{{$asset_path}}/global/plugins/select2/select2.min.js"></script>
+  <!--<script type="text/javascript" src="{{$asset_path}}/global/plugins/select2/select2.min.js"></script>-->
   <script type="text/javascript" src="{{$asset_path}}/global/plugins/jquery-multi-select/js/jquery.multi-select.js"></script>
   <script src="{{$asset_path}}/pages/scripts/components-dropdowns.js"></script>
   <script src="{{$asset_path}}/pages/scripts/ui-blockui.js"></script>

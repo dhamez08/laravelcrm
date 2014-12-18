@@ -70,7 +70,8 @@
 							Form::select(
 								'task_min',
 								$getMin,
-								isset($startMinute) ? $startMinute:null,
+								//isset($startMinute) ? $startMinute:null,
+								$theDate->minute,
 								array(
 									'class'=>'form-control',
 									'id'=>'task_min',

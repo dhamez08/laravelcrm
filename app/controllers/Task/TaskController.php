@@ -164,7 +164,8 @@ class TaskController extends \BaseController {
 				'status' 		=> '1',
 				'remind' 		=> $remind_time,
 				'remind_mins' 	=> \Input::get('remind_mins'),
-				'belongs_to' 	=> \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id
+				//'belongs_to' 	=> \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id
+				'belongs_to'	=> \Auth::id()
 			);
 			$task = \CustomerTasks\CustomerTasksEntity::get_instance()->createOrUpdate($data, $taskid);
 
