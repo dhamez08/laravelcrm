@@ -1,7 +1,7 @@
 <!-- BEGIN HORIZANTAL MENU -->
 <!-- DOC: Apply "hor-menu-light" class after the "hor-menu" class below to have a horizontal menu with white background -->
 <!-- DOC: This is desktop version of the horizontal menu. The mobile version is defined(duplicated) sidebar menu below. So the horizontal menu has 2 seperate versions -->
-<div class="hor-menu hor-menu-light hidden-sm hidden-xs">
+<div class="hor-menu hor-menu-light hidden-sm hidden-xs hidden-md">
 	<ul class="nav navbar-nav">
 		<!-- DOC: Remove data-hover="dropdown" and data-close-others="true" attributes below to disable the horizontal opening on mouse hover -->
 		<li class="classic-menu-dropdown {{\Request::is('dashboard') ? 'active':''}}">

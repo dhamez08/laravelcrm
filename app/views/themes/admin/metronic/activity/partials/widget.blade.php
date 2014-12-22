@@ -6,11 +6,11 @@
 		</div>
 		<div class="actions pull-left" style="margin-left: 5px;">
 			<a
-				class="btn btn-circle btn-sm green-meadow openModal"
+				class="btn btn-icon-only btn-circle btn-sm green-meadow openModal"
 				data-toggle="modal"
 				data-target=".ajaxModal"
 				href="{{action('Notes\NotesController@getAjaxCreateInput', array('customerid'=>$customerId))}}">
-			<i class="fa fa-plus"></i> Add Note </a>
+				<i class="fa fa-plus"></i></a>
 		</div>
 		<ul class="nav nav-tabs">
 			<li class="active">

@@ -2,13 +2,16 @@
 <div class="panel panel-default" style="padding-bottom:0px;">
 	<div class="panel-body" style="padding-bottom:0px;">
 		 <div class="row">
-		 	<div class="col-md-12">
-			 	<a href="#" class="pull-left" title="Tags" id="toggle-client-tags">
-					<i class="icon-tag"></i>
-				</a>
-				<a href="{{action('Clients\ClientsController@getEdit',array('clientId'=>$customer->id))}}" class="pull-right" title="Edit Profile Information">
-					<i class="icon-pencil"></i>
-				</a>
+		 	<div class="col-lg-12">
+				<div class="row" style="margin: -10px -10px 0px -10px;">
+					<a href="#" class="btn btn-icon-only btn-circle grey-cascade pull-left" title="Tags" id="toggle-client-tags">
+						<i class="icon-tag"></i>
+					</a>
+					<a href="{{action('Clients\ClientsController@getEdit',array('clientId'=>$customer->id))}}" class="btn btn-icon-only btn-circle blue pull-right" title="Edit Profile Information">
+						<i class="icon-pencil"></i>
+					</a>
+					<div class="clearfix"></div>
+				</div>
 			</div>
 		 	<div class="col-md-12 summary-profile-pic text-center">
 				<a href="#" data-target=".socialProfile" data-toggle="modal" class="openModal">
@@ -38,26 +41,31 @@
 			 		<div class="clearfix"></div>
 		 		</div>
 		 		<div class="row text-center btnprofile">
-		 			<div class="col-md-12">
-		 				<?php $sms = ''; ?>
-		 				@if( $telephone->count() > 0 )
-							@foreach($telephone->get() as $phone)
-								@if( $phone->type == 'Mobile' )
-									<?php $sms = $phone->number; ?>
-								@endif
-							@endforeach
-						@endif
+		 			<div class="col-lg-12">
 
-						@if(!empty($sms))
-		 				<a
-							class="openModal btn btn-sm green-meadow round-10"
-							data-toggle="modal"
-							data-target=".ajaxModal"
-							href="{{action('SMS\SMSController@getAjaxIndividualSendSms', array('customerid'=>$customer->id,'mobile_number'=>$sms))}}"
-						>
-		 				SMS</a>
-						@endif
-						<a href="#" data-target=".emailMessage" data-toggle="modal" class="openModal btn btn-sm red round-10">Email</a>
+						<div class="btn-toolbar">
+							<div class="btn-group btn-group-sm btn-group-circle btn-group-justified">
+								<?php $sms = ''; ?>
+								@if( $telephone->count() > 0 )
+									@foreach($telephone->get() as $phone)
+										@if( $phone->type == 'Mobile' )
+											<?php $sms = $phone->number; ?>
+										@endif
+									@endforeach
+								@endif
+
+								@if(!empty($sms))
+								<a
+									class="openModal btn btn-sm green-meadow"
+									data-toggle="modal"
+									data-target=".ajaxModal"
+									href="{{action('SMS\SMSController@getAjaxIndividualSendSms', array('customerid'=>$customer->id,'mobile_number'=>$sms))}}"
+								>
+								SMS</a>
+								@endif
+								<a href="#" data-target=".emailMessage" data-toggle="modal" class="openModal btn btn-sm red">Email</a>
+							</div>
+						</div>
 		 			</div>
 		 		</div>
 		 		<ul class="client-social-icons hide">
@@ -91,11 +99,26 @@
 
 					 			<div class="form-group">
 									@if( $email->count() > 0 )
+										<?php $em = array(); ?>
 										@foreach($email->get() as $mail)
+											<?php
+												$m = explode('@',$mail->email);
+												$username = trim($m[0]);
+												$domain = trim($m[1]);
+											?>
 											<p>
-												<span class="label label-info" style="font-size:9px;">{{$mail->type}}</span>
-												<a href="mailto:{{$mail->email}}?bcc=dropbox.13554456@123crm.co.uk&subject= **enter your subject here** [REF:{{$customer->ref}}]" target="_blank">
-														{{$mail->email}}
+												<span class="label label-info" style="font-size:9px;">
+
+													@if(strtolower($mail->type) == "home")
+														<i class="fa fa-home"></i>
+													@elseif(strtolower($mail->type) == "work")
+														<i class="fa fa-briefcase"></i>
+													@endif
+
+													<span style="color:#0000FF; font-weight: bolder;">{{$domain}}</span>
+												</span><br />
+												<a href="mailto:{{$mail->email}}?bcc=dropbox.13554456@123crm.co.uk&subject= **enter your subject here** [REF:{{$customer->ref}}]" target="_blank" title="{{$mail->email}}" style="margin:10px;">
+														{{$username}}
 												</a>
 											</p>
 										@endforeach
@@ -111,11 +134,24 @@
 														data-target=".ajaxModal"
 														href="{{action('SMS\SMSController@getAjaxIndividualSendSms', array('customerid'=>$customer->id,'mobile_number'=>$phone->number))}}"
 													>
-														<i class="fa fa-phone"></i>
+
+														<i class="fa fa-mobile"></i>
 														{{$phone->number}}
 													</a>
 												@else
-													<i class="fa fa-phone"></i>
+
+													@if(strtolower($phone->type) == "home")
+														<i class="fa fa-home"></i>
+													@elseif(strtolower($phone->type) == "work")
+														<i class="fa fa-briefcase"></i>
+													@elseif(strtolower($phone->type) == "direct")
+														<i class="fa fa-phone"></i>
+													@elseif(strtolower($phone->type) == "mobile")
+														<i class="fa fa-mobile"></i>
+													@elseif(strtolower($phone->type) == "fax")
+														<i class="fa fa-fax"></i>
+													@endif
+
 													{{$phone->number}}
 												@endif
 											</p>
@@ -277,15 +313,15 @@
 <div class="panel panel-default">
 	<div class="panel-body">
 		<div class="row">
-			<a href="javscript;;" class="col-sm-4 text-center">
+			<a href="javscript;;" class="col-sm-4 col-xs-4 text-center">
 				<div class="text-success counter text-center">0</div>
 				<div class="counter_label text-center">Projects</div>
 			</a>
-			<a href="javascript;;" class="col-sm-4 text-center">
+			<a href="javascript;;" class="col-sm-4 col-xs-4 text-center">
 				<div class="text-success counter text-center">{{$tasks['total']}}</div>
 				<div class="counter_label text-center">Tasks</div>
 			</a>
-			<a href="{{url('file/client-file/'.$customer->id)}}" class="col-sm-4 text-center">
+			<a href="{{url('file/client-file/'.$customer->id)}}" class="col-sm-4 col-xs-4 text-center">
 				<div class="text-success counter text-center">{{$files_count}}</div>
 				<div class="counter_label text-center">Uploads</div>
 			</a>

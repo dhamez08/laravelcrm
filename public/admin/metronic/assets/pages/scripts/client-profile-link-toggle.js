@@ -130,7 +130,7 @@ var profileLink = function () {
             handleLinksToggle();
             handleEditTags();
             handleClientTags();
-        },
+        }
     };
 
 }();
