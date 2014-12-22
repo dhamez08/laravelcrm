@@ -5,3 +5,6 @@ wkhtmltopdf-windows/
 public/document/
 public/documents/
 public/img/
+
+composer.lock
+composer.phar

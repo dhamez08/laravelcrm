@@ -174,7 +174,7 @@
 
 		</div>
 		<div class="col-lg-6 column sortable">
-			
+
 				<!-- BEGIN ACTIVITY -->
 				{{\Activity\ActivityController::get_instance()->getWidgetDisplay($customerId,'')}}
 				<!-- END ACTIVITY -->
