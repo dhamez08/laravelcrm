@@ -22,7 +22,7 @@
 		&nbsp;
 	@show
 	@section('innerpage-content')
-		<div class="col-md-2 col-summary">
+		<div class="col-lg-2 col-md-3 col-sm-3 col-summary">
 			<!-- CLIENT LEFT SIDEBAR -->
 			@if( $customer->type == 2 )
 				@include($view_path.'.clients.company.leftColumn')
@@ -32,10 +32,12 @@
 
 			<!-- END CLIENT LEFT SIDEBAR -->
 		</div>
-		<div class="col-md-10 col-summary">
+		<div class="col-lg-10 col-md-9 col-sm-9 col-summary">
+
 			<!-- CENTER COLUMN -->
 			@include($view_path.'.files.partials.files')
 			<!-- END CENTER COLUMN -->
+
 		</div>
 	@stop
 @stop

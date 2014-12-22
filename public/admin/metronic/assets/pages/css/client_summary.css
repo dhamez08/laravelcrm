@@ -8,8 +8,8 @@ div.sendemail {
 
 .summary-profile-pic .profilePic{
 	margin: auto;
-	width: 140px;
-	height: 150px;
+	width: 137px;
+	height: 148px;
 }
 
 .round-50 {
@@ -85,7 +85,7 @@ div.sendemail {
 .profilemenu a.client_menu{
 	float: left;
 	width: 100%;
-	font-size: 11px !important;
+	font-size: 10px !important;
 	font-weight: bold;
 	padding:0px;
 	cursor: pointer;
