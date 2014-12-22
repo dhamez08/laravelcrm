@@ -122,6 +122,7 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Ignited\Pdf\PdfServiceProvider',
+		'Barryvdh\Debugbar\ServiceProvider',
 
 	),
 
@@ -190,7 +191,7 @@ return array(
 		'Validator'         => 'Illuminate\Support\Facades\Validator',
 		'View'              => 'Illuminate\Support\Facades\View',
 		'PDF'  				=> 'Ignited\Pdf\Facades\Pdf',
-
+		'Debugbar' 			=> 'Barryvdh\Debugbar\Facade',
 	),
 
 );
