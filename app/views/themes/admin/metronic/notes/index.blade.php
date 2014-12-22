@@ -13,7 +13,13 @@
 									</div>
 									<div class="cont-col2">
 										<div class="desc">
-											 <a href="#" title="Note Subject">{{ $note->subject or "<NO SUBJECT>" }}</a>
+											 <a 
+											 	data-toggle="modal" 
+											 	data-target=".ajaxModal" 
+											 	href="{{ action('Notes\NotesController@getAjaxViewInput', array('note_id'=>$note->id)) }}" 
+											 	title="Note Subject">
+											 	{{ empty($note->subject) ? "<NO SUBJECT>" : $note->subject }}
+											 </a>
 										</div>
 									</div>
 								</div>
@@ -21,7 +27,7 @@
 							<div class="col2" style="width:50% !important">
 								<div class="cont">
 									<div class="cont-col1">
-										<small class="muted">Created By {{ $note->user->first_name }} {{ $note->user->last_name }} on {{ $note->created_at }}</small>
+										<small class="muted">Created By {{ $note->user->first_name }} {{ $note->user->last_name }} on {{ \Carbon\Carbon::parse($note->created_at)->format('m/d/Y') }} at {{ \Carbon\Carbon::parse($note->created_at)->format('H:i') }}</small>
 									</div>
 									<div class="cont-col2">
 										<a href="{{ action('Notes\NotesController@getDeleteNote',array('id'=>$note->id,'customerid'=>$note->customer_id)) }}" class="pull-right" title="Delete File"><i class="icon-trash"></i> </a>

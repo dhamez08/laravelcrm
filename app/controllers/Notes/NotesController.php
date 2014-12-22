@@ -72,14 +72,38 @@ class NotesController extends \BaseController {
 		$dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
 		$data 						= $this->data_view;
 		$data['customerId'] 		= $customerId;
+		$data['added_by']			= \Auth::user()->first_name . ' ' . \Auth::user()->last_name;
 		$data['pageTitle'] 			= 'Add Note';
 		$data['contentClass'] 		= '';
 		$data['portlet_body_class']	= '';
 		$data['portlet_title']		= 'Note';
 		$data['fa_icons']			= 'cog';
+		$data['form_type']			= 'create';
+		$data['input_attr']	= array('class' => 'form-control');
 		$data 						= array_merge($data,$dashboard_data);
 
 		return \View::make( $data['include'] . '.create', $data )->render();
+	}
+
+	public function getAjaxViewInput($note_id)
+	{
+		$note = \CustomerNotes\CustomerNotes::find($note_id);
+
+		$dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
+		$data 						= $this->data_view;
+		$data['note']				= $note;
+		$data['customerId'] 		= $note->customer_id;
+		$data['added_by']			= $note->user->first_name . ' ' . $note->user->last_name;
+		$data['pageTitle'] 			= 'View Note';
+		$data['contentClass'] 		= '';
+		$data['portlet_body_class']	= '';
+		$data['portlet_title']		= 'Note';
+		$data['fa_icons']			= 'cog';
+		$data['form_type']			= 'view';
+		$data['input_attr']	= array('class' => 'form-control', 'readonly');
+		$data 						= array_merge($data,$dashboard_data);
+
+		return \View::make( $data['include'] . '.create', $data )->render();		
 	}
 
 	/**

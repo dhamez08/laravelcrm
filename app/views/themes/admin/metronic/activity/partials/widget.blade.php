@@ -13,10 +13,10 @@
 			<i class="fa fa-plus"></i> Add Note </a>
 		</div>
 		<ul class="nav nav-tabs">
-			<li class="">
+			<li class="active">
 				<a href="#notes" data-toggle="tab">Notes </a>
 			</li>
-			<li class="active">
+			<li class="">
 				<a href="#messages" data-toggle="tab">Messages </a>
 			</li>
 			<li class="">
@@ -26,12 +26,12 @@
 	</div>
 	<div class="portlet-body tabbable-line">
 		<div class="tab-content">
-			<div class="tab-pane" id="notes">
+			<div class="tab-pane active" id="notes">
 				<div class="scroller" style="height:366px">
 					{{\Notes\NotesController::get_instance()->getIndex($customerId,'')}}
 				</div>
 			</div>
-			<div class="tab-pane active" id="messages">
+			<div class="tab-pane" id="messages">
 				<div class="scroller" style="height:366px">
 					{{\Messages\MessagesController::get_instance()->getMessagesByCustomer($customerId)}}
 				</div>
