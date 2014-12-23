@@ -35,7 +35,7 @@ var ClientSearch = function(){
                     if (s.type == 2) {
                         layout += s.company_name;
                     } else {
-                        layout += s.title + ' ' + s.first_name + ' ' + s.last_name;
+                        layout += s.first_name + ' ' + s.last_name;
                     }
                     layout += '</a>';
                     layout += '</li>';

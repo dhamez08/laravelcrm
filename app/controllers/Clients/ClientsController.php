@@ -1563,14 +1563,21 @@ class ClientsController extends \BaseController {
 	}
 
 	public function getClientlist(){
-		$clients = \Clients\Clients::CustomerBelongsUser(\Auth::id())
-			->where(function($query){
-				$query->where('first_name','LIKE','%'.\Input::get('keyword').'%')
-						->orWhere('last_name','LIKE','%'.\Input::get('keyword').'%');
-			})
-			->select('id','type','title','first_name','last_name','company_name')
-			->get();
 
+		$clients = \DB::table('customer')
+			->leftJoin('customer_address', 'customer_address.customer_id', '=', 'customer.id')
+			->leftJoin('customer_telephone', 'customer_telephone.customer_id', '=', 'customer.id')
+			->where('customer.belongs_user', '=', \Auth::id())
+			->where(function($query){
+				$query->where('first_name','LIKE',\Input::get('keyword').'%')
+					->orWhere('last_name','LIKE',\Input::get('keyword').'%')
+					->orWhere('customer_telephone.number','LIKE','%'.trim(\Input::get('keyword'),urldecode("+")).'%')
+					->orWhere('customer_address.postcode','LIKE',\Input::get('keyword').'%')
+					->orWhere('company_name',\Input::get('keyword').'%');
+			})
+			->groupBy('customer.id')
+			->get();
+		
 		return \Response::json( $clients );
 	}
 }
