@@ -75,29 +75,33 @@ class Twitter{
   }
 
   public function getRecent($name){
-    $lastId = '';
-    $connection = $this->Authenticate();
-    $tweets = $connection->get("https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=".$name);
-    $recent = array();
-    $x = 0;
-    $error = false;
-    foreach($tweets as $feeds){
-      $r = $connection->get("https://api.twitter.com/1.1/statuses/oembed.json?id=".$feeds->id_str);
-      $r->id_str = $feeds->id_str;
-      $error = (isset($feeds->id_str)) ? true : $error ;
-      $recent[$x] = $r;
-      $x++;
-    }
+    if( trim($name) != '') {
+      $lastId = '';
+      $connection = $this->Authenticate();
+      $tweets = $connection->get("https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=" . $name);
+      $recent = array();
+      $x = 0;
+      $error = false;
+      foreach ($tweets as $feeds) {
+        $r = $connection->get("https://api.twitter.com/1.1/statuses/oembed.json?id=" . $feeds->id_str);
+        $r->id_str = $feeds->id_str;
+        $error = (isset($feeds->id_str)) ? true : $error;
+        $recent[$x] = $r;
+        $x++;
+      }
 
-    if(isset($tweets->errors)){
-      return NULL;
-    }
+      if (isset($tweets->errors)) {
+        return NULL;
+      }
 
-    if(!isset($tweets->errors)) {
-      \Session::put('recent',$recent);
-      return $recent;
-    } else if(\Session::has('recent')){
-      return \Session::get('recent');
+      if (!isset($tweets->errors)) {
+        \Session::put('recent', $recent);
+        return $recent;
+      } else if (\Session::has('recent')) {
+        return \Session::get('recent');
+      }
+    } else {
+      return FALSE;
     }
   }
 

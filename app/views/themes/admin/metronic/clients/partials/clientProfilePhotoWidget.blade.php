@@ -44,7 +44,7 @@
                     <div class="fileinput-new thumbnail" style="width: 100px; height: 100px;">
                       <img src="http://www.placehold.it/100x100/EFEFEF/AAAAAA&amp;text=no+image" alt=""/>
                     </div>
-                    <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 100px; max-height: 10 0px;">
+                    <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 100px; max-height: 100px;">
                     </div>
                     <div>
                       <span class="btn small default btn-file">
@@ -80,7 +80,6 @@
           var photo_id = jQuery(this).attr('data-photo-id');
           $.get("{{url('clientprofile/changephoto')}}",{ id: photo_id, accnt: '{{$customer->id}}' },function(response){
             $("#main-profile-pic").attr('src',response.profile_image);
-            $(".img-circle").attr('src',response.profile_image);
           });
         });
       });

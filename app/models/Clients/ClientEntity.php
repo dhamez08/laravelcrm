@@ -86,6 +86,7 @@ class ClientEntity extends \Eloquent{
 		if( is_null($id) ) {
 			//create
 			$clients = new \Clients\Clients;
+			$clients->profile_image 			= \Input::get('profile_image','');
 		}else{
 			//update
 			$clients = \Clients\Clients::find($id);
@@ -125,7 +126,7 @@ class ClientEntity extends \Eloquent{
 		$clients->organisation 				= \Input::get('organisation','');
 		$clients->associated				= \Input::get('associated','');
 		$clients->relationship 				= \Input::get('relationship','');
-		$clients->profile_image 			= \Input::get('profile_image','');
+
 		$clients->duedil_company_details 	= \Input::get('duedil_company_details','');
 		$clients->vmd						= \Input::get('vmd','');
 		$clients->vmd_pin 					= \Input::get('vmd_pin','');

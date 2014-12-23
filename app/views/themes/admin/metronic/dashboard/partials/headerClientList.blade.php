@@ -9,7 +9,7 @@
 			@endforeach
 		@endif
 	</ul>
-	<div style="width:20%" class="page-toolbar">
+	<div style="width:30%" class="page-toolbar" id="clientSearch">
 		<div class="pull-right">
 			<div class="input-group">
 				<input type="text" placeholder="Search" class="form-control">
@@ -24,3 +24,16 @@
 @if(isset($customer))
 	@include($view_path.'.clients.partials.CustomerTagWidget')
 @endif
+
+@section('script-footer')
+	@parent
+		@section('footer-custom-js')
+			@parent
+			<script type="text/javascript" src="{{$asset_path}}/pages/scripts/client-search.js"></script>
+			<script>
+				jQuery(document).ready(function() {
+					ClientSearch.init( baseURL );
+				});
+			</script>
+		@stop
+@stop

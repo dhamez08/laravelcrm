@@ -516,8 +516,8 @@ class ClientsController extends \BaseController {
 		$data['belongToPartner']		= \Clients\ClientEntity::get_instance()->getPartnerBelong($data['customer']);
 		$data['associate']					= \Clients\ClientEntity::get_instance()->setAssociateCustomer($clientId);
 		$data['partner']						= \Clients\ClientEntity::get_instance()->getCustomerPartner();
-    $data['customFields']       = $data['customer']->customFieldsData();
-		$data['center_column_view']	= 'dashboard';
+    	$data['customFields']       		= $data['customer']->customFieldsData();
+		$data['center_column_view']			= 'dashboard';
 		$data['customerId']					= $clientId;
 		$data['clientId']						= $clientId;
 		$data['belongsTo']					= \Auth::id();
@@ -1560,5 +1560,19 @@ class ClientsController extends \BaseController {
 		$data['files_count']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->count();
 
 		return \View::make( $data['view_path'] . '.clients.custom', $data );
+	}
+
+	public function getClientlist(){
+		$group_id				= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+		$data['clients']		= \Clients\ClientEntity::get_instance()->getCustomerHead($group_id, $this->get_customer_type);
+		$clients = \Clients\Clients::CustomerBelongsUser($group_id)
+			->where(function($query){
+				$query->where('first_name','LIKE','%'.\Input::get('keyword').'%')
+						->orWhere('last_name','LIKE','%'.\Input::get('keyword').'%');
+			})
+			->select('id','type','title','first_name','last_name','company_name')
+			->get();
+
+		return \Response::json( $clients );
 	}
 }

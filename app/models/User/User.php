@@ -87,4 +87,9 @@ class User extends \Eloquent implements UserInterface, RemindableInterface {
 	public function customtabs() {
 		return $this->hasMany('\CustomFieldTab\CustomFieldTab','user_id','id')->whereNull('deleted_at');
 	}
+
+	public function scopegetUserFullname(){
+		$fullname = $this->where('id','=',\Auth::id())->select('title','first_name','last_name')->first();
+		return $fullname->title ." ". $fullname->first_name ." ".$fullname->last_name;
+	}
 }

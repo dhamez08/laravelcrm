@@ -45,7 +45,6 @@
 		 			<div class="col-lg-12">
 
 						<div class="btn-toolbar">
-							<div class="btn-group btn-group-sm btn-group-circle btn-group-justified">
 								<?php $sms = ''; ?>
 								@if( $telephone->count() > 0 )
 									@foreach($telephone->get() as $phone)
@@ -56,6 +55,7 @@
 								@endif
 
 								@if(!empty($sms))
+								<div class="btn-group btn-group-sm btn-group-circle btn-group-justified">
 								<a
 									class="openModal btn btn-sm green-meadow"
 									data-toggle="modal"
@@ -63,6 +63,8 @@
 									href="{{action('SMS\SMSController@getAjaxIndividualSendSms', array('customerid'=>$customer->id,'mobile_number'=>$sms))}}"
 								>
 								SMS</a>
+								@else
+								<div class="btn-group btn-group-sm btn-group-solid btn-group-justified">
 								@endif
 								<a href="#" data-target=".emailMessage" data-toggle="modal" class="openModal btn btn-sm red">Email</a>
 							</div>
@@ -314,15 +316,15 @@
 <div class="panel panel-default">
 	<div class="panel-body">
 		<div class="row">
-			<a href="javscript;;" class="col-sm-4 col-xs-4 text-center">
+			<a href="javscript:void(0);" class="col-sm-4 col-xs-4 text-center">
 				<div class="text-success counter text-center">0</div>
 				<div class="counter_label text-center">Projects</div>
 			</a>
-			<a href="javascript;;" class="col-sm-4 col-xs-4 text-center">
+			<a href="javascript:void(0);" class="col-sm-4 col-xs-4 text-center">
 				<div class="text-success counter text-center">{{$tasks['total']}}</div>
 				<div class="counter_label text-center">Tasks</div>
 			</a>
-			<a href="{{url('file/client-file/'.$customer->id)}}" class="col-sm-4 col-xs-4 text-center">
+			<a href="{{url('file/client-file/'.$customer->id)}}" class="col-sm-4 col-xs-4 text-left">
 				<div class="text-success counter text-center">{{$files_count}}</div>
 				<div class="counter_label text-center">Uploads</div>
 			</a>
@@ -330,7 +332,7 @@
 		<hr />
 		<div class="row">
 			<div class="col-md-12">
-				<h4>About {{$currentClient->displayCustomerName()}}</h4>
+				<h6 style="font-weight: bolder;">About {{$currentClient->displayCustomerName()}}</h6>
 				<p style="align:justify;">
 					{{$currentClient->background_info}}
 				</p>

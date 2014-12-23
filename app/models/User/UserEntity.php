@@ -204,4 +204,5 @@ class UserEntity extends \Eloquent implements UserInterface, RemindableInterface
 		return $get_meta;
 	}
 
+
 }

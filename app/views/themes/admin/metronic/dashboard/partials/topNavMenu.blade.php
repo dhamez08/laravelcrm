@@ -219,14 +219,10 @@
 		<li class="dropdown dropdown-user">
 			<a data-close-others="true" data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle" href="#">
 
-			@if(isset($customer) && $customer->profile_image > 0)
-				<img src="{{\CustomerProfileImages\CustomerProfileImages::where('id',$customer->profile_image)->first()->image}}" alt="Avatar" class="img-circle round-50"/>
-			@else
-				<img src="{{url('public/img/profile_images/profile.jpg')}}" alt="Avatar" class="img-circle round-50"/>
-			@endif
+			<img src="{{url('public/img/profile_images/profile.jpg')}}" alt="Avatar" class="img-circle round-50"/>
 
 			<span class="username username-hide-on-mobile">
-				{{isset($currentClient) ? $currentClient->displayCustomerName(): 'Guest'}}
+				{{\User\User::getUserFullname()}}
 			</span>
 			<i class="fa fa-angle-down"></i>
 			</a>
@@ -250,11 +246,13 @@
 		</li>
 		<!-- END USER LOGIN DROPDOWN -->
 		<!-- BEGIN QUICK SIDEBAR TOGGLER -->
+		<!--
 		<li style="display:none" class="dropdown dropdown-quick-sidebar-toggler">
 			<a class="dropdown-toggle" href="javascript:;">
 			<i class="icon-logout"></i>
 			</a>
 		</li>
+		-->
 		<!-- END QUICK SIDEBAR TOGGLER -->
 	</ul>
 </div>
