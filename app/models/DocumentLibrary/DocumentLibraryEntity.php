@@ -55,7 +55,7 @@ class DocumentLibraryEntity extends \Eloquent{
 	}
 
 	public function documents() {
-		$documents = $this->where('belongs_to', '=', \Auth::id())
+		$documents = \DB::table($this->table)->where('belongs_to', '=', \Auth::id())
 					->whereNull('deleted_at');
 		return $documents->get();
 	}
