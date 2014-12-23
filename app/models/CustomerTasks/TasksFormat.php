@@ -48,10 +48,10 @@ class TasksFormat extends Facade{
 		return $this->label->color;
 	}
 
-	public function displayHtmlLabelIcon(){
+	public function displayHtmlLabelIcon($show_icon = true){
 		$html  = '<span class="label label-sm" style="padding:3px;background-color:'.$this->displayColor().'">';
 			$html .= $this->displayAction();
-			$html .= '<i class="fa '.$this->displayIcon().'"></i>';
+			if($show_icon) $html .= '<i class="fa '.$this->displayIcon().'"></i>';
 		$html .= '</span>';
 		return $html;
 	}

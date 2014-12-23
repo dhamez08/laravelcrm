@@ -22,9 +22,46 @@
 		<p>Overdue : {{$tasks['due']->all}}</p>
 		<div class="scroller" style="height:256px" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd">
 			<!-- START TASK LIST -->
-			<ul class="task-list">
+			<!-- <ul class="task-list"> -->
+			<ul class="feeds">
 				@if(count($tasks['total']) > 0)
 					@foreach($tasks['data'] as $task)
+						<li>
+							<div class="col1" style="width:70% !important">
+								<div class="cont">
+									<div class="cont-col1">
+										<!-- TODO: Replace with dynamic icon -->
+										<div class="label label-sm label-info">
+											<i class="fa fa-file"></i>
+										</div>
+										{{$task->displayHtmlLabelIcon(false)}}
+									</div>
+									<div class="cont-col2">
+										<div class="desc" style="margin-left:120px">
+											<a class="openModal" data-toggle="modal" data-target=".ajaxModal" href="{{action('Task\TaskController@getEditClientTask',array('id'=>$task->id,'customerid'=>$task->customer_id,'redirect'=>'task'))}}">
+												{{$task->displayName()}}
+											</a>
+										</div>										
+									</div>
+								</div>
+							</div>
+							<div class="col2" style="width:30% !important">
+								<div class="cont">
+									<div class="cont-col1">
+										<small class="muted">on {{\Carbon\Carbon::parse($task->created_at)->format('d/m/Y')}} at {{\Carbon\Carbon::parse($task->created_at)->format('H:i')}}</small>
+									</div>
+									<div class="cont-col2">
+										<a href="{{
+						 						action('Task\TaskController@getCancelTask',
+						 							array('id'=>$task->id,'customerid'=>$task->customer_id))
+					 							}}" class="pull-right delete-task" title="Delete Task"><i class="icon-trash"></i> </a>
+									</div>									
+								</div>
+							</div>
+						</li>
+
+
+						<!--
 						<li class="">
 							<div class="task-title">
 								{{--$task->displayHtmlTaskDue()--}}
@@ -65,6 +102,7 @@
 									</div>
 								</div>
 						</li>
+						-->
 					@endforeach
 				@endif
 			</ul>
