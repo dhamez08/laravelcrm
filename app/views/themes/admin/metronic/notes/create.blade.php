@@ -48,11 +48,12 @@
 			<div class="form-group">
 				<a 
 					data-toggle="modal" 
-					data-target=".ajaxModal" 
+					data-target=".ajaxModalStacked" 
 					href="{{action(
 						'Clients\ClientsController@getCreateClientTask',
 						array(
-							'customerid'=>isset($customerId) ? $customerId:'')
+							'customerid'=>isset($customerId) ? $customerId:''
+							)
 						)
 					}}" 
 					class="btn btn-sm btn-success"

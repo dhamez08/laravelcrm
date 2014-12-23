@@ -91,6 +91,7 @@
 		</div>
 	</div>
 	{{\Task\TaskController::get_instance()->modalCreateTask()}}
+	@include($view_path . '.clients.partials.modals.stacked-modal', array('modalClass' => 'stackedModal', 'pageTitle' => 'Stacked Modal'))
 	<!-- END FOOTER -->
 @show
 
