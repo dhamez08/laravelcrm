@@ -1,6 +1,6 @@
 <div class="col-md-12">
 	<div class="row" id="portlets">
-		<div class="col-md-6 column">
+		<div class="col-lg-6 column">
 			<!-- BEGIN TASKS -->
 			{{\Task\TaskController::get_instance()->getWidgetDisplay($customerId,$belongsTo)}}
 			<!-- END TASKS -->
@@ -13,7 +13,7 @@
 						<span class="caption-subject bold uppercase">Files </span>
 					</div>
 					<div class="actions pull-left" style="margin-left: 5px;">
-						<a data-toggle="modal" role="button" href="#fileuploadmodal" class="btn btn-circle btn-sm green-meadow"><i class="fa fa-plus"></i> Add</a>
+						<a data-toggle="modal" role="button" href="#fileuploadmodal" class="btn btn-icon-only btn-circle btn-sm green-meadow"><i class="fa fa-plus"></i> </a>
 					</div>
 					<ul class="nav nav-tabs">
 						<li class="active">
@@ -173,121 +173,123 @@
 			<!-- END FILE -->
 
 		</div>
-		<div class="col-md-6 column sortable">
-			<!-- BEGIN ACTIVITY -->
-			{{\Activity\ActivityController::get_instance()->getWidgetDisplay($customerId,'')}}
-			<!-- END ACTIVITY -->
+		<div class="col-lg-6 column sortable">
 
-			<!-- BEGIN FEED -->
-			<div class="portlet light bordered">
-				<div class="portlet-title tabbable-line">
-					<div class="caption font-green-sharp">
-						<i class="icon-feed font-green-sharp"></i>
-						<span class="caption-subject bold uppercase">FEEDS </span>
+				<!-- BEGIN ACTIVITY -->
+				{{\Activity\ActivityController::get_instance()->getWidgetDisplay($customerId,'')}}
+				<!-- END ACTIVITY -->
+
+				<!-- BEGIN FEED -->
+				<div class="portlet light bordered">
+					<div class="portlet-title tabbable-line">
+						<div class="caption font-green-sharp">
+							<i class="icon-feed font-green-sharp"></i>
+							<span class="caption-subject bold uppercase">FEEDS </span>
+						</div>
+						<ul class="nav nav-tabs">
+							<li class="">
+								<a href="#facebook" data-toggle="tab"><i class="fa fa-facebook"></i> Facebook </a>
+							</li>
+							<li class="active">
+								<a href="#twitter" data-toggle="tab"><i class="fa fa-twitter"></i> Twitter </a>
+							</li>
+							<li class="">
+								<a href="#linkedin" data-toggle="tab"><i class="fa fa-linkedin"></i> Linkedin </a>
+							</li>
+						</ul>
 					</div>
-					<ul class="nav nav-tabs">
-						<li class="">
-							<a href="#facebook" data-toggle="tab"><i class="fa fa-facebook"></i> Facebook </a>
-						</li>
-						<li class="active">
-							<a href="#twitter" data-toggle="tab"><i class="fa fa-twitter"></i> Twitter </a>
-						</li>
-						<li class="">
-							<a href="#linkedin" data-toggle="tab"><i class="fa fa-linkedin"></i> Linkedin </a>
-						</li>
-					</ul>
-				</div>
-				<div class="portlet-body">
-					<div class="tab-content">
-						<div class="tab-pane" id="facebook">
-							<div class="scroller" style="height:350px" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd">
-								<ul class="feeds">
-									<li>
-										<div class="col1">
-											<div class="cont">
-												<div class="cont-col1">
-													<div class="label label-sm label-info">
-														<i class="fa fa-facebook"></i>
+					<div class="portlet-body">
+						<div class="tab-content">
+							<div class="tab-pane" id="facebook">
+								<div class="scroller" style="height:350px" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd">
+									<ul class="feeds">
+										<li>
+											<div class="col1">
+												<div class="cont">
+													<div class="cont-col1">
+														<div class="label label-sm label-info">
+															<i class="fa fa-facebook"></i>
+														</div>
 													</div>
-												</div>
-												<div class="cont-col2">
-													<div class="desc">
-														 Feeds From Facebook
+													<div class="cont-col2">
+														<div class="desc">
+															 Feeds From Facebook
+														</div>
 													</div>
 												</div>
 											</div>
-										</div>
-										<div class="col2">
-											<div class="date">
-												 Just now
+											<div class="col2">
+												<div class="date">
+													 Just now
+												</div>
 											</div>
-										</div>
-									</li>
-								</ul>
+										</li>
+									</ul>
+								</div>
 							</div>
-						</div>
-						<div class="tab-pane active" id="twitter">
-							<div style="overflow-y:auto;height:350px;min-height:350px;max-height:350px;" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd">
-								<ul class="feeds">
-									<li>
-										<div class="col1">
-											<div class="cont">
-												<div class="cont-col1">
-													<div class="label label-sm label-info">
-														<i class="fa fa-twitter"></i>
+							<div class="tab-pane active" id="twitter">
+								<div style="overflow-y:auto;height:350px;min-height:350px;max-height:350px;" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd">
+									<ul class="feeds">
+										<li>
+											<div class="col1">
+												<div class="cont">
+													<div class="cont-col1">
+														<div class="label label-sm label-info">
+															<i class="fa fa-twitter"></i>
+														</div>
 													</div>
-												</div>
-												<div class="cont-col2">
-													<div class="desc">
-														 Feeds from Twitter
+													<div class="cont-col2">
+														<div class="desc">
+															 Feeds from Twitter
+														</div>
 													</div>
 												</div>
 											</div>
-										</div>
-										<div class="col2">
-											<div class="date">
-												 Just now
+											<div class="col2">
+												<div class="date">
+													 Just now
+												</div>
 											</div>
-										</div>
-									</li>
-								</ul>
+										</li>
+									</ul>
+								</div>
 							</div>
-						</div>
-						<div class="tab-pane" id="linkedin">
-							<div class="scroller" style="height:350px" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd">
-								<ul class="feeds">
-									<li>
-										<div class="col1">
-											<div class="cont">
-												<div class="cont-col1">
-													<div class="label label-sm label-info">
-														<i class="fa fa-linkedin"></i>
+							<div class="tab-pane" id="linkedin">
+								<div class="scroller" style="height:350px" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd">
+									<ul class="feeds">
+										<li>
+											<div class="col1">
+												<div class="cont">
+													<div class="cont-col1">
+														<div class="label label-sm label-info">
+															<i class="fa fa-linkedin"></i>
+														</div>
 													</div>
-												</div>
-												<div class="cont-col2">
-													<div class="desc">
-														 Feeds from linkedin
+													<div class="cont-col2">
+														<div class="desc">
+															 Feeds from linkedin
+														</div>
 													</div>
 												</div>
 											</div>
-										</div>
-										<div class="col2">
-											<div class="date">
-												 Just now
+											<div class="col2">
+												<div class="date">
+													 Just now
+												</div>
 											</div>
-										</div>
-									</li>
-								</ul>
+										</li>
+									</ul>
+								</div>
 							</div>
 						</div>
 					</div>
+					<div class="portlet-footer">
+						<a href="#" class="pull-right">See all Feeds <i class="icon-arrow-right"></i></a>
+						<div class="clearfix"></div>
+					</div>
 				</div>
-				<div class="portlet-footer">
-					<a href="#" class="pull-right">See all Feeds <i class="icon-arrow-right"></i></a>
-					<div class="clearfix"></div>
-				</div>
-			</div>
-			<!-- END FEED-->
+				<!-- END FEED-->
+
 		</div>
 	</div>
 </div>
@@ -467,6 +469,11 @@
 				jQuery(document).ready(function() {
 					TwitterFeeds.init("{{URL::to('/')}}","{{\Twitter\Twitter::get_instance()->getTwitterUsername($customer->id)}}");
 				});
+				</script>
+				<script>
+					$(function(){
+						$("#twitter").find("iframe").css("width","99%");
+					});
 				</script>
 		@stop
 @stop
