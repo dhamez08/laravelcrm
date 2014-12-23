@@ -1563,9 +1563,7 @@ class ClientsController extends \BaseController {
 	}
 
 	public function getClientlist(){
-		$group_id				= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
-		$data['clients']		= \Clients\ClientEntity::get_instance()->getCustomerHead($group_id, $this->get_customer_type);
-		$clients = \Clients\Clients::CustomerBelongsUser($group_id)
+		$clients = \Clients\Clients::CustomerBelongsUser(\Auth::id())
 			->where(function($query){
 				$query->where('first_name','LIKE','%'.\Input::get('keyword').'%')
 						->orWhere('last_name','LIKE','%'.\Input::get('keyword').'%');
