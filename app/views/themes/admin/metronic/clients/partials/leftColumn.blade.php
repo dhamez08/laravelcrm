@@ -21,7 +21,8 @@
 			</div>
 		 	<div class="col-md-12">
 		 		<div class="description">
-			 		<p>{{$currentClient->displayCustomerName()}}</p>
+			 		<p style="color:#6B788C; margin-top:10px; font-size: 17px">{{$currentClient->displayCustomerName(false)}}</p>
+			 		<p style="color:#428bca">{{ $currentClient->job_title }}</p>
 			 		@if( $belongToPartner )
 						@if( $belongToPartner->type == 2 )
 							<span>{{$customer->job_title}} at </span>
