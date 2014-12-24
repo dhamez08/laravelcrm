@@ -9,7 +9,13 @@
 					@if($customtab->section1)
 						<div class="caption font-green-sharp">
 							<i class="icon-speech font-green-sharp"></i>
+							@if(!empty($customtab->section1_name))
 							<span class="caption-subject bold uppercase"> {{ $customtab->section1_name }}</span>
+							@else
+							<a href="{{ url('settings/custom-fields/custom-tab/'.$customtab->id.'?backToClient='.$customer->id) }}" class="btn btn-circle btn-default btn-sm">
+								<i class="fa fa-pencil"></i> Configure name
+							</a>
+							@endif
 						</div>
 					@endif
 					<div class="actions">
@@ -122,7 +128,13 @@
 						@if($customtab->section2)
 							<div class="caption font-green-sharp">
 								<i class="icon-speech font-green-sharp"></i>
+								@if(!empty($customtab->section2_name))
 								<span class="caption-subject bold uppercase"> {{ $customtab->section2_name }}</span>
+								@else
+								<a href="{{ url('settings/custom-fields/custom-tab/'.$customtab->id.'?backToClient='.$customer->id) }}" class="btn btn-circle btn-default btn-sm">
+									<i class="fa fa-pencil"></i> Configure name
+								</a>
+								@endif
 							</div>
 						@endif
 						<div class="actions">
@@ -235,7 +247,13 @@
 					@if($customtab->section3)
 						<div class="caption font-green-sharp">
 							<i class="icon-speech font-green-sharp"></i>
+							@if(!empty($customtab->section3_name))
 							<span class="caption-subject bold uppercase"> {{ $customtab->section3_name }}</span>
+							@else
+							<a href="{{ url('settings/custom-fields/custom-tab/'.$customtab->id.'?backToClient='.$customer->id) }}" class="btn btn-circle btn-default btn-sm">
+								<i class="fa fa-pencil"></i> Configure name 
+							</a>
+							@endif
 						</div>
 					@endif
 					<div class="actions">
@@ -344,7 +362,13 @@
 						@if($customtab->section4)
 							<div class="caption font-green-sharp">
 								<i class="icon-speech font-green-sharp"></i>
+								@if(!empty($customtab->section4_name))
 								<span class="caption-subject bold uppercase"> {{ $customtab->section4_name }}</span>
+								@else
+								<a href="{{ url('settings/custom-fields/custom-tab/'.$customtab->id.'?backToClient='.$customer->id) }}" class="btn btn-circle btn-default btn-sm">
+									<i class="fa fa-pencil"></i> Configure name
+								</a>
+								@endif
 							</div>
 						@endif
 						<div class="actions">
