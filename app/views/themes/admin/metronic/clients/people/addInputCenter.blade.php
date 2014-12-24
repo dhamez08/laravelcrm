@@ -1,3 +1,5 @@
+{{var_dump($title)}}
+{{var_dump($peopleRelationship)}}
 <div class="panel panel-default">
 	<div class="panel-body">
 		{{ Form::open(

@@ -221,7 +221,7 @@
 								  </tbody>
 								</table>
 								<p class="form-control-static text-center">
-									<a href="{{action('Clients\ClientsController@getAddFamilyPerson',array('clientId'=>$customer->id))}}">
+									<a class="openModal" data-toggle="modal" data-target=".familyMember" href="javscript:void();">
 										<i class="fa fa-plus-circle"></i>
 										Create New Person
 									</a>
@@ -380,8 +380,11 @@
 	</div>
 </div>
 
-<!--Profile Model-->
+<!--Profile Modal-->
 @include($view_path.'.clients.partials.clientProfilePhotoWidget')
 
-<!--Email Messaging Model-->
+<!--Email Messaging Modal-->
 @include($view_path.'.clients.partials.emailWidget')
+
+<!--Family Member Modal-->
+@include($view_path.'.clients.partials.familyMember')

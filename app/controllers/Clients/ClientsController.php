@@ -1303,13 +1303,30 @@ class ClientsController extends \BaseController {
 				);
 			}
 			\Clients\ClientEntity::get_instance()->createOrUpdate();
-			\Session::flash('message', 'Successfully Added Family Person');
-			return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>\Input::get('clientId')));
+			//\Session::flash('message', 'Successfully Added Family Person');
+
+			$data = array(
+				'flag' => TRUE,
+				'alert' => 'success',
+				'message' => 'Successfully Added Family Person'
+			);
+
+			return \Response::json($data);
+
+			//return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>\Input::get('clientId')));
 		}else{
 			\Input::flash();
-			return \Redirect::action('Clients\ClientsController@getAddFamilyPerson',array('clientId'=>\Input::get('clientId')))
-			->withErrors($validator)
-			->withInput();
+
+			//return \Redirect::action('Clients\ClientsController@getAddFamilyPerson',array('clientId'=>\Input::get('clientId')))
+			//->withErrors($validator)
+			//->withInput();
+
+			$data = array(
+				'flag' => FALSE,
+				'alert' => 'error',
+				'message' => $validator->messages()
+			);
+			return \Response::json($data);
 		}
 
 	}
