@@ -32,6 +32,7 @@ class CustomFieldTabEntity extends \Eloquent{
 
 	public function saveTab($data) {
 		$this->name = $data['tab'];
+		$this->icon = $data['icon'];
 		$this->user_id = \Auth::id();
 		$this->save();
 	}
@@ -113,6 +114,7 @@ class CustomFieldTabEntity extends \Eloquent{
 		// }
 
 		$this->name 		 = $data["tab_name"];
+		$this->icon 		 = $data["tab_icon"];
 		$this->section1 	 = $section1;
 		$this->section1_form = $section1_form;
 		$this->section1_name = $data["section1_name"];

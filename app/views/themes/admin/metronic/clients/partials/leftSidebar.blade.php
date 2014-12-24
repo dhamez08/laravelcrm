@@ -86,7 +86,7 @@
 				@foreach(Auth::user()->customtabs as $tab)
 				<li{{(\Input::get('custom') == $tab->id) ? '  class="start active open"': ''}}>
 					<a href="{{ url('clients/custom/'.$customer->id.'?custom='.$tab->id) }}">
-					<i class="icon-logout"></i>
+					<i class="fa {{ empty($tab->icon) ? 'fa-question' : $tab->icon }}"></i>
 					<span class="title">{{ $tab->name }}</span>
 					<span class="arrow "></span>
 					</a>

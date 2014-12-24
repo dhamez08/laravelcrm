@@ -17,6 +17,16 @@
 	      			<label for="tab">Tab name:</label>
 	      			<input type="text" class="form-control" id="tab" name="tab" placeholder="Enter the tab name">
 	      		</div>
+
+            <div class="form-group">
+              <label class="control-label">Icon</label>
+              <select name="icon" class="bs-select form-control" data-show-subtext="true" data-live-search="true">
+                @foreach($icons as $icon )
+                <option value="{{$icon}}" data-icon="{{$icon}}">{{$icon}}</option>
+                @endforeach
+              </select>
+            </div>
+
 	      	</div>
       	</div>
       	<div class="row">

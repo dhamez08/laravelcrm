@@ -68,5 +68,11 @@
 	@parent
 	@section('footer-custom-js')
 	@parent
+	<script src="{{$asset_path}}/pages/scripts/components-dropdowns.js"></script>
+	<script type="text/javascript">
+		jQuery(document).ready(function() {
+		   ComponentsDropdowns.initBootstrapSelect();
+		});
+	</script>
 	@stop
 @stop

@@ -258,6 +258,10 @@ var ComponentsDropdowns = function () {
             handleSelect2Modal();
             handleMultiSelect();
             handleBootstrapSelect();
+        },
+
+        initBootstrapSelect: function () {
+            handleBootstrapSelect();
         }
     };
 

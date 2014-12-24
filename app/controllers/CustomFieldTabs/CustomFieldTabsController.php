@@ -69,7 +69,7 @@ class CustomFieldTabsController extends \BaseController {
 		$data['pageTitle'] 		= 'Custom Field Settings';
 		$data['tabActive'] 		= 'custom-tabs';
 		$data['clientTabs']		= \Config::get('crm.settings.customFields.clientTabs');
-		$data['clientTabRows']	= $this->userEntity->find(\Auth::id())->tabs;
+		$data['clientTabRows']	= \Auth::user()->tabs; //$this->userEntity->find(\Auth::id())->tabs;
 		$data['clientFiles']	= \Config::get('crm.settings.customFields.clientFiles');
 		$data['clientFileRows']	= $this->userEntity->find(\Auth::id())->getClientFiles();
 		$data['customTabs']		= $this->customFieldTabEntity->getTabsByLoggedUser();
@@ -77,6 +77,7 @@ class CustomFieldTabsController extends \BaseController {
 		$data['clientFields']	= $this->customFieldEntity->getFieldsByLoggedUser();
 		$data['pageSubTitle'] 	= '';
 		$data['contentClass'] 	= 'settings';
+		$data['icons'] 			= array_keys( \TaskLabel\TaskLabelEntity::get_instance()->getIcons() );
 
 		$data = array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
 		//var_dump($data);exit();
@@ -85,12 +86,15 @@ class CustomFieldTabsController extends \BaseController {
 
 	public function postAddTab() {
 		$rules = array(
-			'tab' => 'required|min:3'
+			'tab' => 'required|min:3',
+			'icon' => 'required'
 		);
 
 		$messages = array(
 			'tab.required' => 'Tab name is required.',
-			'tab.min'=>'Tab name must have atleast 3 characters'
+			'tab.min'=>'Tab name must have atleast 3 characters',
+
+			'icon.required' => 'Icon is required.'
 		);
 
 		$validator = \Validator::make(\Input::all(), $rules, $messages);
@@ -156,6 +160,7 @@ class CustomFieldTabsController extends \BaseController {
 			$data['tab']		= $tab;
 			$data['pageSubTitle'] 	= '';
 			$data['contentClass'] 	= 'settings';
+			$data['icons'] 			= array_keys( \TaskLabel\TaskLabelEntity::get_instance()->getIcons() );			
 			$data = array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
 			return \View::make( $data['view_path'] . '.settings.custom-fields.edit-custom-tab', $data );
 		} else {

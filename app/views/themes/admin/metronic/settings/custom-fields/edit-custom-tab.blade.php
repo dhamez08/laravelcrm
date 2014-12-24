@@ -44,6 +44,14 @@
 									<label for="tab_name" class="control-label">Tab Name:</label>
 									<input type="text" name="tab_name" value="{{ $tab->name }}" class="form-control" />
 								</div>
+								<div class="col-md-4">
+									<label for="tab_icon" class="control-label">Icon:</label>
+									<select name="tab_icon" class="bs-select form-control" data-show-subtext="true" data-live-search="true">
+										@foreach($icons as $icon )
+										<option value="{{$icon}}" data-icon="{{$icon}}" {{ $tab->icon == $icon ? 'selected' : '' }}>{{$icon}}</option>
+										@endforeach
+									</select>
+								</div>								
 							</div>
 							<div class="row">
 								<div class="col-md-6">
@@ -221,5 +229,11 @@
 	@parent
 	@section('footer-custom-js')
 	@parent
+	<script src="{{$asset_path}}/pages/scripts/components-dropdowns.js"></script>
+	<script type="text/javascript">
+		jQuery(document).ready(function() {
+		   ComponentsDropdowns.initBootstrapSelect();
+		});
+	</script>	
 	@stop
 @stop

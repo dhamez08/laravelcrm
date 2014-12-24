@@ -21,6 +21,7 @@
 							<li class="list-group-item">
 								<div class="row">
 									<div class="col-md-9">
+										<i class="fa {{ empty($tab->icon) ? 'fa-question' : $tab->icon }}"></i>
 										{{ $tab->name }}
 									</div>
 									<div class="col-md-3 text-right">
