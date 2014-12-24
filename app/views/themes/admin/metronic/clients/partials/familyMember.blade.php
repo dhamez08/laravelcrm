@@ -142,6 +142,7 @@
                     var birthdate       = $("#member_birthdate").val();
                     var relationship    = $("#member_relation").val();
                     var customer_id     = $("#customer_id").val();
+                    var _token          = $("input[name='_token']").val();
 
                     var data = {
                         title: title,
