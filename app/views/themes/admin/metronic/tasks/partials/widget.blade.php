@@ -5,7 +5,21 @@
 			<i class="fa fa-check-square-o font-green-sharp"></i>
 			<span class="caption-subject bold uppercase">Task</span>
 		</div>
-		<div class="actions">
+		<div class="actions pull-left" style="margin-left: 5px">
+			<a
+				class="btn btn-icon-only btn-circle btn-sm green-meadow openModal"
+				data-toggle="modal"
+				data-target=".createTask"
+				href="{{action(
+						'Clients\ClientsController@getCreateClientTask',
+						array(
+							'customerid'=>isset($customerId) ? $customerId:'')
+						)
+					}}">
+				<i class="fa fa-plus"></i>
+			</a>
+
+			<!--
 			<a href="{{action(
 						'Clients\ClientsController@getCreateClientTask',
 						array(
@@ -16,6 +30,7 @@
 				data-toggle="modal"
 				class="btn btn-default btn-sm openModal">
 			<i class="fa fa-plus"></i> Add </a>
+			-->
 		</div>
 	</div>
 	<div class="portlet-body">

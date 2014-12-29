@@ -88,7 +88,7 @@
 					 	<div class="col-md-12">
 					 		<div class="form-body client-detail">
 					 			<div>
-									<span class="label label-info" style="font-size:9px;">{{$currentClient->type}} Address</span>
+									<span class="label label-info" style="font-size:11px;">{{$currentClient->type}} Address</span>
 									{{$currentClient->displayHtmlAddress()}}
 
 									<p class="form-control-static text-center">
@@ -110,7 +110,7 @@
 												$domain = trim($m[1]);
 											?>
 											<p>
-												<span class="label label-info" style="font-size:9px;">
+												<span class="label label-info" style="font-size:11px;">
 
 													@if(strtolower($mail->type) == "home")
 														<i class="fa fa-home"></i>
@@ -129,7 +129,7 @@
 									@if( $telephone->count() > 0 )
 										@foreach($telephone->get() as $phone)
 											<p>
-												<span class="label label-info" style="font-size:9px;">{{$phone->type}}</span>
+												<span class="label label-info" style="font-size:11px;">{{$phone->type}}</span>
 												@if( $phone->type == 'Mobile' )
 													<a
 														class="openModal"
