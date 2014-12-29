@@ -85,3 +85,35 @@ ul.client-social-icons {
     padding-left: 5px;
     padding-right: 5px;
 }
+
+.table-feeds {
+
+}
+
+.table-feeds .label-icon {
+	display: inline-block;
+	padding: 5px 4px 6px 5px;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.table-feeds .label-icon i {
+	text-align: center;
+	font-size: 14px;
+}
+.table-feeds tr {
+	background-color: #fafafa;
+	margin-bottom: 7px;
+}
+
+.table-feeds tr [class^="fa-"], 
+.table-feeds tr [class^="glyphicon-"], 
+.table-feeds tr [class^="icon-"], 
+.table-feeds tr [class*=" fa-"], 
+.table-feeds tr [class*=" glyphicon-"], 
+.table-feeds tr [class*=" icon-"] {
+	display: inline-block;
+	width: 1.25em;
+	text-align: center;	
+}
+
