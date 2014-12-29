@@ -1530,7 +1530,15 @@ class ClientsController extends \BaseController {
 		}else{
 			$redirect = url('clients');
 		}
+
 		$data = array('clientid'=>$clientId,'redirect'=>$redirect);
+
+		if( \Input::has('note_id') ) {
+			$data['note_id'] = \Input::get('note_id');
+		}
+
+		\Debugbar::info(\Input::all());
+
 		return \Task\TaskController::get_instance()->getAjaxModalCreateTask($data);
 	}
 

@@ -145,6 +145,21 @@
 						}}
 					</div>
 				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Attach Note</label>
+					<div class="col-sm-10">
+						{{
+							Form::select(
+								'note',
+								$notes,
+								$chosen_note,
+								array(
+									'class'=>'form-control',
+								)
+							)
+						}}
+					</div>
+				</div>				
 			  {{Form::hidden('redirect',null,array('id'=>'redirect'))}}
 			  <button type="submit" class="btn btn-primary">Update</button>
 

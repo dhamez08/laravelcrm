@@ -103,8 +103,7 @@ class TaskController extends \BaseController {
 			$data['startHour'] = $start->hour;
 			$data['startMinute'] = $start->minute;
 		}
-
-
+	
 		$data['pageTitle'] 		= 'Create Task';
 		$data['pageSubTitle'] 	= '';
 		$data['option'] 		= (object)$arrayOtherOption;
@@ -113,6 +112,13 @@ class TaskController extends \BaseController {
 		$data['getMin']			= \Config::get('crm.task_min');
 		$data['taskLabel']		= \TaskLabel\TaskLabelEntity::get_instance()->getAllTaskLabel()->lists('action_name','id');
 		$data['remindMin']		= \Config::get('crm.task_remind');
+		
+		$data['notes'][0]		= 'None';
+		$data['notes'] 			= array_replace($data['notes'], \Clients\Clients::find($data['currentClient']->id)->notes->lists('subject', 'id'));
+		$data['chosen_note']	= isset($arrayOtherOption['note_id']) ? $arrayOtherOption['note_id'] : null;
+
+		\Debugbar::info($data);
+
 		$data 					= array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
 		return \View::make( $data['view_path'] . '.tasks.createInput', $data );
 	}
@@ -165,9 +171,30 @@ class TaskController extends \BaseController {
 				'remind' 		=> $remind_time,
 				'remind_mins' 	=> \Input::get('remind_mins'),
 				//'belongs_to' 	=> \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id
-				'belongs_to'	=> \Auth::id()
+				'belongs_to'	=> \Auth::id(),
+				'note_id'		=> \Input::get('note') == 0 ? null : \Input::get('note')
 			);
 			$task = \CustomerTasks\CustomerTasksEntity::get_instance()->createOrUpdate($data, $taskid);
+
+			// Get current note
+			$taskNoteId = \CustomerTasks\CustomerTasks::find($taskid)->note_id;
+
+			\Debugbar::info($taskNoteId);
+
+			// Update old note
+			if(!empty($taskNoteId)) {
+				$oldNote = \CustomerNotes\CustomerNotes::find($taskNoteId);
+				\Debugbar::info($oldNote);
+				$oldNote->task_id = null;
+				$oldNote->save();
+			}
+
+			// Update new note
+			if(\Input::get('note') > 0) {
+				$newNote = \CustomerNotes\CustomerNotes::find(\Input::get('note'));
+				$newNote->task_id = $task->id;
+				$newNote->save();
+			}
 
 			\Session::flash('message', 'Successfully Updated Task' );
 			if( \Input::has('redirect') ){
@@ -229,10 +256,18 @@ class TaskController extends \BaseController {
 				'status' 		=> '1',
 				'remind' 		=> $remind_time,
 				'remind_mins' 	=> \Input::get('remind_mins'),
-				'belongs_to' 	=> \Auth::id()
+				'belongs_to' 	=> \Auth::id(),
 				//'belongs_to' 	=> \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id
+				'note_id'		=> \Input::get('note') == 0 ? null : \Input::get('note')
 			);
 			$task = \CustomerTasks\CustomerTasksEntity::get_instance()->createOrUpdate($data);
+
+			// Update attached note
+			if(\Input::get('note') > 0) {
+				$note = \CustomerNotes\CustomerNotes::find(\Input::get('note'));
+				$note->task_id = $task->id;
+				$note->save();
+			}
 
 			\Session::flash('message', 'Successfully Added Task' );
 			if( \Input::has('redirect') ){
@@ -274,6 +309,11 @@ class TaskController extends \BaseController {
 		}else{
 			$data['client_linkTo'] = $linkTo->first_name.' '.$linkTo->last_name;
 		}
+
+		$data['notes'][0]		= 'None';
+		$data['notes'] 			= array_replace($data['notes'], \Clients\Clients::find($data['tasks']->customer_id)->notes->lists('subject', 'id'));
+		$data['chosen_note']	= $data['tasks']->note_id ? $data['tasks']->note_id : null;
+
 		$data 					= array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
 		//var_dump($data['tasks']->name);exit();
 		return \View::make( $data['view_path'] . '.tasks.editInput', $data );

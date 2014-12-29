@@ -46,4 +46,9 @@ class CustomerTasks extends \Eloquent{
 		return $this->belongsTo('\Clients\Clients','customer_id','id');
 	}
 
+	public function note()
+	{
+		return $this->hasOne('\CustomerNotes\CustomerNotes', 'note_id', 'id');
+	}
+
 }
