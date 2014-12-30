@@ -18,6 +18,7 @@ class CustomerNotes extends \Eloquent{
 		'note',
 		'file',
 		'added_by',
+		'task_id',
 	);
 
 	public function user(){
@@ -38,6 +39,24 @@ class CustomerNotes extends \Eloquent{
 
 	public function scopeNoteId($query, $id){
 		return $query->where('id','=',$id);
+	}
+
+	public function scopeNoTasks($query, $includeNoteIds = array()) 
+	{
+		$query = $query->where(function($query) use ($includeNoteIds)
+		{
+			$query->whereNull('task_id');
+			if(count($includeNoteIds) > 0)
+				$query->orWhereIn('id', $includeNoteIds);
+		});
+
+		/*
+		$query = $query->whereNull('task_id');
+		if(count($includeNoteIds) > 0)
+			$query = $query->orWhereIn('task_id', $includeNoteIds);
+		*/
+
+		return $query;
 	}
 
 }

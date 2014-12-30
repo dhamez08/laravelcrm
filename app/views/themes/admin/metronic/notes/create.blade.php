@@ -46,25 +46,6 @@
 
 			@if(in_array($form_type, array('create')))
 			<div class="form-group">
-				<a 
-					data-toggle="modal" 
-					data-target=".ajaxModalStacked" 
-					href="{{action(
-						'Clients\ClientsController@getCreateClientTask',
-						array(
-							'customerid'=>isset($customerId) ? $customerId:''
-							)
-						)
-					}}" 
-					class="btn btn-sm btn-success"
-				>
-					Set Reminder
-				</a>
-			</div>
-			@endif
-
-			@if(in_array($form_type, array('create')))
-			<div class="form-group">
 				<label>Upload File (Optional)</label>
 				{{Form::file('notefile')}}
 			</div>
