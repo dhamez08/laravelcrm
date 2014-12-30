@@ -6,7 +6,7 @@
 			<span class="caption-subject bold font-yellow-lemon uppercase">
 			{{$title}} </span>
 			@else
-			<a href="{{ url('settings/custom-fields/?backToClientFiles='.$customer->id) }}" class="btn btn-circle btn-default btn-sm">
+			<a href="{{ url('settings/custom-fields?backToClientFiles='.$customer->id) }}" class="btn btn-circle btn-default btn-sm">
 				<i class="fa fa-pencil"></i> Configure name 
 			</a>
 			@endif
