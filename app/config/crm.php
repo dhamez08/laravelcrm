@@ -1,5 +1,6 @@
 <?php
 return array(
+	'timezone' => 'Europe/London',
 	'themes' => array(
 		'admin' => array(
 			'name' 		=> 'Metronic',
@@ -52,6 +53,7 @@ return array(
 					'placeholder'	=>	'Enter a name for section 4',
 					'readonly'		=>	0
 				),
+				/*
 				array(
 					'label_name'	=>	'Section 5 Name:',
 					'form_name'		=>	'section5',
@@ -66,6 +68,7 @@ return array(
 					'placeholder'	=>	'Enter a name for section 6',
 					'readonly'		=>	0
 				),
+				*/
 			)
 		)
 	),

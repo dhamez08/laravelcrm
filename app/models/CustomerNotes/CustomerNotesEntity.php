@@ -27,6 +27,14 @@ class CustomerNotesEntity extends \Eloquent{
 		return self::$instance;
 	}
 
+    public function getCreatedAtAttribute($value)
+    {
+        return \Carbon\Carbon::createFromTimestamp(strtotime($value))
+            ->timezone(\Config::get('crm.timezone'))
+            ->toDateTimeString()
+        ;
+    }	
+
 	/**
 	 * This is use to create user or update
 	 * this is full field, mainly use in register

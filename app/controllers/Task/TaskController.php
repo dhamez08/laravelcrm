@@ -114,7 +114,7 @@ class TaskController extends \BaseController {
 		$data['remindMin']		= \Config::get('crm.task_remind');
 		
 		$data['notes'][0]		= 'None';
-		$data['notes'] 			= array_replace($data['notes'], \Clients\Clients::find($data['currentClient']->id)->notes->lists('subject', 'id'));
+		$data['notes'] 			= array_replace($data['notes'], \CustomerNotes\CustomerNotes::customerId($data['currentClient']->id)->noTasks()->lists('subject', 'id'));
 		$data['chosen_note']	= isset($arrayOtherOption['note_id']) ? $arrayOtherOption['note_id'] : null;
 
 		\Debugbar::info($data);
@@ -174,17 +174,15 @@ class TaskController extends \BaseController {
 				'belongs_to'	=> \Auth::id(),
 				'note_id'		=> \Input::get('note') == 0 ? null : \Input::get('note')
 			);
-			$task = \CustomerTasks\CustomerTasksEntity::get_instance()->createOrUpdate($data, $taskid);
 
 			// Get current note
 			$taskNoteId = \CustomerTasks\CustomerTasks::find($taskid)->note_id;
 
-			\Debugbar::info($taskNoteId);
+			$task = \CustomerTasks\CustomerTasksEntity::get_instance()->createOrUpdate($data, $taskid);			
 
 			// Update old note
 			if(!empty($taskNoteId)) {
 				$oldNote = \CustomerNotes\CustomerNotes::find($taskNoteId);
-				\Debugbar::info($oldNote);
 				$oldNote->task_id = null;
 				$oldNote->save();
 			}
@@ -311,7 +309,7 @@ class TaskController extends \BaseController {
 		}
 
 		$data['notes'][0]		= 'None';
-		$data['notes'] 			= array_replace($data['notes'], \Clients\Clients::find($data['tasks']->customer_id)->notes->lists('subject', 'id'));
+		$data['notes'] 			= array_replace($data['notes'],\CustomerNotes\CustomerNotes::customerId($data['tasks']->customer_id)->noTasks(array($data['tasks']->note_id))->lists('subject', 'id'));
 		$data['chosen_note']	= $data['tasks']->note_id ? $data['tasks']->note_id : null;
 
 		$data 					= array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());

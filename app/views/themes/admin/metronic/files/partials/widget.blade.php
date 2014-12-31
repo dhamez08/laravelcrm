@@ -1,9 +1,15 @@
 <div class="portlet portlet-sortable light bordered" style="min-height:500px;">
 	<div class="portlet-title tabbable-line">
 		<div class="caption">
+			@if(trim($title) !== '')
 			<i class="icon-pin font-yellow-lemon"></i>
 			<span class="caption-subject bold font-yellow-lemon uppercase">
 			{{$title}} </span>
+			@else
+			<a href="{{ url('settings/custom-fields?backToClientFiles='.$customer->id) }}" class="btn btn-circle btn-default btn-sm">
+				<i class="fa fa-pencil"></i> Configure name 
+			</a>
+			@endif
 		</div>
 		<ul class="nav nav-tabs">
 			<li  class="active">

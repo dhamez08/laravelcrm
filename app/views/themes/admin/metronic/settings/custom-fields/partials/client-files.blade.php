@@ -13,6 +13,9 @@
 							Customise client file sections.
 							<br /><br />
 							{{ Form::open(array('url' => 'settings/custom-fields/save-custom-files')) }}
+								@if(\Input::has('backToClientFiles'))
+								<input type="hidden" name="backToClientFiles" value="{{ \Input::get('backToClientFiles') }}">
+								@endif
 								@foreach($clientFiles as $key => $file)
 								<div>
 	        						<div class="form-group {{ $file['field_name'] }}">
