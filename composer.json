@@ -9,7 +9,8 @@
 		"ignited/laravel-pdf": "1.*",
 		"h4cc/wkhtmltopdf-i386": "*",
 		"h4cc/wkhtmltopdf-amd64": "0.11.0-RC1",
-		"barryvdh/laravel-debugbar": "~1.8"
+		"barryvdh/laravel-debugbar": "~1.8",
+		"atticmedia/anvard": "dev-master"
 	},
 	"autoload": {
 		"classmap": [

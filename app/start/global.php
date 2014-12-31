@@ -86,5 +86,14 @@ App::missing(function($exception)
 	//return Response::view('error', array(), 404);
 });
 
+/*
+|--------------------------------------------------------------------------
+| Bind Hybrid Auth
+|--------------------------------------------------------------------------
+*/
+App::bind('Hybrid_Auth', function() {
+	return new Hybrid_Auth(app_path() . '/config/packages/atticmedia/anvard/hybridauth.php');
+});
+
 require app_path().'/filters.php';
 require app_path().'/composers/client.php';

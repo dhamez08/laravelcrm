@@ -21,6 +21,7 @@ Route::get( 'logout' , 'AuthController@getLogout' );
 Route::get( 'confirmcode/{confirm_code}' , 'AuthController@getConfirmAuthCode' );
 Route::controller( 'register' , 'RegisterController' );
 Route::get( 'marketing/sms-receipt' , 'Marketing\MarketingController@getSmsReceipt' );
+Route::get('social/{action?}',array("as"=>"hybridauth",	"uses"=>"SocialMediaAccount\SocialMediaAccountController@getAuth"));
 Route::group(array('before' => 'auth'), function()
 {
 	Route::controller( 'clientprofile' , 'ClientProfilePhoto\ClientProfilePhotoController');

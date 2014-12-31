@@ -92,4 +92,8 @@ class User extends \Eloquent implements UserInterface, RemindableInterface {
 		$fullname = $this->where('id','=',\Auth::id())->select('title','first_name','last_name')->first();
 		return $fullname->title ." ". $fullname->first_name ." ".$fullname->last_name;
 	}
+
+	public function profiles() {
+		return $this->hasMany('Profile');
+	}
 }

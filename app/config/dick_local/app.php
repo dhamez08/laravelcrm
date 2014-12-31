@@ -15,4 +15,10 @@ return array(
 
 	'debug' => true,
 
+	'url' => 'http://laravel.dev.com/',
+
+	'providers' => array(
+		'Atticmedia\Anvard\AnvardServiceProvider'
+	)
+
 );
