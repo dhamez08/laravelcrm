@@ -1,5 +1,6 @@
 <?php
 return array(
+	'timezone' => 'Europe/London',
 	'themes' => array(
 		'admin' => array(
 			'name' 		=> 'Metronic',

@@ -80,7 +80,7 @@
 								@endif
 							</td>
 							<td>
-								<small class="muted">Created By {{ $note->user->first_name }} {{ $note->user->last_name }} on {{ \Carbon\Carbon::parse($note->created_at)->format('m/d/Y') }} at {{ \Carbon\Carbon::parse($note->created_at)->format('H:i') }}</small>
+								<small class="muted">Created By {{ $note->user->first_name }} {{ $note->user->last_name }} on {{ \Carbon\Carbon::parse($note->created_at)->format('d/m/Y') }} at {{ \Carbon\Carbon::parse($note->created_at)->format('H:i') }}</small>
 							</td>
 							<td>
 								<a href="{{ action('Notes\NotesController@getDeleteNote',array('id'=>$note->id,'customerid'=>$note->customer_id)) }}" class="pull-right" title="Delete File"><i class="icon-trash"></i> </a>

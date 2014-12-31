@@ -118,7 +118,7 @@ class NotesController extends \BaseController {
 		// prefix first
 		// group id
 		// time
-		$file_name = $this->prefixNoteFileName . '_' . time() . '.' . \Input::file($fileName)->getClientOriginalExtension();
+		$file_name = $this->prefixNoteFileName . '_' . time() . '_' . \Input::file($fileName)->getClientOriginalName();
 		// upload
 		$upload_success = \Input::file($fileName)->move($this->noteFolder, $file_name);
 		if($upload_success ){

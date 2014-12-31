@@ -21,6 +21,14 @@ class CustomerNotes extends \Eloquent{
 		'task_id',
 	);
 
+    public function getCreatedAtAttribute($value)
+    {
+        return \Carbon\Carbon::createFromTimestamp(strtotime($value))
+            ->timezone(\Config::get('crm.timezone'))
+            ->toDateTimeString()
+        ;
+    }	
+
 	public function user(){
 		return $this->hasOne('\User\User','id','added_by');
 	}

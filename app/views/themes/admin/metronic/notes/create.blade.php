@@ -55,6 +55,7 @@
 				@if(empty($note->file))
 					<div class="alert alert-info">No File.</div>
 				@else
+					<span class="label label-info">{{ $note->file }}</span>
 					<a href="{{ url('public/documents/' . $note->file) }}" target="_blank" class="btn btn-sm btn-primary"><i class="fa fa-file"></i> View/Download File</a>
 				@endif				
 			</div>			
