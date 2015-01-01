@@ -145,21 +145,38 @@
 						}}
 					</div>
 				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">Attach Note</label>
-					<div class="col-sm-10">
-						{{
-							Form::select(
-								'note',
-								$notes,
-								$chosen_note,
-								array(
-									'class'=>'form-control',
-								)
-							)
-						}}
+
+			<div class="form-group">
+				<div class="col-sm-12">
+					<ul class="nav nav-tabs">
+						@if(!\Input::has('note_id'))
+						<li class="{{ $noteType == 'note_custom' ? 'active' : '' }}">
+							<a href="#note_custom" data-toggle="tab" data-tab="note_custom" class="note-tab-types">
+								Add Manual Note 
+							</a>
+						</li>
+						@endif
+						<li class="{{ $noteType == 'note_existing' ? 'active' : '' }}">
+							<a href="#note_existing" data-toggle="tab" data-tab="note_existing" class="note-tab-types">
+								Add Existing Note 
+							</a>				
+						</li>
+					</ul>
+					<div class="tab-content">
+						@if(!\Input::has('note_id'))
+						<div class="tab-pane fade {{ $noteType == 'note_custom' ? 'active in' : '' }}" id="note_custom">
+							{{ Form::textarea('custom_note', null, array('class' => 'form-control', 'placeholder' => 'Enter note here (optional)')) }}
+						</div>
+						@endif
+						<div class="tab-pane fade {{ $noteType == 'note_existing' ? 'active in' : '' }}" id="note_existing">
+							{{ \Notes\NotesController::get_instance()->getIndex($tasks->customer_id,'', $existingNoteViewType, $tasks->note_id, $notesOtherData) }}
+						</div>
 					</div>
-				</div>				
+				</div>
+			</div>
+
+			{{ Form::hidden('note_type', $noteType, array('id' => 'note_type')) }}
+			
 			  {{Form::hidden('redirect',null,array('id'=>'redirect'))}}
 			  <button type="submit" class="btn btn-primary">Update</button>
 

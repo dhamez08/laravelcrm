@@ -113,11 +113,23 @@ class TaskController extends \BaseController {
 		$data['taskLabel']		= \TaskLabel\TaskLabelEntity::get_instance()->getAllTaskLabel()->lists('action_name','id');
 		$data['remindMin']		= \Config::get('crm.task_remind');
 		
-		$data['notes'][0]		= 'None';
-		$data['notes'] 			= array_replace($data['notes'], \CustomerNotes\CustomerNotes::customerId($data['currentClient']->id)->noTasks()->lists('subject', 'id'));
+		//$data['notes'][0]		= 'None';
+		//$data['notes'] 			= array_replace($data['notes'], \CustomerNotes\CustomerNotes::customerId($data['currentClient']->id)->noTasks()->lists('subject', 'id'));
 		$data['chosen_note']	= isset($arrayOtherOption['note_id']) ? $arrayOtherOption['note_id'] : null;
 
-		\Debugbar::info($data);
+		$data['existingNoteViewType'] = 'task-create';
+
+		$data['notesOtherData'] = array();
+		if(!isset($arrayOtherOption['note_id'])) {
+			$data['notesOtherData'] = array(
+				'only_available' => true
+			);
+		} else {
+			$data['notesOtherData'] = array(
+				'only_selected' => true,
+				//'selected' => isset($arrayOtherOption['note_id']) ? $arrayOtherOption['note_id'] : null
+			);
+		}
 
 		$data 					= array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
 		return \View::make( $data['view_path'] . '.tasks.createInput', $data );
@@ -128,15 +140,23 @@ class TaskController extends \BaseController {
 			'name' => 'required|min:3',
 			'getclient' => 'required',
 			'task_date' => 'required',
+			'note_type' => 'required',			
 		);
 		$messages = array(
 			'name.required'=>'Task Name is required',
 			'getclient.required'=>'Link to client is required',
+			'note_type.required'=>'Note Type is required',			
 			'name.min'=>'Task Name must have more than 3 character',
 			'task_date.required'=>'Task date is required',
 			'task_date.date'=>'Date is invalid',
 			'task_date.date_format'=>'Date format is invalid',
 		);
+
+		//Additional rules
+		if(\Input::get('note_type') == 'note_existing') {
+			$rules['note'] = 'required';
+			$messages['note.required'] = 'Existing Note is required';
+		}		
 
 		$validator = \Validator::make(\Input::all(), $rules, $messages);
 		if($validator->passes()){
@@ -172,7 +192,11 @@ class TaskController extends \BaseController {
 				'remind_mins' 	=> \Input::get('remind_mins'),
 				//'belongs_to' 	=> \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id
 				'belongs_to'	=> \Auth::id(),
-				'note_id'		=> \Input::get('note') == 0 ? null : \Input::get('note')
+
+				'note_type'		=> \Input::get('note_type'),
+				'custom_note'	=> \Input::get('note_type') == 'note_custom' ? \Input::get('custom_note') : null,
+				'custom_note_file' => null,
+				'note_id'		=> \Input::get('note_type') == 'note_existing' ? \Input::get('note') : null				
 			);
 
 			// Get current note
@@ -188,7 +212,7 @@ class TaskController extends \BaseController {
 			}
 
 			// Update new note
-			if(\Input::get('note') > 0) {
+			if(\Input::get('note_type') == 'note_existing') {
 				$newNote = \CustomerNotes\CustomerNotes::find(\Input::get('note'));
 				$newNote->task_id = $task->id;
 				$newNote->save();
@@ -212,15 +236,23 @@ class TaskController extends \BaseController {
 			'task_name' => 'required|min:3',
 			'getclient' => 'required',
 			'task_date' => 'required',
+			'note_type' => 'required',
 		);
 		$messages = array(
 			'task_name.required'=>'Task Name is required',
 			'getclient.required'=>'Link to client is required',
+			'note_type.required'=>'Note Type is required',
 			'task_name.min'=>'Task Name must have more than 3 character',
 			'task_date.required'=>'Task date is required',
 			'task_date.date'=>'Date is invalid',
 			'task_date.date_format'=>'Date format is invalid',
 		);
+
+		//Additional rules
+		if(\Input::get('note_type') == 'note_existing') {
+			$rules['note'] = 'required';
+			$messages['note.required'] = 'Existing Note is required';
+		}
 
 		$validator = \Validator::make(\Input::all(), $rules, $messages);
 		if($validator->passes()){
@@ -256,12 +288,16 @@ class TaskController extends \BaseController {
 				'remind_mins' 	=> \Input::get('remind_mins'),
 				'belongs_to' 	=> \Auth::id(),
 				//'belongs_to' 	=> \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id
-				'note_id'		=> \Input::get('note') == 0 ? null : \Input::get('note')
+				
+				'note_type'		=> \Input::get('note_type'),
+				'custom_note'	=> \Input::get('note_type') == 'note_custom' ? \Input::get('custom_note') : null,
+				'custom_note_file' => null,
+				'note_id'		=> \Input::get('note_type') == 'note_existing' ? \Input::get('note') : null
 			);
 			$task = \CustomerTasks\CustomerTasksEntity::get_instance()->createOrUpdate($data);
 
 			// Update attached note
-			if(\Input::get('note') > 0) {
+			if(\Input::get('note_type') == 'note_existing') {
 				$note = \CustomerNotes\CustomerNotes::find(\Input::get('note'));
 				$note->task_id = $task->id;
 				$note->save();
@@ -311,6 +347,21 @@ class TaskController extends \BaseController {
 		$data['notes'][0]		= 'None';
 		$data['notes'] 			= array_replace($data['notes'],\CustomerNotes\CustomerNotes::customerId($data['tasks']->customer_id)->noTasks(array($data['tasks']->note_id))->lists('subject', 'id'));
 		$data['chosen_note']	= $data['tasks']->note_id ? $data['tasks']->note_id : null;
+		$data['noteType']		= $data['tasks']->note_type;
+		$data['existingNoteViewType'] = 'task-create';
+
+		$data['notesOtherData'] = array();
+		if(!\Input::has('note_id')) {
+			$data['notesOtherData'] = array(
+				'only_available' => true,
+				'include_selected' => true
+			);
+		} else {
+			$data['notesOtherData'] = array(
+				'only_selected' => true,
+				//'selected' => isset($arrayOtherOption['note_id']) ? $arrayOtherOption['note_id'] : null
+			);
+		}
 
 		$data 					= array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
 		//var_dump($data['tasks']->name);exit();

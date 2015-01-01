@@ -143,21 +143,42 @@
 					}}
 				</div>
 			</div>
+
 			<div class="form-group">
-				<label class="col-sm-2 control-label">Attach Note</label>
-				<div class="col-sm-10">
-					{{
-						Form::select(
-							'note',
-							$notes,
-							$chosen_note,
-							array(
-								'class'=>'form-control',
-							)
-						)
-					}}
+				<div class="col-sm-12">
+					<ul class="nav nav-tabs">
+						@if(empty($chosen_note))
+						<li class="active">
+							<a href="#note_custom" data-toggle="tab" data-tab="note_custom" class="note-tab-types">
+								Add Manual Note 
+							</a>
+						</li>
+						@endif
+						<li class="{{ empty($chosen_note) ? '' : 'active' }}">
+							<a href="#note_existing" data-toggle="tab" data-tab="note_existing" class="note-tab-types">
+								Add Existing Note 
+							</a>				
+						</li>
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane fade {{ empty($chosen_note) ? 'active in' : '' }}" id="note_custom">
+							{{ Form::textarea('custom_note', null, array('class' => 'form-control', 'placeholder' => 'Enter note here (optional)')) }}
+						</div>
+						<div class="tab-pane fade {{ !empty($chosen_note) ? 'active in' : '' }}" id="note_existing">
+							{{ \Notes\NotesController::get_instance()->getIndex($currentClient->id, '', $existingNoteViewType, $chosen_note, $notesOtherData) }}
+						</div>
+					</div>
 				</div>
 			</div>
+
+			{{ 
+				Form::hidden(
+					'note_type', 
+					empty($chosen_note) ? 'note_custom' : 'note_existing', 
+					array('id' => 'note_type')
+				) 
+			}}
+
 			  {{Form::hidden('redirect',null,array('id'=>'redirect'))}}
 			  <button type="submit" class="btn btn-primary">Create</button>
 			  <div class="ajax-container-msg hide" >
