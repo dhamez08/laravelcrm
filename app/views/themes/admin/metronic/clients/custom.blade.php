@@ -100,23 +100,24 @@
 	<script type="text/javascript" src="{{$asset_path}}/pages/scripts/client.js"></script>
 	<script type="text/javascript" src="{{$asset_path}}/pages/scripts/notes.js"></script>
 	<script type="text/javascript">
-		$(document).on("ready", function() {
-			$(".view-data-form").on("click", function(e) {
-				e.preventDefault();
-				$this = $(this);
 
-				$("#form-data-modal #content-form-action").hide();
-				$("#form-data-modal").modal("show");
+		$(".view-data-form").on("click", function(e) {
+			e.preventDefault();
+			$this = $(this);
 
-				$.get("{{ url('settings/custom-forms/form-data') }}/"+$this.attr("data-ref-id"), function(responce) {
-					$("#form-data-modal input.content-hidden-form").val(responce);
-					$("#form-data-modal input.title-hidden-form").val($this.attr("data-form-name"));
-					$("#form-data-modal #content-form-data").html(responce);
-					$("#form-data-modal #content-form-name").html($this.attr("data-form-name"));
-					$("#form-data-modal #content-form-action").show();
-				});
+			$("#form-data-modal #content-form-action").hide();
+			$("#form-data-modal").modal("show");
+
+			$.get("{{ url('settings/custom-forms/form-data') }}/"+$this.attr("data-ref-id"), function(responce) {
+				$("#form-data-modal input.content-hidden-form").val(responce);
+				$("#form-data-modal input.title-hidden-form").val($this.attr("data-form-name"));
+				$("#form-data-modal #content-form-data").html(responce);
+				$("#form-data-modal #content-form-name").html($this.attr("data-form-name"));
+				$("#form-data-modal #content-form-action").show();
 			});
+		});
 
+		$(document).on("ready", function() {
 			deletePhone.init();
         	deleteURL.init();
         	deleteEmail.init();

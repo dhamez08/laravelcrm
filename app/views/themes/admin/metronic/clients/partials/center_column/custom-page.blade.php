@@ -61,7 +61,7 @@
 							<?php
 							$results = \CustomTabFilesData\CustomTabFilesDataEntity::get_instance()->getFilesBySection_Custom_Customer(1, $customtab->id, $customer->id);
 							$icons	 = \Config::get('crm.document_file_type_class');
-							$path = "/public/document/";
+							$path = url() . "/public/document/";
 							?>
 
 							@if(count($results)>0)
@@ -179,7 +179,7 @@
 								<?php
 								$results = \CustomTabFilesData\CustomTabFilesDataEntity::get_instance()->getFilesBySection_Custom_Customer(2, $customtab->id, $customer->id);
 								$icons	 = \Config::get('crm.document_file_type_class');
-								$path = "/public/document/";
+								$path = url() . "/public/document/";
 								?>
 
 								@if(count($results)>0)
@@ -298,7 +298,7 @@
 							<?php
 							$results = \CustomTabFilesData\CustomTabFilesDataEntity::get_instance()->getFilesBySection_Custom_Customer(3, $customtab->id, $customer->id);
 							$icons	 = \Config::get('crm.document_file_type_class');
-							$path = "/public/document/";
+							$path = url() . "/public/document/";
 							?>
 
 							@if(count($results)>0)
@@ -413,7 +413,7 @@
 								<?php
 								$results = \CustomTabFilesData\CustomTabFilesDataEntity::get_instance()->getFilesBySection_Custom_Customer(4, $customtab->id, $customer->id);
 								$icons	 = \Config::get('crm.document_file_type_class');
-								$path = "/public/document/";
+								$path = url() . "/public/document/";
 								?>
 
 								@if(count($results)>0)
