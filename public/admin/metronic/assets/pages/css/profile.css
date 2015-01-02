@@ -329,3 +329,7 @@ Profile Page
   font-size: 12px;
   margin-top: 2px !important;
 }
+
+.popover {
+  max-width: 100%;
+}
