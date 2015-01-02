@@ -137,7 +137,7 @@
 		<!-- IMPORTANT! fullcalendar depends on jquery-ui-1.10.3.custom.min.js for drag & drop support -->
 		<script src="{{$asset_path}}/global/plugins/fullcalendar/fullcalendar/moment.min.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/global/plugins/fullcalendar/fullcalendar/fullcalendar211.min.js" type="text/javascript"></script>
-		<script src="{{$asset_path}}/global/plugins/fullcalendar/fullcalendar/gcal211.js" type="text/javascript"></script>
+		<script src="{{$asset_path}}/global/plugins/fullcalendar/fullcalendar/gcal225.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/global/plugins/jquery.sparkline.min.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/global/plugins/gritter/js/jquery.gritter.js" type="text/javascript"></script>

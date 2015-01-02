@@ -26,6 +26,7 @@ var TaskCalendar = function () {
                         center: '',
                         right: 'prev,next,today,month,agendaWeek,agendaDay',
                 },
+                googleCalendarApiKey: 'AIzaSyCV47iUXlYHHWUn2TSC5ZU0sxLhjE0pdLE',
                 eventSources:[
 					{
 						url: $url + '/calendar/task-calendar',
@@ -34,7 +35,8 @@ var TaskCalendar = function () {
 							}
                     },
                     {
-						url:$gcal_url,
+						//url:$gcal_url,
+                        googleCalendarId: '4tdpri8dl2u8n2oqi32j2le5f4@group.calendar.google.com',
 						className: 'gcal-event'
 					}
                 ],
