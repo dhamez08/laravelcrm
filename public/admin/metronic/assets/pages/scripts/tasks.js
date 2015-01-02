@@ -119,6 +119,12 @@ var CreateTask = (function(){
 						confirmation && document.location.assign(newUrl);
 					});
 				});
+
+				jQuery('.note-tab-types').on('click', function(e) {
+					e.preventDefault();
+					var tabType = jQuery(this).data('tab');
+					jQuery('#note_type').val(tabType);
+				});
 			});
 			jQuery('.complete-task, .delete-task').on('click',function(e){
 				e.preventDefault();

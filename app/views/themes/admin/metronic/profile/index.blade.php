@@ -47,6 +47,17 @@
 	@parent
 	@section('footer-custom-js')
 	<script type="text/javascript" src="{{$asset_path}}	/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"></script>
+	<script type="text/javascript">
+		$('#gcal-help').popover({
+			content: function() {
+				return $('#gcal-help-content').html();
+			},
+			html: true,
+			title: 'How to obtain Google Calendar ID',
+			trigger: 'click hover',
+			container: 'body'
+		});
+	</script>
 	@parent
 	@stop
 @stop

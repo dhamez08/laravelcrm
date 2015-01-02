@@ -26,6 +26,7 @@ var TaskCalendar = function () {
                         center: '',
                         right: 'prev,next,today,month,agendaWeek,agendaDay',
                 },
+                googleCalendarApiKey: 'AIzaSyCV47iUXlYHHWUn2TSC5ZU0sxLhjE0pdLE',
                 eventSources:[
 					{
 						url: $url + '/calendar/task-calendar',
@@ -34,8 +35,9 @@ var TaskCalendar = function () {
 							}
                     },
                     {
-						url:$gcal_url,
-						className: 'gcal-event'
+						//url:$gcal_url,
+                        googleCalendarId: $gcal_url,
+						className: 'gcal-event',
 					}
                 ],
                 eventRender: function(event, element, calEvent) {
@@ -45,7 +47,9 @@ var TaskCalendar = function () {
                     }
                 },
                 eventClick: function(calEvent, jsEvent, view) {
-                    if( calEvent.source.dataType == 'gcal' ){
+                    console.log(calEvent);
+                    //if( calEvent.source.dataType == 'gcal' ){
+                    if(typeof calEvent.source.googleCalendarId != 'undefined') {
 						window.open(calEvent.url, 'gcalevent', 'width=700,height=600');
 						return false;
 					}else{

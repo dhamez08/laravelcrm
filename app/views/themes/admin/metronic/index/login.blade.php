@@ -84,19 +84,19 @@
 					<h4>Or login with</h4>
 					<ul class="social-icons">
 						<li>
-							<a href="#" data-original-title="facebook" class="facebook">
+							<a href="{{url('social/facebook')}}" data-original-title="facebook" class="facebook">
 							</a>
 						</li>
 						<li>
-							<a href="#" data-original-title="Twitter" class="twitter">
+							<a href="{{url('social/twitter')}}" data-original-title="Twitter" class="twitter">
 							</a>
 						</li>
 						<li>
-							<a href="#" data-original-title="Goole Plus" class="googleplus">
+							<a href="{{url('social/google')}}" data-original-title="Goole Plus" class="googleplus">
 							</a>
 						</li>
 						<li>
-							<a href="#" data-original-title="Linkedin" class="linkedin">
+							<a href="{{url('social/linkedin')}}" data-original-title="Linkedin" class="linkedin">
 							</a>
 						</li>
 					</ul>
@@ -129,6 +129,7 @@
 	@parent
 	@section('footer-custom-js')
 		<script src="{{$asset_path}}/pages/scripts/login.js" type="text/javascript"></script>
+		<script src="{{$asset_path}}/pages/scripts/socialLogin.js" type="text/javascript"></script>
 	@stop
 	@section('footer-custom-js')
 		<script>
@@ -140,5 +141,3 @@
 		</script>
 	@stop
 @stop
-
-

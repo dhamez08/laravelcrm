@@ -313,7 +313,27 @@
 							)
 						}}
 							<div class="form-group">
-								<label class="control-label">Google Calendar Feed</label>
+								<label class="control-label">Google Calendar ID <i class="fa fa-info-circle text-info" id="gcal-help"></i></label>
+								<div class="hidden" id="gcal-help-content">
+									<p><strong>Make your Google Calendar public:</strong></p>
+									<ol>
+										<li>In the Google Calendar interface, locate the "My calendars" area on the left.</li>
+										<li>Hover over the calendar you need and click the downward arrow.</li>
+										<li>A menu will appear. Click "Share this Calendar".</li>
+										<li>Check "Make this calendar public".</li>
+										<li>Make sure "Share only my free/busy information" is <strong>unchecked</strong>.</li>
+										<li>Click "Save".</li>
+									</ol>
+									<p><strong>Obtain your Google Calendar's ID:</strong></p>
+									<ol>
+										<li>In the Google Calendar interface, locate the "My calendars" area on the left.</li>
+										<li>Hover over the calendar you need and click the downward arrow.</li>
+										<li>A menu will appear. Click "Calendar settings".</li>
+										<li>In the "Calendar Address" section of the screen, you will see your Calendar ID.
+										It will look something like "abcd1234@group.calendar.google.com".</li>
+										<li>Copy and paste the Calendar ID below.</li>
+									</ol>
+								</div>
 								<div class="controls">
 									{{
 										Form::text(

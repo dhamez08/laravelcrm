@@ -1537,8 +1537,6 @@ class ClientsController extends \BaseController {
 			$data['note_id'] = \Input::get('note_id');
 		}
 
-		\Debugbar::info(\Input::all());
-
 		return \Task\TaskController::get_instance()->getAjaxModalCreateTask($data);
 	}
 

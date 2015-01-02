@@ -55,16 +55,32 @@ class NotesController extends \BaseController {
 		return self::$instance;
 	}
 
-	public function getIndex($customerId, $belongsToUser){
+	public function getIndex($customerId, $belongsToUser, $viewType = null, $selectedNoteId = null, $otherData = null){
 		$dashboard_data 		= \Dashboard\DashboardController::get_instance()->getSetupThemes();
 		$data 					= $this->data_view;
 		$belongsTo 				= \Auth::id();
-		$data['notes']			= \CustomerNotes\CustomerNotesEntity::get_instance()->getNotes($customerId, $belongsTo);
+
+		$data['notes']		= \CustomerNotes\CustomerNotesEntity::get_instance()->getNotes($customerId, $belongsTo);
+		if(is_array($otherData) && isset($otherData['only_available'])) {
+			$data['notes'] = $data['notes']->where(function($query) use ($otherData, $selectedNoteId)
+			{
+				$query->whereNull('task_id');
+				if(isset($otherData['include_selected']))
+					$query->orWhere('id', $selectedNoteId);
+			});
+		} elseif(is_array($otherData) && isset($otherData['only_selected'])) {
+			$data['notes']->where('id', $selectedNoteId);
+		}
+
 		//var_dump($data['notes']->get()->toArray());
 		if(!is_null($customerId)){
 			$data['customerId'] = $customerId;
 		}
-		$data 						= array_merge($data,$dashboard_data);
+
+		$data['viewType']		= $viewType;
+		$data['selectedNoteId'] = $selectedNoteId;
+
+		$data 					= array_merge($data,$dashboard_data);
 		return \View::make( $data['include'] . '.index', $data )->render();
 	}
 

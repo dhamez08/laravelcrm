@@ -218,8 +218,12 @@
 		<!-- BEGIN USER LOGIN DROPDOWN -->
 		<li class="dropdown dropdown-user">
 			<a data-close-others="true" data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle" href="#">
-
-			<img src="{{url('public/img/profile_images/profile.jpg')}}" alt="Avatar" class="img-circle round-50"/>
+			<?php $socialProfile = \SocialMediaAccount\ProfileEntity::get_instance()->getSocialProfile(); ?>
+			@if( $socialProfile !== FALSE )
+				<img src="{{$socialProfile->photoURL}}" alt="Avatar" class="img-circle round-50"/>
+			@else
+				<img src="{{url('public/img/profile_images/profile.jpg')}}" alt="Avatar" class="img-circle round-50"/>
+			@endif
 
 			<span class="username username-hide-on-mobile">
 				{{\User\User::getUserFullname()}}

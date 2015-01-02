@@ -51,39 +51,59 @@
 							<td>
 								 <a 
 								 	data-toggle="modal" 
-								 	data-target=".ajaxModal" 
+								 	data-target=".ajaxModalStacked" 
 								 	href="{{ action('Notes\NotesController@getAjaxViewInput', array('note_id'=>$note->id)) }}" 
 								 	title="Note Subject">
 								 	{{ empty($note->subject) ? "<NO SUBJECT>" : $note->subject }}
 								 </a>
 							</td>
 							<td>
-								@if(empty($note->task_id))
-								<a href="{{action(
-											'Clients\ClientsController@getCreateClientTask',
-											array(
-												'customerid'=>isset($customerId) ? $customerId:'')
-											)
-										}}?note_id={{ $note->id }}"
-									data-target=".createTask"
-									data-toggle="modal"
-									class="btn btn-xs btn-info openModal">								
-									Set Reminder
-								</a>
-								@else
-								<a class="btn btn-xs btn-info openModal" 
-									data-toggle="modal" 
-									data-target=".ajaxModal" 
-									href="{{action('Task\TaskController@getEditClientTask',array('id'=>$note->task_id,'customerid'=>\CustomerTasks\CustomerTasks::find($note->task_id)->customer_id,'redirect'=>'task'))}}">
-									Edit Reminder
-								</a>
+								@if(!in_array($viewType, array('task-create')))
+									@if(empty($note->task_id))
+									<a href="{{action(
+												'Clients\ClientsController@getCreateClientTask',
+												array(
+													'customerid'=>isset($customerId) ? $customerId:'')
+												)
+											}}?note_id={{ $note->id }}"
+										data-target=".createTask"
+										data-toggle="modal"
+										class="btn btn-xs btn-info openModal">								
+										Set Reminder
+									</a>
+									@else
+									<a class="btn btn-xs btn-warning openModal" 
+										data-toggle="modal" 
+										data-target=".ajaxModal" 
+										href="{{action(
+													'Task\TaskController@getEditClientTask',
+													array(
+														'id'=>$note->task_id,
+														'customerid'=>\CustomerTasks\CustomerTasks::find($note->task_id)->customer_id,
+														'redirect'=>'task'
+													)
+												)
+											}}?note_id={{ $note->id }}">
+										Edit Reminder
+									</a>
+									@endif
 								@endif
 							</td>
 							<td>
 								<small class="muted">Created By {{ $note->user->first_name }} {{ $note->user->last_name }} on {{ \Carbon\Carbon::parse($note->created_at)->format('d/m/Y') }} at {{ \Carbon\Carbon::parse($note->created_at)->format('H:i') }}</small>
 							</td>
 							<td>
+								@if(!in_array($viewType, array('task-create')))
 								<a href="{{ action('Notes\NotesController@getDeleteNote',array('id'=>$note->id,'customerid'=>$note->customer_id)) }}" class="pull-right" title="Delete File"><i class="icon-trash"></i> </a>
+								@else
+								{{ 
+									Form::radio(
+										'note', 
+										$note->id,
+										isset($selectedNoteId) && $selectedNoteId == $note->id ? true : false
+									) 
+								}}
+								@endif
 							</td>
 						</tr>
 					@endforeach
