@@ -4,7 +4,7 @@
 <div class="page-sidebar-wrapper">
 	<!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
 	<!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
-	<div class="client-sidebar page-sidebar navbar-collapse collapse" style="">
+	<div class="client-sidebar page-sidebar" style="">
 		<!-- BEGIN SIDEBAR MENU -->
 		<ul id="side-bar-page-nav" data-slide-speed="200" data-auto-scroll="true" class="client-sidebar-menu page-sidebar-menu page-sidebar-menu-light page-sidebar-menu-hover-submenu">
 			<!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->

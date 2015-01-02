@@ -55,6 +55,13 @@ var Summary = function () {
             $(window).trigger('resize');
         });
 
+        // Trigger toggler when screen is resized
+        $(window).resize(function(){
+            if(Metronic.getViewPort().width < 992){
+
+            }
+        })
+
     }
 
     // public functions
