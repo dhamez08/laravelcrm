@@ -37,7 +37,7 @@ var TaskCalendar = function () {
                     {
 						//url:$gcal_url,
                         googleCalendarId: $gcal_url,
-						className: 'gcal-event'
+						className: 'gcal-event',
 					}
                 ],
                 eventRender: function(event, element, calEvent) {
@@ -48,7 +48,8 @@ var TaskCalendar = function () {
                 },
                 eventClick: function(calEvent, jsEvent, view) {
                     console.log(calEvent);
-                    if( calEvent.source.dataType == 'gcal' ){
+                    //if( calEvent.source.dataType == 'gcal' ){
+                    if(typeof calEvent.source.googleCalendarId != 'undefined')
 						window.open(calEvent.url, 'gcalevent', 'width=700,height=600');
 						return false;
 					}else{
