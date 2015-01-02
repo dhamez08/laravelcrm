@@ -1150,7 +1150,8 @@ Page sidebar
     position: relative;
     margin-right: -100%;
   }
-  .page-full-width .page-sidebar {
+  .page-full-width .page-sidebar,
+  .page-sidebar.main-navbar-collapse {
     display: none !important;
   }
   .page-sidebar.navbar-collapse {

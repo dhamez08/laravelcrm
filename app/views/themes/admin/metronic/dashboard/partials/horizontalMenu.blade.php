@@ -67,6 +67,6 @@
 </div>
 <!-- END HORIZANTAL MENU -->
 <!-- BEGIN RESPONSIVE MENU TOGGLER -->
-<a data-target=".navbar-collapse" data-toggle="collapse" class="menu-toggler responsive-toggler" href="javascript:;">
+<a data-target=".main-navbar-collapse" data-toggle="collapse" class="menu-toggler responsive-toggler" href="javascript:;">
 </a>
 <!-- END RESPONSIVE MENU TOGGLER -->

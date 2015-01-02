@@ -98,6 +98,7 @@
 	<script>
 		jQuery(document).ready(function() {
 			//Summary.init();
+            Summary.init_toggler();
 		});
 	</script>
 	@stop

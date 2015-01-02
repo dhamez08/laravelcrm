@@ -13,6 +13,7 @@
 @section('body-content')
 	@parent
 	@section('left-sidebar')
+        @include( \DashboardEntity::get_instance()->getView() . '.dashboard.partials.leftSidebar' )
 		@if( isset($clientId) )
 			@include($view_path.'.clients.partials.leftSidebar')
 		@endif
