@@ -49,7 +49,7 @@ var TaskCalendar = function () {
                 eventClick: function(calEvent, jsEvent, view) {
                     console.log(calEvent);
                     //if( calEvent.source.dataType == 'gcal' ){
-                    if(typeof calEvent.source.googleCalendarId != 'undefined')
+                    if(typeof calEvent.source.googleCalendarId != 'undefined') {
 						window.open(calEvent.url, 'gcalevent', 'width=700,height=600');
 						return false;
 					}else{
