@@ -85,6 +85,22 @@ class CalendarController extends \BaseController {
 		}else{
 			$data['client_linkTo'] = $linkTo->first_name.' '.$linkTo->last_name;
 		}
+
+		$data['noteType']		= $data['tasks']->note_type;
+		$data['existingNoteViewType'] = 'task-create';
+		$data['notesOtherData'] = array();
+		if(!\Input::has('note_id')) {
+			$data['notesOtherData'] = array(
+				'only_available' => true,
+				'include_selected' => true
+			);
+		} else {
+			$data['notesOtherData'] = array(
+				'only_selected' => true,
+				//'selected' => isset($arrayOtherOption['note_id']) ? $arrayOtherOption['note_id'] : null
+			);
+		}	
+
 		$data 					= array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
 		//var_dump($data['tasks']->name);exit();
 		return \View::make( $data['view_path'] . '.tasks.editInput', $data );

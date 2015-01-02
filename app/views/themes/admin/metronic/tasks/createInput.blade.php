@@ -165,7 +165,7 @@
 							{{ Form::textarea('custom_note', null, array('class' => 'form-control', 'placeholder' => 'Enter note here (optional)')) }}
 						</div>
 						<div class="tab-pane fade {{ !empty($chosen_note) ? 'active in' : '' }}" id="note_existing">
-							{{ \Notes\NotesController::get_instance()->getIndex($currentClient->id, '', $existingNoteViewType, $chosen_note, $notesOtherData) }}
+							{{ \Notes\NotesController::get_instance()->getIndex(isset($currentClient->id) ? $currentClient->id : null, '', $existingNoteViewType, $chosen_note, $notesOtherData) }}
 						</div>
 					</div>
 				</div>

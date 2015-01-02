@@ -313,7 +313,7 @@
 							)
 						}}
 							<div class="form-group">
-								<label class="control-label">Google Calendar Feed</label>
+								<label class="control-label">Google Calendar ID <i class="fa fa-info-circle"></i></label>
 								<div class="controls">
 									{{
 										Form::text(

@@ -36,7 +36,7 @@ var TaskCalendar = function () {
                     },
                     {
 						//url:$gcal_url,
-                        googleCalendarId: '4tdpri8dl2u8n2oqi32j2le5f4@group.calendar.google.com',
+                        googleCalendarId: $gcal_url,
 						className: 'gcal-event'
 					}
                 ],
