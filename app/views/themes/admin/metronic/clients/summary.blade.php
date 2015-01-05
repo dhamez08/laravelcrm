@@ -9,10 +9,16 @@
 		<link href="{{$asset_path}}/global/plugins/jquery-file-upload/css/jquery.fileupload.css" rel="stylesheet"/>
 		<link href="{{$asset_path}}/global/plugins/jquery-file-upload/css/jquery.fileupload-ui.css" rel="stylesheet"/>
 	@stop
+
+    @section('head-custom-css')
+        @parent
+        <link href="{{$asset_path}}/pages/css/client-summary-sidebar.css" rel="stylesheet"/>
+    @stop
 @stop
 @section('body-content')
 	@parent
 	@section('left-sidebar')
+        @include( \DashboardEntity::get_instance()->getView() . '.dashboard.partials.leftSidebar' )
 		@if( isset($clientId) )
 			@include($view_path.'.clients.partials.leftSidebar')
 		@endif
