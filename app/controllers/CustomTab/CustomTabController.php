@@ -25,7 +25,7 @@ class CustomTabController extends \BaseController {
 	 * */
 	public function __construct(){
 		parent::__construct();
-
+		$this->fileFolder 	 	= public_path() . '/document';
 	}
 
 	/**
@@ -98,6 +98,50 @@ class CustomTabController extends \BaseController {
 			->withInput();
 		}
 	}
+
+	// added by rjosephporter - 01.05.2014
+	public function postAjaxUploadFile($file_type, $customer_id, $page = "") {
+		$belongs_to = \Auth::id();
+		if( \Input::hasFile('files') ){
+			$file_id = \Input::get('file_type');
+			foreach(\Input::file('files') as $file){
+				$fileName = $this->_doUpload($file);
+				$data = array(
+					'customer_id' 	=> $customer_id,
+					'custom_id'		=> \Input::get('custom_id'),
+					'section'		=> \Input::get('section'),
+					'file_name'		=> $fileName,
+					'file_type'		=> $file->getClientOriginalExtension(),
+				);		
+
+				\CustomTabFilesData\CustomTabFilesDataEntity::get_instance()->createOrUpdate($data);
+
+				return \Response::json(
+					array(
+						'success'=>true,
+						'msg'=>'',
+						'redirect'=>url('clients/custom/' . $customer_id . '?custom=' . \Input::get('custom_id')),
+					)
+				);
+			}
+		}else{
+			return \Response::json(array('success'=>false,'msg'=>'Cannot upload, file.'));
+		}
+	}
+
+	// added by rjosephporter - 01.05.2015
+	private function _doUpload($fileName){
+		// set the file name
+		// prefix first
+		// group id
+		// time
+		$file_name = $fileName->getClientOriginalName();
+		// upload
+		$upload_success = $fileName->move($this->fileFolder, $file_name);
+		if($upload_success ){
+			return $file_name;
+		}
+	}		
 
 	public function getDeleteFile($id, $customer_id, $custom_id) {
 		$file = \CustomTabFilesData\CustomTabFilesDataEntity::get_instance()->where('id',$id)->where('customer_id', $customer_id)->first();

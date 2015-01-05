@@ -26,7 +26,7 @@
 		<div class="col-lg-6">
 
 			<div class="portlet light bordered">
-				<div class="portlet-title" style="border-bottom:0px">
+				<div class="portlet-title {{ $customtab->$sec_name == 2 ? 'tabbable-line' : '' }}" style="border-bottom:0px">
 					@if($customtab->$sec_name)
 						<div class="caption font-green-sharp">
 							<i class="icon-speech font-green-sharp"></i>
@@ -39,22 +39,38 @@
 							@endif
 						</div>
 					@endif
-					<div class="actions">
-						@if($customtab->$sec_name)
+					@if($customtab->$sec_name)					
 							@if($customtab->$sec_name==1)
+							<div class="actions">
 								<a href="#" class="btn btn-circle btn-default btn-sm" data-toggle="modal" data-target="#{{$sec_name}}notes-modal">
+									<i class="fa fa-plus"></i> Add 
+								</a>
+							</div>									
 							@elseif($customtab->$sec_name==2)
-								<a href="#" class="btn btn-circle btn-default btn-sm" data-toggle="modal" data-target="#{{$sec_name}}files-modal">
+							<ul class="nav nav-tabs">
+								<li  class="active">
+									<a href=".list_files{{$sec_key}}" data-toggle="tab">
+									Files </a>
+								</li>
+								<li>
+									<a href=".add_new{{$sec_key}}" data-toggle="tab">
+									{{-- <a href="#" data-toggle="modal" data-target="#{{$sec_name}}files-modal"> --}}
+									Add New </a>
+								</li>
+							</ul>
 							@elseif($customtab->$sec_name==3)
+							<div class="actions">
 								<a href="#" class="btn btn-circle btn-default btn-sm" data-toggle="modal" data-target="#{{$sec_name}}form-modal">
+									<i class="fa fa-plus"></i> Add 
+								</a>
+							</div>									
 							@endif
-							<i class="fa fa-plus"></i> Add </a>
-						@else
-							<a href="{{ url('settings/custom-fields/custom-tab/'.$customtab->id.'?backToClient='.$customer->id) }}" class="btn btn-circle btn-default btn-sm">
-							<i class="fa fa-pencil"></i> Configure this section </a>
-						@endif
-						
-					</div>
+					@else
+							<div class="actions">
+								<a href="{{ url('settings/custom-fields/custom-tab/'.$customtab->id.'?backToClient='.$customer->id) }}" class="btn btn-circle btn-default btn-sm">
+								<i class="fa fa-pencil"></i> Configure this section </a>
+							</div>					
+					@endif
 				</div>
 				<div class="portlet-body">
 					<div class="scroller" style="height: 200px;">
@@ -85,33 +101,121 @@
 							$path = url() . "/public/document/";
 							?>
 
-							@if(count($results)>0)
-							<ul class="feeds">
-								@foreach($results as $result)
-									<li>
-										<div class="col1">
-											<div class="cont">
-												<div class="cont-col1">
-													<div class="label label-sm label-danger">
-														<i class="fa {{ $icons[$result->file_type] }}"></i>
-													</div>
-												</div>
-												<div class="cont-col2">
-													<div class="desc">
-														<a href="{{ $path.$result->file_name }}" target="_blank">{{ $result->name }}</a>
-													</div>
+							<div class="tab-content">
+								<div class="tab-pane active list_files{{$sec_key}}" style="max-height:400px;" id="">
+									@if(count($results)>0)
+									<div class="list_files_widget">
+										@foreach($results as $result)
+											<p>
+												<a href="{{ $path.$result->file_name }}" target="_blank">{{$result->file_name}}</a>
+												<a 	class="btn red btn-xs deleteFile"
+													href="{{
+														action(
+															'File\ClientFileController@getDeleteFile',
+															array(
+																'id'=>$result->id,
+																'customerid'=>$result->customer_id
+															)
+														)
+													}}"
+												>
+													<i class="fa fa-trash-o fa-5x"></i>
+												</a>
+											</p>
+										@endforeach
+									</div>
+									@else
+										No data has been added.
+									@endif
+								</div>
+								<div class="tab-pane add_new{{$sec_key}}" id="">
+									<!-- BEGIN PAGE CONTENT-->
+									<div class="row">
+										<div class="col-md-12">
+											<!-- BEGIN PAGE CONTENT-->
+											<div class="row">
+												<div class="col-md-12">
+													<a class="btn dropbox_file btn-primary" href="#" data-file-type='{{$sec_key}}' data-customer-id='{{$customer->id}}'>
+													<span class="fa fa-dropbox">Add File from Dropbox</span>
+													</a>
 												</div>
 											</div>
+											<!-- END PAGE CONTENT-->
+											<blockquote>
+												<p style="font-size:14px">
+													 File Upload widget with multiple file selection.<br>
+													 The maximum file size for uploads is 5 MB<br>
+												</p>
+											</blockquote>
+											{{
+												Form::open(
+													array(
+														'action' => array(
+															'CustomTab\CustomTabController@postAjaxUploadFile',
+															'file_id'=>$sec_key,
+															'customer_id'=>$customer->id
+														),
+														'role'=>'form',
+														'files'=> true,
+														'class'=>'fileupload form-horizontal'
+													)
+												)
+											}}
+												{{ Form::hidden('custom_id', \Input::get('custom')) }}
+												{{ Form::hidden('section', $sec_key) }}
+												<!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+												<div class="row fileupload-buttonbar">
+													<div class="col-md-12">
+														<!-- The fileinput-button span is used to style the file input field as button -->
+														<span class="btn green fileinput-button">
+														<i class="fa fa-plus"></i>
+														<span>
+														Add files... </span>
+														{{Form::file('files[]',array('multiple'=>true))}}
+														</span>
+														<button type="submit" class="btn blue start">
+														<i class="fa fa-upload"></i>
+														<span>
+														Start upload </span>
+														</button>
+														<button type="reset" class="btn warning cancel">
+														<i class="fa fa-ban-circle"></i>
+														<span>
+														Cancel upload </span>
+														</button>
+														<!-- The global file processing state -->
+														<span class="fileupload-process">
+														</span>
+													</div>
+													<!-- The global progress information -->
+													<div class="col-md-12 fileupload-progress fade">
+														<!-- The global progress bar -->
+														<div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+															<div class="progress-bar progress-bar-success" style="width:0%;">
+															</div>
+														</div>
+														<!-- The extended global progress information -->
+														<div class="progress-extended">
+															 &nbsp;
+														</div>
+													</div>
+												</div>
+												<div class="well">
+													<p>You can Drop files here or Click "Add Files"..</p>
+													<!-- The table listing the files available for upload/download -->
+													<div class="file_upload_container">
+														<table role="presentation" style="width:auto !important;" class="table table-striped table-responsive clearfix">
+															<tbody class="files">
+															</tbody>
+														</table>
+													</div>
+												</div>
+											{{Form::close()}}
 										</div>
-										<div class="col2" style="margin-left:-95px">
-											<a href="{{ url('custom-tab/delete-file/'.$result->id.'/'.$customer->id.'/'.$customtab->id) }}" class="btn btn-circle red-intense btn-sm" onclick="return confirm('Are you sure you want to delete?')"><i class="fa fa-times"></i> Delete</a>
-										</div>
-									</li>
-								@endforeach
-							</ul>
-							@else
-								No data has been added.
-							@endif
+									</div>
+									<!-- END PAGE CONTENT-->
+								</div>
+							</div>
 						@elseif($customtab->$sec_name==3)
 							<?php
 							$results = \CustomFormData\CustomFormDataEntity::get_instance()->getData($customtab->$section_forms[$sec_key], $customer->id);
