@@ -41,9 +41,9 @@
 					@endif
 					@if($customtab->$sec_name)					
 							@if($customtab->$sec_name==1)
-							<div class="actions">
-								<a href="#" class="btn btn-circle btn-default btn-sm" data-toggle="modal" data-target="#{{$sec_name}}notes-modal">
-									<i class="fa fa-plus"></i> Add 
+							<div class="actions pull-left" style="margin-left: 5px">
+								<a href="#" class="btn btn-icon-only btn-circle btn-sm green-meadow" data-toggle="modal" data-target="#{{$sec_name}}notes-modal">
+									<i class="fa fa-plus"></i>
 								</a>
 							</div>									
 							@elseif($customtab->$sec_name==2)
@@ -59,9 +59,9 @@
 								</li>
 							</ul>
 							@elseif($customtab->$sec_name==3)
-							<div class="actions">
-								<a href="#" class="btn btn-circle btn-default btn-sm" data-toggle="modal" data-target="#{{$sec_name}}form-modal">
-									<i class="fa fa-plus"></i> Add 
+							<div class="actions pull-left" style="margin-left: 5px">
+								<a href="#" class="btn btn-icon-only btn-circle btn-sm green-meadow" data-toggle="modal" data-target="#{{$sec_name}}form-modal">
+									<i class="fa fa-plus"></i> 
 								</a>
 							</div>									
 							@endif
@@ -73,7 +73,7 @@
 					@endif
 				</div>
 				<div class="portlet-body">
-					<div class="scroller" style="height: 200px;">
+					<div class="scroller" style="height: 350px;">
 					@if($customtab->$sec_name)
 						@if($customtab->$sec_name==1)
 							<?php
@@ -81,12 +81,13 @@
 							?>
 
 							@if(count($results)>0)
-							<table class="table">
+							<table class="table table-condensed">
 								@foreach($results as $result)
 									<tr>
-										<td>Added - {{ date("d/m/Y H:i",strtotime($result->created_at)) }}<br />{{ $result->entry }}</td>
-										<td align="right">
-										<a href="{{ url('custom-tab/delete-note/'.$result->id.'/'.$customer->id.'/'.$customtab->id) }}" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-circle red-intense btn-sm"><i class="fa fa-times"></i> Delete</a>
+										<td>{{ $result->entry }}</td>
+										<td><small class="muted">Created on {{ date("d/m/Y H:i",strtotime($result->created_at)) }}</small></td>
+										<td>
+											<a href="{{ url('custom-tab/delete-note/'.$result->id.'/'.$customer->id.'/'.$customtab->id) }}" onclick="return confirm('Are you sure you want to delete?')" class="pull-right delete-task"><i class="icon-trash"></i></a>
 										</td>
 									</tr>
 								@endforeach
@@ -104,6 +105,106 @@
 							<div class="tab-content">
 								<div class="tab-pane active list_files{{$sec_key}}" style="max-height:400px;" id="">
 									@if(count($results)>0)
+									
+									<div class="scroller" style="height:350px" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd">
+										<ul class="feeds">
+											@foreach($results as $files)
+												<li>
+													<div class="col1">
+														<div class="cont">
+															<div class="cont-col1">
+																<div class="label label-sm label-info">
+																	<?php
+																	$ext = explode(".",$files->file_name);
+																	$ext = strtolower(trim(end($ext)));
+																	$file_type = "file";
+																	switch($ext){
+																		case "pdf":
+																			$file_type = "file-pdf";
+																			break;
+																		case "doc":
+																		case "docx":
+																			$file_type = "file-word";
+																			break;
+																		case "png":
+																		case "jpg":
+																		case "jpeg":
+																		case "bmp":
+																		case "gif":
+																		case "tif":
+																			$file_type = "file-image";
+																			break;
+																		case "ppt":
+																		case "pptx":
+																			$file_type = "file-powerpoint";
+																			break;
+																		case "xls":
+																		case "xlsx":
+																			$file_type = "file-excel";
+																			break;
+																		case "php":
+																		case "js":
+																		case "py":
+																		case "rb":
+																		case "cpp":
+																		case "c":
+																		case "sh":
+																		case "html":
+																		case "css":
+																		case "sass":
+																		case "less":
+																			$file_type = "file-code";
+																			break;
+																		case "mp3":
+																		case "mp4":
+																		case "acc":
+																		case "ogg":
+																			$file_type = "file-sound";
+																			break;
+																		case "mkv":
+																		case "flv":
+																		case "avi":
+																		case "wmv":
+																			$file_type = "file-video";
+																			break;
+																		case "zip":
+																		case "rar":
+																		case "bz":
+																		case "gz":
+																			$file_type = "file-zip";
+																			break;
+																		default:
+																			$file_type = "file";
+																	}
+																	?>
+																	<i class="fa fa-{{$file_type}}-o"></i>
+																</div>
+															</div>
+															<div class="cont-col2">
+																<div class="desc">
+																	 <a download href="{{ $path.$files->file_name }}" title="Download File {{$files->file_name}}">{{$files->file_name}}</a>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="col2">
+														<a href="{{
+																	action(
+																		'CustomTab\CustomTabController@getDeleteFile',
+																		array(
+																			'id'=>$files->id,
+																			'customerid'=>$files->customer_id
+																		)
+																	)
+																}}"
+															class="pull-right" title="Delete File {{$files->filename}}"><i class="icon-trash"></i> </a>
+													</div>
+												</li>
+											@endforeach
+										</ul>
+									</div>									
+
+									{{--
 									<div class="list_files_widget">
 										@foreach($results as $result)
 											<p>
@@ -124,6 +225,7 @@
 											</p>
 										@endforeach
 									</div>
+									--}}
 									@else
 										No data has been added.
 									@endif
@@ -222,15 +324,19 @@
 							?>
 
 							@if(count($results)>0)
-							<table class="table">
+							<table class="table table-condensed">
 								@foreach($results as $result)
 									<tr>
 										<td>
-											{{ $result->name }} - {{ date("d/m/Y H:i",strtotime($result->created_at)) }}
+											<a href="#" class="blue-madison view-data-form" data-ref-id="{{ $result->ref_id }}" data-form-name="{{ $result->name }}">
+												{{ $result->name }}
+											</a>
 										</td>
-										<td align="right">
-										<a href="#" class="btn btn-circle blue-madison btn-sm view-data-form" data-ref-id="{{ $result->ref_id }}" data-form-name="{{ $result->name }}">View</a>
-										<a href="{{ url('settings/custom-forms/delete-form-data/'.$result->ref_id) }}" class="btn btn-circle red-intense btn-sm" onclick="return confirm('Are you sure you want to delete?')"><i class="fa fa-times"></i> Delete</a>
+										<td>
+											<small class="muted">Created on {{ date("d/m/Y H:i",strtotime($result->created_at)) }}</small>
+										</td>
+										<td>
+											<a href="{{ url('settings/custom-forms/delete-form-data/'.$result->ref_id) }}" class="pull-right delete-task" onclick="return confirm('Are you sure you want to delete?')"><i class="icon-trash"></i></a>
 										</td>
 									</tr>
 								@endforeach

@@ -143,7 +143,7 @@ class CustomTabController extends \BaseController {
 		}
 	}		
 
-	public function getDeleteFile($id, $customer_id, $custom_id) {
+	public function getDeleteFile($id, $customer_id, $custom_id = null) {
 		$file = \CustomTabFilesData\CustomTabFilesDataEntity::get_instance()->where('id',$id)->where('customer_id', $customer_id)->first();
 		if($file) {
 			$img = $file->file_name;
