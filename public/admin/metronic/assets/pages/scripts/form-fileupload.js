@@ -10,14 +10,18 @@ var FormFileUpload = function () {
 					autoUpload: false,
 					disableImageResize: /Android(?!.*Chrome)|Opera/.test(window.navigator.userAgent),
 					maxFileSize: 30000000,
-					limitMultiFileUploads: 10,
+					//limitMultiFileUploads: 10,
 					acceptFileTypes: /(\.|\/)(gif|jpe?g|png|pdf|doc|docx|zip|rar|mpg|mp4|avi|xlsx|xls)$/i
 					// Uncomment the following to send cross-domain cookies:
 					//xhrFields: {withCredentials: true},
-				}).bind('fileuploaddone', function (e, data) {
+				//}).bind('fileuploaddone', function (e, data) {
+				}).bind('fileuploadcompleted', function (e, data) {	
+					console.log('DONE');
 					//$('#msg').html('');
 					if(data.result.success == true) {
-						window.location.replace(data.result.redirect);
+						setTimeout(function() {
+							window.location.replace(data.result.redirect);
+						}, 2000);						
 						/*$.get( data.result.listurl + "/" + data.result.websiteid , function(html) {
 							$('#slideritems').html(html);
 						});*/
