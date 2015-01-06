@@ -37,7 +37,7 @@ return array(
 					'form_name'		=>	'section2',
 					'field_name'	=>	'files_2',
 					'placeholder'	=>	'Enter a name for section 2',
-					'readonly'		=>	0
+					'readonly'		=>	1
 				),
 				array(
 					'label_name'	=>	'Section 3 Name:',

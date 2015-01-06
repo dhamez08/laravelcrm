@@ -316,7 +316,7 @@
 									array(
 										'action' => array(
 											'File\ClientFileController@postOnAjaxUploadFile',
-											'file_id'=>1,
+											'file_id'=>2,
 											'customer_id'=>$customer->id,
 											'page' => 'client_summary'
 										),
