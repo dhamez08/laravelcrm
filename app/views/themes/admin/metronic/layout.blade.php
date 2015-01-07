@@ -153,6 +153,7 @@
 		<script src="{{$asset_path}}/global/plugins/bootstrap-select/bootstrap-select.min.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/global/plugins/select2/select2.min.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/global/scripts/jquery.cookie.js" type="text/javascript"></script>
+        <script src="{{$asset_path}}/pages/scripts/notification.js" type="text/javascript"></script>
 		<!-- END PAGE LEVEL SCRIPTS -->
 
 		<!-- BEGIN PAGE LEVEL PLUGINS -->
@@ -233,6 +234,8 @@
 				jQuery('.file_upload_container').slimScroll({
 					height:'300px'
 				});
+
+                Reminder.init();
 			});
 		</script>
 	@show

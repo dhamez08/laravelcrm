@@ -92,6 +92,12 @@ Route::group(array('before' => 'auth'), function()
 
 	Route::controller('custom-tab','CustomTab\CustomTabController');
 	Route::get( 'dashboard' , 'Dashboard\DashboardController@getIndex' );
+
+    Route::group(array('prefix' => 'tasks'), function()
+    {
+        Route::get('count', 'Task\TaskController@getAjaxTaskCount');
+        Route::get('notification', 'Task\TaskController@getAjaxTaskNotification');
+    });
 });
 Route::post('pass-email-data','Email\EmailController@sendData');
 Route::get('testmail', function()

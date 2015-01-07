@@ -187,22 +187,20 @@
 					<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: auto;"><ul style="overflow: hidden; width: auto; height: auto;" class="dropdown-menu-list scroller" data-initialized="1">
 						@if(\CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(((isset($clientId))? $clientId :NULL),\Auth::id())['due']->today > 0)
 							@foreach(\CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(((isset($clientId))? $clientId :NULL),\Auth::id())['data'] as $dueTasks)
-								@if($dueTasks->isReminded())
-									<li>
-										<a class="openModal" data-toggle="modal" data-target=".ajaxModal" href="{{action('Task\TaskController@getEditClientTask',array('id'=>$dueTasks->id,'customerid'=>$dueTasks->customer_id,'redirect'=>'task'))}}">
-										<span class="task">
-											<span class="desc">
-												{{$dueTasks->displayHtmlTaskDue()}}
-												{{$dueTasks->displayHtmlLabelIcon()}}
-												<br />
-												{{$dueTasks->displayName()}}
-												<br />
-												{{$dueTasks->displayTaskFullName()}}
-											</span>
-										</span>
-										</a>
-									</li>
-								@endif
+                                <li>
+                                    <a class="openModal" data-toggle="modal" data-target=".ajaxModal" href="{{action('Task\TaskController@getEditClientTask',array('id'=>$dueTasks->id,'customerid'=>$dueTasks->customer_id,'redirect'=>'task'))}}">
+                                    <span class="task">
+                                        <span class="desc">
+                                            {{$dueTasks->displayHtmlTaskDue()}}
+                                            {{$dueTasks->displayHtmlLabelIcon()}}
+                                            <br />
+                                            {{$dueTasks->displayName()}}
+                                            <br />
+                                            {{$dueTasks->displayTaskFullName()}}
+                                        </span>
+                                    </span>
+                                    </a>
+                                </li>
 							@endforeach
 						@endif
 					</ul><div class="slimScrollBar" style="background: none repeat scroll 0% 0% rgb(187, 187, 187); width: 7px; position: absolute; top: 0px; opacity: 0.4; border-radius: 7px; z-index: 99; right: 1px; display: block;"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: none repeat scroll 0% 0% rgb(234, 234, 234); opacity: 0.2; z-index: 90; right: 1px;"></div></div>

@@ -415,4 +415,37 @@ class TaskController extends \BaseController {
 		return \View::make( $data['view_path'] . '.tasks.partials.widget', $data )->render();
 	}
 
+    public function getAjaxTaskNotification(){
+        $data   = $this->data_view;
+        if($this->dueTaskCount() > 0){
+            $data['tasks'] = \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(((isset($clientId))? $clientId :NULL),\Auth::id())['data'];
+            $response['result'] = true;
+            $response['task'] = \View::make( $data['view_path'] . '.tasks.partials.taskNotification', $data )->render();
+            return \Response::json($response);
+        } else {
+            return \Response::json(array('result'=>false));
+        }
+    }
+
+    public function getAjaxTaskCount(){
+        $data   = $this->data_view;
+        $response['count'] = $this->dueTaskCount();
+        if($response['count'] > 0){
+            $tasks = \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(((isset($clientId))? $clientId :NULL),\Auth::id())['data'];
+            $response['tasks'] = \View::make( $data['view_path'] . '.tasks.partials.taskNotification', array('tasks' => $tasks))->render();
+            foreach($tasks as $task){
+                if(time() >= strtotime($task->remind) && intval($task->remind_mins)){
+                    $response['reminder'][] = $task;
+                }
+            }
+            // Render content of modal.
+        }
+        $response['result'] = true;
+        return \Response::json($response);
+    }
+
+    private function dueTaskCount(){
+        return \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(((isset($clientId))? $clientId :NULL),\Auth::id())['due']->today;
+    }
+
 }
