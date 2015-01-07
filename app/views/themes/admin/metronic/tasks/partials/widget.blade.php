@@ -96,7 +96,7 @@
 								</a>								
 							</td>
 							<td>
-								<small class="muted">on {{\Carbon\Carbon::parse($task->created_at)->format('d/m/Y')}} at {{\Carbon\Carbon::parse($task->created_at)->format('H:i')}}</small>
+								<small class="muted">on {{\Carbon\Carbon::parse($task->date)->format('d/m/Y')}} at {{\Carbon\Carbon::parse($task->date)->format('H:i')}}</small>
 							</td>
 							<td>
 								<a href="{{
