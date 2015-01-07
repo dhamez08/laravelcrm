@@ -152,13 +152,13 @@
 						@if(!\Input::has('note_id'))
 						<li class="{{ $noteType == 'note_custom' ? 'active' : '' }}">
 							<a href="#note_custom" data-toggle="tab" data-tab="note_custom" class="note-tab-types">
-								Add Manual Note 
+								Manual Note 
 							</a>
 						</li>
 						@endif
 						<li class="{{ $noteType == 'note_existing' ? 'active' : '' }}">
 							<a href="#note_existing" data-toggle="tab" data-tab="note_existing" class="note-tab-types">
-								Add Existing Note 
+								Existing Note 
 							</a>				
 						</li>
 					</ul>
@@ -169,7 +169,15 @@
 						</div>
 						@endif
 						<div class="tab-pane fade {{ $noteType == 'note_existing' ? 'active in' : '' }}" id="note_existing">
-							{{ \Notes\NotesController::get_instance()->getIndex($tasks->customer_id,'', $existingNoteViewType, $tasks->note_id, $notesOtherData) }}
+							{{ 
+								\Notes\NotesController::get_instance()->getIndex(
+									$tasks->customer_id,
+									'', 
+									$existingNoteViewType, 
+									\CustomerNotes\CustomerNotes::where('task_id', $tasks->id)->lists('id'),
+									$notesOtherData
+								) 
+							}}
 						</div>
 					</div>
 				</div>

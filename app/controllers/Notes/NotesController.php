@@ -65,11 +65,18 @@ class NotesController extends \BaseController {
 			$data['notes'] = $data['notes']->where(function($query) use ($otherData, $selectedNoteId)
 			{
 				$query->whereNull('task_id');
-				if(isset($otherData['include_selected']))
-					$query->orWhere('id', $selectedNoteId);
+				if(isset($otherData['include_selected'])) {
+					if(!is_array($selectedNoteId))
+						$query->orWhere('id', $selectedNoteId);
+					elseif(!empty($selectedNoteId))
+						$query->orWhereIn('id', $selectedNoteId);
+				}					
 			});
 		} elseif(is_array($otherData) && isset($otherData['only_selected'])) {
-			$data['notes']->where('id', $selectedNoteId);
+			if(!is_array($selectedNoteId))
+				$data['notes']->where('id', $selectedNoteId);
+			elseif(!empty($selectedNoteId))
+				$data['notes']->whereIn('id', $selectedNoteId);
 		}
 
 		//var_dump($data['notes']->get()->toArray());

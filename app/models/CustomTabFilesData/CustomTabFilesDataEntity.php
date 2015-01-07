@@ -32,6 +32,20 @@ class CustomTabFilesDataEntity extends \Eloquent{
 		return self::$instance;
 	}
 
+	// added by rjosephporter - 01.05.2015
+	public function createOrUpdate($data, $id = null)
+	{		
+		if($id == null) { //create
+			$document = new $this;
+			$document->insert($data);
+		} else { //update
+			$document = \CustomTabFilesData\CustomTabFilesDataEntity::find($id);
+			$document->where('id', $id);
+			$document->update($data);
+		}
+		return $document;
+	}
+
 	public function upload() {
 
 		$destination = public_path()."/document/";

@@ -96,13 +96,20 @@
 								@if(!in_array($viewType, array('task-create')))
 								<a href="{{ action('Notes\NotesController@getDeleteNote',array('id'=>$note->id,'customerid'=>$note->customer_id)) }}" class="pull-right" title="Delete File"><i class="icon-trash"></i> </a>
 								@else
-								{{ 
+								{{-- 
 									Form::radio(
 										'note', 
 										$note->id,
 										isset($selectedNoteId) && $selectedNoteId == $note->id ? true : false
 									) 
-								}}
+								--}}
+								{{ 
+									Form::checkbox(
+										'note[]', 
+										$note->id,
+										in_array($note->id, (!is_array($selectedNoteId) ? array($selectedNoteId) : $selectedNoteId)) ? true : false
+									) 
+								}}								
 								@endif
 							</td>
 						</tr>

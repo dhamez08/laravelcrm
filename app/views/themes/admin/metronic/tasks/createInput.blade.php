@@ -150,13 +150,13 @@
 						@if(empty($chosen_note))
 						<li class="active">
 							<a href="#note_custom" data-toggle="tab" data-tab="note_custom" class="note-tab-types">
-								Add Manual Note 
+								Manual Note 
 							</a>
 						</li>
 						@endif
 						<li class="{{ empty($chosen_note) ? '' : 'active' }}">
 							<a href="#note_existing" data-toggle="tab" data-tab="note_existing" class="note-tab-types">
-								Add Existing Note 
+								Existing Note 
 							</a>				
 						</li>
 					</ul>

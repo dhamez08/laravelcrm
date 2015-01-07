@@ -281,6 +281,35 @@ class ClientFileController extends \BaseController {
 		}
 	}
 
+	public function postBulkDeleteFile($customerid)
+	{
+		$fileIds = \Input::get('files_to_delete');
+		$successDelete = 0;
+		if(count($fileIds) > 0) {
+			foreach($fileIds as $fileId)  {
+				$file = \CustomerFiles\CustomerFiles::find($fileId);
+				if( \File::exists(public_path('documents')) ){
+					if( \File::isFile( public_path('documents/' . $file->filename) ) ){
+						\File::delete(public_path('documents/' . $file->filename));
+					}
+				}
+				if( $file->delete() ){
+					$successDelete++;
+				}
+			}
+			if($successDelete == count($fileIds)) {
+				\Session::flash('message', 'Successfully Deleted File');
+			} else {
+				\Session::flash('message', 'There was an error when deleting file(s)');
+			}			
+		} else {
+			\Session::flash('message', 'No selected file(s) to delete');
+		}
+
+
+		return \Redirect::to('file/client-file/' . $customerid);
+	}
+
 	public function getMediaWidget($user_id, $customer_id = null){
 		$data 				= $this->data_view;
 		$data['sms_files']	= \SMSFIles\SMSFIles::userId(\Auth::id());
