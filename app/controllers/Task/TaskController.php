@@ -196,26 +196,32 @@ class TaskController extends \BaseController {
 				'note_type'		=> \Input::get('note_type'),
 				'custom_note'	=> \Input::get('note_type') == 'note_custom' ? \Input::get('custom_note') : null,
 				'custom_note_file' => null,
-				'note_id'		=> \Input::get('note_type') == 'note_existing' ? \Input::get('note') : null				
+				//'note_id'		=> \Input::get('note_type') == 'note_existing' ? \Input::get('note') : null				
 			);
 
 			// Get current note
-			$taskNoteId = \CustomerTasks\CustomerTasks::find($taskid)->note_id;
+			//$taskNoteId = \CustomerTasks\CustomerTasks::find($taskid)->note_id;
+			$taskNoteId = \CustomerTasks\CustomerTasks::find($taskid)->notes;
 
 			$task = \CustomerTasks\CustomerTasksEntity::get_instance()->createOrUpdate($data, $taskid);			
 
 			// Update old note
 			if(!empty($taskNoteId)) {
-				$oldNote = \CustomerNotes\CustomerNotes::find($taskNoteId);
-				$oldNote->task_id = null;
-				$oldNote->save();
+				foreach($taskNoteId as $noteObj) {
+					$oldNote = \CustomerNotes\CustomerNotes::find($noteObj->id);
+					$oldNote->task_id = null;
+					$oldNote->save();
+				}
 			}
 
 			// Update new note
 			if(\Input::get('note_type') == 'note_existing') {
+				/*
 				$newNote = \CustomerNotes\CustomerNotes::find(\Input::get('note'));
 				$newNote->task_id = $task->id;
 				$newNote->save();
+				*/
+				$newNote = \CustomerNotes\CustomerNotes::whereIn('id', \Input::get('note'))->update(array('task_id' => $task->id));
 			}
 
 			\Session::flash('message', 'Successfully Updated Task' );
@@ -292,15 +298,17 @@ class TaskController extends \BaseController {
 				'note_type'		=> \Input::get('note_type'),
 				'custom_note'	=> \Input::get('note_type') == 'note_custom' ? \Input::get('custom_note') : null,
 				'custom_note_file' => null,
-				'note_id'		=> \Input::get('note_type') == 'note_existing' ? \Input::get('note') : null
+				//'note_id'		=> \Input::get('note_type') == 'note_existing' ? \Input::get('note') : null
 			);
 			$task = \CustomerTasks\CustomerTasksEntity::get_instance()->createOrUpdate($data);
 
 			// Update attached note
 			if(\Input::get('note_type') == 'note_existing') {
-				$note = \CustomerNotes\CustomerNotes::find(\Input::get('note'));
-				$note->task_id = $task->id;
-				$note->save();
+				foreach(\Input::get('note') as $note_id) {
+					$note = \CustomerNotes\CustomerNotes::find($note_id);
+					$note->task_id = $task->id;
+					$note->save();
+				}
 			}
 
 			\Session::flash('message', 'Successfully Added Task' );

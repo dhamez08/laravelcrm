@@ -51,4 +51,9 @@ class CustomerTasks extends \Eloquent{
 		return $this->hasOne('\CustomerNotes\CustomerNotes', 'note_id', 'id');
 	}
 
+	public function notes()
+	{
+		return $this->hasMany('\CustomerNotes\CustomerNotes', 'task_id', 'id');
+	}
+
 }
