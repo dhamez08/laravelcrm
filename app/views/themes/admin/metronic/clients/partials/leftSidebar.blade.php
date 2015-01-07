@@ -61,6 +61,7 @@
 				</a>
 			</li>
 			<!-- END FRONTEND THEME LINKS -->
+			{{--
 			<li>
 				<a href="javascript:;">
 				<i class="fa fa-euro"></i>
@@ -75,6 +76,7 @@
 				<span class="arrow "></span>
 				</a>
 			</li>
+			--}}
 			<li>
 				<a href="javascript:;">
 				<i class="fa fa-briefcase"></i>

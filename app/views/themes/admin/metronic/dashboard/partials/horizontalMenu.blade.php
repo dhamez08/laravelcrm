@@ -58,11 +58,13 @@
 				@endif
 			</a>
 		</li>
+		{{-- 
 		<li class="classic-menu-dropdown">
 			<a href="#">
 			<i class="fa fa-file-text-o"></i>  Accounting
 			</a>
 		</li>
+		--}}
 	</ul>
 </div>
 <!-- END HORIZANTAL MENU -->
