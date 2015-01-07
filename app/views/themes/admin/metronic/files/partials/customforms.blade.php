@@ -13,16 +13,38 @@
 		</ul>
 	</div>
 	<div class="portlet-body tabbable-line" style="max-height:500px;">
-
+		{{ 
+			Form::open(
+				array(
+					'action' =>	array(
+						'File\ClientFileController@postBulkDeleteFile',
+						'customer_id'=>$customer->id
+					),
+					'role' => 'form',
+				)
+			) 
+		}}		
+		<?php
+			$customerFilesCount = \CustomerFiles\CustomerFiles::customerFile($customer->id)->where('type', $id)->count();
+		?>
+		@if($customerFilesCount > 0)
+		<div class="row">
+			<div class="col-md-12">
+				<button type="submit" class="btn btn-xs btn-danger pull-left"><i class="fa fa-trash"></i> Bulk Delete</button>
+			</div>
+		</div>
+		@endif		
 		<div class="scroller" style="height:350px" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd">
-			<ul class="feeds">
-				@foreach($customerFiles->get()	as $files)
-					@if($files->type == $id)
-					<li>
-						<div class="col1">
-							<div class="cont">
-								<div class="cont-col1">
-									<div class="label label-sm label-info">
+			<table class="table table-condensed">
+				<tbody>
+					@foreach($customerFiles->get()	as $files)
+						@if($files->type == $id)
+							<tr>
+								<td style="width:1%">
+									{{ Form::checkbox('files_to_delete[]', $files->id) }}
+								</td>
+								<td>
+									<span class="label label-sm label-info">
 										<?php
 										$ext = explode(".",$files->filename);
 										$ext = strtolower(trim(end($ext)));
@@ -87,56 +109,29 @@
 										}
 										?>
 										<i class="fa fa-{{$file_type}}-o"></i>
-									</div>
-								</div>
-								<div class="cont-col2">
-									<div class="desc">
-										 <a download href="{{asset('public/documents/' . $files->filename)}}" title="Download File {{$files->filename}}">{{$files->filename}}</a>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col2">
-							<a href="{{
-										action(
-											'File\ClientFileController@getDeleteFile',
-											array(
-												'id'=>$files->id,
-												'customerid'=>$files->customer_id
-											)
-										)
-									}}"
-								class="pull-right" title="Delete File {{$files->filename}}"><i class="icon-trash"></i> </a>
-						</div>
-					</li>
-					@endif
-				@endforeach
-			</ul>
-		</div>	
-
-		{{--
-		<div class="list_files_widget">
-			@foreach($customerFiles->get()	as $files)
-				@if($files->type == $id)
-					<p>
-						<a href="{{asset('public/documents/' . $files->filename)}}" target="_blank">{{$files->filename}}</a>
-						<a 	class="btn red btn-sm deleteFile"
-							href="{{
-								action(
-									'File\ClientFileController@getDeleteFile',
-									array(
-										'id'=>$files->id,
-										'customerid'=>$files->customer_id
-									)
-								)
-							}}"
-						>
-							<i class="fa fa-trash-o fa-5x"></i>
-						</a>
-					</p>
-				@endif
-			@endforeach
+									</span>
+									&nbsp;&nbsp;<a download href="{{asset('public/documents/' . $files->filename)}}" title="Download File {{$files->filename}}">{{$files->filename}}</a>
+								</td>
+								<td>
+									<a href="{{
+												action(
+													'File\ClientFileController@getDeleteFile',
+													array(
+														'id'=>$files->id,
+														'customerid'=>$files->customer_id
+													)
+												)
+											}}"
+										class="pull-right" title="Delete File {{$files->filename}}">
+											<i class="icon-trash"></i> 
+									</a>
+								</td>
+							</tr>
+						@endif
+					@endforeach
+				</tbody>
+			</table>
 		</div>
-		--}}
+		{{ Form::close() }}
 	</div>
 </div>
