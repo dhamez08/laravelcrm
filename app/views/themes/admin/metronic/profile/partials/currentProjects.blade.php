@@ -1,4 +1,4 @@
-<div class="tab-pane" id="tab_current_projects">
+<div class="tab-pane{{(\Session::has('profile') && \Session::get('profile') == 'account-current-projects') ? ' active': ''}}" id="tab_current_projects">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12">

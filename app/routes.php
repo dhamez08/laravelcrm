@@ -24,6 +24,7 @@ Route::get( 'marketing/sms-receipt' , 'Marketing\MarketingController@getSmsRecei
 Route::get('social/{action?}',array("as"=>"hybridauth",	"uses"=>"SocialMediaAccount\SocialMediaAccountController@getAuth"));
 Route::group(array('before' => 'auth'), function()
 {
+	Route::get('profile/setprimary', 'SocialMediaAccount\SocialMediaAccountController@getSetPrimary');
 	Route::controller( 'clientprofile' , 'ClientProfilePhoto\ClientProfilePhotoController');
 	Route::controller( 'twitter' , 'Twitter\TwitterController');
 	Route::controller( 'clients' , 'Clients\ClientsController');
@@ -92,12 +93,6 @@ Route::group(array('before' => 'auth'), function()
 
 	Route::controller('custom-tab','CustomTab\CustomTabController');
 	Route::get( 'dashboard' , 'Dashboard\DashboardController@getIndex' );
-
-    Route::group(array('prefix' => 'tasks'), function()
-    {
-        Route::get('count', 'Task\TaskController@getAjaxTaskCount');
-        Route::get('notification', 'Task\TaskController@getAjaxTaskNotification');
-    });
 });
 Route::post('pass-email-data','Email\EmailController@sendData');
 Route::get('testmail', function()

@@ -16,19 +16,19 @@
 		<div class="col-md-12">
 			<div class="tabbable tabbable-custom tabbable-full-width">
 				<ul class="nav nav-tabs" role="tablist">
-					<li class="active">
+					<li class="{{(\Session::has('profile')) ? ((\Session::get('profile') == 'account-overview' ) ? ' active': '') : ' active' }}">
 						<a href="#tab_overview" data-toggle="tab">
 						Overview </a>
 					</li>
-					<li>
+					<li class="{{(\Session::has('profile') && \Session::get('profile') == 'account-settings') ? ' active': ''}}">
 						<a href="#tab_account_settings" data-toggle="tab">
 						Account Settings </a>
 					</li>
-					<li>
+					<li class="{{(\Session::has('profile') && \Session::get('profile') == 'account-current-projects') ? ' active': ''}}">
 						<a href="#tab_current_projects" data-toggle="tab">
 						Current Projects </a>
 					</li>
-					<li>
+					<li  class="{{(\Session::has('profile') && \Session::get('profile') == 'account-help-settings') ? ' active': ''}}">
 						<a href="#tab_help_settings" data-toggle="tab">
 						Help & Settings </a>
 					</li>

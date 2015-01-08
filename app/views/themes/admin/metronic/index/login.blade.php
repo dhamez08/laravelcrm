@@ -82,23 +82,28 @@
 				</div>
 				<div class="login-options">
 					<h4>Or login with</h4>
+					<?php $providers = Config::get('anvard::hybridauth.providers'); ?>
 					<ul class="social-icons">
-						<li>
-							<a href="{{url('social/facebook')}}" data-original-title="facebook" class="facebook">
-							</a>
-						</li>
-						<li>
-							<a href="{{url('social/twitter')}}" data-original-title="Twitter" class="twitter">
-							</a>
-						</li>
-						<li>
-							<a href="{{url('social/google')}}" data-original-title="Goole Plus" class="googleplus">
-							</a>
-						</li>
-						<li>
-							<a href="{{url('social/linkedin')}}" data-original-title="Linkedin" class="linkedin">
-							</a>
-						</li>
+						@foreach($providers as $provider_key => $provider_value)
+							<?php
+							$key = strtolower($provider_key);
+							if($key == "google"){
+								$class = "googleplus";
+								$title = "Google Plus";
+								$key = "google";
+							} else {
+								$class = $key;
+								$title = $provider_key;
+								$key = $key;
+							}
+							?>
+							@if($provider_value['enabled'])
+								<li>
+									<a href="{{url('social/'.$key)}}" data-original-title="{{$title}}" class="{{$class}}">
+									</a>
+								</li>
+							@endif
+						@endforeach
 					</ul>
 				</div>
 				<div class="forget-password">

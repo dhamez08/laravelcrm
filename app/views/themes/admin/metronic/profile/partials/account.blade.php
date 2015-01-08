@@ -1,9 +1,13 @@
-<div class="tab-pane" id="tab_account_settings">
+@section('head-custom-css')
+	@parent
+	<link href="{{$asset_path}}/pages/css/client-social-profile.css" rel="stylesheet"/>
+@stop
+<div class="tab-pane{{(\Session::has('profile') && \Session::get('profile') == 'account-settings') ? ' active': ''}}" id="tab_account_settings">
 	<div class="container-fluid">
 		<div class="row profile-account">
 			<div class="col-md-3">
 				<ul class="ver-inline-menu tabbable margin-bottom-10">
-					<li class="active">
+					<li class="{{(\Session::has('account-settings')) ? ((\Session::get('account-settings') == 'personal_info') ? ' active': '') : ' active'}}">
 						<a data-toggle="tab" href="#tab_personal_info">
 						<i class="fa fa-cog"></i> Personal info </a>
 						<span class="after">
@@ -25,11 +29,15 @@
 						<a data-toggle="tab" href="#tab_sms">
 						<i class="fa fa-mobile-phone"></i> SMS Account </a>
 					</li>
+					<li class="{{(\Session::has('account-settings') && \Session::get('account-settings') == 'social-profile') ? ' active': ''}}">
+						<a data-toggle="tab" href="#tab_social_media_account">
+							<i class="fa fa-globe"></i> Social Media Account </a>
+					</li>
 				</ul>
 			</div>
 			<div class="col-md-9">
 				<div class="tab-content">
-					<div id="tab_personal_info" class="tab-pane active">
+					<div id="tab_personal_info" class="tab-pane{{(\Session::has('account-settings')) ? ((\Session::get('account-settings') == 'personal_info') ? ' active': '') : ' active'}}">
 							{{
 								Form::model(
 									$user,
@@ -365,6 +373,93 @@
 							</ul>
 						</form>
 					</div>
+
+					<div id="tab_social_media_account" class="tab-pane{{(\Session::has('account-settings') && \Session::get('account-settings') == 'social-profile') ? ' active': ''}}">
+						<h2>Social Media Accounts</h2>
+						<div class="col-lg-12">
+							<div class="row">
+								<span>Get Connected to Social Networking Site:</span>
+								<br />
+								<?php $providers = Config::get('anvard::hybridauth.providers'); ?>
+								<ul class="social-icons">
+									@foreach($providers as $provider_key => $provider_value)
+									<?php
+										$key = strtolower($provider_key);
+										if($key == "google"){
+											$class = "googleplus";
+											$title = "Google Plus";
+											$key = "google";
+										} else {
+											$class = $key;
+											$title = $provider_key;
+											$key = $key;
+										}
+									?>
+										@if($provider_value['enabled'] && !in_array(strtolower($provider_key),\SocialMediaAccount\ProfileEntity::get_instance()->getConnectedProviders()))
+											<li>
+												<a href="{{url('social/'.$key)}}" data-original-title="{{$title}}" class="{{$class}}">
+												</a>
+											</li>
+										@endif
+									@endforeach
+								</ul>
+								<span class="social-loading"></span>
+							</div>
+						</div>
+
+						<div class="col-lg-12">
+							<div class="row">
+								<hr />
+								<?php $social = \SocialMediaAccount\ProfileEntity::get_instance()->getMediaAccount(); ?>
+								@if(count($social) > 0)
+									@foreach($social as $account)
+										<div class="col-md-6 col-sm-4 col-lg-4">
+
+												<!-- BEGIN Portlet PORTLET-->
+												<div class="portlet box green-meadow">
+													<div class="portlet-title">
+														<div class="caption">
+															<i class="fa fa-{{strtolower($account->provider)}}"></i>
+															<span class="caption-subject bold uppercase">
+																{{$account->provider}}
+															</span>
+														</div>
+														<div class="tools">
+															<a href="" class="collapse"></a>
+															<a href="" title="Used as Profile photo" data-profile-id="{{$account->id}}" class="config social-profile-config"></a>
+															<!--
+															<a href="" class="reload"></a>
+															<a href="" class="remove"></a>
+															-->
+														</div>
+													</div>
+													<div class="portlet-body">
+														<div class="row">
+															<div class="social-img col-xs-2 col-sm-12 col-md-3">
+																<a href="{{$account->profileURL}}" target="_blank">
+																	<img src="{{$account->photoURL}}" style="width:60px;" />
+																</a>
+															</div>
+															<div class="social-detail col-xs-10 col-sm-12 col-md-9">
+																<div class="row">
+																	<ul>
+																		<li class="profile-name">{{$account->displayName}}</li>
+																		<li class="profile-email">{{$account->email}}</li>
+																	</ul>
+																</div>
+															</div>
+														</div>
+														<div class="clearfix"></div>
+													</div>
+												</div>
+												<!-- END GRID PORTLET-->
+
+										</div>
+									@endforeach
+								@endif
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 			<!--end col-md-9-->
@@ -372,3 +467,27 @@
 	</div>
 
 </div>
+
+@section('script-footer')
+	@parent
+
+	@section('footer-custom-js')
+		<script>
+			$(function(){
+				$(document).on("click","ul.social-icons li a",function(){
+					$("span.social-loading").html('<i class="fa fa-spinner fa-spin"></i> Connecting Account to ' + $(this).attr('data-original-title'));
+				});
+
+				$(document).on("click","a.social-profile-config",function(e){
+					e.preventDefault();
+					var dataId = $(this).attr('data-profile-id');
+					$.get("{{url('profile/setprimary')}}",{ id: dataId },function(response){
+						if(response.status == true){
+							$("img.img-avatar-top").attr("src",response.profile['photoURL']);
+						}
+					});
+				});
+			});
+		</script>
+	@stop
+@stop

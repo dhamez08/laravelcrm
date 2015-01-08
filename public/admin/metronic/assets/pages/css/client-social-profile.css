@@ -1,0 +1,10 @@
+.social-detail ul{
+    list-style: none;
+    padding: 0px;
+    margin: 0px 0px 0px 15px;
+}
+
+.social-detail ul li.profile-name{
+    font-weight: bold;
+}
+

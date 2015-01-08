@@ -159,5 +159,31 @@ class ProfileEntity extends \Eloquent
             return FALSE;
         }
     }
+
+    public function getMediaAccount(){
+        $account = \SocialMediaAccount\Profile::where('user_id','=',\Auth::id())->get();
+        return $account;
+    }
+
+    public function getConnectedProviders(){
+        $connected = \SocialMediaAccount\Profile::where('user_id','=',\Auth::id())->select('provider')->get();
+        $p = array();
+        if(count($connected)){
+           foreach($connected as $net => $social){
+               $p[] = $social['provider'];
+           }
+        }
+        return $p;
+    }
+
+    public function getPrimaryAvatar(){
+        $check = \SocialMediaAccount\ProfilePrimary::where("user_id","=",\Auth::id())->first();
+        if(count($check) > 0){
+            $profile = \SocialMediaAccount\Profile::find($check->profile_id);
+            return $profile->photoURL;
+        } else {
+            return url('public/img/profile_images/profile.jpg');
+        }
+    }
 }
 ?>
