@@ -96,7 +96,7 @@ Route::group(array('before' => 'auth'), function()
     Route::group(array('prefix' => 'tasks'), function()
     {
         Route::get('count', 'Task\TaskController@getAjaxTaskCount');
-        Route::get('notification', 'Task\TaskController@getAjaxTaskNotification');
+        Route::post('dismiss', 'Task\TaskController@postAjaxDismissReminder');
     });
 });
 Route::post('pass-email-data','Email\EmailController@sendData');

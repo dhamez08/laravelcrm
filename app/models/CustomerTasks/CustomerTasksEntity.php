@@ -180,4 +180,13 @@ class CustomerTasksEntity extends \Eloquent{
 		return $arrayData;
 	}
 
+    public function setReminded($id = null){
+        if($id != null){
+            $obj = \CustomerTasks\CustomerTasks::find($id);
+            $obj->is_reminded = true;
+            $obj->save();
+            return $obj;
+        }
+    }
+
 }

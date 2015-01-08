@@ -27,7 +27,39 @@ var Reminder = (function(){
                         header.find('ul.dropdown-menu > li:first').find('p').text('You have '+msg.count+' tasks reminder.');
 
                         if(msg.reminder){
-                            //Pop up reminder with sound.
+                            if(jQuery('body .bootbox.modal').length == 0){
+                                var task_table = $('<table>').attr('id','task-reminders').addClass('table table-condensed table-feeds').append('<tbody>');
+                                task_table.find('tbody').html(msg.reminder);
+                                var audio = new Audio(baseURL+'/public/admin/metronic/assets/global/sounds/reminder.mp3');
+                                audio.play();
+                                bootbox.dialog({
+                                    title: "Task Reminder",
+                                    message: task_table,
+                                    buttons: {
+                                        "Dismiss": {
+                                            label: "Dismiss All",
+                                            className: "btn-primary",
+                                            callback: function() {
+                                                var task_ids = new Array();
+                                                jQuery('#task-reminders').find('tr').each(function(){
+                                                    task_ids.push($(this).data('task-id'));
+                                                })
+                                                var dismiss = $.ajax({
+                                                    url: baseURL+"/tasks/dismiss",
+                                                    type: "POST",
+                                                    dataType: "json",
+                                                    data: {'tasks_ids': task_ids}
+                                                });
+                                                dismiss.done(function(msg){
+                                                    if(msg.result){
+                                                        $('button.bootbox-close-button.close').click();
+                                                    }
+                                                });
+                                            }
+                                        }
+                                    }
+                                });
+                            }
                         }
                     }
                     getReminderCount();
