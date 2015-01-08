@@ -187,20 +187,22 @@
 					<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: auto;"><ul style="overflow: hidden; width: auto; height: auto;" class="dropdown-menu-list scroller" data-initialized="1">
 						@if(\CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(((isset($clientId))? $clientId :NULL),\Auth::id())['due']->today > 0)
 							@foreach(\CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(((isset($clientId))? $clientId :NULL),\Auth::id())['data'] as $dueTasks)
-                                <li>
-                                    <a class="openModal" data-toggle="modal" data-target=".ajaxModal" href="{{action('Task\TaskController@getEditClientTask',array('id'=>$dueTasks->id,'customerid'=>$dueTasks->customer_id,'redirect'=>'task'))}}">
-                                    <span class="task">
-                                        <span class="desc">
-                                            {{$dueTasks->displayHtmlTaskDue()}}
-                                            {{$dueTasks->displayHtmlLabelIcon()}}
-                                            <br />
-                                            {{$dueTasks->displayName()}}
-                                            <br />
-                                            {{$dueTasks->displayTaskFullName()}}
-                                        </span>
-                                    </span>
-                                    </a>
-                                </li>
+								@if($dueTasks->isReminded())
+									<li>
+										<a class="openModal" data-toggle="modal" data-target=".ajaxModal" href="{{action('Task\TaskController@getEditClientTask',array('id'=>$dueTasks->id,'customerid'=>$dueTasks->customer_id,'redirect'=>'task'))}}">
+										<span class="task">
+											<span class="desc">
+												{{$dueTasks->displayHtmlTaskDue()}}
+												{{$dueTasks->displayHtmlLabelIcon()}}
+												<br />
+												{{$dueTasks->displayName()}}
+												<br />
+												{{$dueTasks->displayTaskFullName()}}
+											</span>
+										</span>
+										</a>
+									</li>
+								@endif
 							@endforeach
 						@endif
 					</ul><div class="slimScrollBar" style="background: none repeat scroll 0% 0% rgb(187, 187, 187); width: 7px; position: absolute; top: 0px; opacity: 0.4; border-radius: 7px; z-index: 99; right: 1px; display: block;"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: none repeat scroll 0% 0% rgb(234, 234, 234); opacity: 0.2; z-index: 90; right: 1px;"></div></div>
@@ -216,12 +218,9 @@
 		<!-- BEGIN USER LOGIN DROPDOWN -->
 		<li class="dropdown dropdown-user">
 			<a data-close-others="true" data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle" href="#">
-			<?php $socialProfile = \SocialMediaAccount\ProfileEntity::get_instance()->getSocialProfile(); ?>
-			@if( $socialProfile !== FALSE )
-				<img src="{{$socialProfile->photoURL}}" alt="Avatar" class="img-circle round-50"/>
-			@else
-				<img src="{{url('public/img/profile_images/profile.jpg')}}" alt="Avatar" class="img-circle round-50"/>
-			@endif
+			<?php $profileAvatar = \SocialMediaAccount\ProfileEntity::get_instance()->getPrimaryAvatar(); ?>
+
+			<img src="{{$profileAvatar}}" alt="Avatar" class="img-circle img-avatar-top round-50"/>
 
 			<span class="username username-hide-on-mobile">
 				{{\User\User::getUserFullname()}}

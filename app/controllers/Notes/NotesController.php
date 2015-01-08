@@ -211,4 +211,17 @@ class NotesController extends \BaseController {
 		}
 	}
 
+	public function postBulkDeleteNote()
+	{
+		$noteIds = \Input::get('notes_to_delete');
+		if(count($noteIds) > 0) {
+			$notesDeleted = \CustomerNotes\CustomerNotes::whereIn('id', $noteIds)->delete();
+			\Session::flash('message', 'Notes deleted successfully.');
+		} else {
+			\Session::flash('message', 'No selected notes to delete.');
+		}
+
+		return  \Redirect::back();
+	}
+
 }

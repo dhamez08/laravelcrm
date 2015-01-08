@@ -8,3 +8,4 @@ public/img/
 
 composer.lock
 composer.phar
+app/config/packages/atticmedia/anvard/hybridauth.php

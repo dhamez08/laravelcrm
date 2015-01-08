@@ -24,6 +24,7 @@ Route::get( 'marketing/sms-receipt' , 'Marketing\MarketingController@getSmsRecei
 Route::get('social/{action?}',array("as"=>"hybridauth",	"uses"=>"SocialMediaAccount\SocialMediaAccountController@getAuth"));
 Route::group(array('before' => 'auth'), function()
 {
+	Route::get('profile/setprimary', 'SocialMediaAccount\SocialMediaAccountController@getSetPrimary');
 	Route::controller( 'clientprofile' , 'ClientProfilePhoto\ClientProfilePhotoController');
 	Route::controller( 'twitter' , 'Twitter\TwitterController');
 	Route::controller( 'clients' , 'Clients\ClientsController');

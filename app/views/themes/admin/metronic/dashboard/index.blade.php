@@ -68,6 +68,10 @@
 									<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 								</div>
 							@endif
+
+							<div id="ajax-loading-bar" class="col-md-12 text-center hidden" style="padding: 15px 0px;">
+								<img src="{{$asset_path}}/global/img/ajax-loading-bar.gif" />
+							</div>
 						@show
 
 						@section('innerpage-content')

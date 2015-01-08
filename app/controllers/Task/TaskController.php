@@ -399,6 +399,7 @@ class TaskController extends \BaseController {
 		if($Task->count()){
 			$name = $Task->pluck('name');
 			$Task->delete();
+			\CustomerNotes\CustomerNotes::where('task_id', $taskid)->update(array('task_id' => null));
 			if(\Input::has('redirect')){
 				\Session::flash('message', 'Successfully Deleted Task - ' . $name);
 				return \Redirect::to(\Input::get('redirect'));
@@ -407,6 +408,20 @@ class TaskController extends \BaseController {
 				return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>$customerid));
 			}
 		}
+	}
+
+	public function postBulkCancelTask()
+	{
+		$taskIds = \Input::get('tasks_to_delete');
+		if(count($taskIds) > 0) {
+			$tasksDeleted = \CustomerTasks\CustomerTasks::whereIn('id', $taskIds)->delete();
+			\CustomerNotes\CustomerNotes::whereIn('task_id', $taskIds)->update(array('task_id' => null));
+			\Session::flash('message', 'Tasks deleted successfully.');
+		} else {
+			\Session::flash('message', 'No selected tasks to delete.');
+		}
+
+		return \Redirect::back();
 	}
 
 	public function getWidgetDisplay($customerId, $belongsToUser){

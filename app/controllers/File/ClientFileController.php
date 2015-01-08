@@ -307,7 +307,8 @@ class ClientFileController extends \BaseController {
 		}
 
 
-		return \Redirect::to('file/client-file/' . $customerid);
+		//return \Redirect::to('file/client-file/' . $customerid);
+		return \Redirect::back();
 	}
 
 	public function getMediaWidget($user_id, $customer_id = null){

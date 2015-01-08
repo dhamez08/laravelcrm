@@ -1,50 +1,35 @@
 <div class="row">
 	<div class="col-md-12">
+		@if(!in_array($viewType, array('task-create')))
+			{{ 
+				Form::open(
+					array(
+						'action' => array(
+							'Notes\NotesController@postBulkDeleteNote',
+						),
+						'role' => 'form'
+					)
+				) 
+			}}
+			@if($notes->count() > 0)
+			<div class="row">
+				<div class="col-md-12">
+					<button type="submit" class="btn btn-xs btn-danger pull-left"><i class="fa fa-trash"></i> Bulk Delete</button>
+				</div>
+			</div>
+			@endif
+		@endif
 		<div class="scroller" style="height:350px" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd">
-			<!--
-			<ul class="feeds">
-				@if( $notes->count() > 0 )
-					@foreach($notes->get() as $note)
-						<li>
-							<div class="col1" style="width:50% !important">
-								<div class="cont">
-									<div class="cont-col1">
-										TODO: Replace with dynamic user profile image
-										<img src="{{url('public/img/profile_images/profile.jpg')}}" alt="Avatar" class="img-circle round-50" style="width:30px"/>
-									</div>
-									<div class="cont-col2">
-										<div class="desc">
-											 <a 
-											 	data-toggle="modal" 
-											 	data-target=".ajaxModal" 
-											 	href="{{ action('Notes\NotesController@getAjaxViewInput', array('note_id'=>$note->id)) }}" 
-											 	title="Note Subject">
-											 	{{ empty($note->subject) ? "<NO SUBJECT>" : $note->subject }}
-											 </a>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col2" style="width:50% !important">
-								<div class="cont">
-									<div class="cont-col1">
-										<small class="muted">Created By {{ $note->user->first_name }} {{ $note->user->last_name }} on {{ \Carbon\Carbon::parse($note->created_at)->format('m/d/Y') }} at {{ \Carbon\Carbon::parse($note->created_at)->format('H:i') }}</small>
-									</div>
-									<div class="cont-col2">
-										<a href="{{ action('Notes\NotesController@getDeleteNote',array('id'=>$note->id,'customerid'=>$note->customer_id)) }}" class="pull-right" title="Delete File"><i class="icon-trash"></i> </a>
-									</div>
-								</div>
-							</div>
-						</li>						
-					@endforeach
-				@endif
-			</ul>
-			-->
 			<table class="table table-condensed table-feeds">
 				<tbody>
 				@if( $notes->count() > 0 )
 					@foreach($notes->get() as $note)
 						<tr>
+							@if(!in_array($viewType, array('task-create')))
+							<td style="width:1%">
+								{{ Form::checkbox('notes_to_delete[]', $note->id) }}
+							</td>
+							@endif
 							<td class="text-center">
 								<img src="{{url('public/img/profile_images/profile.jpg')}}" alt="Avatar" class="img-circle round-50" style="width:30px"/>
 							</td>
@@ -96,13 +81,6 @@
 								@if(!in_array($viewType, array('task-create')))
 								<a href="{{ action('Notes\NotesController@getDeleteNote',array('id'=>$note->id,'customerid'=>$note->customer_id)) }}" class="pull-right" title="Delete File"><i class="icon-trash"></i> </a>
 								@else
-								{{-- 
-									Form::radio(
-										'note', 
-										$note->id,
-										isset($selectedNoteId) && $selectedNoteId == $note->id ? true : false
-									) 
-								--}}
 								{{ 
 									Form::checkbox(
 										'note[]', 
@@ -119,5 +97,8 @@
 			</table>
 
 		</div>
+		@if(!in_array($viewType, array('task-create')))
+			{{ Form::close() }}
+		@endif
 	</div>
 </div>
