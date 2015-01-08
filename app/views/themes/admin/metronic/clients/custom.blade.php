@@ -100,7 +100,6 @@
 	@parent
 	@section('footer-custom-js')
 	@parent
-	<script src="{{$asset_path}}/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
 	<script type="text/javascript" src="{{$asset_path}}/pages/scripts/opportunities.js"></script>
 	<script type="text/javascript" src="{{$asset_path}}/pages/scripts/client.js"></script>
 	<script type="text/javascript" src="{{$asset_path}}/pages/scripts/notes.js"></script>
@@ -158,7 +157,6 @@
 		<script src="{{$asset_path}}/global/plugins/jquery-file-upload/js/jquery.fileupload-ui.js"></script>
 
 		<script src="{{$asset_path}}/pages/scripts/form-fileupload.js"></script>
-		<script src="{{$asset_path}}/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
 		<script type="text/javascript" src="{{$asset_path}}/pages/scripts/client.js"></script>
 		<script type="text/javascript" src="{{$asset_path}}/pages/scripts/dropbox-file.js"></script>
 		<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->

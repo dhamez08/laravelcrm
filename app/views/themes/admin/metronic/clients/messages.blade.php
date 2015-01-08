@@ -38,7 +38,6 @@
 	@section('footer-custom-js')
 	<!-- add here -->
 	@parent
-	<script src="{{$asset_path}}/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
 	<script type="text/javascript" src="{{$asset_path}}/pages/scripts/opportunities.js"></script>
 	<script type="text/javascript" src="{{$asset_path}}/pages/scripts/client.js"></script>
 	<script type="text/javascript" src="{{$asset_path}}/pages/scripts/notes.js"></script>

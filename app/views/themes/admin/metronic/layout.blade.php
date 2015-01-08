@@ -167,6 +167,7 @@
 		<script src="{{$asset_path}}/pages/scripts/client-file-search.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/pages/scripts/media-library.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/pages/scripts/dropbox-file.js" type="text/javascript"></script>
+        <script src="{{$asset_path}}/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
 		@endif
 		<!-- END PAGE LEVEL PLUGINS -->
 
