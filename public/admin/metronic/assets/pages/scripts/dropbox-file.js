@@ -21,7 +21,7 @@ var DropBoxIntegrationFile = function() {
 		request.done(function( msg ) {
 			console.log(msg.success);
 			if (msg.success) {
-				jQuery('#ajax-loading-bar').toggleClass('hidden');
+				//jQuery('#ajax-loading-bar').toggleClass('hidden');
 				window.location.href = msg.redirect;
 			}
 		});
