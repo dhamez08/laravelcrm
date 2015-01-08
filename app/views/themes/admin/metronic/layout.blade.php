@@ -154,6 +154,7 @@
 		<script src="{{$asset_path}}/global/plugins/select2/select2.min.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/global/scripts/jquery.cookie.js" type="text/javascript"></script>
         <script src="{{$asset_path}}/pages/scripts/notification.js" type="text/javascript"></script>
+        <script src="{{$asset_path}}/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
 		<!-- END PAGE LEVEL SCRIPTS -->
 
 		<!-- BEGIN PAGE LEVEL PLUGINS -->
@@ -167,7 +168,6 @@
 		<script src="{{$asset_path}}/pages/scripts/client-file-search.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/pages/scripts/media-library.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/pages/scripts/dropbox-file.js" type="text/javascript"></script>
-        <script src="{{$asset_path}}/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
 		@endif
 		<!-- END PAGE LEVEL PLUGINS -->
 
