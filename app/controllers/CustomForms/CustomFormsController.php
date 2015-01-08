@@ -351,6 +351,18 @@ class CustomFormsController extends \BaseController {
 		return \Redirect::back()->withErrors(['There was a problem deleting the form data, please try again']);
 	}
 
+	public function postBulkDeleteFormData()
+	{
+		$formRefIds = \Input::get('forms_to_delete');
+		if(count($formRefIds) > 0) {
+			$formsDeleted = \CustomFormData\CustomFormDataEntity::whereIn('ref_id', $formRefIds)->forceDelete();
+			\Session::flash('message', 'Form Data successfully deleted.');
+		} else {
+			\Session::flash('message', 'No selected Form Data to delete.');
+		}
+		return \Redirect::back();
+	}
+
 	private function _formTemplate() {
 		$content = '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>';
 		$content.= '<link href="'.$this->data_view['asset_path'].'/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>';

@@ -70,6 +70,18 @@ class CustomTabController extends \BaseController {
 		}
 	}
 
+	public function postBulkDeleteNote($customer_id, $custom_id)
+	{
+		$noteIds = \Input::get('notes_to_delete');
+		if(count($noteIds) > 0) {
+			$notesDeleted = \CustomTabNotesData\CustomTabNotesDataEntity::whereIn('id', $noteIds)->delete();
+			\Session::flash('message', 'Notes deleted successfully');			
+		} else {
+			\Session::flash('message', 'No selected notes to delete');
+		}
+		return \Redirect::to('clients/custom/'.$customer_id.'?custom='.$custom_id);		
+	}
+
 	public function postAddFile() {
 		$rules = array(
 			'name' => 'required',
@@ -157,6 +169,32 @@ class CustomTabController extends \BaseController {
 		} else {
 			return \Redirect::back()->withErrors(['There was a problem deleting the file, please try again']);
 		}
+	}
+
+	public function postBulkDeleteFile($customer_id, $custom_id)
+	{
+		$fileIds = \Input::get('files_to_delete');
+		$filesDeletedCount = 0;
+		if(count($fileIds) > 0) {
+			foreach($fileIds as $fileId) {
+				$file = \CustomTabFilesData\CustomTabFilesDataEntity::get_instance()->where('id', $fileId)->where('customer_id', $customer_id)->first();
+				if($file) {
+					$img = $file->file_name;
+					if(\File::delete(public_path().'/document/'.$img)) {
+						$file->delete();
+						$filesDeletedCount++;
+					}					
+				}
+			}
+			if($filesDeletedCount == count($fileIds)) {
+				\Session::flash('message', 'Files deleted successfully.');
+			} else {
+				\Session::flash('message', 'There was an error when try to delete files. Please try again.');
+			}
+		} else {
+			\Session::flash('message', 'No selected files to delete.');
+		}
+		return \Redirect::to('clients/custom/' . $customer_id . '?custom=' . $custom_id);		
 	}
 
 

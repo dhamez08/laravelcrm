@@ -73,162 +73,178 @@
 					@endif
 				</div>
 				<div class="portlet-body">
-					<div class="scroller" style="height: 350px;">
 					@if($customtab->$sec_name)
 						@if($customtab->$sec_name==1)
+							{{
+								Form::open(
+									array(
+										'action' => array(
+											'CustomTab\CustomTabController@postBulkDeleteNote',
+											'customer_id' => $customer->id,
+											'custom_id' => $customtab->id
+										),
+										'role' => 'form',
+									)
+								)
+							}}
 							<?php
 							$results = \CustomTabNotesData\CustomTabNotesDataEntity::get_instance()->getNotesBySection_Custom_Customer($sec_key, $customtab->id, $customer->id);
 							?>
-
-							@if(count($results)>0)
-							<table class="table table-condensed">
-								@foreach($results as $result)
-									<tr>
-										<td>{{ $result->entry }}</td>
-										<td><small class="muted">Created on {{ date("d/m/Y H:i",strtotime($result->created_at)) }}</small></td>
-										<td>
-											<a href="{{ url('custom-tab/delete-note/'.$result->id.'/'.$customer->id.'/'.$customtab->id) }}" onclick="return confirm('Are you sure you want to delete?')" class="pull-right delete-task"><i class="icon-trash"></i></a>
-										</td>
-									</tr>
-								@endforeach
-							</table>
-							@else
-								No data has been added.
+							@if(count($results) > 0)
+								<div class="row">
+									<div class="col-md-12">
+										<button type="submit" class="btn btn-xs btn-danger pull-left"><i class="fa fa-trash"></i> Bulk Delete</button>
+									</div>
+								</div>
 							@endif
+							<div class="scroller" style="height: 350px;">
+								@if(count($results)>0)
+								<table class="table table-condensed">
+									@foreach($results as $result)
+										<tr>
+											<td style="width:1%">
+												{{ Form::checkbox('notes_to_delete[]', $result->id) }}
+											</td>
+											<td>{{ $result->entry }}</td>
+											<td><small class="muted">Created on {{ date("d/m/Y H:i",strtotime($result->created_at)) }}</small></td>
+											<td>
+												<a href="{{ url('custom-tab/delete-note/'.$result->id.'/'.$customer->id.'/'.$customtab->id) }}" onclick="return confirm('Are you sure you want to delete?')" class="pull-right delete-task"><i class="icon-trash"></i></a>
+											</td>
+										</tr>
+									@endforeach
+								</table>
+								@else
+									No data has been added.
+								@endif
+							</div>
+							{{ Form::close() }}
 						@elseif($customtab->$sec_name==2)
 							<?php
-							$results = \CustomTabFilesData\CustomTabFilesDataEntity::get_instance()->getFilesBySection_Custom_Customer($sec_key, $customtab->id, $customer->id);
-							$icons	 = \Config::get('crm.document_file_type_class');
-							$path = url() . "/public/document/";
-							?>
-
+								$results = \CustomTabFilesData\CustomTabFilesDataEntity::get_instance()->getFilesBySection_Custom_Customer($sec_key, $customtab->id, $customer->id);
+								$icons	 = \Config::get('crm.document_file_type_class');
+								$path = url() . "/public/document/";
+							?>																		
 							<div class="tab-content">
 								<div class="tab-pane active list_files{{$sec_key}}" style="max-height:400px;" id="">
-									@if(count($results)>0)
-									
-									<div class="scroller" style="height:350px" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd">
-										<ul class="feeds">
-											@foreach($results as $files)
-												<li>
-													<div class="col1">
-														<div class="cont">
-															<div class="cont-col1">
-																<div class="label label-sm label-info">
-																	<?php
-																	$ext = explode(".",$files->file_name);
-																	$ext = strtolower(trim(end($ext)));
-																	$file_type = "file";
-																	switch($ext){
-																		case "pdf":
-																			$file_type = "file-pdf";
-																			break;
-																		case "doc":
-																		case "docx":
-																			$file_type = "file-word";
-																			break;
-																		case "png":
-																		case "jpg":
-																		case "jpeg":
-																		case "bmp":
-																		case "gif":
-																		case "tif":
-																			$file_type = "file-image";
-																			break;
-																		case "ppt":
-																		case "pptx":
-																			$file_type = "file-powerpoint";
-																			break;
-																		case "xls":
-																		case "xlsx":
-																			$file_type = "file-excel";
-																			break;
-																		case "php":
-																		case "js":
-																		case "py":
-																		case "rb":
-																		case "cpp":
-																		case "c":
-																		case "sh":
-																		case "html":
-																		case "css":
-																		case "sass":
-																		case "less":
-																			$file_type = "file-code";
-																			break;
-																		case "mp3":
-																		case "mp4":
-																		case "acc":
-																		case "ogg":
-																			$file_type = "file-sound";
-																			break;
-																		case "mkv":
-																		case "flv":
-																		case "avi":
-																		case "wmv":
-																			$file_type = "file-video";
-																			break;
-																		case "zip":
-																		case "rar":
-																		case "bz":
-																		case "gz":
-																			$file_type = "file-zip";
-																			break;
-																		default:
-																			$file_type = "file";
-																	}
-																	?>
-																	<i class="fa fa-{{$file_type}}-o"></i>
-																</div>
-															</div>
-															<div class="cont-col2">
-																<div class="desc">
-																	 <a download href="{{ $path.$files->file_name }}" title="Download File {{$files->file_name}}">{{$files->file_name}}</a>
-																</div>
-															</div>
-														</div>
-													</div>
-													<div class="col2">
-														<a href="{{
-																	action(
-																		'CustomTab\CustomTabController@getDeleteFile',
-																		array(
-																			'id'=>$files->id,
-																			'customerid'=>$files->customer_id
-																		)
-																	)
-																}}"
-															class="pull-right" title="Delete File {{$files->filename}}"><i class="icon-trash"></i> </a>
-													</div>
-												</li>
-											@endforeach
-										</ul>
-									</div>									
-
-									{{--
-									<div class="list_files_widget">
-										@foreach($results as $result)
-											<p>
-												<a href="{{ $path.$result->file_name }}" target="_blank">{{$result->file_name}}</a>
-												<a 	class="btn red btn-xs deleteFile"
-													href="{{
-														action(
-															'File\ClientFileController@getDeleteFile',
-															array(
-																'id'=>$result->id,
-																'customerid'=>$result->customer_id
-															)
-														)
-													}}"
-												>
-													<i class="fa fa-trash-o fa-5x"></i>
-												</a>
-											</p>
-										@endforeach
-									</div>
-									--}}
-									@else
-										No data has been added.
+									{{
+										Form::open(
+											array(
+												'action' => array(
+													'CustomTab\CustomTabController@postBulkDeleteFile',
+													'customer_id' => $customer->id,
+													'custom_id' => $customtab->id
+												),
+											)
+										)									
+									}}
+									@if(count($results) > 0)
+										<div class="row">
+											<div class="col-md-12">
+												<button type="submit" class="btn btn-xs btn-danger pull-left"><i class="fa fa-trash"></i> Bulk Delete</button>
+											</div>
+										</div>
 									@endif
+									<div class="scroller" style="height: 350px;">										
+										@if(count($results)>0)
+										<table class="table table-condensed">
+											<tbody>
+												@foreach($results as $files)
+													<tr>
+														<td style="width:1%">
+															{{ Form::checkbox('files_to_delete[]', $files->id) }}
+														</td>
+														<td>
+															<span class="label label-sm label-info">
+																<?php
+																$ext = explode(".",$files->file_name);
+																$ext = strtolower(trim(end($ext)));
+																$file_type = "file";
+																switch($ext){
+																	case "pdf":
+																		$file_type = "file-pdf";
+																		break;
+																	case "doc":
+																	case "docx":
+																		$file_type = "file-word";
+																		break;
+																	case "png":
+																	case "jpg":
+																	case "jpeg":
+																	case "bmp":
+																	case "gif":
+																	case "tif":
+																		$file_type = "file-image";
+																		break;
+																	case "ppt":
+																	case "pptx":
+																		$file_type = "file-powerpoint";
+																		break;
+																	case "xls":
+																	case "xlsx":
+																		$file_type = "file-excel";
+																		break;
+																	case "php":
+																	case "js":
+																	case "py":
+																	case "rb":
+																	case "cpp":
+																	case "c":
+																	case "sh":
+																	case "html":
+																	case "css":
+																	case "sass":
+																	case "less":
+																		$file_type = "file-code";
+																		break;
+																	case "mp3":
+																	case "mp4":
+																	case "acc":
+																	case "ogg":
+																		$file_type = "file-sound";
+																		break;
+																	case "mkv":
+																	case "flv":
+																	case "avi":
+																	case "wmv":
+																		$file_type = "file-video";
+																		break;
+																	case "zip":
+																	case "rar":
+																	case "bz":
+																	case "gz":
+																		$file_type = "file-zip";
+																		break;
+																	default:
+																		$file_type = "file";
+																}
+																?>
+																<i class="fa fa-{{$file_type}}-o"></i>
+															</span>
+															&nbsp;&nbsp;<a download href="{{ $path.$files->file_name }}" title="Download File {{$files->file_name}}">{{$files->file_name}}</a>
+														</td>
+														<td>
+															<a href="{{
+																		action(
+																			'CustomTab\CustomTabController@getDeleteFile',
+																			array(
+																				'id'=>$files->id,
+																				'customerid'=>$files->customer_id
+																			)
+																		)
+																	}}"
+																class="pull-right" title="Delete File {{$files->filename}}">
+																	<i class="icon-trash"></i> 
+															</a>
+														</td>
+													</tr>
+												@endforeach
+											</tbody>
+										</table>
+										@else
+											No data has been added.
+										@endif
+									</div>
+									{{ Form::close() }}
 								</div>
 								<div class="tab-pane add_new{{$sec_key}}" id="">
 									<!-- BEGIN PAGE CONTENT-->
@@ -319,34 +335,55 @@
 								</div>
 							</div>
 						@elseif($customtab->$sec_name==3)
+							{{
+								Form::open(
+									array(
+										'action' => array(
+											'CustomForms\CustomFormsController@postBulkDeleteFormData'
+										),
+										'role' => 'form'
+									)
+								)
+							}}
 							<?php
-							$results = \CustomFormData\CustomFormDataEntity::get_instance()->getData($customtab->$section_forms[$sec_key], $customer->id);
-							?>
-
-							@if(count($results)>0)
-							<table class="table table-condensed">
-								@foreach($results as $result)
-									<tr>
-										<td>
-											<a href="#" class="blue-madison view-data-form" data-ref-id="{{ $result->ref_id }}" data-form-name="{{ $result->name }}">
-												{{ $result->name }}
-											</a>
-										</td>
-										<td>
-											<small class="muted">Created on {{ date("d/m/Y H:i",strtotime($result->created_at)) }}</small>
-										</td>
-										<td>
-											<a href="{{ url('settings/custom-forms/delete-form-data/'.$result->ref_id) }}" class="pull-right delete-task" onclick="return confirm('Are you sure you want to delete?')"><i class="icon-trash"></i></a>
-										</td>
-									</tr>
-								@endforeach
-							</table>
-							@else
-								No data has been added.
-							@endif
+								$results = \CustomFormData\CustomFormDataEntity::get_instance()->getData($customtab->$section_forms[$sec_key], $customer->id);
+							?>						
+							@if(count($results) > 0)
+								<div class="row">
+									<div class="col-md-12">
+										<button type="submit" class="btn btn-xs btn-danger pull-left"><i class="fa fa-trash"></i> Bulk Delete</button>
+									</div>
+								</div>
+							@endif							
+							<div class="scroller" style="height: 350px;">
+								@if(count($results)>0)
+								<table class="table table-condensed">
+									@foreach($results as $result)
+										<tr>
+											<td style="width:1%">
+												{{ Form::checkbox('forms_to_delete[]', $result->ref_id) }}
+											</td>
+											<td>
+												<a href="#" class="blue-madison view-data-form" data-ref-id="{{ $result->ref_id }}" data-form-name="{{ $result->name }}">
+													{{ $result->name }}
+												</a>
+											</td>
+											<td>
+												<small class="muted">Created on {{ date("d/m/Y H:i",strtotime($result->created_at)) }}</small>
+											</td>
+											<td>
+												<a href="{{ url('settings/custom-forms/delete-form-data/'.$result->ref_id) }}" class="pull-right delete-task" onclick="return confirm('Are you sure you want to delete?')"><i class="icon-trash"></i></a>
+											</td>
+										</tr>
+									@endforeach
+								</table>
+								@else
+									No data has been added.
+								@endif
+							</div>
+							{{ Form::close() }}
 						@endif
 					@endif
-					</div>
 				</div>
 			</div>
 
