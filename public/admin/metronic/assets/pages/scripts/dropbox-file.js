@@ -5,7 +5,7 @@ Media Library
 var DropBoxIntegrationFile = function() {
 
 	var ajaxInsertDB = function(_url, dropbox_file, file_type, customer_id){
-
+		jQuery('#ajax-loading-bar').toggleClass('hidden');
 		var request = $.ajax({
 		  url: _url + '/file/ajax-add-file-integration',
 		  type: "POST",
@@ -21,6 +21,7 @@ var DropBoxIntegrationFile = function() {
 		request.done(function( msg ) {
 			console.log(msg.success);
 			if (msg.success) {
+				jQuery('#ajax-loading-bar').toggleClass('hidden');
 				window.location.href = msg.redirect;
 			}
 		});
