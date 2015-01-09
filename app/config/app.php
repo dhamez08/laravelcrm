@@ -123,6 +123,7 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Ignited\Pdf\PdfServiceProvider',
 		'Barryvdh\Debugbar\ServiceProvider',
+        'Camroncade\Timezone\TimezoneServiceProvider'
 
 	),
 

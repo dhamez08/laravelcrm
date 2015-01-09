@@ -70,6 +70,7 @@ class UserEntity extends \Eloquent implements UserInterface, RemindableInterface
 			$user->email 			= \Input::get('email','');
 			$user->sms 				= \Input::get('sms','');
 			$user->telephone 		= \Input::get('telephone','');
+            $user->timezone 		= \Input::get('timezone','');
 			$user->address_line 	= \Input::get('address_line','');
 			$user->address_town 	= \Input::get('address_town','');
 			$user->address_county 	= \Input::get('address_county','');
@@ -87,6 +88,7 @@ class UserEntity extends \Eloquent implements UserInterface, RemindableInterface
 			$user->email 			= \Input::get('email','');
 			$user->sms 				= \Input::get('sms','');
 			$user->telephone 		= \Input::get('telephone','');
+            $user->timezone 		= \Input::get('timezone','');
 			$user->address_line 	= \Input::get('address_line','');
 			$user->address_town 	= \Input::get('address_town','');
 			$user->address_county 	= \Input::get('address_county','');
