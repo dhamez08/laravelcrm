@@ -49,6 +49,7 @@ class RegisterController extends \BaseController {
 			'first_name' => 'required|min:3',
 			'last_name' => 'required|min:3',
 			'telephone' => 'required|min:3',
+            'timezone' => 'required',
 			'email' => 'required|email',
 			'company' => 'required|min:3',
 			'address_line' => 'required|min:3',
@@ -81,6 +82,7 @@ class RegisterController extends \BaseController {
 			'sms.min'=>'SMS Display Name must have more than 3 character',
 			'telephone.required'=>'Phone is required',
 			'telephone.min'=>'Phone must have more than 3 character',
+            'timezone.required'=>'Please select your timezone',
 		);
 		$validator = \Validator::make(\Input::all(), $rules, $messages);
 		if ( $validator->passes() ) {

@@ -119,6 +119,23 @@
 										);
 									}}
 							</div>
+                            <div class="form-group">
+                                <label class="control-label">Timezone</label>
+                                {{
+                                    Timezone::selectForm(
+                                        $user->timezone,
+                                        'Select a timezone',
+                                        array(
+                                            'name' => 'timezone',
+                                            'class'=>'form-control placeholder-no-fix',
+                                            'placeholder'=>'Timezone'
+                                        ),
+                                        array(
+                                            'customValue' => 'true'
+                                        )
+                                    );
+                                }}
+                            </div>
 							<p>
 								Company Information
 							</p>

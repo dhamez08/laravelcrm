@@ -128,7 +128,7 @@
                         <i class="fa fa-globe"></i>
                         {{
                             Timezone::selectForm(
-                                'Asia/Hong_Kong',
+                                null,
                                 'Select a timezone',
                                 array(
                                     'name' => 'timezone',
