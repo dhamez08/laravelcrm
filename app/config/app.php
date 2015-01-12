@@ -123,8 +123,8 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Ignited\Pdf\PdfServiceProvider',
 		'Barryvdh\Debugbar\ServiceProvider',
-        'Camroncade\Timezone\TimezoneServiceProvider'
-
+        'Camroncade\Timezone\TimezoneServiceProvider',
+        'Atticmedia\Anvard\AnvardServiceProvider'
 	),
 
 	/*
