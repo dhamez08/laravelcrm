@@ -50,7 +50,7 @@ class BaseController extends Controller {
 		$this->admin_theme_path 	= \Config::get('crm.themes.admin.path');
 
         if( \Auth::check() ){
-            if(\Auth::user()->timezone){
+            if(!empty(\Auth::user()->timezone)){
                 $this->setTimeZone(\Auth::user()->timezone);
             }
         }else{
