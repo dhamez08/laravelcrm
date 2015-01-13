@@ -268,17 +268,18 @@
 										@foreach($tasks['data'] as $task)
 											<li class="">
 												<div class="task-title">
-													{{$task->displayHtmlTaskDue()}}
-													{{$task->displayHtmlLabelIcon()}}
-													&nbsp;<br />
+													{{-- $task->displayHtmlTaskDue() --}}
+													{{-- $task->displayHtmlLabelIcon() --}}
 													<span class="task-title-sp">
 														<a class="openModal" data-toggle="modal" data-target=".ajaxModal" href="{{action('Task\TaskController@getEditClientTask',array('id'=>$task->id,'customerid'=>$task->customer_id,'redirect'=>'task'))}}">
-															{{$task->displayName()}}
-														</a>
+															<small>{{ trim($task->displayName()) }}</small>
+														</a>&nbsp;-&nbsp;<small>{{\Carbon\Carbon::parse($task->date)->format('H:i')}}&nbsp;on&nbsp;{{\Carbon\Carbon::parse($task->date)->format('d/m/Y')}}</small>
+														<!--
 														-
 														<a href="{{action('Clients\ClientsController@getClientSummary',array('id'=>$task->customer_id))}}">
-															{{$task->displayTaskFullName()}}
+															<small>{{$task->displayTaskFullName()}}</small>
 														</a>
+														-->
 													</span>
 													<div class="task-config">
 														<div class="task-config-btn btn-group hide">
