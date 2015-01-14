@@ -77,6 +77,7 @@ class CustomFieldsController extends \BaseController {
 		$data['clientFields']	= $this->customFieldEntity->getFieldsByLoggedUser();
 		$data['pageSubTitle'] 	= '';
 		$data['contentClass'] 	= 'settings';
+		$data['icons'] 			= array_keys( \TaskLabel\TaskLabelEntity::get_instance()->getIcons() );
 
 		$data = array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
 		//var_dump($data);exit();

@@ -26,7 +26,7 @@
 									</h4>
 								</td>
 								<td>
-									<a class="btn btn-warning btn-xs" href="{{$list->user->id}}" role="button">Delete</a>
+									<a class="btn btn-warning btn-xs" href="{{ action('User\UserController@getRemoveAdditionalUser', array($groupId, $list->user->id) ) }}" role="button">Delete</a>
 								</td>
 							</tr>
 						@endforeach

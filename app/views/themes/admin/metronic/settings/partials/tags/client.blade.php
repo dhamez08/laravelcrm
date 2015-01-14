@@ -6,7 +6,7 @@
 				<table class="table table-striped">
 					@foreach($client_tags as $tag)
 					<tr>
-						<td><a class="editableTag" data-pk="{{ $tag->id }}" data-params="{_token:'{{csrf_token();}}'}">{{ $tag->tag }}</a></td>
+						<td><a class="editableTag-clients" data-pk="{{ $tag->id }}" data-params="{_token:'{{csrf_token();}}'}">{{ $tag->tag }}</a></td>
 						<td><a href="{{ URL::to('settings/tags/clients/delete/'.$tag->id) }}" onclick="return confirm('Are you sure you want to delete?')">Delete</a></td>
 					</tr>
 					@endforeach
@@ -67,7 +67,7 @@
 		$(function(){
 	        //edit form style - popup or inline
 	        $.fn.editable.defaults.mode = 'inline';
-	        $('.editableTag').editable({
+	        $('.editableTag-clients').editable({
 		            validate: function(value) {
 		                if($.trim(value) == '') 
 		                    return 'Value is required.';

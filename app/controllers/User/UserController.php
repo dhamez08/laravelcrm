@@ -64,6 +64,7 @@ class UserController extends \BaseController {
 		$data['contentClass'] 	= 'settings';
 
 		$groupId 		= \UserGroup\UserGroup::managerID(\Auth::id());
+		$data['groupId'] = $groupId->first()->id;
 		$data['users']	= \User\UserEntity::get_instance()->getSubscribeUsersList($groupId->first()->id);
 
 		$data = array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
@@ -180,5 +181,21 @@ class UserController extends \BaseController {
 			->withErrors($validator)
 			->withInput();
 		}
+	}
+
+	public function getRemoveAdditionalUser($group_id, $user_id)
+	{
+		$user = \User\User::find($user_id);
+		$user->delete();
+
+		$userToGroup = \UserToGroup\UserToGroup::groupId($group_id)->userId($user_id)->limit(1);
+		$userToGroup->delete();
+
+		if($user) {
+			\Session::flash('message', 'Successfully deleted user.');
+		}
+
+		return \Redirect::to('settings/users');
+
 	}
 }
