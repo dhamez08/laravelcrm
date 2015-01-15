@@ -91,15 +91,11 @@
 							$results = \CustomTabNotesData\CustomTabNotesDataEntity::get_instance()->getNotesBySection_Custom_Customer($sec_key, $customtab->id, $customer->id);
 							?>
 							@if(count($results) > 0)
-								<div class="row">
-									<div class="col-md-12">
-										<button type="submit" class="btn btn-xs btn-danger pull-left"><i class="fa fa-trash"></i> Bulk Delete</button>
-									</div>
-								</div>
+								@include($view_path.'.clients.partials.bulkDeleteToolbar', array('checkbox_name' => 'custom_'.$sec_name.'_check_all', 'table_target' => '#table-custom-'.$sec_name.'-list'))
 							@endif
 							<div class="scroller" style="height: 350px;">
 								@if(count($results)>0)
-								<table class="table table-condensed">
+								<table class="table table-condensed" id="table-custom-{{ $sec_name }}-list">
 									@foreach($results as $result)
 										<tr>
 											<td style="width:1%">
@@ -138,15 +134,11 @@
 										)									
 									}}
 									@if(count($results) > 0)
-										<div class="row">
-											<div class="col-md-12">
-												<button type="submit" class="btn btn-xs btn-danger pull-left"><i class="fa fa-trash"></i> Bulk Delete</button>
-											</div>
-										</div>
+										@include($view_path.'.clients.partials.bulkDeleteToolbar', array('checkbox_name' => 'custom_'.$sec_name.'_check_all', 'table_target' => '#table-custom-'.$sec_name.'-list'))
 									@endif
 									<div class="scroller" style="height: 350px;">										
 										@if(count($results)>0)
-										<table class="table table-condensed">
+										<table class="table table-condensed" id="table-custom-{{ $sec_name }}-list">
 											<tbody>
 												@foreach($results as $files)
 													<tr>
@@ -349,15 +341,11 @@
 								$results = \CustomFormData\CustomFormDataEntity::get_instance()->getData($customtab->$section_forms[$sec_key], $customer->id);
 							?>						
 							@if(count($results) > 0)
-								<div class="row">
-									<div class="col-md-12">
-										<button type="submit" class="btn btn-xs btn-danger pull-left"><i class="fa fa-trash"></i> Bulk Delete</button>
-									</div>
-								</div>
+								@include($view_path.'.clients.partials.bulkDeleteToolbar', array('checkbox_name' => 'custom_'.$sec_name.'_check_all', 'table_target' => '#table-custom-'.$sec_name.'-list'))
 							@endif							
 							<div class="scroller" style="height: 350px;">
 								@if(count($results)>0)
-								<table class="table table-condensed">
+								<table class="table table-condensed" id="table-custom-{{ $sec_name }}-list">
 									@foreach($results as $result)
 										<tr>
 											<td style="width:1%">

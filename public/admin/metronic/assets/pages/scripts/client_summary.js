@@ -62,6 +62,22 @@ var Summary = function () {
             }
         })
 
+        jQuery('.bulk-delete-toolbar').find('input[type="checkbox"]').on('change', function() {
+            var target_table = jQuery(this).attr('table-target');
+            if(jQuery(this).is(':checked')) {
+                jQuery(target_table).find('input[type="checkbox"]').prop('checked', true);
+                jQuery(target_table).find('input[type="checkbox"]').uniform({checkedClass: 'checked'});
+            } else {
+                jQuery(target_table).find('input[type="checkbox"]').prop('checked', false);
+                jQuery(target_table).find('input[type="checkbox"]').uniform({checkedClass: ''});
+            }
+        });
+
+        jQuery('.bulk-delete-toolbar').closest('form').submit(function(e) {
+            var c = confirm("Click OK to confirm bulk delete.");
+            return c; 
+        });
+
     }
 
     // public functions

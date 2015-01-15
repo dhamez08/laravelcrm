@@ -12,15 +12,11 @@
 				) 
 			}}
 			@if($notes->count() > 0)
-			<div class="row">
-				<div class="col-md-12">
-					<button type="submit" class="btn btn-xs btn-danger pull-left"><i class="fa fa-trash"></i> Bulk Delete</button>
-				</div>
-			</div>
+				@include($view_path.'.clients.partials.bulkDeleteToolbar', array('checkbox_name' => 'notes_check_all', 'table_target' => '#table-note-list'))
 			@endif
 		@endif
 		<div class="scroller" style="height:350px" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd">
-			<table class="table table-condensed table-feeds">
+			<table class="table table-condensed table-feeds" id="table-note-list">
 				<tbody>
 				@if( $notes->count() > 0 )
 					@foreach($notes->get() as $note)

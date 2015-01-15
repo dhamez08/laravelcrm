@@ -33,14 +33,12 @@
 			) 
 		}}
 		@if(count($tasks['total']) > 0)
-		<div class="row">
-			<div class="col-md-12">
-				<button type="submit" class="btn btn-xs btn-danger pull-left"><i class="fa fa-trash"></i> Bulk Delete</button>
-			</div>
-		</div>
+
+			@include($view_path.'.clients.partials.bulkDeleteToolbar', array('checkbox_name' => 'tasks_check_all', 'table_target' => '#table-task-list'))
+
 		@endif
 		<div class="scroller" style="height:256px" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd">
-			<table class="table table-condensed table-feeds">
+			<table class="table table-condensed table-feeds" id="table-task-list">
 				<tbody>
 				@if(count($tasks['total']) > 0)
 					@foreach($tasks['data'] as $task)

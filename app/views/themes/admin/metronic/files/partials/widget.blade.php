@@ -40,14 +40,10 @@
 					$customerFilesCount = \CustomerFiles\CustomerFiles::customerFile($customer->id)->where('type', $id)->count();
 				?>
 				@if($customerFilesCount > 0)
-				<div class="row">
-					<div class="col-md-12">
-						<button type="submit" class="btn btn-xs btn-danger pull-left"><i class="fa fa-trash"></i> Bulk Delete</button>
-					</div>
-				</div>
+					@include($view_path.'.clients.partials.bulkDeleteToolbar', array('checkbox_name' => 'file_'.$id.'_check_all', 'table_target' => '#table-file-'.$id.'-list'))
 				@endif
 				<div class="scroller" style="height:350px" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd">					
-					<table class="table table-condensed">
+					<table class="table table-condensed" id="table-file-{{ $id }}-list">
 						<tbody>
 							@foreach($customerFiles->get()	as $files)
 								@if($files->type == $id)
