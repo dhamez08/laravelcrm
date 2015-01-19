@@ -45,7 +45,6 @@
 @stop
 @section('script-footer')
 	@parent
-	@section('footer-custom-js')
 	<script type="text/javascript" src="{{$asset_path}}	/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"></script>
 	<script type="text/javascript">
 		$('#gcal-help').popover({
@@ -57,7 +56,5 @@
 			trigger: 'click hover',
 			container: 'body'
 		});
-	</script>
-	@parent
-	@stop
+	</script>		
 @stop
