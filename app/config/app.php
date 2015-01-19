@@ -193,6 +193,7 @@ return array(
 		'View'              => 'Illuminate\Support\Facades\View',
 		'PDF'  				=> 'Ignited\Pdf\Facades\Pdf',
 		'Debugbar' 			=> 'Barryvdh\Debugbar\Facade',
+        'ThumbnailGenerator'=> 'Tristan\ThumbnailGenerator',
 	),
 
 );
