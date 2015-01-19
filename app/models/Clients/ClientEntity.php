@@ -144,9 +144,9 @@ class ClientEntity extends \Eloquent{
 	}
 
 	public function convertToMysqlDate($dateValue){
-		//$date = \Carbon\Carbon::createFromFormat('d/m/Y',$dateValue);
-		//return $date->instance($date)->toDateString();
-		return \Carbon\Carbon::parse( $dateValue )->format('Y-m-d');
+		$date = \Carbon\Carbon::createFromFormat('d/m/Y',$dateValue);
+		return $date->instance($date)->toDateString();
+		//return \Carbon\Carbon::parse( $dateValue )->format('Y-m-d');
 	}
 
 	public function getCustomerList($belongsTo, $arrayType = array()){
