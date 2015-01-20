@@ -56,7 +56,26 @@ class MarketingController extends \BaseController {
 		return \Dashboard\DashboardController::get_instance()->getSetupThemes();
 	}
 
-	public function getIndex(){
+	public function getIndex()
+	{
+		$data = $this->data_view;
+		$data['pageTitle'] 			= 'Marketing';
+		$data['contentClass'] 		= 'no-gutter';
+		$data['portlet_title'][1]	= 'SMS Marketing';
+		$data['portlet_title'][2]	= 'Email Marketing';
+
+		$get_credit					= \SMSCredit\SMSCreditEntity::get_instance()->getSMSCredit(\Auth::id());
+		if( $get_credit ){
+			$data['sms_credit']		= \SMSCredit\SMSCreditEntity::get_instance()->getSMSCredit(\Auth::id());
+		}else{
+			$data['sms_credit'] 	= 0;
+		}
+
+		$data 						= array_merge($data,$this->getSetupThemes());
+		return \View::make( $data['view_path'] . '.marketing.index-new', $data );
+	}
+
+	public function getOldIndex(){
 		$data = $this->data_view;
 		$data['pageTitle'] 			= 'SMS Report';
 		$data['contentClass'] 		= 'no-gutter';
@@ -105,7 +124,13 @@ class MarketingController extends \BaseController {
 	public function postSendSmsMessage(){
 		\Session::forget('session_sendsms');
 		\Session::forget('sms_session');
-		if( count(\Input::get('sendsms')) > 0 ){
+
+		$customer_count = 0;
+		foreach(\Input::get('sendsms') as $sendsms) {
+			if(!empty($sendsms['clientid'])) $customer_count++;
+		}
+
+		if( $customer_count > 0 ){
 			if( \SMSCredit\SMSCreditEntity::get_instance()->getSMSCredit(\Auth::id()) ){
 				$send_sms = array();
 				foreach(\Input::get('sendsms') as $key=>$val){
@@ -120,10 +145,10 @@ class MarketingController extends \BaseController {
 				\Session::put('session_sendsms',$send_sms);
 				return \Redirect::to('marketing/message-sms');
 			}else{
-				return \Redirect::to('marketing')->withErrors('Sorry you do not have enough credits.');
+				return \Redirect::back()->withErrors('Sorry you do not have enough credits.');
 			}
 		}else{
-			return \Redirect::to('marketing')->withErrors('Choose customer first');
+			return \Redirect::back()->withErrors('Choose customer first');
 		}
 	}
 
@@ -133,11 +158,19 @@ class MarketingController extends \BaseController {
 		$data['pageTitle'] 			= 'SMS Marketing';
 		$data['contentClass'] 		= 'no-gutter';
 		$data['portlet_body_class']	= 'form';
-		$data['portlet_title']		= 'Person\'s Name and Mobile Number';
+		$data['portlet_title']		= 'SMS Message';
 		$data['fa_icons']			= 'user';
 		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
 		$data['center_column_view'] = 'dashboard';
-		$data['sms_files']			= \SMSFIles\SMSFIles::userId(\Auth::id())->orderBy('created_at','desc');
+		$data['sms_files']			= \SMSFIles\SMSFIles::userId(\Auth::id())->orderBy('created_at','desc')->get();
+
+		/* TODO: fix file preview generator
+		$thumbnailGenerator = new \Tristan\ThumbnailGenerator\ThumbnailGenerator;
+		foreach ($data['sms_files'] as &$file) {
+			$file->preview = $thumbnailGenerator->generateThumbnail('documents/' . $file->file);
+		}
+		*/
+
 		$data['list_number']		= \Session::get('session_sendsms');
 		$data 						= array_merge($data,$this->getSetupThemes());
 		return \View::make( $data['view_path'] . '.marketing.message', $data );

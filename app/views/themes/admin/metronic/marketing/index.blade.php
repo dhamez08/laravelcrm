@@ -52,9 +52,12 @@
 							</tbody>
 						</table>
 					@show
+					<a href="{{ url('marketing') }}" class="btn blue">Back</a> 
+					{{--
 					@if( $sms_credit > 0 )
 						<a href="{{url('marketing/send-client-sms')}}" class="btn btn-primary">Send SMS</a>
 					@endif
+					--}}
 				</div>
 			</div>
 		</div>

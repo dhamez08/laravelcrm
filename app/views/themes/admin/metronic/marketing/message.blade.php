@@ -26,9 +26,15 @@
 					@section('portlet-content')
 						@if( count($list_number) > 0 )
 						<div class="row-fluid">
-							<div class="span12 well">
-								<h5 style="margin-top:0px;">Attach File</h5>
-								{{\File\ClientFileController::get_instance()->getMediaWidget(\Auth::id())}}
+							<div class="col-md-12">
+								<div class="panel panel-info">
+									<div class="panel-heading">
+										<h3 class="panel-title">Upload File</h3>
+									</div>									
+									<div class="panel-body">
+										{{\File\ClientFileController::get_instance()->getMediaWidget(\Auth::id())}}
+									</div>
+								</div>
 							</div>
 						</div>
 						{{ Form::open(
@@ -40,41 +46,72 @@
 								)
 							)
 						}}
-							<div class="row-fluid">
-								<div class="span12 well">
-									<h5 style="margin-top:0px;">Attach File</h5>
-									<div class="file-list">
-										@if( $sms_files->count() > 0 )
-											<select name="attach_file[]" multiple>
-												@foreach($sms_files->get() as $files)
-													<option value="{{$files->id}}">
-														{{$files->file}}
-													</option>
+						<div class="row-fluid">
+							<div class="col-md-12">
+								<div class="panel panel-info">
+									<div class="panel-heading">
+										<h3 class="panel-title">Files List</h3>
+									</div>									
+									<div class="panel-body">
+										{{ Form::open(
+											array(
+													'action' => array('Marketing\MarketingController@postSendSmsVerify'),
+													'method' => 'POST',
+													'class' => 'form-horizontal',
+													'role'=>'form',
+												)
+											)
+										}}
+
+										<div class="alert alert-warning">
+											Select file(s) to be attached in your SMS message If your file is not on the list, upload it using the tool above.
+										</div>
+
+										<table class="table table-condensed">
+											<tbody>
+											@if( count($sms_files) > 0 )
+												@foreach($sms_files as $files)
+												<tr>
+													<td style="width:1%">{{ Form::checkbox('attach_file[]', $files->id) }}</td>
+													<td style="width:1%">{{ $files->file }}</td>
+													<td><a href="{{ url('public/documents/' . $files->file) }}" target="_blank">View File</a></td>
+												</tr>
 												@endforeach
-											</select>
-										@else
-												<h4>Upload file first click "Add new"</h4>
-										@endif
+											@endif		
+											</tbody>
+										</table>
+
+
+										
 									</div>
-								</div>
+								</div>								
 							</div>
+						</div>
 
-							<div class="row-fluid">
-								<div class="span12 well">
-									<h5 style="margin-top:0px;">Personalised Message</h5>
-									If you would like each message to start "Hi <i>First Name</i>." please tick the box below. Please remember this will increase the character count, so may require additional sms credits to send. We will give you a summary on the next page.
-									<input type="checkbox" name="personalised" />
-								</div>
-							</div>
+						<div class="row-fluid">
+							<div class="col-md-12">
+								<div class="panel panel-info">
+									<div class="panel-heading">
+										<h3 class="panel-title">Enter your message below</h3>
+									</div>
+									<div class="panel-body">
 
-							<div class="row-fluid">
-								<div class="span12 well">
-									<h5 style="margin-top:0px;">Enter your message below</h5>
-									<textarea rows="7" style="width:70%;" id="message" name="message" placeholder="Enter your message ..."></textarea>
-									<p id="sms_message_counter"></p>
+										<div class="alert alert-warning">
+											If you would like each message to start with "Hi <i>FirstName</i>.", pleach check the box below. Please remember that this will increase the character count so it may require additional SMS credits to send. A summary of the message is provided in the next page.
+										</div>
+
+										<input type="checkbox" name="personalised" /> Personalise message
+										
+										<textarea rows="7" style="width:100%; margin-top:20px" id="message" name="message" placeholder="Enter your message ..."></textarea>
+										<p id="sms_message_counter"></p>
+									</div>										
 								</div>
 							</div>
-							{{Form::submit('Next Step',array('class'=>"btn blue"))}}
+						</div>
+
+						<a href="{{ url('marketing/send-client-sms') }}" class="btn blue">Back</a> 
+						{{Form::submit('Next Step',array('class'=>"btn blue"))}}
+
 						{{ Form::close()}}
 						@endif
 					@show

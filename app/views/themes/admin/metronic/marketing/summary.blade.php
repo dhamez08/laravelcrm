@@ -60,6 +60,7 @@
 									<p>{{$sms_session['message']}}</p>
 								</div>
 							</div>
+							<a href="{{ url('marketing/message-sms') }}" class="btn blue">Back</a> 
 							{{Form::submit('Send Message',array('class'=>"btn blue"))}}
 							{{(\Textlocal\TextlocalEntity::get_instance()->getSendSmsTest()) ? 'Test mode':''}}
 						{{ Form::close()}}

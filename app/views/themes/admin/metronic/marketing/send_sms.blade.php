@@ -28,7 +28,7 @@
 						@if( $list_customer->count() > 0 )
 							{{Form::open(
 								array(
-									'action' => array('Marketing\MarketingController@getIndex'),
+									'action' => array('Marketing\MarketingController@getSendClientSms'),
 									'method' => 'GET',
 									'class' => 'form-horizontal',
 									'role'=>'form',
@@ -73,7 +73,7 @@
 																<input type="checkbox" name="sendsms[{{$val_customer->id}}][clientid]" value="{{$val_customer->id}}" />
 																{{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}
 																@foreach($val_customer->telephone as $phone)
-																	{{$phone->number}}
+																	<span class="label label-info"><i class="fa fa-mobile"></i> {{$phone->number}}</span>
 																	<input type="hidden" name="sendsms[{{$val_customer->id}}][number]" value="{{$phone->number}}" />
 																	<input type="hidden" name="sendsms[{{$val_customer->id}}][name]" value="{{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}" />
 																@endforeach
@@ -82,7 +82,7 @@
 																	<input type="checkbox" name="sendsms[{{$val_customer->id}}][clientid]" value="{{$val_customer->id}}" />
 																	{{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}
 																	@foreach($val_customer->telephone as $phone)
-																		{{$phone->number}}
+																		<span class="label label-info"><i class="fa fa-mobile"></i> {{$phone->number}}</span>
 																		<input type="hidden" name="sendsms[{{$val_customer->id}}][number]" value="{{$phone->number}}" />
 																		<input type="hidden" name="sendsms[{{$val_customer->id}}][name]" value="{{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}" />
 																	@endforeach
@@ -94,6 +94,7 @@
 										@endforeach
 									</tbody>
 								</table>
+								<a href="{{ url('marketing') }}" class="btn blue">Back</a> 
 								@if( $sms_credit > 0 )
 									{{Form::submit('Next Step',array('class'=>"btn blue"))}}
 								@endif
