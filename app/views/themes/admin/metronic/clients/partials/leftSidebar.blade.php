@@ -99,3 +99,8 @@
 		<!-- END SIDEBAR MENU -->
 	</div>
 </div>
+<script>
+    if ($.cookie && $.cookie('sidebar_closed') === '1') {
+        $('.page-sidebar-menu').addClass('page-sidebar-menu-closed');
+    }
+</script>

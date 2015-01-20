@@ -60,6 +60,8 @@
 		@show
 
 		@section('head-js')
+            <script src="{{$asset_path}}/global/plugins/jquery-1.11.0.min.js" type="text/javascript"></script>
+            <script src="{{$asset_path}}/global/scripts/jquery.cookie.js" type="text/javascript"></script>
 		@show
 
 		@yield('head-custom-css')
@@ -73,6 +75,11 @@
 
 @section('begin-body')
 	<body class="{{{ $html_body_class or 'one23-body' }}}">
+    <script>
+        if ($.cookie && $.cookie('sidebar_closed') === '1') {
+            $('body').addClass('page-sidebar-closed');
+        }
+    </script>
 @show
 
 @yield('body-header')
@@ -108,7 +115,7 @@
 		<script src="{{$asset_path}}/global/plugins/respond.min.js"></script>
 		<script src="{{$asset_path}}/global/plugins/excanvas.min.js"></script>
 		<![endif]-->
-		<script src="{{$asset_path}}/global/plugins/jquery-1.11.0.min.js" type="text/javascript"></script>
+<!--		<script src="{{$asset_path}}/global/plugins/jquery-1.11.0.min.js" type="text/javascript"></script>-->
 		<script src="{{$asset_path}}/global/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
 		<!-- IMPORTANT! Load jquery-ui-1.10.3.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
 		<script src="{{$asset_path}}/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
@@ -152,7 +159,7 @@
 		<script src="{{$asset_path}}/global/plugins/bootstrap-editable/bootstrap-editable/js/bootstrap-editable.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/global/plugins/bootstrap-select/bootstrap-select.min.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/global/plugins/select2/select2.min.js" type="text/javascript"></script>
-		<script src="{{$asset_path}}/global/scripts/jquery.cookie.js" type="text/javascript"></script>
+<!--		<script src="{{$asset_path}}/global/scripts/jquery.cookie.js" type="text/javascript"></script>-->
         <script src="{{$asset_path}}/pages/scripts/notification.js" type="text/javascript"></script>
         <script src="{{$asset_path}}/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
 		<!-- END PAGE LEVEL SCRIPTS -->
