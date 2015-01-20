@@ -1,11 +1,13 @@
-@if( $sms_files->count() > 0 )
-	<select name="attach_file[]" multiple>
-		@foreach($sms_files->get() as $files)
-			<option value="{{$files->id}}">
-				{{$files->file}}
-			</option>
+<table class="table table-condensed file-list">
+	<tbody>
+	@if( count($sms_files) > 0 )
+		@foreach($sms_files as $files)
+		<tr>
+			<td style="width:1%">{{ Form::checkbox('attach_file[]', $files->id) }}</td>
+			<td style="width:1%">{{ $files->file }}</td>
+			<td><a href="{{ url('public/documents/' . $files->file) }}" target="_blank">View File</a></td>
+		</tr>
 		@endforeach
-	</select>
-@else
-		<h4>Upload file first click "Add new"</h4>
-@endif
+	@endif		
+	</tbody>
+</table>

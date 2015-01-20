@@ -66,23 +66,27 @@
 										<div class="alert alert-warning">
 											Select file(s) to be attached in your SMS message If your file is not on the list, upload it using the tool above.
 										</div>
-
-										<table class="table table-condensed">
-											<tbody>
-											@if( count($sms_files) > 0 )
-												@foreach($sms_files as $files)
-												<tr>
-													<td style="width:1%">{{ Form::checkbox('attach_file[]', $files->id) }}</td>
-													<td style="width:1%">{{ $files->file }}</td>
-													<td><a href="{{ url('public/documents/' . $files->file) }}" target="_blank">View File</a></td>
-												</tr>
-												@endforeach
-											@endif		
-											</tbody>
-										</table>
-
-
-										
+										<div class="file-list">
+											<table class="table table-condensed file-list">
+												<tbody>
+												@if( count($sms_files) > 0 )
+													@foreach($sms_files as $files)
+													<tr>
+														<td style="width:1%">{{ Form::checkbox('attach_file[]', $files->id) }}</td>
+														<td style="width:1%">{{ $files->file }}</td>
+														<td><a href="{{ url('public/documents/' . $files->file) }}" target="_blank">View File</a></td>
+													</tr>
+													@endforeach
+												@else
+													<tr>
+														<td>
+															No files uploaded.
+														</td>
+													</tr>
+												@endif		
+												</tbody>
+											</table>
+										</div>									
 									</div>
 								</div>								
 							</div>
