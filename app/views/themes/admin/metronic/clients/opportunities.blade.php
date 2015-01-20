@@ -14,6 +14,7 @@
 @section('body-content')
 	@parent
 	@section('left-sidebar')
+        @include( \DashboardEntity::get_instance()->getView() . '.dashboard.partials.leftSidebar' )
 		@include($view_path.'.clients.partials.leftSidebar')
 	@stop
 	@section('innerpage-page-title')
