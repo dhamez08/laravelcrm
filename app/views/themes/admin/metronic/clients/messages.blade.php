@@ -5,6 +5,11 @@
 	@section('head-page-level-css')
 		@parent
 	@stop
+
+    @section('head-custom-css')
+        @parent
+        <link href="{{$asset_path}}/pages/css/client-summary-sidebar.css" rel="stylesheet"/>
+    @stop
 @stop
 @section('body-content')
 	@parent
