@@ -89,10 +89,10 @@ class ThumbnailGenerator {
         $im->setimageformat("png");
         $im->scaleimage($this->width,0);
 
-        $dimensions = $im->getimagegeometry();
-        $height = $dimensions['height'];
-        if($height > $this->width)
-            $im->scaleImage(0,$this->width);
+//        $dimensions = $im->getimagegeometry();
+//        $height = $dimensions['height'];
+//        if($height > $this->width)
+//            $im->scaleImage(0,$this->width);
 
         $im->setimagecompression(\Imagick::COMPRESSION_UNDEFINED);
         $im->setimagecompressionquality(0);
@@ -111,10 +111,10 @@ class ThumbnailGenerator {
         $im->setimageformat("png");
         $im->scaleimage($this->width,0);
 
-        $dimensions = $im->getimagegeometry();
-        $height = $dimensions['height'];
-        if($height > $this->width)
-            $im->scaleImage(0,$this->width);
+//        $dimensions = $im->getimagegeometry();
+//        $height = $dimensions['height'];
+//        if($height > $this->width)
+//            $im->scaleImage(0,$this->width);
 
         $im->setimagecompression(\Imagick::COMPRESSION_UNDEFINED);
         $im->setimagecompressionquality(0);
