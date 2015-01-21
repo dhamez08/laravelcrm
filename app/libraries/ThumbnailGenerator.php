@@ -107,6 +107,9 @@ class ThumbnailGenerator {
 
     private function imageToThumb($file){
         $im = new \Imagick($file->getPathname());
+        $im->setimageformat("png");
+        $im->scaleimage($this->width,0);
+
         $dimensions = $im->getimagegeometry();
         $height = $dimensions['height'];
         if($height > $this->width)
