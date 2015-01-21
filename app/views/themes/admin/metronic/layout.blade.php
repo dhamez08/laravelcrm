@@ -162,6 +162,7 @@
 <!--		<script src="{{$asset_path}}/global/scripts/jquery.cookie.js" type="text/javascript"></script>-->
         <script src="{{$asset_path}}/pages/scripts/notification.js" type="text/javascript"></script>
         <script src="{{$asset_path}}/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
+        <script src="{{$asset_path}}/pages/scripts/file-preview.js" type="text/javascript"></script>
 		<!-- END PAGE LEVEL SCRIPTS -->
 
 		<!-- BEGIN PAGE LEVEL PLUGINS -->

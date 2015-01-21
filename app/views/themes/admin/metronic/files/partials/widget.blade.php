@@ -118,7 +118,7 @@
 												?>
 												<i class="fa fa-{{$file_type}}-o"></i>
 											</span>																					
-											&nbsp;&nbsp;<a download href="{{asset('public/documents/' . $files->filename)}}" title="Download File {{$files->filename}}">{{$files->filename}}</a>
+											&nbsp;&nbsp;<a download href="{{asset('public/documents/' . $files->filename)}}" class="file-preview" data-thumb="{{asset('public' . $files->thumbnail)}}" title="Download File {{$files->filename}}">{{$files->filename}}</a>
 											
 										</td>
 										<td>

@@ -1,5 +1,7 @@
 <?php
 namespace File;
+use Tristan\ThumbnailGenerator\ThumbnailGenerator;
+
 /**
  * Clients Controller
  *
@@ -160,10 +162,15 @@ class ClientFileController extends \BaseController {
 			$file_id = \Input::get('file_type');
 			foreach(\Input::file('files') as $file){
 				$fileName = $this->_doUpload($file);
+
+                $thumbgen = new ThumbnailGenerator();
+                $thumb_filename = $thumbgen->generateThumbnail('documents/'.$fileName);
+
 				$data = array(
 					'customer_id' => $customer_id,
 					'user_id' => \Auth::id(),
 					'filename' => $fileName,
+                    'thumbnail' => $thumb_filename,
 					'name' => $file->getClientOriginalName(),
 					'type' => $file_type
 				);
@@ -197,10 +204,15 @@ class ClientFileController extends \BaseController {
 		if( \Input::hasFile('files') ){
 			foreach(\Input::file('files') as $file){
 				$fileName = $this->_doUpload($file);
+
+                $thumbgen = new ThumbnailGenerator();
+                $thumb_filename = $thumbgen->generateThumbnail('documents/'.$fileName);
+
 				$data = array(
 					'customer_id' => $customer_id,
 					'user_id' => \Auth::id(),
 					'filename' => $fileName,
+                    'thumbnail' => $thumb_filename,
 					'name' => $file->getClientOriginalName(),
 					'type' => $file_id
 				);
@@ -345,4 +357,8 @@ class ClientFileController extends \BaseController {
 			return \Redirect::to('clients/client-summary/' . $customerid);
 		}
 	}
+
+    public function ajaxGetThumbnail(){
+
+    }
 }

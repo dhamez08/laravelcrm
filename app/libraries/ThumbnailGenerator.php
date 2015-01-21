@@ -14,7 +14,7 @@ class ThumbnailGenerator {
     public $width;
     public $pdf_storage;
 
-    public static $supported_file_types = array('pdf','docx','xlsx','pptx','odt');
+    public static $supported_file_types = array('pdf','doc','docx','xls','xlsx','ppt','pptx','odt');
     public static $default_file_thumbs = array(
             'mp3' => 'document-frequency-icon.png',
             'aac' => 'document-frequency-icon.png',
@@ -34,16 +34,16 @@ class ThumbnailGenerator {
 
     public function __construct($destination = null){
         if($destination == null){
-            $this->destination = public_path()."/documents/thumbs/";
+            $this->destination = public_path("documents/thumbs/");
         } else {
-            $this->destination = public_path()."/".$destination;
+            $this->destination = public_path($destination);
         }
-        $this->pdf_storage = public_path()."/documents/pdf/";
+        $this->pdf_storage = public_path("documents/pdf/");
     }
 
     public function generateThumbnail($source, $width = 256){
         $this->width = $width;
-        $source = public_path()."/".$source;
+        $source = public_path($source);
 
         $file = new \Symfony\Component\HttpFoundation\File\File($source);
         $extension = $file->getExtension();
@@ -67,13 +67,13 @@ class ThumbnailGenerator {
             $theme_folder = \Config::get('crm.themes.admin.folder');
             $asset_path = \URL::asset('public/admin/'.$theme_folder.'/assets');
 
-            $path = $asset_path.'/layout/img/icos/'.$icon;
+            $path = str_replace(public_path(),'',$asset_path.'/layout/img/icos/'.$icon);
         }
         return $path;
     }
 
     private function convertToPDF($file){
-        $command = "libreoffice --headless --convert-to pdf {$file->getPathname()} --outdir {$this->pdf_storage}";
+        $command = "libreoffice --headless --convert-to pdf '{$file->getPathname()}' --outdir '{$this->pdf_storage}'";
         exec($command);
         $file = new \Symfony\Component\HttpFoundation\File\File($this->pdf_storage.$this->generateFileName($file).".pdf");
         return $file;
@@ -82,8 +82,9 @@ class ThumbnailGenerator {
     private function pdfToThumbnail($file){
         $im = new \Imagick($file->getPathname());
         $im->setiteratorindex(0);
+        $im->setimageopacity(1.0);
+        $im->setImageBackgroundColor('white');
         $im->setimageformat("png");
-        $im = $im->flattenImages();
         $im->scaleimage($this->width,0);
 
         $dimensions = $im->getimagegeometry();
