@@ -8,7 +8,7 @@ $(function(){
 
         var options = new Object();
         options.html = true;
-        options.content = '<img src="'+thumb+'"/>';
+        options.content = $('<img>').attr('src',thumb).css('width', 240);
         options.placement = 'bottom';
         options.container = 'body';
 
