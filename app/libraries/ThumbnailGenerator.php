@@ -99,6 +99,7 @@ class ThumbnailGenerator {
 
         $pathname = $this->destination.$this->generateFileName($file).'_thumb.png';
 
+        unlink($pathname);
         $im->writeImage($pathname);
         $im->destroy();
 
@@ -120,6 +121,7 @@ class ThumbnailGenerator {
 
         $pathname = $this->destination.$this->generateFileName($file).'_thumb.png';
 
+        unlink($pathname);
         $im->writeImage($pathname);
         $im->destroy();
 
