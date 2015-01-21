@@ -14,7 +14,8 @@ class ThumbnailGenerator {
     public $width;
     public $pdf_storage;
 
-    public static $supported_file_types = array('pdf','doc','docx','xls','xlsx','ppt','pptx','odt');
+    public static $supported_doc_types = array('pdf','doc','docx','xls','xlsx','ppt','pptx','odt');
+    public static $supported_image_types = array('jpg','jpeg','png','gif');
     public static $default_file_thumbs = array(
             'mp3' => 'document-frequency-icon.png',
             'aac' => 'document-frequency-icon.png',
@@ -46,9 +47,11 @@ class ThumbnailGenerator {
         $source = public_path($source);
 
         $file = new \Symfony\Component\HttpFoundation\File\File($source);
-        $extension = $file->getExtension();
+        $extension = strtolower($file->getExtension());
 
-        if(in_array($extension, ThumbnailGenerator::$supported_file_types)){
+        if(in_array($extension, ThumbnailGenerator::$supported_image_types)){
+            $path = $this->imageToThumb($file);
+        } else if(in_array($extension, ThumbnailGenerator::$supported_doc_types)){
             if($extension != 'pdf'){
                 $file = $this->convertToPDF($file);
                 $path = $this->pdfToThumbnail($file);
@@ -65,9 +68,8 @@ class ThumbnailGenerator {
             }
 
             $theme_folder = \Config::get('crm.themes.admin.folder');
-            $asset_path = \URL::asset('public/admin/'.$theme_folder.'/assets');
 
-            $path = str_replace(public_path(),'',$asset_path.'/layout/img/icos/'.$icon);
+            $path = '/admin/'.$theme_folder.'/assets/layout/img/icos/'.$icon;
         }
         return $path;
     }
@@ -87,6 +89,24 @@ class ThumbnailGenerator {
         $im->setimageformat("png");
         $im->scaleimage($this->width,0);
 
+        $dimensions = $im->getimagegeometry();
+        $height = $dimensions['height'];
+        if($height > $this->width)
+            $im->scaleImage(0,$this->width);
+
+        $im->setimagecompression(\Imagick::COMPRESSION_UNDEFINED);
+        $im->setimagecompressionquality(0);
+
+        $pathname = $this->destination.$this->generateFileName($file).'_thumb.png';
+
+        $im->writeImage($pathname);
+        $im->destroy();
+
+        return str_replace(public_path(),'',$pathname);
+    }
+
+    private function imageToThumb($file){
+        $im = new \Imagick($file->getPathname());
         $dimensions = $im->getimagegeometry();
         $height = $dimensions['height'];
         if($height > $this->width)
