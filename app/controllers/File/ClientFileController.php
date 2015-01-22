@@ -136,11 +136,15 @@ class ClientFileController extends \BaseController {
 
 		\CustomerFiles\CustomerFilesEntity::get_instance()->copyRemoteFile($dropbox_file, $destination);
 
+        $thumbgen = new ThumbnailGenerator();
+        $thumb_filename = $thumbgen->generateThumbnail('documents/'.$new_file_name);
+
 		// save file
 		$data = array(
 			'customer_id' => \Input::get('customer_id'),
 			'user_id' => \Auth::id(),
 			'filename' => $new_file_name,
+            'thumbnail' => $thumb_filename,
 			'name' => $new_file_name,
 			'type' => \Input::get('file_type'),
 			'integration' => \Input::get('integrate')
