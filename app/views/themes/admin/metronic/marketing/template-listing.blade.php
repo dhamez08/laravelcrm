@@ -28,27 +28,27 @@
                 <div class="row mix-grid thumbnails">
                     <div class="col-md-3 col-sm-4 mix category_1 mix_all" style="display: block; opacity: 1; ">
                         <div class="mix-inner">
-                            <img alt="" src="http://localhost:8000/public/img/template_previews/worn_left.jpg" class="img-responsive">
+                            <img alt="" src="{{$asset_path}}img/template_previews/worn_left.jpg" class="img-responsive">
                             <div class="mix-details">
                                 <h4>Set this template as default?</h4>
                                 <a class="mix-link"><i class="fa fa-check"></i></a>
-                                <a data-rel="fancybox-button" title="Project Name" href="http://localhost:8000/public/img/template_previews/worn_left.jpg" class="mix-preview fancybox-button"><i class="fa fa-pencil"></i></a>
+                                <a data-rel="fancybox-button" title="Project Name" href="{{$asset_path}}/img/template_previews/worn_left.jpg" class="mix-preview fancybox-button"><i class="fa fa-pencil"></i></a>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-4 mix category_1 mix_all" style="display: block; opacity: 1; ">
                         <div class="mix-inner">
-                            <img alt="" src="http://localhost:8000/public/img/template_previews/textile_left.jpg" class="img-responsive">
+                            <img alt="" src="{{$asset_path}}/img/template_previews/textile_left.jpg" class="img-responsive">
                             <div class="mix-details">
                                 <h4>Set this template as default?</h4>
                                 <a class="mix-link"><i class="fa fa-check"></i></a>
-                                <a data-rel="fancybox-button" title="Project Name" href="http://localhost:8000/public/img/template_previews/textile_left.jpg" class="mix-preview fancybox-button"><i class="fa fa-pencil"></i></a>
+                                <a data-rel="fancybox-button" title="Project Name" href="{{$asset_path}}/img/template_previews/textile_left.jpg" class="mix-preview fancybox-button"><i class="fa fa-pencil"></i></a>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3 col-sm-4 mix category_1 mix_all" style="display: block; opacity: 1; ">
                         <div class="mix-inner">
-                            <img alt="" src="http://localhost:8000/public/img/template_previews/natural_1.jpg" class="img-responsive">
+                            <img alt="" src="{{$asset_path}}/img/template_previews/natural_1.jpg" class="img-responsive">
                             <div class="mix-details">
                                 <h4>Set this template as default?</h4>
                                 <a class="mix-link"><i class="fa fa-check"></i></a>
