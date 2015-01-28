@@ -172,6 +172,7 @@ class MarketingController extends \BaseController {
 		*/
 
 		$data['list_number']		= \Session::get('session_sendsms');
+		$data['sms_templates']		= \User\User::find(\Auth::id())->smsTemplate;
 		$data 						= array_merge($data,$this->getSetupThemes());
 		return \View::make( $data['view_path'] . '.marketing.message', $data );
 	}
@@ -180,23 +181,25 @@ class MarketingController extends \BaseController {
 		if (trim(\Input::get('message')) == '') {
 			return \Redirect::to('marketing/message-sms')->withErrors('You must enter a message');
 		}else{
-			// files attach
-			$files = \SMSFIles\SMSFIlesEntity::get_instance()->getFileAndConvertToURL( \Input::get('attach_file') );
-			$str_files = '';
-			if( $files && count($files) > 0 ){
-				$str_files = '';
-				foreach($files as $file){
-					$tinyurl = \helpers\TinyURL::tinyurl($file);
-					if( $tinyurl && $tinyurl->state == 'ok' ){
-						$sms_attach = $tinyurl->shorturl;
-					}else{
-						$sms_attach = $file;
+			$str_files = '';			
+			if(count(\Input::get('attach_file')) > 0) {
+				// files attach
+				$files = \SMSFIles\SMSFIlesEntity::get_instance()->getFileAndConvertToURL( \Input::get('attach_file') );
+				if( $files && count($files) > 0 ){
+					$str_files = '';
+					foreach($files as $file){
+						$tinyurl = \helpers\TinyURL::tinyurl($file);
+						if( $tinyurl && $tinyurl->state == 'ok' ){
+							$sms_attach = $tinyurl->shorturl;
+						}else{
+							$sms_attach = $file;
+						}
+						$str_files .= $sms_attach."\n";
 					}
-					$str_files .= $sms_attach."\n";
+					$str_files = 'Attach file : ' . $str_files;
 				}
-				$str_files = 'Attach file : ' . $str_files;
+				// files attach
 			}
-			// files attach
 
 			$message 			= trim(\Input::get('message'));
 			$message 			.= ' ' . trim($str_files);
@@ -267,6 +270,11 @@ class MarketingController extends \BaseController {
 				} else {
 					$messagetosend = $sms_session['message'];
 				}
+
+				// Replace shortcodes
+				$custObj = \Clients\Clients::find($client_id);
+				$messagetosend = \EmailShortCodeReplacement::get_instance()->replace($custObj, $messagetosend);				
+
 				//send sms thru textlocal gateway
 				$txt_local = \Marketing\MarketingEntity::get_instance()->sendSMS(
 					$val['number'],

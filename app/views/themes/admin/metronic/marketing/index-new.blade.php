@@ -27,7 +27,7 @@
 						<div class="tab-content">
 							@section('portlet-1-content')
 								<a href="{{ url('marketing/send-client-sms') }}" class="btn btn-lg green btn-block" {{ $sms_credit <= 0 ? 'disabled' : '' }}>Send SMS ({{ $sms_credit }} credits)</a>
-								<a href="#" class="btn btn-lg blue btn-block">SMS Templates</a>
+								<a href="{{ url('settings/sms') }}" class="btn btn-lg blue btn-block">SMS Templates</a>
 								<a href="{{ url('marketing/old-index') }}" class="btn btn-lg yellow btn-block">Reports</a>
 							@show
 						</div>
