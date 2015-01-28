@@ -349,4 +349,16 @@ class MarketingController extends \BaseController {
 		\Log::info('textlocal handling receipt ' . print_r(\Input::all()));
 	}
 
+    public function getTemplates(){
+        $data = $this->data_view;
+        $data['pageTitle'] 			= 'Email Templates';
+        $data['contentClass'] 		= 'no-gutter';
+        $data['fa_icons']			= 'user';
+        $data['center_column_view'] = 'dashboard';
+
+        $data 						= array_merge($data,$this->getSetupThemes());
+        //var_dump($data['sms_sent']->get()->toArray());
+        return \View::make( $data['view_path'] . '.marketing.template-listing', $data );
+    }
+
 }
