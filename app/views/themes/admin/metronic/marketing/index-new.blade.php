@@ -58,7 +58,6 @@
 			</div>
 		</div>			
 	</div>
-<!--    @include($view_path.'.marketing.partials.emailWidget')-->
 	@stop
 @stop
 @section('script-footer')
