@@ -87,7 +87,7 @@
                       <div class="inbox-form-group row template-preview-container">
                         <!-- <textarea class="inbox-editor inbox-wysihtml5 form-control" name="message" rows="12"></textarea> -->
                         <div class="col-md-12">
-                          <iframe seamless="seamless" class="template-preview" src="http://localhost:8000/public/documents/templates/textile/right_sidebar.html"></iframe>
+                          <iframe seamless="seamless" class="template-preview" src="{{asset('public/documents/templates/textile/right_sidebar.html')}}"></iframe>
                         </div>
                       </div>
                   <div class="inbox-compose-btn">
@@ -107,32 +107,5 @@
 
 @section('footer-custom-js')
   @parent
-  <script src="{{$asset_path}}/global/plugins/fancybox/source/jquery.fancybox.pack.js" type="text/javascript"></script>
-  <script src="{{$asset_path}}/global/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js" type="text/javascript"></script>
-  <script src="{{$asset_path}}/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js" type="text/javascript"></script>
 
-  <script src="{{$asset_path}}/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
-  <script type="text/javascript" src="{{$asset_path}}/global/plugins/bootstrap-select/bootstrap-select.min.js"></script>
-  <!--<script type="text/javascript" src="{{$asset_path}}/global/plugins/select2/select2.min.js"></script>-->
-  <script type="text/javascript" src="{{$asset_path}}/global/plugins/jquery-multi-select/js/jquery.multi-select.js"></script>
-  <script src="{{$asset_path}}/pages/scripts/components-dropdowns.js"></script>
-  <script src="{{$asset_path}}/pages/scripts/ui-blockui.js"></script>
-
-  <script>
-  var BASE_URL = '{{ url('/') }}';
-  var ASSET_PATH = '{{$asset_path}}';
-  var ASSET_PATH_PUBLIC = '{{ url('public/admin/metronic/assets') }}';
-  </script>
-
-  <script src="{{$asset_path}}/pages/scripts/client-email.js?v=0.4" type="text/javascript"></script>
-  <script src="{{$asset_path}}/global/plugins/bootstrap-summernote/summernote.min.js" type="text/javascript"></script>
-  <script src="{{$asset_path}}/pages/scripts/components-editors.js" type="text/javascript"></script>
-  <script type="text/javascript">
-  jQuery(document).ready(function() {
-    ComponentsEditors.init();
-    ClientEmail.init();
-
-    ComponentsDropdowns.init();
-  });
-  </script>
 @stop
