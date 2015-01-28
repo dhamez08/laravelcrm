@@ -70,7 +70,7 @@ class MarketingController extends \BaseController {
 		}else{
 			$data['sms_credit'] 	= 0;
 		}
-
+        $data['customer_emails']    = $this->getCustomerEmails();
 		$data 						= array_merge($data,$this->getSetupThemes());
 		return \View::make( $data['view_path'] . '.marketing.index-new', $data );
 	}
@@ -365,8 +365,28 @@ class MarketingController extends \BaseController {
         $data['center_column_view'] = 'dashboard';
 
         $data 						= array_merge($data,$this->getSetupThemes());
-        //var_dump($data['sms_sent']->get()->toArray());
         return \View::make( $data['view_path'] . '.marketing.template-listing', $data );
     }
+
+    private function getCustomerEmails(){
+        $this->get_customer_type = array(1,2,3);
+        $group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+        $customers		= \Clients\ClientEntity::get_instance()->getCustomerHead($group_id, $this->get_customer_type);
+        $email_arrays = array();
+
+        foreach($customers as $customer){
+            $emails = \Clients\Clients::find($customer['customer_id'])->emails->toArray();
+            if(!empty($emails)){
+                foreach($emails as $email){
+                    $email['fullname'] = $customer['fullname'];
+                    $email_arrays[] = $email;
+                }
+            }
+        }
+
+        return $email_arrays;
+    }
+
+
 
 }
