@@ -60,6 +60,11 @@ class User extends \Eloquent implements UserInterface, RemindableInterface {
 		return $this->hasOne('\SMSCredit\SMSCredit');
 	}
 
+	public function smsTemplate()
+	{
+		return $this->hasMany('\SMSTemplate\SMSTemplate', 'belongs_to', 'id');
+	}
+
 	/**
 	 * Query scope to get confirm_code column
 	 * @param 	$query	laravel default

@@ -99,12 +99,23 @@
 										<h3 class="panel-title">Enter your message below</h3>
 									</div>
 									<div class="panel-body">
-
+										{{--
 										<div class="alert alert-warning">
 											If you would like each message to start with "Hi <i>FirstName</i>.", pleach check the box below. Please remember that this will increase the character count so it may require additional SMS credits to send. A summary of the message is provided in the next page.
 										</div>
+										--}}
 
-										<input type="checkbox" name="personalised" /> Personalise message
+										<span class="hidden"><input type="checkbox" name="personalised" /> Personalise message</span>
+
+										<div class="form-group" style="margin-left:0px">
+											<label>SMS Template</label>
+											<select class="form-control input-large" id="sms_template">
+												<option value="0">Select Template</option>
+												@foreach($sms_templates as $template)
+													<option value="{{ $template->id }}">{{ $template->name }}</option>
+												@endforeach
+											</select>
+										</div>
 										
 										<textarea rows="7" style="width:100%; margin-top:20px" id="message" name="message" placeholder="Enter your message ..."></textarea>
 										<p id="sms_message_counter"></p>
@@ -137,6 +148,18 @@
 			var smsCount = $("#message").val().length;
 			var smsNeeded = Math.ceil(smsCount/160);
 			$("#sms_message_counter").html("Character count without personalised message is <strong>"+smsCount+"</strong> and will use "+smsNeeded+" credits per message.");
+		});
+
+		$('#sms_template').change(function(e) {
+			e.preventDefault();
+			var val = $(this).val();
+			if(val == 0) {
+				$('#message').val('').trigger('keyup');
+			} else {
+				$.get(baseURL + '/settings/sms/template/' + val, null, function(data) {
+					$('#message').val(data.body).trigger('keyup');
+				});
+			}			
 		});
 	});
 	</script>

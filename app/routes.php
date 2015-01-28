@@ -71,6 +71,11 @@ Route::group(array('before' => 'auth'), function()
 		Route::controller('/', 'Settings\EmailController');
 	});
 
+	Route::group(array('prefix' => 'settings/sms'), function()
+	{
+		Route::controller('/', 'Settings\SMSController');
+	});	
+
 	Route::group(array('prefix' => 'settings/custom-fields'), function()
 	{
 		Route::controller('/', 'CustomFieldTabs\CustomFieldTabsController');
