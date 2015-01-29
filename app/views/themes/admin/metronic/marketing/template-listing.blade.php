@@ -109,8 +109,47 @@
 
                 </div>
             </div>
-            <div id="tab_2" class="tab_pane">
+            <div id="tab_2" class="tab-pane">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="portlet">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="fa fa-gift"></i>Templates
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>
+                                                    Name
+                                                </th>
+                                                <th>
+                                                    Subject
+                                                </th>
+                                                <th>
+                                                    &nbsp;
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
 
+                                            </tbody>
+                                        </table>
+                                        <a type="button" class="btn green" data-toggle="modal" href="#add-template-modal"><i class="fa fa-plus"></i> Add Email Template</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-4">
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
