@@ -72,7 +72,7 @@
 												@if( count($sms_files) > 0 )
 													@foreach($sms_files as $files)
 													<tr>
-														<td style="width:1%">{{ Form::checkbox('attach_file[]', $files->id) }}</td>
+														<td style="width:1%">{{ Form::checkbox('attach_file[]', $files->id, in_array($files->id, $checked_files) ? true : false) }}</td>
 														<td style="width:1%">{{ $files->file }}</td>
 														<td><a href="{{ url('public/documents/' . $files->file) }}" target="_blank">View File</a></td>
 													</tr>
@@ -117,7 +117,7 @@
 											</select>
 										</div>
 										
-										<textarea rows="7" style="width:100%; margin-top:20px" id="message" name="message" placeholder="Enter your message ..."></textarea>
+										<textarea rows="7" style="width:100%; margin-top:20px" id="message" name="message" placeholder="Enter your message ...">{{ \Session::get('sms_session.message') }}</textarea>
 										<p id="sms_message_counter"></p>
 									</div>										
 								</div>
@@ -143,6 +143,7 @@
 	<script type="text/javascript" src="{{$asset_path}}/pages/scripts/sms-files.js"></script>
 	<script>
 	$(document).ready(function(){
+		$('#message').trigger('keyup');
 		SMSFileUpload.init(baseURL + '/smsfile/ajax-files');
 		$("#message").keyup(function() {
 			var smsCount = $("#message").val().length;

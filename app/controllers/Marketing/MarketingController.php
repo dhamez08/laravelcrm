@@ -109,7 +109,15 @@ class MarketingController extends \BaseController {
 		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
 		$data['center_column_view'] = 'dashboard';
 		$data['tag_id']				= \Input::has('tags') ? (\Input::get('tags') != 0 ) ? \Input::get('tags'):null:null;
-		$data['list_customer']		= \Marketing\MarketingEntity::get_instance()->getCustomerList($data['tag_id']);
+
+		$customerFilters = array();
+		if(\Input::get('age_min')) $customerFilters['min_age'] = \Input::get('age_min');
+		if(\Input::get('age_max')) $customerFilters['max_age'] = \Input::get('age_max');
+		if(\Input::get('marital_status')) $customerFilters['marital_status'] = \Input::get('marital_status');
+
+		$data['list_customer']		= \Marketing\MarketingEntity::get_instance()->getCustomerList($data['tag_id'], 'Mobile', $customerFilters);
+		
+
 		$data['tags']			 	= \ClientTag\ClientTagEntity::get_instance()->getTagsByLoggedUser();
 		$get_credit					= \SMSCredit\SMSCreditEntity::get_instance()->getSMSCredit(\Auth::id());
 		if( $get_credit ){
@@ -117,6 +125,9 @@ class MarketingController extends \BaseController {
 		}else{
 			$data['sms_credit'] = 0;
 		}
+
+		$data['checked_customers']	= \Session::get('session_sendsms');
+
 		$data 						= array_merge($data,$this->getSetupThemes());
 		return \View::make( $data['view_path'] . '.marketing.send_sms', $data );
 	}
@@ -126,7 +137,7 @@ class MarketingController extends \BaseController {
 		\Session::forget('sms_session');
 
 		$customer_count = 0;
-		foreach(\Input::get('sendsms') as $sendsms) {
+		foreach(\Input::get('sendsms', array()) as $sendsms) {
 			if(!empty($sendsms['clientid'])) $customer_count++;
 		}
 
@@ -173,6 +184,7 @@ class MarketingController extends \BaseController {
 
 		$data['list_number']		= \Session::get('session_sendsms');
 		$data['sms_templates']		= \User\User::find(\Auth::id())->smsTemplate;
+		$data['checked_files']		= \Session::get('sms_session.files', array());
 		$data 						= array_merge($data,$this->getSetupThemes());
 		return \View::make( $data['view_path'] . '.marketing.message', $data );
 	}
@@ -221,10 +233,11 @@ class MarketingController extends \BaseController {
 			$cred = \SMSCredit\SMSCreditEntity::get_instance()->getSMSCredit(\Auth::id());
 			if( $cred >= $sms_count ){
 				$sms_session = array(
-					'message' => $message,
+					'message' => trim(\Input::get('message')), //$message,
 					'personalised' => $personalized,
 					'required_credits' => $sms_count,
-					'current_credits' => $cred
+					'current_credits' => $cred,
+					'files' => \Input::get('attach_file')
 				);
 				\Session::forget('sms_session');
 				\Session::put('sms_session',$sms_session);
@@ -238,6 +251,7 @@ class MarketingController extends \BaseController {
 	}
 
 	public function getSummary(){
+		\Debugbar::info(\Session::get('sms_session'));
 		$data = $this->data_view;
 		$data['pageTitle'] 			= 'SMS Marketing';
 		$data['contentClass'] 		= 'no-gutter';

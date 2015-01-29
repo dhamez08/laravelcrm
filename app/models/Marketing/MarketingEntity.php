@@ -24,7 +24,7 @@ class MarketingEntity{
 		return self::$instance;
 	}
 
-	public function getCustomerList($tag_id = null, $phone_type = 'Mobile'){
+	public function getCustomerList($tag_id = null, $phone_type = 'Mobile', $otherFilters){
 		$type = array(1);
 		$client = \Clients\Clients::customerType($type)
 		->customerBelongsUser(\Auth::id())
@@ -43,6 +43,18 @@ class MarketingEntity{
 			* */
 			$query->where('type', '=', $phone_type);
 		}));
+
+		// other filters		
+		if(isset($otherFilters['min_age'])) {
+			$client->where(\DB::raw('TIMESTAMPDIFF(YEAR, dob, CURDATE())'), '>=', $otherFilters['min_age']);
+		}
+		if(isset($otherFilters['max_age'])) {
+			$client->where(\DB::raw('TIMESTAMPDIFF(YEAR, dob, CURDATE())'), '<=', $otherFilters['max_age']);
+		}
+		if(isset($otherFilters['marital_status'])) {
+			$client->where('marital_status', $otherFilters['marital_status']);
+		}
+
 		return $client;
 	}
 
