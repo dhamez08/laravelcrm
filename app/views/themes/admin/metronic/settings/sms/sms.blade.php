@@ -79,6 +79,20 @@
                 var $initialVal = this.val();
                 this.val($initialVal);
             };
+		    $.fn.getCursorPosition = function() {
+		        var el = $(this).get(0);
+		        var pos = 0;
+		        if('selectionStart' in el) {
+		            pos = el.selectionStart;
+		        } else if('selection' in document) {
+		            el.focus();
+		            var Sel = document.selection.createRange();
+		            var SelLength = document.selection.createRange().text.length;
+		            Sel.moveStart('character', -el.value.length);
+		            pos = Sel.text.length - SelLength;
+		        }
+		        return pos;
+		    }            
         })(jQuery);
 
 		jQuery(document).ready(function() {
@@ -132,18 +146,24 @@
 			    }        
 			});
 			*/
+			
 
             $("a.custom_form_link").live("click", function() {
             	console.log('clicked = ' + isValid);
-            	if(isValid==1 && $("#template_body").val()!='') {
+            	//if(isValid==1 && $("#template_body").val()!='') {
+				if(isValid==1) {            		
             		console.log('valid');
-	                var selection = document.getSelection();
-					var cursorPos = selection.anchorOffset;
-					var oldContent = selection.anchorNode.nodeValue;
+	                var selection = document.getSelection();                
+					//var cursorPos = selection.anchorOffset;
+					var cursorPos = $('#template_body').getCursorPosition();
+					//var oldContent = selection.anchorNode.nodeValue;
+					var oldContent = $('#template_body').val();
 					var toInsert = $(this).html();
+
 					if(oldContent!=null) {
 						var newContent = oldContent.substring(0, cursorPos) + toInsert + oldContent.substring(cursorPos);
-						selection.anchorNode.nodeValue = newContent;
+						//selection.anchorNode.nodeValue = newContent;
+						$('#template_body').val(newContent);
 						$("#template_body").setCursorToTextEnd();
 					} else if($("#template_body").val()=='<p><br></p>') {
 						$("#template_body").val(toInsert);
