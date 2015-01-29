@@ -117,3 +117,18 @@ ul.client-social-icons {
 	text-align: center;	
 }
 
+@media (max-width: 1199px){
+    .page-header.navbar .menu-toggler.responsive-toggler {
+        display: inline-block;
+    }
+
+    .page-header.navbar {
+        padding: 0 20px;
+    }
+}
+
+@media (max-width: 991px){
+    .page-header.navbar {
+        padding: 0 10px;
+    }
+}
