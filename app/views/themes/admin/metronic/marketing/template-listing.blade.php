@@ -111,7 +111,6 @@
             </div>
             <div id="tab_2" class="tab_pane">
 
-                </div>
             </div>
         </div>
     </div>
