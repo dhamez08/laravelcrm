@@ -24,7 +24,7 @@ class MarketingEntity{
 		return self::$instance;
 	}
 
-	public function getCustomerList($tag_id = null, $phone_type = 'Mobile', $otherFilters){
+	public function getCustomerList($tag_id = null, $phone_type = 'Mobile', $otherFilters = array()){
 		$type = array(1);
 		$client = \Clients\Clients::customerType($type)
 		->customerBelongsUser(\Auth::id())

@@ -95,6 +95,26 @@ var Summary = function () {
 
 }();
 
+$(document).on('change', '#sms_template', function(e) {
+    e.preventDefault();
+    var val = $(this).val();
+    var form = $(this).closest('form');
+    if(val == 0) {
+        form.find('textarea[name="note"]').val('');
+        $('#message').val('').trigger('keyup');
+    } else {
+        $.get(baseURL + '/settings/sms/template/' + val, null, function(data) {
+            form.find('textarea[name="note"]').val(data.body);
+            $('#message').val(data.body).trigger('keyup');
+        });
+    }           
+});
+
+$(document).on('keyup', 'textarea[name="note"]', function() {
+    $('#message').val($(this).val());
+    $('#message').trigger('keyup');
+});
+
 /***
 Usage
 ***/

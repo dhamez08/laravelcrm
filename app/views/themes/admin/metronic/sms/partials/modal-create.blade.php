@@ -50,6 +50,17 @@
 				{{Form::hidden('mobile_number',$mobile_number)}}
 				<p>{{$mobile_number}}</p>
 			</div>
+
+			<div class="form-group">
+				<label>SMS Template</label>
+				<select class="form-control input-large" id="sms_template">
+					<option value="0">Select Template</option>
+					@foreach($sms_templates as $template)
+						<option value="{{ $template->id }}">{{ $template->name }}</option>
+					@endforeach
+				</select>
+			</div>
+
 			<div class="form-group">
 				<label>SMS</label>
 				{{Form::textarea(
