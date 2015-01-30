@@ -466,6 +466,7 @@ class MarketingController extends \BaseController {
     {
         $emailTemplate = \EmailTemplate\EmailTemplate::find($id);
         $data = $this->data_view;
+        $data['pageTitle'] 			= 'Email Templates';
         $data['portlet_title'] = 'Update Template';
         $data['id'] = $emailTemplate->id;
         $data['name'] = $emailTemplate->name;
