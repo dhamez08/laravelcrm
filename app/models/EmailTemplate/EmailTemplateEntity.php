@@ -37,6 +37,7 @@ class EmailTemplateEntity extends \Eloquent{
 	public function getTemplatesByLoggedUser() {
 		return $this
 				->where('belongs_to', \Auth::id())
+                ->where('type',1)
 				->orderBy('name')
 				->get();
 	}
