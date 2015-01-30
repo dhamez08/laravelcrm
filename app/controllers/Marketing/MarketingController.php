@@ -70,7 +70,6 @@ class MarketingController extends \BaseController {
 		}else{
 			$data['sms_credit'] 	= 0;
 		}
-        $data['customer_emails']    = $this->getCustomerEmails();
 		$data 						= array_merge($data,$this->getSetupThemes());
 		return \View::make( $data['view_path'] . '.marketing.index-new', $data );
 	}
@@ -379,7 +378,12 @@ class MarketingController extends \BaseController {
         $data['center_column_view'] = 'dashboard';
 
         $data 						= array_merge($data,$this->getSetupThemes());
-        return \View::make( $data['view_path'] . '.marketing.template-listing', $data );
+        $data['email_templates'] = \User\User::find(\Auth::id())->emailTemplate()->where('type',2)->get();
+
+        $dataAddTemplateModal = array();
+
+        return \View::make( $data['view_path'] . '.marketing.template-listing', $data )
+            ->nest('add_template_modal', $data['view_path'] . '.marketing.partials.add_template', $dataAddTemplateModal);
     }
 
     private function getCustomerEmails(){
@@ -401,6 +405,97 @@ class MarketingController extends \BaseController {
         return $email_arrays;
     }
 
+    public function getSendClientEmail(){
+        $data = $this->data_view;
+        $data['pageTitle'] 			= 'Email Marketing';
+        $data['contentClass'] 		= 'no-gutter';
+        $data['portlet_title']		= 'Choose Contacts';
+        $data 						= array_merge($data,$this->getSetupThemes());
 
+        $type = array(1);
+        $data['customer_list'] = \Clients\Clients::customerType($type)
+            ->customerBelongsUser(\Auth::id())->with('emails');
+
+        return \View::make( $data['view_path'] . '.marketing.compose-email', $data );
+    }
+
+    public function postCreateEmail(){
+        $data = $this->data_view;
+        $data['pageTitle'] 			= 'Email Marketing';
+        $data['contentClass'] 		= 'no-gutter';
+        $data['portlet_title']		= 'Create Email';
+        $data 						= array_merge($data,$this->getSetupThemes());
+
+        $emails = \Input::get('email', array());
+        if(!empty($emails)){
+            return \View::make( $data['view_path'] . '.marketing.email', $data );
+        } else{
+            return \Redirect::back()->withErrors('Choose customer first');
+        }
+    }
+
+    public function postSaveEmailTemplate(){
+        $emailTemplate = new \EmailTemplate\EmailTemplate;
+        $emailTemplate->belongs_to = \Auth::id();
+        $emailTemplate->name = \Input::get('template_name', '');
+        $emailTemplate->subject = \Input::get('template_subject', '');
+        $emailTemplate->body = \Input::get('template_body', '');
+        $emailTemplate->type = 2; // Email marketing template
+        $emailTemplate->save();
+        if($emailTemplate) {
+            \Session::flash('message', 'Successfully Added Template');
+        } else {
+            \Session::flash('message', 'Something went wrong');
+        }
+        return \Redirect::to('marketing/templates#personal');
+    }
+
+    public function getRemoveTemplate($id)
+    {
+        $emailTemplate = \EmailTemplate\EmailTemplate::find($id);
+        if($emailTemplate->belongs_to == \Auth::id()) {
+            $emailTemplate->delete();
+            \Session::flash('message', 'Successfully Removed Template');
+        } else {
+            \Session::flash('message', 'Template does not belong to the logged in user.');
+        }
+        return \Redirect::to('marketing/templates#personal');
+    }
+
+    public function getUpdateTemplate($id)
+    {
+        $emailTemplate = \EmailTemplate\EmailTemplate::find($id);
+        $data = $this->data_view;
+        $data['pageTitle'] 			= 'Email Templates';
+        $data['portlet_title'] = 'Update Template';
+        $data['id'] = $emailTemplate->id;
+        $data['name'] = $emailTemplate->name;
+        $data['subject'] = $emailTemplate->subject;
+        $data['body'] = $emailTemplate->body;
+        $data = array_merge($data, \Dashboard\DashboardController::get_instance()->getSetupThemes());
+        return \View::make($data['view_path'] . '.marketing.update-template', $data);
+    }
+
+    public function postUpdateTemplate($id){
+        $emailTemplate = \EmailTemplate\EmailTemplate::find($id);
+        $emailTemplate->name = \Input::get('template_name', '');
+        $emailTemplate->subject = \Input::get('template_subject', '');
+        $emailTemplate->body = \Input::get('template_body', '');
+        $emailTemplate->save();
+        if($emailTemplate) {
+            \Session::flash('message', 'Successfully Updated Template');
+        } else {
+            \Session::flash('message', 'Something went wrong');
+        }
+        return \Redirect::to('marketing/templates#personal');
+    }
+
+    public function postEmailSummary(){
+
+    }
+
+    public function getTest(){
+
+    }
 
 }

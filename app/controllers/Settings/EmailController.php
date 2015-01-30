@@ -73,7 +73,7 @@ class EmailController extends \BaseController {
         $data['portlet_title'] = 'Email Settings';
         $data['contentClass'] = '';
         /* Templates and Signatures */
-        $data['email_templates'] = \User\User::find(\Auth::id())->emailTemplate;
+        $data['email_templates'] = \User\User::find(\Auth::id())->emailTemplate()->where('type',1)->get();
         $data['email_signatures'] = \User\User::find(\Auth::id())->emailSignature;
         /* Initialize view data for modals */
         $dataAddTemplateModal = array();
@@ -94,6 +94,7 @@ class EmailController extends \BaseController {
         $emailTemplate->name = \Input::get('template_name', '');
         $emailTemplate->subject = \Input::get('template_subject', '');
         $emailTemplate->body = \Input::get('template_body', '');
+        $emailTemplate->type = 1;
         $emailTemplate->save();
         if($emailTemplate) {
             \Session::flash('message', 'Successfully Added Template');

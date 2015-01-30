@@ -13,102 +13,70 @@
 @section('body-content')
 @parent
 @section('innerpage-content')
-<div class="row">
-    <div class="col-md-12">
-        <!-- Start Email Compose -->
-        <form class="inbox-compose form-horizontal" id="fileupload" action="" method="POST" enctype="multipart/form-data">
-            {{ Form::token() }}
-            <input type="hidden" name="to_name" value="" />
-            <input type="hidden" name="client_ref" value="" />
-            <input type="hidden" name="customer_id" value="" />
-            <div class="inbox-compose-btn">
-                <button type="submit" name="btn_action" value="send" class="btn blue"><i class="fa fa-check"></i>Send</button>
-                <button type="button" data-dismiss="modal" class="btn inbox-discard-btn">Cancel</button>
-            </div>
-            <div class="inbox-form-group mail-to">
-                <label class="control-label">To:</label>
-                <div class="controls controls-to">
-                    <select id="select2_user" class="form-control select2" placeholder="Select Customer's Email">
-                        @if (count($customer_emails) > 0)
-                            @foreach($customer_emails as $mail)
-                                <option value="{{ $mail['id']}}" selected="selected">{{$mail['fullname']}} - {{ $mail['email'] }}</option>
-                            @endforeach
-                        @endif
-
-                    </select>
-                    <input type="hidden" name="to[]" value="" />
-                </div>
-            </div>
-            <div class="inbox-form-group input-cc display-hide">
-                <a href="javascript:;" class="close">
-                </a>
-                <label class="control-label">Cc:</label>
-                <div class="controls controls-cc">
-                    <input type="text" name="cc" class="form-control">
-                </div>
-            </div>
-            <div class="inbox-form-group input-bcc display-hide">
-                <a href="javascript:;" class="close">
-                </a>
-                <label class="control-label">Bcc:</label>
-                <div class="controls controls-bcc">
-                    <input type="text" name="bcc" class="form-control">
-                </div>
-            </div>
-            <div class="inbox-form-group">
-                <label class="control-label">Subject:</label>
-                <div class="controls">
-                    {{
-                    Form::text(
-                    'subject',
-                    null,
-                    array(
-                    'class'=>'form-control',
-                    'id'=>'email_subject'
+<div class="portlet box {{{$dashboard_class or 'blue'}}} tabbable">
+    <div class="portlet-title">
+        <div class="caption">
+            @section('portlet-captions')
+            {{{$portlet_title or 'Portlet Title'}}}
+            @show
+        </div>
+    </div>
+    <div class="portlet-body {{{$portlet_body_class or ''}}}">
+        <div class="portlet-tabs">
+            <div class="tab-content">
+                {{ Form::open(
+                        array(
+                            'action' => array('Marketing\MarketingController@postCreateEmail'),
+                            'method' => 'POST',
+                            'class' => 'form-horizontal',
+                            'role'=>'form',
+                        )
                     )
-                    );
-                    }}
-                </div>
+                }}
+                <table class="table table-striped table-advance table-hover">
+                    <thead>
+                    <tr>
+                        <th>
+                            <input type="checkbox" id="check_all_customers">
+                            Person's Name and Email
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($customer_list->get() as $customer)
+                            @if( $customer->emails->count() > 0)
+                                @foreach($customer->emails as $email)
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" name="email[]" value="{{$email->id}}" />
+                                            {{$customer->title}} {{$customer->first_name}} {{$customer->last_name}} -
+                                            <span class="label label-info"><i class="fa fa-envelope-o"></i> {{$email->email}}</span>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                        @endforeach
+                    </tbody>
+                </table>
+                {{Form::submit('Next Step',array('class'=>"btn blue"))}}
+                {{ Form::close()}}
             </div>
-            <div class="inbox-form-group">
-                <label class="control-label">Files:</label>
-                <div class="controls">
-                    <select id="client_files" name="client_files" class="form-control">
-
-                    </select>
-                </div>
-            </div>
-
-            <div class="inbox-form-group">
-                <label class="control-label">Template:</label>
-                <div class="controls">
-                    <select id="email_template" name="email_template" class="form-control">
-                        <option value="">No template required</option>
-
-                    </select>
-                </div>
-            </div>
-
-            <div class="inbox-form-group row template-preview-container">
-                <!-- <textarea class="inbox-editor inbox-wysihtml5 form-control" name="message" rows="12"></textarea> -->
-                <div class="col-md-12">
-                    <iframe seamless="seamless" class="template-preview" src="{{asset('public/documents/templates/textile/right_sidebar.html')}}"></iframe>
-                </div>
-            </div>
-            <div class="inbox-compose-btn">
-                <button type="submit" name="btn_action" value="send" class="btn blue"><i class="fa fa-check"></i>Send</button>
-                <button type="button" onclick="history.back(-1);" class="btn inbox-discard-btn">Cancel</button>
-                <button type="submit" name="btn_action" value="draft" class="btn">Draft</button>
-            </div>
-        </form>
-        <!-- End Email Compose -->
+        </div>
     </div>
 </div>
 @stop
 @stop
 @section('script-footer')
-@parent
-@section('footer-custom-js')
-@parent
-@stop
+    @parent
+    @section('footer-custom-js')
+        @parent
+        <script type="text/javascript">
+            $('#check_all_customers').change(function() {
+                var table_body = $(this).closest('table').find('tbody');
+                var checkedClass = $(this).is(":checked") ? 'checked' : '';
+                table_body.find('input[type="checkbox"]').prop('checked', $(this).is(":checked"));
+                table_body.find('input[type="checkbox"]').uniform({checkedClass: checkedClass});
+            });
+        </script>
+    @stop
 @stop
