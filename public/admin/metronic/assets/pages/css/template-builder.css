@@ -1,0 +1,24 @@
+.section-element {
+    margin-bottom: 10px;
+}
+
+.section-element img {
+    display: block;
+    margin: 0 auto;
+    z-index: 10;
+}
+
+.selector-background {
+    background-color: #222528;
+    padding: 15px;
+    height: 1024px;
+}
+
+.canvas {
+    height: 1024px;
+    width: 670px;
+    margin: 0 auto;
+    background-color: #efefef;
+    z-index: 2;
+    overflow: scroll;
+}
