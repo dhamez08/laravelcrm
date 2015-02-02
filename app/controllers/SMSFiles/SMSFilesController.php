@@ -105,6 +105,7 @@ class SMSFilesController extends \BaseController {
 	public function getAjaxFiles(){
 		$data 				= $this->data_view;
 		$data['sms_files']	= \SMSFIles\SMSFIles::userId(\Auth::id())->orderBy('created_at','desc')->get();
+		$data['checked_files'] = \Session::get('sms_session.files', array());
 		$data 				= array_merge($data,$this->getSetupThemes());
 		return \View::make($data['view_path'] . '.files.partials.ajax-list-files', $data)->render();
 	}

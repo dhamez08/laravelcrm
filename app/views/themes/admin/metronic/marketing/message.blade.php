@@ -67,6 +67,9 @@
 											Select file(s) to be attached in your SMS message If your file is not on the list, upload it using the tool above.
 										</div>
 										<div class="file-list">
+
+											@include($view_path . '.files.partials.ajax-list-files', array('sms_files' => $sms_files, 'checked_files' => $checked_files))
+											{{--
 											<table class="table table-condensed file-list">
 												<tbody>
 												@if( count($sms_files) > 0 )
@@ -90,7 +93,8 @@
 												@endif		
 												</tbody>
 											</table>
-										</div>									
+											--}}
+										</div>										
 									</div>
 								</div>								
 							</div>
