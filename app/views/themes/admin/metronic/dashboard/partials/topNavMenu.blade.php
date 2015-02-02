@@ -2,6 +2,7 @@
 <div class="top-menu">
 	<ul class="nav navbar-nav pull-right">
 		<!-- BEGIN NOTIFICATION DROPDOWN -->
+		{{-- 
 		<li id="header_notification_bar" class="dropdown dropdown-extended dropdown-notification">
 			<a data-close-others="true" data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle" href="#">
 			<i class="icon-bell"></i>
@@ -106,6 +107,7 @@
 				</li>
 			</ul>
 		</li>
+		--}}
 		<!-- END NOTIFICATION DROPDOWN -->
 		<!-- BEGIN INBOX DROPDOWN -->
 		<li id="header_inbox_bar" class="dropdown dropdown-extended dropdown-inbox">

@@ -226,6 +226,7 @@ class SMSController extends \BaseController {
 		$data['portlet_body_class']	= '';
 		$data['portlet_title']		= 'SMS';
 		$data['fa_icons']			= 'cog';
+		$data['sms_templates']		= \User\User::find(\Auth::id())->smsTemplate;
 		$data 						= array_merge($data,$dashboard_data);
 		return \View::make( $data['include'] . '.partials.modal-create', $data )->render();
 	}
@@ -307,6 +308,11 @@ class SMSController extends \BaseController {
 			// re-structure the message body
 			// include the attachment link
 			$sms_msg = trim( \Input::get('note') );
+
+			// Replace shortcodes
+			$custObj = \Clients\Clients::find($client_id);
+			$sms_msg = \EmailShortCodeReplacement::get_instance()->replace($custObj, $sms_msg);				
+			
 			$sms_msg .= "\n";
 			$sms_msg .= "Attach file \n";
 			//$sms_msg .= "<a href=".$fileName.">".$orignal_file_name."</a>";

@@ -24,13 +24,19 @@ class MarketingEntity{
 		return self::$instance;
 	}
 
-	public function getCustomerList($tag_id = null, $phone_type = 'Mobile', $otherFilters){
+	public function getCustomerList($tag_id = null, $phone_type = 'Mobile', $otherFilters = array()){
 		$type = array(1);
 		$client = \Clients\Clients::customerType($type)
 		->customerBelongsUser(\Auth::id())
 		->with(array('myTag' => function($query) use ($tag_id)
 		{
-			$query->where('tag_id', '=', $tag_id);
+			if(is_array($tag_id)) {
+				foreach ($tag_id as $tag) {
+					$query->where('tag_id', '=', $tag);
+				}
+			} else {
+				$query->where('tag_id', '=', $tag_id);
+			}			
 		}))
 		->with(array('telephone' => function($query) use ($phone_type)
 		{

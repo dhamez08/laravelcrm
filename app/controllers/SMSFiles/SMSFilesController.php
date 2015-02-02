@@ -1,5 +1,7 @@
 <?php
 namespace SMSFiles;
+use Tristan\ThumbnailGenerator\ThumbnailGenerator;
+
 /**
  * Clients Controller
  *
@@ -66,11 +68,16 @@ class SMSFilesController extends \BaseController {
 				$mime_type = \Input::file('files')->getMimeType();
 				$file_name = \Auth::id() .'_'.str_replace(' ','_',strtolower(\Input::file('files')->getClientOriginalName()));
 				$upload_success = \Input::file('files')->move(public_path() . '/documents', $file_name);
+
+                $thumbgen = new ThumbnailGenerator();
+                $thumb_filename = $thumbgen->generateThumbnail('documents/'.$file_name);
+
 				if($upload_success ){
 					$data = array(
 						'user_id' => \Auth::id(),
 						'file' => $file_name,
-						'file_mimetype' => $mime_type
+						'file_mimetype' => $mime_type,
+						'thumbnail' => $thumb_filename
 					);
 					\SMSFIles\SMSFIlesEntity::get_instance()->createOrUpdate($data);
 
@@ -98,6 +105,7 @@ class SMSFilesController extends \BaseController {
 	public function getAjaxFiles(){
 		$data 				= $this->data_view;
 		$data['sms_files']	= \SMSFIles\SMSFIles::userId(\Auth::id())->orderBy('created_at','desc')->get();
+		$data['checked_files'] = \Session::get('sms_session.files', array());
 		$data 				= array_merge($data,$this->getSetupThemes());
 		return \View::make($data['view_path'] . '.files.partials.ajax-list-files', $data)->render();
 	}
