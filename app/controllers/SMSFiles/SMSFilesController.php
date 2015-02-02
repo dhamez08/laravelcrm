@@ -1,5 +1,7 @@
 <?php
 namespace SMSFiles;
+use Tristan\ThumbnailGenerator\ThumbnailGenerator;
+
 /**
  * Clients Controller
  *
