@@ -35,22 +35,49 @@
 								)
 							)}}
 								@if( $tags )
-									<label>Tags: </label>
-									{{
-										Form::select(
-											'tags',
-											array('0'=>'Select') + $tags->lists('tag','id'),
-											isset($tag_id) ? $tag_id:null
-										);
-									}}
+									<div class="row">
+										<div class="col-md-12">
+											<label>Tags: </label>
+											{{
+												Form::select(
+													'tags[]',
+													$tags->lists('tag','id'),
+													isset($tag_id) ? $tag_id:null,
+													array('multiple')
+												);
+											}}
+										</div>
+									</div>
 								@endif
-								&nbsp;&nbsp;
-								<label>Age: </label>
-								{{ Form::number('age_min', \Input::get('age_min'), array('placeholder' => 'Minimum Age')) }} - {{ Form::number('age_max', \Input::get('age_max'), array('placeholder' => 'Maximum Age')) }}
-								&nbsp;&nbsp;
-								<label>Marital Status: </label>
-								{{ Form::select('marital_status', Config::get('crm.marital_status'), \Input::get('marital_status')) }}
-								{{Form::submit('Apply Filters',array('class'=>"btn blue btn-xs"))}}
+
+								<div class="row">
+									<div class="col-md-12">
+
+										<div class="portlet box blue" style="margin-top:10px; margin-bottom:10px">
+											<div class="portlet-title">
+												<div class="caption caption-mini">
+													<i class="fa fa-cogs"></i>Advanced Filters
+												</div>
+												<div class="tools">
+													<a href="javascript:;" class="expand">
+													</a>
+												</div>
+											</div>
+											<div class="portlet-body" style="display:none">
+												<div class="row">
+													<div class="col-md-12" style="margin: 10px 10px;">
+														<label>Age: </label>
+														{{ Form::number('age_min', \Input::get('age_min'), array('placeholder' => 'Minimum Age')) }} - {{ Form::number('age_max', \Input::get('age_max'), array('placeholder' => 'Maximum Age')) }}
+														&nbsp;&nbsp;
+														<label>Marital Status: </label>
+														{{ Form::select('marital_status', Config::get('crm.marital_status'), \Input::get('marital_status')) }}
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								{{Form::submit('Apply Filters',array('class'=>"btn blue"))}}
 							{{Form::close()}}
 							<p></p>
 							{{ Form::open(
@@ -86,7 +113,8 @@
 																	<input type="hidden" name="sendsms[{{$val_customer->id}}][name]" value="{{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}" />
 																@endforeach
 														@else
-															@if( in_array($tag_id,$val_customer->my_tag->lists('tag_id')) )
+															{{-- @if( in_array($tag_id,$val_customer->my_tag->lists('tag_id')) ) --}}
+															@if(count(array_diff($tag_id, $val_customer->my_tag->lists('tag_id'))) == 0)
 																	<input type="checkbox" name="sendsms[{{$val_customer->id}}][clientid]" value="{{$val_customer->id}}" {{ !empty($checked_customers[$val_customer->id]) ? 'checked' : '' }} />
 																	{{$val_customer->title}} {{$val_customer->first_name}} {{$val_customer->last_name}}
 																	@foreach($val_customer->telephone as $phone)
@@ -125,6 +153,9 @@
 		var checkedClass = $(this).is(":checked") ? 'checked' : '';
 		table_body.find('input[type="checkbox"]').prop('checked', $(this).is(":checked"));
 		table_body.find('input[type="checkbox"]').uniform({checkedClass: checkedClass});
+	});
+	$('select[name="tags[]"]').select2({
+		width: '100%'
 	});
 	</script>
 	@stop

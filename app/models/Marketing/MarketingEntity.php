@@ -30,7 +30,13 @@ class MarketingEntity{
 		->customerBelongsUser(\Auth::id())
 		->with(array('myTag' => function($query) use ($tag_id)
 		{
-			$query->where('tag_id', '=', $tag_id);
+			if(is_array($tag_id)) {
+				foreach ($tag_id as $tag) {
+					$query->where('tag_id', '=', $tag);
+				}
+			} else {
+				$query->where('tag_id', '=', $tag_id);
+			}			
 		}))
 		->with(array('telephone' => function($query) use ($phone_type)
 		{
