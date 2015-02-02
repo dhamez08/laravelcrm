@@ -73,7 +73,11 @@
 													@foreach($sms_files as $files)
 													<tr>
 														<td style="width:1%">{{ Form::checkbox('attach_file[]', $files->id, in_array($files->id, $checked_files) ? true : false) }}</td>
-														<td style="width:1%">{{ $files->file }}</td>
+														<td style="width:1%">
+															<a href="#" class="file-preview" data-thumb="{{ asset('public' . $files->thumbnail) }}">
+																{{ $files->file }}
+															</a>
+														</td>
 														<td><a href="{{ url('public/documents/' . $files->file) }}" target="_blank">View File</a></td>
 													</tr>
 													@endforeach
@@ -141,6 +145,7 @@
 	@section('footer-custom-js')
 	@parent
 	<script type="text/javascript" src="{{$asset_path}}/pages/scripts/sms-files.js"></script>
+	<script type="text/javascript" src="{{$asset_path}}/pages/scripts/file-preview.js"></script>
 	<script>
 	$(document).ready(function(){
 		$('#message').trigger('keyup');

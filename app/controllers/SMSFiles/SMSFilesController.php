@@ -66,11 +66,16 @@ class SMSFilesController extends \BaseController {
 				$mime_type = \Input::file('files')->getMimeType();
 				$file_name = \Auth::id() .'_'.str_replace(' ','_',strtolower(\Input::file('files')->getClientOriginalName()));
 				$upload_success = \Input::file('files')->move(public_path() . '/documents', $file_name);
+
+                $thumbgen = new ThumbnailGenerator();
+                $thumb_filename = $thumbgen->generateThumbnail('documents/'.$file_name);
+
 				if($upload_success ){
 					$data = array(
 						'user_id' => \Auth::id(),
 						'file' => $file_name,
-						'file_mimetype' => $mime_type
+						'file_mimetype' => $mime_type,
+						'thumbnail' => $thumb_filename
 					);
 					\SMSFIles\SMSFIlesEntity::get_instance()->createOrUpdate($data);
 
