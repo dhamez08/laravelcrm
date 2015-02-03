@@ -67,7 +67,7 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label class="control-label">Expected Close Date:</label>
-                  <input type="text" class="form-control" name="close_date" data-provide="datepicker" data-date-format="dd/mm/yyyy" />
+                  <input type="text" class="form-control" name="close_date" data-provide="datepicker" data-date-format="dd/mm/yyyy" data-date-autoclose="true" />
                 </div>
               </div>
             </div>
