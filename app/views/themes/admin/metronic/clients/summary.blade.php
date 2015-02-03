@@ -13,6 +13,11 @@
     @section('head-custom-css')
         @parent
         <link href="{{$asset_path}}/pages/css/client-summary-sidebar.css" rel="stylesheet"/>
+        <style type="text/css">
+		.portlet-body {
+			height: 400px;
+		}
+        </style>
     @stop
 @stop
 @section('body-content')

@@ -64,6 +64,10 @@
 			font-weight: bold;
 			padding-left: 0px;
 		}
+
+		.portlet-body {
+			height: 400px;
+		}		
 		</style>
 	@stop
 @stop
