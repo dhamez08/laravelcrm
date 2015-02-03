@@ -6,6 +6,7 @@
             <!-- BEGIN PAGE LEVEL STYLES -->
             <link href="{{$asset_path}}/pages//css/portfolio.css" rel="stylesheet"/>
             <link href="{{$asset_path}}/pages//css/email-marketing.css" rel="stylesheet"/>
+            <link href="{{$asset_path}}/pages//css/template-builder.css" rel="stylesheet"/>
             <link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/bootstrap-summernote/summernote.css">
             <!-- END PAGE LEVEL SCRIPTS -->
         @stop
@@ -22,6 +23,9 @@
             </li>
             <li class="">
                 <a data-toggle="tab" href="#personal" aria-expanded="false"> Personal </a>
+            </li>
+            <li class="">
+                <a data-toggle="tab" href="#template-creator" aria-expanded="false"> Template Creator </a>
             </li>
         </ul>
         <div class="tab-content">
@@ -165,6 +169,22 @@
                     </div>
                 </div>
             </div>
+            <div id="template-creator" class="tab-pane">
+                <div class=row>
+                    <div class="col-md-3 selector-background">
+                    <!--  Section selector  -->
+                        <div class="col-md-12 section-element"><img data-section="header" src="{{asset('public/img/template_builder/header.jpg')}}"/></div>
+                        <div class="col-md-12 section-element"><img data-section="content-1" src="{{asset('public/img/template_builder/1-1 feature.jpg')}}"/></div>
+                        <div class="col-md-12 section-element"><img data-section="content-2" src="{{asset('public/img/template_builder/1-1 content box.jpg')}}"/></div>
+                    </div>
+                    <div class="col-md-9">
+                    <!-- Canvas -->
+                        <div id="template-canvas" class="canvas">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -188,6 +208,7 @@
     var ASSET_PATH_PUBLIC = '{{ url('public/admin/metronic/assets') }}';
 </script>
 <script src="{{$asset_path}}/pages/scripts/components-editors.js" type="text/javascript"></script>
+<script src="{{$asset_path}}/pages/scripts/template-builder.js" type="text/javascript"></script>
 <script type="text/javascript">
     jQuery(document).ready(function() {
 
