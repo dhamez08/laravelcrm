@@ -55,7 +55,7 @@
 						<option value="all" <?php if (\Input::get("user")=="all") { echo 'selected="selected"'; } ?>>All Users</option>
 					    @if(count($group)>0)
 					        @foreach($group as $user)
-					        	<option value="{{ $g->user_id }}" @if($user->user_id==\Input::get('user')) selected="selected" @endif>{{ $user->first_name . ' ' . $user->last_name . ' (' . $user->username . ')' }}</option>
+					        	<option value="{{ $user->user_id }}" @if($user->user_id==\Input::get('user')) selected="selected" @endif>{{ $user->first_name . ' ' . $user->last_name . ' (' . $user->username . ')' }}</option>
 					        @endforeach
 					    @endif
 					    </select>
