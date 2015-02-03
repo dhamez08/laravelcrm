@@ -169,11 +169,23 @@ class ClientEntity extends \Eloquent{
 		}
 	}
 
-	public function getCustomerHead($belongsTo, $arrayType = array()){
+	public function getCustomerHead($belongsTo, $arrayType = array(), $otherFilters = array()){
 		$arrayCustomer = array();
 		$dataCustomer = \Clients\Clients::customerType($arrayType)
 		->customerBelongsTo($belongsTo)
 		->with('myTag');
+
+		// Other filters
+		if(isset($otherFilters['min_age'])) {
+			$dataCustomer->where(\DB::raw('TIMESTAMPDIFF(YEAR, dob, CURDATE())'), '>=', $otherFilters['min_age']);
+		}
+		if(isset($otherFilters['max_age'])) {
+			$dataCustomer->where(\DB::raw('TIMESTAMPDIFF(YEAR, dob, CURDATE())'), '<=', $otherFilters['max_age']);
+		}
+		if(isset($otherFilters['marital_status'])) {
+			$dataCustomer->where('marital_status', $otherFilters['marital_status']);
+		}		
+
 		if( $dataCustomer->count() > 0 ){
 			foreach($dataCustomer->get() as $val){
 				$arrayCustomer[$val->id]['customer_id'] = $val->id;

@@ -186,7 +186,13 @@ class ClientsController extends \BaseController {
 		$data['fa_icons']			= 'user';
 		$data['tag_id']				= \Input::has('tags') ? (\Input::get('tags') != 0 ) ? \Input::get('tags'):null:null;
 		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
-		$data['array_customer']		= \Clients\ClientEntity::get_instance()->getCustomerHead($group_id, $this->get_customer_type);
+
+		$customerFilters = array();
+		if(\Input::get('age_min')) $customerFilters['min_age'] = \Input::get('age_min');
+		if(\Input::get('age_max')) $customerFilters['max_age'] = \Input::get('age_max');
+		if(\Input::get('marital_status')) $customerFilters['marital_status'] = \Input::get('marital_status');
+
+		$data['array_customer']		= \Clients\ClientEntity::get_instance()->getCustomerHead($group_id, $this->get_customer_type, $customerFilters);
 		$data['tags']			 	= \ClientTag\ClientTagEntity::get_instance()->getTagsByLoggedUser();
 		$data['center_column_view'] = 'dashboard';
 		$data 						= array_merge($data,$this->getSetupThemes());
