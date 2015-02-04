@@ -57,7 +57,21 @@ class TaskController extends \BaseController {
 		$data['portlet_title']		= 'Task';
 		$data['fa_icons']			= 'cog';
 		$belongsTo 					= \Auth::id();
-		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(null, \Auth::id());
+
+		// Filters
+		$otherFilters = array();
+		if(\Input::get('action'))	$otherFilters['action'] = \Input::get('action');
+		if(\Input::get('client'))	$otherFilters['client']	= \Input::get('client');
+
+		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(null, \Auth::id(), $otherFilters);
+		$data['taskLabel']			= \TaskLabel\TaskLabelEntity::get_instance()->getAllTaskLabel()->lists('action_name','id');
+
+		$clients = \Clients\Clients::customerBelongsTo(\Auth::id())->get();
+		$data['client'] = array();
+		foreach ($clients as $client) {
+			$data['client'][$client->id] = $client->first_name . ' ' . $client->last_name;
+		}		
+		
 		$data['redirectURL']		= url('task');
 		$data 						= array_merge($data,$dashboard_data);
 		//var_dump($data['tasks']);
