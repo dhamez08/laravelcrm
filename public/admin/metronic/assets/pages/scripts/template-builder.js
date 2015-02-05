@@ -2,6 +2,18 @@
  * Created by dhamez on 2/3/15.
  */
 $(function(){
+
+    var selected_element = null;
+
+    $('#colorpicker').farbtastic(function(color){
+        if(selected_element){
+            selected_element.css('color', color);
+            console.log(color);
+        }
+    });
+
+
+
     $('.section-element img').draggable({
         revert: true,
         revertDuration: 0,
@@ -35,6 +47,32 @@ $(function(){
     $('body').on('click','.remove-section',function(){
         $(this).closest('.section-container').remove();
     });
+
+    $('body').on('click','.editable',function(event){
+        event.stopPropagation();
+        selected_element = $(this);
+
+        $('#sections').collapse('hide');
+        $('#tool-box').collapse('show');
+
+        if(selected_element.hasClass('editable-text')){
+            var text_size = selected_element.css('font-size').split('px').join('');
+            var text_color = selected_element.css('color');
+
+            $('#font-size-slider').val(text_size);
+
+        } else if(selected_element.hasClass('editable-photo')){
+            var image_src = selected_element.attr('src');
+        }
+    });
+
+    $('#font-size-slider').on('change',function(){
+        if(selected_element){
+            var font_size = $(this).val();
+            selected_element.css('font-size',font_size+'px');
+        }
+    });
+
 
 
     $('#template-canvas').sortable({cancel:'.editable'});
@@ -82,7 +120,7 @@ $(function(){
                                                         '<td height="20"></td>' +
                                                     '</tr>' +
                                                     '<tr>' +
-                                                        '<td contenteditable class="editable" align="center" style="font-family: \'Open Sans\', Arial, sans-serif; font-size:14px; color:#ffffff; line-height:26px; text-transform:uppercase; letter-spacing:4px;" data-max="25" data-min="13" data-size="Header Content" data-color="Header Content" mc:edit="header content" data-link-color="Slogan Link" data-link-style="text-decoration:none; color:#ff646a;">Powered by a Community of Millions.</td>' +
+                                                        '<td contenteditable class="editable editable-text" align="center" style="font-family: \'Open Sans\', Arial, sans-serif; font-size:14px; color:#ffffff; line-height:26px; text-transform:uppercase; letter-spacing:4px;" data-max="25" data-min="13" data-size="Header Content" data-color="Header Content" mc:edit="header content" data-link-color="Slogan Link" data-link-style="text-decoration:none; color:#ff646a;">Powered by a Community of Millions.</td>' +
                                                     '</tr>' +
                                                     '<tr>' +
                                                         '<td height="75"></td>' +
@@ -132,13 +170,13 @@ $(function(){
                                                 '<td height="50"></td>' +
                                             '</tr>' +
                                                 '<tr>' +
-                                                    '<td style="font-family: \'Open Sans\', Arial, sans-serif; font-size:24px; color:#ffffff; line-height:26px; font-weight: bold;" data-max="30" data-min="12" data-size="CTA Title" data-color="CTA Title" mc:edit="1/1 feature title" data-link-color="Feature Link" data-link-style="text-decoration:none; color:#ffdbdc;" contenteditable class="editable">Article title</td>' +
+                                                    '<td style="font-family: \'Open Sans\', Arial, sans-serif; font-size:24px; color:#ffffff; line-height:26px; font-weight: bold;" data-max="30" data-min="12" data-size="CTA Title" data-color="CTA Title" mc:edit="1/1 feature title" data-link-color="Feature Link" data-link-style="text-decoration:none; color:#ffdbdc;" contenteditable class="editable editable-text">Article title</td>' +
                                                 '</tr>' +
                                                 '<tr>' +
                                                     '<td height="15"></td>' +
                                                 '</tr>' +
                                                 '<tr>' +
-                                                    '<td style="font-family: \'Open Sans\', Arial, sans-serif; font-size:13px; color:#ffffff; line-height:26px;" data-max="30" data-min="12" data-size="CTA Content" data-color="CTA Content" mc:edit="1/1 feature content" data-link-color="Feature Link" data-link-style="text-decoration:none; color:#ffdbdc;" contenteditable class="editable">									Envato is an ecosystem of sites to help you get creative. From our world-leading digital marketplaces where you can buy images, templates, project files.									</td>' +
+                                                    '<td style="font-family: \'Open Sans\', Arial, sans-serif; font-size:13px; color:#ffffff; line-height:26px;" data-max="30" data-min="12" data-size="CTA Content" data-color="CTA Content" mc:edit="1/1 feature content" data-link-color="Feature Link" data-link-style="text-decoration:none; color:#ffdbdc;" contenteditable class="editable editable-text">									Envato is an ecosystem of sites to help you get creative. From our world-leading digital marketplaces where you can buy images, templates, project files.									</td>' +
                                                 '</tr>' +
                                                 '<tr>' +
                                                     '<td height="20"></td>' +
@@ -213,13 +251,13 @@ $(function(){
                                                                     '<td height="15"></td>' +
                                                                 '</tr>' +
                                                                 '<tr align="left">' +
-                                                                    '<td style="font-family: \'Open Sans\', Arial, sans-serif; font-size:18px; color:#3b3b3b; line-height:30px; font-weight: bold;" data-max="25" data-min="12" data-size="Title" data-color="Title" mc:edit="1/1 content box title" data-link-color="Content Link" data-link-style="text-decoration:none; color:#ff646a;" contenteditable class="editable">Article title</td>' +
+                                                                    '<td style="font-family: \'Open Sans\', Arial, sans-serif; font-size:18px; color:#3b3b3b; line-height:30px; font-weight: bold;" data-max="25" data-min="12" data-size="Title" data-color="Title" mc:edit="1/1 content box title" data-link-color="Content Link" data-link-style="text-decoration:none; color:#ff646a;" contenteditable class="editable editable-text">Article title</td>' +
                                                                 '</tr>' +
                                                                 '<tr>'+
                                                                     '<td height="10"></td>' +
                                                                 '</tr>' +
                                                                 '<tr>' +
-                                                                    '<td style="font-family: \'Open Sans\', Arial, sans-serif; font-size:13px; color:#7f8c8d; line-height:26px;" data-max="25" data-min="12" data-size="Main Text" data-color="Main Text" mc:edit="1/1 content box content" data-link-color="Content Link" data-link-style="text-decoration:none; color:#ff646a;" contenteditable class="editable">													Designers, developers and creatives from all over the globe are responsible for the work you see across Envato’s ecosystem.												</td>' +
+                                                                    '<td style="font-family: \'Open Sans\', Arial, sans-serif; font-size:13px; color:#7f8c8d; line-height:26px;" data-max="25" data-min="12" data-size="Main Text" data-color="Main Text" mc:edit="1/1 content box content" data-link-color="Content Link" data-link-style="text-decoration:none; color:#ff646a;" contenteditable class="editable editable-text">													Designers, developers and creatives from all over the globe are responsible for the work you see across Envato’s ecosystem.												</td>' +
                                                                 '</tr>' +
                                                                 '<tr>' +
                                                                     '<td height="25"></td>' +

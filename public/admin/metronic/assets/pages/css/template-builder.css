@@ -45,3 +45,37 @@
     padding-left: 15px;
     cursor: pointer;
 }
+
+.farbtastic {
+    margin: 0 auto;
+}
+
+.editor-label {
+    color: #FFFFFF;
+}
+
+.m-top-15 {
+    margin-top: 15px;
+}
+
+#template-creator .panel {
+    background-color: transparent;
+    border-width: 0;
+}
+
+#template-creator .panel-heading {
+    background-color: transparent;
+}
+
+#template-creator .panel-body {
+    border-width: 0;
+}
+
+#template-creator .panel-title {
+    color: #ACACAC;
+    font-weight: 500;
+}
+
+#template-creator .panel-title a:focus {
+    text-decoration: none;
+}

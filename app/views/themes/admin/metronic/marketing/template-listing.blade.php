@@ -7,7 +7,8 @@
             <link href="{{$asset_path}}/pages//css/portfolio.css" rel="stylesheet"/>
             <link href="{{$asset_path}}/pages//css/email-marketing.css" rel="stylesheet"/>
             <link href="{{$asset_path}}/pages//css/template-builder.css" rel="stylesheet"/>
-            <link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/bootstrap-summernote/summernote.css">
+            <link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/bootstrap-summernote/summernote.css"/>
+            <link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/farbtastic/farbtastic.css"/>
             <!-- END PAGE LEVEL SCRIPTS -->
         @stop
 @stop
@@ -173,9 +174,49 @@
                 <div class=row>
                     <div class="col-md-3 selector-background">
                     <!--  Section selector  -->
-                        <div class="col-md-12 section-element"><img data-section="header" src="{{asset('public/img/template_builder/header.jpg')}}"/></div>
-                        <div class="col-md-12 section-element"><img data-section="content-1" src="{{asset('public/img/template_builder/1-1 feature.jpg')}}"/></div>
-                        <div class="col-md-12 section-element"><img data-section="content-2" src="{{asset('public/img/template_builder/1-1 content box.jpg')}}"/></div>
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingOne">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#sections" aria-expanded="true" aria-controls="collapseOne">
+                                            <i class="fa fa-th-large"></i> Modules
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="sections" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                    <div class="panel-body">
+                                        <div class="col-md-12 section-element"><img data-section="header" src="{{asset('public/img/template_builder/header.jpg')}}"/></div>
+                                        <div class="col-md-12 section-element"><img data-section="content-1" src="{{asset('public/img/template_builder/1-1 feature.jpg')}}"/></div>
+                                        <div class="col-md-12 section-element"><img data-section="content-2" src="{{asset('public/img/template_builder/1-1 content box.jpg')}}"/></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingOne">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#tool-box" aria-expanded="true" aria-controls="collapseTwo">
+                                            <i class="fa fa-sliders"></i> Toolbox
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="tool-box" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                    <div class="panel-body">
+                                        <div class="col-md-12 m-top-15">
+                                            <label for="font-size-slider" class="editor-label">Font Size</label>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <input id="font-size-slider" type="range" min="12" max="24" step="1" />
+                                        </div>
+                                        <div class="col-md-12 m-top-15">
+                                            <label for="font-size-slider" class="editor-label">Font Color</label>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div id="colorpicker"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-9">
                     <!-- Canvas -->
@@ -202,6 +243,7 @@
     @parent
 <script type='text/javascript' src="{{$asset_path}}/global/plugins/jquery.caret.js"></script>
 <script src="{{$asset_path}}/global/plugins/bootstrap-summernote/summernote.min.js" type="text/javascript"></script>
+<script src="{{$asset_path}}/global/plugins/farbtastic/farbtastic.js" type="text/javascript"></script>
 <script>
     var BASE_URL = '{{ url('/') }}';
     var ASSET_PATH = '{{$asset_path}}';
