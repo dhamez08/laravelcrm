@@ -254,8 +254,9 @@ class CustomerOpportunitiesEntity extends \Eloquent{
 		$sql = "SELECT customer_opportunities.*, CONCAT(customer.company_name, ' ', customer.first_name, ' ', customer.last_name) as client FROM customer_opportunities LEFT JOIN customer on customer_opportunities.customer_id=customer.id";
 		if ($tag!="") {		
 		$sql .= " LEFT JOIN customer_opportunities_tags on customer_opportunities_tags.opp_id=customer_opportunities.id";
-		}		
-		$sql .= " WHERE customer_opportunities.belongs_to IN (?) ";
+		}
+		$sql .= " WHERE true ";		
+		$sql .= " AND customer_opportunities.belongs_to IN (?) ";
 		// todays date
 		$todays_is = date("Y-m-d H:i:s");	
 		if ($status=="open") {
@@ -304,13 +305,22 @@ class CustomerOpportunitiesEntity extends \Eloquent{
 		if ($tag!="") {
 			$sql .= "AND customer_opportunities_tags.opp_tag=? ";
 		}
+
+		/*
+		if(!empty($user)) {
+			$sql .= "AND customer_opportunities.belongs_to = ? ";
+		}
+		*/
 		
 		$sql .= "ORDER BY customer_opportunities.close_date DESC";
 
 		if($tag!="")
-			$query = \DB::select($sql, array(\Auth::id(),$tag));
+			//$query = \DB::select($sql, array(\Auth::id(),$tag));
+			$query = \DB::select($sql, array($user, $tag));
 		else
-			$query = \DB::select($sql, array(\Auth::id()));
+			$query = \DB::select($sql, array($user));
+
+		//$query = \DB::select($sql, array($user, $tag));
 
 		return $query;	
 	}
