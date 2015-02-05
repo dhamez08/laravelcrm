@@ -317,11 +317,11 @@
 <div class="panel panel-default">
 	<div class="panel-body">
 		<div class="row">
-			<a href="javscript:void(0);" class="col-sm-4 col-xs-4 text-center">
-				<div class="text-success counter text-center">0</div>
+			<a href="{{ url('clients/opportunities/'.$customer->id) }}" class="col-sm-4 col-xs-4 text-center">
+				<div class="text-success counter text-center">{{ count( \CustomerOpportunities\CustomerOpportunitiesEntity::get_instance()->getListsByCustomer($customer->id) ) }}</div>
 				<div class="counter_label text-center">Projects</div>
 			</a>
-			<a href="javascript:void(0);" class="col-sm-4 col-xs-4 text-center">
+			<a href="{{ url('clients/client-summary/'.$customer->id) }}" class="col-sm-4 col-xs-4 text-center">
 				<div class="text-success counter text-center">{{$tasks['total']}}</div>
 				<div class="counter_label text-center">Tasks</div>
 			</a>

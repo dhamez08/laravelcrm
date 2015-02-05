@@ -3296,10 +3296,12 @@ Portlets
   background-image: url(../img/portlet-reload-icon-white.png);
 }
 .portlet.box > .portlet-title > .tools > a.expand {
-  background-image: url(../img/portlet-expand-icon-white.png);
+  /*background-image: url(../img/portlet-expand-icon-white.png);*/
+  background-image: url(../img/portlet-collapse-icon-white.png);
 }
 .portlet.box > .portlet-title > .tools > a.collapse {
-  background-image: url(../img/portlet-collapse-icon-white.png);
+  /*background-image: url(../img/portlet-collapse-icon-white.png);*/
+  background-image: url(../img/portlet-expand-icon-white.png);
 }
 .portlet.box > .portlet-title > .actions {
   padding: 6px 0;

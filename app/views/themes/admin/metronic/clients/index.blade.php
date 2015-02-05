@@ -56,15 +56,57 @@
 									)
 								)}}
 										@if( isset($tags) )
-											{{
-												Form::select(
-													'tags',
-													array_merge(array('0'=>'Select All'),$tags->lists('tag','id')),
-													isset($tag_id) ? $tag_id:null
-												);
-											}}
+											<div class="row">
+												<div class="col-md-12">
+													<label>Tags:</label>
+													{{--
+														Form::select(
+															'tags',
+															array_merge(array('0'=>'Select All'),$tags->lists('tag','id')),
+															isset($tag_id) ? $tag_id:null
+														);
+													--}}
+													{{
+														Form::select(
+															'tags[]',
+															$tags->lists('tag','id'),
+															isset($tag_id) ? $tag_id:null,
+															array('multiple')
+														);
+													}}													
+												</div>
+											</div>
 										@endif
-										{{Form::submit('Filter Client by tag',array('class'=>"btn blue btn-sm"))}}
+
+										<div class="row">
+											<div class="col-md-12">
+
+												<div class="portlet box blue" style="margin-top:10px; margin-bottom:10px">
+													<div class="portlet-title">
+														<div class="caption caption-mini">
+															<i class="fa fa-cogs"></i>Advanced Filters
+														</div>
+														<div class="tools">
+															<a href="javascript:;" class="expand">
+															</a>
+														</div>
+													</div>
+													<div class="portlet-body" style="display:none">
+														<div class="row">
+															<div class="col-md-12" style="margin: 10px 10px;">
+																<label>Age: </label>
+																{{ Form::number('age_min', \Input::get('age_min'), array('placeholder' => 'Minimum Age')) }} - {{ Form::number('age_max', \Input::get('age_max'), array('placeholder' => 'Maximum Age')) }}
+																&nbsp;&nbsp;
+																<label>Marital Status: </label>
+																{{ Form::select('marital_status', Config::get('crm.marital_status'), \Input::get('marital_status')) }}
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										{{Form::submit('Apply Filters',array('class'=>"btn blue btn-sm"))}}
 								{{Form::close()}}
 							</div>
 							<p></p>
@@ -86,8 +128,8 @@
 										@foreach($array_customer as $customers)
 										@if( is_null($tag_id) )
 											<tr>
-												<td>
-													Photo here
+												<td style="width:1%">
+													<img src="{{ asset('public/img/profile_images/summary_person.png') }}" style="width:20px">
 												</td>
 												<td>
 													<div>
@@ -116,7 +158,8 @@
 													Delete </a>
 												</td>
 											@else
-												@if( in_array($tag_id,$customers['my_tag_object']->lists('tag_id')) )
+												{{-- @if( in_array($tag_id,$customers['my_tag_object']->lists('tag_id')) ) --}}
+												@if(count(array_diff($tag_id, $customers['my_tag_object']->lists('tag_id'))) == 0)
 													<td>
 														Photo here
 													</td>
@@ -168,5 +211,10 @@
 	@parent
 	@section('footer-custom-js')
 		@parent
+		<script type="text/javascript">
+			$('select[name="tags[]"]').select2({
+				width: '100%'
+			});
+		</script>
 	@stop
 @stop

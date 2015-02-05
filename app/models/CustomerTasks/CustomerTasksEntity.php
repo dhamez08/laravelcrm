@@ -102,7 +102,7 @@ class CustomerTasksEntity extends \Eloquent{
 		echo json_encode($task);
 	}
 
-	public function getTaskUser($customerId = null, $belongsToUser = null){
+	public function getTaskUser($customerId = null, $belongsToUser = null, $otherFilters = array()){
 		if( is_null($belongsToUser) ){
 			$belongsToUser = \Auth::id();
 		}
@@ -120,6 +120,12 @@ class CustomerTasksEntity extends \Eloquent{
 			->with('client')
 			->orderBy('created_at','desc');
 		}
+
+		// Filters
+		if(isset($otherFilters['action']))
+			$tasks->whereIn('task_setting', $otherFilters['action']);
+		if(isset($otherFilters['client']))
+			$tasks->whereIn('customer_id', $otherFilters['client']);
 
 		$arrayData = array();
 		$due_all = 0;

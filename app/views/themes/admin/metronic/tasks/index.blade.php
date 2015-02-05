@@ -35,6 +35,59 @@
 							<a href="{{url('clients/create-client-task?redirect=task')}}" data-target=".createTask" data-toggle="modal" class="btn btn-default btn-sm openModal">
 							<i class="fa fa-plus"></i> Create Task</a>
 							</p>
+							{{ Form::open(array('method' => 'GET', 'role' => 'form')) }}
+							<div class="row">
+								<div class="col-md-12">
+									<label>Action:</label>
+									{{
+										Form::select(
+											'action[]',
+											$taskLabel,
+											\Input::get('action'),
+											array('multiple')
+										);
+									}}													
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-12">
+
+									<div class="portlet box blue" style="margin-top:10px; margin-bottom:10px">
+										<div class="portlet-title">
+											<div class="caption caption-mini">
+												<i class="fa fa-cogs"></i>Advanced Filters
+											</div>
+											<div class="tools">
+												<a href="javascript:;" class="expand">
+												</a>
+											</div>
+										</div>
+										<div class="portlet-body" style="display:none">
+											<div class="row">
+												<div class="col-md-12" style="margin: 10px 10px;">
+													<label>Client: </label>
+													{{ 
+														Form::select(
+															'client[]', 
+															$client, 
+															\Input::get('client'),
+															array('multiple')
+														) 
+													}}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>	
+
+							{{Form::submit('Apply Filters',array('class'=>"btn blue btn-sm"))}}
+
+							{{ Form::close() }}	
+
+							<p></p>					
+
 							<p>Overdue : {{$tasks['due']->all}}</p>
 							<!-- START TASK LIST -->
 							<ul class="task-list">
@@ -99,5 +152,13 @@
 	    	TaskCalendar.init(baseURL);
 	    });
 		</script>
+		<script type="text/javascript">
+			$('select[name="action[]"]').select2({
+				width: '100%'
+			});
+			$('select[name="client[]"]').select2({
+				width: '80%'
+			});			
+		</script>		
 	@stop
 @stop
