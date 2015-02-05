@@ -40,7 +40,8 @@
 						</div>
 						<div class="portlet-body">
 							<div style="height:460px;text-align:center">        
-                                <div id="pipeline-forecast-placeholder" style="width:100%;height:100%;"></div>        
+                                <div class="hidden" id="pipeline-forecast-placeholder" style="width:100%;height:100%;"></div>        
+                                <div id="amcharts-pipeline-forecast-placeholder" style="width: 100%; height: 400px; background-color: #FFFFFF;" ></div>
                             </div>
 						</div>
 					</div>
@@ -90,6 +91,10 @@
 	<script src="{{$asset_path}}/global/plugins/flot/jquery.flot.symbol.js"></script>
     <script src="{{$asset_path}}/global/plugins/flot/jquery.flot.orderBars.js"></script>
 	<script src="{{$asset_path}}/global/plugins/flot/jquery.flot.axislabels.js"></script>
+
+    <script src="{{$asset_path}}/global/plugins/amcharts/amcharts.js"></script>
+    <script src="{{$asset_path}}/global/plugins/amcharts/serial.js"></script>
+
 	<script type="text/javascript">
 
         //Pipeline forecast chart data
@@ -279,6 +284,60 @@
                 opacity: 0.9
             }).appendTo("body").fadeIn(200);
         }
+    </script>
+
+    <script type="text/javascript">
+        AmCharts.makeChart("amcharts-pipeline-forecast-placeholder",
+            {
+                "type": "serial",
+                "pathToImages": "http://cdn.amcharts.com/lib/3/images/",
+                "categoryField": "date",
+                "dataDateFormat": "MM/YYYY",
+                "theme": "default",
+                "categoryAxis": {
+                    "minPeriod": "MM",
+                    "parseDates": true
+                },
+                "chartCursor": {
+                    "categoryBalloonDateFormat": "MMM YYYY"
+                },
+                "trendLines": [],
+                "graphs": [
+                    {
+                        "balloonText": "[[title]] - £[[value]]",
+                        "bullet": "round",
+                        "id": "AmGraph-1",
+                        "title": "Expected Total Value",
+                        "valueField": "column-1"
+                    },
+                    {
+                        "balloonText": "[[title]] - £[[value]]",
+                        "bullet": "round",
+                        "id": "AmGraph-2",
+                        "title": "Pipeline Value",
+                        "valueField": "column-2"
+                    }
+                ],
+                "guides": [],
+                "valueAxes": [],
+                "allLabels": [],
+                "balloon": {},
+                "legend": {
+                    "useGraphSettings": true,
+                    "valueText": ""
+                },
+                "titles": [],
+                "dataProvider": [
+                    @foreach($forecast as $key => $value)
+                        {
+                            "date": "{{ $value->themonth }}",
+                            "column-1": {{ $value->maxcash }},
+                            "column-2": {{ $value->thecash }}
+                        },                        
+                    @endforeach
+                ]
+            }
+        );
     </script>
 	@stop
 @stop

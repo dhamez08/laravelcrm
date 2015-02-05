@@ -141,3 +141,27 @@ ul.client-social-icons {
 	font-size: 12px;
 	padding: 11px 0 9px 0;
 }
+
+.panel-yellow {
+	border-color: rgb(252, 210, 2);
+}
+.panel-yellow > .panel-heading {
+	color: #a94442;
+	background-color: rgb(252, 210, 2);
+	border-color: rgb(252, 210, 2);
+}
+.panel-yellow > .panel-body  {
+	padding: 5px;
+}
+
+.panel-orange {
+	border-color: rgb(255, 102, 0);
+}
+.panel-orange > .panel-heading {
+	color: #8a6d3b;
+	background-color: rgb(255, 102, 0);
+	border-color: rgb(255, 102, 0);	
+}
+.panel-orange > .panel-body  {
+	padding: 5px;
+}
