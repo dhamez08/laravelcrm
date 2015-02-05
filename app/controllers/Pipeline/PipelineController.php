@@ -85,6 +85,11 @@ class PipelineController extends \BaseController {
 		$end_date = new \DateTime($start_date->format("Y-m-d"));
 		$how_many_months = 8;
 		$chart_array = array();
+
+		$months = array();
+		$year = date('Y');
+		foreach(range(1,12) as $monthNumber)
+			$months[] = str_pad($monthNumber, 2, '0', STR_PAD_LEFT) . '/' . $year;
  
 		if (is_numeric($user) || $user=="all") {
 			if ($role==1) {
@@ -101,7 +106,26 @@ class PipelineController extends \BaseController {
 				}
 				
 				//$data['bymilestone'] = $this->pipeline_model->pipelineByMilestoneUser($user);
-				$data['forecast'] = $this->pipeline_model->pipelineForecastUser($users_list);
+				//$data['forecast'] = $this->pipeline_model->pipelineForecastUser($users_list);
+				$tempForecast = $this->pipeline_model->pipelineForecastUser($users_list);
+
+				$forecast = array();
+				foreach($months as $k => $m) {
+					$forecast[$k] = new \stdClass;
+					$forecast[$k]->thecash = '0.00';
+					$forecast[$k]->maxcash = '0.00';
+					$forecast[$k]->themonth = $m;
+					foreach($tempForecast as $tf) {
+						if($tf->themonth == $m) {
+							$forecast[$k]->thecash = $tf->thecash;
+							$forecast[$k]->maxcash = $tf->maxcash;
+							$forecast[$k]->themonth = $tf->themonth;
+						}
+					}
+				}
+
+				$data['forecast'] = $forecast;
+				\Debugbar::info($data['forecast']);
 
 				$data['stats'] = $this->pipeline_model->pipelineStatsUser($users_list);
 
@@ -161,7 +185,25 @@ class PipelineController extends \BaseController {
 		} else {
 
 			//$data['bymilestone'] = $this->pipeline_model->pipelineByMilestone();
-			$data['forecast'] = $this->pipeline_model->pipelineForecast();
+			//$data['forecast'] = $this->pipeline_model->pipelineForecast();
+
+			$tempForecast = $this->pipeline_model->pipelineForecast();
+
+			$forecast = array();
+			foreach($months as $k => $m) {
+				$forecast[$k] = new \stdClass;
+				$forecast[$k]->thecash = '0.00';
+				$forecast[$k]->maxcash = '0.00';
+				$forecast[$k]->themonth = $m;
+				foreach($tempForecast as $tf) {
+					if($tf->themonth == $m) {
+						$forecast[$k]->thecash = $tf->thecash;
+						$forecast[$k]->maxcash = $tf->maxcash;
+						$forecast[$k]->themonth = $tf->themonth;
+					}
+				}
+			}
+			$data['forecast'] = $forecast;
 			$data['stats'] = $this->pipeline_model->pipelineStats();
 
 			

@@ -105,6 +105,28 @@
             Summary.init_toggler();
 		});
 	</script>
+    <script type="text/javascript">
+        $('.easy-pie-chart .number.conversion_30days ').easyPieChart({
+            animate: 1000,
+            size: 75,
+            lineWidth: 3,
+            barColor: Metronic.getBrandColor('yellow')
+        });
+
+        $('.easy-pie-chart .number.conversion_90days').easyPieChart({
+            animate: 1000,
+            size: 75,
+            lineWidth: 3,
+            barColor: Metronic.getBrandColor('green')
+        });
+
+        $('.easy-pie-chart .number.conversion_360days').easyPieChart({
+            animate: 1000,
+            size: 75,
+            lineWidth: 3,
+            barColor: Metronic.getBrandColor('red')
+        });
+    </script>	
 	@stop
 @stop
 
