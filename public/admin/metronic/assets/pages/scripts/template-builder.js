@@ -8,6 +8,8 @@ $(function(){
         appendTo: 'body'
     });
 
+    $('.section-container').sortable();
+
     $('#template-canvas').droppable({
         accept: '.section-element img',
         drop: function(event, ui){
@@ -21,6 +23,21 @@ $(function(){
             }
         }
     })
+
+    $('body').on('mouseover','.section-container',function(){
+        $(this).find('.close-button-container').fadeIn();
+
+        $(this).closest('.section-container').on('mouseleave',function(){
+            $('.close-button-container').fadeOut();
+        })
+    });
+
+    $('body').on('click','.remove-section',function(){
+        $(this).closest('.section-container').remove();
+    });
+
+
+    $('#template-canvas').sortable({cancel:'.editable'});
 
 
     function generate_html_header(container){
@@ -65,7 +82,7 @@ $(function(){
                                                         '<td height="20"></td>' +
                                                     '</tr>' +
                                                     '<tr>' +
-                                                        '<td contenteditable align="center" style="font-family: \'Open Sans\', Arial, sans-serif; font-size:14px; color:#ffffff; line-height:26px; text-transform:uppercase; letter-spacing:4px;" data-max="25" data-min="13" data-size="Header Content" data-color="Header Content" mc:edit="header content" data-link-color="Slogan Link" data-link-style="text-decoration:none; color:#ff646a;">Powered by a Community of Millions.</td>' +
+                                                        '<td contenteditable class="editable" align="center" style="font-family: \'Open Sans\', Arial, sans-serif; font-size:14px; color:#ffffff; line-height:26px; text-transform:uppercase; letter-spacing:4px;" data-max="25" data-min="13" data-size="Header Content" data-color="Header Content" mc:edit="header content" data-link-color="Slogan Link" data-link-style="text-decoration:none; color:#ff646a;">Powered by a Community of Millions.</td>' +
                                                     '</tr>' +
                                                     '<tr>' +
                                                         '<td height="75"></td>' +
@@ -81,7 +98,13 @@ $(function(){
                 '</tbody>' +
             '</table>';
 
-        $(header_html).hide().appendTo(container).fadeIn();
+        var section = $('<div>').addClass('section-container');
+        var close_button = $('<div>').addClass('close-button-container').append($('<i>').addClass('fa fa-times remove-section'));
+        close_button.hide();
+        section.append(header_html).append(close_button);
+        section.hide().appendTo(container).fadeIn();
+
+
     }
 
     function generate_html_content_1(container){
@@ -109,13 +132,13 @@ $(function(){
                                                 '<td height="50"></td>' +
                                             '</tr>' +
                                                 '<tr>' +
-                                                    '<td style="font-family: \'Open Sans\', Arial, sans-serif; font-size:24px; color:#ffffff; line-height:26px; font-weight: bold;" data-max="30" data-min="12" data-size="CTA Title" data-color="CTA Title" mc:edit="1/1 feature title" data-link-color="Feature Link" data-link-style="text-decoration:none; color:#ffdbdc;" contenteditable>Article title</td>' +
+                                                    '<td style="font-family: \'Open Sans\', Arial, sans-serif; font-size:24px; color:#ffffff; line-height:26px; font-weight: bold;" data-max="30" data-min="12" data-size="CTA Title" data-color="CTA Title" mc:edit="1/1 feature title" data-link-color="Feature Link" data-link-style="text-decoration:none; color:#ffdbdc;" contenteditable class="editable">Article title</td>' +
                                                 '</tr>' +
                                                 '<tr>' +
                                                     '<td height="15"></td>' +
                                                 '</tr>' +
                                                 '<tr>' +
-                                                    '<td style="font-family: \'Open Sans\', Arial, sans-serif; font-size:13px; color:#ffffff; line-height:26px;" data-max="30" data-min="12" data-size="CTA Content" data-color="CTA Content" mc:edit="1/1 feature content" data-link-color="Feature Link" data-link-style="text-decoration:none; color:#ffdbdc;" contenteditable>									Envato is an ecosystem of sites to help you get creative. From our world-leading digital marketplaces where you can buy images, templates, project files.									</td>' +
+                                                    '<td style="font-family: \'Open Sans\', Arial, sans-serif; font-size:13px; color:#ffffff; line-height:26px;" data-max="30" data-min="12" data-size="CTA Content" data-color="CTA Content" mc:edit="1/1 feature content" data-link-color="Feature Link" data-link-style="text-decoration:none; color:#ffdbdc;" contenteditable class="editable">									Envato is an ecosystem of sites to help you get creative. From our world-leading digital marketplaces where you can buy images, templates, project files.									</td>' +
                                                 '</tr>' +
                                                 '<tr>' +
                                                     '<td height="20"></td>' +
@@ -147,7 +170,11 @@ $(function(){
             '</tbody>' +
        ' </table>';
 
-        $(contenet_1_html).hide().appendTo(container).fadeIn();
+        var section = $('<div>').addClass('section-container');
+        var close_button = $('<div>').addClass('close-button-container').append($('<i>').addClass('fa fa-times remove-section'));
+        close_button.hide();
+        section.append(contenet_1_html).append(close_button);
+        section.hide().appendTo(container).fadeIn();
     }
 
     function generate_html_content_2(container){
@@ -186,13 +213,13 @@ $(function(){
                                                                     '<td height="15"></td>' +
                                                                 '</tr>' +
                                                                 '<tr align="left">' +
-                                                                    '<td style="font-family: \'Open Sans\', Arial, sans-serif; font-size:18px; color:#3b3b3b; line-height:30px; font-weight: bold;" data-max="25" data-min="12" data-size="Title" data-color="Title" mc:edit="1/1 content box title" data-link-color="Content Link" data-link-style="text-decoration:none; color:#ff646a;" contenteditable>Article title</td>' +
+                                                                    '<td style="font-family: \'Open Sans\', Arial, sans-serif; font-size:18px; color:#3b3b3b; line-height:30px; font-weight: bold;" data-max="25" data-min="12" data-size="Title" data-color="Title" mc:edit="1/1 content box title" data-link-color="Content Link" data-link-style="text-decoration:none; color:#ff646a;" contenteditable class="editable">Article title</td>' +
                                                                 '</tr>' +
                                                                 '<tr>'+
                                                                     '<td height="10"></td>' +
                                                                 '</tr>' +
                                                                 '<tr>' +
-                                                                    '<td style="font-family: \'Open Sans\', Arial, sans-serif; font-size:13px; color:#7f8c8d; line-height:26px;" data-max="25" data-min="12" data-size="Main Text" data-color="Main Text" mc:edit="1/1 content box content" data-link-color="Content Link" data-link-style="text-decoration:none; color:#ff646a;" contenteditable>													Designers, developers and creatives from all over the globe are responsible for the work you see across Envato’s ecosystem.												</td>' +
+                                                                    '<td style="font-family: \'Open Sans\', Arial, sans-serif; font-size:13px; color:#7f8c8d; line-height:26px;" data-max="25" data-min="12" data-size="Main Text" data-color="Main Text" mc:edit="1/1 content box content" data-link-color="Content Link" data-link-style="text-decoration:none; color:#ff646a;" contenteditable class="editable">													Designers, developers and creatives from all over the globe are responsible for the work you see across Envato’s ecosystem.												</td>' +
                                                                 '</tr>' +
                                                                 '<tr>' +
                                                                     '<td height="25"></td>' +
@@ -212,7 +239,11 @@ $(function(){
             '</tbody>' +
         '</table>';
 
-        $(content_2_html).hide().appendTo(container).fadeIn();
 
+        var section = $('<div>').addClass('section-container');
+        var close_button = $('<div>').addClass('close-button-container').append($('<i>').addClass('fa fa-times remove-section'));
+        close_button.hide();
+        section.append(content_2_html).append(close_button);
+        section.hide().appendTo(container).fadeIn();
     }
 });
