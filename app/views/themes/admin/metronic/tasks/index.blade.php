@@ -58,7 +58,7 @@
 											<div class="caption caption-mini">
 												<i class="fa fa-cogs"></i>Advanced Filters
 											</div>
-											<div class="tools">
+											<div class="tools" style="float:left">
 												<a href="javascript:;" class="expand">
 												</a>
 											</div>
