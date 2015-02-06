@@ -199,6 +199,8 @@ class ClientEntity extends \Eloquent{
 				$arrayCustomer[$val->id]['organisation'] = $val->organisation;
 				$arrayCustomer[$val->id]['my_tag_object'] = $val->my_tag;
 				$arrayCustomer[$val->id]['my_tag'] = $val->my_tag->lists('id');
+				
+				$arrayCustomer[$val->id]['profile_image'] = \Clients\Clients::find($val->id)->profileImage()->where('id', $val->profile_image)->first();
 			}
 			return $arrayCustomer;
 		}
