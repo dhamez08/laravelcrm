@@ -192,7 +192,53 @@
                 </div>
             </div>
             <div class="portlet-body">
+
                 <div class="row">
+                    <div class="col-md-4">
+                        
+                        <div class="panel status panel-blue-madison">
+                            <div class="panel-heading">
+                                <h1 class="panel-title text-center">
+                                    £{{ number_format($sales_30days,2) }}
+                                </h1>
+                            </div>
+                            <div class="panel-body text-center">                        
+                                <strong>This Month</strong>
+                            </div>
+                        </div>
+
+                    </div>          
+                    <div class="col-md-4">
+                      
+                        <div class="panel status panel-purple-plum">
+                            <div class="panel-heading">
+                                <h1 class="panel-title text-center">
+                                    £{{ number_format($sales_90days,2) }}
+                                </h1>
+                            </div>
+                            <div class="panel-body text-center">                        
+                                <strong>Last 90 Days</strong>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-4">
+                      
+                        <div class="panel status panel-red-intense">
+                            <div class="panel-heading">
+                                <h1 class="panel-title text-center">
+                                    £{{ number_format($sales_360days,2) }}
+                                </h1>
+                            </div>
+                            <div class="panel-body text-center">                        
+                                <strong>Year to Date</strong>
+                            </div>
+                        </div>
+
+                    </div>                    
+                </div>
+
+                <div class="row hidden">
                     <div class="col-md-4">
                         <div class="dashboard-stat blue-madison">
                             <div class="visual"><i class="fa fa-money"></i></div>
