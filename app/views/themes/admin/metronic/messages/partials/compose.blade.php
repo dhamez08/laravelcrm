@@ -1,14 +1,14 @@
-<form class="inbox-compose form-horizontal" id="fileupload" action="#" method="POST" enctype="multipart/form-data">
+<form class="inbox-compose form-horizontal" id="fileupload" action="{{ url('messages/compose') }}" method="POST" enctype="multipart/form-data">
 {{ Form::token() }}
 	<div class="inbox-compose-btn">
 		<button type="submit" name="btn_action" value="send" class="btn blue"><i class="fa fa-check"></i>Send</button>
-		<button type="button" onclick="history.back(-1);" class="btn inbox-discard-btn">Cancel</button>
+		<button type="button" data-dismiss="modal" class="btn inbox-discard-btn">Cancel</button>
 		<button type="submit" name="btn_action" value="draft" class="btn">Draft</button>
 	</div>
 	<div class="inbox-form-group mail-to">
 		<label class="control-label">To:</label>
 		<div class="controls controls-to">
-			<select id="select2_user" name="to[]" class="form-control select2" multiple>
+			<select id="select2_user" name="to[]" class="form-control select2" multiple required>
 			@foreach($customers->get() as $customer)
 				<option value="{{ $customer->id }}">{{ $customer->first_name . " " . $customer->last_name }}</option>
 			@endforeach
@@ -26,7 +26,7 @@
 		</a>
 		<label class="control-label">Cc:</label>
 		<div class="controls controls-cc">
-			<input type="text" name="cc" class="form-control">
+			<input type="email" name="cc" class="form-control">
 		</div>
 	</div>
 	<div class="inbox-form-group input-bcc display-hide">
@@ -34,7 +34,7 @@
 		</a>
 		<label class="control-label">Bcc:</label>
 		<div class="controls controls-bcc">
-			<input type="text" name="bcc" class="form-control">
+			<input type="email" name="bcc" class="form-control">
 		</div>
 	</div>
 	<div class="inbox-form-group">
@@ -46,7 +46,8 @@
 				null,
 				array(
 					'class'=>'form-control',
-					'id'=>'email_subject'
+					'id'=>'email_subject',
+					'required'
 				)
 			);
 		}}
@@ -207,7 +208,7 @@
 	</script>
 	<div class="inbox-compose-btn">
 		<button type="submit" name="btn_action" value="send" class="btn blue"><i class="fa fa-check"></i>Send</button>
-		<button type="button" onclick="history.back(-1);" class="btn inbox-discard-btn">Cancel</button>
+		<button type="button" data-dismiss="modal" class="btn inbox-discard-btn">Cancel</button>
 		<button type="submit" name="btn_action" value="draft" class="btn">Draft</button>
 	</div>
 </form>

@@ -40,8 +40,7 @@
 				<div class="col-md-2">
 					<ul class="inbox-nav margin-bottom-10">
 						<li class="compose-btn">
-							<a href="{{ url('messages/compose') }}" data-title="Compose" class="btn green">
-							<i class="fa fa-edit"></i> Compose </a>
+							<a href="#" data-target=".emailMessage" data-toggle="modal" class="openModal btn btn-sm red"><i class="fa fa-edit"></i> Compose </a>
 						</li>
 						<li class="inbox {{ $message_title=='Inbox' ? 'active':'' }}">
 							<a href="{{ url('messages/inbox') }}" class="btn" data-title="Inbox">
@@ -92,6 +91,9 @@
 			</div>
 		</div>
 	</div>
+
+	@include($view_path . '.messages.modals.compose')
+
 	@stop
 @stop
 @section('script-footer')

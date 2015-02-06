@@ -153,7 +153,8 @@ class MessagesController extends \BaseController {
 		$data['message_title'] = 'Sent';
 		$data['UnreadMessagesCount'] 	= \Message\MessageEntity::get_instance()->getUnreadMessagesCount();
 		$data['messages'] = \Message\MessageEntity::get_instance()->listAllSentMessages();
-		$data 	= array_merge($data,$this->getSetupThemes());
+		$dataMessages 	= $this->_messageCommon();
+		$data 	= array_merge($data,$this->getSetupThemes(), $dataMessages);
 		return \View::make( $data['view_path'] . '.messages.index', $data );
 	}
 
@@ -163,7 +164,8 @@ class MessagesController extends \BaseController {
 		$data['message_title'] = 'Draft';
 		$data['UnreadMessagesCount'] 	= \Message\MessageEntity::get_instance()->getUnreadMessagesCount();
 		$data['messages'] = \Message\MessageEntity::get_instance()->listAllDraftMessages();
-		$data 	= array_merge($data,$this->getSetupThemes());
+		$dataMessages 	= $this->_messageCommon();
+		$data 	= array_merge($data,$this->getSetupThemes(), $dataMessages);
 		return \View::make( $data['view_path'] . '.messages.index', $data );
 	}
 
@@ -173,7 +175,8 @@ class MessagesController extends \BaseController {
 		$data['message_title'] = 'Trash';
 		$data['UnreadMessagesCount'] 	= \Message\MessageEntity::get_instance()->getUnreadMessagesCount();
 		$data['messages'] = \Message\MessageEntity::get_instance()->listAllTrashMessages();
-		$data 	= array_merge($data,$this->getSetupThemes());
+		$dataMessages 	= $this->_messageCommon();
+		$data 	= array_merge($data,$this->getSetupThemes(), $dataMessages);
 		return \View::make( $data['view_path'] . '.messages.index', $data );
 	}
 
@@ -363,12 +366,12 @@ class MessagesController extends \BaseController {
 				\Session::flash('message', 'Email successfully sent');
 			else
 				\Session::flash('message', 'Email successfully saved to draft');
-			return \Redirect::back();
+			return \Redirect::to('messages/inbox');
 
 		} else {
 
 			\Input::flash();
-			return \Redirect::back()
+			return \Redirect::to('messages/inbox')
 			->withErrors($validator)
 			->withInput();
 
