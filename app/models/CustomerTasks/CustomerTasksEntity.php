@@ -56,7 +56,7 @@ class CustomerTasksEntity extends \Eloquent{
 		return \CustomerTasks\CustomerTasks::customerID($customerID);
 	}
 
-	public function jsonTaskInCalendar($start_date, $end_date){
+	public function jsonTaskInCalendar($start_date, $end_date, $otherFilters = array()){
 		$task = array();
 
 		//$belongsTo = \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
@@ -66,6 +66,11 @@ class CustomerTasksEntity extends \Eloquent{
 		->endDate($end_date)
 		->with('label')
 		->with('client');
+
+		// Filters
+		if(!empty($otherFilters['action']))	$tasks->taskSetting($otherFilters['action']);
+		if(!empty($otherFilters['client']))	$tasks->customerID($otherFilters['client']);
+
 		if( $tasks ){
 			foreach($tasks->get() as $row){
 				$parseEndTime = \Carbon\Carbon::parse($row->end_time);

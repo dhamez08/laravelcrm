@@ -61,7 +61,7 @@
 					    </select>
 					    @endif  
 					    <button type="submit" class="btn blue">Apply</button>
-					    </form>
+					</form>
 				</div>
 			</div>
 			<div class="row" style="margin-top:20px">

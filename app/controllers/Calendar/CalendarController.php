@@ -57,12 +57,32 @@ class CalendarController extends \BaseController {
 		$data['portlet_title']		= 'Calendar';
 		$data['fa_icons']			= 'calendar';
 		$data['google_calendar']	= \User\UserEntity::get_instance()->getGoogleCalendarFeedURL();
+
+		// Filters
+		$otherFilters = array();
+		if(\Input::get('action'))	$otherFilters['action'] = \Input::get('action');
+		if(\Input::get('client'))	$otherFilters['client']	= \Input::get('client');
+
+		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(null, \Auth::id(), $otherFilters);
+		$data['taskLabel']			= \TaskLabel\TaskLabelEntity::get_instance()->getAllTaskLabel()->lists('action_name','id');
+
+		$clients = \Clients\Clients::customerBelongsTo(\Auth::id())->get();
+		$data['client'] = array();
+		foreach ($clients as $client) {
+			$data['client'][$client->id] = $client->first_name . ' ' . $client->last_name;
+		}	
+		
 		$data 						= array_merge($data,$dashboard_data);
 		return \View::make( $data['view_path'] . '.calendar.index', $data );
 	}
 
 	public function getTaskCalendar(){
-		return \CustomerTasks\CustomerTasksEntity::get_instance()->jsonTaskInCalendar(\Input::get('start'), \Input::get('end'));
+
+		$otherFilters = array();
+		if(\Input::get('action')) $otherFilters['action'] = \Input::get('action');
+		if(\Input::get('client')) $otherFilters['client'] = \Input::get('client');
+
+		return \CustomerTasks\CustomerTasksEntity::get_instance()->jsonTaskInCalendar(\Input::get('start'), \Input::get('end'), $otherFilters);
 	}
 
 	public function getEditTask($taskId, $customerId, $redirect = null){

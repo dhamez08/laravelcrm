@@ -37,6 +37,10 @@ class CustomerTasks extends \Eloquent{
 		return $query->where('date', '<=', $endDate);
 	}
 
+	public function scopeTaskSetting($query, $task_setting) {
+		return $query->where('task_setting', '=', $task_setting);
+	}
+
 	public function label(){
 		return $this->hasOne('\TaskLabel\TaskLabel','id','task_setting');
 	}
