@@ -114,7 +114,7 @@
                                 {{ $conversion_30days }} </span>
                                 %
                             </div>
-                            <a class="title" href="#">
+                            <a class="title" href="{{ url('pipeline/list-view?status=conversionthismonth') }}">
                             This Month
                             </a>
                         </div>
@@ -128,7 +128,7 @@
                                 {{ $conversion_90days }} </span>
                                 %
                             </div>
-                            <a class="title" href="#">
+                            <a class="title" href="{{ url('pipeline/list-view?status=conversion90days') }}">
                             Last 90 Days
                             </a>
                         </div>
@@ -142,7 +142,7 @@
                                 {{ $conversion_360days }} </span>
                                 %
                             </div>
-                            <a class="title" href="#">
+                            <a class="title" href="{{ url('pipeline/list-view?status=conversionthisyear') }}">
                             Year to Date
                             </a>
                         </div>
@@ -155,7 +155,7 @@
                             <div class="visual"><i class="fa fa-bar-chart-o"></i></div>
                             <div class="details">   
                                 <div class="number">{{ $conversion_30days }}%</div>
-                                <div class="desc">This Month</div>
+                                <div class="desc"><a href="{{ url('pipeline/list-view') }}">This Month</a></div>
                             </div>
                         </div>
                     </div>
@@ -164,7 +164,7 @@
                             <div class="visual"><i class="fa fa-bar-chart-o"></i></div>
                             <div class="details">   
                                 <div class="number">{{ $conversion_90days }}%</div>
-                                <div class="desc">Last 90 Days</div>
+                                <div class="desc"><a href="{{ url('pipeline/list-view') }}">Last 90 Days</a></div>
                             </div>
                         </div>
                     </div>
@@ -173,7 +173,7 @@
                             <div class="visual"><i class="fa fa-bar-chart-o"></i></div>
                             <div class="details">   
                                 <div class="number">{{ $conversion_360days }}%</div>
-                                <div class="desc">Year to Date</div>
+                                <div class="desc"><a href="{{ url('pipeline/list-view') }}">Year to Date</a></div>
                             </div>
                         </div>
                     </div>
@@ -203,7 +203,7 @@
                                 </h1>
                             </div>
                             <div class="panel-body text-center">                        
-                                <strong>This Month</strong>
+                                <strong><a href="{{ url('pipeline/list-view?status=wonthismonth') }}">This Month</a></strong>
                             </div>
                         </div>
 
@@ -217,7 +217,7 @@
                                 </h1>
                             </div>
                             <div class="panel-body text-center">                        
-                                <strong>Last 90 Days</strong>
+                                <strong><a href="{{ url('pipeline/list-view?won90days') }}">Last 90 Days</a></strong>
                             </div>
                         </div>
 
@@ -231,7 +231,7 @@
                                 </h1>
                             </div>
                             <div class="panel-body text-center">                        
-                                <strong>Year to Date</strong>
+                                <strong><a href="{{ url('pipeline/list-view?wonthisyear') }}">Year to Date</a></strong>
                             </div>
                         </div>
 
