@@ -61,7 +61,9 @@ class CustomerTasksEntity extends \Eloquent{
 
 		//$belongsTo = \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
 		$belongsTo = \Auth::id();
-		$tasks	= \CustomerTasks\CustomerTasks::belongsToUser($belongsTo)->status(1)
+		$belongsToArray = isset($otherFilters['user']) ? explode(',', $otherFilters['user']) : array($belongsTo);
+		//$tasks	= \CustomerTasks\CustomerTasks::belongsToUser($belongsTo)->status(1)
+		$tasks	= \CustomerTasks\CustomerTasks::belongsToUserIn($belongsToArray)->status(1)
 		->startDate($start_date)
 		->endDate($end_date)
 		->with('label')

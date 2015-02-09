@@ -52,14 +52,24 @@
 							);
 						}}
 
-						<label for="client" class="control-label">Client: </label>
+						<label for="client" class="control-label hidden">Client: </label>
 						{{ 
 							Form::select(
 								'client[]', 
 								array('' => 'All Clients') + $client, 
 								\Input::get('client'),
-								array('class' => 'form-control')
+								array('class' => 'form-control hidden')
 							) 
+						}}
+
+						<label for="user" class="control-label">Tasks for: </label>
+						{{
+							Form::select(
+								'user[]',
+								$user_list,
+								\Input::get('user'),
+								array('class' => 'form-control')
+							)
 						}}
   
 					    <button type="submit" class="btn blue">Apply Filters</button>

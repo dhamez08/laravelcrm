@@ -32,7 +32,8 @@ var TaskCalendar = function () {
 						url: $url + '/calendar/task-calendar',
                         data: {
                             action: $('select[name="action[]"]').val(),
-                            client: $('select[name="client[]"]').val()
+                            client: $('select[name="client[]"]').val(),
+                            user: $('select[name="user[]"]').val()
                         },
 						error: function() {
 							//alert('there was an error while fetching events!');

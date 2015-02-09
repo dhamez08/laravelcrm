@@ -21,6 +21,10 @@ class CustomerTasks extends \Eloquent{
 		return $query->where('belongs_to', '=', $belongsto);
 	}
 
+	public function scopeBelongsToUserIn($query, $belongsToArray) {
+		return $query->whereIn('belongs_to', $belongsToArray);
+	}
+
 	public function scopeStatus($query, $status){
 		return $query->where('status', '=', $status);
 	}
