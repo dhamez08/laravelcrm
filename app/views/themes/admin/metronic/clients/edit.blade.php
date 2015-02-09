@@ -85,7 +85,7 @@
 			</div>
 			<div class="row">
 				<div class="col-md-6">
-					<h3 class="form-section">Telephone Number</h3>
+					<h3 class="form-section">Telephone Number <button class="btn green btn-xs add-phone" type="button">Add</button></h3>
 					@if( isset($telephone) )
 						<?php $telephoneIdx = 0; ?>
 						@foreach( $telephone->get() as $val )
@@ -96,7 +96,7 @@
 					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.contactInput' )
 				</div>
 				<div class="col-md-6">
-					<h3 class="form-section">Email</h3>
+					<h3 class="form-section">Email <button class="btn green btn-xs add-email" type="button">Add</button></h3>
 					@if( isset($email) )
 						<?php $emailIdx = 0; ?>
 						@foreach( $email->get() as $val )
@@ -110,7 +110,7 @@
 			<div id="website-customfields-container">
 				<div class="row">
 					<div class="col-md-6">
-						<h3 class="form-section">Website</h3>
+						<h3 class="form-section">Website <button class="btn green btn-xs add-website" type="button">Add</button></h3>
 						@if( isset($url) )
 							<?php $urlIdx = 0; ?>
 							@foreach( $url->get() as $val )
@@ -171,7 +171,7 @@
 	@section('footer-custom-js')
 	<!-- add here -->
 	@parent
-	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+	{{-- <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script> --}}
 	<script type="text/javascript" src="{{$asset_path}}/pages/scripts/client.js"></script>
 		<script>
 			jQuery(document).ready(function() {
@@ -179,18 +179,23 @@
 				    autoclose:true,
 				    format: 'dd/mm/yyyy'
 				});
+
+				//Metronic.init();
+				//Index.init();
+
 				addPhone.init();
 				addEmail.init();
 				addPartner.init();
 				addChildren.init();
 				addressLookup.init();
 				addWebsite.init();
+
 				addRowChildren.init();
 				deletePhone.init();
 				deleteURL.init();
 				deleteEmail.init();
 				deletePerson.init();
-				addPartner.init();
+				//addPartner.init();
 			});
 		</script>
 	@stop
