@@ -86,50 +86,18 @@
 			 	<div id="personalinformation" class="collapse-profile-menu hide">
 			 		<div class="row">
 					 	<div class="col-md-12">
-					 		<div class="form-body client-detail">
+					 		<div class="form-body client-detail" style="margin-top:10px">
 					 			<div>
-									<span class="label label-info" style="font-size:11px;">{{$currentClient->type}} Address</span>
+									<span class="label label-info" style="font-size:11px; margin-left:15px">{{$currentClient->type}}</span>
 									{{$currentClient->displayHtmlAddress()}}
-
-									<p class="form-control-static text-center">
-										<a href="{{$currentClient->displayGoogleMapLink()}}" target="_blank">show on map</a>
-										|
-										<a href="{{$currentClient->displayGoogleMapDirectionLink()}}" target="_blank">get directions</a>
-									</p>
 								</div>
 
-								<hr style="padding:5px;" />
+								<div style="padding:5px;" /></div>
 
 					 			<div class="form-group">
-									@if( $email->count() > 0 )
-										<?php $em = array(); ?>
-										@foreach($email->get() as $mail)
-											<?php
-												$m = explode('@',$mail->email);
-												$username = trim($m[0]);
-												$domain = trim($m[1]);
-											?>
-											<p>
-												<span class="label label-info" style="font-size:11px;">
-
-													@if(strtolower($mail->type) == "home")
-														<i class="fa fa-home"></i>
-													@elseif(strtolower($mail->type) == "work")
-														<i class="fa fa-briefcase"></i>
-													@endif
-
-													<span style="color:#0000FF; font-weight: bolder;">{{$domain}}</span>
-												</span><br />
-												<a href="mailto:{{$mail->email}}?bcc=dropbox.13554456@123crm.co.uk&subject= **enter your subject here** [REF:{{$customer->ref}}]" target="_blank" title="{{$mail->email}}" style="margin:10px;">
-														{{$username}}
-												</a>
-											</p>
-										@endforeach
-									@endif
 									@if( $telephone->count() > 0 )
 										@foreach($telephone->get() as $phone)
-											<p>
-												<span class="label label-info" style="font-size:11px;">{{$phone->type}}</span>
+											<p style="margin-left:15px">
 												@if( $phone->type == 'Mobile' )
 													<a
 														class="openModal"
@@ -157,9 +125,42 @@
 
 													{{$phone->number}}
 												@endif
+												<span class="label label-info" style="font-size:11px;">{{$phone->type}}</span>
 											</p>
 										@endforeach
 									@endif
+
+									@if( $email->count() > 0 )
+										<?php $em = array(); ?>
+										@foreach($email->get() as $mail)
+											<?php
+												$m = explode('@',$mail->email);
+												$username = trim($m[0]);
+												$domain = trim($m[1]);
+											?>
+											<p style="margin-left:15px">
+												<a href="mailto:{{$mail->email}}?bcc=dropbox.13554456@123crm.co.uk&subject= **enter your subject here** [REF:{{$customer->ref}}]" target="_blank" title="{{$mail->email}}">
+														{{$mail->email}}
+												</a> 
+												<span class="label label-info" style="font-size:11px;">
+
+													@if(strtolower($mail->type) == "home")
+														{{-- <i class="fa fa-home"></i> --}} Home
+													@elseif(strtolower($mail->type) == "work")
+														{{-- <i class="fa fa-briefcase"></i> --}} Work
+													@endif
+													{{-- <span style="color:#0000FF; font-weight: bolder;">{{$domain}}</span> --}}
+												</span>												
+											</p>
+										@endforeach
+									@endif
+
+									<p class="form-control-static text-center">
+										<a href="{{$currentClient->displayGoogleMapLink()}}" target="_blank">show on map</a>
+										|
+										<a href="{{$currentClient->displayGoogleMapDirectionLink()}}" target="_blank">get directions</a>
+									</p>									
+
 									<hr style="padding:5px;" />
 									<div class="col-md-12">
 										<p class="form-control-static">Date of Birth: <strong>{{$currentClient->displayDob('d/m/Y')}}</strong></p>
