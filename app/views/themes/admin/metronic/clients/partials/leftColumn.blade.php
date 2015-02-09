@@ -206,7 +206,7 @@
 																'Clients\ClientsController@getConfirmPersonDelete',
 																array(
 																	'id'=>$family->id,
-																	'client'=>$currentClient->id,
+																	'client'=>$currentClient->customer_id,
 																	'hash'=>($family->id . csrf_token())
 																)
 															)
