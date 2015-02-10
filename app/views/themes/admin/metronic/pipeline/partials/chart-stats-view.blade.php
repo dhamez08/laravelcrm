@@ -24,11 +24,11 @@
                         <form class="form-inline" method="get">
                             <label for="user" class="control-label"><strong>Pipeline for user:</strong></label>
                             <select id="user" name="user" class="form-control" onchange="this.form.submit()">
-                                <option value="" @if(\Input::get('user')=='' || !\Input::get('user')) selected="selected" @endif>Myself Only</option>
-                                <option value="all" @if(\Input::get('user')=='all') selected="selected" @endif>All Users</option>
+                                <option value="" @if($user=='' || !$user) selected="selected" @endif>Myself Only</option>
+                                <option value="all" @if($user=='all') selected="selected" @endif>All Users</option>
                             @if(count($group)>0)
                                 @foreach($group as $g)
-                                    <option value="{{ $g->user_id }}" @if($g->user_id==\Input::get('user')) selected="selected" @endif>{{ $g->first_name . ' ' . $g->last_name . ' (' . $g->username . ')' }}</option>
+                                    <option value="{{ $g->user_id }}" @if($g->user_id==$user) selected="selected" @endif>{{ $g->first_name . ' ' . $g->last_name . ' (' . $g->username . ')' }}</option>
                                 @endforeach
                             @endif
                             </select>

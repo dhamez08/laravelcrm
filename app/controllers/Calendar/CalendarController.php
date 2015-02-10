@@ -60,9 +60,9 @@ class CalendarController extends \BaseController {
 
 		// Filters
 		$otherFilters = array();
-		if(\Input::get('action'))	$otherFilters['action'] = \Input::get('action');
-		if(\Input::get('client'))	$otherFilters['client']	= \Input::get('client');
-		if(\Input::get('user'))		$otherFilters['user']	= \Input::get('user');
+		if(\Input::get('action.0'))	$otherFilters['action'] = \Input::get('action.0');
+		if(\Input::get('client.0'))	$otherFilters['client']	= \Input::get('client.0');
+		if(\Input::get('user.0'))	$otherFilters['user']	= \Input::get('user.0');
 
 		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(null, \Auth::id(), $otherFilters);
 		$data['taskLabel']			= \TaskLabel\TaskLabelEntity::get_instance()->getAllTaskLabel()->lists('action_name','id');

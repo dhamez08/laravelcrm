@@ -115,24 +115,40 @@ class CustomerTasksEntity extends \Eloquent{
 		}
 		if( !is_null($customerId) ){
 			$tasks	= \CustomerTasks\CustomerTasks::status(1)
-			->belongsToUser($belongsToUser)
+			//->belongsToUser($belongsToUser)
 			->customerID($customerId)
 			->with('label')
 			->with('client')
 			->orderBy('created_at','desc');
 		}else{
 			$tasks	= \CustomerTasks\CustomerTasks::status(1)
-			->belongsToUser($belongsToUser)
+			//->belongsToUser($belongsToUser)
 			->with('label')
 			->with('client')
 			->orderBy('created_at','desc');
 		}
 
 		// Filters
-		if(isset($otherFilters['action']))
-			$tasks->whereIn('task_setting', $otherFilters['action']);
-		if(isset($otherFilters['client']))
-			$tasks->whereIn('customer_id', $otherFilters['client']);
+		if(!empty($otherFilters['action']))
+			$tasks->whereIn('task_setting', array($otherFilters['action']));
+		if(!empty($otherFilters['client']))
+			$tasks->whereIn('customer_id', array($otherFilters['client']));
+		if(!empty($otherFilters['user'])) {
+			$userGroupId = \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+			$subUsers = \User\UserEntity::get_instance()->getSubscribeUsersList($userGroupId)->get();
+
+			if(isset($otherFilters['user']) && $otherFilters['user'] == 'all') {
+				$allList = array();
+				$allList[] = \Auth::id();
+				foreach ($subUsers as $su) {
+					$allList[] = $su->user_id;
+				}
+				$otherFilters['user'] = implode(',', $allList);
+			}
+			$tasks->belongsToUserIn(explode(',', $otherFilters['user']));			
+		} else {
+			$tasks->belongsToUser($belongsToUser);
+		}
 
 		$arrayData = array();
 		$due_all = 0;

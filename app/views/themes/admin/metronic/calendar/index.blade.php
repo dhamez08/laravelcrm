@@ -25,11 +25,6 @@
 	@stop
 	@section('innerpage-content')
 
-				{{ Form::open(array('method' => 'GET', 'role' => 'form')) }}
-				
-				
-				{{ Form::close() }}
-
 		<div class="portlet box {{{$dashboard_class or 'blue'}}} calendar">
 			<div class="portlet-title">
 				<div class="caption">					
@@ -42,6 +37,8 @@
 			<div class="portlet-body {{{$portlet_body_class or ''}}}">
 
 					<form class="form-inline" method="get" id="status_sort" style="margin-bottom:10px">
+						<a href="{{url('clients/create-client-task?redirect=task')}}" data-target=".createTask" data-toggle="modal" class="btn btn-default btn-sm openModal">
+						<i class="fa fa-plus"></i> Create Task</a>					    
 					    <label for="action" class="control-label">Action: </label>
 						{{
 							Form::select(
@@ -67,7 +64,7 @@
 							Form::select(
 								'user[]',
 								$user_list,
-								\Input::get('user'),
+								\Input::get('user', 'all'),
 								array('class' => 'form-control')
 							)
 						}}

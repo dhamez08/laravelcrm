@@ -68,7 +68,8 @@ class PipelineController extends \BaseController {
 		$data['portlet_title']		= 'Chart / Sales View';
 		$data 						= array_merge($data,$this->getSetupThemes());
 
-		$user = \Input::get('user');
+		$user = \Input::get('user', 'all');
+		$data['user'] = $user;
 		$role = \Session::get('role');
 
 		// set vars for the different things
@@ -275,7 +276,8 @@ class PipelineController extends \BaseController {
 
 		$status = \Input::get('status');
 		$tag = \Input::get('tag');
-		$user = \Input::get("user");
+		$user = \Input::get("user", "all");
+		$data['userInput'] = $user;
 		$role = \Session::get("role");
 
 		if ($role==1) {
