@@ -17,6 +17,11 @@ var ComponentsDropdowns = function () {
             allowClear: true
         });
 
+        $('#select2_user_forward').select2({
+            placeholder: "Select a Customer",
+            allowClear: true
+        });        
+
         $("#select2_sample3").select2({
             placeholder: "Select...",
             allowClear: true,

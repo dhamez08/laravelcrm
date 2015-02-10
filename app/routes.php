@@ -38,6 +38,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::controller( 'email', 'Email\EmailController');
 	Route::controller( 'messages', 'Messages\MessagesController' );
 	Route::get( 'client-messages/{client_id}', 'Messages\MessagesController@getIndex' );
+	Route::post( 'client-messages/{client_id}', 'Messages\MessagesController@postView' );
 	Route::controller( 'sms', 'SMS\SMSController' );
 	Route::get( 'settings' , 'Settings\SettingsController@getIndex' );
 	Route::controller('client-tag', 'ClientTags\ClientTagsController');

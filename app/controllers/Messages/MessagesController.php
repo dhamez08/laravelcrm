@@ -394,7 +394,10 @@ class MessagesController extends \BaseController {
 
 			$data = array_merge($data, $this->getSetupThemes(), $dataMessages);
 			return \View::make($data['view_path'] . '.messages.partials.messageWidgetView', $data);
-
+		} elseif (\Input::get('show') == "modal_complete") {
+			$data = array_merge($data, $this->getSetupThemes(), $dataMessages);
+			$data['modal_complete'] = true;
+			return \View::make($data['view_path'] . '.messages.partials.messageWidgetView', $data);			
 		} else {
 
 			$data['center_view'] = 'inbox_view';
