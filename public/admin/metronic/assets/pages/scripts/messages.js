@@ -279,12 +279,12 @@ var Messages = function () {
             });
 
             //handle compose/reply cc input toggle
-            $('.inbox-content').on('click', '.mail-to .inbox-cc', function () {
+            $('.inbox-compose').on('click', '.mail-to .inbox-cc', function () {
                 handleCCInput();
             });
 
             //handle compose/reply bcc input toggle
-            $('.inbox-content').on('click', '.mail-to .inbox-bcc', function () {
+            $('.inbox-compose').on('click', '.mail-to .inbox-bcc', function () {
                 handleBCCInput();
             });
 

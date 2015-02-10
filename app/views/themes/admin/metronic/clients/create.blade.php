@@ -82,11 +82,11 @@
 			<div id="telephone-email-container">
 				<div class="row">
 					<div class="col-md-6">
-						<h3 class="form-section">Telephone Number</h3>
+						<h3 class="form-section">Telephone Number <button class="btn green btn-xs add-phone" type="button">Add</button></h3>
 						@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.contactInput' )
 					</div>
 					<div class="col-md-6">
-						<h3 class="form-section">Email</h3>
+						<h3 class="form-section">Email <button class="btn green btn-xs add-email" type="button">Add</button></h3>
 						@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.emailInput' )
 					</div>
 				</div>
@@ -94,7 +94,7 @@
 			<div id="website-customfields-container">
 				<div class="row">
 					<div class="col-md-6">
-						<h3 class="form-section">Website</h3>
+						<h3 class="form-section">Website <button class="btn green btn-xs add-website" type="button">Add</button></h3>
 						@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.urlInput' )
 					</div>
 					<div class="col-md-6">

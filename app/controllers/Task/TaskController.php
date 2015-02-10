@@ -60,8 +60,10 @@ class TaskController extends \BaseController {
 
 		// Filters
 		$otherFilters = array();
-		if(\Input::get('action'))	$otherFilters['action'] = \Input::get('action');
-		if(\Input::get('client'))	$otherFilters['client']	= \Input::get('client');
+		if(\Input::get('action.0'))	$otherFilters['action'] = \Input::get('action.0');
+		if(\Input::get('client.0'))	$otherFilters['client']	= \Input::get('client.0');
+		$otherFilters['user'] = 'all';
+		if(\Input::get('user.0'))	$otherFilters['user']	= \Input::get('user.0');
 
 		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(null, \Auth::id(), $otherFilters);
 		$data['taskLabel']			= \TaskLabel\TaskLabelEntity::get_instance()->getAllTaskLabel()->lists('action_name','id');
@@ -70,7 +72,18 @@ class TaskController extends \BaseController {
 		$data['client'] = array();
 		foreach ($clients as $client) {
 			$data['client'][$client->id] = $client->first_name . ' ' . $client->last_name;
-		}		
+		}	
+
+		$data['user_list'] = array(
+			\Auth::id() => 'Myself Only',
+			'all'		=> 'All',
+		);
+		$sub_users = \CustomerOpportunities\CustomerOpportunitiesEntity::get_instance()->getGroupUsersList();
+		if(count($sub_users) > 0) {
+			foreach ($sub_users as $su) {
+				$data['user_list'][$su->user_id] = $su->first_name . ' ' . $su->last_name;
+			}
+		}			
 		
 		$data['redirectURL']		= url('task');
 		$data 						= array_merge($data,$dashboard_data);

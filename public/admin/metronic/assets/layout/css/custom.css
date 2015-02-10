@@ -165,3 +165,39 @@ ul.client-social-icons {
 .panel-orange > .panel-body  {
 	padding: 5px;
 }
+
+.panel-blue-madison {
+	border-color: #578ebe;
+}
+.panel-blue-madison > .panel-heading {
+	color: #8a6d3b;
+	background-color: #578ebe;
+	border-color: #578ebe;
+}
+.panel-blue-madison > .panel-body {
+	padding: 5px;
+}
+
+.panel-purple-plum {
+	border-color: #8775a7;
+}
+.panel-purple-plum > .panel-heading {
+	color: #8a6d3b;
+	background-color: #8775a7;
+	border-color: #8775a7;
+}
+.panel-purple-plum > .panel-body {
+	padding: 5px;
+}
+
+.panel-red-intense {
+	border-color: #e35b5a;
+}
+.panel-red-intense > .panel-heading {
+	color: #8a6d3b;
+	background-color: #e35b5a;
+	border-color: #e35b5a;
+}
+.panel-red-intense > .panel-body {
+	padding: 5px;
+}

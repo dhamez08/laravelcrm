@@ -30,9 +30,14 @@ var TaskCalendar = function () {
                 eventSources:[
 					{
 						url: $url + '/calendar/task-calendar',
-							error: function() {
-								//alert('there was an error while fetching events!');
-							}
+                        data: {
+                            action: $('select[name="action[]"]').val(),
+                            client: $('select[name="client[]"]').val(),
+                            user: $('select[name="user[]"]').val()
+                        },
+						error: function() {
+							//alert('there was an error while fetching events!');
+						}
                     },
                     {
 						//url:$gcal_url,

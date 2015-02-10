@@ -58,8 +58,7 @@
 						<i class="fa fa-trash-o"></i> Move to Trash </a>
 					</li>
 					<li>
-					</ul>
-				</div>
+				</ul>
 			</div>
 		</div>
 		<div class="inbox-view">
@@ -90,7 +89,7 @@
 				{{ Form::token() }}
 					<div class="inbox-form-group mail-to">
 						<div class="controls controls-to">
-							<select id="select2_user" name="to[]" class="form-control select2" multiple>
+							<select id="select2_user_forward" name="to[]" class="form-control select2" multiple>
 							@foreach($customers->get() as $customer)
 								<option value="{{ $customer->id }}">{{ $customer->first_name . " " . $customer->last_name }}</option>
 							@endforeach
@@ -105,3 +104,5 @@
 				</div>
 			</div>
 		</div>
+	</div>
+</div>

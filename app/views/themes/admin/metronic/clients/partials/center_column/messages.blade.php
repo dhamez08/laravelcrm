@@ -23,7 +23,7 @@
 								{{ $message->sender }}
 							</td>
 							<td>{{ $message->to }}</td>
-							<td><a href="{{ url('messages/view?message_id='.$message->id) }}">{{ $message->subject }}</a></td>
+							<td><a href="{{ url('messages/view?show=modal_complete&message_id='.$message->id) }}" data-toggle="modal" data-target=".ajaxModalStacked">{{ $message->subject }}</a></td>
 							<td>
 								@if($message->direction=='1')
 									<span class="label label-sm label-success label-mini">Sent</span>
@@ -33,7 +33,7 @@
 								 on {{ date("d/m/y H:i",strtotime($message->added_date)) }}
 							</td>
 							<td>
-								<a href="{{ url('messages/view?message_id='.$message->id) }}" class="btn default btn-xs green-stripe">View</a>
+								<a href="{{ url('messages/view?show=modal_complete&message_id='.$message->id) }}" data-toggle="modal" data-target=".ajaxModalStacked" class="btn default btn-xs green-stripe">View</a>
 								<a href="{{ url('messages/delete/'.$message->id.'?back=yes') }}" class="btn default btn-xs red-stripe">Delete</a>
 							</td>
 						</tr>

@@ -21,6 +21,10 @@ class CustomerTasks extends \Eloquent{
 		return $query->where('belongs_to', '=', $belongsto);
 	}
 
+	public function scopeBelongsToUserIn($query, $belongsToArray) {
+		return $query->whereIn('belongs_to', $belongsToArray);
+	}
+
 	public function scopeStatus($query, $status){
 		return $query->where('status', '=', $status);
 	}
@@ -35,6 +39,10 @@ class CustomerTasks extends \Eloquent{
 
 	public function scopeEndDate($query, $endDate){
 		return $query->where('date', '<=', $endDate);
+	}
+
+	public function scopeTaskSetting($query, $task_setting) {
+		return $query->where('task_setting', '=', $task_setting);
 	}
 
 	public function label(){

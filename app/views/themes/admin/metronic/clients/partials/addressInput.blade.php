@@ -1,4 +1,4 @@
-<div class="form-group">
+<div class="form-group hidden">
 	<label class="control-label col-md-3">House Number</label>
 	<div class="col-md-9">
 		{{
@@ -8,21 +8,6 @@
 				array(
 					'class'=>'form-control input-sm',
 					'id'=>'address_line_2'
-				)
-			);
-		}}
-	</div>
-</div>
-<div class="form-group">
-	<label class="control-label col-md-3">Post Code</label>
-	<div class="col-md-9">
-		{{
-			Form::text(
-				'postcode',
-				null,
-				array(
-					'class'=>'form-control input-sm',
-					'id'=>'postcode'
 				)
 			);
 		}}
@@ -71,6 +56,21 @@
 				array(
 					'class'=>'form-control input-sm',
 					'id'=>'county'
+				)
+			);
+		}}
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-md-3">Post Code</label>
+	<div class="col-md-9">
+		{{
+			Form::text(
+				'postcode',
+				null,
+				array(
+					'class'=>'form-control input-sm',
+					'id'=>'postcode'
 				)
 			);
 		}}

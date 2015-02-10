@@ -15,7 +15,7 @@
 	@parent
 		@section('portlet-content')
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-12">
 					<form class="form-inline" method="get" id="status_sort">
 					    <label for="status" class="control-label">Filter by status or milestone:</label>
 					    <select id="status" name="status" class="form-control" onchange="this.form.submit()">
@@ -52,16 +52,16 @@
 					    <label for="user" class="control-label">User:</label>
 					    <select id="user" name="user" class="form-control" onchange="this.form.submit()">
 					    <option value="">Myself Only</option>
-						<option value="all" <?php if (\Input::get("user")=="all") { echo 'selected="selected"'; } ?>>All Users</option>
+						<option value="all" <?php if ($userInput=="all") { echo 'selected="selected"'; } ?>>All Users</option>
 					    @if(count($group)>0)
 					        @foreach($group as $user)
-					        	<option value="{{ $user->user_id }}" @if($user->user_id==\Input::get('user')) selected="selected" @endif>{{ $user->first_name . ' ' . $user->last_name . ' (' . $user->username . ')' }}</option>
+					        	<option value="{{ $user->user_id }}" @if($user->user_id==$userInput) selected="selected" @endif>{{ $user->first_name . ' ' . $user->last_name . ' (' . $user->username . ')' }}</option>
 					        @endforeach
 					    @endif
 					    </select>
 					    @endif  
 					    <button type="submit" class="btn blue">Apply</button>
-					    </form>
+					</form>
 				</div>
 			</div>
 			<div class="row" style="margin-top:20px">

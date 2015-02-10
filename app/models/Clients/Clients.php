@@ -77,6 +77,14 @@ class Clients extends \Eloquent{
 		return $query->where('belongs_user','=',$belongsTo);
 	}
 
+	public function scopeRelationshipIn($query, $relationshipArray) {
+		return $query->whereIn('relationship', $relationshipArray);
+	}
+
+	public function scopeRelationshipNotIn($query, $relationshipArray) {
+		return $query->whereNotIn('relationship', $relationshipArray);
+	}
+
 	/**
 	 * Person that is associated to
 	 * */

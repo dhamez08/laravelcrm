@@ -57,12 +57,57 @@ class CalendarController extends \BaseController {
 		$data['portlet_title']		= 'Calendar';
 		$data['fa_icons']			= 'calendar';
 		$data['google_calendar']	= \User\UserEntity::get_instance()->getGoogleCalendarFeedURL();
+
+		// Filters
+		$otherFilters = array();
+		if(\Input::get('action.0'))	$otherFilters['action'] = \Input::get('action.0');
+		if(\Input::get('client.0'))	$otherFilters['client']	= \Input::get('client.0');
+		if(\Input::get('user.0'))	$otherFilters['user']	= \Input::get('user.0');
+
+		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(null, \Auth::id(), $otherFilters);
+		$data['taskLabel']			= \TaskLabel\TaskLabelEntity::get_instance()->getAllTaskLabel()->lists('action_name','id');
+
+		$clients = \Clients\Clients::customerBelongsTo(\Auth::id())->get();
+		$data['client'] = array();
+		foreach ($clients as $client) {
+			$data['client'][$client->id] = $client->first_name . ' ' . $client->last_name;
+		}
+
+		$data['user_list'] = array(
+			\Auth::id() => 'Myself Only',
+			'all'		=> 'All',
+		);
+		$sub_users = \CustomerOpportunities\CustomerOpportunitiesEntity::get_instance()->getGroupUsersList();
+		if(count($sub_users) > 0) {
+			foreach ($sub_users as $su) {
+				$data['user_list'][$su->user_id] = $su->first_name . ' ' . $su->last_name;
+			}
+		}
+
 		$data 						= array_merge($data,$dashboard_data);
 		return \View::make( $data['view_path'] . '.calendar.index', $data );
 	}
 
 	public function getTaskCalendar(){
-		return \CustomerTasks\CustomerTasksEntity::get_instance()->jsonTaskInCalendar(\Input::get('start'), \Input::get('end'));
+
+		$otherFilters = array();
+		if(\Input::get('action')) $otherFilters['action'] = \Input::get('action');
+		if(\Input::get('client')) $otherFilters['client'] = \Input::get('client');
+		if(\Input::get('user')) $otherFilters['user'] = \Input::get('user');
+
+		$userGroupId = \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+		$subUsers = \User\UserEntity::get_instance()->getSubscribeUsersList($userGroupId)->get();
+
+		if(isset($otherFilters['user']) && $otherFilters['user'] == 'all') {
+			$allList = array();
+			$allList[] = \Auth::id();
+			foreach ($subUsers as $su) {
+				$allList[] = $su->user_id;
+			}
+			$otherFilters['user'] = implode(',', $allList);
+		}
+
+		return \CustomerTasks\CustomerTasksEntity::get_instance()->jsonTaskInCalendar(\Input::get('start'), \Input::get('end'), $otherFilters);
 	}
 
 	public function getEditTask($taskId, $customerId, $redirect = null){

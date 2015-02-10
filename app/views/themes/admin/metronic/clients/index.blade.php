@@ -86,7 +86,7 @@
 														<div class="caption caption-mini">
 															<i class="fa fa-cogs"></i>Advanced Filters
 														</div>
-														<div class="tools">
+														<div class="tools" style="float:left">
 															<a href="javascript:;" class="expand">
 															</a>
 														</div>
@@ -129,7 +129,7 @@
 										@if( is_null($tag_id) )
 											<tr>
 												<td style="width:1%">
-													<img src="{{ asset('public/img/profile_images/summary_person.png') }}" style="width:20px">
+													<img src="{{ isset($customers['profile_image']->image) ? $customers['profile_image']->image : url('public/img/profile_images/profile.jpg') }}" style="width:35px">
 												</td>
 												<td>
 													<div>
