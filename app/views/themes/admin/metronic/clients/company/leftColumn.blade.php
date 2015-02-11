@@ -35,7 +35,7 @@
 						@if( $email->count() > 0 )
 							@foreach($email->get() as $mail)
 								<p>
-									<a href="mailto:{{$mail->email}}?bcc=dropbox.13554456@123crm.co.uk&subject= **enter your subject here** [REF:{{$customer->ref}}]" target="_blank">
+									<a href="mailto:{{$mail->email}}?bcc=dropbox.13554456@zeromyexcess.co.uk&subject= **enter your subject here** [REF:{{$customer->ref}}]" target="_blank">
 										@if( strlen($mail->email) > 15 )
 											{{substr($mail->email,0,15)}}...
 										@else
