@@ -50,6 +50,7 @@ $(function(){
 
     $('body').on('click','.editable',function(event){
         event.stopPropagation();
+
         selected_element = $(this);
 
         $('#sections').collapse('hide');
@@ -62,7 +63,49 @@ $(function(){
             $('#font-size-slider').val(text_size);
 
         } else if(selected_element.hasClass('editable-photo')){
-            var image_src = selected_element.attr('src');
+            var options = new Object();
+            var body = $('body');
+
+            var visibility_icon = $('<i>').addClass('fa popover-icon hide-image');
+            parseInt(selected_element.css('opacity')) ? visibility_icon.addClass('fa-eye-slash') : visibility_icon.addClass('fa-eye');
+
+            var url_input = $('<div>').addClass('url-input')
+                .append($('<input>')
+                    .addClass('url')
+                    .attr('type','text')
+                    .attr('placeholder','Your url')
+                );
+
+            var tooltip = $('<div>').addClass('image-options')
+                .append('Change photo ')
+                .append($('<i>')
+                    .addClass('fa fa-chain change-url popover-icon'))
+                .append(visibility_icon);
+
+            options.html = true;
+            options.placement = 'bottom';
+            options.container = 'body';
+            options.content = $('<div>')
+                .append(tooltip)
+                .append(url_input);
+
+            selected_element.popover(options);
+            selected_element.popover('show');
+
+            body.on('click','.hide-image.fa-eye-slash',function(){
+                selected_element.css('opacity',0);
+                $(this).removeClass('fa-eye-slash').addClass('fa-eye');
+            });
+
+            body.on('click','.hide-image.fa-eye',function(){
+                selected_element.css('opacity',1);
+                $(this).removeClass('fa-eye').addClass('fa-eye-slash');
+            });
+
+            body.on('click','.change-url.fa-chain',function(){
+                $('.url-input').show();
+                $('.image-options').hide();
+            });
         }
     });
 
@@ -73,7 +116,14 @@ $(function(){
         }
     });
 
-
+    $('body').on('click', function (e) {
+        if ($(e.target).data('toggle') !== 'popover'
+            && $(e.target).parents('.popover.in').length === 0) {
+            if(selected_element && selected_element.popover()){
+                selected_element.popover('destroy');
+            }
+        }
+    });
 
     $('#template-canvas').sortable({cancel:'.editable'});
 
@@ -100,7 +150,7 @@ $(function(){
                                                 '</tr>' +
                                                 '<tr>' +
                                                     '<td align="center" style="line-height: 0px;">' +
-                                                        '<img width="260" height="44" alt="logo" src="http://www.stampready.net/dashboard/zip_uploads/o9H4JQxK1etzXm3iCunfvVq7/Koble_container/images/logo.png" style="display:block; line-height:0px; font-size:0px; border:0px;" mc:edit="header logo">' +
+                                                        '<img width="260" height="44" alt="logo" src="http://www.stampready.net/dashboard/zip_uploads/o9H4JQxK1etzXm3iCunfvVq7/Koble_container/images/logo.png" style="display:block; line-height:0px; font-size:0px; border:0px;" mc:edit="header logo" class="editable editable-photo">' +
                                                         '</td>' +
                                                     '</tr>' +
                                                     '<tr>' +

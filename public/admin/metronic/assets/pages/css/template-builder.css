@@ -79,3 +79,34 @@
 #template-creator .panel-title a:focus {
     text-decoration: none;
 }
+
+.popover {
+    background-color: transparent;
+}
+
+.popover-content {
+    background-color: #1B2024;
+    border-radius: 4px !important;
+    color: #FFFFFF;
+    padding: 15px;
+}
+
+.popover.bottom > .arrow:after {
+    border-bottom-color: #1B2024;
+}
+
+.popover-icon {
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 16px !important;
+    cursor: pointer;
+}
+
+.url{
+    background-color: #1B2024;
+    border-width: 0;
+}
+
+.url-input {
+    display: none;
+}
