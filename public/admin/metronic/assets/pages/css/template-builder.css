@@ -110,3 +110,7 @@
 .url-input {
     display: none;
 }
+
+.change-photo {
+    cursor: pointer;
+}

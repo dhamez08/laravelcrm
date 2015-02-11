@@ -69,15 +69,22 @@ $(function(){
             var visibility_icon = $('<i>').addClass('fa popover-icon hide-image');
             parseInt(selected_element.css('opacity')) ? visibility_icon.addClass('fa-eye-slash') : visibility_icon.addClass('fa-eye');
 
-            var url_input = $('<div>').addClass('url-input')
+            var url_input = $('<div>')
+                .addClass('url-input')
                 .append($('<input>')
+                    .attr('id','image-url')
                     .addClass('url')
                     .attr('type','text')
-                    .attr('placeholder','Your url')
-                );
+                    .attr('placeholder','Your url'))
+                .append($('<i>')
+                    .addClass('fa fa-times popover-icon close-url'));
 
-            var tooltip = $('<div>').addClass('image-options')
-                .append('Change photo ')
+            var tooltip = $('<div>')
+                .addClass('image-options')
+                .append($('<span>')
+                    .addClass('change-photo').text('Change photo '))
+                .append($('<input>')
+                    .attr('type','file').attr('id','upload-photo').css('display','none'))
                 .append($('<i>')
                     .addClass('fa fa-chain change-url popover-icon'))
                 .append(visibility_icon);
@@ -106,6 +113,31 @@ $(function(){
                 $('.url-input').show();
                 $('.image-options').hide();
             });
+
+            body.on('click','.close-url',function(){
+                $('#image-url').val('');
+                $('.url-input').hide();
+                $('.image-options').show();
+            });
+
+            body.on('keypress','#image-url',function(e){
+                if(e.keyCode == 13){
+                    var hyperlink = $('<a>')
+                        .attr('href',$(this).val())
+                        .attr('target','_blank');
+
+                    selected_element.wrap(hyperlink);
+                    selected_element.popover('destroy');
+                }
+            });
+
+            body.on('click','.change-photo',function(){
+                $('#upload-photo').click();
+            })
+
+            body.on('change','#upload-photo',function(){
+                console.log('test');
+            })
         }
     });
 
