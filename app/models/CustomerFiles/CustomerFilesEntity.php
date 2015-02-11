@@ -66,6 +66,10 @@ class CustomerFilesEntity extends \Eloquent{
 		return \DB::table($this->table)->where('customer_id', $client_id)->whereNull('deleted_at')->orderBy('created_at', 'desc')->get();
 	}
 
+	public function getFilesByUser($user_id) {
+		return \DB::table($this->table)->where('user_id', $user_id)->whereNull('deleted_at')->orderBy('created_at', 'desc')->get();
+	}
+
 	public function saveFormDataFromCustomTab() {
 
 		$form = new $this;

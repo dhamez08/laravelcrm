@@ -59,7 +59,7 @@
 			<select id="client_files" name="client_files" class="form-control">
 	            <option value="">Select Files</option>
 	            <?php 
-	            $client_files = \CustomerFiles\CustomerFilesEntity::get_instance()->getFilesByClient(isset($customer) ? $customer->id:'');
+	            $client_files = \CustomerFiles\CustomerFilesEntity::get_instance()->getFilesByUser(\Auth::id());
 	            $document_libraries = \DocumentLibrary\DocumentLibraryEntity::get_instance()->documents();
 	            ?>
 	            @if(count($client_files)>0)
