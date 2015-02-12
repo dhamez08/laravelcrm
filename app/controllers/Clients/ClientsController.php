@@ -187,14 +187,37 @@ class ClientsController extends \BaseController {
 		$data['tag_id']				= \Input::has('tags') ? (\Input::get('tags') != 0 ) ? \Input::get('tags'):null:null;
 		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
 
+		$data['user_list'] = array(
+			\Auth::id() => 'Myself Only',
+			'all'		=> 'All',
+		);
+		$sub_users = \CustomerOpportunities\CustomerOpportunitiesEntity::get_instance()->getGroupUsersList();
+		if(count($sub_users) > 0) {
+			foreach ($sub_users as $su) {
+				$data['user_list'][$su->user_id] = $su->first_name . ' ' . $su->last_name;
+			}
+		}
+		$allUsers = $data['user_list'];
+		unset($allUsers['all']);
+		$allUsers = array_keys($allUsers);
+
 		$customerFilters = array();
 		if(\Input::get('age_min')) $customerFilters['min_age'] = \Input::get('age_min');
 		if(\Input::get('age_max')) $customerFilters['max_age'] = \Input::get('age_max');
 		if(\Input::get('marital_status')) $customerFilters['marital_status'] = \Input::get('marital_status');
+		if(\Input::get('user')) $customerFilters['user'] = \Input::get('user');
+
+		if(!empty($customerFilters['user'])) {
+			if($customerFilters['user'] == 'all')
+				$customerFilters['user'] = $allUsers;
+			else
+				$customerFilters['user'] = array($customerFilters['user']);
+		}
 
 		$data['array_customer']		= \Clients\ClientEntity::get_instance()->getCustomerHead($group_id, $this->get_customer_type, $customerFilters);
 		$data['tags']			 	= \ClientTag\ClientTagEntity::get_instance()->getTagsByLoggedUser();
-		$data['center_column_view'] = 'dashboard';
+		$data['center_column_view'] = 'dashboard';	
+
 		$data 						= array_merge($data,$this->getSetupThemes());
 		return \View::make( $data['view_path'] . '.clients.index', $data );
 	}
@@ -291,6 +314,7 @@ class ClientsController extends \BaseController {
 		$data 						= array_merge($data,$this->getSetupThemes());
 		$data['html_body_class'] 	= $this->data_view['html_body_class'];
 		$data['center_column_view'] = 'dashboard';
+		$data['user_list']			= array();
 
 		return \View::make( $data['view_path'] . '.clients.create', $data );
 	}

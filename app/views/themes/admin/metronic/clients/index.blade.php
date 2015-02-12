@@ -8,6 +8,9 @@
 		<link href="{{$asset_path}}/global/plugins/jquery-file-upload/blueimp-gallery/blueimp-gallery.min.css" rel="stylesheet"/>
 		<link href="{{$asset_path}}/global/plugins/jquery-file-upload/css/jquery.fileupload.css" rel="stylesheet"/>
 		<link href="{{$asset_path}}/global/plugins/jquery-file-upload/css/jquery.fileupload-ui.css" rel="stylesheet"/>
+
+		<link href="{{$asset_path}}/global/plugins/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet"/>
+		<link href="{{$asset_path}}/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css" rel="stylesheet"/>
 	@stop
 @stop
 @section('body-content')
@@ -51,34 +54,55 @@
 									array(
 										'action' => array('Clients\ClientsController@getIndex'),
 										'method' => 'GET',
-										'class' => 'form-horizontal',
+										'class' => 'form-inline',
 										'role'=>'form',
 									)
 								)}}
-										@if( isset($tags) )
-											<div class="row">
-												<div class="col-md-12">
-													<label>Tags:</label>
-													{{--
-														Form::select(
-															'tags',
-															array_merge(array('0'=>'Select All'),$tags->lists('tag','id')),
-															isset($tag_id) ? $tag_id:null
-														);
-													--}}
-													{{
-														Form::select(
-															'tags[]',
-															$tags->lists('tag','id'),
-															isset($tag_id) ? $tag_id:null,
-															array('multiple')
-														);
-													}}													
-												</div>
-											</div>
-										@endif
 
-										<div class="row">
+										<div class="form-group">
+											<label for="clientSearch">Search: </label>
+											{{
+												Form::text(
+													'search',
+													\Input::get('search', ''),
+													array(
+														'class' => 'form-control',
+														'id' => 'clientSearch',
+														'placeholder' => 'Enter name or phone number',
+														'style' => 'min-width:230px'
+													)
+												)
+											}}
+										</div>	
+
+										@if( isset($tags) )
+										<div class="form-group">
+											<label for="clientTags">Tags: </label>
+											{{
+												Form::select(
+													'tags[]',
+													$tags->lists('tag','id'),
+													isset($tag_id) ? $tag_id:null,
+													array('multiple')
+												);
+											}}											
+										</div>				
+										@endif	
+
+										<div class="form-group">
+											<label for="clientUser">User: </label>
+											{{
+												Form::select(
+													'user',
+													$user_list,
+													\Input::get('user', 'all'),
+													array('class' => 'form-control')
+												)
+
+											}}
+										</div>				
+
+										<div class="row hidden">
 											<div class="col-md-12">
 
 												<div class="portlet box blue" style="margin-top:10px; margin-bottom:10px">
@@ -106,11 +130,11 @@
 											</div>
 										</div>
 
-										{{Form::submit('Apply Filters',array('class'=>"btn blue btn-sm"))}}
+										{{Form::submit('Apply Filters',array('class'=>"btn blue"))}}
 								{{Form::close()}}
 							</div>
 							<p></p>
-							<table class="table table-striped table-advance table-hover">
+							<table id="dt-customer-list" class="table table-striped table-advance table-hover">
 								<thead>
 									<tr>
 										<th>
@@ -151,6 +175,15 @@
 
 															@endif
 														{{--@endif--}}
+														@if($customers['address'])
+														<br/>
+														<small>{{ $customers['address'] }}</small>
+														@endif
+														@if($customers['telephone'])
+														<br/>
+														<small>Phone: {{ implode(', ', $customers['telephone']) }}</small>
+														@endif
+
 													</div>
 												</td>
 												<td>
@@ -160,8 +193,8 @@
 											@else
 												{{-- @if( in_array($tag_id,$customers['my_tag_object']->lists('tag_id')) ) --}}
 												@if(count(array_diff($tag_id, $customers['my_tag_object']->lists('tag_id'))) == 0)
-													<td>
-														Photo here
+													<td style="width:1%">
+														<img src="{{ isset($customers['profile_image']->image) ? $customers['profile_image']->image : url('public/img/profile_images/profile.jpg') }}" style="width:35px">
 													</td>
 													<td>
 														<div>
@@ -211,10 +244,31 @@
 	@parent
 	@section('footer-custom-js')
 		@parent
+		<script src="{{$asset_path}}/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+		<script src="{{$asset_path}}/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
 		<script type="text/javascript">
 			$('select[name="tags[]"]').select2({
-				width: '100%'
+				//'width': 'resolve'
+				width: '230px'
 			});
+
+			var clientListTable = $('#dt-customer-list').dataTable({
+				'paging': false,
+				'ordering': false,
+				'bInfo': false,
+				//'bFilter': false
+				'dom': 't'				
+			});
+			var clientListTableApi = clientListTable.DataTable();
+
+			$('input[name="search"]').keyup(function(){
+				clientListTableApi.search($(this).val()).draw() ;
+			})	
+
+			$(document).ready(function() {
+				$('input[name="search"]').trigger('keyup');
+			});
+
 		</script>
 	@stop
 @stop
