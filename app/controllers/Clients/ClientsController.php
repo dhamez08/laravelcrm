@@ -89,6 +89,9 @@ class ClientsController extends \BaseController {
 		$this->data_view 					= parent::setupThemes();
 		$this->data_view['html_body_class'] = 'page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-full-width';
 		$this->data_view['client_index'] 	= $this->data_view['view_path'] . '.clients.index';
+
+		$this->data_view['user_list']		= array();
+
 		$this->title 						= \Config::get('crm.person_title');
 		$this->marital_status 				= \Config::get('crm.marital_status');
 		$this->living_status 				= \Config::get('crm.living_status');
@@ -1632,5 +1635,16 @@ class ClientsController extends \BaseController {
 			->get();
 		
 		return \Response::json( $clients );
+	}
+
+	public function getExcelTest() {
+
+		$result = \Excel::load('/home/vagrant/sites/one23crm/public/import/3_fullclientexport.csv', function($reader) {
+			$reader->noHeading();
+		})->get();
+
+		\Debugbar::info($result);
+
+		return "Hello World!";
 	}
 }
