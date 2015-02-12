@@ -297,6 +297,31 @@ class ClientsController extends \BaseController {
 		}
 	}
 
+	public function getDeleteClient($id, $token)
+	{
+		if( strcmp(\Session::token(), $token) == 0 ){
+			$person = \Clients\Clients::find($id);
+			if( $person->telephone()->count() > 0 ){
+				$person->telephone()->delete();
+			}
+			if( $person->address()->count() > 0 ){
+				$person->address()->delete();
+			}
+			if( $person->emails()->count() > 0 ){
+				$person->emails()->delete();
+			}
+			if( $person->url()->count() > 0 ){
+				$person->url()->delete();
+			}
+			$person->delete();
+			\Session::flash('message', 'Successfully Deleted Client');
+			return \Redirect::action('Clients\ClientsController@getIndex');
+		}else{
+			echo 'nice try hacker';
+			die();
+		}		
+	}
+
 	public function getCreate(){
 		$data 						= $this->data_view;
 		$data['pageTitle'] 			= 'Client';

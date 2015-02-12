@@ -187,8 +187,8 @@
 													</div>
 												</td>
 												<td>
-													<a href="#" class="btn default btn-xs red-stripe">
-													Delete </a>
+													<a href="{{ url('clients/delete-client/' . $customers['customer_id'] . '/' . \Session::token() ) }}" class="btn btn-danger btn-sm btn-delete-client">
+													<i class="fa fa-trash"></i> </a>
 												</td>
 											@else
 												{{-- @if( in_array($tag_id,$customers['my_tag_object']->lists('tag_id')) ) --}}
@@ -219,8 +219,8 @@
 														</div>
 													</td>
 													<td>
-														<a href="#" class="btn default btn-xs red-stripe">
-														Delete </a>
+														<a href="{{ url('clients/delete-client/' . $customers['customer_id'] . '/' . \Session::token() ) }}" class="btn btn-danger btn-sm btn-delete-client">
+														<i class="fa fa-trash"></i> </a>
 													</td>
 												@endif
 											@endif
@@ -264,6 +264,10 @@
 			$('input[name="search"]').keyup(function(){
 				clientListTableApi.search($(this).val()).draw() ;
 			})	
+
+			$('.btn-delete-client').on('click', function() {
+				return confirm('Are you sure you want to delete?');
+			});
 
 			$(document).ready(function() {
 				$('input[name="search"]').trigger('keyup');
