@@ -114,3 +114,9 @@
 .change-photo {
     cursor: pointer;
 }
+
+.tool-box-input {
+    border-radius: 3px !important;
+    background-color: #7A7A7A !important;
+    border-width: 0 !important;
+}
