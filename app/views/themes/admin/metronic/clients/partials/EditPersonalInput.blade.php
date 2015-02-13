@@ -86,6 +86,26 @@
 			);
 		}}
 	</div>
+	{{--
+	<label class="control-label col-md-3">Number of Children</label>
+	<div class="col-md-3">
+		@if(false)
+			<p>{{count($children)}}</p>
+		@else
+			{{
+				Form::select(
+					'noc',
+					range(0,10),
+					null,
+					array(
+						'class'=>'form-control input-sm',
+						'id'=>'noc',
+					)
+				);
+			}}
+		@endif
+	</div>
+	--}}	
 </div>
 <div class="form-group">
 	<label class="control-label col-md-3">Living Status</label>

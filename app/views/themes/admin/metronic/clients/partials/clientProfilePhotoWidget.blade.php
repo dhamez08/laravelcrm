@@ -16,7 +16,7 @@
               <div class="col-md-12">
                 <div style="width:100px;height:100px;min-width:100px;min-height:100px;max-width:100px;max-height:100px;float:left;">
                   <a href="#" class="thumbnail photo-select" data-photo-id="0">
-                    <img src="{{url('public/img/profile_images/profile.jpg')}}" title="" alt="" />
+                    <img src="{{url('public/img/profile_images/summary_person.png')}}" title="" alt="" />
                   </a>
                 </div>
                 @if(isset($customer))

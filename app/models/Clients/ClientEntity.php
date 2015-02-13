@@ -172,7 +172,9 @@ class ClientEntity extends \Eloquent{
 	public function getCustomerHead($belongsTo, $arrayType = array(), $otherFilters = array()){
 		$arrayCustomer = array();
 		$dataCustomer = \Clients\Clients::customerType($arrayType)
-		->customerBelongsTo($belongsTo)
+		//->customerBelongsTo($belongsTo)
+		->with('address')
+		->with('telephone')
 		->with('myTag');
 
 		// Other filters
@@ -184,10 +186,17 @@ class ClientEntity extends \Eloquent{
 		}
 		if(isset($otherFilters['marital_status'])) {
 			$dataCustomer->where('marital_status', $otherFilters['marital_status']);
-		}		
+		}
+		if(isset($otherFilters['user'])) {
+			$dataCustomer->customerBelongsUserIn($otherFilters['user']);
+		} else {
+			$dataCustomer->customerBelongsTo($belongsTo);
+		}
 
 		if( $dataCustomer->count() > 0 ){
-			foreach($dataCustomer->get() as $val){
+			$dataCustomerGet = $dataCustomer->get();
+			\Debugbar::info($dataCustomerGet);
+			foreach($dataCustomerGet as $val){
 				$arrayCustomer[$val->id]['customer_id'] = $val->id;
 				$arrayCustomer[$val->id]['title'] = $val->title;
 				$arrayCustomer[$val->id]['fullname'] = $val->title.' '.$val->first_name.' '.$val->last_name;
@@ -201,6 +210,9 @@ class ClientEntity extends \Eloquent{
 				$arrayCustomer[$val->id]['my_tag'] = $val->my_tag->lists('id');
 				
 				$arrayCustomer[$val->id]['profile_image'] = \Clients\Clients::find($val->id)->profileImage()->where('id', $val->profile_image)->first();
+				$arrayCustomer[$val->id]['address'] = isset($val->address) ? $val->address->address_line_1 . ' ' . $val->address->address_line_2 . ' ' . $val->address->town . ' ' . $val->address->county . ' ' . $val->address->postcode : null;
+				//$arrayCustomer[$val->id]['city'] = isset($val->address) ? $val->address->city : null;
+				$arrayCustomer[$val->id]['telephone'] = isset($val->telephone) ? $val->telephone->lists('number') : null;
 			}
 			return $arrayCustomer;
 		}
@@ -226,6 +238,7 @@ class ClientEntity extends \Eloquent{
 					);
 				}elseif( $family->type == 4 ){
 					$this->children_data[] = (object)array(
+						'associated'=>$family->associated,
 						'children_id'=>$family->id,
 						'first_name'=>$family->first_name,
 						'last_name'=>$family->last_name,

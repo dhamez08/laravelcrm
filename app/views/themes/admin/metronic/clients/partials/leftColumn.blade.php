@@ -18,7 +18,7 @@
 					@if($customer->profile_image > 0)
 		 				<img id="main-profile-pic" src="{{$profileImg->where('id',$customer->profile_image)->first()->image}}" alt="profile pic" class="profilePic round-50"/>
 					@else
-						<img id="main-profile-pic" src="{{url('public/img/profile_images/profile.jpg')}}" alt="profile pic" class="profilePic round-50"/>
+						<img id="main-profile-pic" src="{{url('public/img/profile_images/summary_person.png')}}" alt="profile pic" class="profilePic round-50"/>
 					@endif
 				</a>
 			</div>

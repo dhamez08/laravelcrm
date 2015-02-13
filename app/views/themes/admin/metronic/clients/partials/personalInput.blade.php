@@ -87,6 +87,7 @@
 			);
 		}}
 	</div>
+	{{--
 	<label class="control-label col-md-3">Number of Children</label>
 	<div class="col-md-3">
 		@if( isset($children) && count($children) > 0 )
@@ -105,6 +106,7 @@
 			}}
 		@endif
 	</div>
+	--}}
 </div>
 <div class="form-group">
 	<label class="control-label col-md-3">Living Status</label>

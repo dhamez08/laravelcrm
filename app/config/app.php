@@ -124,7 +124,8 @@ return array(
 		'Ignited\Pdf\PdfServiceProvider',
 		'Barryvdh\Debugbar\ServiceProvider',
         'Camroncade\Timezone\TimezoneServiceProvider',
-        'Atticmedia\Anvard\AnvardServiceProvider'
+        'Atticmedia\Anvard\AnvardServiceProvider',
+        'Maatwebsite\Excel\ExcelServiceProvider',
 	),
 
 	/*
@@ -194,6 +195,7 @@ return array(
 		'PDF'  				=> 'Ignited\Pdf\Facades\Pdf',
 		'Debugbar' 			=> 'Barryvdh\Debugbar\Facade',
         'ThumbnailGenerator'=> 'Tristan\ThumbnailGenerator',
+        'Excel' => 'Maatwebsite\Excel\Facades\Excel',
 	),
 
 );

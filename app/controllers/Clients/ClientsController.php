@@ -89,6 +89,9 @@ class ClientsController extends \BaseController {
 		$this->data_view 					= parent::setupThemes();
 		$this->data_view['html_body_class'] = 'page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-full-width';
 		$this->data_view['client_index'] 	= $this->data_view['view_path'] . '.clients.index';
+
+		$this->data_view['user_list']		= array();
+
 		$this->title 						= \Config::get('crm.person_title');
 		$this->marital_status 				= \Config::get('crm.marital_status');
 		$this->living_status 				= \Config::get('crm.living_status');
@@ -187,14 +190,37 @@ class ClientsController extends \BaseController {
 		$data['tag_id']				= \Input::has('tags') ? (\Input::get('tags') != 0 ) ? \Input::get('tags'):null:null;
 		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
 
+		$data['user_list'] = array(
+			\Auth::id() => 'Myself Only',
+			'all'		=> 'All',
+		);
+		$sub_users = \CustomerOpportunities\CustomerOpportunitiesEntity::get_instance()->getGroupUsersList();
+		if(count($sub_users) > 0) {
+			foreach ($sub_users as $su) {
+				$data['user_list'][$su->user_id] = $su->first_name . ' ' . $su->last_name;
+			}
+		}
+		$allUsers = $data['user_list'];
+		unset($allUsers['all']);
+		$allUsers = array_keys($allUsers);
+
 		$customerFilters = array();
 		if(\Input::get('age_min')) $customerFilters['min_age'] = \Input::get('age_min');
 		if(\Input::get('age_max')) $customerFilters['max_age'] = \Input::get('age_max');
 		if(\Input::get('marital_status')) $customerFilters['marital_status'] = \Input::get('marital_status');
+		if(\Input::get('user')) $customerFilters['user'] = \Input::get('user');
+
+		if(!empty($customerFilters['user'])) {
+			if($customerFilters['user'] == 'all')
+				$customerFilters['user'] = $allUsers;
+			else
+				$customerFilters['user'] = array($customerFilters['user']);
+		}
 
 		$data['array_customer']		= \Clients\ClientEntity::get_instance()->getCustomerHead($group_id, $this->get_customer_type, $customerFilters);
 		$data['tags']			 	= \ClientTag\ClientTagEntity::get_instance()->getTagsByLoggedUser();
-		$data['center_column_view'] = 'dashboard';
+		$data['center_column_view'] = 'dashboard';	
+
 		$data 						= array_merge($data,$this->getSetupThemes());
 		return \View::make( $data['view_path'] . '.clients.index', $data );
 	}
@@ -271,6 +297,55 @@ class ClientsController extends \BaseController {
 		}
 	}
 
+	public function getConfirmChildDelete($id, $client, $token) {
+		if( strcmp($id . \Session::token(), $token) == 0 ){
+			$person = \Clients\Clients::find($id);
+			if( $person->telephone()->count() > 0 ){
+				$person->telephone()->delete();
+			}
+			if( $person->address()->count() > 0 ){
+				$person->address()->delete();
+			}
+			if( $person->emails()->count() > 0 ){
+				$person->emails()->delete();
+			}
+			if( $person->url()->count() > 0 ){
+				$person->url()->delete();
+			}
+			$person->delete();
+			\Session::flash('message', 'Successfully Deleted Child');
+			return \Redirect::action('Clients\ClientsController@getEdit',array('clientId'=>$client));
+		}else{
+			echo 'nice try hacker';
+			die();
+		}		
+	}
+
+	public function getDeleteClient($id, $token)
+	{
+		if( strcmp(\Session::token(), $token) == 0 ){
+			$person = \Clients\Clients::find($id);
+			if( $person->telephone()->count() > 0 ){
+				$person->telephone()->delete();
+			}
+			if( $person->address()->count() > 0 ){
+				$person->address()->delete();
+			}
+			if( $person->emails()->count() > 0 ){
+				$person->emails()->delete();
+			}
+			if( $person->url()->count() > 0 ){
+				$person->url()->delete();
+			}
+			$person->delete();
+			\Session::flash('message', 'Successfully Deleted Client');
+			return \Redirect::action('Clients\ClientsController@getIndex');
+		}else{
+			echo 'nice try hacker';
+			die();
+		}		
+	}
+
 	public function getCreate(){
 		$data 						= $this->data_view;
 		$data['pageTitle'] 			= 'Client';
@@ -291,6 +366,7 @@ class ClientsController extends \BaseController {
 		$data 						= array_merge($data,$this->getSetupThemes());
 		$data['html_body_class'] 	= $this->data_view['html_body_class'];
 		$data['center_column_view'] = 'dashboard';
+		$data['user_list']			= array();
 
 		return \View::make( $data['view_path'] . '.clients.create', $data );
 	}
@@ -606,6 +682,29 @@ class ClientsController extends \BaseController {
 					$clientId
 				);
 
+				// if has children then add
+				if( count( \Input::get('children') ) > 0 ){
+					foreach( \Input::get('children') as $key => $val ){
+						if( trim($val['firstname']) != '' ){
+							\Input::merge(
+								array(
+									'dob' => \Clients\ClientEntity::get_instance()->convertToMysqlDate($val['dob']),
+									'ref' => \Auth::id() . time() . rand(1,9),
+									'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
+									'belongs_user' => \Auth::id(),
+									'first_name' => $val['firstname'],
+									'last_name' => $val['lastname'],
+									'associated' => $customer->id,
+									'relationship' => $val['relation_to_client'],
+									'type' => 4,
+									'email' => '',
+								)
+							);
+							\Clients\ClientEntity::get_instance()->createOrUpdate();
+						}
+					}
+				}				
+
 				\CustomerPhone\CustomerPhoneController::get_instance()->iteratePhoneInput(
 					\Input::get('edit_telephone'),
 					$clientId
@@ -620,6 +719,29 @@ class ClientsController extends \BaseController {
 					\Input::get('edit_urls'),
 					$clientId
 				);
+
+				// if has children then update
+				if( count( \Input::get('edit_children') ) > 0 ){
+					foreach( \Input::get('edit_children') as $key => $val ){
+						if( trim($val['firstname']) != '' ){
+							\Input::merge(
+								array(
+									'dob' => \Clients\ClientEntity::get_instance()->convertToMysqlDate($val['dob']),
+									//'ref' => \Auth::id() . time() . rand(1,9),
+									//'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
+									//'belongs_user' => \Auth::id(),
+									'first_name' => $val['firstname'],
+									'last_name' => $val['lastname'],
+									'associated' => $customer->id,
+									'relationship' => $val['relation_to_client'],
+									'type' => 4,
+									'email' => '',
+								)
+							);
+							\Clients\ClientEntity::get_instance()->createOrUpdate($val['id']);
+						}
+					}
+				}
 
 				if( \Input::has('address_id') ){
 					// update address
@@ -1608,5 +1730,16 @@ class ClientsController extends \BaseController {
 			->get();
 		
 		return \Response::json( $clients );
+	}
+
+	public function getExcelTest() {
+
+		$result = \Excel::load('/home/vagrant/sites/one23crm/public/import/3_fullclientexport.csv', function($reader) {
+			$reader->noHeading();
+		})->get();
+
+		\Debugbar::info($result);
+
+		return "Hello World!";
 	}
 }

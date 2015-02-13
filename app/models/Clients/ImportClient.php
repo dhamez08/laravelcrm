@@ -91,7 +91,10 @@ class ImportClient extends \Eloquent{
 
 			$row_counter = 0;
 
-			while (($thecsv = fgetcsv($openfile, 4096, ",")) !== FALSE) {
+			//while (($thecsv = fgetcsv($openfile, 4096, ",")) !== FALSE) {
+			while (! feof($openfile)) {
+
+				$thecsv = fgetcsv($openfile, 4096, ",");
 
 				if (($headers==1) && ($row_counter==0)) {
 					$row_counter++;
@@ -128,17 +131,17 @@ class ImportClient extends \Eloquent{
 						 ($csv_column[$i]=="first_name" ) || 
 						 ($csv_column[$i]=="last_name") || 
 						 ($csv_column[$i]=="job_title") || 
-						 ($csv_column[$i]=="dob") && 
+						 ($csv_column[$i]=="dob") || 
 						 ($csv_column[$i]=="marital_status") ) 
 					{
 						$column_name = $csv_column[$i];
-						$import[$column_name] = $thecsv[$i];
+						$import[$column_name] = !empty($thecsv[$i]) ? $thecsv[$i] : '';
 					}
 
 					// company details
 					if ($csv_column[$i]=="company_name") {
 						if ($thecsv[$i]!="") {
-							$company['company_name'] = $thecsv[$i];
+							$company['company_name'] = !empty($thecsv[$i]) ? $thecsv[$i] : '';
 						}
 					}
 
@@ -149,7 +152,7 @@ class ImportClient extends \Eloquent{
 						 ($csv_column[$i]=="postcode") ) 
 					{
 						$address_column = $csv_column[$i];
-						$address[$address_column] = $thecsv[$i];
+						$address[$address_column] = !empty($thecsv[$i]) ? $thecsv[$i] : '';
 						if ($csv_column[$i]=="address_line_1") {
 							$address['type'] = 'Home';
 						} elseif ($csv_column[$i]=="work_address_line_1") {
@@ -163,7 +166,7 @@ class ImportClient extends \Eloquent{
 						 ($csv_column[$i]=="mobile") ) 
 					{
 						if ($thecsv[$i]!="") {
-							$telephone['number'] = $thecsv[$i];
+							$telephone['number'] = !empty($thecsv[$i]) ? $thecsv[$i] : '';
 
 							if ($csv_column[$i]=="work_telephone") {
 								$telephone['type'] = 'Work';
@@ -178,14 +181,14 @@ class ImportClient extends \Eloquent{
 					//email addresses
 					if ( ($csv_column[$i]=="email") || ($csv_column[$i]=="work_email") ) {
 						if ($thecsv[$i]!="") {
-							$email['email'] = $thecsv[$i];
+							$email['email'] = !empty($thecsv[$i]) ? $thecsv[$i] : '';
 						}
 					}
 
 					// customer notes
 					if ($csv_column[$i]=="notes") {
 						if ($thecsv[$i]!="") {
-							$notes['note'] = $thecsv[$i];
+							$notes['note'] = !empty($thecsv[$i]) ? $thecsv[$i] : '';
 						}
 					}
 						
@@ -234,13 +237,175 @@ class ImportClient extends \Eloquent{
 						$notes_array = array_merge($notes, $note_to);
 						\CustomerNotes\CustomerNotes::create($notes_array);
 					}
-					return true;
+					//return true;
 				}else{
-					return false;
+					//return false;
 				}
 
 			}
+			return true;
+		} else {
+			return false;
 		}
 	}
+
+	public function processImportToDBpersonRichard(){
+		$file 			= \Input::get('file');
+		$column_count 	= (\Input::get('columns')-1);
+		$headers 		= \Input::get('headers');
+		$csv_column = \Input::get('column');
+		
+		if(\Input::has('file')){
+			$filename = $file;
+			$row_counter = 0;
+
+			$clientImports = \Excel::load($filename, function($reader) {
+				$reader->noHeading();
+			})->get();
+
+			foreach ($clientImports as $clientRow) {
+				if($headers == 1) continue;
+				$import_refs = array(
+					'ref' => \Auth::id() . time() . rand(1,9),
+					'type' => 1,
+					'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
+					'belongs_user' => \Auth::id(),
+				);	
+				$import_company_refs = array(
+					'ref' => \Auth::id() . time() . rand(1,9),
+					'type' => 2,
+					'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
+					'belongs_user' => \Auth::id(),
+				);	
+				$import = array();
+				$address = array();
+				$telephone = array();
+				$email = array();
+				$company = array();
+				$notes = array();	
+
+				foreach($clientRow as $i => $clientColumnValue) {
+					// do the name details
+					if ( ($csv_column[$i]=="title") || 
+						 ($csv_column[$i]=="first_name" ) || 
+						 ($csv_column[$i]=="last_name") || 
+						 ($csv_column[$i]=="job_title") || 
+						 ($csv_column[$i]=="dob") || 
+						 ($csv_column[$i]=="marital_status") ) 
+					{
+						$column_name = $csv_column[$i];
+						$import[$column_name] = $clientColumnValue;
+					}
+
+					// company details
+					if ($csv_column[$i]=="company_name") {
+						if ($clientColumnValue!="") {
+							$company['company_name'] = $clientColumnValue;
+						}
+					}
+
+					// home address details
+					if ( ($csv_column[$i]=="address_line_1") || 
+						 ($csv_column[$i]=="town") || 
+						 ($csv_column[$i]=="county") || 
+						 ($csv_column[$i]=="postcode") ) 
+					{
+						$address_column = $csv_column[$i];
+						$address[$address_column] = $clientColumnValue;
+						if ($csv_column[$i]=="address_line_1") {
+							$address['type'] = 'Home';
+						} elseif ($csv_column[$i]=="work_address_line_1") {
+							$address['type'] = 'Work';
+						}
+					}
+
+					// telephone details
+					if ( ($csv_column[$i]=="telephone") || 
+						 ($csv_column[$i]=="work_telephone") || 
+						 ($csv_column[$i]=="mobile") ) 
+					{
+						if ($clientColumnValue!="") {
+							$telephone['number'] = $clientColumnValue;
+
+							if ($csv_column[$i]=="work_telephone") {
+								$telephone['type'] = 'Work';
+							} elseif ($csv_column[$i]=="mobile") {
+								$telephone['type'] = 'Mobile';
+							} else {
+								$telephone['type'] = 'Home';
+							}
+						}
+					}
+
+					//email addresses
+					if ( ($csv_column[$i]=="email") || ($csv_column[$i]=="work_email") ) {
+						if ($clientColumnValue!="") {
+							$email['email'] = $clientColumnValue;
+						}
+					}
+
+					// customer notes
+					if ($csv_column[$i]=="notes") {
+						if ($clientColumnValue!="") {
+							$notes['note'] = $clientColumnValue;
+						}
+					}				
+				}
+
+				if (count($company)>0) {
+					//$import_array = array_merge($import_company_refs, $company);
+					$import_array = ($import_company_refs + $company);
+					$clientid = \Clients\Clients::create($import_array);
+				} else {
+					//$import_array = array_merge($import_refs, $import);
+					$import_array = ($import_refs + $import);
+					$clientid = \Clients\Clients::create($import_array);
+				}				
+
+				if( $clientid->id ){
+					$personid = array('customer_id'=>$clientid->id);
+					
+					// import the address info
+					if (count($address)>2) {
+						$address_array = ($address + $personid);
+						\CustomerAddress\CustomerAddress::create($address_array);
+					}	
+
+					// import the telephone info
+					if (count($telephone)>0) {
+						//$telephone_array = array_merge($telephone, $personid);
+						$telephone_array = ($telephone + $personid);
+						\CustomerTelephone\CustomerTelephone::create($telephone_array);
+					}
+
+					// import the email addresses
+					if (count($email)>0) {
+						$email_to = array(
+							'customer_id' => $clientid->id,
+							'type' => 'Home'
+						);
+						$email_array = ($email + $email_to);
+						\CustomerEmail\CustomerEmail::create($email_array);
+					}
+
+					// import customer notes
+					if (count($notes)>0) {
+
+						$note_to = array(
+							'customer_id' => $clientid->id,
+							'added_by' => \Auth::id()
+						);
+						$notes_array = ($notes + $note_to);
+						\CustomerNotes\CustomerNotes::create($notes_array);
+					}
+					//return true;
+				}else{
+					//return false;
+				}
+			}
+
+			return true;
+		}
+	}	
 
 }
