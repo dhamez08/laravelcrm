@@ -244,13 +244,13 @@
 <script type='text/javascript' src="{{$asset_path}}/global/plugins/jquery.caret.js"></script>
 <script src="{{$asset_path}}/global/plugins/bootstrap-summernote/summernote.min.js" type="text/javascript"></script>
 <script src="{{$asset_path}}/global/plugins/farbtastic/farbtastic.js" type="text/javascript"></script>
+<script src="{{$asset_path}}/pages/scripts/underscore-min.js" type="text/javascript"></script>
 <script>
     var BASE_URL = '{{ url('/') }}';
     var ASSET_PATH = '{{$asset_path}}';
     var ASSET_PATH_PUBLIC = '{{ url('public/admin/metronic/assets') }}';
 </script>
 <script src="{{$asset_path}}/pages/scripts/components-editors.js" type="text/javascript"></script>
-<script src="{{$asset_path}}/pages/scripts/template-builder.js" type="text/javascript"></script>
 <script type="text/javascript">
     jQuery(document).ready(function() {
 
@@ -337,5 +337,6 @@
         });
     });
 </script>
+<script src="{{$asset_path}}/pages/scripts/template-builder.js" type="text/javascript"></script>
     @stop
 @stop

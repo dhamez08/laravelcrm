@@ -3,6 +3,8 @@
  */
 $(function(){
 
+
+
     var selected_element = null;
 
     $('#colorpicker').farbtastic(function(color){
@@ -83,8 +85,8 @@ $(function(){
                 .addClass('image-options')
                 .append($('<span>')
                     .addClass('change-photo').text('Change photo '))
-                .append($('<input>')
-                    .attr('type','file').attr('id','upload-photo').css('display','none'))
+                .append($('<form>').attr('method','post').attr('id','upload-form').css('display','none').append($('<input>')
+                    .attr('name','upload-photo').attr('type','file').attr('id','upload-photo').css('display','none')))
                 .append($('<i>')
                     .addClass('fa fa-chain change-url popover-icon'))
                 .append(visibility_icon);
@@ -136,8 +138,71 @@ $(function(){
             })
 
             body.on('change','#upload-photo',function(){
-                console.log('test');
+                $('#upload-form').submit();
             })
+
+            var filesToUpload = null;
+
+            function handleFileSelect(event)
+            {
+                var files = event.target.files || event.originalEvent.dataTransfer.files;
+                // Itterate thru files (here I user Underscore.js function to do so).
+                // Simply user 'for loop'.
+                files = new Array();
+                _.each(files, function(file) {
+                    filesToUpload.push(file);
+                });
+            }
+
+            /**
+             * Form submit
+             */
+            function handleFormSubmit(event)
+            {
+                event.preventDefault();
+
+                var form = this,
+                    formData = new FormData(form);  // This will take all the data from current form and turn then into FormData
+
+                // Prevent multiple submisions
+                if ($(form).data('loading') === true) {
+                    return;
+                }
+                $(form).data('loading', true);
+
+                // Add selected files to FormData which will be sent
+                if (filesToUpload) {
+                    _.each(filesToUpload, function(file){
+                        formData.append('cover[]', file);
+                    });
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: 'file-upload',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response)
+                    {
+                        if(response.success){
+                            selected_element.attr('src',response.filePath);
+                        }
+                    },
+                    complete: function()
+                    {
+                        // Allow form to be submited again
+                        $(form).data('loading', false);
+                    },
+                    dataType: 'json'
+                });
+            }
+
+            /**
+             * Register events
+             */
+            $('#upload-photo').on('change', handleFileSelect);
+            $('#upload-form').on('submit', handleFormSubmit);
         }
     });
 

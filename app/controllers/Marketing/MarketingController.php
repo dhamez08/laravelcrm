@@ -30,7 +30,8 @@ class MarketingController extends \BaseController {
 		$this->data_view 					= parent::setupThemes();
 		$this->data_view['marketing_index']		= $this->data_view['view_path'] . '.page';
 		$this->data_view['html_body_class'] = 'page-header-fixed page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed';
-	}
+        $this->fileFolder 	 	= public_path() . '/documents';
+    }
 
 	/**
 	 * Return an instance of this class.
@@ -490,12 +491,21 @@ class MarketingController extends \BaseController {
         return \Redirect::to('marketing/templates#personal');
     }
 
-    public function postEmailSummary(){
-
+    public function postFileUpload(){
+        if( \Input::hasFile('upload-photo') ){
+            $fileName = $this->_doUpload(\Input::file('upload-photo'));
+            return \Response::json(array('success'=>true,'filePath'=>asset('public/documents/'.$fileName)));
+        }else{
+            return \Response::json(array('success'=>false,'msg'=>'Cannot upload, file.'));
+        }
     }
 
-    public function getTest(){
-
+    private function _doUpload($fileName){
+        $file_name = $fileName->getClientOriginalName();
+        $upload_success = $fileName->move($this->fileFolder, $file_name);
+        if($upload_success ){
+            return $file_name;
+        }
     }
 
 }
