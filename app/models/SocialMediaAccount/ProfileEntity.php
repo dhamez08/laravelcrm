@@ -182,7 +182,7 @@ class ProfileEntity extends \Eloquent
             $profile = \SocialMediaAccount\Profile::find($check->profile_id);
             return $profile->photoURL;
         } else {
-            return url('public/img/profile_images/profile.jpg');
+            return url('public/img/profile_images/summary_person.png');
         }
     }
 }

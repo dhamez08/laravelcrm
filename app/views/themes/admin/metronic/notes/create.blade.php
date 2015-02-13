@@ -17,7 +17,7 @@
 			}}
 
 			<div class="form-group">
-				<img src="{{url('public/img/profile_images/profile.jpg')}}" alt="Avatar" class="img-circle round-50" style="width:50px"/>
+				<img src="{{url('public/img/profile_images/summary_person.png')}}" alt="Avatar" class="img-circle round-50" style="width:50px"/>
 				<span><strong>{{ $added_by }}</strong></span>
 			</div>
 

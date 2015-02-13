@@ -42,8 +42,8 @@ class ClientProfilePhotoController extends \BaseController {
         $photo = \CustomerProfileImages\CustomerProfileImages::where('id','=',$id)->first();
         if(count($photo) == 0){
           $profile_photo_id = 0;
-          $profile_image = asset('public/img/profile_images/profile.jpg');
-          $avatar = asset('public/img/profile_images/profile.jpg');
+          $profile_image = asset('public/img/profile_images/summary_person.png');
+          $avatar = asset('public/img/profile_images/summary_person.png');
         } else {
           $profile_photo_id = $photo->id;
           $profile_image = $photo->image;
@@ -51,8 +51,8 @@ class ClientProfilePhotoController extends \BaseController {
         }
       } else {
         $profile_photo_id = 0;
-        $profile_image = asset('public/img/profile_images/profile.jpg');
-        $avatar = asset('public/img/profile_images/profile.jpg');
+        $profile_image = asset('public/img/profile_images/summary_person.png');
+        $avatar = asset('public/img/profile_images/summary_person.png');
       }
       return \Response::json(array('status'=>'change','profile_photo_id'=>$profile_photo_id,'profile_image'=>$profile_image,'avatar'=>$avatar));
     }
