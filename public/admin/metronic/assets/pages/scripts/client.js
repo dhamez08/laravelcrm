@@ -342,7 +342,7 @@ var addRowChildren = function () {
 					x++; //text box increment
 					jQuery(children_wrapper).append(content(x)); //add input box
 					// append dropdown phone type / for
-					jQuery(".relation_to_client > option").each(function () {
+					jQuery("#baseRelationToClient > option").each(function () {
 						jQuery('#clone-children .children-wrapper select[name="children['+x+'][relation_to_client]"]').append(jQuery("<option />").val(this.value).text(this.text));
 					});
 				}

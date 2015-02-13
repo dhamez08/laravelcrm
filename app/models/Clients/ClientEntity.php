@@ -238,6 +238,7 @@ class ClientEntity extends \Eloquent{
 					);
 				}elseif( $family->type == 4 ){
 					$this->children_data[] = (object)array(
+						'associated'=>$family->associated,
 						'children_id'=>$family->id,
 						'first_name'=>$family->first_name,
 						'last_name'=>$family->last_name,

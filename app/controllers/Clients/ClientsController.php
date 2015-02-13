@@ -297,6 +297,30 @@ class ClientsController extends \BaseController {
 		}
 	}
 
+	public function getConfirmChildDelete($id, $client, $token) {
+		if( strcmp($id . \Session::token(), $token) == 0 ){
+			$person = \Clients\Clients::find($id);
+			if( $person->telephone()->count() > 0 ){
+				$person->telephone()->delete();
+			}
+			if( $person->address()->count() > 0 ){
+				$person->address()->delete();
+			}
+			if( $person->emails()->count() > 0 ){
+				$person->emails()->delete();
+			}
+			if( $person->url()->count() > 0 ){
+				$person->url()->delete();
+			}
+			$person->delete();
+			\Session::flash('message', 'Successfully Deleted Child');
+			return \Redirect::action('Clients\ClientsController@getEdit',array('clientId'=>$client));
+		}else{
+			echo 'nice try hacker';
+			die();
+		}		
+	}
+
 	public function getDeleteClient($id, $token)
 	{
 		if( strcmp(\Session::token(), $token) == 0 ){
@@ -658,6 +682,29 @@ class ClientsController extends \BaseController {
 					$clientId
 				);
 
+				// if has children then add
+				if( count( \Input::get('children') ) > 0 ){
+					foreach( \Input::get('children') as $key => $val ){
+						if( trim($val['firstname']) != '' ){
+							\Input::merge(
+								array(
+									'dob' => \Clients\ClientEntity::get_instance()->convertToMysqlDate($val['dob']),
+									'ref' => \Auth::id() . time() . rand(1,9),
+									'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
+									'belongs_user' => \Auth::id(),
+									'first_name' => $val['firstname'],
+									'last_name' => $val['lastname'],
+									'associated' => $customer->id,
+									'relationship' => $val['relation_to_client'],
+									'type' => 4,
+									'email' => '',
+								)
+							);
+							\Clients\ClientEntity::get_instance()->createOrUpdate();
+						}
+					}
+				}				
+
 				\CustomerPhone\CustomerPhoneController::get_instance()->iteratePhoneInput(
 					\Input::get('edit_telephone'),
 					$clientId
@@ -672,6 +719,29 @@ class ClientsController extends \BaseController {
 					\Input::get('edit_urls'),
 					$clientId
 				);
+
+				// if has children then update
+				if( count( \Input::get('edit_children') ) > 0 ){
+					foreach( \Input::get('edit_children') as $key => $val ){
+						if( trim($val['firstname']) != '' ){
+							\Input::merge(
+								array(
+									'dob' => \Clients\ClientEntity::get_instance()->convertToMysqlDate($val['dob']),
+									//'ref' => \Auth::id() . time() . rand(1,9),
+									//'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
+									//'belongs_user' => \Auth::id(),
+									'first_name' => $val['firstname'],
+									'last_name' => $val['lastname'],
+									'associated' => $customer->id,
+									'relationship' => $val['relation_to_client'],
+									'type' => 4,
+									'email' => '',
+								)
+							);
+							\Clients\ClientEntity::get_instance()->createOrUpdate($val['id']);
+						}
+					}
+				}
 
 				if( \Input::has('address_id') ){
 					// update address

@@ -71,10 +71,10 @@
 					</div>
 				</div>
 			</div>
-			<div id="children_details" class="hide">
+			<div id="children_details" class="show">
 				<div class="row">
 					<div class="col-md-12">
-						<h3 class="form-section">Childrens Details</h3>
+						<h3 class="form-section">Childrens Details <button class="btn green btn-xs add-row-children" type="button">Add</button></h3>
 						@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.childrenInput' )
 					</div>
 				</div>
@@ -157,6 +157,7 @@
 			addEmail.init();
 			addPartner.init();
 			addChildren.init();
+			addRowChildren.init();
 			addressLookup.init();
 			addWebsite.init();
 		});

@@ -83,6 +83,30 @@
 					}}
 				@endif
 			</div>
+
+			<div class="hide" id="partner_details">
+				<div class="row">
+					<div class="col-md-12">
+						<h3 class="form-section">Partner Info</h3>
+						@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.partnerInput' )
+					</div>
+				</div>
+			</div>
+
+			<div id="children_details" class="show">
+				<div class="row">
+					<div class="col-md-12">
+						<h3 class="form-section">Childrens Details <button class="btn green btn-xs add-row-children" type="button">Add</button></h3>
+						@if(count($children) > 0)
+							@foreach($children as $chldrn)
+								@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.editChildrenInput', array('childrenIdx' => $chldrn->children_id, 'val' => $chldrn) )
+							@endforeach
+						@endif
+						@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.childrenInput' )
+					</div>
+				</div>
+			</div>			
+
 			<div class="row">
 				<div class="col-md-6">
 					<h3 class="form-section">Telephone Number <button class="btn green btn-xs add-phone" type="button">Add</button></h3>
