@@ -1,3 +1,5 @@
+<div class="well">
+
 <div class="form-group hidden">
 	<label class="control-label col-md-3">House Number</label>
 	<div class="col-md-9">
@@ -91,4 +93,6 @@
 		);
 	}}
 	</div>
+</div>
+
 </div>

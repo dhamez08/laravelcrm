@@ -60,7 +60,21 @@
 				</div>
 				<div class="col-md-6 right-form">
 					<h3 class="form-section">Address</h3>
-					@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.addressInput' )
+
+					<div class="form-group">
+						<label class="col-md-3 control-label">Type: </label>
+						<div class="col-md-9">
+							<label>Home</label>
+							<input type="checkbox" name="address_checkbox[]" class="form-control address-checkbox" value="home"/>
+
+							<label>Work</label>
+							<input type="checkbox" name="address_checkbox[]" class="form-control address-checkbox" value="work"/>
+						</div>
+					</div>
+
+					@foreach(array('home','work') as $address_index)
+						@include( \DashboardEntity::get_instance()->getView() . '.clients.partials.addressMultipleInput', array('index' => $address_index) )
+					@endforeach
 				</div>
 			</div>
 			<div class="hide" id="partner_details">
@@ -153,6 +167,7 @@
 		jQuery(document).ready(function() {
 			Metronic.init();
 			Index.init();
+			addAddress.init();
 			addPhone.init();
 			addEmail.init();
 			addPartner.init();
