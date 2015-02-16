@@ -3,15 +3,20 @@
  */
 $(function(){
 
+
+    var color_element = null;
     var selected_element = null;
 
     $('#colorpicker').farbtastic(function(color){
-        if(selected_element){
-            selected_element.css('color', color);
-            console.log(color);
+        if(selected_element && color_element){
+            selected_element.css(color_element, color);
+            if(color_element == 'color'){
+                $('#font-color').val(color.toUpperCase());
+            } else if(color_element == 'background-color'){
+                $('#background-color').val(color.toUpperCase());
+            }
         }
     });
-
 
 
     $('.section-element img').draggable({
@@ -48,17 +53,64 @@ $(function(){
         $(this).closest('.section-container').remove();
     });
 
+    $('body').on('focus','#font-color, #background-color',function(){
+        $('.colorpicker-container').removeClass('hide');
+        var id = $(this).attr('id');
+        if(id == 'font-color'){
+            color_element = 'color';
+        } else if(id == 'background-color'){
+            color_element = 'background-color';
+        }
+    });
+
+
+    $('body').on('change','#font-color, #background-color',function(){
+        var id = $(this).attr('id');
+        if(id == 'font-color'){
+            selected_element.css('color', $(this).val());
+        } else if(id == 'background-color'){
+            selected_element.css('background-color', $(this).val());
+        }
+    });
+
+    $('body').on('blur','#font-color, #background-color',function(){
+        $('.colorpicker-container').addClass('hide');
+    });
+
     $('body').on('click','.editable',function(event){
         event.stopPropagation();
 
         selected_element = $(this);
 
-        $('#sections').collapse('hide');
-        $('#tool-box').collapse('show');
-
         if(selected_element.hasClass('editable-text')){
+
+            $('#sections').collapse('hide');
+            $('#tool-box').collapse('show');
+
+            var hexDigits = new Array("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f");
+
+            function rgb2hex(rgb) {
+                rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+                return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+            }
+
+            function hex(x) {
+                return isNaN(x) ? "00" : hexDigits[(x - x % 16) / 16] + hexDigits[x % 16];
+            }
+
             var text_size = selected_element.css('font-size').split('px').join('');
             var text_color = selected_element.css('color');
+            var background_color = selected_element.css('background-color');
+
+            if(background_color != "transparent")
+                background_color = rgb2hex(background_color);
+
+            if(text_color != "transparent")
+                text_color = rgb2hex(text_color);
+
+
+            $('#font-color').val(text_color.toUpperCase());
+            $('#background-color').val(background_color.toUpperCase());
 
             $('#font-size-slider').val(text_size);
 
@@ -83,8 +135,8 @@ $(function(){
                 .addClass('image-options')
                 .append($('<span>')
                     .addClass('change-photo').text('Change photo '))
-                .append($('<input>')
-                    .attr('type','file').attr('id','upload-photo').css('display','none'))
+                .append($('<form>').attr('method','post').attr('id','upload-form').css('display','none').append($('<input>')
+                    .attr('name','upload-photo').attr('type','file').attr('id','upload-photo').css('display','none')))
                 .append($('<i>')
                     .addClass('fa fa-chain change-url popover-icon'))
                 .append(visibility_icon);
@@ -136,8 +188,60 @@ $(function(){
             })
 
             body.on('change','#upload-photo',function(){
-                console.log('test');
+                $('#upload-form').submit();
             })
+
+            var filesToUpload = null;
+
+            function handleFileSelect(event)
+            {
+                var files = event.target.files || event.originalEvent.dataTransfer.files;
+                files = new Array();
+                _.each(files, function(file) {
+                    filesToUpload.push(file);
+                });
+            }
+
+            function handleFormSubmit(event)
+            {
+                event.preventDefault();
+
+                var form = this,
+                    formData = new FormData(form);
+
+                if ($(form).data('loading') === true) {
+                    return;
+                }
+                $(form).data('loading', true);
+
+                if (filesToUpload) {
+                    _.each(filesToUpload, function(file){
+                        formData.append('cover[]', file);
+                    });
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: 'file-upload',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response)
+                    {
+                        if(response.success){
+                            selected_element.attr('src',response.filePath);
+                        }
+                    },
+                    complete: function()
+                    {
+                        $(form).data('loading', false);
+                    },
+                    dataType: 'json'
+                });
+            }
+
+            $('#upload-photo').on('change', handleFileSelect);
+            $('#upload-form').on('submit', handleFormSubmit);
         }
     });
 

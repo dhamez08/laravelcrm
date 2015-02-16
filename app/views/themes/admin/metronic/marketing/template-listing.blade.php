@@ -201,16 +201,33 @@
                                 </div>
                                 <div id="tool-box" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                                     <div class="panel-body">
-                                        <div class="col-md-12 m-top-15">
-                                            <label for="font-size-slider" class="editor-label">Font Size</label>
+                                        <div class="row">
+                                            <div class="col-md-12 m-top-15">
+                                                <label for="font-size-slider" class="editor-label">Font Size</label>
+                                            </div>
                                         </div>
-                                        <div class="col-md-12">
-                                            <input id="font-size-slider" type="range" min="12" max="24" step="1" />
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <input id="font-size-slider" type="range" min="12" max="24" step="1" />
+                                            </div>
                                         </div>
-                                        <div class="col-md-12 m-top-15">
-                                            <label for="font-size-slider" class="editor-label">Font Color</label>
+                                        <div class="row">
+                                            <div class="col-md-5 m-top-15">
+                                                <label for="font-size-slider" class="editor-label">Font Color</label>
+                                            </div>
+                                            <div class="col-md-7 m-top-15">
+                                                <input id="font-color" class="form-control tool-box-input" type="text"/>
+                                            </div>
                                         </div>
-                                        <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-5 m-top-15">
+                                                <label for="font-size-slider" class="editor-label">Background Color</label>
+                                            </div>
+                                            <div class="col-md-7 m-top-15">
+                                                <input id="background-color" class="form-control tool-box-input" type="text"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 colorpicker-container hide">
                                             <div id="colorpicker"></div>
                                         </div>
                                     </div>
@@ -244,13 +261,13 @@
 <script type='text/javascript' src="{{$asset_path}}/global/plugins/jquery.caret.js"></script>
 <script src="{{$asset_path}}/global/plugins/bootstrap-summernote/summernote.min.js" type="text/javascript"></script>
 <script src="{{$asset_path}}/global/plugins/farbtastic/farbtastic.js" type="text/javascript"></script>
+<script src="{{$asset_path}}/pages/scripts/underscore-min.js" type="text/javascript"></script>
 <script>
     var BASE_URL = '{{ url('/') }}';
     var ASSET_PATH = '{{$asset_path}}';
     var ASSET_PATH_PUBLIC = '{{ url('public/admin/metronic/assets') }}';
 </script>
 <script src="{{$asset_path}}/pages/scripts/components-editors.js" type="text/javascript"></script>
-<script src="{{$asset_path}}/pages/scripts/template-builder.js" type="text/javascript"></script>
 <script type="text/javascript">
     jQuery(document).ready(function() {
 
@@ -337,5 +354,6 @@
         });
     });
 </script>
+<script src="{{$asset_path}}/pages/scripts/template-builder.js" type="text/javascript"></script>
     @stop
 @stop
