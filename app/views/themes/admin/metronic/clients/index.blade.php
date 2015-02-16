@@ -160,7 +160,7 @@
 														@if( $customers['type'] == 2 )
 															<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$customers['customer_id']))}}">{{$customers['company_name']}}</a>
 														@else
-															<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$customers['customer_id']))}}">{{$customers['fullname']}}</a>
+															<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$customers['customer_id']))}}" data-toggle="popover" data-trigger="hover" data-placement="right" data-title="Client Overview" data-client-fullname="{{ $customers['fullname'] }}" data-client-address="{{ $customers['address'] }}" data-client-phone="{{ implode(', ', $customers['telephone']) }}" data-client-email="{{ implode(', ', $customers['emails']) }}" data-client-website="{{ implode(', ', $customers['urls']) }}">{{$customers['fullname']}}</a>
 														@endif
 
 														{{--@if( $customers['associated'] != 0 && $customers['relationship'] != '' )--}}
@@ -201,7 +201,7 @@
 															@if( $customers['type'] == 2 )
 																<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$customers['customer_id']))}}">{{$customers['company_name']}}</a>
 															@else
-																<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$customers['customer_id']))}}">{{$customers['fullname']}}</a>
+																<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$customers['customer_id']))}}" data-toggle="popover" data-trigger="hover" data-placement="right" data-title="Client Overview" data-client-fullname="{{ $customers['fullname'] }}" data-client-address="{{ $customers['address'] }}" data-client-phone="{{ implode(', ', $customers['telephone']) }}" data-client-email="{{ implode(', ', $customers['emails']) }}" data-client-website="{{ implode(', ', $customers['urls']) }}">{{$customers['fullname']}}</a>
 															@endif
 
 															{{--@if( $customers['associated'] != 0 && $customers['relationship'] != '' )--}}
@@ -237,6 +237,20 @@
 			{{--@include($view_path.'.clients.partials.center_column.'.$center_column_view)--}}
 			<!-- END CENTER COLUMN -->
 		</div>
+
+		<div id="client-popover-template" class="hidden">
+			<div class="row">
+	            <div class="col-md-12 client-popover-detail-wrapper">
+	                <h4 class="fullname"></h4>
+	                <p class="hidden"><strong>Family Members: </strong> <span class="family-members"></span> </p>
+	                <p><strong>Address: </strong> <span class="address"></span> </p>
+	                <p><strong>Phone: </strong> <span class="phone"></span> </p>
+	                <p><strong>Email: </strong> <span class="email"></span> </p>
+	                <p><strong>Website: </strong> <span class="website"></span> </p>
+	            </div>             
+			</div>
+		</div>
+
 	@stop
 @stop
 
@@ -271,6 +285,23 @@
 
 			$(document).ready(function() {
 				$('input[name="search"]').trigger('keyup');
+
+				$('a[data-toggle="popover"]').popover({
+					html: true,
+					content: function() {
+						var popoverTemplate = $('#client-popover-template');
+
+						popoverTemplate = popoverTemplate.find('.client-popover-detail-wrapper');
+						popoverTemplate.find('.fullname').text($(this).data('client-fullname'));
+						popoverTemplate.find('.family-members').text('FAMILY MEMBERS');
+						popoverTemplate.find('.address').text($(this).data('client-address'));
+						popoverTemplate.find('.phone').text($(this).data('client-phone'));
+						popoverTemplate.find('.email').text($(this).data('client-email'));
+						popoverTemplate.find('.website').text($(this).data('client-website'));
+
+						return $('#client-popover-template').html();
+					}
+				});
 			});
 
 		</script>

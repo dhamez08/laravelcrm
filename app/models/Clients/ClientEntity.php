@@ -175,6 +175,8 @@ class ClientEntity extends \Eloquent{
 		//->customerBelongsTo($belongsTo)
 		->with('address')
 		->with('telephone')
+		->with('emails')
+		->with('url')
 		->with('myTag');
 
 		// Other filters
@@ -213,6 +215,8 @@ class ClientEntity extends \Eloquent{
 				$arrayCustomer[$val->id]['address'] = isset($val->address) ? $val->address->address_line_1 . ' ' . $val->address->address_line_2 . ' ' . $val->address->town . ' ' . $val->address->county . ' ' . $val->address->postcode : null;
 				//$arrayCustomer[$val->id]['city'] = isset($val->address) ? $val->address->city : null;
 				$arrayCustomer[$val->id]['telephone'] = isset($val->telephone) ? $val->telephone->lists('number') : null;
+				$arrayCustomer[$val->id]['emails'] = isset($val->emails) ? $val->emails->lists('email') : null;
+				$arrayCustomer[$val->id]['urls'] = isset($val->url) ? $val->url->lists('url') : null;
 			}
 			return $arrayCustomer;
 		}
