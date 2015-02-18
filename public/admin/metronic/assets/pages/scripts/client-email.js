@@ -330,6 +330,7 @@ var ClientEmail = function () {
             initWysihtml5();
             initFileupload();
 
+            /*
             $("select#email_template").live("change", function() {
                 $this = $(this);
                 $.get(BASE_URL+'/settings/email/template/'+$this.val(), function(response) {
@@ -337,6 +338,25 @@ var ClientEmail = function () {
                     $("#message").code(response.body);
                     $("input#email_subject").val(response.subject);
                 });
+            });
+            */
+
+            var previousTemplateSelected;
+            var noTemplateBodyContent = '';
+            $("select#email_template").focus(function() {
+                console.log($(this).val());
+                previousTemplateSelected = $(this).val();
+                noTemplateBodyContent = $('#message').code();
+            }).change(function() {
+                if($(this).val() == '')
+                    $('#message').code(noTemplateBodyContent);
+
+                $this = $(this);
+                $.get(BASE_URL+'/settings/email/template/'+$this.val(), function(response) {
+                    //$(".inbox-wysihtml5").data('wysihtml5').editor.setValue(response.body);
+                    $("#message").code(response.body);
+                    $("input#email_subject").val(response.subject);
+                });                
             });
 
             $("select#custom_form").live("change", function() {
