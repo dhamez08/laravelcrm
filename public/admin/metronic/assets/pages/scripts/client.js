@@ -1,6 +1,27 @@
 /**
 Custom module for you to write your own javascript functions
 **/
+var addAddress = function () {
+    // private functions & variables
+
+    // public functions
+    return {
+        //main function
+        init: function () {
+        	jQuery('.address-checkbox').click(function(e) {
+        		//e.preventDefault();
+        		jQuery('#well-' + $(this).val()).toggle();
+        	});
+        	jQuery('.address-checkbox').each(function(ndx, val) {
+        		if($(this).is(':checked')) {
+        			jQuery('#well-' + $(this).val()).show();
+        		}
+        	});
+        },
+    };
+
+}();
+
 var addPhone = function () {
     // private functions & variables
 
