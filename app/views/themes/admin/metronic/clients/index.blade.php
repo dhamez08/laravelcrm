@@ -186,9 +186,9 @@
 
 													</div>
 												</td>
-												<td>
-													<a href="{{ url('clients/delete-client/' . $customers['customer_id'] . '/' . \Session::token() ) }}" class="btn btn-danger btn-sm btn-delete-client">
-													<i class="fa fa-trash"></i> </a>
+												<td style="vertical-align:middle">
+													<a href="{{ url('clients/delete-client/' . $customers['customer_id'] . '/' . \Session::token() ) }}" class="btn-delete-client">
+													<i class="icon-trash"></i> </a>
 												</td>
 											@else
 												{{-- @if( in_array($tag_id,$customers['my_tag_object']->lists('tag_id')) ) --}}
@@ -218,9 +218,9 @@
 															{{--@endif--}}
 														</div>
 													</td>
-													<td>
-														<a href="{{ url('clients/delete-client/' . $customers['customer_id'] . '/' . \Session::token() ) }}" class="btn btn-danger btn-sm btn-delete-client">
-														<i class="fa fa-trash"></i> </a>
+													<td style="vertical-align:middle">
+														<a href="{{ url('clients/delete-client/' . $customers['customer_id'] . '/' . \Session::token() ) }}" class="btn-delete-client">
+														<i class="icon-trash"></i> </a>
 													</td>
 												@endif
 											@endif
