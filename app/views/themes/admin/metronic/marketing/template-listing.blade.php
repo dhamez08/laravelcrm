@@ -197,9 +197,7 @@
                                                     </h4>
                                                 </div>
                                                 <div id="layout-{{$layout['id']}}-sections" class="panel-collapse collapse" role="tabpanel" aria-labelledby="layout-{{$layout['id']}}-heading">
-                                                    <div class="panel-body display-image-list" id="layout-{{$layout['id']}}-section-list">
-                                                    <!-- Insert images here -->
-                                                    </div>
+                                                    <div class="panel-body display-image-list" id="layout-{{$layout['id']}}-section-list"></div>
                                                 </div>
                                             </div>
                                         @endforeach

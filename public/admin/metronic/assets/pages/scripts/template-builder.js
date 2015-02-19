@@ -265,31 +265,32 @@ $(function(){
 
     $('.layout-name').on('click',function(){
         var layout_id = $(this).data('layout-id');
-        $.ajax({
-            url: 'ajax-layout-section-list/'+layout_id,
-            type: 'get',
-            dataType: 'json',
-            success: function(data, status){
 
-//                if($('#layout-'+layout_id+'-section-list').html() == ""){
-                    $.each(data, function(index, value){
-                        var div = $('<div>')
-                            .addClass('col-md-12 section-element section-display-image')
-                            .append($('<img>')
-                                .attr('src',value.display_image)
-                                .addClass('img-responsive')
-                                .data('html',value.source_code));
-                        $('#layout-'+layout_id+'-section-list').append(div);
+        if($('#layout-'+layout_id+'-section-list').html() == ""){
+            $.ajax({
+                url: 'ajax-layout-section-list/'+layout_id,
+                type: 'get',
+                dataType: 'json',
+                success: function(data, status){
+
+                        $.each(data, function(index, value){
+                            var div = $('<div>')
+                                .addClass('col-md-12 section-element section-display-image')
+                                .append($('<img>')
+                                    .attr('src',value.display_image)
+                                    .addClass('img-responsive')
+                                    .data('html',value.source_code));
+                            $('#layout-'+layout_id+'-section-list').append(div);
+                        });
+
+                    $('.section-element img').draggable({
+                        revert: true,
+                        revertDuration: 0,
+                        appendTo: 'body'
                     });
-//                }
-
-                $('.section-element img').draggable({
-                    revert: true,
-                    revertDuration: 0,
-                    appendTo: 'body'
-                });
-            }
-        });
+                }
+            });
+        }
     });
 
 });
