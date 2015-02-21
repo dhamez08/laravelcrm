@@ -53,7 +53,8 @@
 }
 
 .editor-label {
-    color: #FFFFFF;
+    color: #7B7B7B;
+    font-size: 12px;
 }
 
 .m-top-15 {
@@ -121,6 +122,7 @@
     border-radius: 3px !important;
     background-color: #7A7A7A !important;
     border-width: 0 !important;
+    height: 26px;
 }
 
 .section-display-image {
@@ -133,7 +135,10 @@
     margin-bottom: 0;
 }
 
-/*.display-image-list {*/
-    /*max-height: 600px;*/
-    /*overflow-y: scroll;*/
-/*}*/
+.colorpicker-container {
+    margin-top: 15px;
+}
+
+.layout-name {
+    font-size: 14px;
+}

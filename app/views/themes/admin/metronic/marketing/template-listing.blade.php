@@ -210,35 +210,33 @@
                                 <div class="panel-heading" role="tab" id="module-heading">
                                     <h4 class="panel-title">
                                         <a data-toggle="collapse" data-parent="#accordion" href="#tool-box" aria-expanded="true" aria-controls="collapseTwo">
-                                            <i class="fa fa-sliders"></i> Toolbox
+                                            <i class="fa fa-sliders"></i> Styles
                                         </a>
                                     </h4>
                                 </div>
                                 <div id="tool-box" class="panel-collapse collapse" role="tabpanel" aria-labelledby="toolbar-heading">
                                     <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-md-12 m-top-15">
+                                        <div class="row text-control">
+                                            <div class="col-md-6 m-top-15">
                                                 <label for="font-size-slider" class="editor-label">Font Size</label>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-6 m-top-15">
                                                 <input id="font-size-slider" type="range" min="12" max="24" step="1" />
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-5 m-top-15">
+                                        <div class="row text-control">
+                                            <div class="col-md-6 m-top-15">
                                                 <label for="font-size-slider" class="editor-label">Font Color</label>
                                             </div>
-                                            <div class="col-md-7 m-top-15">
+                                            <div class="col-md-6 m-top-15">
                                                 <input id="font-color" class="form-control tool-box-input" type="text"/>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-5 m-top-15">
+                                        <div class="row text-control box-control">
+                                            <div class="col-md-6 m-top-15">
                                                 <label for="font-size-slider" class="editor-label">Background Color</label>
                                             </div>
-                                            <div class="col-md-7 m-top-15">
+                                            <div class="col-md-6 m-top-15">
                                                 <input id="background-color" class="form-control tool-box-input" type="text"/>
                                             </div>
                                         </div>

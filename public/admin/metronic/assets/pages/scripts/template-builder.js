@@ -11,9 +11,9 @@ $(function(){
         if(selected_element && color_element){
             selected_element.css(color_element, color);
             if(color_element == 'color'){
-                $('#font-color').val(color.toUpperCase());
+                $('#font-color').val(color);
             } else if(color_element == 'background-color'){
-                $('#background-color').val(color.toUpperCase());
+                $('#background-color').val(color);
             }
         }
     });
@@ -81,16 +81,8 @@ $(function(){
             $('#layouts').collapse('hide');
             $('#tool-box').collapse('show');
 
-            var hexDigits = new Array("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f");
-
-            function rgb2hex(rgb) {
-                rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-                return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
-            }
-
-            function hex(x) {
-                return isNaN(x) ? "00" : hexDigits[(x - x % 16) / 16] + hexDigits[x % 16];
-            }
+            $('.box-control').hide();
+            $('.text-control').show();
 
             var text_size = selected_element.css('font-size').split('px').join('');
             var text_color = selected_element.css('color');
@@ -103,12 +95,13 @@ $(function(){
                 text_color = rgb2hex(text_color);
 
 
-            $('#font-color').val(text_color.toUpperCase());
-            $('#background-color').val(background_color.toUpperCase());
+            $('#font-color').val(text_color);
+            $('#background-color').val(background_color);
 
             $('#font-size-slider').val(text_size);
 
-        } else if(selected_element.hasClass('editable-photo')){
+        }
+        else if(selected_element.hasClass('editable-photo')){
             var options = new Object();
             var body = $('body');
 
@@ -146,13 +139,11 @@ $(function(){
             selected_element.popover('show');
 
             body.on('click','.hide-image.fa-eye-slash',function(){
-//                selected_element.css('opacity',0);
                 selected_element.css('display','none');
                 $(this).removeClass('fa-eye-slash').addClass('fa-eye');
             });
 
             body.on('click','.hide-image.fa-eye',function(){
-//                selected_element.css('opacity',1);
                 selected_element.css('display','visible');
                 $(this).removeClass('fa-eye').addClass('fa-eye-slash');
             });
@@ -238,11 +229,68 @@ $(function(){
 
             $('#upload-photo').on('change', handleFileSelect);
             $('#upload-form').on('submit', handleFormSubmit);
-        } else if(selected_element.hasClass('editable-box')){
-//            alert('box');
-        } else if(selected_element.hasClass('editable-url')){
-//            alert('url');
         }
+        else if(selected_element.hasClass('editable-url')){
+            console.log('test');
+            var options = new Object();
+            var body = $('body');
+
+
+            var url_input = $('<div>')
+                .addClass('url-input')
+                .append($('<input>')
+                    .attr('id','image-url')
+                    .addClass('url')
+                    .attr('type','text')
+                    .attr('placeholder','Your url'))
+                .append($('<i>')
+                    .addClass('fa fa-times popover-icon close-url'));
+
+            url_input.show();
+
+            options.html = true;
+            options.placement = 'bottom';
+            options.container = 'body';
+            options.content = $('<div>')
+                .append(url_input);
+
+            selected_element.popover(options);
+            selected_element.popover('show');
+
+            body.on('click','.change-url.fa-chain',function(){
+                $('.url-input').show();
+                $('.image-options').hide();
+            });
+
+            body.on('click','.close-url',function(){
+                $('#image-url').val('');
+                selected_element.popover('destroy');
+            });
+
+            body.on('keypress','#image-url',function(e){
+                if(e.keyCode == 13){
+                    selected_element.attr('href',$(this).val()).attr('target','_blank');
+                    selected_element.popover('destroy');
+                }
+            });
+        }
+    });
+
+    $('body').on('click','.editable-box',function(){
+        selected_element = $(this);
+
+        $('.text-control').hide();
+        $('.box-control').show();
+
+        $('#layouts').collapse('hide');
+        $('#tool-box').collapse('show');
+
+        var background_color = selected_element.css('background-color');
+
+        if(background_color != "transparent")
+            background_color = rgb2hex(background_color);
+
+        $('#background-color').val(background_color);
     });
 
     $('#font-size-slider').on('change',function(){
@@ -252,7 +300,7 @@ $(function(){
         }
     });
 
-    $('body').on('click', function (e) {
+    $('body').on('mouseup', function (e) {
         if ($(e.target).data('toggle') !== 'popover'
             && $(e.target).parents('.popover.in').length === 0) {
             if(selected_element && selected_element.popover()){
@@ -292,5 +340,16 @@ $(function(){
             });
         }
     });
+
+    var hexDigits = new Array("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f");
+
+    function rgb2hex(rgb) {
+        rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+        return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+    }
+
+    function hex(x) {
+        return isNaN(x) ? "00" : hexDigits[(x - x % 16) / 16] + hexDigits[x % 16];
+    }
 
 });
