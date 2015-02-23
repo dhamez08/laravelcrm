@@ -201,3 +201,15 @@ ul.client-social-icons {
 .panel-red-intense > .panel-body {
 	padding: 5px;
 }
+
+.panel-green-light {
+	border-color: #59C69E;
+}
+.panel-green-light > .panel-heading {
+	color: #8a6d3b;
+	background-color: #59C69E;
+	border-color: #59C69E;
+}
+.panel-green-light > .panel-body {
+	padding: 5px;
+}

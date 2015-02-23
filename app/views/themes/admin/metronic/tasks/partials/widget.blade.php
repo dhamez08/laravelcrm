@@ -1,8 +1,8 @@
 <!-- BEGIN Portlet PORTLET-->
-<div class="portlet portlet-sortable light bordered">
+<div class="portlet {{ $portletClass or 'portlet-sortable light bordered' }}">
 	<div class="portlet-title">
-		<div class="caption font-green-sharp">
-			<i class="fa fa-check-square-o font-green-sharp"></i>
+		<div class="caption {{ $portletCaptionClass or 'font-green-sharp' }}">
+			<i class="fa fa-check-square-o"></i>
 			<span class="caption-subject bold uppercase">Task</span>
 		</div>
 		<div class="actions pull-left" style="margin-left: 5px">
@@ -21,7 +21,7 @@
 		</div>
 	</div>
 	<div class="portlet-body">
-		<p>Overdue : {{$tasks['due']->all}}</p>
+		<p>Overdue : <span class="badge badge-danger">{{$tasks['due']->all}}</span></p>
 		{{ 
 			Form::open(
 				array(
@@ -76,9 +76,9 @@
 			</table>
 		</div>
 		{{ Form::close() }}
-		<p>Today : {{$tasks['due']->today}}</p>
-		<p>Next Seven Days : {{$tasks['due']->seven}}</p>
-		<p>Future : {{$tasks['due']->future}}</p>
+		<p>Today : <span class="badge badge-warning">{{$tasks['due']->today}}</span></p>
+		<p>Next Seven Days : <span class="badge badge-info">{{$tasks['due']->seven}}</span></p>
+		<p>Future : <span class="badge badge-default">{{$tasks['due']->future}}</span></p>
 	</div>
 </div>
 <!-- END Portlet PORTLET-->

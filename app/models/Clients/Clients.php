@@ -89,6 +89,19 @@ class Clients extends \Eloquent{
 		return $query->whereNotIn('relationship', $relationshipArray);
 	}
 
+	public function scopeBirthdayThisWeek($query) {
+		return $query->whereRaw(\DB::raw("DATE_FORMAT(dob, '%m-%d') between
+											DATE_FORMAT(adddate(curdate(), INTERVAL 1-DAYOFWEEK(curdate()) DAY), '%m-%d')	
+											AND
+											DATE_FORMAT(adddate(curdate(), INTERVAL 7-DAYOFWEEK(curdate()) DAY), '%m-%d')"
+											)
+		);
+	}
+
+	public function scopeBirthdayThisMonth($query) {
+		return $query->whereRaw(\DB::raw('MONTH(dob) = MONTH(NOW())'));
+	}
+
 	/**
 	 * Person that is associated to
 	 * */

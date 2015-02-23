@@ -47,7 +47,7 @@
 					<!-- Dashboard Title -->
 					@section('innerpage-page-title')
 						<h3 class="page-title">
-							{{{$pageTitle or 'Dashboard'}}} <small>{{{$pageSubTitle or ''}}}</small>
+							{{-- {{{$pageTitle or 'Dashboard'}}} <small>{{{$pageSubTitle or ''}}}</small> --}}
 						</h3>
 					@show
 					<!-- Dashboard Title -->
