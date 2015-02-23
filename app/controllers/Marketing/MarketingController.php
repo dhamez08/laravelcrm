@@ -1,5 +1,7 @@
 <?php
 namespace Marketing;
+use Illuminate\Http\Response;
+
 /**
  * Marketing Controller
  *
@@ -380,6 +382,7 @@ class MarketingController extends \BaseController {
 
         $data 						= array_merge($data,$this->getSetupThemes());
         $data['email_templates'] = \User\User::find(\Auth::id())->emailTemplate()->where('type',2)->get();
+        $data['layouts']        = \EmailLayout\EmailLayout::all();
 
         $dataAddTemplateModal = array();
 
@@ -506,6 +509,16 @@ class MarketingController extends \BaseController {
         if($upload_success ){
             return $file_name;
         }
+    }
+
+
+    public function getAjaxLayoutSectionList($layout_id){
+        $sections = \EmailLayout\EmailLayout::find(1)->section;
+        foreach($sections as &$section){
+            $section['display_image'] = asset('public/img/template_builder/'.$section['display_image']);
+            $section['source_code'] = html_entity_decode($section['source_code']);
+        }
+        return \Response::json($sections);
     }
 
 }

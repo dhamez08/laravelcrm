@@ -160,7 +160,7 @@
 														@if( $customers['type'] == 2 )
 															<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$customers['customer_id']))}}">{{$customers['company_name']}}</a>
 														@else
-															<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$customers['customer_id']))}}" data-toggle="popover" data-trigger="hover" data-placement="right" data-title="Client Overview" data-client-fullname="{{ $customers['fullname'] }}" data-client-address="{{ $customers['address'] }}" data-client-phone="{{ implode(', ', $customers['telephone']) }}" data-client-email="{{ implode(', ', $customers['emails']) }}" data-client-website="{{ implode(', ', $customers['urls']) }}">{{$customers['fullname']}}</a>
+															<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$customers['customer_id']))}}" data-toggle="popover" data-trigger="hover" data-placement="right" data-title="Client Overview" data-client-fullname="{{ $customers['fullname'] }}" data-client-address="{{ $customers['address'] }}" data-client-phone="{{ implode(', ', $customers['telephone']) }}" data-client-email="{{ implode(', ', $customers['emails']) }}" data-client-website="{{ implode(', ', $customers['urls']) }}" data-client-profile-picture="{{ isset($customers['profile_image']->image) ? $customers['profile_image']->image : url('public/img/profile_images/summary_person.png') }}">{{$customers['fullname']}}</a>
 														@endif
 
 														{{--@if( $customers['associated'] != 0 && $customers['relationship'] != '' )--}}
@@ -186,9 +186,9 @@
 
 													</div>
 												</td>
-												<td>
-													<a href="{{ url('clients/delete-client/' . $customers['customer_id'] . '/' . \Session::token() ) }}" class="btn btn-danger btn-sm btn-delete-client">
-													<i class="fa fa-trash"></i> </a>
+												<td style="vertical-align:middle">
+													<a href="{{ url('clients/delete-client/' . $customers['customer_id'] . '/' . \Session::token() ) }}" class="btn-delete-client">
+													<i class="icon-trash"></i> </a>
 												</td>
 											@else
 												{{-- @if( in_array($tag_id,$customers['my_tag_object']->lists('tag_id')) ) --}}
@@ -201,7 +201,7 @@
 															@if( $customers['type'] == 2 )
 																<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$customers['customer_id']))}}">{{$customers['company_name']}}</a>
 															@else
-																<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$customers['customer_id']))}}" data-toggle="popover" data-trigger="hover" data-placement="right" data-title="Client Overview" data-client-fullname="{{ $customers['fullname'] }}" data-client-address="{{ $customers['address'] }}" data-client-phone="{{ implode(', ', $customers['telephone']) }}" data-client-email="{{ implode(', ', $customers['emails']) }}" data-client-website="{{ implode(', ', $customers['urls']) }}">{{$customers['fullname']}}</a>
+																<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$customers['customer_id']))}}" data-toggle="popover" data-trigger="hover" data-placement="right" data-title="Client Overview" data-client-fullname="{{ $customers['fullname'] }}" data-client-address="{{ $customers['address'] }}" data-client-phone="{{ implode(', ', $customers['telephone']) }}" data-client-email="{{ implode(', ', $customers['emails']) }}" data-client-website="{{ implode(', ', $customers['urls']) }}" {{ isset($customers['profile_image']->image) ? $customers['profile_image']->image : url('public/img/profile_images/summary_person.png') }}>{{$customers['fullname']}}</a>
 															@endif
 
 															{{--@if( $customers['associated'] != 0 && $customers['relationship'] != '' )--}}
@@ -218,9 +218,9 @@
 															{{--@endif--}}
 														</div>
 													</td>
-													<td>
-														<a href="{{ url('clients/delete-client/' . $customers['customer_id'] . '/' . \Session::token() ) }}" class="btn btn-danger btn-sm btn-delete-client">
-														<i class="fa fa-trash"></i> </a>
+													<td style="vertical-align:middle">
+														<a href="{{ url('clients/delete-client/' . $customers['customer_id'] . '/' . \Session::token() ) }}" class="btn-delete-client">
+														<i class="icon-trash"></i> </a>
 													</td>
 												@endif
 											@endif
@@ -239,16 +239,24 @@
 		</div>
 
 		<div id="client-popover-template" class="hidden">
-			<div class="row">
-	            <div class="col-md-12 client-popover-detail-wrapper">
-	                <h4 class="fullname"></h4>
-	                <p class="hidden"><strong>Family Members: </strong> <span class="family-members"></span> </p>
-	                <p><strong>Address: </strong> <span class="address"></span> </p>
-	                <p><strong>Phone: </strong> <span class="phone"></span> </p>
-	                <p><strong>Email: </strong> <span class="email"></span> </p>
-	                <p><strong>Website: </strong> <span class="website"></span> </p>
-	            </div>             
+			<div class="client-popover-detail-wrapper">
+				<div class="row">
+					<div class="col-md-offset-2 col-md-8">
+						<img src="" class="profile-picture img-rounded img-responsive" />
+					</div>
+				</div>
+				<div class="row">
+		            <div class="col-md-12">
+		                <h4 class="fullname"></h4>
+		                <p class="hidden"><strong>Family Members: </strong> <span class="family-members"></span> </p>
+		                <p><strong>Address: </strong> <span class="address"></span> </p>
+		                <p><strong>Phone: </strong> <span class="phone"></span> </p>
+		                <p><strong>Email: </strong> <span class="email"></span> </p>
+		                <p><strong>Website: </strong> <span class="website"></span> </p>
+		            </div>             
+				</div>
 			</div>
+
 		</div>
 
 	@stop
@@ -292,6 +300,7 @@
 						var popoverTemplate = $('#client-popover-template');
 
 						popoverTemplate = popoverTemplate.find('.client-popover-detail-wrapper');
+						popoverTemplate.find('.profile-picture').attr('src', $(this).data('client-profile-picture'));
 						popoverTemplate.find('.fullname').text($(this).data('client-fullname'));
 						popoverTemplate.find('.family-members').text('FAMILY MEMBERS');
 						popoverTemplate.find('.address').text($(this).data('client-address'));

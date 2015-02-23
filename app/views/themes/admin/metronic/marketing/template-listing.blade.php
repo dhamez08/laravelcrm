@@ -26,7 +26,7 @@
                 <a data-toggle="tab" href="#personal" aria-expanded="false"> Personal </a>
             </li>
             <li class="">
-                <a data-toggle="tab" href="#template-creator" aria-expanded="false"> Template Creator </a>
+                <a id="template-creator-tab" data-toggle="tab" href="#template-creator" aria-expanded="false"> Template Creator </a>
             </li>
         </ul>
         <div class="tab-content">
@@ -176,54 +176,67 @@
                     <!--  Section selector  -->
                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                             <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="headingOne">
+                                <div class="panel-heading" role="tab" id="module-heading">
                                     <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#sections" aria-expanded="true" aria-controls="collapseOne">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#layouts" aria-expanded="true" aria-controls="collapseOne">
                                             <i class="fa fa-th-large"></i> Modules
                                         </a>
                                     </h4>
                                 </div>
-                                <div id="sections" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                                    <div class="panel-body">
-                                        <div class="col-md-12 section-element"><img data-section="header" src="{{asset('public/img/template_builder/header.jpg')}}"/></div>
-                                        <div class="col-md-12 section-element"><img data-section="content-1" src="{{asset('public/img/template_builder/1-1 feature.jpg')}}"/></div>
-                                        <div class="col-md-12 section-element"><img data-section="content-2" src="{{asset('public/img/template_builder/1-1 content box.jpg')}}"/></div>
+                                <div id="layouts" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="module-heading">
+                                    <div class="panel-body" id="layout-list">
+                                        <!-- Start -->
+                                        <div class="panel-group" id="layout-list" role="tablist" aria-multiselectable="true">
+                                        @foreach($layouts as $layout)
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading" role="tab" id="layout-{{$layout['id']}}-heading">
+                                                    <h4 class="panel-title">
+                                                        <a class="layout-name" data-layout-id="{{$layout['id']}}" data-toggle="collapse" data-parent="#layout-list" href="#layout-{{$layout['id']}}-sections" aria-expanded="true" aria-controls="collapseOne">
+                                                            <strong>{{$layout['name']}}</strong>
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <div id="layout-{{$layout['id']}}-sections" class="panel-collapse collapse" role="tabpanel" aria-labelledby="layout-{{$layout['id']}}-heading">
+                                                    <div class="panel-body display-image-list" id="layout-{{$layout['id']}}-section-list"></div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                        </div>
+                                        <!-- End -->
                                     </div>
                                 </div>
                             </div>
                             <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="headingOne">
+                                <div class="panel-heading" role="tab" id="module-heading">
                                     <h4 class="panel-title">
                                         <a data-toggle="collapse" data-parent="#accordion" href="#tool-box" aria-expanded="true" aria-controls="collapseTwo">
-                                            <i class="fa fa-sliders"></i> Toolbox
+                                            <i class="fa fa-sliders"></i> Styles
                                         </a>
                                     </h4>
                                 </div>
-                                <div id="tool-box" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                <div id="tool-box" class="panel-collapse collapse" role="tabpanel" aria-labelledby="toolbar-heading">
                                     <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-md-12 m-top-15">
+                                        <div class="row text-control">
+                                            <div class="col-md-6 m-top-15">
                                                 <label for="font-size-slider" class="editor-label">Font Size</label>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-6 m-top-15">
                                                 <input id="font-size-slider" type="range" min="12" max="24" step="1" />
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-5 m-top-15">
+                                        <div class="row text-control">
+                                            <div class="col-md-6 m-top-15">
                                                 <label for="font-size-slider" class="editor-label">Font Color</label>
                                             </div>
-                                            <div class="col-md-7 m-top-15">
+                                            <div class="col-md-6 m-top-15">
                                                 <input id="font-color" class="form-control tool-box-input" type="text"/>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-5 m-top-15">
+                                        <div class="row text-control box-control">
+                                            <div class="col-md-6 m-top-15">
                                                 <label for="font-size-slider" class="editor-label">Background Color</label>
                                             </div>
-                                            <div class="col-md-7 m-top-15">
+                                            <div class="col-md-6 m-top-15">
                                                 <input id="background-color" class="form-control tool-box-input" type="text"/>
                                             </div>
                                         </div>
