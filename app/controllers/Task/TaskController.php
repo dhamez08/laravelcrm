@@ -451,7 +451,7 @@ class TaskController extends \BaseController {
 		return \Redirect::back();
 	}
 
-	public function getWidgetDisplay($customerId, $belongsToUser){
+	public function getWidgetDisplay($customerId, $belongsToUser, $otherData = array()){
 		$dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
 		$data 						= $this->data_view;
 		$belongsTo 					= \Auth::id();
@@ -459,6 +459,9 @@ class TaskController extends \BaseController {
 		if(!is_null($customerId)){
 			$data['customerId'] = $customerId;
 		}
+
+		$data = $data + $otherData;
+
 		$data 						= array_merge($data,$dashboard_data);
 		//var_dump($data['tasks']);
 		//exit();

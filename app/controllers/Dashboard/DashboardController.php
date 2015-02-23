@@ -154,6 +154,14 @@ class DashboardController extends \BaseController {
 			}
 		}
 
+		$data['google_calendar']	= \User\UserEntity::get_instance()->getGoogleCalendarFeedURL();
+		$data['clientBirthdays']	= array(
+			'thisWeek' 	=> \Clients\Clients::customerBelongsTo($user)->birthdayThisWeek()->get(),
+			'thisMonth' => \Clients\Clients::customerBelongsTo($user)->birthdayThisMonth()->get()
+		);
+
+		\Debugbar::info($data['clientBirthdays']['thisMonth']);
+
 		return \View::make( $data['view_path'] . '.dashboard.index', $data );
 	}
 
