@@ -9,6 +9,7 @@
             <link href="{{$asset_path}}/pages//css/template-builder.css" rel="stylesheet"/>
             <link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/bootstrap-summernote/summernote.css"/>
             <link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/farbtastic/farbtastic.css"/>
+            <link rel="stylesheet" type="text/css" href="{{$asset_path}}/global/plugins/jcrop/css/jquery.Jcrop.min.css"/>
             <!-- END PAGE LEVEL SCRIPTS -->
         @stop
 @stop
@@ -259,18 +260,19 @@
         </div>
     </div>
 </div>
-
 @stop
 @stop
 
 @section('body-modals')
     {{ $add_template_modal }}
+    {{ $cropper_modal }}
 @stop
 
 @section('script-footer')
     @parent
     @section('footer-custom-js')
     @parent
+<script type='text/javascript' src="{{$asset_path}}/global/plugins/jcrop/js/jquery.Jcrop.min.js"></script>
 <script type='text/javascript' src="{{$asset_path}}/global/plugins/jquery.caret.js"></script>
 <script src="{{$asset_path}}/global/plugins/bootstrap-summernote/summernote.min.js" type="text/javascript"></script>
 <script src="{{$asset_path}}/global/plugins/farbtastic/farbtastic.js" type="text/javascript"></script>

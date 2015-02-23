@@ -142,3 +142,13 @@
 .layout-name {
     font-size: 14px;
 }
+
+#image-cropper-preview {
+    display: none;
+}
+
+.image-dimension {
+    color: #ACACAC;
+    margin-left: 10px;
+    margin-right: 10px;
+}

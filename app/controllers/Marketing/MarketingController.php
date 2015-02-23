@@ -387,7 +387,8 @@ class MarketingController extends \BaseController {
         $dataAddTemplateModal = array();
 
         return \View::make( $data['view_path'] . '.marketing.template-listing', $data )
-            ->nest('add_template_modal', $data['view_path'] . '.marketing.partials.add_template', $dataAddTemplateModal);
+            ->nest('add_template_modal', $data['view_path'] . '.marketing.partials.add_template', $dataAddTemplateModal)
+            ->nest('cropper_modal', $data['view_path'] . '.marketing.partials.image_cropper', array());
     }
 
     private function getCustomerEmails(){
@@ -496,19 +497,29 @@ class MarketingController extends \BaseController {
 
     public function postFileUpload(){
         if( \Input::hasFile('upload-photo') ){
-            $fileName = $this->_doUpload(\Input::file('upload-photo'));
+            $x_coord = intval(\Input::get('x_coord'));
+            $y_coord = intval(\Input::get('y_coord'));
+            $width = intval(\Input::get('width'));
+            $height = intval(\Input::get('height'));
+            $image_width = \Input::get('image_width');
+            $image_height = \Input::get('image_height');
+
+            $fileName = $this->_doUpload(\Input::file('upload-photo'), $x_coord, $y_coord, $width, $height, $image_width, $image_height);
             return \Response::json(array('success'=>true,'filePath'=>asset('public/documents/'.$fileName)));
         }else{
             return \Response::json(array('success'=>false,'msg'=>'Cannot upload, file.'));
         }
     }
 
-    private function _doUpload($fileName){
-        $file_name = $fileName->getClientOriginalName();
-        $upload_success = $fileName->move($this->fileFolder, $file_name);
-        if($upload_success ){
+    private function _doUpload($file, $x, $y, $width, $height, $image_width, $image_height){
+        $file_name = $file->getClientOriginalName();
+        $image = \Image::make($file->getRealPath())
+            ->crop($width, $height, $x, $y)
+            ->resize($image_width, $image_height)
+            ->save($this->fileFolder."/".$file_name);
+
             return $file_name;
-        }
+//        }
     }
 
 

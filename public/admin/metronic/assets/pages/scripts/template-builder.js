@@ -6,6 +6,8 @@ $(function(){
 
     var color_element = null;
     var selected_element = null;
+    var jcrop_api = null;
+    var is_modal_active = false;
 
     $('#colorpicker').farbtastic(function(color){
         if(selected_element && color_element){
@@ -105,6 +107,9 @@ $(function(){
             var options = new Object();
             var body = $('body');
 
+            var image_width = parseInt(selected_element.css('width').split('px').join(''));
+            var image_height = parseInt(selected_element.css('height').split('px').join(''));
+
             var visibility_icon = $('<i>').addClass('fa popover-icon hide-image');
             parseInt(selected_element.css('opacity')) ? visibility_icon.addClass('fa-eye-slash') : visibility_icon.addClass('fa-eye');
 
@@ -122,6 +127,7 @@ $(function(){
                 .addClass('image-options')
                 .append($('<span>')
                     .addClass('change-photo').text('Change photo '))
+                .append($('<span>').addClass('image-dimension').text(image_width+" x "+image_height))
                 .append($('<form>').attr('method','post').attr('id','upload-form').css('display','none').append($('<input>')
                     .attr('name','upload-photo').attr('type','file').attr('id','upload-photo').css('display','none')))
                 .append($('<i>')
@@ -175,7 +181,9 @@ $(function(){
             })
 
             body.on('change','#upload-photo',function(){
-                $('#upload-form').submit();
+                readURL($(this));
+                $('#image-cropper').modal('show');
+                is_modal_active = true;
             })
 
             var filesToUpload = null;
@@ -195,6 +203,15 @@ $(function(){
 
                 var form = this,
                     formData = new FormData(form);
+
+                var preview = $('#image-cropper-preview');
+
+                formData.append('x_coord',preview.data('x-coord'));
+                formData.append('y_coord',preview.data('y-coord'));
+                formData.append('width',preview.data('width'));
+                formData.append('height',preview.data('height'));
+                formData.append('image_width',image_width);
+                formData.append('image_height',image_height);
 
                 if ($(form).data('loading') === true) {
                     return;
@@ -227,11 +244,63 @@ $(function(){
                 });
             }
 
+            function readURL(input) {
+                if (input[0].files && input[0].files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var true_width;
+                        var true_height;
+
+                        var image = new Image();
+                        image.src = e.target.result;
+                        image.onload = function(){
+                            true_width = this.width;
+                            true_height = this.height;
+
+                            var boundary_w = true_width < image_width ? true_width : image_width;
+                            var boundary_h = true_height < image_height ? true_height : image_height;
+
+                            $('#image-cropper-preview').Jcrop({
+                                onSelect: setSelection,
+                                onChange: setSelection,
+                                boxWidth: 565,
+                                keySupport: false,
+                                trueSize: [true_width,true_height],
+                                minSize: [boundary_w,boundary_h],
+                                setSelect: [0,0,boundary_w,boundary_h],
+                                aspectRatio: boundary_w / boundary_h
+                            },function(){
+                                jcrop_api = this;
+                            });
+                        }
+
+                        var preview = $('#image-cropper-preview');
+                        preview.attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input[0].files[0]);
+                }
+            }
+
+            function setSelection(coords){
+                var preview = $('#image-cropper-preview');
+                preview.data('x-coord', coords.x);
+                preview.data('y-coord', coords.y);
+                preview.data('x2-coord', coords.x2);
+                preview.data('y2-coord', coords.y2);
+                preview.data('height', coords.h);
+                preview.data('width', coords.w);
+            }
+
+            $('#crop-image').on('click',function(){
+                $('#upload-form').submit();
+                is_modal_active = false;
+            });
+
             $('#upload-photo').on('change', handleFileSelect);
             $('#upload-form').on('submit', handleFormSubmit);
         }
         else if(selected_element.hasClass('editable-url')){
-            console.log('test');
             var options = new Object();
             var body = $('body');
 
@@ -303,7 +372,7 @@ $(function(){
     $('body').on('mouseup', function (e) {
         if ($(e.target).data('toggle') !== 'popover'
             && $(e.target).parents('.popover.in').length === 0) {
-            if(selected_element && selected_element.popover()){
+            if(selected_element && selected_element.popover() && !is_modal_active){
                 selected_element.popover('destroy');
             }
         }
@@ -339,6 +408,16 @@ $(function(){
                 }
             });
         }
+    });
+
+    $('#image-cropper').on('hidden.bs.modal', function (e) {
+        is_modal_active = false;
+        if(jcrop_api)
+            jcrop_api.destroy();
+
+        if(selected_element && selected_element.popover() && !is_modal_active)
+            selected_element.popover('destroy');
+
     });
 
     var hexDigits = new Array("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f");
