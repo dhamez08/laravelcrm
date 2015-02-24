@@ -12,7 +12,8 @@
 		"barryvdh/laravel-debugbar": "~1.8",
 		"atticmedia/anvard": "dev-master",
         "camroncade/timezone": "dev-master",
-        "maatwebsite/excel": "1.*"
+        "maatwebsite/excel": "1.*",
+		"intervention/image": "~2.1"
 	},
 	"autoload": {
 		"classmap": [
