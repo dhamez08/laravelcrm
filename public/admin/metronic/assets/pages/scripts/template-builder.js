@@ -266,7 +266,6 @@ $(function(){
                                 boxWidth: 565,
                                 keySupport: false,
                                 trueSize: [true_width,true_height],
-                                minSize: [boundary_w,boundary_h],
                                 setSelect: [0,0,boundary_w,boundary_h],
                                 aspectRatio: boundary_w / boundary_h
                             },function(){
@@ -412,12 +411,13 @@ $(function(){
 
     $('#image-cropper').on('hidden.bs.modal', function (e) {
         is_modal_active = false;
-        if(jcrop_api)
+        if(jcrop_api){
             jcrop_api.destroy();
+        }
 
-        if(selected_element && selected_element.popover() && !is_modal_active)
+        if(selected_element && selected_element.popover() && !is_modal_active){
             selected_element.popover('destroy');
-
+        }
     });
 
     var hexDigits = new Array("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f");
