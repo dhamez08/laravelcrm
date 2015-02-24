@@ -511,15 +511,26 @@ class MarketingController extends \BaseController {
         }
     }
 
+//    private function _doUpload($file, $x, $y, $width, $height, $image_width, $image_height){
+//        $file_name = $file->getClientOriginalName();
+//        $image = \Image::make($file->getRealPath())
+//            ->crop($width, $height, $x, $y)
+//            ->resize($image_width, $image_height)
+//            ->save($this->fileFolder."/".$file_name);
+//
+//            return $file_name;
+////        }
+//    }
+
     private function _doUpload($file, $x, $y, $width, $height, $image_width, $image_height){
         $file_name = $file->getClientOriginalName();
-        $image = \Image::make($file->getRealPath())
-            ->crop($width, $height, $x, $y)
-            ->resize($image_width, $image_height)
-            ->save($this->fileFolder."/".$file_name);
 
-            return $file_name;
-//        }
+        $layer = \PHPImageWorkshop\ImageWorkshop::initFromPath($file->getRealPath());
+        $layer->cropInPixel($width,$height,$x,$y,'LT');
+        $layer->resizeInPixel($image_width, $image_height);
+        $layer->save($this->fileFolder, $file_name, true);
+
+        return $file_name;
     }
 
 

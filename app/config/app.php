@@ -126,7 +126,6 @@ return array(
         'Camroncade\Timezone\TimezoneServiceProvider',
         'Atticmedia\Anvard\AnvardServiceProvider',
         'Maatwebsite\Excel\ExcelServiceProvider',
-        'Intervention\Image\ImageServiceProvider',
 	),
 
 	/*
@@ -197,7 +196,6 @@ return array(
 		'Debugbar' 			=> 'Barryvdh\Debugbar\Facade',
         'ThumbnailGenerator'=> 'Tristan\ThumbnailGenerator',
         'Excel' => 'Maatwebsite\Excel\Facades\Excel',
-        'Image' => 'Intervention\Image\Facades\Image'
 	),
 
 );
