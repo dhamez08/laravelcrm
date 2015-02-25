@@ -77,8 +77,8 @@
 				</a>
 			</li>
 			--}}
-			<li>
-				<a href="javascript:;">
+			<li{{(Request::is('clients/live-documents/*')) ? '  class="start active open"': ''}}>
+				<a href="{{ url('clients/live-documents/' . $customer->id) }}">
 				<i class="fa fa-briefcase"></i>
 				<span class="title">Live Documents</span>
 				<span class="arrow "></span>

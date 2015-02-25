@@ -1773,14 +1773,90 @@ class ClientsController extends \BaseController {
 		return \Response::json( $clients );
 	}
 
-	public function getExcelTest() {
+	public function getLiveDocuments($clientId)
+	{
+		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+		$dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
+		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid');
 
-		$result = \Excel::load('/home/vagrant/sites/one23crm/public/import/3_fullclientexport.csv', function($reader) {
-			$reader->noHeading();
-		})->get();
+		$data 						= $this->_getClientData($clientId);
+		$data['center_column_view']	= 'liveDocuments';
+		$data['clientId']			= $clientId;
 
-		\Debugbar::info($result);
+		$data['customer_details']		=  \Clients\Clients::find($clientId)->address()->first()->toArray();
+		$data['vmd'] 				= \Clients\ClientEntity::get_instance()->getVMD();	//$this->client_model->getVMD();
+		$account 					= \Clients\ClientEntity::get_instance()->getVMDAccount($clientId);	//$this->client_model->getVMDAccount($client);
+		$data['account'] 			= $account;	
+		\Debugbar::info($data['account']);
+		$data['shared'] 			= \Clients\ClientEntity::get_instance()->getViewMyDocsSharedList($clientId);	//$this->client_model->getViewMyDocsSharedList($client);
+		$data['uploaded'] 			= \Clients\ClientEntity::get_instance()->getViewMyDocsUploadedList($account['vmd']);	//$this->client_model->getViewMyDocsUploadedList($account['vmd']);		
 
-		return "Hello World!";
+		$data 						= array_merge($data,$dashboard_data);
+
+		return \View::make( $data['view_path'] . '.clients.liveDocuments', $data);
 	}
+
+	public function getViewMyDocumentsActivate() {
+		$clientID = \Input::get('id');
+		$client = \Clients\Clients::find($clientID);
+		// get client details so we can create an vmd account
+		if ($client) {
+			$result = \Clients\ClientEntity::get_instance()->createVMDAccount($client->id, $client->title, $client->first_name, $client->last_name, 'test@one23.co.uk', $client->address()->first()->postcode);
+			
+			if ($result) {
+				// update client vmd record
+				\Clients\ClientEntity::get_instance()->updateVMDRecord($client->id, $result['ref'], $result['pin']);
+				return \Redirect::to('clients/live-documents/' . $client->id);
+			} else {
+				return \Redirect::to('clients/live-documents/' . $client->id . '?error');
+			}
+		}
+	}
+
+	public function getViewMyDocumentsUnlink() {
+		//$this->load->model('client_model');
+		//$client = $this->input->get('id');
+		$client = \Input::get('id');
+		//$this->client_model->updateVMDRecordRemove($client);
+		\Clients\ClientEntity::get_instance()->updateVMDRecordRemove($client);
+		//redirect("clients/view_my_documents?id=". $client);
+		return \Redirect::to('clients/live-documents/' . $client);
+	}		
+
+	public function postViewMyDocumentsShare() {
+		//$this->load->model('client_model');
+		$name = \Input::get('name');	//$this->input->post('name');
+		$file = \Input::get('file');	//$this->input->post('file');
+		$client = \Input::get('client');	//$this->input->post('client');
+		$notes = \Input::get('notes');	//$this->input->post('notes');
+		$filename = \Input::get('filename');	//$this->input->post('filename');
+		if ($filename) {
+			// get vmd ref
+			$vmd = \Clients\ClientEntity::get_instance()->getVMDAccount($client);	//$this->client_model->getVMDAccount($client);
+			// upload file to vmd
+			$upload = \Clients\ClientEntity::get_instance()->uploadVMDDocument($vmd, $filename, $name, $notes);	//$this->client_model->uploadVMDDocument($vmd, $filename, $name, $notes);
+						
+			if ($upload!="") {
+				// save details
+				$file_details = array(
+					'url' => $upload['url'],
+					'ref' => $upload['ref'],
+					'time' => date('Y-m-d H:i:s'),
+					'user_id' => $client,
+					'name' => $name,
+					'notes' => $notes
+				);
+				//$this->client_model->createVMDShared($file_details);
+				\Clients\ClientEntity::get_instance()->createVMDShared($file_details);
+				//redirect('clients/view_my_documents?id='.$client);			
+				\Redirect::to('clients/live-documents/' . $client);
+			} else {
+				//redirect('clients/view_my_documents?id='.$client . '&error');
+				\Redirect::to('clients/live-documents/' . $client . '?error');
+			}
+		} else {
+			//redirect('clients');
+			\Redirect::to('clients');
+		}	
+	}	
 }
