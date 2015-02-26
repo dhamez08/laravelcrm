@@ -385,7 +385,7 @@ class ClientEntity extends \Eloquent{
 			'file_name' => $name,
 			'file_text' => $notes,
 			//'file' => '@/home/onecouk/www/123crm.co.uk/documents/' . $file
-			'file' => public_path('documents/' . $file)
+			'file' => '@' . public_path('documents/' . $file)
 		);
 		// send over request
 		$ch = curl_init();
@@ -416,7 +416,7 @@ class ClientEntity extends \Eloquent{
 		$results = \DB::select($sql, array($user));
 		if(count($results) > 0) {
 			foreach($results as $row) {
-				$rows[] = $row;
+				$rows[] = (array) $row;
 			}	
 			return $rows;
 		} else {
@@ -433,7 +433,7 @@ class ClientEntity extends \Eloquent{
 		$results = \DB::select($sql, array($ref, $vmd['vmd_user']));
 		if(count($results) > 0) {
 			foreach($results as $row) {
-				$rows[] = $row;
+				$rows[] = (array) $row;
 			}	
 			return $rows;
 		} else {

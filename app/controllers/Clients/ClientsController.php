@@ -1787,7 +1787,6 @@ class ClientsController extends \BaseController {
 		$data['vmd'] 				= \Clients\ClientEntity::get_instance()->getVMD();	//$this->client_model->getVMD();
 		$account 					= \Clients\ClientEntity::get_instance()->getVMDAccount($clientId);	//$this->client_model->getVMDAccount($client);
 		$data['account'] 			= $account;	
-		\Debugbar::info($data['account']);
 		$data['shared'] 			= \Clients\ClientEntity::get_instance()->getViewMyDocsSharedList($clientId);	//$this->client_model->getViewMyDocsSharedList($client);
 		$data['uploaded'] 			= \Clients\ClientEntity::get_instance()->getViewMyDocsUploadedList($account['vmd']);	//$this->client_model->getViewMyDocsUploadedList($account['vmd']);		
 
@@ -1849,14 +1848,14 @@ class ClientsController extends \BaseController {
 				//$this->client_model->createVMDShared($file_details);
 				\Clients\ClientEntity::get_instance()->createVMDShared($file_details);
 				//redirect('clients/view_my_documents?id='.$client);			
-				\Redirect::to('clients/live-documents/' . $client);
+				return \Redirect::to('clients/live-documents/' . $client);
 			} else {
 				//redirect('clients/view_my_documents?id='.$client . '&error');
-				\Redirect::to('clients/live-documents/' . $client . '?error');
+				return \Redirect::to('clients/live-documents/' . $client . '?error');
 			}
 		} else {
 			//redirect('clients');
-			\Redirect::to('clients');
+			return \Redirect::to('clients');
 		}	
 	}	
 }
