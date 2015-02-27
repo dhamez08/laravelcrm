@@ -301,8 +301,8 @@ $(function(){
                 is_modal_active = false;
             });
 
-            $('#upload-photo').one('change', handleFileSelect);
-            $('#upload-form').one('submit', handleFormSubmit);
+            body.on('change','#upload-photo', handleFileSelect);
+            body.on('submit','#upload-form', handleFormSubmit);
         }
         else if(selected_element.hasClass('editable-url')){
             var options = new Object();
