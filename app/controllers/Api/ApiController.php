@@ -1,7 +1,7 @@
 <?php
 namespace Api;
 use Carbon\Carbon;
-class ApiController extends \BaseController {
+class ApiController {
 	
 	public function postVmdShared() {
 		$this->load->model('api_model');
