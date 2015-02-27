@@ -78,7 +78,11 @@
 			</li>
 			--}}
 			<li{{(Request::is('clients/live-documents/*')) ? '  class="start active open"': ''}}>
-				<a href="{{ url('clients/live-documents/' . $customer->id) }}">
+				@if(isset($customer))
+					<a href="{{ url('clients/live-documents/' . $customer->id) }}">
+				@else
+					<a href="javascript:;">
+				@endif
 				<i class="fa fa-briefcase"></i>
 				<span class="title">Live Documents</span>
 				<span class="arrow "></span>

@@ -109,6 +109,7 @@
 									&nbsp;&nbsp;<a download href="{{asset('public/documents/' . $files->filename)}}" class="file-preview" data-thumb="{{asset('public' . $files->thumbnail)}}" title="Download File {{$files->filename}}">{{$files->filename}}</a>
 								</td>
 								<td>
+									<a href="#" class="share-file pull-right" style="padding: 0px 5px" data-toggle="modal" data-target="#modal-share-file" data-filename="{{ $files->filename }}"><i class="fa fa-share"></i></a>&nbsp;&nbsp;
 									<a href="{{
 												action(
 													'File\ClientFileController@getDeleteFile',

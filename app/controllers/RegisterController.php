@@ -91,7 +91,12 @@ class RegisterController extends \BaseController {
 
 			$user 			= $this->userEntity->createOrUpdate(null,2);
 			$this->userEntity->updatePassword($user->id, \Input::get('password'));
-			$userGroup 		= $this->userGroupEntity->createGroup($user->id);
+
+			// Create VMD account
+			$vmdDetails = \UserGroup\UserGroupEntity::get_instance()->createVMDAccount(\Input::get('company'));
+			$userGroupOtherData = array('vmd_user' => $vmdDetails['username'], 'vmd_pass' => $vmdDetails['password']);
+
+			$userGroup 		= $this->userGroupEntity->createGroup($user->id, $userGroupOtherData);
 			$userToGroup 	= $this->userToGroupEntity->createUserToGroup($user->id, $userGroup->id);
 			$subscription 	= $this->SubscriptionEntity->createSubscription($user->id);
 

@@ -329,7 +329,6 @@ class ClientEntity extends \Eloquent{
 	}
 	
 	function createVMDAccount($client, $title, $first_name, $last_name, $email, $postcode) {
-		\Debugbar::info(func_num_args());
 		// log in first
 		$login_details = $this->getVMD();
 		if (!$login_details) {

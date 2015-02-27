@@ -42,8 +42,6 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#modal-share-file').on('shown.bs.modal', function(e) {
-				console.log(e);
-				console.log($(e.relatedTarget).data('filename'));
 				$(this).find('input[name="filename"]').val($(e.relatedTarget).data('filename'));
 			});
 		});
