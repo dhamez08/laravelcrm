@@ -4,7 +4,6 @@ use Carbon\Carbon;
 class ApiController {
 	
 	public function postVmdShared() {
-		$this->load->model('api_model');
 		$new_file = array(
 			'ref' => \Input::get('ref'),
 			'url' => \Input::get('url'),
