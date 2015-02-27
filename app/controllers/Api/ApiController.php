@@ -1,7 +1,7 @@
 <?php
 namespace Api;
 use Carbon\Carbon;
-class ApiController extends Controller{
+class ApiController extends \Controller{
 	
 	public function postVmdShared() {
 		$new_file = array(
