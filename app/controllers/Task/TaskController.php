@@ -251,6 +251,9 @@ class TaskController extends \BaseController {
 				$newNote = \CustomerNotes\CustomerNotes::whereIn('id', \Input::get('note'))->update(array('task_id' => $task->id));
 			}
 
+			// Log Activity
+			\Activity\ActivityEntity::get_instance()->logActivity('Update Task', $taskid);			
+
 			\Session::flash('message', 'Successfully Updated Task' );
 			if( \Input::has('redirect') ){
 				return \Response::json(array('result'=>true,'redirect'=>\Input::get('redirect')));
@@ -338,6 +341,9 @@ class TaskController extends \BaseController {
 				}
 			}
 
+			// Log Activity
+			\Activity\ActivityEntity::get_instance()->logActivity('New Task', $task->id);			
+
 			\Session::flash('message', 'Successfully Added Task' );
 			if( \Input::has('redirect') ){
 				return \Response::json(array('result'=>true,'redirect'=>\Input::get('redirect')));
@@ -411,6 +417,10 @@ class TaskController extends \BaseController {
 				'status'=>0,
 			);
 			$updateTask->update($data);
+
+			// Log Activity
+			\Activity\ActivityEntity::get_instance()->logActivity('Complete Task', $taskid);
+
 			if(\Input::has('redirect')){
 				\Session::flash('message', 'Successfully Completed Task - ' . $name);
 				return \Redirect::to(\Input::get('redirect'));
@@ -427,6 +437,10 @@ class TaskController extends \BaseController {
 			$name = $Task->pluck('name');
 			$Task->delete();
 			\CustomerNotes\CustomerNotes::where('task_id', $taskid)->update(array('task_id' => null));
+
+			// Log Activity
+			//\Activity\ActivityEntity::get_instance()->logActivity('Remove Task', $taskid);
+
 			if(\Input::has('redirect')){
 				\Session::flash('message', 'Successfully Deleted Task - ' . $name);
 				return \Redirect::to(\Input::get('redirect'));
@@ -443,6 +457,13 @@ class TaskController extends \BaseController {
 		if(count($taskIds) > 0) {
 			$tasksDeleted = \CustomerTasks\CustomerTasks::whereIn('id', $taskIds)->delete();
 			\CustomerNotes\CustomerNotes::whereIn('task_id', $taskIds)->update(array('task_id' => null));
+
+			//foreach($taskIds as $id) {
+				// Log Activity
+				//\Activity\ActivityEntity::get_instance()->logActivity('Remove Task', $id);				
+			//}
+
+
 			\Session::flash('message', 'Tasks deleted successfully.');
 		} else {
 			\Session::flash('message', 'No selected tasks to delete.');

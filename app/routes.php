@@ -117,3 +117,5 @@ Route::get('testmail', function()
 	});
 	//echo \Config::get('mail.from.address');
 });
+
+Route::controller('api', 'Api\ApiController');

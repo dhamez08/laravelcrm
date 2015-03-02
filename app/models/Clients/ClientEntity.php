@@ -284,4 +284,160 @@ class ClientEntity extends \Eloquent{
 		return json_encode($typehead);
 	}
 
+	// BEGIN VMD related methods
+	function doVMDLogin($user, $pass) {	
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL,"http://www.viewmydocuments.co.uk/api/providerAuth");
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, "provider_user=". $user ."&provider_pass=". $pass);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		$response = curl_exec($ch);
+		curl_close($ch);
+		if ($response) {
+			$results = json_decode($response, true);
+			return $results['token'];
+		} else {
+			return false;
+		}
+	}	
+	
+	function getVMD() {
+		//$sql = "SELECT vmd_user, vmd_pass FROM users_groups WHERE group_id='". $this->session->userdata('group_id') ."' AND vmd_user!='' and vmd_pass!='' LIMIT 1";
+		$sql = 'SELECT vmd_user, vmd_pass FROM users_groups WHERE id = ?  AND vmd_user != "" and vmd_pass != "" LIMIT 1';		
+		//$query = $this->db->query($sql);
+		$results = \DB::select($sql, array(\Session::get('group_id')));
+		//if($query->num_rows() > 0) {
+		if(count($results) > 0) {
+			$row = (array) $results[0];
+			return $row;
+		} else {
+			return false;
+		}	
+	}
+
+	function getVMDAccount($client) {
+		//$sql = "SELECT vmd, vmd_pin FROM customer WHERE id='". $client ."' AND belongs_to='". $this->session->userdata('group_id') ."' LIMIT 1";
+		$sql = 'SELECT vmd, vmd_pin FROM customer WHERE id = ? AND belongs_to = ? LIMIT 1';		
+		//$query = $this->db->query($sql);
+		$results = \DB::select($sql, array($client, \Session::get('group_id')));
+		if(count($results) > 0) {
+			$row = (array) $results[0];
+			return $row;
+		} else {
+			return false;
+		}	
+	}
+	
+	function createVMDAccount($client, $title, $first_name, $last_name, $email, $postcode) {
+		// log in first
+		$login_details = $this->getVMD();
+		if (!$login_details) {
+			exit('No view my documents login details found');
+		}
+		$login = $this->doVMDLogin($login_details['vmd_user'], $login_details['vmd_pass']);	
+		// send over request
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL,"http://www.viewmydocuments.co.uk/api/searchClient");
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, "token=". $login ."&client_title=". $title ."&client_fname=". $first_name ."&client_sname=". $last_name ."&client_email=". $email ."&client_postcode=". $postcode);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		//curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+		//curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		//curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+		$response = curl_exec($ch);
+		\Debugbar::info($response);
+		curl_close($ch);
+		if ($response) {
+			$results = json_decode($response, true);
+			return $results;
+		} else {
+			return false;
+			//$curl_errno = curl_errno($ch);
+        	//$curl_error = curl_error($ch);
+        	//exit($curl_errno . ': ' . $curl_error); 			
+		}	
+	}	
+	
+	function updateVMDRecord($client, $ref, $pin) {
+		$data = array('vmd' => $ref, 'vmd_pin' => $pin);
+		\DB::table('customer')->where('id', $client)->update($data);
+	}
+	
+	function updateVMDRecordRemove($client) {
+		$data = array('vmd' => '', 'vmd_pin' => '');
+		//$this->db->where('id', $client);
+		//$this->db->update('customer', $data);
+		\DB::table('customer')->where('id', $client)->update($data);
+	}		
+
+	function uploadVMDDocument($client, $file, $name, $notes) {
+		// log in first
+		$login_details = $this->getVMD();
+		if (!$login_details) {
+			exit('No view my documents login details found');
+		}
+		$login = $this->doVMDLogin($login_details['vmd_user'], $login_details['vmd_pass']);	
+		// get the file location and create array
+		$post = array(
+			'token' => $login,
+			'client_ref' => $client['vmd'],
+			'file_name' => $name,
+			'file_text' => $notes,
+			//'file' => '@/home/onecouk/www/123crm.co.uk/documents/' . $file
+			'file' => '@' . public_path('documents/' . $file)
+		);
+		// send over request
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, "http://www.viewmydocuments.co.uk/api/uploadDocument");
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		$response = curl_exec($ch);
+		curl_close($ch);
+		if ($response) {		
+			$response = json_decode($response, true);
+			return array('ref' => $response['ref'], 'url' => $response['url']);
+		} else {
+			return false;
+		}
+	}	
+	
+	function createVMDShared($data) {
+		//$this->db->insert('view_my_docs_shared', $data);	
+		\DB::table('view_my_docs_shared')->insert($data);
+	}
+	
+	function getViewMyDocsSharedList($user) {
+		$rows = array();
+		//$sql = "SELECT * FROM view_my_docs_shared WHERE user_id='". $user ."' ORDER BY time DESC";		
+		$sql = 'SELECT * FROM view_my_docs_shared WHERE user_id = ? ORDER BY time DESC';		
+		//$query = $this->db->query($sql);		
+		$results = \DB::select($sql, array($user));
+		if(count($results) > 0) {
+			foreach($results as $row) {
+				$rows[] = (array) $row;
+			}	
+			return $rows;
+		} else {
+			return false;
+		}	
+	}
+	
+	function getViewMyDocsUploadedList($ref) {
+		$vmd = $this->getVMD();
+		$rows = array();
+		//$sql = "SELECT * FROM view_my_docs_uploaded WHERE ref='". $ref ."' AND provider='". $vmd['vmd_user'] ."' ORDER BY time DESC";	
+		$sql = 'SELECT * FROM view_my_docs_uploaded WHERE ref = ? AND provider = ? ORDER BY time DESC';		
+		//$query = $this->db->query($sql);		
+		$results = \DB::select($sql, array($ref, $vmd['vmd_user']));
+		if(count($results) > 0) {
+			foreach($results as $row) {
+				$rows[] = (array) $row;
+			}	
+			return $rows;
+		} else {
+			return false;
+		}	
+	}
+	// END VMD related methods
 }

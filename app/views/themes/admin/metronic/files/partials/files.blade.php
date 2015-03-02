@@ -34,3 +34,16 @@
 		</div>
 	</div>
 </div>
+
+@include($view_path . '.files.partials.modal-share-file', array('clientId' => $customer->id))
+
+@section('footer-custom-js')
+	@parent
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#modal-share-file').on('shown.bs.modal', function(e) {
+				$(this).find('input[name="filename"]').val($(e.relatedTarget).data('filename'));
+			});
+		});
+	</script>
+@stop

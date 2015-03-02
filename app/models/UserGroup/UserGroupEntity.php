@@ -43,9 +43,16 @@ class UserGroupEntity extends \Eloquent{
 	 * @param	$user_id	int		the user id to where manager it belong
 	 * @return	object
 	 * */
-	public function createGroup($user_id){
+	public function createGroup($user_id, $otherData = array()){
 		$userGroup = new \UserGroup\UserGroup;
 		$userGroup->manager_id = $user_id;
+
+		if(count($otherData) > 0) {
+			foreach($otherData as $odKey => $odVal) {
+				$userGroup->$odKey = $odVal;
+			}
+		}
+
 		$userGroup->save();
 		return $userGroup;
 	}
@@ -109,6 +116,29 @@ class UserGroupEntity extends \Eloquent{
 			$userGroup->save();
 			return $userGroup;
 		}
+	}
+
+	public function createVMDAccount($company, $notification = null)
+	{
+		if(is_null($notification)) {
+			$notification = url('api/vmd-shared');
+		}
+
+		// send over request
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL,"http://www.viewmydocuments.co.uk/api/providerCreate");
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, "provider_company=". $company ."&provider_notification=". $notification ."");
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		$response = curl_exec($ch);
+		\Debugbar::info($response);
+		curl_close($ch);
+		if ($response) {
+			$results = json_decode($response, true);
+			return $results;
+		} else {
+			return false;			
+		}	
 	}
 
 }
