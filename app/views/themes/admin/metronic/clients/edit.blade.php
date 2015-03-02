@@ -249,7 +249,7 @@
 			    	if($('#home_address_line_1').val() !== '') address.push($('#home_address_line_1').val());
 			    	if($('#home_address_line_2').val() !== '') address.push($('#home_address_line_2').val());
 			    	if($('#home_address_line_3').val() !== '') address.push($('#home_address_line_3').val());
-			    	$('#home_address').val(address.join(', '));
+			    	$('#home_address').val(address.join('\n'));
 			    }			
 			});
 

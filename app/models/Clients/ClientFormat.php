@@ -94,8 +94,8 @@ class ClientFormat extends Facade{
 
 	public function displayHtmlAddress(){
 		$address = '<address>';
-		$address .= $this->address_line_1.'<br>';
-		$address .= (!empty($this->address_line_2)) ? $this->address_line_2.'<br>':'';
+		$address .= nl2br($this->address_line_1).'<br>';
+		$address .= (!empty($this->address_line_2)) ? nl2br($this->address_line_2).'<br>':'';
 		$address .= $this->town.'<br>';
 		$address .= (!empty($this->county)) ? $this->county.'<br>':'';
 		$address .= $this->postcode.'<br>';
