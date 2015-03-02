@@ -9,9 +9,11 @@
 				Filter By <i class="fa fa-angle-down"></i>
 				</a>
 				<div class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
+					@if(isset($user_list))
 					@foreach($user_list as $ulKey => $ulVal)
 					<label><input type="radio" name="recentActivityFilter" value="{{ $ulKey }}"/>{{ $ulVal }}</label>
 					@endforeach
+					@endif
 				</div>
 			</div>
 		</div>
