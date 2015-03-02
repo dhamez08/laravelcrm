@@ -524,10 +524,13 @@ class MarketingController extends \BaseController {
 
     private function _doUpload($file, $x, $y, $width, $height, $image_width, $image_height){
         $file_name = $file->getClientOriginalName();
+        $file_extension = $file->getClientOriginalExtension();
 
         $layer = \PHPImageWorkshop\ImageWorkshop::initFromPath($file->getRealPath());
         $layer->cropInPixel($width,$height,$x,$y,'LT');
         $layer->resizeInPixel($image_width, $image_height);
+
+        $file_name = sha1($file_name.time()).".".$file_extension;
         $layer->save($this->fileFolder, $file_name, true);
 
         return $file_name;
