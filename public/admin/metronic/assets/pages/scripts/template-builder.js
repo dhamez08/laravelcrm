@@ -244,6 +244,11 @@ $(function(){
                             $('#cropper-loader').addClass('hide');
                             $('#close-cropper').click();
                             is_modal_active = false;
+                        } else {
+                            $('#cropper-loader').addClass('hide');
+                            $('#close-cropper').click();
+                            is_modal_active = false;
+                            alert('File dimension or file size is too large. Please resize image.')
                         }
                     },
                     complete: function()

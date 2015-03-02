@@ -160,3 +160,8 @@
 #image-cropper .modal-body {
     text-align: center;
 }
+
+#image-cropper-preview {
+    width: 565px;
+    height: auto;
+}

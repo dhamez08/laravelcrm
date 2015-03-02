@@ -7,7 +7,7 @@
             </div>
             <div class="modal-body">
                 <img class="hide" id="cropper-loader" src="{{$asset_path}}/global/img/spiffygif_88x88.gif"/>
-                <img id="image-cropper-preview" width="565"/>
+                <img id="image-cropper-preview" />
             </div>
             <div class="modal-footer">
                 <button id="close-cropper" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
