@@ -209,7 +209,7 @@
 			    	if($('#work_address_line_1').val() !== '') address.push($('#work_address_line_1').val());
 			    	if($('#work_address_line_2').val() !== '') address.push($('#work_address_line_2').val());
 			    	if($('#work_address_line_3').val() !== '') address.push($('#work_address_line_3').val());
-			    	$('#work_address').val(address.join(', '));
+			    	$('#work_address').val(address.join('\n'));
 			    }			    				
 			});
 
