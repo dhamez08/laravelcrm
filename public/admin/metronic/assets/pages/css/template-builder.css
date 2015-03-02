@@ -152,3 +152,11 @@
     margin-left: 10px;
     margin-right: 10px;
 }
+
+.center-align {
+    margin: 0 auto;
+}
+
+#image-cropper .modal-body {
+    text-align: center;
+}

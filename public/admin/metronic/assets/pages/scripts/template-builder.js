@@ -8,6 +8,8 @@ $(function(){
     var selected_element = null;
     var jcrop_api = null;
     var is_modal_active = false;
+    var image_width = 0;
+    var image_height = 0;
 
     $('#colorpicker').farbtastic(function(color){
         if(selected_element && color_element){
@@ -38,10 +40,10 @@ $(function(){
     })
 
     $('body').on('mouseover','.section-container',function(){
-        $(this).find('.close-button-container').fadeIn();
+        $(this).find('.close-button-container').show('slide',{direction:'right'},200);
 
         $(this).closest('.section-container').on('mouseleave',function(){
-            $('.close-button-container').fadeOut();
+            $('.close-button-container').hide('slide',{direction:'right'},200);
         })
     });
 
@@ -107,8 +109,8 @@ $(function(){
             var options = new Object();
             var body = $('body');
 
-            var image_width = parseInt(selected_element.css('width').split('px').join(''));
-            var image_height = parseInt(selected_element.css('height').split('px').join(''));
+            image_width = parseInt(selected_element.css('width').split('px').join(''));
+            image_height = parseInt(selected_element.css('height').split('px').join(''));
 
             var visibility_icon = $('<i>').addClass('fa popover-icon hide-image');
             parseInt(selected_element.css('opacity')) ? visibility_icon.addClass('fa-eye-slash') : visibility_icon.addClass('fa-eye');
@@ -234,6 +236,9 @@ $(function(){
                     {
                         if(response.success){
                             selected_element.attr('src',response.filePath);
+                            $('#cropper-loader').addClass('hide');
+                            $('#close-cropper').click();
+                            is_modal_active = false;
                         }
                     },
                     complete: function()
@@ -297,7 +302,14 @@ $(function(){
             }
 
             $('#crop-image').one('click',function(){
+                var preview = $('#image-cropper-preview');
                 $('#upload-form').submit();
+                    if(jcrop_api){
+                        jcrop_api.destroy();
+                        $('#cropper-loader').removeClass('hide');
+                        preview.removeAttr('style');
+                    }
+
                 is_modal_active = false;
             });
 
