@@ -112,6 +112,8 @@ $(function(){
             image_width = parseInt(selected_element.css('width').split('px').join(''));
             image_height = parseInt(selected_element.css('height').split('px').join(''));
 
+            console.log('width: '+image_width+", height: "+image_height);
+
             var visibility_icon = $('<i>').addClass('fa popover-icon hide-image');
             parseInt(selected_element.css('opacity')) ? visibility_icon.addClass('fa-eye-slash') : visibility_icon.addClass('fa-eye');
 
@@ -214,6 +216,9 @@ $(function(){
                 formData.append('height',preview.data('height'));
                 formData.append('image_width',image_width);
                 formData.append('image_height',image_height);
+
+
+                console.log('width: '+image_width+", height: "+image_height);
 
                 if ($(form).data('loading') === true) {
                     return;
