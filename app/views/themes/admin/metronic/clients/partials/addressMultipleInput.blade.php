@@ -28,7 +28,10 @@
 			);
 		}}
 		</div>
-	</div>	
+	</div>
+
+	<div class="form-group" id="{{ $index }}_postcode_lookup"></div>  
+
 	<div class="form-group">
 		<label class="control-label col-md-3">Address</label>
 		<div class="col-md-9">
@@ -38,6 +41,7 @@
 					isset($val->address_line_1) ? $val->address_line_1 : null,
 					array(
 						'class'=>'form-control input-sm',
+						'id'=>$index.'_address',
 						'rows'=>5,
 						'cols'=>8,
 						'style'=>'resize:none;',
@@ -55,6 +59,7 @@
 					isset($val->town) ? $val->town : null,
 					array(
 						'class'=>'form-control input-sm',
+						'id'=>$index.'_town',
 					)
 				);
 			}}
@@ -83,11 +88,16 @@
 					isset($val->postcode) ? $val->postcode : null,
 					array(
 						'class'=>'form-control input-sm',
+						'id'=>$index.'_postcode'
 					)
 				);
 			}}
 		</div>
 	</div>
+
+	<input type="hidden" id="{{ $index }}_address_line_1">
+	<input type="hidden" id="{{ $index }}_address_line_2">
+	<input type="hidden" id="{{ $index }}_address_line_3">
 
 	@if(isset($val->id))
 		{{ Form::hidden('address['.$index.'][id]', $val->id) }}
