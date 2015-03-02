@@ -160,7 +160,20 @@ class DashboardController extends \BaseController {
 			'thisMonth' => \Clients\Clients::customerBelongsTo($user)->birthdayThisMonth()->get()
 		);
 
-		\Debugbar::info($data['clientBirthdays']['thisMonth']);
+		$recentActivities = \Activity\ActivityEntity::get_instance()->getActivities();
+		$recentActivitiesList = \Activity\ActivityEntity::get_instance()->listActivities($recentActivities);
+		$data['user_list'] = array(
+			\Auth::id() => 'Myself Only',
+			'all'		=> 'All',
+		);
+		$sub_users = \CustomerOpportunities\CustomerOpportunitiesEntity::get_instance()->getGroupUsersList();
+		if(count($sub_users) > 0) {
+			foreach ($sub_users as $su) {
+				$data['user_list'][$su->user_id] = $su->first_name . ' ' . $su->last_name;
+			}
+		}		
+
+		$data['recentActivities'] = $recentActivitiesList;
 
 		return \View::make( $data['view_path'] . '.dashboard.index', $data );
 	}

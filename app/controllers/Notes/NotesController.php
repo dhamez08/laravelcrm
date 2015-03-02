@@ -178,7 +178,12 @@ class NotesController extends \BaseController {
 				'added_by' => \Auth::id(),
 				'file' => $fileName,
 			);
-			\CustomerNotes\CustomerNotesEntity::get_instance()->createOrUpdate($data);
+			$note = \CustomerNotes\CustomerNotesEntity::get_instance()->createOrUpdate($data);
+
+			if($note->id) {
+				// Log Activity
+				\Activity\ActivityEntity::get_instance()->logActivity('New Note', $note->id);
+			}
 
 			\Session::flash('message', 'Successfully Added Note' );
 			if( \Input::has('redirect') ){
@@ -201,6 +206,10 @@ class NotesController extends \BaseController {
 		if($Note->count() > 0){
 			\CustomerNotes\CustomerNotesEntity::get_instance()->removeNoteAttachFile($Note->pluck('file'));
 			$Note->delete();
+
+			// Log Activity
+			//\Activity\ActivityEntity::get_instance()->logActivity('Remove Note', $id);
+
 			if(\Input::has('redirect')){
 				\Session::flash('message', 'Successfully Deleted Note');
 				return \Redirect::to(\Input::get('redirect'));

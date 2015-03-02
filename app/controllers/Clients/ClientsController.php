@@ -289,6 +289,10 @@ class ClientsController extends \BaseController {
 				$person->url()->delete();
 			}
 			$person->delete();
+
+			// Log Activity
+			//\Activity\ActivityEntity::get_instance()->logActivity('Remove Client', $id);
+
 			\Session::flash('message', 'Successfully Delete Person');
 			return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>$client));
 		}else{
@@ -313,6 +317,10 @@ class ClientsController extends \BaseController {
 				$person->url()->delete();
 			}
 			$person->delete();
+
+			// Log Activity
+			// \Activity\ActivityEntity::get_instance()->logActivity('Remove Client', $id);
+
 			\Session::flash('message', 'Successfully Deleted Child');
 			return \Redirect::action('Clients\ClientsController@getEdit',array('clientId'=>$client));
 		}else{
@@ -338,6 +346,10 @@ class ClientsController extends \BaseController {
 				$person->url()->delete();
 			}
 			$person->delete();
+
+			// Log Activity
+			//\Activity\ActivityEntity::get_instance()->logActivity('Remove Client', $id);
+
 			\Session::flash('message', 'Successfully Deleted Client');
 			return \Redirect::action('Clients\ClientsController@getIndex');
 		}else{
@@ -568,6 +580,10 @@ class ClientsController extends \BaseController {
 					'added a new personal client ',
 					1
 				);
+
+				// Log Activity
+				\Activity\ActivityEntity::get_instance()->logActivity('New Client', $customer->id);
+
 
 				// update dashboard
 				\Session::flash('message', 'Successfully Added Customer');
@@ -817,6 +833,10 @@ class ClientsController extends \BaseController {
 
 			}
 			if( $customer ){
+
+				// Log Activity
+				\Activity\ActivityEntity::get_instance()->logActivity('Update Client', $clientId);
+
 				\Session::flash('message', 'Successfully Updated Customer');
 				return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>$clientId));
 			}
@@ -1183,6 +1203,9 @@ class ClientsController extends \BaseController {
 					'added a new company client ',
 					1
 				);
+
+				// Log Activity
+				\Activity\ActivityEntity::get_instance()->logActivity('New Client', $customer->id);
 
 				// update dashboard
 				\Session::flash('message', 'Successfully Added Customer');

@@ -117,6 +117,10 @@ class UserController extends \BaseController {
 				$user->id,
 				serialize( \Input::get('permission') )
 			);
+
+			// Log Activity
+			\Activity\ActivityEntity::get_instance()->logActivity('New User', $user->id);
+
 			\Session::flash('message', 'Successfully Added User');
 			return \Redirect::to('settings/users');
 		}else{
@@ -173,6 +177,10 @@ class UserController extends \BaseController {
 				serialize( \Input::get('permission') ),
 				$userPermission->id
 			);
+
+			// Log Activity
+			\Activity\ActivityEntity::get_instance()->logActivity('Update User', $userId);
+
 			\Session::flash('message', 'Successfully Updated User');
 			return \Redirect::to('settings/users/addtional-user-edit/' . $userId);
 		}else{
@@ -192,6 +200,10 @@ class UserController extends \BaseController {
 		$userToGroup->delete();
 
 		if($user) {
+
+			// Log Activity
+			//\Activity\ActivityEntity::get_instance()->logActivity('Remove User', $user_id);
+
 			\Session::flash('message', 'Successfully deleted user.');
 		}
 

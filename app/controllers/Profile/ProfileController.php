@@ -127,6 +127,10 @@ class ProfileController extends \BaseController {
 		$validator = \Validator::make(\Input::all(), $rules, $messages);
 		if ( $validator->passes() ) {
 			\User\UserEntity::get_instance()->updateAccount($userId);
+
+			// Log Activity
+			\Activity\ActivityEntity::get_instance()->logActivity('Update Profile', $userId);
+
 			\Session::flash('message', 'Successfully updated account');
 			return \Redirect::to('profile');
 		}else{
