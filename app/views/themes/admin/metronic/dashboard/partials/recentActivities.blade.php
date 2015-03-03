@@ -7,13 +7,15 @@
 			<div class="btn-group">
 				<a class="btn btn-sm btn-default" href="#" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 				Filter By <i class="fa fa-angle-down"></i>
-				</a>
+				</a>				
 				<div class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
-					@if(isset($user_list))
-					@foreach($user_list as $ulKey => $ulVal)
-					<label><input type="radio" name="recentActivityFilter" value="{{ $ulKey }}"/>{{ $ulVal }}</label>
-					@endforeach
+					<form method="get">
+					@if(isset($user_list) && isset($selectedOption))
+						@foreach($user_list as $ulKey => $ulVal)
+						<label><input type="radio" onclick="$(this).closest('form').submit()" name="recentActivitiesUserFilter" value="{{ $ulKey }}" {{ $selectedOption['recentActivitiesUserFilter'] == $ulKey ? 'checked' : '' }}/>{{ $ulVal }}</label>
+						@endforeach
 					@endif
+					</form>
 				</div>
 			</div>
 		</div>

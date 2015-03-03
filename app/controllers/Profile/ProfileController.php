@@ -51,6 +51,8 @@ class ProfileController extends \BaseController {
 		 * line 42
 		 * */
 		$this->data_view['pageSubTitle'] 	= \Auth::user()->title.' '.\Auth::user()->first_name.' '.\Auth::user()->last_name;
+
+		$this->pipeline_model = new \CustomerOpportunities\CustomerOpportunitiesEntity;
 	}
 
 	/**
@@ -80,8 +82,40 @@ class ProfileController extends \BaseController {
 		$data['group']			= \UserGroup\UserGroup::find( $data['userToGroup']->group_id );
 		$data['get_sms_purchase']	=	\SMS\SMSEntity::get_instance()->getPurchaseSMS();
 		$data['get_currency']		=	\SMS\SMSEntity::get_instance()->getCurrency();
+
+		$today['start'] = date('Y-m-d 00:00:00');
+		$today['end']	= date('Y-m-d 23:59:59');
+		
+		$day = date('w');
+		$week['start'] 	= date('Y-m-d', strtotime('-'.$day.' days'));
+		$week['end'] 	= date('Y-m-d', strtotime('+'.(6-$day).' days'));
+
+		$month['start'] = date("Y-m-01") . " 00:00:00";
+		$month['end'] 	= date("Y-m-t") . " 23:59:59";
+		
+		$data['sales'] = array(
+			'count' 	=> array(
+				'daily' 	=> $this->pipeline_model->pipelineSalesUserCount($today['start'], $today['end'], $data['userToGroup']->group_id)[0]->total,
+				'weekly'	=> $this->pipeline_model->pipelineSalesUserCount($week['start'], $week['end'], $data['userToGroup']->group_id)[0]->total,
+				'monthly'	=> $this->pipeline_model->pipelineSalesUserCount($month['start'], $month['end'], $data['userToGroup']->group_id)[0]->total,
+			),
+			'amount' 	=> array(
+				'daily' 	=> 0,
+				'weekly'	=> 0,
+				'monthly'	=> $this->pipeline_model->pipelineSalesUser($month['start'], $month['end'], $data['userToGroup']->group_id)[0]->total,
+			)
+		);
+
+		$data['opportunities'] = $this->pipeline_model->pipelineListGroupUser(null, null, $data['userToGroup']->group_id);
+		\Debugbar::info($data['opportunities']);
+
+		$data['sub_users'] = \CustomerOpportunities\CustomerOpportunitiesEntity::get_instance()->getGroupUsersList();		
+
 		$data 					= array_merge($data,\Dashboard\DashboardController::get_instance()->getSetupThemes());
 		//var_dump($data);exit();
+
+		\Debugbar::info($data['user']);
+
 		return \View::make( $data['view_path'] . '.profile.index', $data );
 	}
 

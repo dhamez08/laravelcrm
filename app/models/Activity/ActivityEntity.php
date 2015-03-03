@@ -59,9 +59,18 @@ class ActivityEntity extends \Eloquent {
 
 	public function getActivities($userId = null, $otherFilters = array())
 	{
-		$userId = is_null($userId) ? \Auth::id() : $userId;
-
-		$activities = \User\User::find($userId)->activity()->orderBy('date_added','desc')->get();
+		\Debugbar::info($userId);
+		if(is_null($userId)) {
+			\Debugbar::info('is_null');
+			$userId = \Auth::id();
+			$activities = \User\User::find($userId)->activity()->orderBy('date_added','desc')->get();
+		} elseif(is_numeric($userId)) {
+			\Debugbar::info('is_int');
+			$activities = \User\User::find($userId)->activity()->orderBy('date_added','desc')->get();
+		} else {
+			\Debugbar::info('all');
+			$activities = \Activity\Activity::where('belongs_to', \Session::get('group_id'))->orderBy('date_added','desc')->get();
+		}
 
 		return $activities;
 	}
