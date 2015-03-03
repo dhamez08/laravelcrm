@@ -160,7 +160,9 @@ class DashboardController extends \BaseController {
 			'thisMonth' => \Clients\Clients::customerBelongsTo($user)->birthdayThisMonth()->get()
 		);
 
-		$recentActivities = \Activity\ActivityEntity::get_instance()->getActivities();
+		$recentActivitiesUserFilter = \Input::get('recentActivitiesUserFilter', \Auth::id());
+
+		$recentActivities = \Activity\ActivityEntity::get_instance()->getActivities($recentActivitiesUserFilter);
 		$recentActivitiesList = \Activity\ActivityEntity::get_instance()->listActivities($recentActivities);
 		$data['user_list'] = array(
 			\Auth::id() => 'Myself Only',
@@ -174,6 +176,9 @@ class DashboardController extends \BaseController {
 		}		
 
 		$data['recentActivities'] = $recentActivitiesList;
+		$data['selectedOption'] = array(
+			'recentActivitiesUserFilter' => $recentActivitiesUserFilter
+		);
 
 		return \View::make( $data['view_path'] . '.dashboard.index', $data );
 	}
