@@ -10,7 +10,7 @@
 				</a>				
 				<div class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
 					<form method="get">
-					@if(isset($user_list))
+					@if(isset($user_list) && isset($selectedOption))
 						@foreach($user_list as $ulKey => $ulVal)
 						<label><input type="radio" onclick="$(this).closest('form').submit()" name="recentActivitiesUserFilter" value="{{ $ulKey }}" {{ $selectedOption['recentActivitiesUserFilter'] == $ulKey ? 'checked' : '' }}/>{{ $ulVal }}</label>
 						@endforeach

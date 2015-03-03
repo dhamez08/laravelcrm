@@ -160,6 +160,14 @@ class CustomerOpportunitiesEntity extends \Eloquent{
 			
 	}
 
+	public function pipelineSalesUserCount($date_from, $date_to, $users) {
+		$sql = "SELECT count(value_calc) as total FROM customer_opportunities WHERE belongs_to IN (?) AND close_date>=? AND close_date<=? AND milestone='Won' AND deleted_at IS NULL";		
+		$query = \DB::select($sql, array($users, $date_from, $date_to));
+						
+		return $query;	
+			
+	}	
+
 	public function pipelineSalesMonthUser($date_from, $date_to, $month, $users) {
 		$sql = "SELECT IFNULL(SUM(value),0) as total, IFNULL(DATE_FORMAT(close_date,'%m/%Y'),?) as themonth FROM customer_opportunities WHERE belongs_to IN (?) AND close_date>=? AND close_date<=? AND milestone='Won' AND deleted_at IS NULL";		
 		

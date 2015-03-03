@@ -1,55 +1,59 @@
+@section('head-page-level-css')
+@parent
+	<link href="{{$asset_path}}/global/plugins/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet"/>
+	<link href="{{$asset_path}}/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css" rel="stylesheet"/>
+@stop
+
 <div class="tab-pane{{(\Session::has('profile')) ? ((\Session::get('profile') == 'account-overview' ) ? ' active': '') : ' active' }}" id="tab_overview">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-3">
 				<ul class="list-unstyled profile-nav">
 					<li>
-						<img src="../../assets/admin/pages/media/profile/profile-img.png" class="img-responsive" alt=""/>
+						<img src="{{ \SocialMediaAccount\ProfileEntity::get_instance()->getPrimaryAvatar() }}" class="img-responsive" alt=""/>
 						<a href="#" class="profile-edit">
 						edit </a>
 					</li>
 					<li>
 						<a href="#">
-						Messages <span>
-						3 </span>
+						Messages 
 						</a>
 					</li>
 					<li>
-						<a href="#">
-						Workflows </a>
-					</li>
+						<a href="#" data-toggle="modal" data-target="#friendsModal">
+						Friends (Group Users) <span>
+						{{ count($sub_users) }} </span></a>
+					</li>					
 					<li>
 						<a href="#">
-						Friends </a>
+						Workflows (disabled for now) </a>
 					</li>
+
 				</ul>
 			</div>
 			<div class="col-md-9">
 				<div class="row">
 					<div class="col-md-8 profile-info">
-						<h1>John Doe</h1>
+						<h1>{{ $user->first_name }} {{ $user->last_name }}</h1>
 						<p>
 							 Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt laoreet dolore magna aliquam tincidunt erat volutpat laoreet dolore magna aliquam tincidunt erat volutpat.
 						</p>
 						<p>
 							<a href="#">
-							www.mywebsite.com </a>
+							{{ $user->email }} </a>
 						</p>
 						<ul class="list-inline">
 							<li>
-								<i class="fa fa-map-marker"></i> Spain
+								<i class="fa fa-map-marker"></i> {{ $user->address_town or 'N/A' }}
 							</li>
 							<li>
-								<i class="fa fa-calendar"></i> 18 Jan 1982
+								<i class="fa fa-calendar"></i> {{ $user->birthdate or 'N/A' }}
 							</li>
 							<li>
-								<i class="fa fa-briefcase"></i> Design
+								<i class="fa fa-briefcase"></i> {{ $user->occupation or 'N/A' }}
 							</li>
 							<li>
-								<i class="fa fa-star"></i> Top Seller
-							</li>
-							<li>
-								<i class="fa fa-heart"></i> BASE Jumping
+								<i class="fa fa-star"></i> {{ $user->company }}
 							</li>
 						</ul>
 					</div>
@@ -72,26 +76,26 @@
 										TODAY SOLD <i class="fa fa-img-up"></i>
 										</span>
 										<span class="sale-num">
-										23 </span>
+										{{ $sales['count']['daily'] }} </span>
 									</li>
 									<li>
 										<span class="sale-info">
 										WEEKLY SALES <i class="fa fa-img-down"></i>
 										</span>
 										<span class="sale-num">
-										87 </span>
+										{{ $sales['count']['weekly'] }} </span>
 									</li>
 									<li>
 										<span class="sale-info">
-										TOTAL SOLD </span>
+										TOTAL SOLD THIS MONTH </span>
 										<span class="sale-num">
-										2377 </span>
+										{{ $sales['count']['monthly'] }} </span>
 									</li>
 									<li>
 										<span class="sale-info">
-										EARNS </span>
+										SALES VALUE </span>
 										<span class="sale-num">
-										$37.990 </span>
+										£{{ $sales['amount']['monthly'] }} </span>
 									</li>
 								</ul>
 							</div>
@@ -114,142 +118,42 @@
 					<div class="tab-content">
 						<div class="tab-pane active" id="tab_1_11">
 							<div class="portlet-body">
-								<table class="table table-striped table-bordered table-advance table-hover">
+								<table class="table table-striped table-bordered table-advance table-hover table-scrollable">
 								<thead>
 								<tr>
 									<th>
 										<i class="fa fa-briefcase"></i> Company
 									</th>
 									<th class="hidden-xs">
-										<i class="fa fa-question"></i> Descrition
+										<i class="fa fa-question"></i> Description
 									</th>
 									<th>
 										<i class="fa fa-bookmark"></i> Amount
 									</th>
 									<th>
+										Status
 									</th>
 								</tr>
 								</thead>
-								<tbody>
+								<tbody class="tbody-scrollable">
+								@foreach($opportunities as $opportunity)
+								<?php $client = \Clients\Clients::find($opportunity->customer_id) ?>
 								<tr>
 									<td>
-										<a href="#">
-										Pixel Ltd </a>
+										<a href="{{ url('clients/client-summary/' . $client->id) }}">
+										{{ $client->first_name }} {{ $client->last_name }} </a>
 									</td>
 									<td class="hidden-xs">
-										 Server hardware purchase
+										 {{ $opportunity->name }}
 									</td>
 									<td>
-										 52560.10$ <span class="label label-success label-sm">
-										Paid </span>
+										 £{{ $opportunity->value }}
 									</td>
 									<td>
-										<a class="btn default btn-xs green-stripe" href="#">
-										View </a>
+										{{ $opportunity->status ? 'Closed' : 'Open' }} / {{ $opportunity->milestone }}
 									</td>
 								</tr>
-								<tr>
-									<td>
-										<a href="#">
-										Smart House </a>
-									</td>
-									<td class="hidden-xs">
-										 Office furniture purchase
-									</td>
-									<td>
-										 5760.00$ <span class="label label-warning label-sm">
-										Pending </span>
-									</td>
-									<td>
-										<a class="btn default btn-xs blue-stripe" href="#">
-										View </a>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<a href="#">
-										FoodMaster Ltd </a>
-									</td>
-									<td class="hidden-xs">
-										 Company Anual Dinner Catering
-									</td>
-									<td>
-										 12400.00$ <span class="label label-success label-sm">
-										Paid </span>
-									</td>
-									<td>
-										<a class="btn default btn-xs blue-stripe" href="#">
-										View </a>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<a href="#">
-										WaterPure Ltd </a>
-									</td>
-									<td class="hidden-xs">
-										 Payment for Jan 2013
-									</td>
-									<td>
-										 610.50$ <span class="label label-danger label-sm">
-										Overdue </span>
-									</td>
-									<td>
-										<a class="btn default btn-xs red-stripe" href="#">
-										View </a>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<a href="#">
-										Pixel Ltd </a>
-									</td>
-									<td class="hidden-xs">
-										 Server hardware purchase
-									</td>
-									<td>
-										 52560.10$ <span class="label label-success label-sm">
-										Paid </span>
-									</td>
-									<td>
-										<a class="btn default btn-xs green-stripe" href="#">
-										View </a>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<a href="#">
-										Smart House </a>
-									</td>
-									<td class="hidden-xs">
-										 Office furniture purchase
-									</td>
-									<td>
-										 5760.00$ <span class="label label-warning label-sm">
-										Pending </span>
-									</td>
-									<td>
-										<a class="btn default btn-xs blue-stripe" href="#">
-										View </a>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<a href="#">
-										FoodMaster Ltd </a>
-									</td>
-									<td class="hidden-xs">
-										 Company Anual Dinner Catering
-									</td>
-									<td>
-										 12400.00$ <span class="label label-success label-sm">
-										Paid </span>
-									</td>
-									<td>
-										<a class="btn default btn-xs blue-stripe" href="#">
-										View </a>
-									</td>
-								</tr>
+								@endforeach
 								</tbody>
 								</table>
 							</div>
@@ -654,3 +558,22 @@
 	</div>
 
 </div>
+
+{{-- @include( \DashboardEntity::get_instance()->getView() . '.profile.modals.friends' ) --}}
+
+	@section('footer-custom-js')
+		@parent
+		<script src="{{$asset_path}}/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+		<script src="{{$asset_path}}/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('.table-scrollable').dataTable({
+					scrollY: '355px',
+					paging: false,
+					info: false,
+					searching: false,
+					ordering: false
+				});
+			});
+		</script>
+	@stop
