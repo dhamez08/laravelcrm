@@ -6,10 +6,74 @@ $(function(){
 
     var color_element = null;
     var selected_element = null;
+    var selected_text = null;
     var jcrop_api = null;
     var is_modal_active = false;
     var image_width = 0;
     var image_height = 0;
+
+    $('body').on('click','.popover-icon',function(){
+        var selected_icon = $(this);
+
+//        console.log(selected_element.html());
+        if(selected_icon.hasClass('fa-align-left')){
+            selected_element.css('text-align','left');
+        } else if(selected_icon.hasClass('fa-align-right')){
+            selected_element.css('text-align','right');
+        } else if(selected_icon.hasClass('fa-align-center')){
+            selected_element.css('text-align','center')
+        } else if(selected_icon.hasClass('fa-align-justify')){
+            selected_element.css('text-align','justify')
+        } else if(selected_icon.hasClass('fa-bold')){
+            document.execCommand('bold');
+        } else if(selected_icon.hasClass('fa-italic')){
+            document.execCommand('italic');
+        }
+    });
+
+    $('body').on('mouseup','.editable-text',function(){
+        if (window.getSelection) {
+            selected_text = window.getSelection().toString();
+        } else if (document.selection) {
+            selected_text = document.selection.createRange().text;
+        }
+
+//        console.log(selected_text);
+
+        setTimeout(function(){
+            if(selected_text){
+                var options = new Object();
+                var body = $('body');
+
+                var text_tooltip = $('<div>')
+                    .addClass('image-options')
+                    .append($('<i>')
+                        .addClass('fa fa-bold popover-icon'))
+                    .append($('<i>')
+                        .addClass('fa fa-italic popover-icon'))
+                    .append($('<i>')
+                        .addClass('fa fa-align-left popover-icon'))
+                    .append($('<i>')
+                        .addClass('fa fa-align-center popover-icon'))
+                    .append($('<i>')
+                        .addClass('fa fa-align-right popover-icon'))
+                    .append($('<i>')
+                        .addClass('fa fa-align-justify popover-icon'))
+                    .append($('<i>')
+                        .addClass('fa fa-link popover-icon'));
+
+                options.html = true;
+                options.placement = 'bottom';
+                options.container = 'body';
+                options.content = $('<div>')
+                    .append(text_tooltip);
+
+                selected_element.popover(options);
+                selected_element.popover('show');
+
+            }
+        },300);
+    });
 
     $('#colorpicker').farbtastic(function(color){
         if(selected_element && color_element){
@@ -81,7 +145,6 @@ $(function(){
         selected_element = $(this);
 
         if(selected_element.hasClass('editable-text')){
-
             $('#layouts').collapse('hide');
             $('#tool-box').collapse('show');
 
@@ -112,7 +175,7 @@ $(function(){
             image_width = parseInt(selected_element.css('width').split('px').join(''));
             image_height = parseInt(selected_element.css('height').split('px').join(''));
 
-            console.log('width: '+image_width+", height: "+image_height);
+//            console.log('width: '+image_width+", height: "+image_height);
 
             var visibility_icon = $('<i>').addClass('fa popover-icon hide-image');
             parseInt(selected_element.css('opacity')) ? visibility_icon.addClass('fa-eye-slash') : visibility_icon.addClass('fa-eye');
@@ -218,7 +281,7 @@ $(function(){
                 formData.append('image_height',image_height);
 
 
-                console.log('width: '+image_width+", height: "+image_height);
+//                console.log('width: '+image_width+", height: "+image_height);
 
                 if ($(form).data('loading') === true) {
                     return;
