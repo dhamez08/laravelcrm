@@ -388,7 +388,7 @@ class MarketingController extends \BaseController {
 
         return \View::make( $data['view_path'] . '.marketing.template-listing', $data )
             ->nest('add_template_modal', $data['view_path'] . '.marketing.partials.add_template', $dataAddTemplateModal)
-            ->nest('cropper_modal', $data['view_path'] . '.marketing.partials.image_cropper', array());
+            ->nest('cropper_modal', $data['view_path'] . '.marketing.partials.image_cropper', $data);
     }
 
     private function getCustomerEmails(){
@@ -524,10 +524,13 @@ class MarketingController extends \BaseController {
 
     private function _doUpload($file, $x, $y, $width, $height, $image_width, $image_height){
         $file_name = $file->getClientOriginalName();
+        $file_extension = $file->getClientOriginalExtension();
 
         $layer = \PHPImageWorkshop\ImageWorkshop::initFromPath($file->getRealPath());
         $layer->cropInPixel($width,$height,$x,$y,'LT');
         $layer->resizeInPixel($image_width, $image_height);
+
+        $file_name = sha1($file_name.time()).".".$file_extension;
         $layer->save($this->fileFolder, $file_name, true);
 
         return $file_name;
