@@ -56,7 +56,7 @@ $(function(){
         selected_text = rangy.saveSelection();
 
         setTimeout(function(){
-            if(selected_text){
+            if(rangy.getSelection().toString()){
                 var options = new Object();
                 var body = $('body');
 
