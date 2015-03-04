@@ -15,7 +15,6 @@ $(function(){
     $('body').on('click','.popover-icon',function(){
         var selected_icon = $(this);
 
-//        console.log(selected_element.html());
         if(selected_icon.hasClass('fa-align-left')){
             selected_element.css('text-align','left');
         } else if(selected_icon.hasClass('fa-align-right')){
@@ -25,20 +24,36 @@ $(function(){
         } else if(selected_icon.hasClass('fa-align-justify')){
             selected_element.css('text-align','justify')
         } else if(selected_icon.hasClass('fa-bold')){
+            rangy.restoreSelection(selected_text);
             document.execCommand('bold');
+            selected_text = rangy.saveSelection();
         } else if(selected_icon.hasClass('fa-italic')){
+            rangy.restoreSelection(selected_text);
             document.execCommand('italic');
+            selected_text = rangy.saveSelection();
+        } else if(selected_icon.hasClass('fa-link')){
+            rangy.restoreSelection(selected_text);
+            selected_text = rangy.saveSelection();
+            $('.url-input').show();
+            $('.image-options').hide();
+
+            $('body').on('keypress','#image-url',function(e){
+                if(e.keyCode == 13){
+                    rangy.restoreSelection(selected_text);
+                    document.execCommand('createLink',false, $(this).val());
+                    selected_text = rangy.saveSelection();
+                    $(this).val('');
+                    $('.url-input').hide();
+                    $('.image-options').show();
+                }
+            });
+
+
         }
     });
 
     $('body').on('mouseup','.editable-text',function(){
-        if (window.getSelection) {
-            selected_text = window.getSelection().toString();
-        } else if (document.selection) {
-            selected_text = document.selection.createRange().text;
-        }
-
-//        console.log(selected_text);
+        selected_text = rangy.saveSelection();
 
         setTimeout(function(){
             if(selected_text){
@@ -62,10 +77,21 @@ $(function(){
                     .append($('<i>')
                         .addClass('fa fa-link popover-icon'));
 
+                var url_input = $('<div>')
+                    .addClass('url-input')
+                    .append($('<input>')
+                        .attr('id','image-url')
+                        .addClass('url')
+                        .attr('type','text')
+                        .attr('placeholder','Your url'))
+                    .append($('<i>')
+                        .addClass('fa fa-times popover-icon close-url'));
+
                 options.html = true;
                 options.placement = 'bottom';
                 options.container = 'body';
                 options.content = $('<div>')
+                    .append(url_input)
                     .append(text_tooltip);
 
                 selected_element.popover(options);

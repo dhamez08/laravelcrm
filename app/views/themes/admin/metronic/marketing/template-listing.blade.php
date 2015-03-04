@@ -277,6 +277,8 @@
 <script src="{{$asset_path}}/global/plugins/bootstrap-summernote/summernote.min.js" type="text/javascript"></script>
 <script src="{{$asset_path}}/global/plugins/farbtastic/farbtastic.js" type="text/javascript"></script>
 <script src="{{$asset_path}}/pages/scripts/underscore-min.js" type="text/javascript"></script>
+<script src="{{$asset_path}}/pages/scripts/rangy-core.js" type="text/javascript"></script>
+<script src="{{$asset_path}}/pages/scripts/rangy-selectionsaverestore.js" type="text/javascript"></script>
 <script>
     var BASE_URL = '{{ url('/') }}';
     var ASSET_PATH = '{{$asset_path}}';
