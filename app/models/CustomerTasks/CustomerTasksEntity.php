@@ -165,6 +165,12 @@ class CustomerTasksEntity extends \Eloquent{
 
 		$arrayData['total'] = 0;
 		$arrayData['data'] = array();
+		$arrayData['tasks'] = array(
+			'overdue'	=> array(),
+			'today'		=> array(),
+			'future'	=> array(),
+			'seven'		=> array()
+		);
 
 		if( $tasks->count() > 0 ){
 			$data = json_decode(json_encode($tasks->get()->toArray()), FALSE);
@@ -174,26 +180,29 @@ class CustomerTasksEntity extends \Eloquent{
 				$task->bind($valTask);
 				$arrayData['data'][] = $task;
 				//echo $valTask->name.'-'.\Carbon\Carbon::parse($valTask->date)->diffInDays().'<br>';
-				if( \Carbon\Carbon::parse($valTask->date)->diffInDays() == 0 ){
+				if( \Carbon\Carbon::parse($valTask->date)->format('Y-m-d') == date('Y-m-d') ){
 					$due_today += 1;
-					$due_all += 1;
+					//$due_all += 1;
+					$arrayData['tasks']['today'][] = $task;
 				}
 
-				if( \Carbon\Carbon::parse($valTask->date)->diffInDays() >= 1
-					&& $valTask->date < \Carbon\Carbon::now()
-				){
+				if( $valTask->date < \Carbon\Carbon::now()){
 					$due_all += 1;
+					$arrayData['tasks']['overdue'][] = $task;
 				}
 
 				if( \Carbon\Carbon::parse($valTask->date)->diffInDays() > 14
 					&& $valTask->date > \Carbon\Carbon::now()
 				){
 					$due_future += 1;
+					$arrayData['tasks']['future'][] = $task;
 				}
-				if( \Carbon\Carbon::parse($valTask->date)->diffInWeeks() == 1
+				if( \Carbon\Carbon::parse($valTask->date)->diffInDays() >= 1
+					&& \Carbon\Carbon::parse($valTask->date)->diffInDays() <= 14
 					&& $valTask->date > \Carbon\Carbon::now()
 				){
 					$due_seven_day += 1;
+					$arrayData['tasks']['seven'][] = $task;
 				}
 
 			}
@@ -205,6 +214,8 @@ class CustomerTasksEntity extends \Eloquent{
 			);
 
 		}
+
+		\Debugbar::info($arrayData);
 
 		return $arrayData;
 	}
