@@ -86,6 +86,7 @@ class ActivityEntity extends \Eloquent {
 
 			$sourceUser = '<strong>' . $user->first_name . ' ' . $user->last_name . '</strong>';
 			$objectDetails = \ActivityGroup\ActivityGroupEntity::get_instance()->getObject($activityGroup->id, $activity->object_id);
+			if(!$objectDetails->client_id) continue;
 
 			$clientLink = '<a href="'.url('clients/client-summary/'.$objectDetails->client_id).'">'.$objectDetails->name.'</a>';
 
