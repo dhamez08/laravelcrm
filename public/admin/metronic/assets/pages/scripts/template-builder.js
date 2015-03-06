@@ -144,10 +144,13 @@ $(function(){
     $('body').on('focus','#font-color, #background-color',function(){
         $('.colorpicker-container').removeClass('hide');
         var id = $(this).attr('id');
+        var color = $(this).val();
         if(id == 'font-color'){
             color_element = 'color';
+            selected_element.css('color', $(this).val());
         } else if(id == 'background-color'){
             color_element = 'background-color';
+            selected_element.css('background-color', $(this).val());
         }
     });
 
@@ -177,21 +180,21 @@ $(function(){
             $('.box-control').hide();
             $('.text-control').show();
 
-            var text_size = selected_element.css('font-size').split('px').join('');
-            var text_color = selected_element.css('color');
-            var background_color = selected_element.css('background-color');
-
-            if(background_color != "transparent")
-                background_color = rgb2hex(background_color);
-
-            if(text_color != "transparent")
-                text_color = rgb2hex(text_color);
-
-
-            $('#font-color').val(text_color);
-            $('#background-color').val(background_color);
-
-            $('#font-size-slider').val(text_size);
+//            var text_size = selected_element.css('font-size').split('px').join('');
+//            var text_color = selected_element.css('color');
+//            var background_color = selected_element.css('background-color');
+//
+//            if(background_color != "transparent")
+//                background_color = rgb2hex(background_color);
+//
+//            if(text_color != "transparent")
+//                text_color = rgb2hex(text_color);
+//
+//
+//            $('#font-color').val(text_color);
+//            $('#background-color').val(background_color);
+//
+//            $('#font-size-slider').val(text_size);
 
         }
         else if(selected_element.hasClass('editable-photo')){
@@ -200,8 +203,6 @@ $(function(){
 
             image_width = parseInt(selected_element.css('width').split('px').join(''));
             image_height = parseInt(selected_element.css('height').split('px').join(''));
-
-//            console.log('width: '+image_width+", height: "+image_height);
 
             var visibility_icon = $('<i>').addClass('fa popover-icon hide-image');
             parseInt(selected_element.css('opacity')) ? visibility_icon.addClass('fa-eye-slash') : visibility_icon.addClass('fa-eye');
@@ -305,9 +306,6 @@ $(function(){
                 formData.append('height',preview.data('height'));
                 formData.append('image_width',image_width);
                 formData.append('image_height',image_height);
-
-
-//                console.log('width: '+image_width+", height: "+image_height);
 
                 if ($(form).data('loading') === true) {
                     return;
@@ -469,12 +467,12 @@ $(function(){
         $('#layouts').collapse('hide');
         $('#tool-box').collapse('show');
 
-        var background_color = selected_element.css('background-color');
-
-        if(background_color != "transparent")
-            background_color = rgb2hex(background_color);
-
-        $('#background-color').val(background_color);
+//        var background_color = selected_element.css('background-color');
+//
+//        if(background_color != "transparent")
+//            background_color = rgb2hex(background_color);
+//
+//        $('#background-color').val(background_color);
     });
 
     $('#font-size-slider').on('change',function(){
