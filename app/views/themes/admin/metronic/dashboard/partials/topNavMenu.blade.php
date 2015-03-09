@@ -220,9 +220,21 @@
 		<!-- BEGIN USER LOGIN DROPDOWN -->
 		<li class="dropdown dropdown-user">
 			<a data-close-others="true" data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle" href="#">
-			<?php $profileAvatar = \SocialMediaAccount\ProfileEntity::get_instance()->getPrimaryAvatar(); ?>
+			
+			<?php 
+				$profileAvatar = \SocialMediaAccount\ProfileEntity::get_instance()->getPrimaryAvatar(); 
+				$userAvatar = \User\User::find(\Auth::id());
+			?>
 
-			<img src="{{$profileAvatar}}" alt="Avatar" class="img-circle img-avatar-top round-50"/>
+			<img src="{{ $userAvatar->getProfileImageUrl() }}" alt="Avatar" class="img-circle img-avatar-top round-50"/>
+
+			{{--
+			@if($userAvatar->profile_image > 0)
+ 				<img src="{{$userAvatar->profileImage()->where('id', $userAvatar->profile_image)->first()->image or url('public/img/profile_images/summary_person.png')}}" alt="Avatar" class="img-circle img-avatar-top round-50"/>
+			@else
+				<img src="{{url('public/img/profile_images/summary_person.png')}}" alt="Avatar" class="img-circle img-avatar-top round-50"/>
+			@endif	
+			--}}			
 
 			<span class="username username-hide-on-mobile">
 				{{\User\User::getUserFullname()}}

@@ -35,31 +35,39 @@ class ActivityGroupEntity extends \Eloquent{
 		switch ($group->name) {
 			case 'User':
 				$object = \User\User::where('id', $objectId)->first();
-				$result->client_id = $object->id;
-				$result->name = $object->first_name . ' ' . $object->last_name;
-				$result->details = null;
-				$result->icon = 'fa-user';
+				if($object) {
+					$result->client_id = $object->id;
+					$result->name = $object->first_name . ' ' . $object->last_name;
+					$result->details = null;
+					$result->icon = 'fa-user';
+				}
 				break;
 			case 'Client':
 				$object = \Clients\Clients::where('id', $objectId)->first();
-				$result->client_id = $object->id;
-				$result->name = $object->first_name . ' ' . $object->last_name;
-				$result->details = null;				
-				$result->icon = 'fa-users';
+				if($object) {
+					$result->client_id = $object->id;
+					$result->name = $object->first_name . ' ' . $object->last_name;
+					$result->details = null;				
+					$result->icon = 'fa-users';
+				}
 				break;
 			case 'Note':
 				$object = \CustomerNotes\CustomerNotes::where('id', $objectId)->first();
-				$result->client_id = $object->customer_id;
-				$result->name = $object->customer->first_name . ' ' . $object->customer->last_name;
-				$result->details = $object->subject;
-				$result->icon = 'fa-comment';
+				if($object) {
+					$result->client_id = $object->customer_id;
+					$result->name = $object->customer->first_name . ' ' . $object->customer->last_name;
+					$result->details = $object->subject;
+					$result->icon = 'fa-comment';
+				}
 				break;
 			case 'Task':
 				$object = \CustomerTasks\CustomerTasks::where('id', $objectId)->first();
-				$result->client_id = $object->customer_id;
-				$result->name = $object->client->first_name . ' ' . $object->client->last_name;
-				$result->details = $object->name;
-				$result->icon = 'fa-tasks';
+				if($object) {
+					$result->client_id = $object->customer_id;
+					$result->name = $object->client->first_name . ' ' . $object->client->last_name;
+					$result->details = $object->name;
+					$result->icon = 'fa-tasks';
+				}
 				break;											
 			default:
 				$result = false;

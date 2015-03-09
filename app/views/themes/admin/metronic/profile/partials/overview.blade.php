@@ -10,8 +10,13 @@
 			<div class="col-md-3">
 				<ul class="list-unstyled profile-nav">
 					<li>
-						<img src="{{ \SocialMediaAccount\ProfileEntity::get_instance()->getPrimaryAvatar() }}" class="img-responsive" alt=""/>
-						<a href="#" class="profile-edit">
+						{{-- <img src="{{ \SocialMediaAccount\ProfileEntity::get_instance()->getPrimaryAvatar() }}" class="img-responsive" alt=""/> --}}
+						@if($user->profile_image > 0)
+			 				<img id="main-profile-pic" src="{{$user->profileImage()->where('id', $user->profile_image)->first()->image or url('public/img/profile_images/summary_person.png')}}" alt="profile pic" class="profilePic round-50 img-responsive"/>
+						@else
+							<img id="main-profile-pic" src="{{url('public/img/profile_images/summary_person.png')}}" alt="profile pic" class="profilePic round-50 img-responsive"/>
+						@endif						
+						<a href="#" data-toggle="modal" data-target=".userProfilePhoto" class="profile-edit">
 						edit </a>
 					</li>
 					<li>
@@ -116,13 +121,35 @@
 						</li>
 					</ul>
 					<div class="tab-content">
+
+						<div class="col-md-12">
+							<div class="btn-group pull-right">
+							<button class="btn dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i>
+							</button>
+							<ul class="dropdown-menu pull-right">
+								<li>
+									<a href="#">
+									Print </a>
+								</li>
+								<li>
+									<a href="#">
+									Save as PDF </a>
+								</li>
+								<li>
+									<a href="#">
+									Export to Excel </a>
+								</li>
+							</ul>
+							</div>
+						</div>
+
 						<div class="tab-pane active" id="tab_1_11">
 							<div class="portlet-body">
 								<table class="table table-striped table-bordered table-advance table-hover table-scrollable">
 								<thead>
 								<tr>
 									<th>
-										<i class="fa fa-briefcase"></i> Company
+										<i class="fa fa-briefcase"></i> Client
 									</th>
 									<th class="hidden-xs">
 										<i class="fa fa-question"></i> Description
@@ -559,7 +586,8 @@
 
 </div>
 
-{{-- @include( \DashboardEntity::get_instance()->getView() . '.profile.modals.friends' ) --}}
+@include( \DashboardEntity::get_instance()->getView() . '.profile.modals.friends' )
+@include( \DashboardEntity::get_instance()->getView() . '.profile.modals.uploadProfilePhoto' )
 
 	@section('footer-custom-js')
 		@parent
