@@ -29,7 +29,7 @@
 						<div class="col1">
 							<div class="cont">
 								<div class="cont-col1">
-									<div class="label label-sm label-info">
+									<div class="label label-sm" style="color:black">
 										<i class="fa {{ $activity['icon'] }}"></i>
 									</div>
 								</div>
