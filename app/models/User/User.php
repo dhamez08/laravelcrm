@@ -106,4 +106,17 @@ class User extends \Eloquent implements UserInterface, RemindableInterface {
 	public function profiles() {
 		return $this->hasMany('Profile');
 	}
+
+	public function profileImage(){
+		return $this->hasMany('\UserProfileImages\UserProfileImages','user_id','id');
+	}
+
+	public function scopeGetProfileImageUrl()
+	{
+		$profile_image = $this->profile_image;
+		if($profile_image > 0)
+			return $this->profileImage()->where('id', $profile_image)->first()->image;
+		else
+			return url('public/img/profile_images/summary_person.png');
+	}	
 }

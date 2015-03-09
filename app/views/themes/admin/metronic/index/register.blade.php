@@ -142,6 +142,58 @@
                         }}
                     </div>
                 </div>
+                <div class="form-group">
+                    <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                    <label class="control-label visible-ie8 visible-ie9">Website</label>
+                    <div class="input-icon">
+                        <i class="fa fa-globe"></i>
+                        {{
+                            Form::text(
+                            	'website',
+                            	null,
+                            	array(
+                            		'placeholder' => 'Website',
+                            		'class' => 'form-control placeholder-no-fix'
+                            	)
+                            )
+                        }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                    <label class="control-label visible-ie8 visible-ie9">Birthdate</label>
+                    <div class="input-icon">
+                        <i class="fa fa-birthday-cake"></i>
+                        {{
+                            Form::text(
+                            	'birthdate',
+                            	null,
+                            	array(
+                            		'placeholder' => 'Birthdate',
+                            		'class' => 'form-control placeholder-no-fix',
+                            		'id' => 'birthdate'
+                            	)
+                            )
+                        }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+                    <label class="control-label visible-ie8 visible-ie9">Occupation</label>
+                    <div class="input-icon">
+                        <i class="fa fa-briefcase"></i>
+                        {{
+                            Form::text(
+                            	'occupation',
+                            	null,
+                            	array(
+                            		'placeholder' => 'Occupation',
+                            		'class' => 'form-control placeholder-no-fix'
+                            	)
+                            )
+                        }}
+                    </div>
+                </div>                
 				<p>
 					Company Information
 				</p>
@@ -326,6 +378,14 @@
 	<div class="copyright">
 	 2014 &copy; {{{$copyright or 'Put Copyright text'}}}.
 	</div>
+	<script type="text/javascript">
+		jQuery(document).ready(function() {
+			jQuery('#birthdate').datepicker({
+			    autoclose:true,
+			    format: 'dd/mm/yyyy'
+			});	
+		});
+	</script>
 	<!-- END FOOTER -->
 @stop
 @section('script-footer')
@@ -339,7 +399,7 @@
 				Metronic.init(); // init metronic core components
 				Layout.init(); // init current layout
 				Login.init();
-				$('.error > li').addClass('list-group-item list-group-item-danger');
+				$('.error > li').addClass('list-group-item list-group-item-danger');			
 			});
 		</script>
 	@stop

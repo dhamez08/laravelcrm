@@ -77,6 +77,11 @@ class UserEntity extends \Eloquent implements UserInterface, RemindableInterface
 			$user->address_postcode = \Input::get('address_postcode','');
 			$user->confirm_code 	= \Input::get('confirm_code','');
 			$user->active 			= $active;
+
+			$user->website			= \Input::get('website', '');
+			$user->birthdate		= \Input::get('birthdate', '') == '' ? '' : \Carbon\Carbon::createFromFormat('d/m/Y', \Input::get('birthdate'))->toDateString();
+			$user->occupation		= \Input::get('occupation', '');
+
 		}else{
 			//update
 			$user 					= \User\User::find($id);
@@ -94,6 +99,10 @@ class UserEntity extends \Eloquent implements UserInterface, RemindableInterface
 			$user->address_county 	= \Input::get('address_county','');
 			$user->address_postcode = \Input::get('address_postcode','');
 			$user->active 			= \Input::get('active',$active);
+
+			$user->website			= \Input::get('website', '');
+			$user->birthdate		= \Input::get('birthdate', '') == '' ? '' : \Carbon\Carbon::createFromFormat('d/m/Y', \Input::get('birthdate'))->toDateString();
+			$user->occupation		= \Input::get('occupation', '');			
 		}
 		$user->save();
 		return $user;
@@ -137,6 +146,12 @@ class UserEntity extends \Eloquent implements UserInterface, RemindableInterface
 		$user->address_town 	= \Input::get('address_town');
 		$user->address_county 	= \Input::get('address_county');
 		$user->address_postcode = \Input::get('address_postcode');
+
+		$user->website			= \Input::get('website');
+		$user->birthdate		= \Input::get('birthdate') == '' ? '' : \Carbon\Carbon::createFromFormat('d/m/Y', \Input::get('birthdate'))->toDateString();
+		$user->occupation 		= \Input::get('occupation');
+
+
 		$user->save();
 
 		return $user;

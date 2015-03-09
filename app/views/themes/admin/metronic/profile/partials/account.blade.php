@@ -136,6 +136,46 @@
                                     );
                                 }}
                             </div>
+							<div class="form-group">
+								<label class="control-label">Website</label>
+									{{
+										Form::text(
+											'website',
+											null,
+											array(
+												'placeholder'=>'Website',
+												'class'=>'form-control placeholder-no-fix'
+											)
+										);
+									}}
+							</div> 
+							<div class="form-group">
+								<label class="control-label">Birthdate</label>
+									{{
+										Form::text(
+											'birthdate',
+											\Carbon\Carbon::createFromFormat('Y-m-d', $user->birthdate)->format('d/m/Y'),
+											array(
+												'placeholder'=>'Birthdate',
+												'class'=>'form-control placeholder-no-fix',
+												'id'=>'birthdate'
+											)
+										);
+									}}
+							</div>
+							<div class="form-group">
+								<label class="control-label">Occupation</label>
+									{{
+										Form::text(
+											'occupation',
+											null,
+											array(
+												'placeholder'=>'Occupation',
+												'class'=>'form-control placeholder-no-fix'
+											)
+										);
+									}}
+							</div>							
 							<p>
 								Company Information
 							</p>
@@ -504,6 +544,11 @@
 						}
 					});
 				});
+
+				$('#birthdate').datepicker({
+				    autoclose:true,
+				    format: 'dd/mm/yyyy'
+				});					
 			});
 		</script>
 	@stop

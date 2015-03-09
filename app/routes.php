@@ -26,6 +26,7 @@ Route::group(array('before' => 'auth'), function()
 {
 	Route::get('profile/setprimary', 'SocialMediaAccount\SocialMediaAccountController@getSetPrimary');
 	Route::controller( 'clientprofile' , 'ClientProfilePhoto\ClientProfilePhotoController');
+	Route::controller( 'userprofile' , 'UserProfilePhoto\UserProfilePhotoController');
 	Route::controller( 'twitter' , 'Twitter\TwitterController');
 	Route::controller( 'clients' , 'Clients\ClientsController');
 	Route::controller( 'profile' , 'Profile\ProfileController' );
