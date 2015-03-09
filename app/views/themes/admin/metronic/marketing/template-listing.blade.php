@@ -219,6 +219,14 @@
                                     <div class="panel-body">
                                         <div class="row text-control">
                                             <div class="col-md-6 m-top-15">
+                                                <label for="font-size-slider" class="editor-label">Apply to All</label>
+                                            </div>
+                                            <div class="col-md-6 m-top-15">
+                                                <input type="checkbox" id="apply-all" data-size="small" />
+                                            </div>
+                                        </div>
+                                        <div class="row text-control">
+                                            <div class="col-md-6 m-top-15">
                                                 <label for="font-size-slider" class="editor-label">Font Size</label>
                                             </div>
                                             <div class="col-md-6 m-top-15">

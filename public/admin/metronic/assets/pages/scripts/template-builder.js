@@ -11,6 +11,13 @@ $(function(){
     var is_modal_active = false;
     var image_width = 0;
     var image_height = 0;
+    var apply_all = false;
+
+    $("#apply-all").bootstrapSwitch();
+
+    $("#apply-all").on('switchChange.bootstrapSwitch', function(event, state) {
+        apply_all = state;
+    });
 
     $('body').on('click','.popover-icon',function(){
         var selected_icon = $(this);
@@ -103,11 +110,18 @@ $(function(){
 
     $('#colorpicker').farbtastic(function(color){
         if(selected_element && color_element){
-            selected_element.css(color_element, color);
+
             if(color_element == 'color'){
                 $('#font-color').val(color);
             } else if(color_element == 'background-color'){
                 $('#background-color').val(color);
+            }
+
+            if(apply_all){
+                var section_group = selected_element.data('color');
+                $('[data-color="'+section_group+'"]').css(color_element, color);
+            } else {
+                selected_element.css(color_element, color);
             }
         }
     });
@@ -147,7 +161,13 @@ $(function(){
         var color = $(this).val();
         if(id == 'font-color'){
             color_element = 'color';
-            selected_element.css('color', $(this).val());
+
+            if(apply_all){
+                var section_group = selected_element.data('color');
+                $('[data-color="'+section_group+'"]').css('color', $(this).val());
+            } else {
+                selected_element.css('color', $(this).val());
+            }
         } else if(id == 'background-color'){
             color_element = 'background-color';
             selected_element.css('background-color', $(this).val());
@@ -158,9 +178,19 @@ $(function(){
     $('body').on('change','#font-color, #background-color',function(){
         var id = $(this).attr('id');
         if(id == 'font-color'){
-            selected_element.css('color', $(this).val());
+            if(apply_all){
+                var section_group = selected_element.data('color');
+                $('[data-color="'+section_group+'"]').css('color', $(this).val());
+            } else {
+                selected_element.css('color', $(this).val());
+            }
         } else if(id == 'background-color'){
-            selected_element.css('background-color', $(this).val());
+            if(apply_all){
+                var section_group = selected_element.data('color');
+                $('[data-color="'+section_group+'"]').css('background-color', $(this).val());
+            } else {
+                selected_element.css('background-color', $(this).val());
+            }
         }
     });
 
@@ -478,7 +508,14 @@ $(function(){
     $('#font-size-slider').on('change',function(){
         if(selected_element){
             var font_size = $(this).val();
-            selected_element.css('font-size',font_size+'px');
+
+            if(apply_all){
+                var section_group = selected_element.data('color');
+                $('[data-color="'+section_group+'"]').css('font-size',font_size+'px');
+            } else {
+                selected_element.css('font-size',font_size+'px');
+            }
+
         }
     });
 
