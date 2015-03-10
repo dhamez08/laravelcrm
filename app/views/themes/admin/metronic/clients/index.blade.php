@@ -18,9 +18,6 @@
     @section('left-sidebar')
         @include( \DashboardEntity::get_instance()->getView() . '.dashboard.partials.leftSidebar' )
     @show
-	@section('pagebar')
-
-	@stop
 	@section('innerpage-page-title')
 		&nbsp;
 	@show

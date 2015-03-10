@@ -1780,6 +1780,7 @@ class ClientsController extends \BaseController {
 	public function getClientlist(){
 
 		$clients = \DB::table('customer')
+			->select('customer.id as customer_id', 'customer.first_name', 'customer.last_name')
 			->leftJoin('customer_address', 'customer_address.customer_id', '=', 'customer.id')
 			->leftJoin('customer_telephone', 'customer_telephone.customer_id', '=', 'customer.id')
 			->where('customer.belongs_user', '=', \Auth::id())
