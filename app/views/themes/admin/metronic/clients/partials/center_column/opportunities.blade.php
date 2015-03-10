@@ -34,7 +34,7 @@
 					?>
 						<tr>
 							<td>
-								<a href="javascript:void()" class="hastooltip" data-toggle="tooltip" data-placement="right" title="{{ $opportunity->text }}">{{ $opportunity->name }}</a>
+								<a href="#" class="hastooltip editOpportunity" data-toggle="tooltip" data-placement="right" title="{{ $opportunity->text }}" opportunity-id="{{ $opportunity->id }}">{{ $opportunity->name }}</a>
 								<br />
 								@if($opportunity->status==0)
 									<strong>Open</strong>
