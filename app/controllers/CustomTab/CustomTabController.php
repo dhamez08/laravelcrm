@@ -130,6 +130,7 @@ class CustomTabController extends \BaseController {
 					'section'		=> \Input::get('section'),
 					'file_name'		=> $fileName,
 					'file_type'		=> $file->getClientOriginalExtension(),
+					'thumbnail'		=> $thumb_filename
 				);		
 
 				\CustomTabFilesData\CustomTabFilesDataEntity::get_instance()->createOrUpdate($data);
