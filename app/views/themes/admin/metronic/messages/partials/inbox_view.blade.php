@@ -61,25 +61,27 @@
 				</ul>
 			</div>
 		</div>
-		<div class="inbox-view">
-			{{ nl2br($message->body) }}
-		</div>
-		<?php $message_attachments = \MessageAttachment\MessageAttachment::where('message_id',$message->id)->get(); ?>
-		@if(count($message_attachments)>0)
-		<hr>
-		<div class="inbox-attached">
-			<div class="margin-bottom-15">
-				<span>{{ count($message_attachments) }} attachment{{ count($message_attachments)>1 ? 's':'' }}</span>
+		<div class="col-md-12">
+			<div class="inbox-view">
+				{{ nl2br($message->body) }}
 			</div>
-			@foreach($message_attachments as $attachment)
-				<div class="margin-bottom-25">
-					<div>
-						<a href="{{ url('public/'.$attachment->file) }}" target="_blank"><strong><i class="fa fa-paperclip"></i> {{ str_replace("documents/","",str_replace("document/library/own/","",$attachment->file)) }}</strong></a>
-					</div>
+			<?php $message_attachments = \MessageAttachment\MessageAttachment::where('message_id',$message->id)->get(); ?>
+			@if(count($message_attachments)>0)
+			<hr>
+			<div class="inbox-attached">
+				<div class="margin-bottom-15">
+					<span>{{ count($message_attachments) }} attachment{{ count($message_attachments)>1 ? 's':'' }}</span>
 				</div>
-			@endforeach
+				@foreach($message_attachments as $attachment)
+					<div class="margin-bottom-25">
+						<div>
+							<a href="{{ url('public/'.$attachment->file) }}" target="_blank"><strong><i class="fa fa-paperclip"></i> {{ str_replace("documents/","",str_replace("document/library/own/","",$attachment->file)) }}</strong></a>
+						</div>
+					</div>
+				@endforeach
+			</div>
+			@endif
 		</div>
-		@endif
 
 		<div style="margin-top:30px;display:none" id="forwardEmailContainer">
 			<div class="panel panel-default">
