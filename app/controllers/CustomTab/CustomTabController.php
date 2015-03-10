@@ -122,7 +122,7 @@ class CustomTabController extends \BaseController {
 				$fileName = $this->_doUpload($file);
 
 				$thumbgen = new ThumbnailGenerator();
-                $thumb_filename = $thumbgen->generateThumbnail('documents/'.$fileName);
+                $thumb_filename = $thumbgen->generateThumbnail('document/'.$fileName);
 
 				$data = array(
 					'customer_id' 	=> $customer_id,
