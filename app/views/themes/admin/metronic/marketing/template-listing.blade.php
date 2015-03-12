@@ -21,7 +21,7 @@
     <div class="tabbable tabbable-custom">
         <ul class="nav nav-tabs">
             <li class="active">
-                <a data-toggle="tab" href="#predefined" aria-expanded="true"> Predefined </a>
+                <a data-toggle="tab" href="#predefined" aria-expanded="true"> User Templates </a>
             </li>
             <li class="">
                 <a data-toggle="tab" href="#personal" aria-expanded="false"> Personal </a>
@@ -33,86 +33,29 @@
         <div class="tab-content">
             <div id="predefined" class="tab-pane active">
                 <div class="row mix-grid thumbnails">
+<!--                    <div class="col-md-3 col-sm-4 mix category_1 mix_all" style="display: block; opacity: 1; ">-->
+<!--                        <div class="mix-inner">-->
+<!--                            <img alt="" src="{{asset('public/img/template_previews/worn_left.jpg')}}" class="img-responsive">-->
+<!--                            <div class="mix-details">-->
+<!--                                <h4>Set this template as default?</h4>-->
+<!--                                <a class="mix-link"><i class="fa fa-check"></i></a>-->
+<!--                                <a data-rel="fancybox-button" title="Project Name" href="{{asset('public/img/template_previews/worn_left.jpg')}}" class="mix-preview fancybox-button"><i class="fa fa-pencil"></i></a>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                    @foreach($user_email_templates as $template)
                     <div class="col-md-3 col-sm-4 mix category_1 mix_all" style="display: block; opacity: 1; ">
                         <div class="mix-inner">
                             <img alt="" src="{{asset('public/img/template_previews/worn_left.jpg')}}" class="img-responsive">
                             <div class="mix-details">
                                 <h4>Set this template as default?</h4>
                                 <a class="mix-link"><i class="fa fa-check"></i></a>
-                                <a data-rel="fancybox-button" title="Project Name" href="{{asset('public/img/template_previews/worn_left.jpg')}}" class="mix-preview fancybox-button"><i class="fa fa-pencil"></i></a>
+                                <a data-rel="fancybox-button" data-template-id="{{$template['id']}}" class="mix-preview fancybox-button template-edit"><i class="fa fa-pencil"></i></a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-4 mix category_1 mix_all" style="display: block; opacity: 1; ">
-                        <div class="mix-inner">
-                            <img alt="" src="{{asset('public/img/template_previews/textile_left.jpg')}}" class="img-responsive">
-                            <div class="mix-details">
-                                <h4>Set this template as default?</h4>
-                                <a class="mix-link"><i class="fa fa-check"></i></a>
-                                <a data-rel="fancybox-button" title="Project Name" href="{{asset('public/img/template_previews/textile_left.jpg')}}" class="mix-preview fancybox-button"><i class="fa fa-pencil"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-4 mix category_1 mix_all" style="display: block; opacity: 1; ">
-                        <div class="mix-inner">
-                            <img alt="" src="{{asset('public/img/template_previews/natural_1.jpg')}}" class="img-responsive">
-                            <div class="mix-details">
-                                <h4>Set this template as default?</h4>
-                                <a class="mix-link"><i class="fa fa-check"></i></a>
-                                <a data-rel="fancybox-button" title="Project Name" href="{{asset('public/img/template_previews/natural_1.jpg')}}" class="mix-preview fancybox-button"><i class="fa fa-pencil"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-4 mix category_1 mix_all" style="display: block; opacity: 1; ">
-                        <div class="mix-inner">
-                            <img alt="" src="{{asset('public/img/template_previews/mistymeadow_left.jpg')}}" class="img-responsive">
-                            <div class="mix-details">
-                                <h4>Set this template as default?</h4>
-                                <a class="mix-link"><i class="fa fa-check"></i></a>
-                                <a data-rel="fancybox-button" title="Project Name" href="{{asset('public/img/template_previews/mistymeadow_left.jpg')}}" class="mix-preview fancybox-button"><i class="fa fa-pencil"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-4 mix category_1 mix_all" style="display: block; opacity: 1; ">
-                        <div class="mix-inner">
-                            <img alt="" src="{{asset('public/img/template_previews/helvetica_left.jpg')}}" class="img-responsive">
-                            <div class="mix-details">
-                                <h4>Set this template as default?</h4>
-                                <a class="mix-link"><i class="fa fa-check"></i></a>
-                                <a data-rel="fancybox-button" title="Project Name" href="{{asset('public/img/template_previews/helvetica_left.jpg')}}" class="mix-preview fancybox-button"><i class="fa fa-pencil"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-4 mix category_1 mix_all" style="display: block; opacity: 1; ">
-                        <div class="mix-inner">
-                            <img alt="" src="{{asset('public/img/template_previews/harbourcoat_left.jpg')}}" class="img-responsive">
-                            <div class="mix-details">
-                                <h4>Set this template as default?</h4>
-                                <a class="mix-link"><i class="fa fa-check"></i></a>
-                                <a data-rel="fancybox-button" title="Project Name" href="{{asset('public/img/template_previews/harbourcoat_left.jpg')}}" class="mix-preview fancybox-button"><i class="fa fa-pencil"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-4 mix category_1 mix_all" style="display: block; opacity: 1; ">
-                        <div class="mix-inner">
-                            <img alt="" src="{{asset('public/img/template_previews/fabric_left.jpg')}}" class="img-responsive">
-                            <div class="mix-details">
-                                <h4>Set this template as default?</h4>
-                                <a class="mix-link"><i class="fa fa-check"></i></a>
-                                <a data-rel="fancybox-button" title="Project Name" href="{{asset('public/img/template_previews/fabric_left.jpg')}}" class="mix-preview fancybox-button"><i class="fa fa-pencil"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-4 mix category_1 mix_all" style="display: block; opacity: 1; ">
-                        <div class="mix-inner">
-                            <img alt="" src="{{asset('public/img/template_previews/eco_left.jpg')}}" class="img-responsive">
-                            <div class="mix-details">
-                                <h4>Set this template as default?</h4>
-                                <a class="mix-link"><i class="fa fa-check"></i></a>
-                                <a data-rel="fancybox-button" title="Project Name" href="{{asset('public/img/template_previews/eco_left.jpg')}}" class="mix-preview fancybox-button"><i class="fa fa-pencil"></i></a>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
+
 
                 </div>
             </div>
@@ -179,12 +122,31 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="module-heading">
                                     <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#controls" aria-expanded="true" aria-controls="collapseOne">
+                                            <i class="fa fa-gear"></i> Controls
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="controls" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="module-heading">
+                                    <div class="panel-body" id="layout-list">
+                                        <div class="control-item" id="create-new">
+                                            Create New
+                                        </div>
+                                        <div class="control-item" id="save-template">
+                                            Save
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="module-heading">
+                                    <h4 class="panel-title">
                                         <a data-toggle="collapse" data-parent="#accordion" href="#layouts" aria-expanded="true" aria-controls="collapseOne">
                                             <i class="fa fa-th-large"></i> Modules
                                         </a>
                                     </h4>
                                 </div>
-                                <div id="layouts" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="module-heading">
+                                <div id="layouts" class="panel-collapse collapse" role="tabpanel" aria-labelledby="module-heading">
                                     <div class="panel-body" id="layout-list">
                                         <!-- Start -->
                                         <div class="panel-group" id="layout-list" role="tablist" aria-multiselectable="true">
@@ -255,10 +217,25 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="module-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#preview-box" aria-expanded="true" aria-controls="collapseTwo">
+                                            <i class="fa fa-expand"></i> Preview
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="preview-box" class="panel-collapse collapse" role="tabpanel" aria-labelledby="toolbar-heading">
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-9">
                     <!-- Canvas -->
+                        <div id="template-loader-container">
+                            <img id="cropper-loader" src="{{$asset_path}}/global/img/spiffygif_88x88.gif"/>
+                        </div>
                         <div id="template-canvas" class="canvas">
 
                         </div>

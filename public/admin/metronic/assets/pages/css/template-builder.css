@@ -165,3 +165,24 @@
     width: 565px;
     height: auto;
 }
+
+.control-item {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding-left: 15px;
+    color: #ACACAC;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#template-loader-container {
+    margin: 0 auto;
+    margin-top: 200px;
+    text-align: center;
+    display: none;
+}
+
+#predefined {
+    min-height: 840px;
+}

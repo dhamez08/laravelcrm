@@ -47,6 +47,11 @@ class User extends \Eloquent implements UserInterface, RemindableInterface {
 		return $this->hasMany('\EmailTemplate\EmailTemplate', 'belongs_to', 'id');
 	}
 
+    public function userEmailTemplate()
+    {
+        return $this->hasMany('\UserEmailTemplate\UserEmailTemplate', 'user_id', 'id');
+    }
+
 	public function emailSignature()
 	{
 		return $this->hasMany('\EmailSignature\EmailSignature', 'belongs_to', 'id');

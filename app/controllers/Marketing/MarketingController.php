@@ -382,6 +382,7 @@ class MarketingController extends \BaseController {
 
         $data 						= array_merge($data,$this->getSetupThemes());
         $data['email_templates'] = \User\User::find(\Auth::id())->emailTemplate()->where('type',2)->get();
+        $data['user_email_templates'] = \User\User::find(\Auth::id())->userEmailTemplate()->get();
         $data['layouts']        = \EmailLayout\EmailLayout::all();
 
         $dataAddTemplateModal = array();
@@ -545,5 +546,33 @@ class MarketingController extends \BaseController {
         }
         return \Response::json($sections);
     }
+
+    public function postAjaxSaveTemplate(){
+        $source_code = \Input::get('source_code');
+        $template_id = \Input::get('template_id');
+        $user_id = \Auth::id();
+
+        if($template_id == 0){
+            $template = new \UserEmailTemplate\UserEmailTemplate;
+            $template->source_code = \HTML::entities($source_code);
+            $template->user_id = $user_id;
+            $template->save();
+        } else {
+            $template = \UserEmailTemplate\UserEmailTemplate::find($template_id);
+            $template->source_code = $source_code;
+            $template->save();
+        }
+
+        return \Response::json(array('test'=>$source_code));
+    }
+
+    public function getAjaxEditTemplate(){
+        $template_id = \Input::get('template_id');
+        $template = \UserEmailTemplate\UserEmailTemplate::find($template_id);
+        $template['source_code'] = \HTML::decode($template['source_code']);
+
+        return \Response::json($template);
+    }
+
 
 }
