@@ -612,6 +612,7 @@ class ClientsController extends \BaseController {
 		$data['fa_icons']						= 'user';
 		$group_id										= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
 		$data['customer']						= \Clients\Clients::find($clientId);
+		$data['customer']->touch();
 		$data['currentClient']			= \Clients\ClientEntity::get_instance()->bindCustomer($data['customer']);
 		$data['telephone']					= $data['customer']->telephone();
 		$data['email']							= $data['customer']->emails();
@@ -1780,6 +1781,7 @@ class ClientsController extends \BaseController {
 	public function getClientlist(){
 
 		$clients = \DB::table('customer')
+			->select('customer.id as customer_id', 'customer.first_name', 'customer.last_name')
 			->leftJoin('customer_address', 'customer_address.customer_id', '=', 'customer.id')
 			->leftJoin('customer_telephone', 'customer_telephone.customer_id', '=', 'customer.id')
 			->where('customer.belongs_user', '=', \Auth::id())

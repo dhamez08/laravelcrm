@@ -1,6 +1,8 @@
 <?php
 namespace CustomTab;
 
+use Tristan\ThumbnailGenerator\ThumbnailGenerator;
+
 class CustomTabController extends \BaseController {
 
 	/**
@@ -118,12 +120,17 @@ class CustomTabController extends \BaseController {
 			$file_id = \Input::get('file_type');
 			foreach(\Input::file('files') as $file){
 				$fileName = $this->_doUpload($file);
+
+				$thumbgen = new ThumbnailGenerator();
+                $thumb_filename = $thumbgen->generateThumbnail('document/'.$fileName);
+
 				$data = array(
 					'customer_id' 	=> $customer_id,
 					'custom_id'		=> \Input::get('custom_id'),
 					'section'		=> \Input::get('section'),
 					'file_name'		=> $fileName,
 					'file_type'		=> $file->getClientOriginalExtension(),
+					'thumbnail'		=> $thumb_filename
 				);		
 
 				\CustomTabFilesData\CustomTabFilesDataEntity::get_instance()->createOrUpdate($data);

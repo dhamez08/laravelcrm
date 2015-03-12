@@ -124,23 +124,17 @@
 						 You have {{ \Message\MessageEntity::get_instance()->getUnreadMessagesCount() }} new messages
 					</p>
 				</li>
-				@elseif(count(\Message\MessageEntity::get_instance()->listAllMessages())>0)
-				<li>
-					<p>
-						 You have {{ count(\Message\MessageEntity::get_instance()->listAllMessages()) }} messages
-					</p>
-				</li>
 				@else
 				<li>
 					<p>
-						 You have no message yet
+						 You have no new messages
 					</p>
 				</li>
 				@endif
-				@if(count(\Message\MessageEntity::get_instance()->listAllMessages())>0)
+				@if(count(\Message\MessageEntity::get_instance()->listAllUnreadMessages())>0)
 				<li>
 					<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: auto; max-height:250px"><ul style="overflow: hidden; width: auto; height: auto;" class="dropdown-menu-list scroller" data-initialized="1">
-					@foreach(\Message\MessageEntity::get_instance()->listAllMessages() as $message)
+					@foreach(\Message\MessageEntity::get_instance()->listAllUnreadMessages() as $message)
 						<li>
 							<a href="{{ url('messages/view?message_id='.$message->id) }}">
 							<span class="photo">
