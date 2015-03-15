@@ -425,6 +425,8 @@ $(function(){
                     });
                 }
 
+                $('#cropper-loader').removeClass('hide');
+
                 $.ajax({
                     type: "POST",
                     url: 'file-upload',
