@@ -389,7 +389,8 @@ class MarketingController extends \BaseController {
 
         return \View::make( $data['view_path'] . '.marketing.template-listing', $data )
             ->nest('add_template_modal', $data['view_path'] . '.marketing.partials.add_template', $dataAddTemplateModal)
-            ->nest('cropper_modal', $data['view_path'] . '.marketing.partials.image_cropper', $data);
+            ->nest('cropper_modal', $data['view_path'] . '.marketing.partials.image_cropper', $data)
+            ->nest('mobile_preview_modal', $data['view_path'] . '.marketing.partials.mobile_preview', $data);
     }
 
     private function getCustomerEmails(){

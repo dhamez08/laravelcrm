@@ -186,3 +186,35 @@
 #predefined {
     min-height: 840px;
 }
+
+.preview-container {
+    position: relative;
+}
+
+.phone-container {
+    position: absolute;
+}
+
+.phone-overlay {
+    position: absolute;
+    top: 100px;
+    left: 36px;
+    width: 320px;
+    height: 527px;
+
+}
+
+#mobile-preview-modal .modal-dialog {
+    width: 410px;
+}
+
+#mobile-preview-modal .modal-content {
+    box-shadow: none;
+    border: none;
+    background-color: transparent;
+}
+
+#phone-content {
+    width: 100%;
+    height: 100%;
+}

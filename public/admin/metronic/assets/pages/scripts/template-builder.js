@@ -38,6 +38,31 @@ $(function(){
 
     });
 
+    $('#fullscreen-preview').on('click',function(){
+        var html = $('#template-canvas').html();
+        var preview = window.open();
+        preview.document.write(html);
+    });
+
+    $('#mobile-preview').on('click',function(){
+        // Open modal for mobile preview
+        var html = $('#template-canvas').html();
+        var style = $('<style>').html($("#mobile-preview-style").val());
+
+
+        var body = $('#phone-content').contents().find('body');
+        body.html('');
+        body.append(style).append(html);
+        body.find('.editable').each(function(){
+            $(this).removeClass('editable editable-photo editable-text editable-url');
+        });
+        body.css('overflow-x','hidden');
+
+
+        $('#mobile-preview-modal').modal('show');
+
+    });
+
     $('#create-new').on('click',function(){
         $('#template-canvas').html('');
         $('#save-template').data('template-id',0);
@@ -498,6 +523,7 @@ $(function(){
         else if(selected_element.hasClass('editable-url')){
             var options = new Object();
             var body = $('body');
+            var uri = selected_element.attr('href');
 
 
             var url_input = $('<div>')
@@ -506,7 +532,8 @@ $(function(){
                     .attr('id','image-url')
                     .addClass('url')
                     .attr('type','text')
-                    .attr('placeholder','Your url'))
+                    .attr('placeholder','Your url')
+                    .val(uri))
                 .append($('<i>')
                     .addClass('fa fa-times popover-icon close-url'));
 

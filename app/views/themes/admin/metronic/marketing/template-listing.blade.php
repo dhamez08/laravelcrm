@@ -226,7 +226,14 @@
                                     </h4>
                                 </div>
                                 <div id="preview-box" class="panel-collapse collapse" role="tabpanel" aria-labelledby="toolbar-heading">
-
+                                    <div class="panel-body" id="layout-list">
+                                        <div class="control-item" id="fullscreen-preview">
+                                            Fullscreen
+                                        </div>
+                                        <div class="control-item" id="mobile-preview">
+                                            Mobile
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -236,6 +243,7 @@
                         <div id="template-loader-container">
                             <img id="cropper-loader" src="{{$asset_path}}/global/img/spiffygif_88x88.gif"/>
                         </div>
+                        <input type="hidden" id="mobile-preview-style" value='/* iPad Text Smoother */div, p, a, li, td { -webkit-text-size-adjust:none; }/* Reset */* { margin-top: 0px; margin-bottom: 0px; padding: 0px; border: none; line-height: normal; outline: none; list-style: none; -webkit-text-size-adjust: none; -ms-text-size-adjust: none; }table { border-collapse: collapse !important; padding: 0px !important; border: none !important; border-bottom-width: 0px !important; mso-table-lspace: 0pt; mso-table-rspace: 0pt; }table td { border-collapse: collapse; }body { margin: 0px; padding: 0px; background-color: #FFFFFF;}.ExternalClass * { line-height: 100%; }/* Responsive */@media only screen and (max-width:600px) {	/* Tables	parameters: width, alignment, padding */	table[class=scale] { width: 100%!important; }		/* Td */	td[class=scale-center-both] { width: 100%!important; text-align: center!important; padding-left: 20px!important; padding-right: 20px!important; }	td[class=scale-center-both-bottom] { width: 100%!important; text-align: center!important; padding-left: 20px!important; padding-right: 20px!important; padding-bottom: 24px!important; }	td[class=scale-center-both-bottom60] { width: 100%!important; text-align: center!important; padding-left: 20px!important; padding-right: 20px!important; padding-bottom: 60px!important; }	td[class=scale-center-both-top] { width: 100%!important; text-align: center!important; padding-left: 20px!important; padding-right: 20px!important; padding-top: 24px!important; }	td[class=scale-center-bottom] { width: 100%!important; text-align: center!important; padding-bottom: 24px!important; }	td[class=scale-center-bottom-top] { width: 100%!important; text-align: center!important; padding-bottom: 24px!important; padding-top: 24px!important; }	td[class=h30] { height: 30px!important; }	img[class="reset"] { display: inline!important; }	img[class="reset2"] { display: inline!important; width: 100%!important; }}'>
                         <div id="template-canvas" class="canvas">
 
                         </div>
@@ -251,6 +259,7 @@
 @section('body-modals')
     {{ $add_template_modal }}
     {{ $cropper_modal }}
+    {{ $mobile_preview_modal }}
 @stop
 
 @section('script-footer')
