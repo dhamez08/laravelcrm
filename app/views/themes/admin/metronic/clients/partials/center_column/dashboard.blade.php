@@ -216,28 +216,7 @@
 						<div class="tab-content">
 							<div class="tab-pane" id="facebook">
 								<div class="scroller" style="height:350px" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd">
-									<ul class="feeds">
-										<li>
-											<div class="col1">
-												<div class="cont">
-													<div class="cont-col1">
-														<div class="label label-sm label-info">
-															<i class="fa fa-facebook"></i>
-														</div>
-													</div>
-													<div class="cont-col2">
-														<div class="desc">
-															 Feeds From Facebook
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="col2">
-												<div class="date">
-													 Just now
-												</div>
-											</div>
-										</li>
+									<ul class="feeds feeds-facebook">
 									</ul>
 								</div>
 							</div>

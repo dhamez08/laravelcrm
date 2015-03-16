@@ -358,6 +358,18 @@
 											{{'@'.trim(str_ireplace("/","",strrchr(str_ireplace("/posts","",$urls->url),"/")))}}
 										@else
 											{{trim(str_ireplace("/","",strrchr(str_ireplace("/posts","",$urls->url),"/")))}}
+
+											<script type="text/javascript">
+												jQuery(document).ready(function() {
+													jQuery.get('http://graph.facebook.com/{{trim(str_ireplace("/","",strrchr(str_ireplace("/posts","",$urls->url),"/")))}}', {}, function(data) {
+														console.log(data);
+														jQuery.each(data, function(ndx, val) {
+															jQuery('.feeds-facebook').append('<li><strong>' + ndx + ':</strong> ' + val + '</li>');
+														});
+													});
+												});
+											</script>
+
 										@endif
 
 									@endif
