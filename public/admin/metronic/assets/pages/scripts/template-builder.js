@@ -13,11 +13,88 @@ $(function(){
     var image_height = 0;
     var apply_all = false;
 
+    $('.template-edit').on('click',function(){
+        $('#template-creator-tab').click();
+        $('#template-canvas').hide();
+        $('#template-loader-container').show();
+
+        var data = new Object();
+        data.template_id = $(this).data('template-id');
+
+
+        $.ajax({
+            type: "GET",
+            url: 'ajax-edit-template',
+            data: data,
+            success: function(response)
+            {
+                $('#template-canvas').html(response.source_code).show();
+                $('#template-loader-container').hide();
+                $('#save-template').data('template-id',response.id);
+            },
+            dataType: 'json'
+        });
+
+
+    });
+
+    $('#fullscreen-preview').on('click',function(){
+        var html = $('#template-canvas').html();
+        var preview = window.open();
+        preview.document.write(html);
+    });
+
+    $('#mobile-preview').on('click',function(){
+        // Open modal for mobile preview
+        var html = $('#template-canvas').html();
+        var style = $('<style>').html($("#mobile-preview-style").val());
+
+
+        var body = $('#phone-content').contents().find('body');
+        body.html('');
+        body.append(style).append(html);
+        body.find('.editable').each(function(){
+            $(this).removeClass('editable editable-photo editable-text editable-url');
+        });
+        body.css('overflow-x','hidden');
+
+
+        $('#mobile-preview-modal').modal('show');
+
+    });
+
+    $('#create-new').on('click',function(){
+        $('#template-canvas').html('');
+        $('#save-template').data('template-id',0);
+    });
+
+    $('#save-template').on('click',function(){
+
+        if($('#template-canvas').html()){
+            var data = new Object();
+            data.source_code = $('#template-canvas').html();
+            data.template_id = $(this).data('template-id');
+
+            console.log(data);
+            $.ajax({
+                type: "POST",
+                url: 'ajax-save-template',
+                data: data,
+                success: function(response)
+                {
+                    location.reload();
+                },
+                dataType: 'json'
+            });
+        }
+    });
+
     $("#apply-all").bootstrapSwitch();
 
     $("#apply-all").on('switchChange.bootstrapSwitch', function(event, state) {
         apply_all = state;
     });
+
 
     $('body').on('click','.popover-icon',function(){
         var selected_icon = $(this);
@@ -348,6 +425,8 @@ $(function(){
                     });
                 }
 
+                $('#cropper-loader').removeClass('hide');
+
                 $.ajax({
                     type: "POST",
                     url: 'file-upload',
@@ -446,6 +525,7 @@ $(function(){
         else if(selected_element.hasClass('editable-url')){
             var options = new Object();
             var body = $('body');
+            var uri = selected_element.attr('href');
 
 
             var url_input = $('<div>')
@@ -454,7 +534,8 @@ $(function(){
                     .attr('id','image-url')
                     .addClass('url')
                     .attr('type','text')
-                    .attr('placeholder','Your url'))
+                    .attr('placeholder','Your url')
+                    .val(uri))
                 .append($('<i>')
                     .addClass('fa fa-times popover-icon close-url'));
 
