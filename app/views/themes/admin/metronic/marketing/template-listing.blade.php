@@ -236,6 +236,38 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="module-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#dynamic-field" aria-expanded="true" aria-controls="collapseTwo">
+                                            <i class="fa fa-th-list"></i> Dynamic Fields
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="dynamic-field" class="panel-collapse collapse" role="tabpanel" aria-labelledby="toolbar-heading">
+                                    <div class="panel-body" id="layout-list">
+                                        <select id="custom_form" class="form-control">
+                                            <option value="0">Choose a Form</option>
+                                            <option value="customer">---Customer Information---</option>
+                                            <option value="custom_fields">---Custom Fields---</option>
+                                            <?php
+                                            $forms = \CustomForm\CustomFormEntity::get_instance()->getFormsByLoggedUser();
+                                            ?>
+                                            @foreach($forms as $form)
+                                            <option value="{{ $form->id }}">{{ $form->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        <div id="fields_container" style="margin-top:15px;min-height:230px;">
+                                            <div class="scroller" style="height:230px" data-always-visible="0" data-rail-visible="0" data-rail-color="red" data-handle-color="green">
+                                                <table class="table table-hover">
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-9">
@@ -285,34 +317,34 @@
         $('#template_body').summernote({height: 300});
         $('#signature_body').summernote({height: 300});
 
-        $("select#custom_form").live("change", function() {
-            $this = $(this);
-            $("#fields_container table tbody").html('');
-            //show loading
-            Metronic.blockUI({
-                target: '#fields_container',
-                boxed: true,
-                message: 'Processing...'
-            });
-
-            var row='';
-            $.get(BASE_URL+'/settings/custom-forms/fields/'+$this.val(), function(response) {
-                var form_name = response.form.name;
-                $.each(response.build, function(i, item) {
-                    //row+='<tr><td><input type="text" value="['+form_name+':'+item.field_name+']" class="form-control" style="border:0px" /></td></tr>';
-                    if($this.val()=='customer')
-                        row+='<tr><td><a href="javascript:void(0)" class="custom_form_link">{'+item.field_name+'}</a></td></tr>';
-                    else
-                        row+='<tr><td><a href="javascript:void(0)" class="custom_form_link">['+form_name+':'+item.field_name+']</a></td></tr>';
-                });
-
-                $("#fields_container table tbody").append(row);
-
-                Metronic.unblockUI('#fields_container');
-            }).error(function() {
-                Metronic.unblockUI('#fields_container');
-            });
-        });
+//        $("select#custom_form").live("change", function() {
+//            $this = $(this);
+//            $("#fields_container table tbody").html('');
+//            //show loading
+//            Metronic.blockUI({
+//                target: '#fields_container',
+//                boxed: true,
+//                message: 'Processing...'
+//            });
+//
+//            var row='';
+//            $.get(BASE_URL+'/settings/custom-forms/fields/'+$this.val(), function(response) {
+//                var form_name = response.form.name;
+//                $.each(response.build, function(i, item) {
+//                    //row+='<tr><td><input type="text" value="['+form_name+':'+item.field_name+']" class="form-control" style="border:0px" /></td></tr>';
+//                    if($this.val()=='customer')
+//                        row+='<tr><td><a href="javascript:void(0)" class="custom_form_link">{'+item.field_name+'}</a></td></tr>';
+//                    else
+//                        row+='<tr><td><a href="javascript:void(0)" class="custom_form_link">['+form_name+':'+item.field_name+']</a></td></tr>';
+//                });
+//
+//                $("#fields_container table tbody").append(row);
+//
+//                Metronic.unblockUI('#fields_container');
+//            }).error(function() {
+//                Metronic.unblockUI('#fields_container');
+//            });
+//        });
 
         var isValid = 0;
 
