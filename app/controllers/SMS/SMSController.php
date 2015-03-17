@@ -335,6 +335,7 @@ class SMSController extends \BaseController {
 					$client = \Clients\Clients::find(\Input::get('customerid')	);
 					// insert into msg database
 					$msg = array(
+						'added_date' => date('Y-m-d H:i:s'),
 						'customer_id' => \Input::get('customerid'),
 						'sender'=>\Auth::user()->title . ' ' . \Auth::user()->first_name . ' ' .\Auth::user()->last_name,
 						'to' => \Input::get('mobile_number'),
