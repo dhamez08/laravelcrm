@@ -707,3 +707,7 @@ var Metronic = function () {
     };
 
 }();
+
+    jQuery(document).ready(function() {
+        $('.task-accordion-head').click(function(){ $(this).next('form').slideToggle() });
+    });
