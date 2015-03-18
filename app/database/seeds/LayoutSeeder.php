@@ -12,7 +12,8 @@ class LayoutSeeder extends Seeder {
         Eloquent::unguard();
 
         DB::table('system_email_layout')->insert(array(
-            array('name'=>'Grit')
+            array('name'=>'Grit'),
+            array('name'=>'Gemicon')
         ));
     }
 

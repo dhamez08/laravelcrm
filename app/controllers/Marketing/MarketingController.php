@@ -540,7 +540,7 @@ class MarketingController extends \BaseController {
 
 
     public function getAjaxLayoutSectionList($layout_id){
-        $sections = \EmailLayout\EmailLayout::find(1)->section;
+        $sections = \EmailLayout\EmailLayout::find($layout_id)->section;
         foreach($sections as &$section){
             $section['display_image'] = asset('public/img/template_builder/'.$section['display_image']);
             $section['source_code'] = html_entity_decode($section['source_code']);
