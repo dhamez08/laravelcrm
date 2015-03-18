@@ -201,15 +201,19 @@
 							<span class="caption-subject bold uppercase">FEEDS </span>
 						</div>
 						<ul class="nav nav-tabs">
+							{{--
 							<li class="">
 								<a href="#facebook" data-toggle="tab"><i class="fa fa-facebook"></i> Facebook </a>
 							</li>
+							--}}
 							<li class="active">
 								<a href="#twitter" data-toggle="tab"><i class="fa fa-twitter"></i> Twitter </a>
 							</li>
+							{{--
 							<li class="">
 								<a href="#linkedin" data-toggle="tab"><i class="fa fa-linkedin"></i> Linkedin </a>
 							</li>
+							--}}
 						</ul>
 					</div>
 					<div class="portlet-body">

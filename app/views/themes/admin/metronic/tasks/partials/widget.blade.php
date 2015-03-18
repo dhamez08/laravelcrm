@@ -254,12 +254,3 @@
 	</div>
 </div>
 <!-- END Portlet PORTLET-->
-
-@section('footer-custom-js')
-	@parent
-    <script>
-    jQuery(document).ready(function() {
-        $('.task-accordion-head').click(function(){ $(this).next('form').slideToggle() });
-    });
-    </script>
-@stop
