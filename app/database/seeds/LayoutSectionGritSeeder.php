@@ -1,6 +1,6 @@
 <?php
 
-class LayoutSectionSeeder extends Seeder {
+class LayoutSectionGritSeeder extends Seeder {
 
     /**
      * Run the database seeds.
@@ -10,7 +10,9 @@ class LayoutSectionSeeder extends Seeder {
     public function run()
     {
         Eloquent::unguard();
-
+        DB::table('system_email_layout')->insert(array(
+            array('name'=>'Grit')
+        ));
         DB::table('system_layout_section')->insert(array(
             array(
                 'layout_id' => 1,
