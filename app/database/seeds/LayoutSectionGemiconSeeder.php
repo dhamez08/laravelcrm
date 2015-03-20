@@ -11,6 +11,9 @@ class LayoutSectionGemiconSeeder extends Seeder {
     {
         Eloquent::unguard();
 
+        DB::table('system_email_layout')->insert(array(
+            array('name'=>'Gemicon')
+        ));
         DB::table('system_layout_section')->insert(array(
             array(
                 'layout_id' => 2,
