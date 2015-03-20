@@ -106,6 +106,11 @@ Route::group(array('before' => 'auth'), function()
         Route::get('count', 'Task\TaskController@getAjaxTaskCount');
         Route::post('dismiss', 'Task\TaskController@postAjaxDismissReminder');
     });
+
+    Route::group(array('prefix' => 'invoice'), function() {
+    	Route::resource('dashboard','Invoice\DashboardController');	
+    });
+
 });
 Route::post('pass-email-data','Email\EmailController@sendData');
 Route::get('testmail', function()
