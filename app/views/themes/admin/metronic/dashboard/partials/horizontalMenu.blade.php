@@ -58,6 +58,15 @@
 				@endif
 			</a>
 		</li>
+		<li class="classic-menu-dropdown">
+			<a href="{{url('invoice/dashboard')}}">
+			<i class="fa fa-file"></i>  Invoice
+				@if( \Request::is('invoice*') )
+					<span class="selected">
+					</span>
+				@endif
+			</a>
+		</li>		
 		{{-- 
 		<li class="classic-menu-dropdown">
 			<a href="#">
