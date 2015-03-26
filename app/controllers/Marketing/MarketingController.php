@@ -575,5 +575,35 @@ class MarketingController extends \BaseController {
         return \Response::json($template);
     }
 
+    public function getSendEmail(){
+        $data['cc'] = 0;
+        $data['bcc'] = 0;
+        $data['subject'] = 'test subject';
+        $data['body'] = '<h1>testing header</h1>';
+        $data['footer'] = 'signature testing';
+        $data['to_email'] = 'dhamez08@gmail.com';
+        $data['to_name'] = 'Tristan Flor';
+        $data['client_ref'] = "[REF:12345]";
+
+        $from_name = \Auth::user()->first_name . ' ' . \Auth::user()->last_name;
+        $from_email = \Auth::user()->email;
+
+
+        \Mail::send('emails.clients.index', $data, function($message) use ($data, $from_name, $from_email)
+        {
+            $message->from($from_email, $from_name);
+            if($data['cc'])
+                $message->cc($data['cc']);
+            if($data['bcc'])
+                $message->bcc($data['bcc']);
+//            if($data['client_files']) {
+//                $file_attach = explode("|", $data['client_files']);
+//                $message->attach(url('/') . '/public/' . $file_attach[1], array("as"=>$file_attach[0]));
+//            }
+            $message->replyTo('dropbox.13554457@one23.co.uk', $from_name);
+            $message->to($data['to_email'], $data['to_name'])->subject($data['subject'] . ' ' . $data['client_ref']);
+        });
+    }
+
 
 }
