@@ -3,7 +3,7 @@
 
 	<div class="row">
 	<div class="col-md-4">		
-	{{ Form::open(array('url' => 'invoice/number', 'role' => 'form', 'class' => 'solsoForm')) }}
+	{{ Form::open(array('url' => 'invoice/invoice/number', 'role' => 'form', 'class' => 'solsoForm')) }}
 
 		<label for="value"> {{ trans('invoice.new_value') }}</label>
 		<div class="input-group">
@@ -24,7 +24,7 @@
 	<h3 class="top20">{{ trans('invoice.invoice_code') }}</h3>
 	<div class="row">
 	<div class="col-md-4">		
-	{{ Form::open(array('url' => 'invoice/code', 'role' => 'form', 'class' => 'solsoForm')) }}
+	{{ Form::open(array('url' => 'invoice/invoice/code', 'role' => 'form', 'class' => 'solsoForm')) }}
 
 		<label for="value">{{ trans('invoice.new_value') }}</label>
 		<div class="input-group">
@@ -45,7 +45,7 @@
 	<h3 class="top20">{{ trans('invoice.invoice_personal_title') }}</h3>
 	<div class="row">
 	<div class="col-md-8">		
-	{{ Form::open(array('url' => 'invoice/text', 'role' => 'form', 'class' => 'solsoForm')) }}
+	{{ Form::open(array('url' => 'invoice/invoice/text', 'role' => 'form', 'class' => 'solsoForm')) }}
 
 		<div class="form-group">
 			<label for="description" class="lowercase">{{ trans('invoice.invoice_personal_description') }}</label>

@@ -36,15 +36,15 @@ class UploadController extends \BaseController {
 			} 
 			catch(Exception $e) 
 			{
-				return Redirect::to('setting')->with('message', $e->getMessage()); 
+				return Redirect::to('invoice/setting')->with('message', $e->getMessage()); 
 			}
 		}
 		else
 		{
-			return Redirect::to('setting')->with('message', trans('invoice.file_is_empty'));
+			return Redirect::to('invoice/setting')->with('message', trans('invoice.file_is_empty'));
 		}
 		
-		return Redirect::to('setting')->with('message', trans('invoice.data_was_saved'));
+		return Redirect::to('invoice/setting')->with('message', trans('invoice.data_was_saved'));
 	}
 	
 	public function update($id)
@@ -69,15 +69,15 @@ class UploadController extends \BaseController {
 			} 
 			catch(Exception $e) 
 			{
-				return Redirect::to('setting')->with('message', $e->getMessage()); 
+				return Redirect::to('invoice/setting')->with('message', $e->getMessage()); 
 			}
 		}
 		else
 		{
-			return Redirect::to('setting')->with('message', trans('invoice.file_is_empty'));
+			return Redirect::to('invoice/setting')->with('message', trans('invoice.file_is_empty'));
 		}
 		
-		return Redirect::to('setting')->with('message', trans('invoice.data_was_updated'));
+		return Redirect::to('invoice/setting')->with('message', trans('invoice.data_was_updated'));
 	}
 
 	public function destroy($id)
@@ -85,7 +85,7 @@ class UploadController extends \BaseController {
 		$delete = Image::where('id', $id)->where('user_id', Auth::id());
 		$delete->delete();
 		
-		return Redirect::to('setting')->with('message', trans('invoice.data_was_deleted'));		
+		return Redirect::to('invoice/setting')->with('message', trans('invoice.data_was_deleted'));		
 	}
 	/* === END C.R.U.D. === */
 

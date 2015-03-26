@@ -13,7 +13,8 @@
 		"atticmedia/anvard": "dev-master",
         "camroncade/timezone": "dev-master",
         "maatwebsite/excel": "1.*",
-        "sybio/image-workshop": "2.0.*"
+        "sybio/image-workshop": "2.0.*",
+		"intervention/image": "~2.1"
 	},
 	"autoload": {
 		"classmap": [

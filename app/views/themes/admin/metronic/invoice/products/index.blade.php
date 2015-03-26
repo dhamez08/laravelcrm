@@ -64,7 +64,7 @@
 		</div>	
 	</div>
 	
-	@include('_modals/delete')
-	@include('_modals/product')
+	@include($view_path . '.invoice/_modals/delete')
+	@include($view_path . '.invoice/_modals/product')
 	
 @stop

@@ -876,6 +876,7 @@ class ClientsController extends \BaseController {
 		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser($clientId, \Auth::id());
 		$data['customer_files']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->get();
 		$data['files_count']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->count();
+		$data['customFields']       = $data['customer']->customFieldsData();
 		$data 						= array_merge($data,$dashboard_data);
 		//var_dump($data['partner']->partner_id);
 		//echo ($data['customer']->customerAssociatedTo($clientId)->get());
@@ -1255,6 +1256,7 @@ class ClientsController extends \BaseController {
 		$data['tasks']				= \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser($clientId, \Auth::id());
 		$data['customer_files']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->get();
 		$data['files_count']		= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->count();
+		$data['customFields']       = $data['customer']->customFieldsData();
 		$data 						= array_merge($data,$dashboard_data);
 		//var_dump($data['belongToPartner']);
 		//exit();

@@ -88,6 +88,21 @@
 				<span class="arrow "></span>
 				</a>
 			</li>
+
+			@if(isset($customer) && $customer->type == '2')
+			<li{{(Request::is('clients/people/*')) ? '  class="start active open"': ''}}>
+				@if(isset($customer))
+					<a href="{{ url('clients/people/' . $customer->id) }}">
+				@else
+					<a href="javascript:;">
+				@endif
+				<i class="fa fa-users"></i>
+				<span class="title">People</span>
+				<span class="arrow "></span>
+				</a>
+			</li>				
+			@endif
+
 			@if(isset($customer))
 				@foreach(Auth::user()->customtabs as $tab)
 				<li{{(\Input::get('custom') == $tab->id) ? '  class="start active open"': ''}}>

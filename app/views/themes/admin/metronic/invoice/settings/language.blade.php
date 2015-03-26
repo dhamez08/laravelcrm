@@ -1,7 +1,7 @@
 <div class="col-md-6 col-lg-4">
 	<h3>{{ trans('invoice.default_language') }}</h3>
 	
-	{{ Form::open(array('url' => 'setting/defaultLanguage', 'role' => 'form', 'class' => 'solsoForm')) }}
+	{{ Form::open(array('url' => 'invoice/setting/defaultLanguage', 'role' => 'form', 'class' => 'solsoForm')) }}
 	
 		<div class="form-group">
 			<select name="language" class="form-control required solsoSelect2">

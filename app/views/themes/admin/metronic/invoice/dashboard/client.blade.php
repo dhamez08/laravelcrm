@@ -2,10 +2,6 @@
 
 @section('innerpage-content')
 
-	<div class="col-md-12 col-lg-12">
-		<h1><i class="fa fa-home"></i> {{ trans('invoice.dashboard') }}</h1>
-	</div>
-
 	<div class="col-md-12">
 		<div role="alert" class="alert alert-warning top20">
 			<strong> {{ trans('invoice.message') }}: </strong> {{ trans('invoice.message_07') }} 

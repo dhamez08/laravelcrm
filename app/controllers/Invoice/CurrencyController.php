@@ -6,6 +6,7 @@ use Auth;
 use Input;
 use Redirect;
 use Invoice\UserSetting;
+use Session;
 
 
 class CurrencyController extends \BaseController {
@@ -22,7 +23,7 @@ class CurrencyController extends \BaseController {
 		$store->position	= 1;
 		$store->save();	
 
-		return Redirect::to('setting')->with('message', trans('invoice.data_was_saved'));
+		return Redirect::to('invoice/setting')->with('message', trans('invoice.data_was_saved'));
 	}
 	
 	public function update($id)
@@ -31,7 +32,7 @@ class CurrencyController extends \BaseController {
 		$update->name		= Input::get('value');
 		$update->save();	
 
-		return Redirect::to('setting')->with('message', trans('invoice.data_was_updated'));
+		return Redirect::to('invoice/setting')->with('message', trans('invoice.data_was_updated'));
 	}
 
 	public function destroy($id)
@@ -39,7 +40,7 @@ class CurrencyController extends \BaseController {
 		$delete = Currency::where('id', $id)->where('user_id', Auth::id());
 		$delete->delete();
 		
-		return Redirect::to('setting')->with('message', trans('invoice.data_was_deleted'));		
+		return Redirect::to('invoice/setting')->with('message', trans('invoice.data_was_deleted'));		
 	}
 	/* === END C.R.U.D. === */
 

@@ -17,18 +17,18 @@
 	@stop
 	@section('pagebar')
 		@parent
-		@include($view_path.'.clients.partials.subPagebar')
+		{{-- @include($view_path.'.clients.partials.subPagebar') --}}
 	@stop
 	@section('innerpage-page-title')
 		&nbsp;
 	@show
 	@section('innerpage-content')
-		<div class="col-md-4">
+		<div class="col-lg-2 col-md-3 col-sm-3 col-summary">
 			<!-- CLIENT LEFT SIDEBAR -->
-			@include($view_path.'.clients.partials.leftColumn')
+			@include($view_path.'.clients.company.leftColumn')
 			<!-- END CLIENT LEFT SIDEBAR -->
 		</div>
-		<div class="col-md-8">
+		<div class="col-lg-10 col-md-9 col-sm-9 col-summary">
 			<!-- CENTER COLUMN -->
 			@include($view_path.'.clients.people.center')
 			<!-- END CENTER COLUMN -->

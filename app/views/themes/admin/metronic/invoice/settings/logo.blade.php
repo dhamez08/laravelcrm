@@ -5,7 +5,7 @@
 
 		<img src="{{ URL::to('public/upload/' . $logo->name ) }}" class="img-responsive thumbnail">
 
-		{{ Form::open(array('url' => 'upload/' . $logo->id, 'role' => 'form', 'method' => 'PUT', 'class' => 'solsoForm', 'files' => 'true')) }}
+		{{ Form::open(array('url' => 'invoice/upload/' . $logo->id, 'role' => 'form', 'method' => 'PUT', 'class' => 'solsoForm', 'files' => 'true')) }}
 	
 	@else	
 	
@@ -13,7 +13,7 @@
 			<strong>{{ trans('invoice.message') }}: </strong> {{ trans('invoice.message_logo') }}
 		</div>		
 	
-		{{ Form::open(array('url' => 'upload', 'role' => 'form', 'class' => 'solsoForm', 'files' => 'true')) }}
+		{{ Form::open(array('url' => 'invoice/upload', 'role' => 'form', 'class' => 'solsoForm', 'files' => 'true')) }}
 		
 	@endif
 

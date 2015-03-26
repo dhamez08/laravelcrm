@@ -109,6 +109,28 @@ Route::group(array('before' => 'auth'), function()
 
     Route::group(array('prefix' => 'invoice'), function() {
     	Route::resource('dashboard','Invoice\DashboardController');	
+    	Route::resource('product', 'Invoice\ProductController');
+    	Route::resource('setting', 'Invoice\SettingController');
+    	Route::resource('upload', 'Invoice\UploadController');
+    	Route::resource('tax', 'Invoice\TaxController');
+    	Route::resource('currency', 'Invoice\CurrencyController');
+    	Route::resource('payment', 'Invoice\PaymentController');
+
+    	Route::post('setting/defaultLanguage',			'Invoice\SettingController@defaultLanguage');
+
+		Route::post('invoice/add-payment/{id}',			'Invoice\InvoiceController@addPayment');
+		Route::post('invoice/edit-status/{id}',			'Invoice\InvoiceController@updateStatus');
+		Route::post('invoice/edit-due-date/{id}',		'Invoice\InvoiceController@updateDueDate');
+		Route::post('invoice/number',					'Invoice\InvoiceController@storeInvoiceNumber');
+		Route::post('invoice/code',						'Invoice\InvoiceController@storeInvoiceCode');
+		Route::post('invoice/text',						'Invoice\InvoiceController@storeInvoiceText'); 
+
+		/* === AJAX === */
+		Route::post('/currency/currencyPosition',		array('uses' => 'Invoice\CurrencyController@currencyPosition',		'as' => 'currency.currencyPosition'));	
+		Route::post('/invoice/deleteProduct',			array('uses' => 'Invoice\InvoiceController@deleteProduct',			'as' => 'invoice.deleteProduct'));
+		Route::post('/setting/defaultCurrency',			array('uses' => 'Invoice\SettingController@defaultCurrency',		'as' => 'setting.defaultCurrency'));
+		Route::post('/ajax/productPrice',				array('uses' => 'Invoice\AjaxController@productPrice',				'as' => 'ajax.productPrice'));	
+		/* === END AJAX === */		   	
     });
 
 });
