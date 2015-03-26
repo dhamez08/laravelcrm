@@ -18,6 +18,7 @@ use Invoice\Image;
 use Input;
 use Invoice\InvoiceProduct;
 use Redirect;
+use Auth;
 
 class InvoiceController extends \BaseController {
 

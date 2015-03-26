@@ -2,7 +2,7 @@
 	<h3>{{ trans('invoice.company') }}</h3>
 </div>		
 
-	{{ Form::open(array('url' => 'setting/' . Auth::id(), 'role' => 'form', 'method' => 'PUT', 'class' => 'solsoForm')) }}
+	{{ Form::open(array('url' => 'invoice/setting/' . Auth::id(), 'role' => 'form', 'method' => 'PUT', 'class' => 'solsoForm')) }}
 	
 	<div class="col-md-6 col-lg-4">
 		<div class="form-group">

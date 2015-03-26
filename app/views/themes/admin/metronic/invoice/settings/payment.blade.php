@@ -3,7 +3,7 @@
 
 	<div class="row">
 	<div class="col-md-6">		
-	{{ Form::open(array('url' => 'payment', 'role' => 'form', 'class' => 'solsoForm')) }}
+	{{ Form::open(array('url' => 'invoice/payment', 'role' => 'form', 'class' => 'solsoForm')) }}
 
 		<label for="value">{{ trans('invoice.new_value') }}</label>
 		<div class="input-group">
@@ -47,7 +47,7 @@
 					</td>
 					
 					<td>
-						{{ Form::open(array('url' => 'payment/' . $v->id, 'role' => 'form', 'method' => 'PUT')) }}
+						{{ Form::open(array('url' => 'invoice/payment/' . $v->id, 'role' => 'form', 'method' => 'PUT')) }}
 						
 						<div class="input-group">
 							<input type="text" name="value" class="form-control required" autocomplete="off" value="{{ $v->name }}">
@@ -61,7 +61,7 @@
 					</td>
 					
 					<td>
-						<a  class="btn btn-danger solsoConfirm" data-toggle="modal" data-target="#solsoDeleteModal" data-url="{{ URL::to('payment/' . $v->id) }}"><i class="fa fa-trash"></i> {{ trans('invoice.delete') }}</a>
+						<a  class="btn btn-danger solsoConfirm" data-toggle="modal" data-target="#solsoDeleteModal" data-url="{{ URL::to('invoice/payment/' . $v->id) }}"><i class="fa fa-trash"></i> {{ trans('invoice.delete') }}</a>
 					</td>
 				</tr>
 				

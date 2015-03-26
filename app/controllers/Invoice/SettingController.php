@@ -16,10 +16,59 @@ use Input;
 use Redirect;
 use Validator;
 use Session;
+use Auth;
 
 class SettingController extends \BaseController {
 
-	protected $layout = 'index';
+	/**
+	 * Instance of this class.
+	 *
+	 * @var      object
+	 */
+	protected static $instance = null;
+
+	/**
+	 * hold the view essentials like
+	 * - title
+	 * - view path
+	 * @return array | associative
+	 * */
+	protected $data_view;
+
+	/**
+	 * auto setup initialize object
+	 * */
+	public function __construct(){
+		parent::__construct();
+		$this->data_view = parent::setupThemes();
+		$this->data_view['dashboard_index'] = $this->data_view['view_path'] . '.dashboard.index';
+	}
+
+	/**
+	 * Return an instance of this class.
+	 *
+	 *
+	 * @return    object    A single instance of this class.
+	 */
+	public static function get_instance() {
+
+		// If the single instance hasn't been set, set it now.
+		if ( null == self::$instance ) {
+			self::$instance = new self;
+		}
+
+		return self::$instance;
+	}
+
+	/**
+	 * get themes
+	 * @return	array
+	 * */
+	public function getSetupThemes(){
+		$this->data_view['html_body_class'] = 'page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo page-container-bg-solid page-full-width';
+		$this->data_view['header_class'] = 'page-header navbar navbar-fixed-top';
+		return $this->data_view;
+	}
 	
 	
 	public function index()
@@ -38,15 +87,17 @@ class SettingController extends \BaseController {
 			'languages'			=> Language::all(),
 			'defaultLanguage'	=> $settings->defaultLanguage(),
 			'newsletter'		=> Newsletter::where('user_id', Auth::id())->first()
-		);		
+		);	
+
+		$data += $this->getSetupThemes();	
 	
 		if ( Auth::user()->role_id == 1 )
 		{
-			$this->layout->content = View::make('settings.admin', $data);
+			return View::make($data['view_path'] .  '.invoice.settings.admin', $data);
 		}	
 		else
 		{
-			$this->layout->content = View::make('settings.index', $data);
+			return View::make($data['view_path'] .  '.invoice.settings.index', $data);
 		}
 	}
 
@@ -90,10 +141,10 @@ class SettingController extends \BaseController {
 		}
 		else
 		{
-			return Redirect::to('setting')->with('message', trans('invoice.validation_error_messages'))->withErrors($validator)->withInput();
+			return Redirect::to('invoice/setting')->with('message', trans('invoice.validation_error_messages'))->withErrors($validator)->withInput();
 		}	
 		
-		return Redirect::to('setting')->with('message', trans('invoice.data_was_updated'));
+		return Redirect::to('invoice/setting')->with('message', trans('invoice.data_was_updated'));
 	}
 	/* === END C.R.U.D. === */	
 	
@@ -115,10 +166,10 @@ class SettingController extends \BaseController {
 		}
 		else
 		{
-			return Redirect::to('setting')->with('message', trans('invoice.validation_error_messages'))->withErrors($validator)->withInput();
+			return Redirect::to('invoice/setting')->with('message', trans('invoice.validation_error_messages'))->withErrors($validator)->withInput();
 		}			
 		
-		return Redirect::to('setting')->with('message', trans('invoice.data_was_updated'));
+		return Redirect::to('invoice/setting')->with('message', trans('invoice.data_was_updated'));
 	}
 	/* === END OTHERS === */
 	
@@ -133,11 +184,13 @@ class SettingController extends \BaseController {
 		$data = array(
 			'company' 		=> UserSetting::where('user_id', Auth::id())->first(),
 			'currencies'	=> Currency::all(),
-		);		
+		);	
+
+		$data += $this->getSetupThemes();	
 	
 		Session::flash('ajaxMessage', trans('invoice.data_was_updated'));	
 		
-		return View::make('settings.currency', $data);	
+		return View::make($data['view_path'] .  '.invoice.settings.currency', $data);	
 	}
 	/* === END AJAX === */
 	

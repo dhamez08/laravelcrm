@@ -19,7 +19,7 @@ class PaymentController extends \BaseController {
 		$store->name	= Input::get('value');
 		$store->save();	
 
-		return Redirect::to('setting')->with('message', trans('invoice.data_was_saved'));
+		return Redirect::to('invoice/setting')->with('message', trans('invoice.data_was_saved'));
 	}
 	
 	public function update($id)
@@ -28,7 +28,7 @@ class PaymentController extends \BaseController {
 		$update->name	= Input::get('value');
 		$update->save();	
 
-		return Redirect::to('setting')->with('message', trans('invoice.data_was_updated'));
+		return Redirect::to('invoice/setting')->with('message', trans('invoice.data_was_updated'));
 	}
 
 	public function destroy($id)
@@ -36,7 +36,7 @@ class PaymentController extends \BaseController {
 		$delete = Payment::where('id', $id)->where('user_id', Auth::id());
 		$delete->delete();
 		
-		return Redirect::to('setting')->with('message', trans('invoice.data_was_deleted'));		
+		return Redirect::to('invoice/setting')->with('message', trans('invoice.data_was_deleted'));		
 	}
 	/* === END C.R.U.D. === */
 

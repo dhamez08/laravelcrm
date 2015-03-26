@@ -9,7 +9,8 @@
 	</div>
 	<div class="portlet-body">
 		<p>Control who has access to your account.</p>
-		<a href="{{url('settings/users')}}">User Setting</a>
+		<a href="{{url('settings/users')}}">User Setting</a>&nbsp;|&nbsp;
+		<a href="{{url('invoice/setting')}}">Invoice Setting</a>
 	</div>
 </div>
 <!-- END Portlet PORTLET-->

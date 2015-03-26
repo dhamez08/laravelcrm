@@ -2,6 +2,7 @@
 namespace Invoice;
 
 use DB;
+use Auth;
 
 class Currency extends \Eloquent {
 
