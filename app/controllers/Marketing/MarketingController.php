@@ -637,7 +637,7 @@ class MarketingController extends \BaseController {
 
                 $client_detail = \Clients\Clients::find($to_id);
                 $data['to_name'] = $client_detail['first_name'] . " " . $client_detail['last_name'];
-                $data['client_ref'] = $client_detail['ref'];
+                $data['client_ref'] = "[REF:".$client_detail['ref']."]";
 
                 \Mail::send('emails.clients.index', $data, function($message) use ($data, $from_name, $from_email)
                 {
