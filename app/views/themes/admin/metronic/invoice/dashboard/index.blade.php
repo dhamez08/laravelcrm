@@ -61,7 +61,7 @@
 			<hr>
 			<div class="stats-footer">
 				<div class="stats-desc pull-left">{{ trans('invoice.number_of_products') }}</div>
-				<a class="pull-right" href="#">View Products</a>
+				<a class="pull-right" href="{{ URL::to('invoice/product') }}">View Products</a>
 			</div>
 		</div> 	
 	</div>  

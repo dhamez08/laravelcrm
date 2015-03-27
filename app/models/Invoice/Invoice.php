@@ -56,7 +56,8 @@ class Invoice extends \Eloquent {
 					else
 					{
 						$client = DB::table('customer')
-								->where('email', Auth::user()->email)	
+								//->where('email', Auth::user()->email)	
+								->where('id', Auth::id())
 								->select('id')
 								->first();
 

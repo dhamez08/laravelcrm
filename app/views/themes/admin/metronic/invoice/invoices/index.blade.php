@@ -1,4 +1,6 @@
-@section('content')
+@extends($dashboard_index)
+
+@section('innerpage-content')
 
 	<div class="col-md-12">
 		@if ($clients == 0)
@@ -54,25 +56,68 @@
 	
 	<div class="col-md-12 top40">
 		<ul id="solsoTabs" class="nav nav-tabs" role="tablist" id="myTab">
-			<li class="active"><a href="#tab1" role="tab" data-toggle="tab">{{ trans('invoice.invoices_created') }}</a></li>
-			<li><a href="#tab2" role="tab" data-toggle="tab">{{ $newInvoicesReceived }} {{ trans('invoice.new') }} {{ trans('invoice.invoices_received') }}</a></li>
+			{{-- <li class="active"><a href="#tab1" role="tab" data-toggle="tab">{{ trans('invoice.invoices_created') }}</a></li> --}}
+			{{-- <li><a href="#tab2" role="tab" data-toggle="tab">{{ $newInvoicesReceived }} {{ trans('invoice.new') }} {{ trans('invoice.invoices_received') }}</a></li> --}}
 		</ul>	
 	
 		<div class="tab-content top20">
 			<div class="tab-pane active" id="tab1">
-				@include('invoices.invoices-created')
+				@include($view_path . '.invoice.invoices.invoices-created')
 			</div>
 			
+			{{--
 			<div class="tab-pane" id="tab2">
-				@include('invoices.invoices-received')	
+				@include($view_path . '.invoice.invoices.invoices-received')	
 			</div>	
+			--}}
 		</div>	
 	</div>
 	
-	@include('_modals/add-payment')
-	@include('_modals/edit-status')
-	@include('_modals/edit-due-date')
-	@include('_modals/email')
-	@include('_modals/delete')
+	@include($view_path . '.invoice/_modals/add-payment')
+	@include($view_path . '.invoice/_modals/edit-status')
+	@include($view_path . '.invoice/_modals/edit-due-date')
+	@include($view_path . '.invoice/_modals/email')
+	@include($view_path . '.invoice/_modals/delete')
 	
+@stop
+
+@section('footer-custom-js')
+<!-- DATEPICKER -->
+<script>	
+	$('.datepicker').datepicker({
+		format: 'yyyy-mm-dd'
+	});
+
+	$('.datepicker').on('changeDate', function() {
+		$('.datepicker').datepicker('hide');
+	});	
+	
+	var startDate 	= '';
+	var endDate 	= '';
+	$('#dp4').datepicker()
+		.on('changeDate', function(ev){
+			startDate = new Date(ev.date);
+			$('#dp4').datepicker('hide');
+		});
+	$('#dp5').datepicker()
+		.on('changeDate', function(ev){
+			if (ev.date.valueOf() < startDate.valueOf()){
+				$(".solsoErrorPopover").popover('show');
+			} else {
+				$(".solsoErrorPopover").popover('hide');
+				endDate = new Date(ev.date);
+			}
+			$('#dp5').datepicker('hide');
+		});		
+</script>		
+<!-- END DATEPICKER -->
+
+
+<script type="text/javascript">
+	/* === MODAL YES/NO === */
+	$( document ).on('click', '.solsoConfirm', function(){
+		$(" #solsoFormID ").prop('action', $(this).attr('data-url'));
+	});
+	/* === MODAL YES/NO === */
+</script>
 @stop

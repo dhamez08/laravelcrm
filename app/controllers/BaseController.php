@@ -6,6 +6,9 @@
  *
  * @access public
  * */
+
+use Invoice\InvoiceReceived;
+
 class BaseController extends Controller {
 
 	/**
@@ -54,6 +57,11 @@ class BaseController extends Controller {
         }else{
             $this->setTimeZone('Asia/Manila');
         }
+
+		if (Auth::check())
+		{
+			View::share('newInvoicesReceived', InvoiceReceived::where('user_id', Auth::id())->where('status', 0)->count());
+		}        
 
 	}
 

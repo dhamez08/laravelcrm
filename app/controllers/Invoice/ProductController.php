@@ -8,6 +8,7 @@ use View;
 use Request;
 use Validator;
 use Input;
+use Redirect;
 
 class ProductController extends \BaseController {
 
@@ -79,12 +80,14 @@ class ProductController extends \BaseController {
 
 	public function create()
 	{
-		$this->layout->content = View::make('products.create');
+		$data = $this->getSetupThemes();
+
+		return View::make($data['view_path'] . '.invoice.products.create', $data);
 	}
 
 	public function show($id)
 	{
-		return json_encode( Product::where('id',  Request::segment(2))->where('user_id', Auth::id())->first() );
+		return json_encode( Product::where('id',  Request::segment(3))->where('user_id', Auth::id())->first() );
 	}	
 	
 	public function edit($id)
@@ -92,8 +95,10 @@ class ProductController extends \BaseController {
 		$data = array(
 			'product'	=> Product::where('id', $id)->where('user_id', Auth::id())->first(),
 		);
+
+		$data += $this->getSetupThemes();
 		
-		$this->layout->content = View::make('products.edit', $data);
+		return View::make($data['view_path'] . '.invoice.products.edit', $data);
 	}
 	/* === END VIEW === */
 	
@@ -122,10 +127,10 @@ class ProductController extends \BaseController {
 		}
 		else
 		{
-			return Redirect::to('product/create')->with('message', trans('invoice.validation_error_messages'))->withErrors($validator)->withInput();
+			return Redirect::to('invoice/product/create')->with('message', trans('invoice.validation_error_messages'))->withErrors($validator)->withInput();
 		}	
 		
-		return Redirect::to('product')->with('message', trans('invoice.data_was_saved'));
+		return Redirect::to('invoice/product')->with('message', trans('invoice.data_was_saved'));
 	}
 	
 	public function update($id)
@@ -149,10 +154,10 @@ class ProductController extends \BaseController {
 		}
 		else
 		{
-			return Redirect::to('product/' . $id . '/edit')->with('message', trans('invoice.validation_error_messages'))->withErrors($validator)->withInput();
+			return Redirect::to('invoice/product/' . $id . '/edit')->with('message', trans('invoice.validation_error_messages'))->withErrors($validator)->withInput();
 		}	
 		
-		return Redirect::to('product')->with('message', trans('invoice.data_was_updated'));
+		return Redirect::to('invoice/product')->with('message', trans('invoice.data_was_updated'));
 	}
 
 	public function destroy($id)
@@ -161,7 +166,7 @@ class ProductController extends \BaseController {
 		$update->status		= 0;
 		$update->save();
 		
-		return Redirect::to('product')->with('message', trans('invoice.data_was_deleted'));		
+		return Redirect::to('invoice/product')->with('message', trans('invoice.data_was_deleted'));		
 	}
 	/* === END C.R.U.D. === */
 

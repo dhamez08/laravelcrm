@@ -1,4 +1,6 @@
-@section('content')
+@extends($dashboard_index)
+
+@section('innerpage-content')
 
 	<div class="col-md-12 col-lg-12">
 		<h1><i class="fa fa-list"></i> {{ trans('invoice.products') }}</h1>
@@ -49,11 +51,11 @@
 						</td>
 						
 						<td>		
-							<a class="btn btn-primary" href="{{ URL::to('product/' . $v->id . '/edit') }}"><i class="fa fa-edit"></i> {{ trans('invoice.edit') }}</a>
+							<a class="btn btn-primary" href="{{ URL::to('invoice/product/' . $v->id . '/edit') }}"><i class="fa fa-edit"></i> {{ trans('invoice.edit') }}</a>
 						</td>
 						
 						<td>		
-							<a  class="btn btn-danger solsoConfirm" data-toggle="modal" data-target="#solsoDeleteModal" data-url="{{ URL::to('product/' . $v->id) }}"><i class="fa fa-trash"></i> {{ trans('invoice.delete') }}</a>		
+							<a  class="btn btn-danger solsoConfirm" data-toggle="modal" data-target="#solsoDeleteModal" data-url="{{ URL::to('invoice/product/' . $v->id) }}"><i class="fa fa-trash"></i> {{ trans('invoice.delete') }}</a>		
 						</td>
 					</tr>
 					
@@ -67,4 +69,30 @@
 	@include($view_path . '.invoice/_modals/delete')
 	@include($view_path . '.invoice/_modals/product')
 	
+@stop
+
+@section('footer-custom-js')
+<script type="text/javascript">
+/* === PRODUCT === */
+	$( document ).on('click', '.solsoShowDetails', function(){
+		$.ajax({
+			url: "product/" + $(this).attr('data-value'),
+			type: 'get',
+			dataType: 'json',
+			data: { product: $(this).val() },
+			success:function(data) {
+				$( '.product-name' ).text(data['name']);
+				$( '.product-price' ).text(data['price']);
+				$( '.product-description' ).text(data['description']);
+			}
+		});
+	});
+/* === END PRODUCT === */
+
+/* === MODAL YES/NO === */
+$( document ).on('click', '.solsoConfirm', function(){
+	$(" #solsoFormID ").prop('action', $(this).attr('data-url'));
+});
+/* === MODAL YES/NO === */
+</script>
 @stop
