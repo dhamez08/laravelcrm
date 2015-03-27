@@ -19,11 +19,59 @@ use Input;
 use Invoice\InvoiceProduct;
 use Redirect;
 use Auth;
+use Validator;
 
 class InvoiceController extends \BaseController {
 
-	protected $layout = 'index';
-	
+	/**
+	 * Instance of this class.
+	 *
+	 * @var      object
+	 */
+	protected static $instance = null;
+
+	/**
+	 * hold the view essentials like
+	 * - title
+	 * - view path
+	 * @return array | associative
+	 * */
+	protected $data_view;
+
+	/**
+	 * auto setup initialize object
+	 * */
+	public function __construct(){
+		parent::__construct();
+		$this->data_view = parent::setupThemes();
+		$this->data_view['dashboard_index'] = $this->data_view['view_path'] . '.dashboard.index';
+	}
+
+	/**
+	 * Return an instance of this class.
+	 *
+	 *
+	 * @return    object    A single instance of this class.
+	 */
+	public static function get_instance() {
+
+		// If the single instance hasn't been set, set it now.
+		if ( null == self::$instance ) {
+			self::$instance = new self;
+		}
+
+		return self::$instance;
+	}
+
+	/**
+	 * get themes
+	 * @return	array
+	 * */
+	public function getSetupThemes(){
+		$this->data_view['html_body_class'] = 'page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo page-container-bg-solid page-full-width';
+		$this->data_view['header_class'] = 'page-header navbar navbar-fixed-top';
+		return $this->data_view;
+	}	
 	
 	/* === VIEW === */
 	public function index()
@@ -34,15 +82,17 @@ class InvoiceController extends \BaseController {
 		$data = array(
 			'invoices'			=> $invoices->invoices(),
 			'invoiceSettings'	=> InvoiceSetting::where('user_id', Auth::id())->first(),
-			'clients' 			=> Client::where('user_id', Auth::id())->count(),
+			'clients' 			=> Client::where('belongs_user', Auth::id())->count(),
 			'products' 			=> Product::where('user_id', Auth::id())->where('status', 1)->count(),
 			'payments'			=> Payment::where('user_id', Auth::id())->get(),
 			'status'			=> InvoiceStatus::all(),
 			'check'				=> $check->checkSettings(),
 			'invoicesReceived'	=> $invoices->invoicesReceived()
 		);
+
+		$data += $this->getSetupThemes();
 		
-		$this->layout->content = View::make('invoices.index', $data);
+		return View::make($data['view_path'] . '.invoice.invoices.index', $data);
 	}
 
 	public function create()
@@ -50,7 +100,7 @@ class InvoiceController extends \BaseController {
 		$invoiceSettings	= InvoiceSetting::where('user_id', Auth::id())->first();
 		
 		$data = array(
-			'clients' 		=> Client::where('user_id', Auth::id())->get(),
+			'clients' 		=> Client::where('belongs_user', Auth::id())->get(),
 			'products' 		=> Product::where('user_id', Auth::id())->where('status', 1)->get(),
 			'currencies'	=> Currency::where('user_id', Auth::id())->get(),
 			'taxes'			=> Tax::where('user_id', Auth::id())->get(),
@@ -58,8 +108,10 @@ class InvoiceController extends \BaseController {
 			'invoiceCode'	=> isset($invoiceSettings->code) ? $invoiceSettings->code : false,
 			'invoiceNumber'	=> isset($invoiceSettings->number) ? $invoiceSettings->number + 1 : false
 		);
+
+		$data += $this->getSetupThemes();
 		
-		$this->layout->content = View::make('invoices.create', $data);
+		return View::make($data['view_path'] . '.invoice.invoices.create', $data);
 	}
 
 	public function show($id)
@@ -214,10 +266,10 @@ class InvoiceController extends \BaseController {
 		}
 		else
 		{
-			return Redirect::to('invoice/create')->with('message', trans('invoice.validation_error_messages'))->withErrors($validator)->withInput();
+			return Redirect::to('invoice/invoice/create')->with('message', trans('invoice.validation_error_messages'))->withErrors($validator)->withInput();
 		}	
 		
-		return Redirect::to('invoice')->with('message', trans('invoice.data_was_saved'));
+		return Redirect::to('invoice/invoice')->with('message', trans('invoice.data_was_saved'));
 	}
 	
 	public function update($id)
@@ -272,10 +324,10 @@ class InvoiceController extends \BaseController {
 		}
 		else
 		{
-			return Redirect::to('invoice/' . $id . '/edit')->with('message', trans('invoice.validation_error_messages'))->withErrors($validator)->withInput();
+			return Redirect::to('invoice/invoice/' . $id . '/edit')->with('message', trans('invoice.validation_error_messages'))->withErrors($validator)->withInput();
 		}					
 
-		return Redirect::to('invoice/' . $id)->with('message', trans('invoice.data_was_updated'));
+		return Redirect::to('invoice/invoice/' . $id)->with('message', trans('invoice.data_was_updated'));
 	}
 
 	public function destroy($id)
@@ -283,7 +335,7 @@ class InvoiceController extends \BaseController {
 		$delete = Invoice::where('id', $id)->where('user_id', Auth::id());
 		$delete->delete();
 		
-		return Redirect::to('invoice')->with('message', trans('invoice.data_was_deleted'));		
+		return Redirect::to('invoice/invoice')->with('message', trans('invoice.data_was_deleted'));		
 	}
 	/* === END C.R.U.D. === */
 	
@@ -303,20 +355,20 @@ class InvoiceController extends \BaseController {
 		{		
 			$store 					= new InvoicePayment;
 			$store->user_id			= Auth::id();
-			$store->invoice_id		= Request::segment(3);
+			$store->invoice_id		= Request::segment(4);
 			$store->payment_id		= Input::get('payment');
 			$store->payment_date	= Input::get('date');
 			$store->payment_amount	= Input::get('amount');
 			$store->save();	
 
-			$store->balance(Request::segment(3));
+			$store->balance(Request::segment(4));
 		}	
 		else
 		{
-			return Redirect::to('invoice')->with('message', trans('invoice.validation_error_messages'))->withErrors($validator)->withInput();
+			return Redirect::to('invoice/invoice')->with('message', trans('invoice.validation_error_messages'))->withErrors($validator)->withInput();
 		}	
 		
-		return Redirect::to('invoice')->with('message', trans('invoice.data_was_saved'));		
+		return Redirect::to('invoice/invoice')->with('message', trans('invoice.data_was_saved'));		
 	}
 	
 	public function storeInvoiceNumber()
@@ -391,7 +443,7 @@ class InvoiceController extends \BaseController {
 		$update->status_id		= Input::get('status');
 		$update->save();
 		
-		return Redirect::to('invoice')->with('message', trans('invoice.data_was_updated'));			
+		return Redirect::to('invoice/invoice')->with('message', trans('invoice.data_was_updated'));			
 	}	
 	
 	public function updateDueDate($id)
@@ -401,7 +453,7 @@ class InvoiceController extends \BaseController {
 		$update->due_date		= Input::get('endDate');
 		$update->save();
 		
-		return Redirect::to('invoice')->with('message', trans('invoice.data_was_updated'));			
+		return Redirect::to('invoice/invoice')->with('message', trans('invoice.data_was_updated'));			
 	}	
 	
 	public function deleteProduct()

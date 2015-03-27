@@ -1,10 +1,12 @@
-@section('content')
+@extends($dashboard_index)
+
+@section('innerpage-content')
 			
 	<div class="col-md-12 col-lg-12">
 		<h1><i class="fa fa-edit"></i> {{ trans('invoice.edit') }}</h1>
 	</div>		
 
-	{{ Form::open(array('url' => 'product/' . Request::segment(2), 'role' => 'form', 'method' => 'PUT', 'class' => 'solsoForm')) }}
+	{{ Form::open(array('url' => 'invoice/product/' . Request::segment(3), 'role' => 'form', 'method' => 'PUT', 'class' => 'solsoForm')) }}
 
 		<div class="col-md-12 col-lg-6">
 			<div class="form-group">

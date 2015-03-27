@@ -13,8 +13,10 @@
 				<th class="xs-small">{{ trans('invoice.action') }}</th>
 				<th class="xs-small">{{ trans('invoice.action') }}</th>
 				<th class="xs-small">{{ trans('invoice.action') }}</th>
+				{{--
 				<th class="xs-small">{{ trans('invoice.action') }}</th>
 				<th class="xs-small">{{ trans('invoice.action') }}</th>
+				--}}
 				<th class="small">{{ trans('invoice.action') }}</th>
 				<th class="small">{{ trans('invoice.action') }}</th>
 				<th class="small">{{ trans('invoice.action') }}</th>
@@ -69,7 +71,7 @@
 				<td>
 					<button class="btn btn-default solsoConfirm" data-toggle="modal" 
 					title="{{ trans('invoice.quick_action') }}" data-popover="popover" data-placement="top" data-content="{{ trans('invoice.change_status') }}"
-					data-target="#solsoChangeStatus" data-url="{{ URL::to('invoice/edit-status/' . $v->id) }}">
+					data-target="#solsoChangeStatus" data-url="{{ URL::to('invoice/invoice/edit-status/' . $v->id) }}">
 						<i class="fa fa-edit"></i>
 					</button>	
 				</td>						
@@ -77,7 +79,7 @@
 				<td>
 					<button class="btn btn-default solsoConfirm" data-toggle="modal" 
 					title="{{ trans('invoice.quick_action') }}" data-popover="popover" data-placement="top" data-content="{{ trans('invoice.change_due_date') }}"
-					data-target="#solsoChangeDueDate" data-url="{{ URL::to('invoice/edit-due-date/' . $v->id) }}">
+					data-target="#solsoChangeDueDate" data-url="{{ URL::to('invoice/invoice/edit-due-date/' . $v->id) }}">
 						<i class="fa fa-calendar"></i>
 					</button>	
 				</td>
@@ -86,7 +88,7 @@
 					@if ( $v->status != 'paid' && $v->status != 'cancelled'  )
 						<button class="btn btn-default solsoConfirm" data-toggle="modal" 
 						title="{{ trans('invoice.quick_action') }}" data-popover="popover" data-placement="top" data-content="{{ trans('invoice.add_payment') }}"
-						data-target="#solsoAddPayment" data-url="{{ URL::to('invoice/add-payment/' . $v->id) }}">
+						data-target="#solsoAddPayment" data-url="{{ URL::to('invoice/invoice/add-payment/' . $v->id) }}">
 							<i class="fa fa-plus"></i>
 						</button>
 					@else
@@ -96,34 +98,36 @@
 					@endif								
 				</td>						
 
+				{{--
 				<td>		
-					<a class="btn btn-default" href="{{ URL::to('pdf/' . $v->id) }}" 
+					<a class="btn btn-default" href="{{ URL::to('invoice/pdf/' . $v->id) }}" 
 					title="{{ trans('invoice.quick_action') }}" data-popover="popover" data-placement="top" data-content="{{ trans('invoice.export_pdf') }}">
 						<i class="fa fa-file-pdf-o"></i>
 					</a>
 				</td>
 				
 				<td>		
-					<button class="btn btn-default solsoConfirm" data-toggle="modal" data-target="#solsoSendEmail" data-url="{{ URL::to('email/' . $v->id) }}" 
+					<button class="btn btn-default solsoConfirm" data-toggle="modal" data-target="#solsoSendEmail" data-url="{{ URL::to('invoice/email/' . $v->id) }}" 
 					title="{{ trans('invoice.quick_action') }}" data-popover="popover" data-placement="top" data-content="{{ trans('invoice.email_to_client') }}">
 						<i class="fa fa-envelope"></i>
 					</button>		
 				</td>						
+				--}}
 
 				<td>		
-					<a class="btn btn-info" href="{{ URL::to('invoice/' . $v->id) }}">
+					<a class="btn btn-info" href="{{ URL::to('invoice/invoice/' . $v->id) }}">
 						<i class="fa fa-eye"></i> {{ trans('invoice.show') }}
 					</a>
 				</td>						
 
 				<td>							
-					<a class="btn btn-primary" href="{{ URL::to('invoice/' . $v->id . '/edit') }}">
+					<a class="btn btn-primary" href="{{ URL::to('invoice/invoice/' . $v->id . '/edit') }}">
 						<i class="fa fa-edit"></i> {{ trans('invoice.edit') }}
 					</a>
 				</td>						
 
 				<td>							
-					<button class="btn btn-danger solsoConfirm" data-toggle="modal" data-target="#solsoDeleteModal" data-url="{{ URL::to('invoice/' . $v->id) }}">
+					<button class="btn btn-danger solsoConfirm" data-toggle="modal" data-target="#solsoDeleteModal" data-url="{{ URL::to('invoice/invoice/' . $v->id) }}">
 						<i class="fa fa-trash"></i> {{ trans('invoice.delete') }}
 					</button>		
 				</td>

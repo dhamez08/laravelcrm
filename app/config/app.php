@@ -127,6 +127,7 @@ return array(
         'Atticmedia\Anvard\AnvardServiceProvider',
         'Maatwebsite\Excel\ExcelServiceProvider',
         'Intervention\Image\ImageServiceProvider',
+        'Barryvdh\DomPDF\ServiceProvider',
 	),
 
 	/*
@@ -198,6 +199,7 @@ return array(
         'ThumbnailGenerator'=> 'Tristan\ThumbnailGenerator',
         'Excel' => 'Maatwebsite\Excel\Facades\Excel',
         'UploadImage'		=> 'Intervention\Image\Facades\Image',
+        'PDF2' => 'Barryvdh\DomPDF\Facade',
 	),
 
 );
