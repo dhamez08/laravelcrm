@@ -26,7 +26,6 @@
                 @section('portlet-content')
                 {{ Form::open(
                         array(
-                            'action' => array('Marketing\MarketingController@postEmailSummary'),
                             'method' => 'POST',
                             'class' => 'form-horizontal',
                             'role'=>'form',
@@ -47,17 +46,29 @@
                                 --}}
 
                                 <span class="hidden"><input type="checkbox" name="personalised" /> Personalise message</span>
-
                                 <div class="form-group" style="margin-left:0px">
-                                    <label>SMS Template</label>
+                                    <label>Template Type</label>
                                     <select class="form-control input-large" id="sms_template">
-                                        <option value="0">Select Template</option>
-
+                                        <option value="0" disabled="true">Select Template</option>
+                                        <option value="">Plain Text</option>
+                                        <option value="">HTML Template</option>
                                     </select>
                                 </div>
 
-                                <textarea rows="7" style="width:100%; margin-top:20px" id="message" name="message" placeholder="Enter your message ...">{{ \Session::get('sms_session.message') }}</textarea>
-                                <p id="sms_message_counter"></p>
+
+                                <div class="form-group" style="margin-left:0px">
+                                    <label>Select Template</label>
+                                    <select class="form-control input-large" id="user_email_template">
+                                        <option value="0">Select Template</option>
+                                        @foreach(\User\User::find(\Auth::id())->userEmailTemplate()->get() as $template)
+                                            <option>{{$template['id']}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+<!--                                <textarea rows="7" style="width:100%; margin-top:20px" id="message" name="message" placeholder="Enter your message ...">{{ \Session::get('sms_session.message') }}</textarea>-->
+                                <iframe id="template-view" style="width: 960px; height: 500px" seamless="true"></iframe>
+<!--                                <p id="sms_message_counter"></p>-->
                             </div>
                         </div>
                     </div>
@@ -77,6 +88,26 @@
 @parent
 @section('footer-custom-js')
 @parent
+<script>
+    $('#user_email_template').change(function(){
+        var data = new Object();
+        data.template_id = $(this).val();
 
+        $.ajax({
+            type: "GET",
+            url: 'ajax-edit-template',
+            data: data,
+            success: function(response)
+            {
+                console.log(response.source_code);
+
+                var body = $('#template-view').contents().find('body');
+                body.html('');
+                body.append(response.source_code);
+            },
+            dataType: 'json'
+        });
+    });
+</script>
 @stop
 @stop
