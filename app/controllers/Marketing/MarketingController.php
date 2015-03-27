@@ -635,7 +635,7 @@ class MarketingController extends \BaseController {
                 $to_id = $email_detail['customer_id'];
                 $data['to_email'] = $email_detail['email'];
 
-                $client_detail = \Clients\Client::find($to_id);
+                $client_detail = \Clients\Clients::find($to_id);
                 $data['to_name'] = $client_detail['first_name'] . " " . $client_detail['last_name'];
                 $data['client_ref'] = $client_detail['ref'];
 
