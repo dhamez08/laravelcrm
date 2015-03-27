@@ -647,7 +647,8 @@ class MarketingController extends \BaseController {
                 });
             }
 
-            return \Response::json(\Input::all());
+            \Session::flash('message', 'Marketing email sent successfully.');
+            return \Redirect::to('marketing/send-client-email');
         } else {
             return \Redirect::back()
             ->withErrors($validator)
