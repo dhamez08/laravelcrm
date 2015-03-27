@@ -96,7 +96,7 @@
                 </div>
 
                 <a href="{{ url('marketing/send-client-email') }}" class="btn blue">Back</a>
-                {{Form::submit('Next Step',array('class'=>"btn blue"))}}
+                {{Form::submit('Send Email',array('class'=>"btn blue"))}}
                 {{ Form::close()}}
                 @show
             </div>
