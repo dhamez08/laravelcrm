@@ -614,7 +614,7 @@ class MarketingController extends \BaseController {
         $validator = \Validator::make(\Input::all(), $rules, $messages);
 
         if($validator->passes()) {
-            $template_type = \Input::get('email');
+            $template_type = \Input::get('template_type');
             if($template_type == 'plain'){
                 $data['body'] = \Input::get('message');
             } else if($template_type == 'html'){
