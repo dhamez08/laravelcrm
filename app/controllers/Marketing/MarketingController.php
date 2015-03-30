@@ -635,7 +635,10 @@ class MarketingController extends \BaseController {
                 $to_id = $email_detail['customer_id'];
                 $data['to_email'] = $email_detail['email'];
 
+
                 $client_detail = \Clients\Clients::find($to_id);
+
+                $data['body'] = \EmailShortCodeReplacement::get_instance()->replace($client_detail, $data['body']);
                 $data['to_name'] = $client_detail['first_name'] . " " . $client_detail['last_name'];
                 $data['client_ref'] = "[REF:".$client_detail['ref']."]";
 
