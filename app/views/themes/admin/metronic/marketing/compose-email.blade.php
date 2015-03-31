@@ -26,8 +26,8 @@
             <div class="tab-content">
                 {{ Form::open(
                         array(
-                            'action' => array('Marketing\MarketingController@postCreateEmail'),
-                            'method' => 'POST',
+                            'action' => array('Marketing\MarketingController@getCreateEmail'),
+                            'method' => 'GET',
                             'class' => 'form-horizontal',
                             'role'=>'form',
                         )
