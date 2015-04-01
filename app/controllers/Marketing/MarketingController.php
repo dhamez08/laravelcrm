@@ -552,6 +552,17 @@ class MarketingController extends \BaseController {
 
         \File::put($this->fileFolder.'/'.$file_name, $data);
 
+        $layer = \PHPImageWorkshop\ImageWorkshop::initFromPath($this->fileFolder.'/'.$file_name);
+        $layer->cropInPixel(655,470,0,0,'LT');
+        $layer->resizeInPixel(655, 470);
+
+        unlink($this->fileFolder.'/'.$file_name);
+
+        $file_name = sha1($file_name.time()).".".$file_extension;
+        $layer->save($this->fileFolder, $file_name, true);
+
+
+
         $user_id = \Auth::id();
 
         if($template_id == 0){
