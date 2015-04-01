@@ -79,6 +79,8 @@ $(function(){
 
             html2canvas($('#template-canvas'), {
                 proxy: baseURL+'/marketing/image-proxy',
+                width: 655,
+                height: 475,
                 onrendered: function(canvas) {
                     var image = canvas.toDataURL();
                     data.thumbnail = image;
