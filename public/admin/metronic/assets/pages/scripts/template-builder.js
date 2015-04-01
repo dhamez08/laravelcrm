@@ -16,7 +16,7 @@ $(function(){
 
     $('#test-generate-thumbnail').on('click',function(){
         html2canvas($('#template-canvas'), {
-            proxy: baseURL+'/public/html2canvasproxy.php',
+            proxy: baseURL+'/marketing/image-proxy',
             onrendered: function(canvas) {
                 var image = canvas.toDataURL();
                 $('#test-image-display').attr('src',image);
