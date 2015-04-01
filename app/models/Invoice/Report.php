@@ -99,16 +99,16 @@ class Report {
 
 	public function clients()
 	{
-		$month = DB::table('clients')
+		$month = DB::table('customer')
 				->select(DB::raw('COUNT(id) as number, created_at as xdate'))
-				->where('user_id', Auth::id())
+				->where('belongs_user', Auth::id())
 				->where(DB::raw('month(created_at)'), '=', date('m'))
 				->groupBy(DB::raw('day(created_at)'))
 				->get();
 				
-		$year = DB::table('clients')
+		$year = DB::table('customer')
 				->select(DB::raw('COUNT(id) as number, created_at as xdate'))
-				->where('user_id', Auth::id())
+				->where('belongs_user', Auth::id())
 				->where(DB::raw('year(created_at)'), '=', date('Y'))
 				->groupBy(DB::raw('month(created_at)'))
 				->get();

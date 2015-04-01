@@ -74,7 +74,7 @@
 			<hr>
 			<div class="stats-footer">
 				<div class="stats-desc pull-left">{{ trans('invoice.number_of_invoices') }}</div>
-				<a class="pull-right" href="#">View Invoices</a>
+				<a class="pull-right" href="{{ URL::to('invoice/invoice') }}">View Invoices</a>
 			</div>
 		</div> 
 	</div> 		
@@ -87,7 +87,7 @@
 			<hr>
 			<div class="stats-footer">
 				<div class="stats-desc pull-left">{{ trans('invoice.value_of_amounts') }}</div>
-				<a class="pull-right" href="#">View Reports</a>
+				<a class="pull-right" href="{{ URL::to('invoice/report') }}">View Reports</a>
 			</div>
 		</div> 
 	</div> 	

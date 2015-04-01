@@ -117,6 +117,7 @@ Route::group(array('before' => 'auth'), function()
     	Route::resource('payment', 'Invoice\PaymentController');
     	Route::resource('invoice', 'Invoice\InvoiceController');
     	Route::get('pdf/{id}', 'Invoice\PdfController@show');
+    	Route::resource('report', 'Invoice\ReportController');
 
     	Route::post('setting/defaultLanguage',			'Invoice\SettingController@defaultLanguage');
 
