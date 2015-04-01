@@ -14,16 +14,6 @@ $(function(){
     var image_height = 0;
     var apply_all = false;
 
-    $('#test-generate-thumbnail').on('click',function(){
-        html2canvas($('#template-canvas'), {
-            proxy: baseURL+'/marketing/image-proxy',
-            onrendered: function(canvas) {
-                var image = canvas.toDataURL();
-                $('#test-image-display').attr('src',image);
-            }
-        });
-    })
-
     $('.template-edit').on('click',function(){
         $('#template-creator-tab').click();
         $('#template-canvas').hide();
@@ -88,7 +78,7 @@ $(function(){
 
 
             html2canvas($('#template-canvas'), {
-                proxy: baseURL+'/html2canvasproxy.php',
+                proxy: baseURL+'/marketing/image-proxy',
                 onrendered: function(canvas) {
                     var image = canvas.toDataURL();
                     data.thumbnail = image;
