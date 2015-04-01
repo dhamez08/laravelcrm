@@ -554,7 +554,7 @@ class MarketingController extends \BaseController {
 
         $layer = \PHPImageWorkshop\ImageWorkshop::initFromPath($this->fileFolder.'/'.$file_name);
         $layer->cropInPixel(655,470,0,0,'LT');
-        $layer->resizeInPixel(655, 470);
+        $layer->resizeInPixel(300, 200);
 
         unlink($this->fileFolder.'/'.$file_name);
 
