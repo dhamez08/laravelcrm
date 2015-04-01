@@ -88,7 +88,7 @@ $(function(){
 
 
             html2canvas($('#template-canvas'), {
-                proxy: baseURL+'/public/html2canvasproxy.php',
+                proxy: baseURL+'/html2canvasproxy.php',
                 onrendered: function(canvas) {
                     var image = canvas.toDataURL();
                     data.thumbnail = image;
