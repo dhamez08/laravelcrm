@@ -46,7 +46,7 @@
                     @foreach($user_email_templates as $template)
                     <div class="col-md-3 col-sm-4 mix category_1 mix_all" style="display: block; opacity: 1; ">
                         <div class="mix-inner">
-                            <img alt="" src="{{asset('public/img/template_previews/worn_left.jpg')}}" class="img-responsive">
+                            <img alt="" src="{{asset('public/documents/'.$template['preview'])}}" class="img-responsive">
                             <div class="mix-details">
                                 <h4>Set this template as default?</h4>
                                 <a class="mix-link"><i class="fa fa-check"></i></a>
@@ -302,6 +302,7 @@
 <script type='text/javascript' src="{{$asset_path}}/global/plugins/jquery.caret.js"></script>
 <script src="{{$asset_path}}/global/plugins/bootstrap-summernote/summernote.min.js" type="text/javascript"></script>
 <script src="{{$asset_path}}/global/plugins/farbtastic/farbtastic.js" type="text/javascript"></script>
+<script src="{{$asset_path}}/global/plugins/html2canvas/html2canvas.js" type="text/javascript"></script>
 <script src="{{$asset_path}}/pages/scripts/underscore-min.js" type="text/javascript"></script>
 <script src="{{$asset_path}}/pages/scripts/rangy-core.js" type="text/javascript"></script>
 <script src="{{$asset_path}}/pages/scripts/rangy-selectionsaverestore.js" type="text/javascript"></script>

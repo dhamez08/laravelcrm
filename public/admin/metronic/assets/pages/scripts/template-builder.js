@@ -3,6 +3,7 @@
  */
 $(function(){
 
+    console.log(baseURL);
 
     var color_element = null;
     var selected_element = null;
@@ -12,6 +13,16 @@ $(function(){
     var image_width = 0;
     var image_height = 0;
     var apply_all = false;
+
+    $('#test-generate-thumbnail').on('click',function(){
+        html2canvas($('#template-canvas'), {
+            proxy: baseURL+'/public/html2canvasproxy.php',
+            onrendered: function(canvas) {
+                var image = canvas.toDataURL();
+                $('#test-image-display').attr('src',image);
+            }
+        });
+    })
 
     $('.template-edit').on('click',function(){
         $('#template-creator-tab').click();
@@ -75,17 +86,27 @@ $(function(){
             data.source_code = $('#template-canvas').html();
             data.template_id = $(this).data('template-id');
 
-            console.log(data);
-            $.ajax({
-                type: "POST",
-                url: 'ajax-save-template',
-                data: data,
-                success: function(response)
-                {
-                    location.reload();
-                },
-                dataType: 'json'
+
+            html2canvas($('#template-canvas'), {
+                proxy: baseURL+'/public/html2canvasproxy.php',
+                onrendered: function(canvas) {
+                    var image = canvas.toDataURL();
+                    data.thumbnail = image;
+
+                    $.ajax({
+                        type: "POST",
+                        url: 'ajax-save-template',
+                        data: data,
+                        success: function(response)
+                        {
+                            location.reload();
+                        },
+                        dataType: 'json'
+                    });
+                }
             });
+
+
         }
     });
 

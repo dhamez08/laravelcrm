@@ -541,16 +541,29 @@ class MarketingController extends \BaseController {
     public function postAjaxSaveTemplate(){
         $source_code = \Input::get('source_code');
         $template_id = \Input::get('template_id');
+        $file        = \Input::get('thumbnail');
+
+        $img = str_replace('data:image/png;base64,', '', $file);
+        $img = str_replace(' ', '+', $img);
+        $data = base64_decode($img);
+
+        $file_extension = 'png';
+        $file_name = sha1(time()).".".$file_extension;
+
+        \File::put($this->fileFolder.'/'.$file_name, $data);
+
         $user_id = \Auth::id();
 
         if($template_id == 0){
             $template = new \UserEmailTemplate\UserEmailTemplate;
             $template->source_code = \HTML::entities($source_code);
+            $template->preview = $file_name;
             $template->user_id = $user_id;
             $template->save();
         } else {
             $template = \UserEmailTemplate\UserEmailTemplate::find($template_id);
             $template->source_code = $source_code;
+            $template->preview = $file_name;
             $template->save();
         }
 
