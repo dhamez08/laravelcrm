@@ -93,9 +93,7 @@ $(function(){
                         },
                         dataType: 'json'
                     });
-                },
-                width: 655,
-                height: 475
+                }
             });
 
 
