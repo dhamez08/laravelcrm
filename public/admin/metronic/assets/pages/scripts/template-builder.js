@@ -17,6 +17,7 @@ $(function(){
     $('.template-edit').on('click',function(){
         $('#template-creator-tab').click();
         $('#template-canvas').hide();
+        $('.template-control').hide();
         $('#template-loader-container').show();
 
         var data = new Object();
@@ -32,6 +33,7 @@ $(function(){
                 $('#template-canvas').html(response.source_code).show();
                 $('#template-name').val(response.name);
                 $('#template-loader-container').hide();
+                $('.template-control').show();
                 $('#save-template').data('template-id',response.id);
             },
             dataType: 'json'
