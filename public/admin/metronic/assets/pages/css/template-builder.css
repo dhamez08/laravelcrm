@@ -25,6 +25,21 @@
     overflow: scroll;
 }
 
+.template-control {
+    margin: 0 auto;
+    width: 670px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.label-container {
+    padding-top: 5px;
+}
+
+#template-name {
+    width: 300px;
+}
+
 .section-container {
     position: relative;
 }

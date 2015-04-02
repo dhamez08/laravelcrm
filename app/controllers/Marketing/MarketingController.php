@@ -542,6 +542,7 @@ class MarketingController extends \BaseController {
         $source_code = \Input::get('source_code');
         $template_id = \Input::get('template_id');
         $file        = \Input::get('thumbnail');
+        $name        = \Input::get('name');
 
         $img = str_replace('data:image/png;base64,', '', $file);
         $img = str_replace(' ', '+', $img);
@@ -570,11 +571,13 @@ class MarketingController extends \BaseController {
             $template->source_code = \HTML::entities($source_code);
             $template->preview = $file_name;
             $template->user_id = $user_id;
+            $template->name = $name;
             $template->save();
         } else {
             $template = \UserEmailTemplate\UserEmailTemplate::find($template_id);
             $template->source_code = $source_code;
             $template->preview = $file_name;
+            $template->name = $name;
             $template->save();
         }
 

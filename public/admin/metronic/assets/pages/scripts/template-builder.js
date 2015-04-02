@@ -30,6 +30,7 @@ $(function(){
             success: function(response)
             {
                 $('#template-canvas').html(response.source_code).show();
+                $('#template-name').val(response.name);
                 $('#template-loader-container').hide();
                 $('#save-template').data('template-id',response.id);
             },
@@ -67,6 +68,7 @@ $(function(){
     $('#create-new').on('click',function(){
         $('#template-canvas').html('');
         $('#save-template').data('template-id',0);
+        $('#template-name').val('');
     });
 
     $('#save-template').on('click',function(){
@@ -75,6 +77,7 @@ $(function(){
             var data = new Object();
             data.source_code = $('#template-canvas').html();
             data.template_id = $(this).data('template-id');
+            data.name = $('#template-name').val();
 
 
             html2canvas($('#template-canvas'), {
