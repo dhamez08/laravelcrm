@@ -18,7 +18,7 @@
 
 .canvas {
     height: 1024px;
-    width: 670px;
+    width: 770px;
     margin: 0 auto;
     background-color: #efefef;
     z-index: 2;
@@ -27,7 +27,7 @@
 
 .template-control {
     margin: 0 auto;
-    width: 670px;
+    width: 770px;
     padding-top: 10px;
     padding-bottom: 10px;
 }
