@@ -14,6 +14,7 @@ $(function(){
     var image_height = 0;
     var apply_all = false;
     var dragging_active = false;
+    var bootbox_open = false;
 
     $('#template-canvas').on('mousedown','.move-section',function(){
         dragging_active = true;
@@ -292,7 +293,24 @@ $(function(){
     });
 
     $('body').on('click','.remove-section',function(){
-        $(this).closest('.section-container').remove();
+        var section_to_remove = $(this);
+        bootbox_open = true;
+        var box = bootbox.confirm({
+            message: 'Are you sure you want to delete this',
+            callback: function(result){
+                if(result){
+                    section_to_remove.closest('.section-container').remove();
+                }
+
+                if(bootbox_open){
+                    bootbox_open = false;
+                    box.find('.close').click();
+                }
+            },
+            show: true
+        })
+
+
     });
 
     $('body').on('click','.copy-section',function(){

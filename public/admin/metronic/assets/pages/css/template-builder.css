@@ -257,3 +257,7 @@
 #dynamic-field td {
     border: none !important;
 }
+
+.close {
+    margin-top: 0 !important;
+}
