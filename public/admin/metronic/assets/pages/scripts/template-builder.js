@@ -149,8 +149,13 @@ $(function(){
 
             $('body').on('keypress','#image-url',function(e){
                 if(e.keyCode == 13){
+                    var url = $(this).val();
+                    if (!/^(f|ht)tps?:\/\//i.test(url)) {
+                        url = "http://" + url;
+                    }
+
                     rangy.restoreSelection(selected_text);
-                    document.execCommand('createLink',false, $(this).val());
+                    document.execCommand('createLink',false, url);
                     selected_text = rangy.saveSelection();
                     $(this).val('');
                     $('.url-input').hide();
@@ -443,8 +448,13 @@ $(function(){
 
             body.one('keypress','#image-url',function(e){
                 if(e.keyCode == 13){
+                    var url = $(this).val();
+                    if (!/^(f|ht)tps?:\/\//i.test(url)) {
+                        url = "http://" + url;
+                    }
+
                     var hyperlink = $('<a>')
-                        .attr('href',$(this).val())
+                        .attr('href',url)
                         .attr('target','_blank');
 
                     selected_element.wrap(hyperlink);
@@ -637,7 +647,12 @@ $(function(){
 
             body.on('keypress','#image-url',function(e){
                 if(e.keyCode == 13){
-                    selected_element.attr('href',$(this).val()).attr('target','_blank');
+                    var url = $(this).val();
+                    if (!/^(f|ht)tps?:\/\//i.test(url)) {
+                        url = "http://" + url;
+                    }
+
+                    selected_element.attr('href',url).attr('target','_blank');
                     selected_element.popover('destroy');
                 }
             });
