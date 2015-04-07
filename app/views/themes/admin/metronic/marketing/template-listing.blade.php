@@ -44,7 +44,7 @@
 <!--                        </div>-->
 <!--                    </div>-->
                     @foreach($user_email_templates as $template)
-                    <div class="col-xlg-2 col-lg-3 col-md-3 col-sm-4 mix category_1 mix_all" style="display: block; opacity: 1; ">
+                    <div class="col-lg-3 col-md-3 col-sm-4 mix category_1 mix_all" style="display: block; opacity: 1; ">
                         <div class="mix-inner">
                             <img alt="" src="{{asset('public/documents/'.$template['preview'])}}" class="img-responsive">
                             <div class="mix-details">
