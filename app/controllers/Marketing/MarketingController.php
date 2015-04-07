@@ -647,7 +647,10 @@ class MarketingController extends \BaseController {
             } else if($template_type == 'html'){
                 $template_id = \Input::get('template_id');
                 $template = \UserEmailTemplate\UserEmailTemplate::find($template_id);
-                $data['body'] = \HTML::decode($template['source_code']);
+                $body = \HTML::decode($template['source_code']);
+
+                $body = str_replace('contenteditable="true"','',$body);
+                $data['body'] = str_replace('contenteditable','',$body);
             }
 
             $emails = \Input::get('email');
