@@ -70,7 +70,7 @@
                                 <div class="form-group html hide" style="margin-left:0px">
                                     <label>Select Template</label>
                                     <select class="form-control input-large" id="user_email_template" name="template_id">
-                                        <option value="0" disabled="true">Select Template</option>
+                                        <option value="0" disabled="true" selected="true">Select Template</option>
                                         @foreach(\User\User::find(\Auth::id())->userEmailTemplate()->get() as $template)
                                             <option value="{{$template['id']}}">{{$template['name']}}</option>
                                         @endforeach
