@@ -16,6 +16,10 @@ $(function(){
     var dragging_active = false;
     var bootbox_open = false;
 
+    $('#template-canvas').on('click','a',function(e){
+        e.preventDefault();
+    })
+
     $('#template-canvas').on('mousedown','.move-section',function(){
         dragging_active = true;
     });
@@ -147,7 +151,7 @@ $(function(){
             $('.url-input').show();
             $('.image-options').hide();
 
-            $('body').on('keypress','#image-url',function(e){
+            $('body').on('keypress','#link-url',function(e){
                 if(e.keyCode == 13){
                     var url = $(this).val();
                     if (!/^(f|ht)tps?:\/\//i.test(url)) {
@@ -195,7 +199,7 @@ $(function(){
                 var url_input = $('<div>')
                     .addClass('url-input')
                     .append($('<input>')
-                        .attr('id','image-url')
+                        .attr('id','link-url')
                         .addClass('url')
                         .attr('type','text')
                         .attr('placeholder','Your url'))
