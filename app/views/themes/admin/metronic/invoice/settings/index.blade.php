@@ -1,6 +1,6 @@
 @extends($dashboard_index)
 
-@section('header-custom-js')
+@section('head-custom-js')
 	<link href="{{$asset_path}}/global/css/invoice_design.css" rel="stylesheet" type="text/css"/>
 	<link href="{{$asset_path}}/global/plugins/bootstrap-fileinput2/css/fileinput.min.css" rel="stylesheet" type="text/css"/>
 @stop

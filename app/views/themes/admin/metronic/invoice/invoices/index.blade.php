@@ -1,5 +1,9 @@
 @extends($dashboard_index)
 
+@section('head-custom-js')
+	<link href="{{$asset_path}}/global/css/invoice_design.css" rel="stylesheet" type="text/css"/>
+@stop
+
 @section('innerpage-content')
 
 	<div class="col-md-12">
