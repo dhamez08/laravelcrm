@@ -7,11 +7,60 @@ use Input;
 use Redirect;
 use Invoice\UserSetting;
 use Session;
+use View;
 
 
 class CurrencyController extends \BaseController {
 
-	protected $layout = 'index';
+	/**
+	 * Instance of this class.
+	 *
+	 * @var      object
+	 */
+	protected static $instance = null;
+
+	/**
+	 * hold the view essentials like
+	 * - title
+	 * - view path
+	 * @return array | associative
+	 * */
+	protected $data_view;
+
+	/**
+	 * auto setup initialize object
+	 * */
+	public function __construct(){
+		parent::__construct();
+		$this->data_view = parent::setupThemes();
+		$this->data_view['dashboard_index'] = $this->data_view['view_path'] . '.dashboard.index';
+	}
+
+	/**
+	 * Return an instance of this class.
+	 *
+	 *
+	 * @return    object    A single instance of this class.
+	 */
+	public static function get_instance() {
+
+		// If the single instance hasn't been set, set it now.
+		if ( null == self::$instance ) {
+			self::$instance = new self;
+		}
+
+		return self::$instance;
+	}
+
+	/**
+	 * get themes
+	 * @return	array
+	 * */
+	public function getSetupThemes(){
+		$this->data_view['html_body_class'] = 'page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo page-container-bg-solid page-full-width';
+		$this->data_view['header_class'] = 'page-header navbar navbar-fixed-top';
+		return $this->data_view;
+	}
 	
 	
 	/* === C.R.U.D. === */
@@ -58,8 +107,10 @@ class CurrencyController extends \BaseController {
 		);		
 
 		Session::flash('ajaxMessage', trans('invoice.data_was_updated'));	
+
+		$data += $this->getSetupThemes();
 		
-		return View::make('settings.currency', $data);		
+		return View::make($data['view_path'] . '.invoice.settings.currency', $data);		
 	}
 	/* === END AJAX === */
 }
