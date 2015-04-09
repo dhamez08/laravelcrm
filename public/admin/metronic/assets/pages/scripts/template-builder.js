@@ -56,6 +56,40 @@ $(function(){
 
     });
 
+    $('.template-delete').on('click',function(){
+        var data = new Object();
+        data.template_id = $(this).data('template-id');
+
+        var button = $(this);
+
+        bootbox_open = true;
+        var box = bootbox.confirm({
+            message: 'Are you sure you want to delete this template?',
+            callback: function(result){
+                if(result){
+                    button.closest('.mix_all').remove();
+                    $.ajax({
+                        type: "POST",
+                        url: 'ajax-delete-template',
+                        data: data,
+                        success: function(response)
+                        {
+
+                        },
+                        dataType: 'json'
+                    });
+                }
+
+                if(bootbox_open){
+                    bootbox_open = false;
+                    box.find('.close').click();
+                }
+            },
+            show: true
+        })
+
+    });
+
     $('#fullscreen-preview').on('click',function(){
         var html = $('#template-canvas').html();
         var preview = window.open();
@@ -305,7 +339,7 @@ $(function(){
         var section_to_remove = $(this);
         bootbox_open = true;
         var box = bootbox.confirm({
-            message: 'Are you sure you want to delete this',
+            message: 'Are you sure you want to delete this section?',
             callback: function(result){
                 if(result){
                     section_to_remove.closest('.section-container').remove();

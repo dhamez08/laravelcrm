@@ -592,6 +592,20 @@ class MarketingController extends \BaseController {
         return \Response::json($template);
     }
 
+    public function postAjaxDeleteTemplate(){
+        $template_id = \Input::get('template_id');
+        $template = \UserEmailTemplate\UserEmailTemplate::find($template_id);
+
+        if(\Auth::id() == $template->user_id){
+            $template->delete();
+            $response['success'] = true;
+        } else {
+            $response['success'] = false;
+        }
+
+        return \Response::json($response);
+    }
+
     public function getSendEmail(){
         $data['cc'] = 0;
         $data['bcc'] = 0;

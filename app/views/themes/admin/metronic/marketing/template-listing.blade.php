@@ -48,8 +48,8 @@
                         <div class="mix-inner">
                             <img alt="" src="{{asset('public/documents/'.$template['preview'])}}" class="img-responsive">
                             <div class="mix-details">
-                                <h4>Set this template as default?</h4>
-                                <a class="mix-link"><i class="fa fa-check"></i></a>
+                                <h4>Choose action for this template.</h4>
+                                <a class="mix-link template-delete" data-template-id="{{$template['id']}}"><i class="fa fa-times"></i></a>
                                 <a data-rel="fancybox-button" data-template-id="{{$template['id']}}" class="mix-preview fancybox-button template-edit"><i class="fa fa-pencil"></i></a>
                             </div>
                         </div>
@@ -275,7 +275,7 @@
                         <div id="template-loader-container">
                             <img id="cropper-loader" src="{{$asset_path}}/global/img/spiffygif_88x88.gif"/>
                         </div>
-                        <input type="hidden" id="mobile-preview-style" value='/* iPad Text Smoother */div, p, a, li, td { -webkit-text-size-adjust:none; }/* Reset */* { margin-top: 0px; margin-bottom: 0px; padding: 0px; border: none; line-height: normal; outline: none; list-style: none; -webkit-text-size-adjust: none; -ms-text-size-adjust: none; }table { border-collapse: collapse !important; padding: 0px !important; border: none !important; border-bottom-width: 0px !important; mso-table-lspace: 0pt; mso-table-rspace: 0pt; }table td { border-collapse: collapse; }body { margin: 0px; padding: 0px; background-color: #FFFFFF;}.ExternalClass * { line-height: 100%; }/* Responsive */@media only screen and (max-width:600px) {	/* Tables	parameters: width, alignment, padding */	table[class=scale] { width: 100%!important; }		/* Td */	td[class=scale-center-both] { width: 100%!important; text-align: center!important; padding-left: 20px!important; padding-right: 20px!important; }	td[class=scale-center-both-bottom] { width: 100%!important; text-align: center!important; padding-left: 20px!important; padding-right: 20px!important; padding-bottom: 24px!important; }	td[class=scale-center-both-bottom60] { width: 100%!important; text-align: center!important; padding-left: 20px!important; padding-right: 20px!important; padding-bottom: 60px!important; }	td[class=scale-center-both-top] { width: 100%!important; text-align: center!important; padding-left: 20px!important; padding-right: 20px!important; padding-top: 24px!important; }	td[class=scale-center-bottom] { width: 100%!important; text-align: center!important; padding-bottom: 24px!important; }	td[class=scale-center-bottom-top] { width: 100%!important; text-align: center!important; padding-bottom: 24px!important; padding-top: 24px!important; }	td[class=h30] { height: 30px!important; }	img[class="reset"] { display: inline!important; }	img[class="reset2"] { display: inline!important; width: 100%!important; }}'>
+                        <input type="hidden" id="mobile-preview-style" value="">
                         <div class="template-control form-inline">
                             <div class="form-group row">
                                 <div class="col-md-4 label-container"><label for="template-name">Template Name: </label></div>
