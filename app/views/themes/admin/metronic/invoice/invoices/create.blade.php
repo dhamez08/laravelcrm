@@ -273,6 +273,7 @@ $('#dp5').datepicker()
 	/* === PRODUCT === */
 		$( document ).on('click', '.solsoShowDetails', function(){
 			$.ajax({
+				async: false,
 				url: "invoice/product/" + $(this).attr('data-value'),
 				type: 'get',
 				dataType: 'json',
@@ -317,6 +318,7 @@ $('#dp5').datepicker()
 		
 		if ( $(this).attr('data-id').length ) {
 			$.ajax({
+				async: false,
 				url: "{{ URL::route('invoice.deleteProduct') }}",
 				type: 'post',
 				dataType: 'json',
@@ -333,6 +335,7 @@ $('#dp5').datepicker()
 		inputPrice = $(this).closest('tr').find("[name='price[]']");
 		
 		$.ajax({
+			async: false,
 			url: "{{ URL::route('ajax.productPrice') }}",
 			type: 'post',
 			dataType: 'json',
@@ -410,6 +413,7 @@ $('#dp5').datepicker()
 		}			
 	
 		$.ajax({
+			async: false,
 			url: goToUrl,
 			type: 'post',
 			dataType: 'html',

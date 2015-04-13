@@ -20,7 +20,7 @@ class PdfController extends \BaseController {
 		
 		if ( $invoice ) 
 		{
-			$userID = Request::segment(4) ? $invoice->user_id : Auth::id();
+			$userID = Request::segment(4) ? $invoice->belongs_user : Auth::id();
 			
 			$data = array(
 				'owner'				=> UserSetting::where('user_id', $userID)->first(),

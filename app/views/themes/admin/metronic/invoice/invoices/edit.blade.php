@@ -1,4 +1,10 @@
-@section('content')
+@extends($dashboard_index)
+
+@section('head-custom-js')
+	<link href="{{$asset_path}}/global/css/invoice_design.css" rel="stylesheet" type="text/css"/>
+@stop
+
+@section('innerpage-content')
 
 	<div class="col-md-12 col-lg-12">
 		<h1><i class="fa fa-edit"></i> {{ trans('invoice.edit') }}</h1>
@@ -10,11 +16,11 @@
 			<div class="form-group">
 				<label for="client">{{ trans('invoice.client') }}</label>
 				<select name="client" class="form-control required solsoSelect2">
-					<option selected value="{{ Input::old('client') ? Input::old('client') : $client->id }}"> {{ Input::old('client') ? Input::old('client') : $client->name }} </option>	
+					<option selected value="{{ Input::old('client') ? Input::old('client') : $client->id }}"> {{ Input::old('client') ? Input::old('client') : $client->first_name . ' ' . $client->last_name }} </option>	
 					<option value="">{{ trans('invoice.choose') }}</option>
 					
 					@foreach ($clients as $v)
-						<option value="{{ $v->id }}"> {{ $v->name }} </option>
+						<option value="{{ $v->id }}"> {{ $v->first_name }} {{ $v->last_name }} </option>
 					@endforeach			
 					
 				</select>
@@ -223,4 +229,198 @@
 		
 	{{ Form::close() }}
 	
+@stop
+
+@section('footer-custom-js')
+<script type="text/javascript">
+if ($('.solsoSelect2').length) {
+	$( ".solsoSelect2" ).select2();
+}
+
+$('.datepicker').datepicker({
+	format: 'yyyy-mm-dd'
+});
+
+$('.datepicker').on('changeDate', function() {
+	$('.datepicker').datepicker('hide');
+});	
+
+var startDate 	= '';
+var endDate 	= '';
+$('#dp4').datepicker()
+	.on('changeDate', function(ev){
+		startDate = new Date(ev.date);
+		$('#dp4').datepicker('hide');
+	});
+$('#dp5').datepicker()
+	.on('changeDate', function(ev){
+		if (ev.date.valueOf() < startDate.valueOf()){
+			$(".solsoErrorPopover").popover('show');
+		} else {
+			$(".solsoErrorPopover").popover('hide');
+			endDate = new Date(ev.date);
+		}
+		$('#dp5').datepicker('hide');
+	});
+</script>
+
+<!-- === SOLUTII SOFT === -->
+<script>
+	/* === PRODUCT === */
+		$( document ).on('click', '.solsoShowDetails', function(){
+			$.ajax({
+				async: false,
+				url: "invoice/product/" + $(this).attr('data-value'),
+				type: 'get',
+				dataType: 'json',
+				data: { product: $(this).val() },
+				success:function(data) {
+					$( '.product-name' ).text(data['name']);
+					$( '.product-price' ).text(data['price']);
+					$( '.product-description' ).text(data['description']);
+				}
+			});
+		});
+	/* === END PRODUCT === */
+
+	/* === CLONE ROW === */
+	$('#createClone').on('click', function(e) {
+		$( '.solsoSelect2.solsoCloneSelect2').select2('destroy');
+		
+		$( '.solsoParent' )
+			.append( '<tr>' + $( 'tr.solsoChild' ).html()  + '</tr>' );
+	
+		$( '.crt' ).each(function( index ) {
+			$( this ).text(index+1);
+			
+			if (index > 0) {
+				$( this ).parent().find( '.removeClone' ).removeClass('disabled');
+			}
+		});			
+		
+		$( ".solsoSubTotal" ).last().text('0.00');
+		
+		$( '.solsoCloneSelect2' ).select2();
+
+		return false;
+	});
+	
+	$( document ).on('click', '.removeClone', function() {
+		$(this).parents().eq(1).remove();
+		
+		$( '.crt' ).each(function( index ) {
+			$( this ).text(index+1);
+		});				
+		
+		if ( $(this).attr('data-id').length ) {
+			$.ajax({
+				async: false,
+				url: "{{ URL::route('invoice.deleteProduct') }}",
+				type: 'post',
+				dataType: 'json',
+				data: { id: $(this).attr('data-id') },
+				success:function(data) {
+				}
+			});
+		}
+	});
+	/* === END CLONE ROW === */	
+	
+	/* === INVOICE === */
+	$( document ).on('change', '.solsoCloneSelect2', function() {
+		inputPrice = $(this).closest('tr').find("[name='price[]']");
+		
+		$.ajax({
+			async: false,
+			url: "{{ URL::route('ajax.productPrice') }}",
+			type: 'post',
+			dataType: 'json',
+			data: { product: $(this).val() },
+			success:function(data) {
+				inputPrice.val(data['price']);
+			}
+		});
+	});		
+	
+	$( document ).on('change', '.solsoCurrencyEvent', function() {
+		if ( $(this).val() != '') {
+			$( '.solsoCurrency' ).text( $( "[name='currency'] option[value='" + $(this).val() + "']").text() );
+		}
+	});	
+	
+	$( document ).on("click change paste keyup", ".solsoEvent", function() {
+		var qty			= $(this).closest('tr').find("[name='qty[]']").val();
+		var price		= $(this).closest('tr').find("[name='price[]']").val();
+		var tax			= $(this).closest('tr').find("[name='taxes[]']").val();
+		var discount	= $(this).closest('tr').find("[name='discount[]']").val();	
+		var type		= $(this).closest('tr').find("[name='discountType[]']").val();	
+		var totalDisc	= $(this).closest('tr').find("[name='invoiceDiscount']").val();	
+		var invoiceType	= $(this).closest('tr').find("[name='invoiceDiscountType']").val();	
+		var subTotal	= 0;
+		var total		= 0;
+		
+		itemQty			= parseFloat(qty)  > 0 		? parseFloat(qty).toFixed(2) 		: 0;
+		itemPrice		= parseFloat(price)  > 0 	? parseFloat(price).toFixed(2) 		: 0;
+		itemTax			= parseFloat(tax) > 0 		? parseFloat(tax).toFixed(2) 		: 0;
+		itemDiscount	= parseFloat(discount) > 0	? parseFloat(discount).toFixed(2)	: 0;
+		invoiceDiscount	= parseFloat(totalDisc) > 0	? parseFloat(totalDisc).toFixed(2)	: 0;
+		
+		solsoValue 			= itemQty * itemPrice;
+		solsoTax			= solsoValue * (itemTax / 100);
+		solsoPrice			= solsoValue + solsoTax;
+		solsoDiscount		= itemDiscount;
+		solsoTotalDiscount	= invoiceDiscount;
+		
+		if ( type == 2 ) {
+			solsoDiscount	= solsoPrice * (itemDiscount / 100);
+		}
+		
+		subTotal		= solsoPrice - solsoDiscount;
+		
+		$(this).closest('tr').find(".solsoSubTotal").text( subTotal.toFixed(2) );
+		
+		$( '.solsoSubTotal' ).each(function() {
+			total += parseFloat($(this).text());
+		});
+		
+		if ( invoiceType == 2 ) {
+			solsoTotalDiscount = total * (invoiceDiscount / 100);
+		}
+		
+		$( '.solsoTotal' ).text( (total - solsoTotalDiscount).toFixed(2) );
+	});
+	/* === END INVOICE === */
+
+	/* === SETTINGS === */
+	$( document ).on('click', '.solsoCurrencySettings', function(e) {
+		e.preventDefault();
+		
+		var id	 	= $(this).attr('data-id');
+		var name 	= $(this).closest('label').find("input[type='radio']").attr('name');
+		var value 	= $(this).closest('label').find("input[type='radio']").val();
+		var url		= '';
+	
+		if ( name == 'position') {
+			goToUrl = "{{ URL::route('currency.currencyPosition') }}";
+		}
+		
+		if ( name == 'default') {
+			goToUrl = "{{ URL::route('setting.defaultCurrency') }}";
+		}			
+	
+		$.ajax({
+			async: false,
+			url: goToUrl,
+			type: 'post',
+			dataType: 'html',
+			data: { itemID: id, itemValue: value  },
+			success:function(data) {
+				$('#tab5').html(data);
+			}
+		});
+		
+		solsoAlerts();
+	});
+	/* === END SETTINGS === */
+</script>
 @stop

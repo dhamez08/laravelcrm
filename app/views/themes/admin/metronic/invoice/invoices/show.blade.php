@@ -1,4 +1,10 @@
-@section('content')
+@extends($dashboard_index)
+
+@section('head-custom-js')
+	<link href="{{$asset_path}}/global/css/invoice_design.css" rel="stylesheet" type="text/css"/>
+@stop
+
+@section('innerpage-content')
 
 	<div class="container top20">
 	<div class="row thumbnail">
@@ -45,12 +51,12 @@
 			<div class="col-md-6 top20">
 				<h2>{{ trans('invoice.bill_to') }} <span class="h4">{{ $invoice->client }}</span></h2>
 
-				<p class="details">{{ $invoice->city }}, {{ $invoice->state }}, {{ $invoice->country }}</p>
-				<p class="details">{{ $invoice->address }} {{ $invoice->zip}}</p>
-				<p class="details">{{ $invoice->contact }}</p>
-				<p class="details">{{ $invoice->phone }}</p>
-				<p class="details">{{ $invoice->bank }}</p>
-				<p class="details">{{ $invoice->bank_account }}</p>				
+				<p class="details">{{ $invoice->city or '' }}, {{ $invoice->state or ''}}, {{ $invoice->country or '' }}</p>
+				<p class="details">{{ $invoice->address or '' }} {{ $invoice->zip or ''}}</p>
+				<p class="details">{{ $invoice->contact or '' }}</p>
+				<p class="details">{{ $invoice->phone or '' }}</p>
+				<p class="details">{{ $invoice->bank or '' }}</p>
+				<p class="details">{{ $invoice->bank_account or '' }}</p>				
 			</div>
 			
 			<div class="col-md-12 top20">
@@ -258,11 +264,11 @@
 	
 			@if (Request::segment(3))
 			
-				<a class="btn  solso-pdf" href="{{ URL::to('pdf/received/' . $invoice->invoiceID) }}"><i class="fa fa-file-pdf-o"></i> {{ trans('invoice.export_pdf') }}</a>
+				<a class="btn  solso-pdf" href="{{ URL::to('invoice/pdf/received/' . $invoice->invoiceID) }}"><i class="fa fa-file-pdf-o"></i> {{ trans('invoice.export_pdf') }}</a>
 				
 			@else
 			
-				<a class="btn  solso-pdf" href="{{ URL::to('pdf/' . $invoice->invoiceID) }}"><i class="fa fa-file-pdf-o"></i> {{ trans('invoice.export_pdf') }}</a>
+				<a class="btn  solso-pdf" href="{{ URL::to('invoice/pdf/' . $invoice->invoiceID) }}"><i class="fa fa-file-pdf-o"></i> {{ trans('invoice.export_pdf') }}</a>
 				<button class="btn solso-email solsoConfirm" data-toggle="modal" data-target="#solsoSendEmail" data-url="{{ URL::to('email/' . $invoice->invoiceID) }}">
 					<i class="fa fa-envelope"></i> {{ trans('invoice.email_to_client') }}
 				</button>					
@@ -274,6 +280,6 @@
 	</div>	
 	</div>
 
-	@include('_modals/email')
+	@include($view_path . '.invoice._modals.email')
 	
 @stop
