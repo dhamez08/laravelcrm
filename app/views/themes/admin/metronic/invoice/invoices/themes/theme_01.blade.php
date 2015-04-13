@@ -48,12 +48,12 @@
 
 				<td class="col-md-6">			
 					<p class="text-left background-th"><span class="h2">{{ trans('invoice.bill_to') }} </span> <span class="h4">{{ $invoice->client }}</span></p>
-					<p class="details">{{ $invoice->city }}, {{ $invoice->state }}, {{ $invoice->country }}</p>
-					<p class="details">{{ $invoice->address }}, {{ $invoice->zip}}</p>
-					<p class="details">{{ $invoice->contact }}</p>
-					<p class="details">{{ $invoice->phone }}</p>
-					<p class="details">{{ $invoice->bank }}</p>
-					<p class="details">{{ $invoice->bank_account }}</p>
+					<p class="details">{{ $invoice->city or '' }}, {{ $invoice->state or '' }}, {{ $invoice->country or '' }}</p>
+					<p class="details">{{ $invoice->address or '' }}, {{ $invoice->zip or ''}}</p>
+					<p class="details">{{ $invoice->contact or '' }}</p>
+					<p class="details">{{ $invoice->phone or '' }}</p>
+					<p class="details">{{ $invoice->bank or '' }}</p>
+					<p class="details">{{ $invoice->bank_account or '' }}</p>
 				</td>
 			</tr>
 		</table>

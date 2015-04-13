@@ -46,7 +46,8 @@ class Invoice extends \Eloquent {
 							'customer.*', 'customer.first_name as client', 	
 							'currencies.id as currencyID', 'currencies.name as currency', 'currencies.position'
 						)
-				->where('invoices.id', $invoiceID)		
+				->where('invoices.id', $invoiceID)	
+				/*	
 				->where(function($querySplit) use ($userID) {
 				
 					if ($userID)
@@ -65,6 +66,7 @@ class Invoice extends \Eloquent {
 					}
 					
 				})
+				*/
 				->first();
 				
 		return $query;		

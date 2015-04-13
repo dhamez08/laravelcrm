@@ -117,6 +117,7 @@ Route::group(array('before' => 'auth'), function()
     	Route::resource('payment', 'Invoice\PaymentController');
     	Route::resource('invoice', 'Invoice\InvoiceController');
     	Route::get('pdf/{id}', 'Invoice\PdfController@show');
+    	Route::get('pdf/received/{id}',	'Invoice\PdfController@show');
     	Route::resource('report', 'Invoice\ReportController');
 
     	Route::post('setting/defaultLanguage',			'Invoice\SettingController@defaultLanguage');
@@ -129,10 +130,10 @@ Route::group(array('before' => 'auth'), function()
 		Route::post('invoice/text',						'Invoice\InvoiceController@storeInvoiceText'); 
 
 		/* === AJAX === */
-		Route::post('/currency/currencyPosition',		array('uses' => 'Invoice\CurrencyController@currencyPosition',		'as' => 'currency.currencyPosition'));	
-		Route::post('/invoice/deleteProduct',			array('uses' => 'Invoice\InvoiceController@deleteProduct',			'as' => 'invoice.deleteProduct'));
-		Route::post('/setting/defaultCurrency',			array('uses' => 'Invoice\SettingController@defaultCurrency',		'as' => 'setting.defaultCurrency'));
-		Route::post('/ajax/productPrice',				array('uses' => 'Invoice\AjaxController@productPrice',				'as' => 'ajax.productPrice'));	
+		Route::post('currency/currencyPosition',		array('uses' => 'Invoice\CurrencyController@currencyPosition',		'as' => 'currency.currencyPosition'));	
+		Route::post('invoice/deleteProduct',			array('uses' => 'Invoice\InvoiceController@deleteProduct',			'as' => 'invoice.deleteProduct'));
+		Route::post('setting/defaultCurrency',			array('uses' => 'Invoice\SettingController@defaultCurrency',		'as' => 'setting.defaultCurrency'));
+		Route::post('ajax/productPrice',				array('uses' => 'Invoice\AjaxController@productPrice',				'as' => 'ajax.productPrice'));	
 		/* === END AJAX === */		   	
     });
 

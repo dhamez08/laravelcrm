@@ -118,11 +118,14 @@ class InvoiceController extends \BaseController {
 	{
 		$newInvoice = new Invoice;
 		$payment	= new InvoicePayment;
-		$invoice	= $newInvoice->single($id, Request::segment(3) ? false : true);
+		//$invoice	= $newInvoice->single($id, Request::segment(3) ? false : true);
+		$invoice	= $newInvoice->single($id, Auth::id() ? false : true);
 		
+		\Debugbar::info($invoice);
+
 		if ( $invoice ) 
 		{
-			$userID = Request::segment(3) ? $invoice->user_id : Auth::id();
+			$userID = Request::segment(4) ? $invoice->belongs_user : Auth::id();
 			
 			$data = array(
 				'owner'				=> UserSetting::where('user_id', $userID)->first(),
@@ -139,13 +142,16 @@ class InvoiceController extends \BaseController {
 				View::share('newInvoicesReceived', InvoiceReceived::where('user_id', Auth::id())->where('status', 0)->count());
 			}	
 
-			$this->layout->content = View::make('invoices.show', $data);
+			$data += $this->getSetupThemes();
+
+			return View::make($data['view_path'] . '.invoice.invoices.show', $data);
 		}	
 		else 
 		{
-			Auth::logout();
+			//Auth::logout();
 			
-			return Redirect::to('login')->with('message', trans('invoice.access_denied'));			
+			//return Redirect::to('login')->with('message', trans('invoice.access_denied'));			
+			return Redirect::to('invoice/invoice');
 		}			
 	}
 	
@@ -159,7 +165,7 @@ class InvoiceController extends \BaseController {
 			$data = array(
 				'invoice'			=> $invoice,
 				'invoiceCode'		=> InvoiceSetting::where('user_id', Auth::id())->first(),
-				'clients' 			=> Client::where('user_id', Auth::id())->get(),
+				'clients' 			=> Client::where('belongs_user', Auth::id())->get(),
 				'client'			=> Invoice::find($id)->client,
 				'invoiceProducts'	=> $newInvoice->products($id, true),
 				'products' 			=> Product::where('user_id', Auth::id())->where('status', 1)->get(),
@@ -167,8 +173,10 @@ class InvoiceController extends \BaseController {
 				'taxes'				=> Tax::where('user_id', Auth::id())->get(),
 				'payments'			=> Payment::where('user_id', Auth::id())->get()
 			);
+
+			$data += $this->getSetupThemes();
 			
-			$this->layout->content = View::make('invoices.edit', $data);
+			return View::make($data['view_path'] . '.invoice.invoices.edit', $data);
 		}
 		else 
 		{
