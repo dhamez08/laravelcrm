@@ -10,7 +10,7 @@
 		<h1><i class="fa fa-edit"></i> {{ trans('invoice.edit') }}</h1>
 	</div>	
 
-	{{ Form::open(array('url' => 'invoice/' . Request::segment(2), 'role' => 'form', 'method' => 'PUT', 'class' => 'solsoForm')) }}
+	{{ Form::open(array('url' => 'invoice/invoice/' . Request::segment(3), 'role' => 'form', 'method' => 'PUT', 'class' => 'solsoForm')) }}
 
 		<div class="col-md-6 col-lg-3">
 			<div class="form-group">
