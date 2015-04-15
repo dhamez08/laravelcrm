@@ -663,9 +663,9 @@ class MarketingController extends \BaseController {
                 $template = \UserEmailTemplate\UserEmailTemplate::find($template_id);
                 $body = \HTML::decode($template['source_code']);
 
-                $data['body'] = "<style> @media (max-width: 640px) { .section-area { width: 100% !important; padding: 0 !important; } .inner-section { padding: 10px 0 !important; } .inner-section div { width: 100% !important; display: block !important; margin: 0 auto !important; text-align: center !important; padding: 5px 0 !important; } .scaled-image { width: 80% !important; height: auto !important; } p { text-align: center !important; } .inner-section div.div-button { width: 90% !important; margin-top: 10px !important; margin-bottom: 10px !important; } } </style>";
+//                $data['body'] = "<style scoped> @media (max-width: 640px) { .section-area { width: 100% !important; padding: 0 !important; } .inner-section { padding: 10px 0 !important; } .inner-section div { width: 100% !important; display: block !important; margin: 0 auto !important; text-align: center !important; padding: 5px 0 !important; } .scaled-image { width: 80% !important; height: auto !important; } p { text-align: center !important; } .inner-section div.div-button { width: 90% !important; margin-top: 10px !important; margin-bottom: 10px !important; } } </style>";
                 $body = str_replace('contenteditable="true"','',$body);
-                $data['body'] .= str_replace('contenteditable','',$body);
+                $data['body'] = str_replace('contenteditable','',$body);
             }
 
             $emails = \Input::get('email');
@@ -687,7 +687,7 @@ class MarketingController extends \BaseController {
                 $data['to_name'] = $client_detail['first_name'] . " " . $client_detail['last_name'];
                 $data['client_ref'] = "[REF:".$client_detail['ref']."]";
 
-                \Mail::send('emails.clients.index', $data, function($message) use ($data, $from_name, $from_email)
+                \Mail::send('emails.clients.marketing', $data, function($message) use ($data, $from_name, $from_email)
                 {
                     $message->from($from_email, $from_name);
                     $message->replyTo('dropbox.13554457@one23.co.uk', $from_name);
