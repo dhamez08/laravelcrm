@@ -189,6 +189,19 @@
                                         </div>
                                         <div class="row text-control">
                                             <div class="col-md-6 m-top-15">
+                                                <label for="font-type" class="editor-label">Font Type</label>
+                                            </div>
+                                            <div class="col-md-6 m-top-15">
+                                                <select id="font-type" class="form-control">
+                                                    <option data-type="Helvitica">Default</option>
+                                                    <option data-url="http://fonts.googleapis.com/css?family=Pacifico" data-type="Pacifico">Pacifico</option>
+                                                    <option data-url="http://fonts.googleapis.com/css?family=Lobster" data-type="Lobster">Lobster</option>
+                                                    <option data-url="http://fonts.googleapis.com/css?family=Josefin+Sans" data-type="Josefin Sans">Josefin Sans</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row text-control">
+                                            <div class="col-md-6 m-top-15">
                                                 <label for="font-size-slider" class="editor-label">Font Size</label>
                                             </div>
                                             <div class="col-md-6 m-top-15">
@@ -281,6 +294,9 @@
                                 <div class="col-md-4 label-container"><label for="template-name">Template Name: </label></div>
                                 <div class="col-md-8"><input id="template-name" type="text" class="col-md-8 form-control" placeholder="Enter a title for your template"></div>
                             </div>
+                        </div>
+                        <div id="font-style-container">
+                            <style></style>
                         </div>
                         <div id="template-canvas" class="canvas">
 

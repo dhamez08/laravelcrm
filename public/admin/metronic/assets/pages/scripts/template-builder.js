@@ -16,6 +16,21 @@ $(function(){
     var dragging_active = false;
     var bootbox_open = false;
 
+    $('#font-type').on('change',function(){
+        var selected_font = $(this).find(':selected');
+        var url = selected_font.data('url');
+        var type = selected_font.data('type');
+
+        // Check if imported
+        var imported = $('#font-style-container').find('style').html();
+
+        if(imported.indexOf(url) == -1 && url != undefined){
+            $('#font-style-container').find('style').append('@import url('+url+');');
+        }
+
+        selected_element.css('font-family',type);
+    });
+
     $('#template-canvas').on('click','a',function(e){
         e.preventDefault();
     })
