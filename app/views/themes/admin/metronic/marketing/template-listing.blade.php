@@ -197,6 +197,20 @@
                                                     <option data-url="http://fonts.googleapis.com/css?family=Pacifico" data-type="Pacifico">Pacifico</option>
                                                     <option data-url="http://fonts.googleapis.com/css?family=Lobster" data-type="Lobster">Lobster</option>
                                                     <option data-url="http://fonts.googleapis.com/css?family=Josefin+Sans" data-type="Josefin Sans">Josefin Sans</option>
+                                                    <option data-url="http://fonts.googleapis.com/css?family=Exo" data-type="Exo">Exo</option>
+                                                    <option data-url="http://fonts.googleapis.com/css?family=Abel" data-type="Abel">Abel</option>
+                                                    <option data-url="http://fonts.googleapis.com/css?family=Cabin" data-type="Cabin">Cabin</option>
+                                                    <option data-url="http://fonts.googleapis.com/css?family=Oxygen" data-type="Oxygen">Oxygen</option>
+                                                    <option data-url="http://fonts.googleapis.com/css?family=Indie+Flower" data-type="Indie Flower">Indie Flower</option>
+                                                    <option data-url="http://fonts.googleapis.com/css?family=Droid+Serif" data-type="Droid Serif">Droid Serif</option>
+                                                    <option data-url="http://fonts.googleapis.com/css?family=Raleway" data-type="Raleway">Raleway</option>
+                                                    <option data-url="http://fonts.googleapis.com/css?family=Droid+Sans" data-type="Droid Sans">Droid Sans</option>
+                                                    <option data-url="http://fonts.googleapis.com/css?family=Open+Sans" data-type="Open Sans">Open Sans</option>
+                                                    <option data-url="http://fonts.googleapis.com/css?family=Roboto" data-type="Roboto">Roboto</option>
+                                                    <option data-url="http://fonts.googleapis.com/css?family=Oswald" data-type="Oswald">Oswald</option>
+                                                    <option data-url="http://fonts.googleapis.com/css?family=Ubuntu" data-type="Ubuntu">Ubuntu</option>
+                                                    <option data-url="http://fonts.googleapis.com/css?family=Lato" data-type="Lato">Lato</option>
+                                                    <option data-url="http://fonts.googleapis.com/css?family=Shadows+Into+Light" data-type="Shadows Into Light">Shadows Into Light</option>
                                                 </select>
                                             </div>
                                         </div>

@@ -543,6 +543,7 @@ class MarketingController extends \BaseController {
         $template_id = \Input::get('template_id');
         $file        = \Input::get('thumbnail');
         $name        = \Input::get('name');
+        $style       = \Input::get('style');
 
         $img = str_replace('data:image/png;base64,', '', $file);
         $img = str_replace(' ', '+', $img);
@@ -572,12 +573,14 @@ class MarketingController extends \BaseController {
             $template->preview = $file_name;
             $template->user_id = $user_id;
             $template->name = $name;
+            $template->style = $style;
             $template->save();
         } else {
             $template = \UserEmailTemplate\UserEmailTemplate::find($template_id);
             $template->source_code = $source_code;
             $template->preview = $file_name;
             $template->name = $name;
+            $template->style = $style;
             $template->save();
         }
 
@@ -662,8 +665,8 @@ class MarketingController extends \BaseController {
                 $template_id = \Input::get('template_id');
                 $template = \UserEmailTemplate\UserEmailTemplate::find($template_id);
                 $body = \HTML::decode($template['source_code']);
+                $data['style'] = $template['style'];
 
-//                $data['body'] = "<style scoped> @media (max-width: 640px) { .section-area { width: 100% !important; padding: 0 !important; } .inner-section { padding: 10px 0 !important; } .inner-section div { width: 100% !important; display: block !important; margin: 0 auto !important; text-align: center !important; padding: 5px 0 !important; } .scaled-image { width: 80% !important; height: auto !important; } p { text-align: center !important; } .inner-section div.div-button { width: 90% !important; margin-top: 10px !important; margin-bottom: 10px !important; } } </style>";
                 $body = str_replace('contenteditable="true"','',$body);
                 $data['body'] = str_replace('contenteditable','',$body);
             }

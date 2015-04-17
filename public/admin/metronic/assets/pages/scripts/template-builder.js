@@ -59,6 +59,7 @@ $(function(){
             data: data,
             success: function(response)
             {
+                $('#font-style-container').find('style').html(response.style);
                 $('#template-canvas').html(response.source_code).show();
                 $('#template-name').val(response.name);
                 $('#template-loader-container').hide();
@@ -143,6 +144,7 @@ $(function(){
             data.source_code = $('#template-canvas').html();
             data.template_id = $(this).data('template-id');
             data.name = $('#template-name').val();
+            data.style = $('#font-style-container').find('style').html();
 
 
             html2canvas($('#template-canvas'), {
