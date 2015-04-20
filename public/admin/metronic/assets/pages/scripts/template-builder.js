@@ -28,7 +28,13 @@ $(function(){
             $('#font-style-container').find('style').append('@import url('+url+');');
         }
 
-        selected_element.css('font-family',type);
+        if(apply_all){
+            var section_group = selected_element.data('color');
+            $('[data-color="'+section_group+'"]').css('font-family',type);
+        } else {
+            selected_element.css('font-family',type);
+        }
+
     });
 
     $('#template-canvas').on('click','a',function(e){
