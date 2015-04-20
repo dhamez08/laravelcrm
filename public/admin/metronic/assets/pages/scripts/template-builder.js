@@ -30,7 +30,11 @@ $(function(){
 
         if(apply_all){
             var section_group = selected_element.data('color');
-            $('[data-color="'+section_group+'"]').css('font-family',type);
+            if(section_group){
+                $('[data-color="'+section_group+'"]').css('font-family',type);
+            } else {
+                selected_element.css('font-family',type);
+            }
         } else {
             selected_element.css('font-family',type);
         }
@@ -288,7 +292,11 @@ $(function(){
 
             if(apply_all){
                 var section_group = selected_element.data('color');
-                $('[data-color="'+section_group+'"]').css(color_element, color);
+                if(section_group){
+                    $('[data-color="'+section_group+'"]').css(color_element, color);
+                } else {
+                    selected_element.css(color_element, color);
+                }
             } else {
                 selected_element.css(color_element, color);
             }
@@ -398,7 +406,11 @@ $(function(){
 
             if(apply_all){
                 var section_group = selected_element.data('color');
-                $('[data-color="'+section_group+'"]').css('color', $(this).val());
+                if(section_group){
+                    $('[data-color="'+section_group+'"]').css('color', $(this).val());
+                } else {
+                    selected_element.css('color', $(this).val());
+                }
             } else {
                 selected_element.css('color', $(this).val());
             }
@@ -414,14 +426,22 @@ $(function(){
         if(id == 'font-color'){
             if(apply_all){
                 var section_group = selected_element.data('color');
-                $('[data-color="'+section_group+'"]').css('color', $(this).val());
+                if(section_group){
+                    $('[data-color="'+section_group+'"]').css('color', $(this).val());
+                } else {
+                    selected_element.css('color', $(this).val());
+                }
             } else {
                 selected_element.css('color', $(this).val());
             }
         } else if(id == 'background-color'){
             if(apply_all){
                 var section_group = selected_element.data('color');
-                $('[data-color="'+section_group+'"]').css('background-color', $(this).val());
+                if(section_group){
+                    $('[data-color="'+section_group+'"]').css('background-color', $(this).val());
+                } else {
+                    selected_element.css('background-color', $(this).val());
+                }
             } else {
                 selected_element.css('background-color', $(this).val());
             }
@@ -736,7 +756,11 @@ $(function(){
 
             if(apply_all){
                 var section_group = selected_element.data('color');
-                $('[data-color="'+section_group+'"]').css('font-size',font_size+'px');
+                if(section_group){
+                    $('[data-color="'+section_group+'"]').css('font-size',font_size+'px');
+                } else {
+                    selected_element.css('font-size',font_size+'px');
+                }
             } else {
                 selected_element.css('font-size',font_size+'px');
             }
