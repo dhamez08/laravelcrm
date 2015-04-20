@@ -137,6 +137,7 @@
             {
                 var body = $('#template-view').contents().find('body');
                 body.html('');
+                body.append('<style>'+response.style+'</style>');
                 body.append(response.source_code);
             },
             dataType: 'json'
