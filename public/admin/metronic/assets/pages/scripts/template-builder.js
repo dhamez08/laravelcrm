@@ -117,7 +117,8 @@ $(function(){
     });
 
     $('#fullscreen-preview').on('click',function(){
-        var html = $('#template-canvas').html();
+        var html = $('#font-style-container').html();
+        html += $('#template-canvas').html();
         var preview = window.open();
         preview.document.write(html);
     });
@@ -125,12 +126,12 @@ $(function(){
     $('#mobile-preview').on('click',function(){
         // Open modal for mobile preview
         var html = $('#template-canvas').html();
-        var style = $('<style>').html($("#mobile-preview-style").val());
-
+        var responsive_style = $("#mobile-preview-style").val();
+        var font_style = $('#font-style-container').html();
 
         var body = $('#phone-content').contents().find('body');
         body.html('');
-        body.append(style).append(html);
+        body.append(responsive_style).append(font_style).append(html);
         body.find('.editable').each(function(){
             $(this).removeClass('editable editable-photo editable-text editable-url');
         });
