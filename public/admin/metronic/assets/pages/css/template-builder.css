@@ -261,3 +261,9 @@
 .close {
     margin-top: 0 !important;
 }
+
+.font-info {
+    font-size: 14px !important;
+    margin-left: 15px;
+    cursor: pointer;
+}
