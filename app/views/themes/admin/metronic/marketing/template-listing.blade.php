@@ -189,7 +189,7 @@
                                         </div>
                                         <div class="row text-control">
                                             <div class="col-md-6 m-top-15">
-                                                <label for="font-type" class="editor-label">Font Type</label>
+                                                <label for="font-type" class="editor-label">Font Type <i class="font-info fa fa-info-circle"></i></label>
                                             </div>
                                             <div class="col-md-6 m-top-15">
                                                 <select id="font-type" class="form-control">

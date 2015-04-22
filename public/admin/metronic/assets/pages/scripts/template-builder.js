@@ -16,6 +16,32 @@ $(function(){
     var dragging_active = false;
     var bootbox_open = false;
 
+    var content = $('<div>')
+        .css('color','#7b7b7b')
+        .append($('<p>').css('font-weight','bold').html('These fonts are only compatible</br> with the following email clients:'))
+        .append(
+            $('<ul>')
+                .append($('<li>').text('Apple Mail'))
+                .append($('<li>').text('Lotus Note'))
+                .append($('<li>').text('Outlook 2000'))
+                .append($('<li>').text('Outlook 2011 (Mac)'))
+                .append($('<li>').text('Thunderbird'))
+                .append($('<li>').text('iPad'))
+                .append($('<li>').text('iPhone'))
+                .append($('<li>').text('Android (Default Client)'))
+        );
+
+    var font_info_options = new Object();
+    font_info_options.html = true;
+    font_info_options.placement = 'bottom';
+    font_info_options.container = 'body';
+    font_info_options.content = $('<div>').append(content);
+    font_info_options.trigger = 'hover';
+
+
+
+    $('.font-info').popover(font_info_options);
+
     $('#font-type').on('change',function(){
         var selected_font = $(this).find(':selected');
         var url = selected_font.data('url');
@@ -730,9 +756,15 @@ $(function(){
             body.on('keypress','#image-url',function(e){
                 if(e.keyCode == 13){
                     var url = $(this).val();
-                    if (!/^(f|ht)tps?:\/\//i.test(url)) {
-                        url = "http://" + url;
+
+                    if(selected_element.hasClass('email-url')){
+                        url = "mailto:" + url;
+                    } else {
+                        if (!/^(f|ht)tps?:\/\//i.test(url)) {
+                            url = "http://" + url;
+                        }
                     }
+
 
                     selected_element.attr('href',url).attr('target','_blank');
                     selected_element.popover('destroy');
