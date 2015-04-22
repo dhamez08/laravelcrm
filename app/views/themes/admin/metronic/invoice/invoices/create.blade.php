@@ -6,7 +6,7 @@
 		<h1><i class="fa fa-plus"></i> {{ trans('invoice.new_invoice') }}</h1>
 	</div>	
 
-	{{ Form::open(array('url' => 'invoice/invoice', 'role' => 'form', 'class' => 'solsoForm')) }}
+	{{ Form::open(array('url' => 'invoice/invoice', 'role' => 'form', 'class' => 'solsoForm', 'id' => 'invoiceForm')) }}
 
 		<div class="col-md-6 col-lg-3">
 			<div class="form-group">
@@ -237,6 +237,24 @@
 
 @section('footer-custom-js')
 <script type="text/javascript">
+
+$('#invoiceForm').submit(function() {
+  var errorCtr = 0;
+  if($('[name="client"]').val() == '') errorCtr++;
+  if($('[name="number"]').val() == '') errorCtr++;
+  if($('[name="currency"]').val() == '') errorCtr++;
+  if($('[name="startDate"]').val() == '') errorCtr++;
+  if($('[name="endDate"]').val() == '') errorCtr++;
+
+  if(errorCtr > 0) {
+  	alert('Validation Errors!');
+  	return false;
+  } else {
+  	return true;
+  }
+
+});
+
 if ($('.solsoSelect2').length) {
 	$( ".solsoSelect2" ).select2();
 }
