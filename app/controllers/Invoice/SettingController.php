@@ -73,6 +73,13 @@ class SettingController extends \BaseController {
 	
 	public function index()
 	{
+
+		\Debugbar::info(\Session::all());
+
+		if( ! \Session::has('invoice_setting_active_tab')) {
+			\Session::put('invoice_setting_active_tab', 1);
+		}
+
 		$settings = new UserSetting;
 		
 		$data = array(
@@ -191,6 +198,16 @@ class SettingController extends \BaseController {
 		Session::flash('ajaxMessage', trans('invoice.data_was_updated'));	
 		
 		return View::make($data['view_path'] .  '.invoice.settings.currency', $data);	
+	}
+
+	public function changeActiveTab()
+	{
+		$tab = \Input::get('tabNumber');
+		\Session::put('invoice_setting_active_tab', $tab);
+
+		$result = array('result' => \Session::get('invoice_setting_active_tab'));
+
+		return \Response::json($result);
 	}
 	/* === END AJAX === */
 	

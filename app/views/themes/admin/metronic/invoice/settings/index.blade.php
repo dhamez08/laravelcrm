@@ -12,16 +12,16 @@
 	</div>		
 	
 	<div class="col-md-12 col-lg-12">
-		<ul id="solsoTabs" class="nav nav-tabs" role="tablist" id="myTab">
+		<ul id="solsoTabs" class="nav nav-tabs" role="tablist" {{-- id="myTab" --}}>
 		
 			{{-- @if (Auth::user()->role_id == 2) --}}
 			
-				<li class="active"><a href="#tab1" role="tab" data-toggle="tab">{{ trans('invoice.my_company') }}</a></li>
-				<li><a href="#tab2" role="tab" data-toggle="tab">{{ trans('invoice.logo') }}</a></li>
-				<li><a href="#tab3" role="tab" data-toggle="tab">{{ trans('invoice.invoice') }}</a></li>
-				<li><a href="#tab4" role="tab" data-toggle="tab">{{ trans('invoice.invoice_tax') }}</a></li>
-				<li><a href="#tab5" role="tab" data-toggle="tab">{{ trans('invoice.currencies') }}</a></li>
-				<li><a href="#tab6" role="tab" data-toggle="tab">{{ trans('invoice.payments') }}</a></li>
+				<li class="{{ \Session::get('invoice_setting_active_tab') == 1 ? 'active' : '' }}"><a href="#tab1" data-tab-number="1" role="tab" data-toggle="tab">{{ trans('invoice.my_company') }}</a></li>
+				<li class="{{ \Session::get('invoice_setting_active_tab') == 2 ? 'active' : '' }}"><a href="#tab2" data-tab-number="2" role="tab" data-toggle="tab">{{ trans('invoice.logo') }}</a></li>
+				<li class="{{ \Session::get('invoice_setting_active_tab') == 3 ? 'active' : '' }}"><a href="#tab3" data-tab-number="3" role="tab" data-toggle="tab">{{ trans('invoice.invoice') }}</a></li>
+				<li class="{{ \Session::get('invoice_setting_active_tab') == 4 ? 'active' : '' }}"><a href="#tab4" data-tab-number="4" role="tab" data-toggle="tab">{{ trans('invoice.invoice_tax') }}</a></li>
+				<li class="{{ \Session::get('invoice_setting_active_tab') == 5 ? 'active' : '' }}"><a href="#tab5" data-tab-number="5" role="tab" data-toggle="tab">{{ trans('invoice.currencies') }}</a></li>
+				<li class="{{ \Session::get('invoice_setting_active_tab') == 6 ? 'active' : '' }}"><a href="#tab6" data-tab-number="6" role="tab" data-toggle="tab">{{ trans('invoice.payments') }}</a></li>
 				{{-- <li><a href="#tab7" role="tab" data-toggle="tab">{{ trans('invoice.invitation') }}</a></li> --}}
 			
 			{{-- @endif --}}
@@ -38,32 +38,32 @@
 		
 			{{-- @if (Auth::user()->role_id == 2) --}}
 			
-				<div class="tab-pane active" id="tab1">
+				<div class="tab-pane {{ \Session::get('invoice_setting_active_tab') == 1 ? 'active' : '' }}" id="tab1">
 					@include($view_path . '.invoice.settings.company')
 				</div>
 				
-				<div class="tab-pane" id="tab2">
+				<div class="tab-pane {{ \Session::get('invoice_setting_active_tab') == 2 ? 'active' : '' }}" id="tab2">
 					@include($view_path . '.invoice.settings.logo')
 				</div>	
 
-				<div class="tab-pane" id="tab3">
+				<div class="tab-pane {{ \Session::get('invoice_setting_active_tab') == 3 ? 'active' : '' }}" id="tab3">
 					@include($view_path . '.invoice.settings.invoice')
 				</div>
 
-				<div class="tab-pane" id="tab4">
+				<div class="tab-pane {{ \Session::get('invoice_setting_active_tab') == 4 ? 'active' : '' }}" id="tab4">
 					@include($view_path . '.invoice.settings.tax')
 				</div>			
 				
-				<div class="tab-pane" id="tab5">
+				<div class="tab-pane {{ \Session::get('invoice_setting_active_tab') == 5 ? 'active' : '' }}" id="tab5">
 					@include($view_path . '.invoice.settings.currency')
 				</div>	
 
-				<div class="tab-pane" id="tab6">
+				<div class="tab-pane {{ \Session::get('invoice_setting_active_tab') == 6 ? 'active' : '' }}" id="tab6">
 					@include($view_path . '.invoice.settings.payment')
 				</div>					
 				
 				{{--
-				<div class="tab-pane" id="tab7">
+				<div class="tab-pane {{ \Session::get('invoice_setting_active_tab') == 7 ? 'active' : '' }}" id="tab7">
 					@include($view_path . '.invoice.settings.invitation')
 				</div>
 				--}}				
@@ -141,6 +141,20 @@
 		
 		solsoAlerts();
 	});
+
+	$('#solsoTabs li').click(function() {
+		console.log('tab clicked!');
+		var tab = $(this).find('a').data('tab-number');
+		$.ajax({
+			url: "{{ URL::route('ajax.setting.changeActiveTab') }}",
+			type: "post",
+			dataType: "json",
+			data: { tabNumber : tab },
+			success: function(data) {
+				console.log(data);
+			}
+		});
+	});	
 	/* === END SETTINGS === */
 </script>
 @stop

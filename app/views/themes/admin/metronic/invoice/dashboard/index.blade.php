@@ -174,7 +174,7 @@
 			<div class="panel-heading">
 				<h2 class="panel-title">{{ trans('invoice.report_01') }}
 
-				<a href="<?php echo URL::to('report');?>" class="pull-right"><i class="fa fa-line-chart"></i>{{ trans('invoice.reports') }}</a></h2>
+				<a href="<?php echo URL::to('invoice/report');?>" class="pull-right"><i class="fa fa-line-chart"></i>{{ trans('invoice.reports') }}</a></h2>
 			</div>
 			
 			<div class="panel-body">
@@ -189,7 +189,7 @@
 			<div class="panel-heading">
 				<h2 class="panel-title">{{ trans('invoice.report_02') }}
 
-				<a href="<?php echo URL::to('report');?>" class="pull-right"><i class="fa fa-line-chart"></i> {{ trans('invoice.reports') }}</a></h2>
+				<a href="<?php echo URL::to('invoice/report');?>" class="pull-right"><i class="fa fa-line-chart"></i> {{ trans('invoice.reports') }}</a></h2>
 			</div>
 			
 			<div class="panel-body">
@@ -204,7 +204,7 @@
 			<div class="panel-heading">
 				<h2 class="panel-title">{{ trans('invoice.invoices_to_be_paid') }}
 
-				<a href="<?php echo URL::to('invoice');?>" class="pull-right"><i class="fa fa-file-pdf-o"></i> {{ trans('invoice.invoices') }}</a></h2>
+				<a href="<?php echo URL::to('invoice/invoice');?>" class="pull-right"><i class="fa fa-file-pdf-o"></i> {{ trans('invoice.invoices') }}</a></h2>
 			</div>
 			
 			<div class="panel-body">
@@ -261,7 +261,7 @@
 			<div class="panel-heading">
 				<h2 class="panel-title">{{ trans('invoice.overdue_invoices') }}
 
-				<a href="<?php echo URL::to('invoice');?>" class="pull-right"><i class="fa fa-file-pdf-o"></i> {{ trans('invoice.invoices') }}</a></h2>
+				<a href="<?php echo URL::to('invoice/invoice');?>" class="pull-right"><i class="fa fa-file-pdf-o"></i> {{ trans('invoice.invoices') }}</a></h2>
 			</div>
 			
 			<div class="panel-body">
