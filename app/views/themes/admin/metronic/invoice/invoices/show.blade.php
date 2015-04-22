@@ -49,14 +49,21 @@
 			</div>
 			
 			<div class="col-md-6 top20">
-				<h2>{{ trans('invoice.bill_to') }} <span class="h4">{{ $invoice->client }}</span></h2>
+				<h2>{{ trans('invoice.bill_to') }} <span class="h4">{{ $invoice->client_fullname }}</span></h2>
 
+				<p class="details">{{ $invoice->address_line_1 or '' }}</p>
+				<p class="details">{{ $invoice->address_line_2 or '' }}</p>
+				<p class="details">{{ $invoice->town or '' }}</p>
+				<p class="details">{{ $invoice->county or '' }}</p>
+				<p class="details">{{ $invoice->postcode or '' }}</p>
+				{{--
 				<p class="details">{{ $invoice->city or '' }}, {{ $invoice->state or ''}}, {{ $invoice->country or '' }}</p>
 				<p class="details">{{ $invoice->address or '' }} {{ $invoice->zip or ''}}</p>
 				<p class="details">{{ $invoice->contact or '' }}</p>
 				<p class="details">{{ $invoice->phone or '' }}</p>
 				<p class="details">{{ $invoice->bank or '' }}</p>
 				<p class="details">{{ $invoice->bank_account or '' }}</p>				
+				--}}
 			</div>
 			
 			<div class="col-md-12 top20">
@@ -183,6 +190,11 @@
 				@endif				
 				
 			</div>
+		</div>
+
+		<div class="col-md-12">
+			<h3>Invoice Extra Information</h3>
+			<p>{{ $invoice->description or 'None' }}</p>
 		</div>
 		
 		<div class="col-md-12">

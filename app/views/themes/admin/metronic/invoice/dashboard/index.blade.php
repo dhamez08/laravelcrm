@@ -233,7 +233,7 @@
 							</td>
 
 							<td>
-								{{ $v->client }}
+								{{ $v->client_fullname }}
 							</td>													
 							
 							<td>
@@ -245,7 +245,7 @@
 							</td>
 							
 							<td>
-								<a class="btn btn-info" href="{{ URL::to('invoice/' . $v->id) }}"><i class="fa fa-eye"></i> {{ trans('invoice.show') }}</a>
+								<a class="btn btn-info" href="{{ URL::to('invoice/invoice/' . $v->id) }}" target="_blank"><i class="fa fa-eye"></i> {{ trans('invoice.show') }}</a>
 							</td>
 						</tr>
 						@endforeach
@@ -290,7 +290,7 @@
 							</td>
 
 							<td>
-								{{ $v->client }}
+								{{ $v->client_fullname }}
 							</td>													
 							
 							<td>
@@ -302,7 +302,7 @@
 							</td>
 							
 							<td>
-								<a class="btn btn-info" href="{{ URL::to('invoice/' . $v->id) }}"><i class="fa fa-eye"></i> {{ trans('invoice.show') }}</a>
+								<a class="btn btn-info" href="{{ URL::to('invoice/invoice/' . $v->id) }}" target="_blank"><i class="fa fa-eye"></i> {{ trans('invoice.show') }}</a>
 							</td>
 						</tr>
 						@endforeach

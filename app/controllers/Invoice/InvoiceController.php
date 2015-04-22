@@ -100,7 +100,7 @@ class InvoiceController extends \BaseController {
 		$invoiceSettings	= InvoiceSetting::where('user_id', Auth::id())->first();
 		
 		$data = array(
-			'clients' 		=> Client::where('belongs_user', Auth::id())->get(),
+			'clients' 		=> Client::where('belongs_user', Auth::id())->where('associated', '0')->get(),
 			'products' 		=> Product::where('user_id', Auth::id())->where('status', 1)->get(),
 			'currencies'	=> Currency::where('user_id', Auth::id())->get(),
 			'taxes'			=> Tax::where('user_id', Auth::id())->get(),

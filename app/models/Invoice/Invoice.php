@@ -25,7 +25,8 @@ class Invoice extends \Eloquent {
 							'customer.first_name as client', 'invoices.id', 'invoices.number', 
 							'invoice_statuses.name as status', 'invoices.description', 
 							'currencies.id as currencyID', 'currencies.name as currency', 'currencies.position',
-							DB::raw('IFNULL(SUM(`invoice_payments`.`payment_amount`), 0) as paid')
+							DB::raw('IFNULL(SUM(`invoice_payments`.`payment_amount`), 0) as paid'),
+							DB::raw('concat(customer.first_name, " ", customer.last_name) as client_fullname')
 						)
 				->where('invoices.user_id', Auth::id())
 				->orderBy('due_date', 'desc')
@@ -39,12 +40,15 @@ class Invoice extends \Eloquent {
 	{
 		$query = DB::table('invoices')
 				->join('customer', 'customer.id', '=', 'invoices.client_id')
+				->join('customer_address', 'customer_address.customer_id', '=', 'customer.id')
 				->join('invoice_statuses', 'invoice_statuses.id', '=', 'invoices.status_id')
 				->join('currencies', 'currencies.id', '=', 'invoices.currency_id')
-				->select(	'invoices.id as invoiceID', 'invoices.number', 'invoices.amount', 'invoices.discount', 'invoices.type', 'invoices.start_date', 
+				->select(	'invoices.id as invoiceID', 'invoices.number', 'invoices.amount', 'invoices.discount', 'invoices.type', 'invoices.start_date', 'invoices.description',
 							'invoices.due_date', 'invoice_statuses.name as status', 'invoices.description as invoiceDescription', 'invoices.client_id as clientID',
 							'customer.*', 'customer.first_name as client', 	
-							'currencies.id as currencyID', 'currencies.name as currency', 'currencies.position'
+							'currencies.id as currencyID', 'currencies.name as currency', 'currencies.position',
+							'customer_address.address_line_1', 'customer_address.address_line_2', 'customer_address.town', 'customer_address.town', 'customer_address.county', 'customer_address.postcode',
+							DB::raw('concat(customer.first_name, " ", customer.last_name) as client_fullname')
 						)
 				->where('invoices.id', $invoiceID)	
 				/*	
@@ -81,7 +85,8 @@ class Invoice extends \Eloquent {
 				->leftJoin('invoice_statuses', 'invoice_statuses.id', '=', 'invoices.status_id')
 				->select(	'invoices.id', 'invoices.number', 'invoices.due_date',
 							'customer.first_name as client',
-							'invoice_statuses.name as status'
+							'invoice_statuses.name as status',
+							DB::raw('concat(customer.first_name, " ", customer.last_name) as client_fullname')
 						)				
 				->where('invoices.user_id', Auth::id())	
 				->whereIn('invoices.status_id', array(2, 3))
@@ -97,7 +102,8 @@ class Invoice extends \Eloquent {
 		$query = DB::table('invoices')
 				->join('customer', 'customer.id', '=', 'invoices.client_id')
 				->select(	'invoices.id', 'invoices.number', 'invoices.due_date',
-							'customer.first_name as client'
+							'customer.first_name as client',
+							DB::raw('concat(customer.first_name, " ", customer.last_name) as client_fullname')
 						)				
 				->where('invoices.user_id', Auth::id())	
 				->where('invoices.status_id', '5')
