@@ -241,9 +241,10 @@ if ($('.solsoSelect2').length) {
 	$( ".solsoSelect2" ).select2();
 }
 
+var currentDate = new Date();
 $('.datepicker').datepicker({
 	format: 'yyyy-mm-dd'
-});
+}).datepicker("setDate", currentDate);
 
 $('.datepicker').on('changeDate', function() {
 	$('.datepicker').datepicker('hide');
