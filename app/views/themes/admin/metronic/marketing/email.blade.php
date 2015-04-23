@@ -203,7 +203,6 @@
 
     $("input[name=subject]").live("click", function() {
         isValid = 1;
-        console.log('test');
     });
 
     $(document).click(function(event) {
@@ -213,11 +212,13 @@
     });
 
     $("a.custom_form_link").live("click", function() {
-        console.log(isValid)
         if(isValid==1) {
             var selection = document.getSelection();
             var cursorPos = selection.anchorOffset;
-            var oldContent = selection.anchorNode.nodeValue;
+            var oldContent = null;
+            if(selection.anchorNode){
+                oldContent = selection.anchorNode.nodeValue;
+            }
             var toInsert = $(this).html();
             if(oldContent!=null) {
                 var newContent = oldContent.substring(0, cursorPos) + toInsert + oldContent.substring(cursorPos);
