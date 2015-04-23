@@ -74,6 +74,12 @@
 							</div>
 						@show
 
+						@section('invoice-topbar')
+							@if(\Request::segment(1) == 'invoice')
+								@include($view_path . '.invoice.dashboard.topbar-stats')
+							@endif
+						@show
+
 						@section('innerpage-content')
 							@include( \DashboardEntity::get_instance()->getView() . '.dashboard.partials.dashboardContent' )
 						@show

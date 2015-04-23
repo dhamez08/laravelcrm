@@ -1,5 +1,7 @@
 <?php
 
+use Invoice\UserSetting;
+
 class RegisterController extends \BaseController {
 	protected static $instance = null;
 	protected $data_view;
@@ -95,6 +97,11 @@ class RegisterController extends \BaseController {
 			// Create VMD account
 			$vmdDetails = \UserGroup\UserGroupEntity::get_instance()->createVMDAccount(\Input::get('company'));
 			$userGroupOtherData = array('vmd_user' => $vmdDetails['username'], 'vmd_pass' => $vmdDetails['password']);
+
+			// Insert UserSetting
+			$invoiceUserSetting = new UserSetting;
+			$invoiceUserSetting->user_id = $user->id;
+			$invoiceUserSetting->save();
 
 			$userGroup 		= $this->userGroupEntity->createGroup($user->id, $userGroupOtherData);
 			$userToGroup 	= $this->userToGroupEntity->createUserToGroup($user->id, $userGroup->id);
