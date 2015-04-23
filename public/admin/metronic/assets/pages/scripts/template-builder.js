@@ -239,15 +239,27 @@ $(function(){
             $('.url-input').show();
             $('.image-options').hide();
 
+            $('body').off('keypress','#link-url');
             $('body').on('keypress','#link-url',function(e){
                 if(e.keyCode == 13){
                     var url = $(this).val();
                     if (!/^(f|ht)tps?:\/\//i.test(url)) {
                         url = "http://" + url;
                     }
-
+                    console.log('test');
                     rangy.restoreSelection(selected_text);
                     document.execCommand('createLink',false, url);
+
+                    var links = selected_element.find('a');
+
+                    $.each(links, function(){
+                        if(!$(this).hasClass('editable-url')){
+                            $(this).addClass('editable editable-url');
+                        }
+                    });
+
+
+                    console.log(selected_element.find('a'));
                     selected_text = rangy.saveSelection();
                     $(this).val('');
                     $('.url-input').hide();
