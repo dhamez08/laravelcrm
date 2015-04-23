@@ -671,12 +671,10 @@ class MarketingController extends \BaseController {
                 $data['body'] = str_replace('contenteditable','',$body);
             }
 
+            $subject = \Input::get('subject');
             $emails = \Input::get('email');
-            $data['subject'] = \Input::get('subject');
-
             $from_name = \Auth::user()->first_name . ' ' . \Auth::user()->last_name;
             $from_email = \Auth::user()->email;
-
 
             foreach($emails as $email_id){
                 $email_detail = \CustomerEmail\CustomerEmail::find($email_id);
@@ -685,7 +683,7 @@ class MarketingController extends \BaseController {
 
 
                 $client_detail = \Clients\Clients::find($to_id);
-
+                $data['subject'] = \EmailShortCodeReplacement::get_instance()->replace($client_detail, $subject);
                 $data['body'] = \EmailShortCodeReplacement::get_instance()->replace($client_detail, $data['body']);
                 $data['to_name'] = $client_detail['first_name'] . " " . $client_detail['last_name'];
                 $data['client_ref'] = "[REF:".$client_detail['ref']."]";

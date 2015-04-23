@@ -86,9 +86,35 @@
                                         @endforeach
                                     </select>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <textarea rows="7" style="width:100%; margin-top:20px" id="message" name="message" class="plain-text" placeholder="Enter your message ...">{{ \Session::get('sms_session.message') }}</textarea>
+                                        <iframe id="template-view" style="width:100%; margin-top:20px; height: 500px" seamless="true" class="html hide"></iframe>
+                                    </div>
+                                    <div class="col-md-3" style="padding:0px;padding-right:30px;">
+                                        <h2>Dynamic Fields</h2>
+                                        <select id="custom_form" class="form-control">
+                                            <option value="0">Choose a Form</option>
+                                            <option value="customer">---Customer Information---</option>
+                                            <option value="custom_fields">---Custom Fields---</option>
+                                            <?php
+                                            $forms = \CustomForm\CustomFormEntity::get_instance()->getFormsByLoggedUser();
+                                            ?>
+                                            @foreach($forms as $form)
+                                            <option value="{{ $form->id }}">{{ $form->name }}</option>
+                                            @endforeach
+                                        </select>
 
-                                <textarea rows="7" style="width:100%; margin-top:20px" id="message" name="message" class="plain-text" placeholder="Enter your message ...">{{ \Session::get('sms_session.message') }}</textarea>
-                                <iframe id="template-view" style="width:100%; margin-top:20px; height: 500px" seamless="true" class="html hide"></iframe>
+                                        <div id="fields_container" style="margin-top:15px;min-height:230px;">
+                                            <div style="height:230px;overflow-y:scroll" data-always-visible="0" data-rail-visible="0" data-rail-color="red" data-handle-color="green">
+                                                <table class="table table-bordered table-hover">
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 <!--                                <p id="sms_message_counter"></p>-->
                             </div>
                         </div>
@@ -125,6 +151,35 @@
         }
     });
 
+    $("select#custom_form").live("change", function() {
+        $this = $(this);
+        $("#fields_container table tbody").html('');
+        //show loading
+        Metronic.blockUI({
+            target: '#fields_container',
+            boxed: true,
+            message: 'Processing...'
+        });
+
+        var row='';
+        $.get(baseURL+'/settings/custom-forms/fields/'+$this.val(), function(response) {
+            var form_name = response.form.name;
+            $.each(response.build, function(i, item) {
+                //row+='<tr><td><input type="text" value="['+form_name+':'+item.field_name+']" class="form-control" style="border:0px" /></td></tr>';
+                if($this.val()=='customer')
+                    row+='<tr><td><a href="javascript:void(0)" class="custom_form_link">{'+item.field_name+'}</a></td></tr>';
+                else
+                    row+='<tr><td><a href="javascript:void(0)" class="custom_form_link">['+form_name+':'+item.field_name+']</a></td></tr>';
+            });
+
+            $("#fields_container table tbody").append(row);
+
+            Metronic.unblockUI('#fields_container');
+        }).error(function() {
+            Metronic.unblockUI('#fields_container');
+        });
+    });
+
     $('#user_email_template').change(function(){
         var data = new Object();
         data.template_id = $(this).val();
@@ -142,6 +197,35 @@
             },
             dataType: 'json'
         });
+    });
+
+    var isValid = 0;
+
+    $("input[name=subject]").live("click", function() {
+        isValid = 1;
+        console.log('test');
+    });
+
+    $(document).click(function(event) {
+        if(!$(event.target).closest('input[name=subject]').length) {
+            isValid = 0;
+        }
+    });
+
+    $("a.custom_form_link").live("click", function() {
+        console.log(isValid)
+        if(isValid==1) {
+            var selection = document.getSelection();
+            var cursorPos = selection.anchorOffset;
+            var oldContent = selection.anchorNode.nodeValue;
+            var toInsert = $(this).html();
+            if(oldContent!=null) {
+                var newContent = oldContent.substring(0, cursorPos) + toInsert + oldContent.substring(cursorPos);
+                selection.anchorNode.nodeValue = newContent;
+            } else {
+                $("input[name=subject]").val($("input[name=subject]").val()+''+toInsert+'');
+            }
+        }
     });
 
     $('#personal_email_template').change(function(){
