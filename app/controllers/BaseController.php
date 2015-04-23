@@ -8,6 +8,9 @@
  * */
 
 use Invoice\InvoiceReceived;
+use Invoice\Invoice;
+use Clients\Clients as Client;
+use Invoice\Product;
 
 class BaseController extends Controller {
 
@@ -61,6 +64,15 @@ class BaseController extends Controller {
 		if (Auth::check())
 		{
 			View::share('newInvoicesReceived', InvoiceReceived::where('user_id', Auth::id())->where('status', 0)->count());
+
+			$invoiceTopBarStats = array(
+				'clients'			=> Client::where('belongs_user', Auth::id())->count(),
+				'products'			=> Product::where('user_id', Auth::id())->where('status', 1)->count(),
+				'invoices'			=> Invoice::where('user_id', Auth::id())->count(),
+				'totalAmount'		=> Invoice::where('user_id', Auth::id())->where('status_id', 1)->sum('amount'),
+			);			
+
+			View::share('invoiceTopBarStats', $invoiceTopBarStats);
 		}        
 
 	}

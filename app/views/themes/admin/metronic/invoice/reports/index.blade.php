@@ -137,6 +137,91 @@ function drawChart() {
 	var chart = new google.visualization.ColumnChart(document.getElementById('chartInvoicesLastYear'));
 	chart.draw(view, options);		
 	/* === END INVOICES === */	
+
+	/* === AMOUNTS === */
+	var data = google.visualization.arrayToDataTable(
+		eval($('.chartAmountLastMonth').val())
+	);
+	var view = new google.visualization.DataView(data);
+	view.setColumns([0, 1,
+					   {
+						calc: "stringify",
+						sourceColumn: 1,
+						type: "string",
+						role: "annotation" },
+					   2]);					
+	var options = {
+		fontName: 'Dosis',
+		fontSize: 14,			
+		title: "{{ date('F Y') }}",
+		legend: { position: "none" },
+	};
+	var chart = new google.visualization.ColumnChart(document.getElementById('chartAmountLastMonth'));
+	chart.draw(view, options);	
+	
+	var data = google.visualization.arrayToDataTable(
+		eval($('.chartAmountLastYear').val())
+	);
+	var view = new google.visualization.DataView(data);
+	view.setColumns([0, 1,
+					   {
+						calc: "stringify",
+						sourceColumn: 1,
+						type: "string",
+						role: "annotation" },
+					   2]);			
+	var options = {
+		fontName: 'Dosis',
+		fontSize: 14,			
+		title: "{{ date('Y') }}",
+		legend: { position: "none" },
+	};
+	var chart = new google.visualization.ColumnChart(document.getElementById('chartAmountLastYear'));
+	chart.draw(view, options);	
+	/* === END AMOUNTS === */			
+	
+	/* === CLIENTS === */
+	var data = google.visualization.arrayToDataTable(
+		eval($('.chartClientsLastMonth').val())
+	);
+	var view = new google.visualization.DataView(data);
+	view.setColumns([0, 1,
+					   {
+						calc: "stringify",
+						sourceColumn: 1,
+						type: "string",
+						role: "annotation" },
+					   2]);					
+	var options = {
+		fontName: 'Dosis',
+		fontSize: 14,			
+		title: "{{ date('F Y') }}",
+		legend: { position: "none" },
+	};
+	var chart = new google.visualization.ColumnChart(document.getElementById('chartClientsLastMonth'));
+	chart.draw(view, options);	
+	
+	var data = google.visualization.arrayToDataTable(
+		eval($('.chartClientsLastYear').val())
+	);
+	var view = new google.visualization.DataView(data);
+	view.setColumns([0, 1,
+					   {
+						calc: "stringify",
+						sourceColumn: 1,
+						type: "string",
+						role: "annotation" },
+					   2]);					
+	var options = {
+		fontName: 'Dosis',
+		fontSize: 14,			
+		title: "{{ date('Y') }}",
+		legend: { position: "none" },
+	};
+	var chart = new google.visualization.ColumnChart(document.getElementById('chartClientsLastYear'));
+	chart.draw(view, options);	
+	/* === END CLIENTS === */
+	
 }
 
 </script>

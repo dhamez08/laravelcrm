@@ -9,88 +9,53 @@
 
 @section('innerpage-content')
 	
-	<div class="col-md-12 hidden">
+	<div class="col-md-12">
+		{{--
 		<div role="alert" class="alert alert-warning">
 			<strong> {{ trans('invoice.message') }}: </strong> {{ trans('invoice.message_09') }} 
 			<a href="{{ URL::to('setting') }}" >{{ trans('invoice.settings') }} -> {{ trans('invoice.application') }}</a>
 			{{ trans('invoice.message_10') }}
 		</div>	
+		--}}
 	
 		@if ($check['email'] == 0)
 			<div role="alert" class="alert alert-warning top20">
 				<strong> {{ trans('invoice.message') }}: </strong> {{ trans('invoice.message_01') }} 
-				<a href="{{ URL::to('setting') }}" >{{ trans('invoice.settings') }} -> {{ trans('invoice.company') }}</a>
+				<a href="{{ URL::to('invoice/setting#tab1') }}" >{{ trans('invoice.settings') }} -> {{ trans('invoice.company') }}</a>
 			</div>	
 		@endif
 
 		@if ($check['logo'] == 0)
 			<div role="alert" class="alert alert-warning top20">
 				<strong>{{ trans('invoice.message') }}: </strong> {{ trans('invoice.message_02') }} 
-				<a href="{{ URL::to('setting') }}" >{{ trans('invoice.settings') }} -> {{ trans('invoice.logo') }}</a>
+				<a href="{{ URL::to('invoice/setting#tab2') }}" >{{ trans('invoice.settings') }} -> {{ trans('invoice.logo') }}</a>
 			</div>	
 		@endif		
 		
 		@if ($check['tax'] == 0)
 			<div role="alert" class="alert alert-warning top20">
 				<strong>{{ trans('invoice.message') }}: </strong> {{ trans('invoice.message_03') }} 
-				<a href="{{ URL::to('setting') }}" >{{ trans('invoice.settings') }} -> {{ trans('invoice.tax') }}</a>
+				<a href="{{ URL::to('invoice/setting#tab4') }}" >{{ trans('invoice.settings') }} -> {{ trans('invoice.tax') }}</a>
 			</div>	
 		@endif
 
 		@if ($check['currency'] == 0)
 			<div role="alert" class="alert alert-warning top20">
 				<strong>{{ trans('invoice.message') }}: </strong> {{ trans('invoice.message_04') }} 
-				<a href="{{ URL::to('setting') }}" >{{ trans('invoice.settings') }} -> {{ trans('invoice.currency') }}</a>
+				<a href="{{ URL::to('invoice/setting#tab5') }}" >{{ trans('invoice.settings') }} -> {{ trans('invoice.currency') }}</a>
 			</div>	
 		@endif
 
 		@if ($check['payment'] == 0)
 			<div role="alert" class="alert alert-warning top20">
 				<strong>{{ trans('invoice.message') }}: </strong> {{ trans('invoice.message_05') }} 
-				<a href="{{ URL::to('setting') }}" >{{ trans('invoice.settings') }} -> {{ trans('invoice.payment') }}</a>
+				<a href="{{ URL::to('invoice/setting#tab6') }}" >{{ trans('invoice.settings') }} -> {{ trans('invoice.payment') }}</a>
 			</div>	
 		@endif		
 		
 	</div>
 	
-	<div class="col-md-4">
-		<div class="widget widget-stats bg-blue">
-			<div class="stats-icon stats-icon-lg"><i class="fa fa-puzzle-piece fa-fw"></i></div>
-			<div class="stats-title">{{ trans('invoice.products') }}</div>
-			<div class="stats-number">{{ $products }}</div>
-			<hr>
-			<div class="stats-footer">
-				<div class="stats-desc pull-left">{{ trans('invoice.number_of_products') }}</div>
-				<a class="pull-right" href="{{ URL::to('invoice/product') }}">View Products</a>
-			</div>
-		</div> 	
-	</div>  
-
-	<div class="col-md-4">
-		<div class="widget widget-stats bg-purple">
-			<div class="stats-icon stats-icon-lg"><i class="fa fa-file-pdf-o fa-fw"></i></div>
-			<div class="stats-title">{{ trans('invoice.invoices') }}</div>
-			<div class="stats-number">{{ $invoices }}</div>
-			<hr>
-			<div class="stats-footer">
-				<div class="stats-desc pull-left">{{ trans('invoice.number_of_invoices') }}</div>
-				<a class="pull-right" href="{{ URL::to('invoice/invoice') }}">View Invoices</a>
-			</div>
-		</div> 
-	</div> 		
-	
-	<div class="col-md-4">
-		<div class="widget widget-stats bg-grey" style="background: none repeat scroll 0 0 #2C3E50 !important">
-			<div class="stats-icon stats-icon-lg"><i class="fa fa-money fa-fw"></i></div>
-			<div class="stats-title">{{ trans('invoice.amount') }}</div>
-			<div class="stats-number">{{ $totalAmount }}</div>
-			<hr>
-			<div class="stats-footer">
-				<div class="stats-desc pull-left">{{ trans('invoice.value_of_amounts') }}</div>
-				<a class="pull-right" href="{{ URL::to('invoice/report') }}">View Reports</a>
-			</div>
-		</div> 
-	</div> 	
+	{{-- @include($view_path . '.invoice.dashboard.topbar-stats') --}}
 
 	<div class="col-md-12">
 		<form class="form-inline pull-right" style="margin-bottom: 10px">
@@ -174,7 +139,7 @@
 			<div class="panel-heading">
 				<h2 class="panel-title">{{ trans('invoice.report_01') }}
 
-				<a href="<?php echo URL::to('report');?>" class="pull-right"><i class="fa fa-line-chart"></i>{{ trans('invoice.reports') }}</a></h2>
+				<a href="<?php echo URL::to('invoice/report');?>" class="pull-right"><i class="fa fa-line-chart"></i>{{ trans('invoice.reports') }}</a></h2>
 			</div>
 			
 			<div class="panel-body">
@@ -189,7 +154,7 @@
 			<div class="panel-heading">
 				<h2 class="panel-title">{{ trans('invoice.report_02') }}
 
-				<a href="<?php echo URL::to('report');?>" class="pull-right"><i class="fa fa-line-chart"></i> {{ trans('invoice.reports') }}</a></h2>
+				<a href="<?php echo URL::to('invoice/report');?>" class="pull-right"><i class="fa fa-line-chart"></i> {{ trans('invoice.reports') }}</a></h2>
 			</div>
 			
 			<div class="panel-body">
@@ -204,7 +169,7 @@
 			<div class="panel-heading">
 				<h2 class="panel-title">{{ trans('invoice.invoices_to_be_paid') }}
 
-				<a href="<?php echo URL::to('invoice');?>" class="pull-right"><i class="fa fa-file-pdf-o"></i> {{ trans('invoice.invoices') }}</a></h2>
+				<a href="<?php echo URL::to('invoice/invoice');?>" class="pull-right"><i class="fa fa-file-pdf-o"></i> {{ trans('invoice.invoices') }}</a></h2>
 			</div>
 			
 			<div class="panel-body">
@@ -261,7 +226,7 @@
 			<div class="panel-heading">
 				<h2 class="panel-title">{{ trans('invoice.overdue_invoices') }}
 
-				<a href="<?php echo URL::to('invoice');?>" class="pull-right"><i class="fa fa-file-pdf-o"></i> {{ trans('invoice.invoices') }}</a></h2>
+				<a href="<?php echo URL::to('invoice/invoice');?>" class="pull-right"><i class="fa fa-file-pdf-o"></i> {{ trans('invoice.invoices') }}</a></h2>
 			</div>
 			
 			<div class="panel-body">

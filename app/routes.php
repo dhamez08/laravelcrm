@@ -134,6 +134,7 @@ Route::group(array('before' => 'auth'), function()
 		Route::post('invoice/deleteProduct',			array('uses' => 'Invoice\InvoiceController@deleteProduct',			'as' => 'invoice.deleteProduct'));
 		Route::post('setting/defaultCurrency',			array('uses' => 'Invoice\SettingController@defaultCurrency',		'as' => 'setting.defaultCurrency'));
 		Route::post('ajax/productPrice',				array('uses' => 'Invoice\AjaxController@productPrice',				'as' => 'ajax.productPrice'));	
+		Route::post('ajax/setting/change-active-tab',	array('uses' => 'Invoice\SettingController@changeActiveTab',		'as' => 'ajax.setting.changeActiveTab'));
 		/* === END AJAX === */		   	
     });
 

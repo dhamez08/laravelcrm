@@ -10,42 +10,42 @@
 		@if ($clients == 0)
 		<div role="alert" class="alert alert-warning top20">
 			<strong>{{ trans('invoice.message') }}: </strong> {{ trans('invoice.create_at_least_one_client') }}
-			<a href="{{ URL::to('client') }}" >{{ trans('invoice.clients') }}</a>
+			<a href="{{ URL::to('clients/create') }}" >{{ trans('invoice.clients') }}</a>
 		</div>	
 		@endif
 	
 		@if ($products == 0)
 		<div role="alert" class="alert alert-warning top20">
 			<strong>{{ trans('invoice.message') }}: </strong> {{ trans('invoice.create_at_least_one_product') }}
-			<a href="{{ URL::to('product') }}" >{{ trans('invoice.products') }}</a>
+			<a href="{{ URL::to('invoice/product') }}" >{{ trans('invoice.products') }}</a>
 		</div>	
 		@endif	
 		
 		@if ($check['email'] == 0)
 			<div role="alert" class="alert alert-warning top20">
 				<strong> {{ trans('invoice.message') }}: </strong> {{ trans('invoice.message_01') }} 
-				<a href="{{ URL::to('setting') }}" >{{ trans('invoice.settings') }} -> {{ trans('invoice.company') }}</a>
+				<a href="{{ URL::to('invoice/setting#tab1') }}" >{{ trans('invoice.settings') }} -> {{ trans('invoice.company') }}</a>
 			</div>	
 		@endif
 		
 		@if ($check['tax'] == 0)
 			<div role="alert" class="alert alert-warning top20">
 				<strong>{{ trans('invoice.message') }}: </strong> {{ trans('invoice.message_03') }} 
-				<a href="{{ URL::to('setting') }}" >{{ trans('invoice.settings') }} -> {{ trans('invoice.tax') }}</a>
+				<a href="{{ URL::to('invoice/setting#tab4') }}" >{{ trans('invoice.settings') }} -> {{ trans('invoice.tax') }}</a>
 			</div>	
 		@endif
 
 		@if ($check['currency'] == 0)
 			<div role="alert" class="alert alert-warning top20">
 				<strong>{{ trans('invoice.message') }}: </strong> {{ trans('invoice.message_04') }} 
-				<a href="{{ URL::to('setting') }}" >{{ trans('invoice.settings') }} -> {{ trans('invoice.currency') }}</a>
+				<a href="{{ URL::to('invoice/setting#tab5') }}" >{{ trans('invoice.settings') }} -> {{ trans('invoice.currency') }}</a>
 			</div>	
 		@endif
 
 		@if ($check['payment'] == 0)
 			<div role="alert" class="alert alert-warning top20">
 				<strong>{{ trans('invoice.message') }}: </strong> {{ trans('invoice.message_05') }} 
-				<a href="{{ URL::to('setting') }}" >{{ trans('invoice.settings') }} -> {{ trans('invoice.payment') }}</a>
+				<a href="{{ URL::to('invoice/setting#tab6') }}" >{{ trans('invoice.settings') }} -> {{ trans('invoice.payment') }}</a>
 			</div>	
 		@endif
 	</div>
