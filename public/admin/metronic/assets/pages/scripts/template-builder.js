@@ -566,7 +566,8 @@ $(function(){
                 $('.image-options').show();
             });
 
-            body.one('keypress','#image-url',function(e){
+            body.off('keypress','#image-url');
+            body.on('keypress','#image-url',function(e){
                 if(e.keyCode == 13){
                     var url = $(this).val();
                     if (!/^(f|ht)tps?:\/\//i.test(url)) {
