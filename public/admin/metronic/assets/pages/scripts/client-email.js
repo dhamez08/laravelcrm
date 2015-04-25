@@ -348,15 +348,44 @@ var ClientEmail = function () {
                 previousTemplateSelected = $(this).val();
                 noTemplateBodyContent = $('#message').code();
             }).change(function() {
-                if($(this).val() == '')
-                    $('#message').code(noTemplateBodyContent);
+                var template_type = $(this).find(':selected').data('template-type');
+                var template_id = $(this).val();
+                $('input[name=template_type]').val(template_type);
 
-                $this = $(this);
-                $.get(BASE_URL+'/settings/email/template/'+$this.val(), function(response) {
-                    //$(".inbox-wysihtml5").data('wysihtml5').editor.setValue(response.body);
-                    $("#message").code(response.body);
-                    $("input#email_subject").val(response.subject);
-                });                
+                if(template_type == 'text'){
+                    $('#text-view').removeClass('hide');
+                    $('#template-view').addClass('hide');
+                    if($(this).val() == '')
+                        $('#message').code(noTemplateBodyContent);
+
+                    $this = $(this);
+                    $.get(BASE_URL+'/settings/email/template/'+$this.val(), function(response) {
+                        //$(".inbox-wysihtml5").data('wysihtml5').editor.setValue(response.body);
+                        $("#message").code(response.body);
+                        $("input#email_subject").val(response.subject);
+                    });
+                } else {
+                    $('#template-view').removeClass('hide');
+                    $('#text-view').addClass('hide');
+                    $('input[name=template_id]').val(template_id);
+
+                    var data = new Object();
+                    data.template_id = $(this).find(':selected').val();
+
+                    $.ajax({
+                        type: "GET",
+                        url: baseURL+'/marketing/ajax-edit-template',
+                        data: data,
+                        success: function(response)
+                        {
+                            var body = $('#template-view').contents().find('body');
+                            body.html('');
+                            body.append('<style>'+response.style+'</style>');
+                            body.append(response.source_code);
+                        },
+                        dataType: 'json'
+                    });
+                }
             });
 
             $("select#custom_form").live("change", function() {

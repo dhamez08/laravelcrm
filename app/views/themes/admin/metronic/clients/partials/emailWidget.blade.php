@@ -17,6 +17,8 @@
             <!-- Start Email Compose -->
                 <form class="inbox-compose form-horizontal" id="fileupload" action="{{url('email/client',array('customer'=>$customer->id))}}" method="POST" enctype="multipart/form-data">
                   {{ Form::token() }}
+                  <input type="hidden" name="template_type" value="text" />
+                  <input type="hidden" name="template_id" value="" />
                   <input type="hidden" name="to_name" value="{{ $currentClient->displayCustomerName() }}" />
                   <input type="hidden" name="client_ref" value="[REF:{{ $customer->ref }}]" />
                   <input type="hidden" name="customer_id" value="{{ $customer->id }}" />
@@ -95,15 +97,24 @@
                           </select>
                         </div>
                       </div>
-                      <?php $templates = \EmailTemplate\EmailTemplateEntity::get_instance()->getTemplatesByLoggedUser(); ?>
-                      @if(count($templates)>0)
+                      <?php
+                        $templates = \EmailTemplate\EmailTemplateEntity::get_instance()->getTemplatesByLoggedUser();
+                        $html_templates = \User\User::find(\Auth::id())->userEmailTemplate()->get();
+                      ?>
+                        @if(count($templates)>0)
+
                       <div class="inbox-form-group">
                         <label class="control-label">Template:</label>
                         <div class="controls">
                           <select id="email_template" name="email_template" class="form-control">
-                            <option value="">No template required</option>
+                            <option data-template-type="text" value="">No template required</option>
+                            <option value="" disabled>Plain Text</option>
                             @foreach($templates as $template)
-                            <option value="{{ $template->id }}">{{ $template->name }}</option>
+                            <option data-template-type="text" value="{{ $template->id }}">{{ $template->name }}</option>
+                            @endforeach
+                            <option value="" disabled>Plain Text</option>
+                            @foreach($html_templates as $html_template)
+                            <option data-template-type="html" value="{{ $html_template['id'] }}">{{ $html_template['name'] }}</option>
                             @endforeach
                           </select>
                         </div>
@@ -123,7 +134,8 @@
                         </div>
                       </div>
                       @endif
-                      <div class="inbox-form-group row">
+                      <iframe id="template-view" style="width:100%; margin-top:20px; height: 500px" seamless="true" class="html hide"></iframe>
+                      <div id="text-view" class="inbox-form-group row">
                         <!-- <textarea class="inbox-editor inbox-wysihtml5 form-control" name="message" rows="12"></textarea> -->
                         <div class="col-md-9">
                           {{

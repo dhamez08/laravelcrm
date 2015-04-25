@@ -106,21 +106,27 @@ class EmailController extends \BaseController {
 
 	public function postClient($clientId) {
 		$btn_action = \Input::get('btn_action');
+        $template_type = \Input::get('template_type');
+
 		$rules = array(
 			'to' => 'required',
 			'cc' => 'email',
 			'bcc' => 'email',
 			'subject' => 'required',
-			'message' => 'required'
 		);
+
 		$messages = array(
 			'to.required'=>'Customer is required',
 			'to.email'=>'To Email is not valid',
 			'cc.email'=>'CC Email is not valid',
 			'bcc.email'=>'BCC Email is not valid',
 			'subject.required'=>'Subject is required',
-			'message.required'=>'Message is required'
 		);
+
+        if($template_type == 'text'){
+            $rules['message'] = 'required';
+            $messages['message.required'] = 'Message is required';
+        }
 
 		$validator = \Validator::make(\Input::all(), $rules, $messages);
 
@@ -136,7 +142,22 @@ class EmailController extends \BaseController {
 			$customers = \Input::get('to');
 
 			$data['subject'] = \Input::get('subject');
-			$data['body'] = \Input::get('message');
+
+            if($template_type == 'text'){
+                $data['body'] = \Input::get('message');
+                $email_view = 'emails.clients.index';
+            } else if($template_type == 'html') {
+                $email_view = 'emails.clients.marketing';
+                $template_id = \Input::get('template_id');
+                $template = \UserEmailTemplate\UserEmailTemplate::find($template_id);
+                $body = \HTML::decode($template['source_code']);
+                $data['style'] = $template['style'];
+
+                $body = str_replace('contenteditable="true"','',$body);
+                $data['body'] = str_replace('contenteditable','',$body);
+
+            }
+
 
 			//code below is to replace the base64 image to real url so that it would be considered on the email provider
 
@@ -216,7 +237,7 @@ class EmailController extends \BaseController {
 					$data['to_name'] = $custObj->first_name . " " . $custObj->last_name;
 					$data['client_ref'] = "[REF:".$custObj->ref."]";
 					if($btn_action=='send') {
-						\Mail::send('emails.clients.index', $data, function($message) use ($data, $from_name, $from_email)
+						\Mail::send($email_view, $data, function($message) use ($data, $from_name, $from_email)
 						{
 							$message->from($from_email, $from_name);
 							if($data['cc'])
