@@ -793,6 +793,7 @@ $(function(){
         $('.box-control').show();
 
         $('#layouts').collapse('hide');
+        $('#sections').collapse('hide');
         $('#tool-box').collapse('show');
     });
 

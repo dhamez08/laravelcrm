@@ -383,7 +383,8 @@ class MarketingController extends \BaseController {
         $data 						= array_merge($data,$this->getSetupThemes());
         $data['email_templates'] = \User\User::find(\Auth::id())->emailTemplate()->where('type',2)->get();
         $data['user_email_templates'] = \User\User::find(\Auth::id())->userEmailTemplate()->get();
-        $data['layouts']        = \EmailLayout\EmailLayout::all();
+        $data['layouts']        = \EmailLayout\EmailLayout::where('is_generic',false)->get();
+        $data['generic_layouts'] = \EmailLayout\EmailLayout::where('is_generic',true)->get();
 
         $dataAddTemplateModal = array();
 

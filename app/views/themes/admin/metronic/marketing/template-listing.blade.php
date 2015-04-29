@@ -172,6 +172,37 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="module-heading">
                                     <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#sections" aria-expanded="true" aria-controls="collapseOne">
+                                            <i class="fa fa-th"></i> Sections
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="sections" class="panel-collapse collapse" role="tabpanel" aria-labelledby="module-heading">
+                                    <div class="panel-body" id="layout-list">
+                                        <!-- Start -->
+                                        <div class="panel-group" id="layout-list" role="tablist" aria-multiselectable="true">
+                                            @foreach($generic_layouts as $layout)
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading" role="tab" id="layout-{{$layout['id']}}-heading">
+                                                    <h4 class="panel-title">
+                                                        <a class="layout-name" data-layout-id="{{$layout['id']}}" data-toggle="collapse" data-parent="#layout-list" href="#layout-{{$layout['id']}}-sections" aria-expanded="true" aria-controls="collapseOne">
+                                                            <strong>{{$layout['name']}}</strong>
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <div id="layout-{{$layout['id']}}-sections" class="panel-collapse collapse" role="tabpanel" aria-labelledby="layout-{{$layout['id']}}-heading">
+                                                    <div class="panel-body display-image-list" id="layout-{{$layout['id']}}-section-list"></div>
+                                                </div>
+                                            </div>
+                                            @endforeach
+                                        </div>
+                                        <!-- End -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="module-heading">
+                                    <h4 class="panel-title">
                                         <a data-toggle="collapse" data-parent="#accordion" href="#tool-box" aria-expanded="true" aria-controls="collapseTwo">
                                             <i class="fa fa-sliders"></i> Styles
                                         </a>
@@ -179,7 +210,7 @@
                                 </div>
                                 <div id="tool-box" class="panel-collapse collapse" role="tabpanel" aria-labelledby="toolbar-heading">
                                     <div class="panel-body">
-                                        <div class="row text-control">
+                                        <div class="row">
                                             <div class="col-md-6 m-top-15">
                                                 <label for="font-size-slider" class="editor-label">Apply to All</label>
                                             </div>
