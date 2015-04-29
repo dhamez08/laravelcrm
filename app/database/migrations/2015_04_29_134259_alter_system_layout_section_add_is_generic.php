@@ -14,7 +14,7 @@ class AlterSystemLayoutSectionAddIsGeneric extends Migration {
     {
         Schema::table('system_email_layout', function($table)
         {
-            $table->boolean('is_generic')->after('style')->default(false);
+            $table->boolean('is_generic')->after('name')->default(false);
         });
     }
 
