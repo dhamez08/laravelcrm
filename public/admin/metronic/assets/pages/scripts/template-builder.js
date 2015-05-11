@@ -548,6 +548,10 @@ $(function(){
             body.one('click','.hide-image.fa-eye-slash',function(){
                 selected_element.css('display','none');
                 $(this).removeClass('fa-eye-slash').addClass('fa-eye');
+
+                if(selected_element.hasClass('has-container')){
+                    selected_element.closest('.parent-container').css('display','none');
+                }
             });
 
             body.one('click','.hide-image.fa-eye',function(){
