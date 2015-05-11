@@ -5,7 +5,7 @@
 	<meta name="dompdf.view" content="XYZ,0,0,1" />
 	
 	<link href='http://fonts.googleapis.com/css?family=Dosis' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" type="text/css" href="{{ url('public/css/invoice.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url('public/admin/metronic/assets/pages/css/invoice_pdf.css') }}">
 </head>
 <body>
 	<div id="invoice">
@@ -47,13 +47,22 @@
 				</td>
 
 				<td class="col-md-6">			
-					<p class="text-left background-th"><span class="h2">{{ trans('invoice.bill_to') }} </span> <span class="h4">{{ $invoice->client }}</span></p>
+					<p class="text-left background-th"><span class="h2">{{ trans('invoice.bill_to') }} </span> <span class="h4">{{ $invoice->client_fullname }}</span></p>
+
+					<p class="details">{{ $invoice->address_line_1 or '' }}</p>
+					<p class="details">{{ $invoice->address_line_2 or '' }}</p>
+					<p class="details">{{ $invoice->town or '' }}</p>
+					<p class="details">{{ $invoice->county or '' }}</p>
+					<p class="details">{{ $invoice->postcode or '' }}</p>
+
+					{{--
 					<p class="details">{{ $invoice->city or '' }}, {{ $invoice->state or '' }}, {{ $invoice->country or '' }}</p>
 					<p class="details">{{ $invoice->address or '' }}, {{ $invoice->zip or ''}}</p>
 					<p class="details">{{ $invoice->contact or '' }}</p>
 					<p class="details">{{ $invoice->phone or '' }}</p>
 					<p class="details">{{ $invoice->bank or '' }}</p>
 					<p class="details">{{ $invoice->bank_account or '' }}</p>
+					--}}
 				</td>
 			</tr>
 		</table>
