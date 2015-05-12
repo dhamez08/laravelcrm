@@ -10,12 +10,12 @@ class LayoutSectionContactSheetSeeder extends Seeder {
     public function run()
     {
         Eloquent::unguard();
-//        DB::table('system_email_layout')->insert(array(
-//            array(
-//                'name'=>'Contact Sheet',
-//                'is_generic' => true
-//            )
-//        ));
+        DB::table('system_email_layout')->insert(array(
+            array(
+                'name'=>'Contact Sheet',
+                'is_generic' => true
+            )
+        ));
         DB::table('system_layout_section')->insert(array(
             array(
                 'layout_id' => 8,
