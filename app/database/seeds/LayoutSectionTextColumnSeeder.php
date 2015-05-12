@@ -1,6 +1,6 @@
 <?php
 
-class LayoutSectionContactSheetSeeder extends Seeder {
+class LayoutSectionTextColumnSeeder extends Seeder {
 
     /**
      * Run the database seeds.
