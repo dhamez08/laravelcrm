@@ -57,7 +57,7 @@ $(function(){
         if(apply_all){
             var section_group = selected_element.data('color');
             if(section_group){
-                $('[data-color="'+section_group+'"]').css('font-family',type);
+                selected_element.closest('.section-container').find('[data-color="'+section_group+'"]').css('font-family',type);
             } else {
                 selected_element.css('font-family',type);
             }
@@ -332,7 +332,7 @@ $(function(){
             if(apply_all){
                 var section_group = selected_element.data('color');
                 if(section_group){
-                    $('[data-color="'+section_group+'"]').css(color_element, color);
+                    selected_element.closest('.section-container').find('[data-color="'+section_group+'"]').css(color_element, color);
                 } else {
                     selected_element.css(color_element, color);
                 }
@@ -446,7 +446,7 @@ $(function(){
             if(apply_all){
                 var section_group = selected_element.data('color');
                 if(section_group){
-                    $('[data-color="'+section_group+'"]').css('color', $(this).val());
+                    selected_element.closest('.section-container').find('[data-color="'+section_group+'"]').css('color', $(this).val());
                 } else {
                     selected_element.css('color', $(this).val());
                 }
@@ -466,7 +466,7 @@ $(function(){
             if(apply_all){
                 var section_group = selected_element.data('color');
                 if(section_group){
-                    $('[data-color="'+section_group+'"]').css('color', $(this).val());
+                    selected_element.closest('.section-container').find('[data-color="'+section_group+'"]').css('color', $(this).val());
                 } else {
                     selected_element.css('color', $(this).val());
                 }
@@ -477,7 +477,7 @@ $(function(){
             if(apply_all){
                 var section_group = selected_element.data('color');
                 if(section_group){
-                    $('[data-color="'+section_group+'"]').css('background-color', $(this).val());
+                    selected_element.closest('.section-container').find('[data-color="'+section_group+'"]').css('background-color', $(this).val());
                 } else {
                     selected_element.css('background-color', $(this).val());
                 }
@@ -498,6 +498,7 @@ $(function(){
 
         if(selected_element.hasClass('editable-text')){
             $('#layouts').collapse('hide');
+            $('#sections').collapse('hide');
             $('#tool-box').collapse('show');
 
             $('.box-control').hide();
@@ -733,6 +734,13 @@ $(function(){
             body.on('submit','#upload-form', handleFormSubmit);
         }
         else if(selected_element.hasClass('editable-url')){
+            $('#layouts').collapse('hide');
+            $('#sections').collapse('hide');
+            $('#tool-box').collapse('show');
+
+            $('.box-control').hide();
+            $('.text-control').show();
+
             var options = new Object();
             var body = $('body');
             var uri = selected_element.attr('href');
@@ -808,7 +816,7 @@ $(function(){
             if(apply_all){
                 var section_group = selected_element.data('color');
                 if(section_group){
-                    $('[data-color="'+section_group+'"]').css('font-size',font_size+'px');
+                    selected_element.closest('.section-container').find('[data-color="'+section_group+'"]').css('font-size',font_size+'px');
                 } else {
                     selected_element.css('font-size',font_size+'px');
                 }
