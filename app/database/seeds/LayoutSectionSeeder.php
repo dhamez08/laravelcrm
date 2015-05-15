@@ -10,6 +10,8 @@ class LayoutSectionSeeder extends Seeder {
     public function run()
     {
         Eloquent::unguard();
+        DB::table('system_email_layout')->truncate();
+        DB::table('system_layout_section')->truncate();
 
         $this->call('LayoutSectionGritSeeder');
         $this->call('LayoutSectionGemiconSeeder');
