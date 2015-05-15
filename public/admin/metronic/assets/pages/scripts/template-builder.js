@@ -375,8 +375,13 @@ $(function(){
             move_button.hide();
             section.append(html).append(close_button).append(copy_button).append(move_button);
             section.hide().appendTo($(this)).fadeIn();
+
+            $('.canvas').find('.section-container').css('margin-bottom',0);
+            $('.canvas').find('.section-container').last().css('margin-bottom',50);
         }
     })
+
+
 
 
     $('body').on('mouseover','.section-hover',function(){
