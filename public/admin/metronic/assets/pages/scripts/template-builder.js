@@ -80,7 +80,7 @@ $(function(){
         setTimeout(function(){
             $('.canvas').find('.section-container').css('margin-bottom',0);
             $('.canvas').find('.section-container').last().css('margin-bottom',50);
-        },100);
+        },50);
     });
 
     $('.template-edit').on('click',function(){
