@@ -77,6 +77,8 @@ $(function(){
 
     $('#template-canvas').on('mouseup','.move-section',function(){
         dragging_active = false;
+        $('.canvas').find('.section-container').css('margin-bottom',0);
+        $('.canvas').find('.section-container').last().css('margin-bottom',50);
     });
 
     $('.template-edit').on('click',function(){
@@ -355,8 +357,6 @@ $(function(){
     $('#template-canvas').on('mouseleave','.move-section',function(){
         if($('#template-canvas').hasClass('ui-sortable') && !dragging_active){
             $('#template-canvas').sortable('destroy');
-            $('.canvas').find('.section-container').css('margin-bottom',0);
-            $('.canvas').find('.section-container').last().css('margin-bottom',50);
         }
     });
 
