@@ -77,8 +77,10 @@ $(function(){
 
     $('#template-canvas').on('mouseup','.move-section',function(){
         dragging_active = false;
-        $('.canvas').find('.section-container').css('margin-bottom',0);
-        $('.canvas').find('.section-container').last().css('margin-bottom',50);
+        setTimeout(function(){
+            $('.canvas').find('.section-container').css('margin-bottom',0);
+            $('.canvas').find('.section-container').last().css('margin-bottom',50);
+        },300);
     });
 
     $('.template-edit').on('click',function(){
