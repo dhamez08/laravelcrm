@@ -355,6 +355,8 @@ $(function(){
     $('#template-canvas').on('mouseleave','.move-section',function(){
         if($('#template-canvas').hasClass('ui-sortable') && !dragging_active){
             $('#template-canvas').sortable('destroy');
+            $('.canvas').find('.section-container').css('margin-bottom',0);
+            $('.canvas').find('.section-container').last().css('margin-bottom',50);
         }
     });
 
