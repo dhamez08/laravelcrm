@@ -119,7 +119,7 @@
                 });
 
                 $("#fields_container table tbody").append(row);
-
+                $('.scroller').slimscroll({height:'230px'})
                 Metronic.unblockUI('#fields_container');
             }).error(function() {
                 Metronic.unblockUI('#fields_container');
