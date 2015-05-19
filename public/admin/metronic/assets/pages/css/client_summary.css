@@ -242,3 +242,7 @@ div.tagsinput span.tag {
 	font-style: italic;
 	color: #c1cbd0;
 }
+
+.portlet-body {
+    overflow-y: auto;
+}
