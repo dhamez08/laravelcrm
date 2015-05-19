@@ -36,7 +36,7 @@ class MarketingEntity{
 				}
 			} else {
 				$query->where('tag_id', '=', $tag_id);
-			}			
+			}
 		}))
 		->with(array('telephone' => function($query) use ($phone_type)
 		{
@@ -83,5 +83,35 @@ class MarketingEntity{
 			return false;
 		}
 	}
+
+    public function getCustomerEmails($tag_id = null, $otherFilters = array()){
+        $type = array(1);
+        $client = \Clients\Clients::customerType($type)
+            ->customerBelongsUser(\Auth::id())
+            ->with(array('myTag' => function($query) use ($tag_id)
+                {
+                    if(is_array($tag_id)) {
+                        foreach ($tag_id as $tag) {
+                            $query->where('tag_id', '=', $tag);
+                        }
+                    } else {
+                        $query->where('tag_id', '=', $tag_id);
+                    }
+                }))
+            ->with('emails');
+
+        // other filters
+        if(isset($otherFilters['min_age'])) {
+            $client->where(\DB::raw('TIMESTAMPDIFF(YEAR, dob, CURDATE())'), '>=', $otherFilters['min_age']);
+        }
+        if(isset($otherFilters['max_age'])) {
+            $client->where(\DB::raw('TIMESTAMPDIFF(YEAR, dob, CURDATE())'), '<=', $otherFilters['max_age']);
+        }
+        if(isset($otherFilters['marital_status'])) {
+            $client->where('marital_status', $otherFilters['marital_status']);
+        }
+
+        return $client;
+    }
 
 }

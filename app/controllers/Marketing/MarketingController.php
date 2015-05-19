@@ -420,9 +420,20 @@ class MarketingController extends \BaseController {
         $data['portlet_title']		= 'Choose Contacts';
         $data 						= array_merge($data,$this->getSetupThemes());
 
-        $type = array(1);
-        $data['customer_list'] = \Clients\Clients::customerType($type)
-            ->customerBelongsUser(\Auth::id())->with('emails');
+        $data['tag_id']				= \Input::has('tags') ? (\Input::get('tags') != 0 ) ? \Input::get('tags'):null:null;
+
+        $customerFilters = array();
+        if(\Input::get('age_min')) $customerFilters['min_age'] = \Input::get('age_min');
+        if(\Input::get('age_max')) $customerFilters['max_age'] = \Input::get('age_max');
+        if(\Input::get('marital_status')) $customerFilters['marital_status'] = \Input::get('marital_status');
+
+        $data['tags']			 	= \ClientTag\ClientTagEntity::get_instance()->getTagsByLoggedUser();
+
+//        $type = array(1);
+//        $data['customer_list'] = \Clients\Clients::customerType($type)
+//            ->customerBelongsUser(\Auth::id())->with('emails');
+
+        $data['customer_list']		= \Marketing\MarketingEntity::get_instance()->getCustomerEmails($data['tag_id'], $customerFilters);
 
         return \View::make( $data['view_path'] . '.marketing.compose-email', $data );
     }
@@ -1385,6 +1396,13 @@ class MarketingController extends \BaseController {
             'error: html2canvas-proxy-php: ' . $response['error']
         ),
         ');';
+    }
+
+    public function getTest(){
+        $data['customer_list'] = \Clients\Clients::customerType(1)
+            ->customerBelongsUser(\Auth::id())->with('emails');
+
+        print_r($data);
     }
 
 }

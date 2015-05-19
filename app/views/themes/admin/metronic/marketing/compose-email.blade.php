@@ -24,14 +24,67 @@
     <div class="portlet-body {{{$portlet_body_class or ''}}}">
         <div class="portlet-tabs">
             <div class="tab-content">
-                {{ Form::open(
-                        array(
-                            'action' => array('Marketing\MarketingController@getCreateEmail'),
-                            'method' => 'GET',
-                            'class' => 'form-horizontal',
-                            'role'=>'form',
-                        )
+                {{Form::open(
+                    array(
+                        'action' => array('Marketing\MarketingController@getSendClientEmail'),
+                        'method' => 'GET',
+                        'class' => 'form-horizontal',
+                        'role'=>'form',
                     )
+                )}}
+                @if( $tags )
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Tags: </label>
+                        {{
+                        Form::select(
+                            'tags[]',
+                            $tags->lists('tag','id'),
+                            isset($tag_id) ? $tag_id:null,
+                            array('multiple')
+                        );
+                        }}
+                    </div>
+                </div>
+                @endif
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="portlet box blue" style="margin-top:10px; margin-bottom:10px">
+                            <div class="portlet-title">
+                                <div class="caption caption-mini">
+                                    <i class="fa fa-cogs"></i>Advanced Filters
+                                </div>
+                                <div class="tools" style="float:left">
+                                    <a href="javascript:;" class="expand">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="portlet-body" style="display:none">
+                                <div class="row">
+                                    <div class="col-md-12" style="margin: 10px 10px;">
+                                        <label>Age: </label>
+                                        {{ Form::number('age_min', \Input::get('age_min'), array('placeholder' => 'Minimum Age')) }} - {{ Form::number('age_max', \Input::get('age_max'), array('placeholder' => 'Maximum Age')) }}
+                                        &nbsp;&nbsp;
+                                        <label>Marital Status: </label>
+                                        {{ Form::select('marital_status', Config::get('crm.marital_status'), \Input::get('marital_status')) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{Form::submit('Apply Filters',array('class'=>"btn blue"))}}
+                {{Form::close()}}
+                <p></p>
+                {{ Form::open(
+                array(
+                'action' => array('Marketing\MarketingController@getCreateEmail'),
+                'method' => 'GET',
+                'class' => 'form-horizontal',
+                'role'=>'form',
+                )
+                )
                 }}
                 <table class="table table-striped table-advance table-hover">
                     <thead>
@@ -76,6 +129,9 @@
                 var checkedClass = $(this).is(":checked") ? 'checked' : '';
                 table_body.find('input[type="checkbox"]').prop('checked', $(this).is(":checked"));
                 table_body.find('input[type="checkbox"]').uniform({checkedClass: checkedClass});
+            });
+            $('select[name="tags[]"]').select2({
+                width: '100%'
             });
         </script>
     @stop
