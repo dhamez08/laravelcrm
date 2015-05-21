@@ -112,7 +112,7 @@
                             @foreach($templates as $template)
                             <option data-template-type="text" value="{{ $template->id }}">{{ $template->name }}</option>
                             @endforeach
-                            <option value="" disabled>Plain Text</option>
+                            <option value="" disabled>HTML Template</option>
                             @foreach($html_templates as $html_template)
                             <option data-template-type="html" value="{{ $html_template['id'] }}">{{ $html_template['name'] }}</option>
                             @endforeach
