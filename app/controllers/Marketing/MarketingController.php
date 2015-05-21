@@ -1381,11 +1381,17 @@ class MarketingController extends \BaseController {
         ');';
     }
 
-    public function getTest(){
-        $data['customer_list'] = \Clients\Clients::customerType(1)
-            ->customerBelongsUser(\Auth::id())->with('emails');
-
-        print_r($data);
+    public function getSampleReport(){
+        $data = $this->data_view;
+        $data['pageTitle'] 			= 'Email Marketing Report';
+        $data['contentClass'] 		= 'no-gutter';
+        $data['portlet_body_class']	= 'form';
+        $data['portlet_title']		= 'Email Marketing Report';
+        $data['fa_icons']			= 'user';
+        $data 						= array_merge($data,$this->getSetupThemes());
+        return \View::make( $data['view_path'] . '.marketing.email-report', $data );
     }
+
+
 
 }
