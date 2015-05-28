@@ -1381,7 +1381,7 @@ class MarketingController extends \BaseController {
         ');';
     }
 
-    public function getSampleReport(){
+    public function getEmailReport(){
         $data = $this->data_view;
         $data['pageTitle'] 			= 'Email Marketing Report';
         $data['contentClass'] 		= 'no-gutter';
@@ -1392,6 +1392,8 @@ class MarketingController extends \BaseController {
         return \View::make( $data['view_path'] . '.marketing.email-report', $data );
     }
 
+    public function getAjaxListEmailReport($status){
 
+    }
 
 }

@@ -50,7 +50,7 @@
 							@section('portlet-2-content')
 								<a href="{{url('marketing/send-client-email')}}" class="btn btn-lg green btn-block">Send Email</a>
 								<a href="{{url('marketing/templates')}}" class="btn btn-lg blue btn-block">Email Templates</a>
-								<a href="#" class="btn btn-lg yellow btn-block">Reports</a>
+								<a href="{{url('marketing/email-report')}}" class="btn btn-lg yellow btn-block">Reports</a>
 							@show
 						</div>
 					</div>
