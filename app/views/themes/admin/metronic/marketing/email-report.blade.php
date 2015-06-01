@@ -182,7 +182,26 @@
                         </div>
                     </div>
                     <div id="list-report" class="tab-pane">
-                    <table class="table table-striped table-bordered table-advance table-hover">
+                        <div class="tab-content">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="row form-group">
+                                        <div class="col-md-2">
+                                            <label class="control-label">Filter:</label>
+                                        </div>
+                                        <div class="col-md-10">
+                                            <select class="form-control">
+                                                <option>All</option>
+                                                <option>Sent</option>
+                                                <option>Read</option>
+                                                <option>Bounced</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-9"></div>
+                            </div>
+                            <table class="table table-striped table-bordered table-advance table-hover">
                         <thead class="flip-content">
                         <tr>
                             <th width="20%">
@@ -200,12 +219,20 @@
                         </tr>
                         </thead>
                         <tbody>
-
+                            @foreach($messages as $message)
+                            <tr>
+                                <td>{{$message->sender}}</td>
+                                <td>{{$message->to}}</td>
+                                <td>{{$message->subject}}</td>
+                                <td>{{$message->added_date}}</td>
+                            </tr>
+                            @endforeach
                         </tbody>
                         <tfoot>
 
                         </tfoot>
                     </table>
+                        </div>
                     </div>
                 </div>
             </div>

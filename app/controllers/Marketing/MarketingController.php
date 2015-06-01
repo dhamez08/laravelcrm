@@ -1389,6 +1389,9 @@ class MarketingController extends \BaseController {
         $data['portlet_title']		= 'Email Marketing Report';
         $data['fa_icons']			= 'user';
         $data 						= array_merge($data,$this->getSetupThemes());
+
+        $data['messages'] = \Message\MessageEntity::get_instance()->listAllSentMessages();
+
         return \View::make( $data['view_path'] . '.marketing.email-report', $data );
     }
 
