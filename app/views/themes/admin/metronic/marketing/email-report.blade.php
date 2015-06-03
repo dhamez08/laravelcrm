@@ -57,7 +57,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-2">
-                                            <button class="btn blue" type="button">Submit</button>
+                                            <button id="date-range-button" class="btn blue" type="button">Submit</button>
                                         </div>
                                     </div>
                                 </div>

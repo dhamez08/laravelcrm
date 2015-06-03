@@ -6,6 +6,10 @@ $(function(){
     var page_index = 0;
     var filter = 'sent'
 
+    $('#date-range-button').on('click',function(){
+        $('.reload').click();
+    })
+
     $('#email-list-more').on('click',function(){
         page_index++;
         fetch_list();
