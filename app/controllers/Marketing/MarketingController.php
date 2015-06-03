@@ -1390,13 +1390,24 @@ class MarketingController extends \BaseController {
         $data['fa_icons']			= 'user';
         $data 						= array_merge($data,$this->getSetupThemes());
 
-        $data['messages'] = \Message\MessageEntity::get_instance()->listAllSentMessages();
+        $data['messages'] = \Message\MessageEntity::get_instance()->listAllSentMessagesWithFilter(0, 5, 0);
 
         return \View::make( $data['view_path'] . '.marketing.email-report', $data );
     }
 
-    public function getAjaxListEmailReport($status){
+    public function getAjaxListEmailReport($filter, $page){
+        $page_size = 5;
+        $page_ndx = $page * $page_size;
 
+        switch($filter){
+            case 'sent'     : $filter_id = 0; break;
+            case 'read'     : $filter_id = 1; break;
+            case 'bounced'  : $filter_id = -1; break;
+        }
+
+        $messages = \Message\MessageEntity::get_instance()->listAllSentMessagesWithFilter($filter_id, $page_size, $page_ndx);
+
+        return \Response::json(array('success'=>true,'messages'=> $messages));
     }
 
 }

@@ -2,7 +2,60 @@
  * Created by dhamez on 5/27/15.
  */
 $(function(){
-    console.log('test');
+    // Fetch initial list for default filter
+    var page_index = 0;
+    var filter = 'sent'
+
+    $('#email-list-more').on('click',function(){
+        page_index++;
+        fetch_list();
+    });
+
+    $('#list-view-tab').on('click',function(){
+        page_index = 0;
+        if(!($('#email-list-table tbody').html())){
+            fetch_list();
+        }
+    });
+
+    $('#email-status-filter').on('change',function(){
+        page_index = 0;
+        filter = $(this).val();
+        $('#email-list-table tbody').html('')
+        fetch_list();
+    });
+
+    function fetch_list(){
+        setTimeout(function(){
+            Metronic.blockUI({
+                target: '#email-list-container',
+                boxed: true
+            });
+
+            $.ajax({
+                url: 'ajax-list-email-report/'+filter+'/'+page_index,
+                type: 'get',
+                dataType: 'json',
+                success: function(response){
+                    console.log(response);
+                    if(response.success){
+                        $.each(response.messages, function(index, message){
+                            $('#email-list-table tbody').append(
+                                $('<tr>')
+                                    .append($('<td>').text(message.sender))
+                                    .append($('<td>').text(message.to))
+                                    .append($('<td>').text(message.subject))
+                                    .append($('<td>').text(message.added_date))
+                            );
+                        });
+                    }
+
+                    Metronic.unblockUI('#email-list-container');
+                }
+            })
+        },100);
+    }
+
     AmCharts.makeChart("email-total-report",
         {
             "type": "serial",

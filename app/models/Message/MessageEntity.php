@@ -157,4 +157,12 @@ class MessageEntity extends \Eloquent{
 		$query = \DB::statement($sql, array($mid));
 
 	}
+
+    public function listAllSentMessagesWithFilter($filter, $page_size, $page_ndx) {
+        $rows = array();
+        $sql = "SELECT m.sender, m.to, m.subject, m.added_date, m.read_status, CONCAT(c.company_name, ' ', c.first_name, ' ', c.last_name) as client FROM messages m, customer c WHERE m.customer_id=c.id AND c.belongs_to=? AND m.read_status=? AND m.direction='1' AND m.deleted_at IS NULL ORDER BY m.read_status,m.added_date DESC LIMIT ? OFFSET ?";
+        $query = \DB::select($sql, array(\Session::get('group_id'), $filter, $page_size, $page_ndx));
+
+        return $query;
+    }
 }

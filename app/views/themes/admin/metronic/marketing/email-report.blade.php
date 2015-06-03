@@ -29,10 +29,10 @@
         <div class="tabbable portlet-tabs">
                 <ul class="nav nav-tabs">
                     <li class="">
-                        <a data-toggle="tab" href="#list-report" aria-expanded="true"> List View </a>
+                        <a id="list-view-tab" data-toggle="tab" href="#list-report" aria-expanded="true"> List View </a>
                     </li>
                     <li class="active">
-                        <a data-toggle="tab" href="#chart-report" aria-expanded="false"> Chart View </a>
+                        <a id="chart-view-tab" data-toggle="tab" href="#chart-report" aria-expanded="false"> Chart View </a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -190,48 +190,42 @@
                                             <label class="control-label">Filter:</label>
                                         </div>
                                         <div class="col-md-10">
-                                            <select class="form-control">
-                                                <option>All</option>
-                                                <option>Sent</option>
-                                                <option>Read</option>
-                                                <option>Bounced</option>
+                                            <select id="email-status-filter" class="form-control">
+                                                <option value="sent">Sent</option>
+                                                <option value="read">Read</option>
+                                                <option value="bounced">Bounced</option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-9"></div>
                             </div>
-                            <table class="table table-striped table-bordered table-advance table-hover">
-                        <thead class="flip-content">
-                        <tr>
-                            <th width="20%">
-                                Sender
-                            </th>
-                            <th>
-                                Recepient
-                            </th>
-                            <th class="numeric">
-                                Subject
-                            </th>
-                            <th class="numeric">
-                                Date Sent
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($messages as $message)
-                            <tr>
-                                <td>{{$message->sender}}</td>
-                                <td>{{$message->to}}</td>
-                                <td>{{$message->subject}}</td>
-                                <td>{{$message->added_date}}</td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                        <tfoot>
-
-                        </tfoot>
-                    </table>
+                            <div id="email-list-container">
+                                <table id="email-list-table" class="table table-striped table-bordered table-advance table-hover">
+                                    <thead class="flip-content">
+                                        <tr>
+                                            <th width="20%">
+                                                Sender
+                                            </th>
+                                            <th>
+                                                Recepient
+                                            </th>
+                                            <th class="numeric">
+                                                Subject
+                                            </th>
+                                            <th class="numeric">
+                                                Date Sent
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="4" class="text-center"><span id="email-list-more" style="cursor: pointer">More <i class="fa fa-chevron-down"></i></span></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
