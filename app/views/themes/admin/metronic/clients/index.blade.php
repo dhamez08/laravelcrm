@@ -160,9 +160,9 @@
 															<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$customers['customer_id']))}}" data-toggle="popover" data-trigger="hover" data-placement="right" data-title="Client Overview" data-client-fullname="{{ $customers['fullname'] }}" data-client-address="{{ $customers['address'] }}" data-client-phone="{{ implode(', ', $customers['telephone']) }}" data-client-email="{{ implode(', ', $customers['emails']) }}" data-client-website="{{ implode(', ', $customers['urls']) }}" data-client-profile-picture="{{ isset($customers['profile_image']->image) ? $customers['profile_image']->image : url('public/img/profile_images/summary_person.png') }}">{{$customers['fullname']}}</a>
 														@endif
 
-														{{--@if( $customers['associated'] != 0 && $customers['relationship'] != '' )--}}
+													<?php //	{{--@if( $customers['associated'] != 0 && $customers['relationship'] != '' )--}} ?>
 															<?php $partner = \Helpers::array_key_exists_wildcard($array_customer,$customers['associated'],'key-value'); ?>
-															{{--var_dump($partner)--}}
+														<?php //	{{--var_dump($partner)--}} ?>
 															@if( $partner )
 																@if( $partner[$customers['associated']]['type'] == 2 )
 																	- {{$customers['job_title']}} at {{$partner[$customers['associated']]['company_name']}}
@@ -171,7 +171,7 @@
 																@endif
 
 															@endif
-														{{--@endif--}}
+													<?php //	{{--@endif--}} ?>
 														@if($customers['address'])
 														<br/>
 														<small>{{ $customers['address'] }}</small>
@@ -188,7 +188,7 @@
 													<i class="icon-trash"></i> </a>
 												</td>
 											@else
-												{{-- @if( in_array($tag_id,$customers['my_tag_object']->lists('tag_id')) ) --}}
+											<?php //	{{-- @if( in_array($tag_id,$customers['my_tag_object']->lists('tag_id')) ) --}} ?>
 												@if(count(array_diff($tag_id, $customers['my_tag_object']->lists('tag_id'))) == 0)
 													<td style="width:1%">
 														<img src="{{ isset($customers['profile_image']->image) ? $customers['profile_image']->image : url('public/img/profile_images/summary_person.png') }}" style="width:35px">
@@ -201,9 +201,9 @@
 																<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$customers['customer_id']))}}" data-toggle="popover" data-trigger="hover" data-placement="right" data-title="Client Overview" data-client-fullname="{{ $customers['fullname'] }}" data-client-address="{{ $customers['address'] }}" data-client-phone="{{ implode(', ', $customers['telephone']) }}" data-client-email="{{ implode(', ', $customers['emails']) }}" data-client-website="{{ implode(', ', $customers['urls']) }}" {{ isset($customers['profile_image']->image) ? $customers['profile_image']->image : url('public/img/profile_images/summary_person.png') }}>{{$customers['fullname']}}</a>
 															@endif
 
-															{{--@if( $customers['associated'] != 0 && $customers['relationship'] != '' )--}}
+														<?php //	{{--@if( $customers['associated'] != 0 && $customers['relationship'] != '' )--}} ?>
 																<?php $partner = \Helpers::array_key_exists_wildcard($array_customer,$customers['associated'],'key-value'); ?>
-																{{--var_dump($partner)--}}
+															<?php //	{{--var_dump($partner)--}} ?>
 																@if( $partner )
 																	@if( $partner[$customers['associated']]['type'] == 2 )
 																		- {{$customers['job_title']}} at {{$partner[$customers['associated']]['company_name']}}
@@ -212,7 +212,7 @@
 																	@endif
 
 																@endif
-															{{--@endif--}}
+														<?php //	{{--@endif--}} ?>
 														</div>
 													</td>
 													<td style="vertical-align:middle">
@@ -231,7 +231,7 @@
 					@show
 				</div>
 			</div>
-			{{--@include($view_path.'.clients.partials.center_column.'.$center_column_view)--}}
+		<?php //	{{--@include($view_path.'.clients.partials.center_column.'.$center_column_view)--}} ?>
 			<!-- END CENTER COLUMN -->
 		</div>
 

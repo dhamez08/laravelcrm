@@ -250,6 +250,12 @@ class EmailController extends \BaseController {
 							}
 							$message->replyTo('dropbox.13554457@one23.co.uk', $from_name);
 							$message->to($data['to_email'], $data['to_name'])->subject($data['subject'] . ' ' . $data['client_ref']);
+							//headers to track the email
+							$message->getHeaders()->addTextHeader('MSG-REF',$data['client_ref']);
+							$message->getHeaders()->addTextHeader('Read-Receipt-To','dropbox.13554457@one23.co.uk');
+							$message->getHeaders()->addTextHeader('Disposition-Notification-To','dropbox.13554457@one23.co.uk');
+							$message->getHeaders()->addTextHeader('X-Confirm-Reading-To','dropbox.13554457@one23.co.uk');
+							$message->getHeaders()->addTextHeader('Return-Receipt-Requested',1);
 						});
 					}
 					// build array to have message
@@ -333,5 +339,12 @@ class EmailController extends \BaseController {
 			\Message\Message::create($new_message);
 		}
 	}
-
+	//email is read by the user
+	// set the message status by reference
+	
+	public function read_mail($ref = null){
+		if ( $ref !== null ){
+			
+		}
+	}
 }
