@@ -25,7 +25,7 @@ class AlterMessagesTableAddReceipt extends Migration {
 	 */
 	public function down()
 	{
-		 Schema::table('messages', function($table)
+		Schema::table('messages', function($table)
         {
             $table->dropColumn('receipt');
         });
