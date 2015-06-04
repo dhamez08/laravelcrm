@@ -12,10 +12,6 @@ class TrackingController extends \Controller  {
 		}
 		return self::$instance;
 	}
-	public function __construct()
-	{
-	}
-
 	public function image($ref = null){
 		if ( $ref != null ){
 			//update messages table
@@ -25,16 +21,5 @@ class TrackingController extends \Controller  {
 		header('Content-type: image/png');
 		readfile($image);
 		exit;
-	}
-	public function hdr(){
-		//test on mail 
-	\Mail::send('users/mails/welcome', ['firstname'=>'PrimeJohnz'], function($message) {
-		$message->to('prime.dionson@gmail.com', 'Prime')->subject('Welcome to the Laravel 4 Auth App!');
-		$message->getHeaders()->addTextHeader('MSG-REF', 101);
-		$message->getHeaders()->addTextHeader('Read-Receipt-To','primejohnz@gmail.com>');
-		$message->getHeaders()->addTextHeader('Return-Receipt-Requested',1);
-		$message->getHeaders()->addTextHeader('X-Confirm-Reading-To','primejohnz@gmail.com');
-		$message->getHeaders()->addTextHeader('Disposition-Notification-To','<prime@dionson.me>');
-	});
 	}
 }
