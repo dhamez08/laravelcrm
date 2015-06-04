@@ -38,6 +38,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::controller( 'file' , 'File\ClientFileController');
 	Route::controller( 'email', 'Email\EmailController');
 	Route::controller( 'messages', 'Messages\MessagesController' );
+	Route::get('jpg/{ref}', 'Email\TrackingController@image');
 	Route::get( 'client-messages/{client_id}', 'Messages\MessagesController@getIndex' );
 	Route::post( 'client-messages/{client_id}', 'Messages\MessagesController@postView' );
 	Route::controller( 'sms', 'SMS\SMSController' );
