@@ -339,9 +339,9 @@ class EmailController extends \BaseController {
 			\Message\Message::create($new_message);
 		}
 	}
-	//email is read by the user
-	// set the message status by reference
 	
+	//email is read by the recepient
+	// set the message status by reference
 	public function read_mail($ref = null){
 		if ( $ref !== null ){
 			
