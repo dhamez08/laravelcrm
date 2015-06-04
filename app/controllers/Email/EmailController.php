@@ -236,7 +236,26 @@ class EmailController extends \BaseController {
 					$data['to_email'] = $custObj->emails()->first()->email;
 					$data['to_name'] = $custObj->first_name . " " . $custObj->last_name;
 					$data['client_ref'] = "[REF:".$custObj->ref."]";
+					
+					//tracker  image
+					$img_html = "<br/><small>Sent through <img src='". url('/') . "/public/admin/metronic/assets/layout/img/logo_123crm.png' style='width:12px'/>";
+					// build array to have message
+					
+					$new_message = array(
+						'subject' => $data['subject'],
+						'body' => $data['body'],
+						'sender' => $from_name,
+						'direction' => $btn_action=='send' ? '1':'3',
+						'type' => '0',
+						'added_date' => date('Y-m-d H:i:s'),
+						'customer_id' => $customer,
+						'to' => $data['to_email']
+					);
+
+					$smessage = \Message\Message::create($new_message);
+					
 					if($btn_action=='send') {
+						$data['body'] .= $img_html;
 						\Mail::send($email_view, $data, function($message) use ($data, $from_name, $from_email)
 						{
 							$message->from($from_email, $from_name);
@@ -251,27 +270,14 @@ class EmailController extends \BaseController {
 							$message->replyTo('dropbox.13554457@one23.co.uk', $from_name);
 							$message->to($data['to_email'], $data['to_name'])->subject($data['subject'] . ' ' . $data['client_ref']);
 							//headers to track the email
-							$message->getHeaders()->addTextHeader('MSG-REF',$data['client_ref']);
+							$message->getHeaders()->addTextHeader('MSG-REF',$smessage->id);
 							$message->getHeaders()->addTextHeader('Read-Receipt-To','dropbox.13554457@one23.co.uk');
 							$message->getHeaders()->addTextHeader('Disposition-Notification-To','dropbox.13554457@one23.co.uk');
 							$message->getHeaders()->addTextHeader('X-Confirm-Reading-To','dropbox.13554457@one23.co.uk');
 							$message->getHeaders()->addTextHeader('Return-Receipt-Requested',1);
 						});
 					}
-					// build array to have message
-					$new_message = array(
-						'subject' => $data['subject'],
-						'body' => $data['body'],
-						'sender' => $from_name,
-						'direction' => $btn_action=='send' ? '1':'3',
-						'type' => '0',
-						'added_date' => date('Y-m-d H:i:s'),
-						'customer_id' => $customer,
-						'to' => $data['to_email']
-					);
-
-					$smessage = \Message\Message::create($new_message);
-
+					
 					if($data['client_files']) {
 						$file_attach = explode("|", $data['client_files']);
 						$new_attachment = array(
