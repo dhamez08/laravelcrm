@@ -237,8 +237,6 @@ class EmailController extends \BaseController {
 					$data['to_name'] = $custObj->first_name . " " . $custObj->last_name;
 					$data['client_ref'] = "[REF:".$custObj->ref."]";
 					
-					//tracker  image
-					$img_html = "<br/><small>Sent through <img src='". url('/') . "/public/admin/metronic/assets/layout/img/logo_123crm.png' style='width:12px'/>";
 					// build array to have message
 					
 					$new_message = array(
@@ -251,8 +249,10 @@ class EmailController extends \BaseController {
 						'customer_id' => $customer,
 						'to' => $data['to_email']
 					);
-
+					
 					$smessage = \Message\Message::create($new_message);
+					//tracker  image
+					$img_html = "<br/><small>Sent through <img src='". url('/') . "/jpg/" . $smessage->id  . "' style='width:12px'/>";
 					
 					if($btn_action=='send') {
 						$data['body'] .= $img_html;

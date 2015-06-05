@@ -12,12 +12,13 @@ class TrackingController extends \Controller  {
 		}
 		return self::$instance;
 	}
-	public function image($ref = null){
-		if ( $ref != null ){
-			//update messages table
-			//set receipt to 1
+	public function image($id = null){
+		if ( $id != null ){
+			$data = array('receipt'=>1);
+			$message = \Message\Message::find($id);
+			$message->update($data);
 		}
-		$image = 'key.png';
+		$image = './public/admin/metronic/assets/layout/img/logo_123crm.png';
 		header('Content-type: image/png');
 		readfile($image);
 		exit;

@@ -17,7 +17,8 @@ class Message extends \Eloquent{
 		'direction',
 		'method',
 		'ref',
-		'read_status'
+		'read_status',
+		'receipt'
 	);
 
 	public function sms(){
