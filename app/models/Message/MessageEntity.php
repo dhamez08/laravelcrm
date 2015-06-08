@@ -165,4 +165,93 @@ class MessageEntity extends \Eloquent{
 
         return $query;
     }
+
+    public function countAllMessages($start_date, $end_date){
+        $rows = array();
+        $sql = "SELECT m.read_status, count(m.read_status) as message_count FROM messages m, customer c WHERE m.customer_id=c.id AND c.belongs_to=? AND m.direction='1' AND m.deleted_at IS NULL AND m.created_at BETWEEN ? AND ? GROUP BY m.read_status";
+        $query = \DB::select($sql, array(\Session::get('group_id'), $start_date." 00:00:00", $end_date." 23:59:59"));
+
+        return $query;
+    }
+
+    public function countSentMessagesPerDay($start_date, $end_date){
+        $dates = array();
+        $sql = 'SELECT DATE_FORMAT(m.created_at, "%d") as date, count(m.created_at) as email_count FROM messages m, customer c WHERE m.customer_id=c.id AND c.belongs_to=? AND m.direction="1" AND m.deleted_at IS NULL AND m.created_at BETWEEN ? AND ? AND (m.read_status = 1 OR m.read_status = 0) GROUP BY DATE_FORMAT(m.created_at, "%Y%m%d")';
+        $query = \DB::select($sql, array(\Session::get('group_id'), $start_date." 00:00:00", $end_date." 23:59:59"));
+        foreach($query as $result){
+            $dates[intval($result->date)] = intval($result->email_count);
+        }
+
+        $date_range = $this->createDateRangeArray($start_date, $end_date);
+        $date_count = array();
+        foreach($date_range as $date){
+            if(isset($dates[intval($date)])){
+                $date_count[intval($date)] = $dates[intval($date)];
+            } else {
+                $date_count[intval($date)] = 0;
+            }
+        }
+
+        return $date_count;
+    }
+
+    public function countReadMessagesPerDay($start_date, $end_date){
+        $dates = array();
+        $sql = 'SELECT DATE_FORMAT(m.created_at, "%d") as date, count(m.created_at) as email_count FROM messages m, customer c WHERE m.customer_id=c.id AND c.belongs_to=? AND m.direction="1" AND m.deleted_at IS NULL AND m.created_at BETWEEN ? AND ? AND m.read_status = 1 GROUP BY DATE_FORMAT(m.created_at, "%Y%m%d")';
+        $query = \DB::select($sql, array(\Session::get('group_id'), $start_date." 00:00:00", $end_date." 23:59:59"));
+        foreach($query as $result){
+            $dates[intval($result->date)] = intval($result->email_count);
+        }
+
+        $date_range = $this->createDateRangeArray($start_date, $end_date);
+        $date_count = array();
+        foreach($date_range as $date){
+            if(isset($dates[intval($date)])){
+                $date_count[intval($date)] = $dates[intval($date)];
+            } else {
+                $date_count[intval($date)] = 0;
+            }
+        }
+
+        return $date_count;
+    }
+
+    public function countBouncedMessagesPerDay($start_date, $end_date){
+        $dates = array();
+        $sql = 'SELECT DATE_FORMAT(m.created_at, "%d") as date, count(m.created_at) as email_count FROM messages m, customer c WHERE m.customer_id=c.id AND c.belongs_to=? AND m.direction="1" AND m.deleted_at IS NULL AND m.created_at BETWEEN ? AND ? AND m.read_status = -1 GROUP BY DATE_FORMAT(m.created_at, "%Y%m%d")';
+        $query = \DB::select($sql, array(\Session::get('group_id'), $start_date." 00:00:00", $end_date." 23:59:59"));
+        foreach($query as $result){
+            $dates[intval($result->date)] = intval($result->email_count);
+        }
+
+        $date_range = $this->createDateRangeArray($start_date, $end_date);
+        $date_count = array();
+        foreach($date_range as $date){
+            if(isset($dates[intval($date)])){
+                $date_count[intval($date)] = $dates[intval($date)];
+            } else {
+                $date_count[intval($date)] = 0;
+            }
+        }
+
+        return $date_count;
+    }
+
+    private function createDateRangeArray($strDateFrom,$strDateTo){
+        $aryRange=array();
+
+        $iDateFrom=mktime(1,0,0,substr($strDateFrom,5,2),     substr($strDateFrom,8,2),substr($strDateFrom,0,4));
+        $iDateTo=mktime(1,0,0,substr($strDateTo,5,2),     substr($strDateTo,8,2),substr($strDateTo,0,4));
+
+        if ($iDateTo>=$iDateFrom)
+        {
+            array_push($aryRange,date('d',$iDateFrom)); // first entry
+            while ($iDateFrom<$iDateTo)
+            {
+                $iDateFrom+=86400; // add 24 hours
+                array_push($aryRange,date('d',$iDateFrom));
+            }
+        }
+        return $aryRange;
+    }
 }

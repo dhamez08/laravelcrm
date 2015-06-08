@@ -6,8 +6,73 @@ $(function(){
     var page_index = 0;
     var filter = 'sent'
 
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth();
+    var yyyy = today.getFullYear();
+    var month = new Array();
+    month[0] = "January";
+    month[1] = "February";
+    month[2] = "March";
+    month[3] = "April";
+    month[4] = "May";
+    month[5] = "June";
+    month[6] = "July";
+    month[7] = "August";
+    month[8] = "September";
+    month[9] = "October";
+    month[10] = "November";
+    month[11] = "December";
+
+    var date_label = "for the month of "+month[mm];
+
+    mm += 1;
+    if(dd<10)
+        dd='0'+dd
+
+    if(mm<10)
+        mm='0'+mm
+
+    var end_date = yyyy+'-'+mm+'-'+dd;
+    var start_date = yyyy+'-'+mm+'-'+'01';
+
+    $('#start-date').val(start_date);
+    $('#end-date').val(end_date);
+
+    rebuild_chart(start_date, end_date);
+
+    var chart_one_data = [
+        {
+            "category": "Email Sent",
+            "column-1": 0
+        },
+        {
+            "category": "Email Read",
+            "column-1": 0
+        },
+        {
+            "category": "Email Bounced",
+            "column-1": 0
+        }
+    ]
+    var chart_two_data = new Array({
+        "category": 0,
+        "column-1": 0
+    });
+    var chart_three_data = new Array({
+        "category": 0,
+        "column-1": 0
+    });
+    var chart_four_data = new Array({
+        "category": 0,
+        "column-1": 0
+    });
+
     $('#date-range-button').on('click',function(){
-        $('.reload').click();
+        var start = $('#start-date').val();
+        var end = $('#end-date').val();
+        date_label = "from "+start+" to "+end;
+        rebuild_chart(start, end);
     })
 
     $('#email-list-more').on('click',function(){
@@ -28,6 +93,54 @@ $(function(){
         $('#email-list-table tbody').html('')
         fetch_list();
     });
+
+    function rebuild_chart(start_date, end_date){
+        var data = new Object();
+        data.start_date = start_date;
+        data.end_date = end_date;
+
+        $.ajax({
+            url: 'ajax-email-report-data',
+            data: data,
+            type: 'get',
+            dataType: 'json',
+            success: function(response){
+                console.log(response);
+
+
+                $.each(response.count, function(index, row){
+                    if(row.read_status == '0'){
+                        chart_one_data[0]['column-1'] = row.message_count;
+                    } else if(row.read_status == '1'){
+                        chart_one_data[1]['column-1'] = row.message_count;
+                    }
+                })
+
+                summary_chart.dataProvider = chart_one_data;
+                summary_chart.validateData();
+
+                sent_chart.dataProvider = generate_data(response.sent);
+                sent_chart.validateData();
+
+                read_chart.dataProvider = generate_data(response.read);
+                read_chart.validateData();
+
+                bounced_chart.dataProvider = generate_data(response.bounced);
+                bounced_chart.validateData();
+
+                $('.date-label').text(date_label);
+            }
+        });
+    }
+
+    function generate_data(array_of_data){
+        var dates = new Array();
+        $.each(array_of_data, function(date, count){
+            dates.push({'category':date, 'column-1':count});
+        })
+
+        return dates;
+    }
 
     function fetch_list(){
         setTimeout(function(){
@@ -60,7 +173,7 @@ $(function(){
         },100);
     }
 
-    AmCharts.makeChart("email-total-report",
+    var summary_chart = AmCharts.makeChart("email-total-report",
         {
             "type": "serial",
             "path": "https://www.amcharts.com/lib/3/",
@@ -112,24 +225,11 @@ $(function(){
             "allLabels": [],
             "balloon": {},
             "titles": [],
-            "dataProvider": [
-                {
-                    "category": "Email Sent",
-                    "column-1": 8
-                },
-                {
-                    "category": "Email Read",
-                    "column-1": 6
-                },
-                {
-                    "category": "Email Bounced",
-                    "column-1": 2
-                }
-            ]
+            "dataProvider": chart_one_data
         }
     );
 
-    AmCharts.makeChart("email-total-sent",
+    var sent_chart = AmCharts.makeChart("email-total-sent",
         {
             "type": "serial",
             "path": "http://www.amcharts.com/lib/3/",
@@ -170,132 +270,11 @@ $(function(){
             "allLabels": [],
             "balloon": {},
             "titles": [],
-            "dataProvider": [
-                {
-                    "category": "1",
-                    "column-1": 8
-                },
-                {
-                    "category": "2",
-                    "column-1": 6
-                },
-                {
-                    "category": "3",
-                    "column-1": "2"
-                },
-                {
-                    "category": "4",
-                    "column-1": 1
-                },
-                {
-                    "category": "5",
-                    "column-1": 2
-                },
-                {
-                    "category": "6",
-                    "column-1": 3
-                },
-                {
-                    "category": "7",
-                    "column-1": 6
-                },
-                {
-                    "category": "8",
-                    "column-1": "8"
-                },
-                {
-                    "category": "9",
-                    "column-1": "2"
-                },
-                {
-                    "category": "10",
-                    "column-1": "9"
-                },
-                {
-                    "category": "11",
-                    "column-1": "10"
-                },
-                {
-                    "category": "12",
-                    "column-1": "11"
-                },
-                {
-                    "category": "13",
-                    "column-1": "11"
-                },
-                {
-                    "category": "14",
-                    "column-1": "9"
-                },
-                {
-                    "category": "15",
-                    "column-1": "12"
-                },
-                {
-                    "category": "16",
-                    "column-1": "11"
-                },
-                {
-                    "category": "17",
-                    "column-1": "9"
-                },
-                {
-                    "category": "18",
-                    "column-1": "8"
-                },
-                {
-                    "category": "19",
-                    "column-1": "11"
-                },
-                {
-                    "category": "20",
-                    "column-1": "12"
-                },
-                {
-                    "category": "21",
-                    "column-1": "13"
-                },
-                {
-                    "category": "22",
-                    "column-1": "15"
-                },
-                {
-                    "category": "23",
-                    "column-1": "17"
-                },
-                {
-                    "category": "24",
-                    "column-1": "19"
-                },
-                {
-                    "category": "25",
-                    "column-1": "11"
-                },
-                {
-                    "category": "26",
-                    "column-1": "9"
-                },
-                {
-                    "category": "27",
-                    "column-1": "11"
-                },
-                {
-                    "category": "28",
-                    "column-1": "12"
-                },
-                {
-                    "category": "29",
-                    "column-1": "14"
-                },
-                {
-                    "category": "30",
-                    "column-1": "12"
-                }
-            ]
+            "dataProvider": chart_two_data
         }
     );
 
-    AmCharts.makeChart("email-total-read",
+    var read_chart = AmCharts.makeChart("email-total-read",
         {
             "type": "serial",
             "path": "http://www.amcharts.com/lib/3/",
@@ -336,132 +315,11 @@ $(function(){
             "allLabels": [],
             "balloon": {},
             "titles": [],
-            "dataProvider": [
-                {
-                    "category": "1",
-                    "column-1": 8
-                },
-                {
-                    "category": "2",
-                    "column-1": 6
-                },
-                {
-                    "category": "3",
-                    "column-1": "2"
-                },
-                {
-                    "category": "4",
-                    "column-1": 1
-                },
-                {
-                    "category": "5",
-                    "column-1": 2
-                },
-                {
-                    "category": "6",
-                    "column-1": 3
-                },
-                {
-                    "category": "7",
-                    "column-1": 6
-                },
-                {
-                    "category": "8",
-                    "column-1": "8"
-                },
-                {
-                    "category": "9",
-                    "column-1": "2"
-                },
-                {
-                    "category": "10",
-                    "column-1": "9"
-                },
-                {
-                    "category": "11",
-                    "column-1": "10"
-                },
-                {
-                    "category": "12",
-                    "column-1": "11"
-                },
-                {
-                    "category": "13",
-                    "column-1": "11"
-                },
-                {
-                    "category": "14",
-                    "column-1": "9"
-                },
-                {
-                    "category": "15",
-                    "column-1": "12"
-                },
-                {
-                    "category": "16",
-                    "column-1": "11"
-                },
-                {
-                    "category": "17",
-                    "column-1": "9"
-                },
-                {
-                    "category": "18",
-                    "column-1": "8"
-                },
-                {
-                    "category": "19",
-                    "column-1": "11"
-                },
-                {
-                    "category": "20",
-                    "column-1": "12"
-                },
-                {
-                    "category": "21",
-                    "column-1": "13"
-                },
-                {
-                    "category": "22",
-                    "column-1": "15"
-                },
-                {
-                    "category": "23",
-                    "column-1": "17"
-                },
-                {
-                    "category": "24",
-                    "column-1": "19"
-                },
-                {
-                    "category": "25",
-                    "column-1": "11"
-                },
-                {
-                    "category": "26",
-                    "column-1": "9"
-                },
-                {
-                    "category": "27",
-                    "column-1": "11"
-                },
-                {
-                    "category": "28",
-                    "column-1": "12"
-                },
-                {
-                    "category": "29",
-                    "column-1": "14"
-                },
-                {
-                    "category": "30",
-                    "column-1": "12"
-                }
-            ]
+            "dataProvider": chart_three_data
         }
     );
 
-    AmCharts.makeChart("email-total-bounced",
+    var bounced_chart = AmCharts.makeChart("email-total-bounced",
         {
             "type": "serial",
             "path": "http://www.amcharts.com/lib/3/",
@@ -502,128 +360,7 @@ $(function(){
             "allLabels": [],
             "balloon": {},
             "titles": [],
-            "dataProvider": [
-                {
-                    "category": "1",
-                    "column-1": 1
-                },
-                {
-                    "category": "2",
-                    "column-1": 1
-                },
-                {
-                    "category": "3",
-                    "column-1": "0"
-                },
-                {
-                    "category": "4",
-                    "column-1": 0
-                },
-                {
-                    "category": "5",
-                    "column-1": 0
-                },
-                {
-                    "category": "6",
-                    "column-1": 0
-                },
-                {
-                    "category": "7",
-                    "column-1": 2
-                },
-                {
-                    "category": "8",
-                    "column-1": "1"
-                },
-                {
-                    "category": "9",
-                    "column-1": "0"
-                },
-                {
-                    "category": "10",
-                    "column-1": "1"
-                },
-                {
-                    "category": "11",
-                    "column-1": "2"
-                },
-                {
-                    "category": "12",
-                    "column-1": "1"
-                },
-                {
-                    "category": "13",
-                    "column-1": "1"
-                },
-                {
-                    "category": "14",
-                    "column-1": "0"
-                },
-                {
-                    "category": "15",
-                    "column-1": "1"
-                },
-                {
-                    "category": "16",
-                    "column-1": "2"
-                },
-                {
-                    "category": "17",
-                    "column-1": "3"
-                },
-                {
-                    "category": "18",
-                    "column-1": "1"
-                },
-                {
-                    "category": "19",
-                    "column-1": "1"
-                },
-                {
-                    "category": "20",
-                    "column-1": "2"
-                },
-                {
-                    "category": "21",
-                    "column-1": "3"
-                },
-                {
-                    "category": "22",
-                    "column-1": "4"
-                },
-                {
-                    "category": "23",
-                    "column-1": "3"
-                },
-                {
-                    "category": "24",
-                    "column-1": "1"
-                },
-                {
-                    "category": "25",
-                    "column-1": "1"
-                },
-                {
-                    "category": "26",
-                    "column-1": "2"
-                },
-                {
-                    "category": "27",
-                    "column-1": "1"
-                },
-                {
-                    "category": "28",
-                    "column-1": "2"
-                },
-                {
-                    "category": "29",
-                    "column-1": "4"
-                },
-                {
-                    "category": "30",
-                    "column-1": "2"
-                }
-            ]
+            "dataProvider": chart_four_data
         }
     );
 });

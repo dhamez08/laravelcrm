@@ -1410,4 +1410,37 @@ class MarketingController extends \BaseController {
         return \Response::json(array('success'=>true,'messages'=> $messages));
     }
 
+    public function getAjaxEmailReportData(){
+        $start_date = \Input::get('start_date');
+        $end_date = \Input::get('end_date');
+
+        $message_count = \Message\MessageEntity::get_instance()->countAllMessages($start_date, $end_date);
+        $sent_count = \Message\MessageEntity::get_instance()->countSentMessagesPerDay($start_date, $end_date);
+        $read_count = \Message\MessageEntity::get_instance()->countReadMessagesPerDay($start_date, $end_date);
+        $bounced_count = \Message\MessageEntity::get_instance()->countBouncedMessagesPerDay($start_date, $end_date);
+
+        return \Response::json(array(
+            'success'=>true,
+            'count'=> $message_count,
+            'sent'=> $sent_count,
+            'read'=> $read_count,
+            'bounced'=> $bounced_count
+        ));
+    }
+
+    public function getEmailCount($start_date, $end_date){
+
+    }
+
+    public function getSentEmailCount($start_date, $end_date){
+
+    }
+
+    public function getReadEmailCount($start_date, $end_date){
+
+    }
+
+    public function getBouncedEmailCount($start_date, $end_date){
+
+    }
 }

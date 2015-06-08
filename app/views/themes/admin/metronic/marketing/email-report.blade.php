@@ -47,13 +47,13 @@
                                         <div class="col-md-4">
                                             <div class="input-icon">
                                                 <i class="fa fa-calendar"></i>
-                                                <input type="text" placeholder="Start" data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" value="" size="16" class="form-control date-picker email-date">
+                                                <input type="text" id="start-date" placeholder="Start" data-date-viewmode="years" data-date-format="yyyy-mm-dd" data-date="" value="" size="16" class="form-control date-picker email-date">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="input-icon">
                                                 <i class="fa fa-calendar"></i>
-                                                <input type="text" placeholder="End" data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="" value="" size="16" class="form-control date-picker email-date">
+                                                <input type="text" id="end-date" placeholder="End" data-date-viewmode="years" data-date-format="yyyy-mm-dd" data-date="" value="" size="16" class="form-control date-picker email-date">
                                             </div>
                                         </div>
                                         <div class="col-md-2">
@@ -71,15 +71,15 @@
                                             <div class="caption">
                                                 <i class="icon-bar-chart font-green-haze"></i>
                                                 <span class="caption-subject bold uppercase font-green-haze"> Email Marketing Statistics</span>
-                                                <span class="caption-helper">for the month of May</span>
+                                                <span class="caption-helper date-label"></span>
                                             </div>
                                             <div class="tools">
                                                 <a class="collapse" href="javascript:;" data-original-title="" title="">
                                                 </a>
-                                                <a class="config" data-toggle="modal" href="#portlet-config" data-original-title="" title="">
-                                                </a>
-                                                <a class="reload" href="javascript:;" data-original-title="" title="">
-                                                </a>
+<!--                                                <a class="config" data-toggle="modal" href="#portlet-config" data-original-title="" title="">-->
+<!--                                                </a>-->
+<!--                                                <a class="reload" href="javascript:;" data-original-title="" title="">-->
+<!--                                                </a>-->
                                                 <a class="fullscreen" href="javascript:;" data-original-title="" title="">
                                                 </a>
                                                 <a class="remove" href="javascript:;" data-original-title="" title="">
@@ -99,15 +99,15 @@
                                             <div class="caption">
                                                 <i class="icon-bar-chart font-green-haze"></i>
                                                 <span class="caption-subject bold uppercase font-green-haze"> Total Email Sent</span>
-                                                <span class="caption-helper">for the month of May</span>
+                                                <span class="caption-helper date-label"></span>
                                             </div>
                                             <div class="tools">
                                                 <a class="collapse" href="javascript:;" data-original-title="" title="">
                                                 </a>
-                                                <a class="config" data-toggle="modal" href="#portlet-config" data-original-title="" title="">
-                                                </a>
-                                                <a class="reload" href="javascript:;" data-original-title="" title="">
-                                                </a>
+<!--                                                <a class="config" data-toggle="modal" href="#portlet-config" data-original-title="" title="">-->
+<!--                                                </a>-->
+<!--                                                <a class="reload" href="javascript:;" data-original-title="" title="">-->
+<!--                                                </a>-->
                                                 <a class="fullscreen" href="javascript:;" data-original-title="" title="">
                                                 </a>
                                                 <a class="remove" href="javascript:;" data-original-title="" title="">
@@ -129,15 +129,15 @@
                                             <div class="caption">
                                                 <i class="icon-bar-chart font-green-haze"></i>
                                                 <span class="caption-subject bold uppercase font-green-haze"> Total Email Read</span>
-                                                <span class="caption-helper">for the month of May</span>
+                                                <span class="caption-helper date-label"></span>
                                             </div>
                                             <div class="tools">
                                                 <a class="collapse" href="javascript:;" data-original-title="" title="">
                                                 </a>
-                                                <a class="config" data-toggle="modal" href="#portlet-config" data-original-title="" title="">
-                                                </a>
-                                                <a class="reload" href="javascript:;" data-original-title="" title="">
-                                                </a>
+<!--                                                <a class="config" data-toggle="modal" href="#portlet-config" data-original-title="" title="">-->
+<!--                                                </a>-->
+<!--                                                <a class="reload" href="javascript:;" data-original-title="" title="">-->
+<!--                                                </a>-->
                                                 <a class="fullscreen" href="javascript:;" data-original-title="" title="">
                                                 </a>
                                                 <a class="remove" href="javascript:;" data-original-title="" title="">
@@ -157,15 +157,15 @@
                                             <div class="caption">
                                                 <i class="icon-bar-chart font-green-haze"></i>
                                                 <span class="caption-subject bold uppercase font-green-haze"> Total Email Bounced</span>
-                                                <span class="caption-helper">for the month of May</span>
+                                                <span class="caption-helper date-label"></span>
                                             </div>
                                             <div class="tools">
                                                 <a class="collapse" href="javascript:;" data-original-title="" title="">
                                                 </a>
-                                                <a class="config" data-toggle="modal" href="#portlet-config" data-original-title="" title="">
-                                                </a>
-                                                <a class="reload" href="javascript:;" data-original-title="" title="">
-                                                </a>
+<!--                                                <a class="config" data-toggle="modal" href="#portlet-config" data-original-title="" title="">-->
+<!--                                                </a>-->
+<!--                                                <a class="reload" href="javascript:;" data-original-title="" title="">-->
+<!--                                                </a>-->
                                                 <a class="fullscreen" href="javascript:;" data-original-title="" title="">
                                                 </a>
                                                 <a class="remove" href="javascript:;" data-original-title="" title="">
@@ -262,7 +262,7 @@
     $(function(){
         jQuery('.email-date').datepicker({
             autoclose:true,
-            format: 'dd-mm-yyyy'
+            format: 'yyyy-mm-dd'
         });
     });
 </script>
