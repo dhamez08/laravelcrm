@@ -23,4 +23,7 @@ class TrackingController extends \Controller  {
 		readfile($image);
 		exit;
 	}
+	public function getReadcount(){
+		
+	}
 }
