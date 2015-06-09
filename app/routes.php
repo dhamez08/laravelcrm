@@ -139,6 +139,7 @@ Route::group(array('before' => 'auth'), function()
     });
 
 });
+Route::get('jpg/{id}', 'Email\TrackingController@image');
 Route::post('pass-email-data','Email\EmailController@sendData');
 Route::get('testmail', function()
 {
