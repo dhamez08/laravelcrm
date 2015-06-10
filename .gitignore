@@ -10,3 +10,5 @@ composer.lock
 composer.phar
 app/config/packages/atticmedia/anvard/hybridauth.php
 /one23couk/nbproject/private/
+
+.htaccess
