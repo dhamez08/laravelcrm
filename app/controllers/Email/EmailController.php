@@ -256,7 +256,7 @@ class EmailController extends \BaseController {
 					
 					if($btn_action=='send') {
 						$data['body'] .= $img_html;
-						\Mail::send($email_view, $data, function($message) use ($data, $from_name, $from_email)
+						\Mail::send($email_view, $data, function($message) use ($data, $from_name, $from_email, $smessage)
 						{
 							$message->from($from_email, $from_name);
 							if($data['cc'])
@@ -270,7 +270,7 @@ class EmailController extends \BaseController {
 							$message->replyTo('dropbox.13554457@one23.co.uk', $from_name);
 							$message->to($data['to_email'], $data['to_name'])->subject($data['subject'] . ' ' . $data['client_ref']);
 							//headers to track the email
-							$message->getHeaders()->addTextHeader('MSG-REF',$message->id);
+							$message->getHeaders()->addTextHeader('MSG-REF',$smessage->id);
 							$message->getHeaders()->addTextHeader('Read-Receipt-To','dropbox.13554457@one23.co.uk');
 							$message->getHeaders()->addTextHeader('Disposition-Notification-To','dropbox.13554457@one23.co.uk');
 							$message->getHeaders()->addTextHeader('X-Confirm-Reading-To','dropbox.13554457@one23.co.uk');
