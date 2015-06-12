@@ -669,13 +669,6 @@ class MarketingController extends \BaseController {
                 $data['to_name'] = $client_detail['first_name'] . " " . $client_detail['last_name'];
                 $data['client_ref'] = "[REF:".$client_detail['ref']."]";
 
-                \Mail::send('emails.clients.marketing', $data, function($message) use ($data, $from_name, $from_email)
-                {
-                    $message->from($from_email, $from_name);
-                    $message->replyTo('dropbox.13554457@one23.co.uk', $from_name);
-                    $message->to($data['to_email'], $data['to_name'])->subject($data['subject'] . ' ' . $data['client_ref']);
-                });
-
                 // build array to have message
                 $new_message = array(
                     'subject' => $data['subject'],
@@ -689,6 +682,22 @@ class MarketingController extends \BaseController {
                 );
 
                 $smessage = \Message\Message::create($new_message);
+
+
+                \Mail::send('emails.clients.marketing', $data, function($message) use ($data, $from_name, $from_email, $smessage)
+                {
+                    $message->from($from_email, $from_name);
+                    $message->replyTo('dropbox.13554457@one23.co.uk', $from_name);
+                    $message->to($data['to_email'], $data['to_name'])->subject($data['subject'] . ' ' . $data['client_ref']);
+
+                    $message->getHeaders()->addTextHeader('MSG-REF',$smessage->id);
+                    $message->getHeaders()->addTextHeader('Read-Receipt-To','laravelcrm@one23.co.uk');
+                    $message->getHeaders()->addTextHeader('Disposition-Notification-To','laravelcrm@one23.co.uk');
+                    $message->getHeaders()->addTextHeader('X-Confirm-Reading-To','laravelcrm@one23.co.uk');
+                    $message->getHeaders()->addTextHeader('Return-Receipt-Requested',1);
+                });
+
+
             }
 
             \Session::flash('message', 'Marketing email sent successfully.');
