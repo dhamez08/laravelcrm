@@ -160,7 +160,7 @@ class MessageEntity extends \Eloquent{
 
     public function listAllSentMessagesWithFilter($filter, $page_size, $page_ndx) {
         $rows = array();
-        $sql = "SELECT m.sender, m.to, m.subject, m.added_date, m.read_status, CONCAT(c.company_name, ' ', c.first_name, ' ', c.last_name) as client FROM messages m, customer c WHERE m.customer_id=c.id AND c.belongs_to=? AND m.read_status=? AND m.direction='1' AND m.deleted_at IS NULL ORDER BY m.read_status,m.added_date DESC LIMIT ? OFFSET ?";
+        $sql = "SELECT m.sender, m.to, m.subject, m.added_date, m.receipt, CONCAT(c.company_name, ' ', c.first_name, ' ', c.last_name) as client FROM messages m, customer c WHERE m.customer_id=c.id AND c.belongs_to=? AND m.receipt=? AND m.direction='1' AND m.deleted_at IS NULL ORDER BY m.receipt,m.added_date DESC LIMIT ? OFFSET ?";
         $query = \DB::select($sql, array(\Session::get('group_id'), $filter, $page_size, $page_ndx));
 
         return $query;
@@ -168,7 +168,7 @@ class MessageEntity extends \Eloquent{
 
     public function countAllMessages($start_date, $end_date){
         $rows = array();
-        $sql = "SELECT m.read_status, count(m.read_status) as message_count FROM messages m, customer c WHERE m.customer_id=c.id AND c.belongs_to=? AND m.direction='1' AND m.deleted_at IS NULL AND m.created_at BETWEEN ? AND ? GROUP BY m.read_status";
+        $sql = "SELECT m.receipt, count(m.receipt) as message_count FROM messages m, customer c WHERE m.customer_id=c.id AND c.belongs_to=? AND m.direction='1' AND m.deleted_at IS NULL AND m.created_at BETWEEN ? AND ? GROUP BY m.receipt";
         $query = \DB::select($sql, array(\Session::get('group_id'), $start_date." 00:00:00", $end_date." 23:59:59"));
 
         return $query;
@@ -176,7 +176,7 @@ class MessageEntity extends \Eloquent{
 
     public function countSentMessagesPerDay($start_date, $end_date){
         $dates = array();
-        $sql = 'SELECT DATE_FORMAT(m.created_at, "%d") as date, count(m.created_at) as email_count FROM messages m, customer c WHERE m.customer_id=c.id AND c.belongs_to=? AND m.direction="1" AND m.deleted_at IS NULL AND m.created_at BETWEEN ? AND ? AND (m.read_status = 1 OR m.read_status = 0) GROUP BY DATE_FORMAT(m.created_at, "%Y%m%d")';
+        $sql = 'SELECT DATE_FORMAT(m.created_at, "%d") as date, count(m.created_at) as email_count FROM messages m, customer c WHERE m.customer_id=c.id AND c.belongs_to=? AND m.direction="1" AND m.deleted_at IS NULL AND m.created_at BETWEEN ? AND ? AND (m.receipt = 1 OR m.receipt = 0) GROUP BY DATE_FORMAT(m.created_at, "%Y%m%d")';
         $query = \DB::select($sql, array(\Session::get('group_id'), $start_date." 00:00:00", $end_date." 23:59:59"));
         foreach($query as $result){
             $dates[intval($result->date)] = intval($result->email_count);
@@ -197,7 +197,7 @@ class MessageEntity extends \Eloquent{
 
     public function countReadMessagesPerDay($start_date, $end_date){
         $dates = array();
-        $sql = 'SELECT DATE_FORMAT(m.created_at, "%d") as date, count(m.created_at) as email_count FROM messages m, customer c WHERE m.customer_id=c.id AND c.belongs_to=? AND m.direction="1" AND m.deleted_at IS NULL AND m.created_at BETWEEN ? AND ? AND m.read_status = 1 GROUP BY DATE_FORMAT(m.created_at, "%Y%m%d")';
+        $sql = 'SELECT DATE_FORMAT(m.created_at, "%d") as date, count(m.created_at) as email_count FROM messages m, customer c WHERE m.customer_id=c.id AND c.belongs_to=? AND m.direction="1" AND m.deleted_at IS NULL AND m.created_at BETWEEN ? AND ? AND m.receipt = 1 GROUP BY DATE_FORMAT(m.created_at, "%Y%m%d")';
         $query = \DB::select($sql, array(\Session::get('group_id'), $start_date." 00:00:00", $end_date." 23:59:59"));
         foreach($query as $result){
             $dates[intval($result->date)] = intval($result->email_count);
@@ -218,7 +218,7 @@ class MessageEntity extends \Eloquent{
 
     public function countBouncedMessagesPerDay($start_date, $end_date){
         $dates = array();
-        $sql = 'SELECT DATE_FORMAT(m.created_at, "%d") as date, count(m.created_at) as email_count FROM messages m, customer c WHERE m.customer_id=c.id AND c.belongs_to=? AND m.direction="1" AND m.deleted_at IS NULL AND m.created_at BETWEEN ? AND ? AND m.read_status = -1 GROUP BY DATE_FORMAT(m.created_at, "%Y%m%d")';
+        $sql = 'SELECT DATE_FORMAT(m.created_at, "%d") as date, count(m.created_at) as email_count FROM messages m, customer c WHERE m.customer_id=c.id AND c.belongs_to=? AND m.direction="1" AND m.deleted_at IS NULL AND m.created_at BETWEEN ? AND ? AND m.receipt = -1 GROUP BY DATE_FORMAT(m.created_at, "%Y%m%d")';
         $query = \DB::select($sql, array(\Session::get('group_id'), $start_date." 00:00:00", $end_date." 23:59:59"));
         foreach($query as $result){
             $dates[intval($result->date)] = intval($result->email_count);

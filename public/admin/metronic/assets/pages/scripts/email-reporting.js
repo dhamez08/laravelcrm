@@ -109,12 +109,15 @@ $(function(){
 
 
                 $.each(response.count, function(index, row){
-                    if(row.read_status == '0'){
+                    if(row.receipt == '0'){
                         chart_one_data[0]['column-1'] = row.message_count;
-                    } else if(row.read_status == '1'){
+                    } else if(row.receipt == '1'){
                         chart_one_data[1]['column-1'] = row.message_count;
                     }
                 })
+
+                // Add sent and read
+                chart_one_data[0]['column-1'] += chart_one_data[1]['column-1'];
 
                 summary_chart.dataProvider = chart_one_data;
                 summary_chart.validateData();

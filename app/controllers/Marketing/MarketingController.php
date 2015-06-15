@@ -697,6 +697,12 @@ class MarketingController extends \BaseController {
                     $message->getHeaders()->addTextHeader('Return-Receipt-Requested',1);
                 });
 
+                // Set receipt to bounced if email was not send.
+                if(count(\Mail::failures()) > 0){
+                    $smessage->receipt = -1;
+                    $smessage->save();
+                }
+
 
             }
 
@@ -1450,6 +1456,32 @@ class MarketingController extends \BaseController {
     }
 
     public function getBouncedEmailCount($start_date, $end_date){
+
+    }
+
+    public function getCheckEmailStatus(){
+        $username = 'laravelcrm@one23.co.uk';
+        $password = 'l4r4v3lcrm';
+        $server = '{baracus.hyliahub.com:993/imap/ssl}INBOX';
+
+        $inbox = imap_open($server, $username, $password);
+        $emails = imap_search($inbox, 'UNSEEN');
+
+        if(!empty($emails)){
+            foreach($emails as $email_number){
+                $message = imap_fetchbody($inbox,$email_number,3);
+                if(preg_match("/MSG-REF: (.*)/", $message, $matches)){
+                    $message_id = intval($matches[1]);
+
+                    // Update message's tracker
+                    if($message_id > 0){
+                        $message = \Message\Message::find($message_id);
+                        $message->receipt  = 1;
+                        $message->save();
+                    }
+                }
+            }
+        }
 
     }
 }
