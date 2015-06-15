@@ -1472,7 +1472,7 @@ class MarketingController extends \BaseController {
                 $message = imap_fetchbody($inbox,$email_number,3);
                 if(preg_match("/MSG-REF: (.*)/", $message, $matches)){
                     $message_id = intval($matches[1]);
-
+                    print_r($message_id);
                     // Update message's tracker
                     if($message_id > 0){
                         $message = \Message\Message::find($message_id);
