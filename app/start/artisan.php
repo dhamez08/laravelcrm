@@ -12,3 +12,4 @@
 */
 
 Artisan::add(new RemoteCommand);
+Artisan::add(new ReceiptCheckerCommand);
