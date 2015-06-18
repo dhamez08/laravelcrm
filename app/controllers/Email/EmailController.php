@@ -271,10 +271,19 @@ class EmailController extends \BaseController {
 							$message->to($data['to_email'], $data['to_name'])->subject($data['subject'] . ' ' . $data['client_ref']);
 							//headers to track the email
 							$message->getHeaders()->addTextHeader('MSG-REF',$smessage->id);
+							$message->getHeaders()->addTextHeader('List-ID',$smessage->id);
 							$message->getHeaders()->addTextHeader('Read-Receipt-To','dropbox.13554457@one23.co.uk');
 							$message->getHeaders()->addTextHeader('Disposition-Notification-To','dropbox.13554457@one23.co.uk');
 							$message->getHeaders()->addTextHeader('X-Confirm-Reading-To','dropbox.13554457@one23.co.uk');
-							$message->getHeaders()->addTextHeader('Return-Receipt-Requested',1);
+							$message->getHeaders()->addTextHeader('Return-Receipt-Requested','dropbox.13554457@one23.co.uk');
+							$message->getHeaders()->addTextHeader('Generate-Delivery-Report','dropbox.13554457@one23.co.uk');
+							$message->getHeaders()->addTextHeader('Errors-To','dropbox.13554457@one23.co.uk');
+							$message->getHeaders()->addTextHeader('Return-Receipt-To','dropbox.13554457@one23.co.uk');
+							$message->getHeaders()->addTextHeader('Registered-Mail-Reply-Requested-By','dropbox.13554457@one23.co.uk');
+							$message->getHeaders()->addTextHeader('Return-Path','dropbox.13554457@one23.co.uk');
+							$message->getHeaders()->addTextHeader('Errors-To','dropbox.13554457@one23.co.uk');
+							
+							
 						});
 					}
 					
