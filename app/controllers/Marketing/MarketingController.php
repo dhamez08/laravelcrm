@@ -687,14 +687,21 @@ class MarketingController extends \BaseController {
                 \Mail::send('emails.clients.marketing', $data, function($message) use ($data, $from_name, $from_email, $smessage)
                 {
                     $message->from($from_email, $from_name);
-                    $message->replyTo('dropbox.13554457@one23.co.uk', $from_name);
+                    $message->replyTo('laravelcrm@one23.co.uk', $from_name);
                     $message->to($data['to_email'], $data['to_name'])->subject($data['subject'] . ' ' . $data['client_ref']);
 
                     $message->getHeaders()->addTextHeader('MSG-REF',$smessage->id);
                     $message->getHeaders()->addTextHeader('Read-Receipt-To','laravelcrm@one23.co.uk');
                     $message->getHeaders()->addTextHeader('Disposition-Notification-To','laravelcrm@one23.co.uk');
                     $message->getHeaders()->addTextHeader('X-Confirm-Reading-To','laravelcrm@one23.co.uk');
-                    $message->getHeaders()->addTextHeader('Return-Receipt-Requested',1);
+                    $message->getHeaders()->addTextHeader('Return-Receipt-Requested','laravelcrm@one23.co.uk');
+                    $message->getHeaders()->addTextHeader('Generate-Delivery-Report','laravelcrm@one23.co.uk');
+                    $message->getHeaders()->addTextHeader('Errors-To','laravelcrm@one23.co.uk');
+                    $message->getHeaders()->addTextHeader('Return-Receipt-To','laravelcrm@one23.co.uk');
+                    $message->getHeaders()->addTextHeader('Registered-Mail-Reply-Requested-By','laravelcrm@one23.co.uk');
+                    $message->getHeaders()->addTextHeader('Return-Path','laravelcrm@one23.co.uk');
+                    $message->getHeaders()->addTextHeader('Errors-To','laravelcrm@one23.co.uk');
+
                 });
 
                 // Set receipt to bounced if email was not send.
