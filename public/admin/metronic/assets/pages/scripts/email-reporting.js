@@ -191,7 +191,9 @@ $(function(){
             "startDuration": 1,
             "backgroundAlpha": 0.59,
             "borderColor": "#DADADA",
-            "color": "#7F7A7A",
+            "colors": [
+                "#578EBE"
+            ],
             "theme": "default",
             "categoryAxis": {
                 "gridPosition": "start"
@@ -242,7 +244,9 @@ $(function(){
             "plotAreaBorderColor": "#A9A9A9",
             "startDuration": 1,
             "startEffect": "easeOutSine",
-            "color": "#4F4F4F",
+            "colors": [
+                "#578EBE"
+            ],
             "fontSize": 12,
             "handDrawScatter": 5,
             "categoryAxis": {
@@ -287,7 +291,9 @@ $(function(){
             "plotAreaBorderColor": "#A9A9A9",
             "startDuration": 1,
             "startEffect": "easeOutSine",
-            "color": "#4F4F4F",
+            "colors": [
+                "#578EBE"
+            ],
             "fontSize": 12,
             "handDrawScatter": 5,
             "categoryAxis": {
@@ -332,7 +338,9 @@ $(function(){
             "plotAreaBorderColor": "#A9A9A9",
             "startDuration": 1,
             "startEffect": "easeOutSine",
-            "color": "#4F4F4F",
+            "colors": [
+                "#578EBE"
+            ],
             "fontSize": 12,
             "handDrawScatter": 5,
             "categoryAxis": {
