@@ -166,6 +166,14 @@ class MessageEntity extends \Eloquent{
         return $query;
     }
 
+    public function listAllMessagesFilter($page_size, $page_ndx) {
+        $rows = array();
+        $sql = "SELECT m.sender, m.to, m.subject, m.added_date, m.receipt, CONCAT(c.company_name, ' ', c.first_name, ' ', c.last_name) as client FROM messages m, customer c WHERE m.customer_id=c.id AND c.belongs_to=? AND m.direction='1' AND m.deleted_at IS NULL ORDER BY m.receipt,m.added_date DESC LIMIT ? OFFSET ?";
+        $query = \DB::select($sql, array(\Session::get('group_id'), $page_size, $page_ndx));
+
+        return $query;
+    }
+
     public function countAllMessages($start_date, $end_date){
         $rows = array();
         $sql = "SELECT m.receipt, count(m.receipt) as message_count FROM messages m, customer c WHERE m.customer_id=c.id AND c.belongs_to=? AND m.direction='1' AND m.deleted_at IS NULL AND m.created_at BETWEEN ? AND ? GROUP BY m.receipt";

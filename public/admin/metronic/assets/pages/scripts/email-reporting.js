@@ -4,7 +4,7 @@
 $(function(){
     // Fetch initial list for default filter
     var page_index = 0;
-    var filter = 'sent'
+    var filter = 'all'
 
     var today = new Date();
     var dd = today.getDate();
@@ -162,12 +162,22 @@ $(function(){
                     console.log(response);
                     if(response.success){
                         $.each(response.messages, function(index, message){
+                            var status = "";
+
+                            switch(message.receipt){
+                                case "0": status = 'Sent'; break;
+                                case "1": status = 'Read'; break;
+                                case "-1": status = 'Bounced'; break;
+                                default: status = 'Undetermined'; break;
+                            }
+
                             $('#email-list-table tbody').append(
                                 $('<tr>')
                                     .append($('<td>').text(message.sender))
                                     .append($('<td>').text(message.to))
                                     .append($('<td>').text(message.subject))
                                     .append($('<td>').text(message.added_date))
+                                    .append($('<td>').text(status))
                             );
                         });
                     }

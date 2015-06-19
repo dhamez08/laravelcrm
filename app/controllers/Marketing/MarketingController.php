@@ -1427,7 +1427,13 @@ class MarketingController extends \BaseController {
             case 'bounced'  : $filter_id = -1; break;
         }
 
-        $messages = \Message\MessageEntity::get_instance()->listAllSentMessagesWithFilter($filter_id, $page_size, $page_ndx);
+        if($filter == 'all'){
+            $messages = \Message\MessageEntity::get_instance()->listAllMessagesFilter($page_size, $page_ndx);
+        } else {
+            $messages = \Message\MessageEntity::get_instance()->listAllSentMessagesWithFilter($filter_id, $page_size, $page_ndx);
+        }
+
+
 
         return \Response::json(array('success'=>true,'messages'=> $messages));
     }
