@@ -164,10 +164,10 @@ $(function(){
                         $.each(response.messages, function(index, message){
                             var status = "";
 
-                            switch(message.receipt){
-                                case "0": status = 'Sent'; break;
-                                case "1": status = 'Read'; break;
-                                case "-1": status = 'Bounced'; break;
+                            switch(parseInt(message.receipt)){
+                                case 0: status = 'Sent'; break;
+                                case 1: status = 'Read'; break;
+                                case -1: status = 'Bounced'; break;
                                 default: status = 'Undetermined'; break;
                             }
 
