@@ -113,6 +113,8 @@ $(function(){
                         chart_one_data[0]['column-1'] = row.message_count;
                     } else if(row.receipt == '1'){
                         chart_one_data[1]['column-1'] = row.message_count;
+                    } else if(row.receipt == '-1'){
+                        chart_one_data[2]['column-1'] = row.message_count
                     }
                 })
 
