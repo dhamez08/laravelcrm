@@ -107,6 +107,10 @@ $(function(){
             success: function(response){
                 console.log(response);
 
+                // Reset chart
+                chart_one_data[0]['column-1'] = 0;
+                chart_one_data[1]['column-1'] = 0;
+                chart_one_data[2]['column-1'] = 0;
 
                 $.each(response.count, function(index, row){
                     if(row.receipt == '0'){
@@ -119,6 +123,7 @@ $(function(){
                 })
 
                 // Add sent and read
+
                 chart_one_data[0]['column-1'] += chart_one_data[1]['column-1'];
 
                 summary_chart.dataProvider = chart_one_data;
