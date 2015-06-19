@@ -688,7 +688,7 @@ class MarketingController extends \BaseController {
                 {
                     $message->from($from_email, $from_name);
                     $message->replyTo('laravelcrm@one23.co.uk', $from_name);
-                    $message->to($data['to_email'], $data['to_name'])->subject($data['subject'] . ' ' . $data['client_ref']);
+                    $message->to($data['to_email'], $data['to_name'])->subject($data['subject'] . ' ' . $data['client_ref'].'[MSG-REF: '.$smessage->id.']');
 
                     $message->getHeaders()->addTextHeader('MSG-REF',$smessage->id);
                     $message->getHeaders()->addTextHeader('Read-Receipt-To','laravelcrm@one23.co.uk');
