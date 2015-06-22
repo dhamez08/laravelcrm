@@ -689,7 +689,7 @@ class MarketingController extends \BaseController {
                 $old_body = $data['body'];
 
                 // Insert notificiation link
-                $notfication_section = '<div style="text-align: center; width: 100%; padding: 10px; font-size: 12px; font-family: helvetica, georgia, serif">Click the link to notify us that you have read this email. <a href="'.url('/').'/marketing/notify-sender/'.$smessage->id.'" target="_blank" style="text-decoration: none; color: #677B7C">Click Here</a></div>';
+                $notfication_section = '<div style="text-align: center; width: 100%; padding: 10px; font-size: 12px; font-family: helvetica, georgia, serif">Click the link to notify us that you have read this email. <a onclick="window.open(\''.url('/').'/marketing/notify-sender/'.$smessage->id.'\')" target="_blank" style="text-decoration: none; color: #677B7C">Click Here</a></div>';
                 $data['body'] .= $notfication_section;
 
 				//tracker  image
@@ -1479,9 +1479,9 @@ class MarketingController extends \BaseController {
         }
 
         echo "<!DOCTYPE html>";
-//        echo "<html>";
+        echo "<html>";
         echo "<script type='text/javascript'>window.close();</script>";
-//        echo "</html>";
+        echo "</html>";
     }
 
 }
