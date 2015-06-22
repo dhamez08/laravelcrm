@@ -1478,10 +1478,6 @@ class MarketingController extends \BaseController {
             $message->save();
         }
 
-        echo "<!DOCTYPE html>";
-        echo "<html>";
-        echo "<script type='text/javascript'>window.close();</script>";
-        echo "</html>";
+        return \Redirect::to('/');
     }
-
 }
