@@ -685,10 +685,16 @@ class MarketingController extends \BaseController {
 
                 $smessage = \Message\Message::create($new_message);
 
-                // Insert notificiation link
+
                 $old_body = $data['body'];
+
+                // Insert notificiation link
                 $notfication_section = '<div style="text-align: center; width: 100%; padding: 10px; font-size: 12px; font-family: helvetica, georgia, serif">Click the link to notify us that you have read this email. <a href="'.url('/').'/marketing/notify-sender/'.$smessage->id.'" target="_blank" style="text-decoration: none; color: #677B7C">Click Here</a></div>';
                 $data['body'] .= $notfication_section;
+
+				//tracker  image
+				$img_html = "<br/><div style='text-align:center;'><img alt='Zeromyexcess Email Marketing' src='". url('/') . "/jpg/" . $smessage->id  . "' style='width:12px'/></div>";
+				$data['body'] .= $img_html;
 
                 \Mail::send('emails.clients.marketing', $data, function($message) use ($data, $from_name, $from_email, $smessage)
                 {
