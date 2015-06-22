@@ -686,6 +686,7 @@ class MarketingController extends \BaseController {
                 $smessage = \Message\Message::create($new_message);
 
                 // Insert notificiation link
+                $old_body = $data['body'];
                 $notfication_section = '<div style="text-align: center; width: 100%; padding: 10px; font-size: 12px; font-family: helvetica, georgia, serif">Click the link to notify us that you have read this email. <a href="'.url('/').'/marketing/notify-sender/'.$smessage->id.'" target="_blank" style="text-decoration: none; color: #677B7C">Click Here</a></div>';
                 $data['body'] .= $notfication_section;
 
@@ -708,6 +709,9 @@ class MarketingController extends \BaseController {
                     $message->getHeaders()->addTextHeader('Errors-To','laravelcrm@one23.co.uk');
 
                 });
+
+                // Remove notification link
+                $data['body'] = $old_body;
 
                 // Set receipt to bounced if email was not send.
                 if(count(\Mail::failures()) > 0){
