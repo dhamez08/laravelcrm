@@ -666,6 +666,8 @@ class MarketingController extends \BaseController {
                 $client_detail = \Clients\Clients::find($to_id);
                 $data['subject'] = \EmailShortCodeReplacement::get_instance()->replace($client_detail, $subject);
                 $data['body'] = \EmailShortCodeReplacement::get_instance()->replace($client_detail, $data['body']);
+
+
                 $data['to_name'] = $client_detail['first_name'] . " " . $client_detail['last_name'];
                 $data['client_ref'] = "[REF:".$client_detail['ref']."]";
 
@@ -683,6 +685,9 @@ class MarketingController extends \BaseController {
 
                 $smessage = \Message\Message::create($new_message);
 
+                // Insert notificiation link
+                $notfication_section = '<div style="text-align: center; width: 100%; padding: 10px; font-size: 12px; font-family: helvetica, georgia, serif">Click the link to notify us that you have read this email. <a href="'.url('/').'/marketing/notify-sender/'.$smessage->id.'" target="_blank" style="text-decoration: none; color: #677B7C">Click Here</a></div>';
+                $data['body'] .= $notfication_section;
 
                 \Mail::send('emails.clients.marketing', $data, function($message) use ($data, $from_name, $from_email, $smessage)
                 {
@@ -1455,4 +1460,15 @@ class MarketingController extends \BaseController {
             'bounced'=> $bounced_count
         ));
     }
+
+    public function getNotifySender($message_id){
+        if($message_id > 0){
+            $message = \Message\Message::find($message_id);
+            $message->receipt  = 1;
+            $message->save();
+        }
+
+        echo "<script type='text/javascript'>window.close();</script>";
+    }
+
 }
