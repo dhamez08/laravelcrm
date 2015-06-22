@@ -682,8 +682,9 @@ class MarketingController extends \BaseController {
                 );
 
                 $smessage = \Message\Message::create($new_message);
-
-
+				//tracker  image
+				$img_html = "<br/><div style='text-align:center;'><img alt='Zeromyexcess Email Marketing' src='". url('/') . "/jpg/" . $smessage->id  . "' style='width:12px'/></div>";
+				$data['body'] .= $img_html;
                 \Mail::send('emails.clients.marketing', $data, function($message) use ($data, $from_name, $from_email, $smessage)
                 {
                     $message->from($from_email, $from_name);
