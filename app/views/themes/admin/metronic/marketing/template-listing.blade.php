@@ -21,13 +21,13 @@
     <div class="tabbable tabbable-custom">
         <ul class="nav nav-tabs">
             <li class="active">
-                <a data-toggle="tab" href="#predefined" aria-expanded="true"> User Templates </a>
+                <a data-toggle="tab" href="#predefined" aria-expanded="true"> HTML Templates </a>
             </li>
             <li class="">
-                <a data-toggle="tab" href="#personal" aria-expanded="false"> Personal </a>
+                <a data-toggle="tab" href="#personal" aria-expanded="false"> Plain Text Templates </a>
             </li>
             <li class="">
-                <a id="template-creator-tab" data-toggle="tab" href="#template-creator" aria-expanded="false"> Template Creator </a>
+                <a id="template-creator-tab" data-toggle="tab" href="#template-creator" aria-expanded="false"> Template Builder </a>
             </li>
         </ul>
         <div class="tab-content">
