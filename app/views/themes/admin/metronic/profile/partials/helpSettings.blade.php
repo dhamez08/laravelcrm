@@ -244,8 +244,114 @@
                                 <div id="email-marketing-4" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <p>
-                                            Still working on this part.
+                                            <strong>Template Builder</strong> is a tool that you use to design your own email layout from pre-defined layouts in the system.
                                         </p>
+                                        <img class="thumbnail" src="{{url('/public/img/help_and_settings/email_marketing/template_builder.png')}}" />
+                                        <h3>Sidebar Tools</h3>
+                                        <p>
+                                            On the left side, we have the controls which will allow you to add sections and modify them according to your preference.
+                                        </p>
+                                        <img class="thumbnail" src="{{url('/public/img/help_and_settings/email_marketing/template_builder_sidebar.png')}}" />
+                                        <ul style="color: #636363">
+                                            <li><strong>Controls</strong> - allows you to save your work or create a new template</li>
+                                            <li><strong>Modules</strong> - contains pre-designed layouts of sections you can use in your template</li>
+                                            <li><strong>Sections</strong> - contains generic layouts of sections you typically use in email marketing</li>
+                                            <li><strong>Styles</strong> - tools that allows you to modify the the sections such as changin font, colors or background, adding links, changing images, etc.</li>
+                                            <li><strong>Dynamic Fields</strong> - works the same with the one in text templates, allows you to put placeholders of clients' properties in the the body of the email template</li>
+                                        </ul>
+
+                                        <h3>Modules</h3>
+                                        <p>
+                                            Upon clicking <strong>Modules</strong>, you will be shown a list of pre-designed templates. Clicking on each will show a preview of available sections.
+                                        </p>
+                                        <img class="thumbnail" src="{{url('/public/img/help_and_settings/email_marketing/template_builder_modules.png')}}" />
+                                        <h4>Sections</h4>
+                                        <p>
+                                           <strong>Sections</strong> is just the same with <strong>Modules</strong> but this one has more generic layouts and more customizable.
+                                        </p>
+                                        <img class="thumbnail" src="{{url('/public/img/help_and_settings/email_marketing/template_builder_generic.png')}}" />
+                                        <p>
+                                            You can use the section by clicking the preview and dragging it to the canvas on the right side. The section will appear in the canvas after you drag the preview. When you hover your mouse, controls will slide sideways that will let you do the following actions:
+                                            <ul style="color: #636363">
+                                                <li><i class="fa fa-times"></i> - deletes the section</li>
+                                                <li><i class="fa fa-arrows"></i> - move/arrange the sections in your canvas</li>
+                                                <li><i class="fa fa-copy"></i> - create a duplicate of a particular section</li>
+                                            </ul>
+                                        </p>
+                                        <img class="thumbnail" src="{{url('/public/img/help_and_settings/email_marketing/template_builder_section.png')}}" />
+                                        <h3>Styles</h3>
+                                        <p>
+                                            To edit the section, just click on an element (e.g. a text or box) you want to edit and the <strong>Styles</strong> toolbox will show the available format controls. Here you can change the font type, font size, foreground color, and background color.
+                                        </p>
+                                        <p>
+                                            There is also an <strong>Apply to All</strong> switch where in when you activate, all changes you make on one element will reflect to other elements of the same type on that particular section. For example: changing the size of a content title will adjust all other titles to the same size.
+                                        </p>
+                                        <p>
+                                            The template builder allows you also to customize the font types of text but the changes will only be vieweble to selected email clients. On other clients such as GMail and Yahoo Mail, the font will revert back to its default.
+                                        </p>
+                                        <img class="thumbnail" src="{{url('/public/img/help_and_settings/email_marketing/template_builder_style.png')}}" />
+                                        <h3>Preview</h3>
+                                        <p>
+                                            The <strong>Preview</strong> tool is used to view how the template would look like when the client receives it in his desktop or mobile email client.
+                                        </p>
+                                        <img class="thumbnail" src="{{url('/public/img/help_and_settings/email_marketing/template_builder_mobile.png')}}" />
+                                        <h3>Dynamic Fields</h3>
+                                        <p>
+                                            Just like in the text templates, <strong>Dynamic Fields</strong> can be used to put placeholders in the email template. These placeholders will automatically filled in with actual values when the email is sent.
+                                        </p>
+                                        <img class="thumbnail" src="{{url('/public/img/help_and_settings/email_marketing/template_builder_dynamic.png')}}" />
+                                        <p>
+                                            To use the Dynamic Fields, just click these toolbar and select from a list of fields the placeholder you want to place in the body of the email. Click the placeholder and drag it to the location where you want to put it.
+                                        </p>
+                                        <img class="thumbnail" src="{{url('/public/img/help_and_settings/email_marketing/template_builder_dynamic_sample.png')}}" />
+                                        <h3>Element Controls</h3>
+                                        <p>
+                                            When clicking some elements, additional controls will popup above the item.
+                                        </p>
+                                        <h4>Text Control</h4>
+                                        <p>
+                                            When you highlight a text, text controls will popup as shown in the image below.
+                                        </p>
+                                        <img class="thumbnail" src="{{url('/public/img/help_and_settings/email_marketing/template_builder_text_popup.png')}}" />
+                                        <ul style="color: #636363">
+                                            <li><i class="fa fa-bold"></i> - Bold</li>
+                                            <li><i class="fa fa-italic"></i> - Italic</li>
+                                            <li><i class="fa fa-align-left"></i> - Left Align</li>
+                                            <li><i class="fa fa-align-center"></i> - Center Align</li>
+                                            <li><i class="fa fa-align-right"></i> - Right Align</li>
+                                            <li><i class="fa fa-align-justify"></i> - Justify</li>
+                                            <li><i class="fa fa-chain"></i> - Convert to Hyperlink</li>
+                                        </ul>
+                                        <h4>Image Control</h4>
+                                        <p>
+                                            When you click on an image, image controls will popup as shown in the image below.
+                                        </p>
+                                        <img class="thumbnail" src="{{url('/public/img/help_and_settings/email_marketing/template_builder_image_popup.png')}}" />
+                                        <ul style="color: #636363">
+                                            <li><i class="fa fa-chain"></i> - Add hyperlink</li>
+                                            <li><i class="fa fa-eye"></i> - Hide or Unhide the image</li>
+                                        </ul>
+                                        <p>
+                                            You can upload your photo by clicking on the <strong>Change Photo</strong> button. This will open an <strong>Image Cropper</strong>. You can use the dimension displayed as guide in creating your own photo so that it will not be pixilated.
+                                        </p>
+                                        <h3>Image Cropper</h3>
+                                        <p>
+                                            When you click on the <strong>Change Photo</strong> button, a dialog box will open prompting you to select a photo from your files that you want to upload. After selecting a photo, a cropper window will appear.
+                                        </p>
+                                        <img class="thumbnail" src="{{url('/public/img/help_and_settings/email_marketing/template_builder_image_cropper.png')}}" />
+                                        <p>
+                                            Select the area you want to crop. The crop dimension is fixed depending on the original size of the image in template. When you're happy with the section, click <strong>Crop</strong> and this will be uploaded and replace the image on your template.
+                                        </p>
+                                        <img class="thumbnail" src="{{url('/public/img/help_and_settings/email_marketing/template_builder_image_cropper_sample.png')}}" />
+                                        <h3>Controls</h3>
+                                        <p>
+                                            Before saving, enter a name for you template on the <strong>Template Name</strong> input.
+                                        </p>
+                                        <img class="thumbnail" src="{{url('/public/img/help_and_settings/email_marketing/template_builder_title.png')}}" />
+                                        <p>
+                                            When you're happy with your template, just click <strong>Save</strong> under the <strong>Controls</strong> menu. Once the template is saved, you can already send it to your clients under the <strong>Send Email</strong> section. You can always edit saved templates by accessing it in the <strong>HTML Templates</strong> tab. If you want to create a new template, just click on <strong>Create</strong> and this will clearout the canvas for you to startover.
+                                        </p>
+                                        <img class="thumbnail" src="{{url('/public/img/help_and_settings/email_marketing/template_builder_save.png')}}" />
                                     </div>
                                 </div>
                             </div>
