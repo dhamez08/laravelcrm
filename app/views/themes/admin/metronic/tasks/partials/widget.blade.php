@@ -20,7 +20,7 @@
 			</a>
 		</div>
 	</div>
-	<div class="portlet-body">
+	<div class="portlet-body" style="overflow-y: scroll">
 
 		<p class="task-accordion-head">Overdue : <span class="badge badge-danger">{{$tasks['due']->all}}</span></p>
 		{{ 
@@ -39,7 +39,7 @@
 			@include($view_path.'.clients.partials.bulkDeleteToolbar', array('checkbox_name' => 'tasks_check_all', 'table_target' => '#table-task-list'))
 
 		@endif
-		<div class="scroller" style="height:256px" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd">
+<!--		<div class="scroller" style="height:256px" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd">-->
 			<table class="table table-condensed table-feeds" id="table-task-list">
 				<tbody>
 				@if(count($tasks['tasks']['overdue']) > 0)
@@ -76,7 +76,7 @@
 				@endif					
 				</tbody>
 			</table>
-		</div>
+<!--		</div>-->
 		{{ Form::close() }}
 
 
@@ -97,7 +97,7 @@
 			@include($view_path.'.clients.partials.bulkDeleteToolbar', array('checkbox_name' => 'tasks_check_all', 'table_target' => '#table-task-list-today'))
 
 		@endif
-		<div class="scroller" style="height:256px" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd">
+<!--		<div class="scroller" style="height:256px" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd">-->
 			<table class="table table-condensed table-feeds" id="table-task-list-today">
 				<tbody>
 				@if(count($tasks['tasks']['today']) > 0)
@@ -134,7 +134,7 @@
 				@endif					
 				</tbody>
 			</table>
-		</div>
+<!--		</div>-->
 		{{ Form::close() }}
 
 		<p class="task-accordion-head">Next Seven Days : <span class="badge badge-info">{{$tasks['due']->seven}}</span></p>
@@ -154,7 +154,7 @@
 			@include($view_path.'.clients.partials.bulkDeleteToolbar', array('checkbox_name' => 'tasks_check_all', 'table_target' => '#table-task-list-seven'))
 
 		@endif
-		<div class="scroller" style="height:256px" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd">
+<!--		<div class="scroller" style="height:256px" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd">-->
 			<table class="table table-condensed table-feeds" id="table-task-list-seven">
 				<tbody>
 				@if(count($tasks['tasks']['seven']) > 0)
@@ -191,7 +191,7 @@
 				@endif					
 				</tbody>
 			</table>
-		</div>
+<!--		</div>-->
 		{{ Form::close() }}
 
 
@@ -212,7 +212,7 @@
 			@include($view_path.'.clients.partials.bulkDeleteToolbar', array('checkbox_name' => 'tasks_check_all', 'table_target' => '#table-task-list-future'))
 
 		@endif
-		<div class="scroller" style="height:256px" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd">
+<!--		<div class="scroller" style="height:256px" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd">-->
 			<table class="table table-condensed table-feeds" id="table-task-list-future">
 				<tbody>
 				@if(count($tasks['tasks']['future']) > 0)
@@ -249,7 +249,7 @@
 				@endif					
 				</tbody>
 			</table>
-		</div>
+<!--		</div>-->
 		{{ Form::close() }}
 	</div>
 </div>
