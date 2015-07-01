@@ -46,18 +46,27 @@ class ReceiptCheckerCommand extends Command {
 
         if(!empty($emails)){
             foreach($emails as $email_number){
-                $message = imap_fetchbody($inbox,$email_number,3);
-                if(preg_match("/MSG-REF: (.*)/", $message, $matches)){
-                    $message_id = intval($matches[1]);
+                $message = imap_fetch_overview($inbox,$email_number,0);
+                $subject = $message[0]->subject;
+                $receipt_status = 0;
 
-                    $this->line('MSG-ID: '.$message_id.' Updated');
-
-                    // Update message's tracker
-                    if($message_id > 0){
-                        $message = \Message\Message::find($message_id);
-                        $message->receipt  = 1;
-                        $message->save();
+                if(preg_match("/MSG-REF: (.*)/", $subject, $matches)){ // Email is read
+                    $message_id = intval(rtrim($matches[1],"]"));
+                    $receipt_status = 1;
+                    $this->line($message_id." : Read");
+                } else { // Bounced email
+                    $body = imap_fetchbody($inbox,$email_number,1);
+                    if(preg_match("/MSG-REF: (.*)/", $body, $matches)){
+                        $message_id = intval($matches[1]);
+                        $receipt_status = -1;
+                        $this->line($message_id." : Bounced");
                     }
+                }
+
+                if($message_id > 0){
+                    $message = \Message\Message::find($message_id);
+                    $message->receipt  = $receipt_status;
+                    $message->save();
                 }
             }
         }

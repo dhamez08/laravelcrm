@@ -54,18 +54,10 @@ class CustomerProfileImagesEntity extends \Eloquent{
 		try{
 			$url = \Input::get('url','');
 			$username = trim(str_ireplace("/","",strrchr(str_ireplace("/posts","",$url),"/")));
-			if(is_numeric($username)){
-				$account_id = $username;
-			} else {
-				$account = $this->_get_content("https://graph.facebook.com/v1.0/".$username."?fields=id,name");
-				$account_id = (isset($account['id'])) ? $account['id'] : '';
-			}
 
-			if(!empty($account_id) || trim($account_id) != ''){
-				$photo_200 = $this->_get_content("https://graph.facebook.com/v2.2/".$account_id."/picture?redirect=0&height=200&type=normal&width=200");
-				$photo_100 = $this->_get_content("https://graph.facebook.com/v2.2/".$account_id."/picture?redirect=0&height=100&type=normal&width=100");
+			if(!empty($username) || trim($username) != ''){
 
-				$check = \CustomerProfileImages\CustomerProfileImages::where('reference_id','=',$account_id)->first();
+				$check = \CustomerProfileImages\CustomerProfileImages::where('reference_username','=',$username)->first();
 				if( count($check) <= 0) {
 					//create
 					$obj = new \CustomerProfileImages\CustomerProfileImages;
@@ -74,13 +66,20 @@ class CustomerProfileImagesEntity extends \Eloquent{
 					$obj = \CustomerProfileImages\CustomerProfileImages::find($check->id);
 				}
 
+                $image_url = $this->fetchImage($username);
+
 				$obj->customer_id = \Input::get('customer_id');
 				$obj->reference_name = "facebook";
-				$obj->reference_id = $account_id;
-				$obj->image = $photo_200['data']['url'];
-				$obj->image_thumbnails = $photo_100['data']['url'];
+                $obj->reference_username = $username;
+                $obj->image = $image_url;
+                $obj->image_thumbnails = $image_url;
 
 				$obj->save();
+
+//              Set id as profile image
+                $client = \Clients\Clients::find($obj->customer_id);
+                $client->profile_image = $obj->id;
+                $client->save();
 
 				return $obj;
 			} else {
@@ -147,5 +146,61 @@ class CustomerProfileImagesEntity extends \Eloquent{
 
 		return json_decode($exec,TRUE);
 	}
+
+    private function curlme($url,$header=NULL,$cookie=NULL,$p=NULL){
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_HEADER, $header);
+        curl_setopt($ch, CURLOPT_NOBODY, $header);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_COOKIE, $cookie);
+        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_USERAGENT,'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.8) Gecko/20100722 Firefox/3.6.8 (.NET CLR 3.5.30729)');
+        if ($p) {
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $p);
+        }
+        $result = curl_exec($ch);
+        if ($result) {
+            return $result;
+        } else {
+            return curl_error($ch);
+        }
+        curl_close($ch);
+    }
+
+    private function fetchImage($username){
+        //login to facebook and get the cookies
+        $a = $this->curlme("https://login.facebook.com/login.php?login_attempt=1",true,null,"email=zeromyexcesscouk@gmail.com&pass=zeromyexcess*888");
+        preg_match('%Set-Cookie: ([^;]+);%',$a,$b);
+        $c = $this->curlme("https://login.facebook.com/login.php?login_attempt=1",true,$b[1],"email=zeromyexcesscouk@gmail.com&pass=zeromyexcess*888");
+        preg_match_all('%Set-Cookie: ([^;]+);%',$c,$d);
+        $cookie = "";
+        for($i=0;$i<count($d[0]);$i++){
+            $cookie.=$d[1][$i].";";
+        }
+        //Now fetch the profile image even if it is private , using the cookie.
+
+        $data = $this->curlme("http://www.facebook.com/" . trim($username),null,$cookie,null);
+        $pattern = '/https:\/\/www.facebook.com\/photo.php\?fbid=[^\s]+source=11/';
+        preg_match($pattern, $data, $matches);
+        if (isset($matches[0])){
+            if (trim($matches[0] !== "")){
+                $data = $this->curlme($matches[0],null,$cookie,null);
+                $pattern = '/https:\/\/scontent[^\s]+/';
+                preg_match($pattern, $data, $matches);
+                if (isset($matches[0])){
+                    if (trim($matches[0]) !== ""){
+                        return str_replace('"',"",$matches[0]);
+                    }
+                }
+
+            }
+        }
+    }
 
 }

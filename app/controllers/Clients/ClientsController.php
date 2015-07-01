@@ -536,7 +536,7 @@ class ClientsController extends \BaseController {
 									'dob' => \Clients\ClientEntity::get_instance()->convertToMysqlDate($val['dob']),
 									'ref' => \Auth::id() . time() . rand(1,9),
 									'belongs_to' => \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id,
-									'belongs_user' => \Auth::id(),
+//									'belongs_user' => \Auth::id(),
 									'first_name' => $val['firstname'],
 									'last_name' => $val['lastname'],
 									'associated' => $customer->id,

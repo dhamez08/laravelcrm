@@ -4,7 +4,7 @@
 $(function(){
     // Fetch initial list for default filter
     var page_index = 0;
-    var filter = 'sent'
+    var filter = 'all'
 
     var today = new Date();
     var dd = today.getDate();
@@ -107,16 +107,23 @@ $(function(){
             success: function(response){
                 console.log(response);
 
+                // Reset chart
+                chart_one_data[0]['column-1'] = 0;
+                chart_one_data[1]['column-1'] = 0;
+                chart_one_data[2]['column-1'] = 0;
 
                 $.each(response.count, function(index, row){
                     if(row.receipt == '0'){
                         chart_one_data[0]['column-1'] = row.message_count;
                     } else if(row.receipt == '1'){
                         chart_one_data[1]['column-1'] = row.message_count;
+                    } else if(row.receipt == '-1'){
+                        chart_one_data[2]['column-1'] = row.message_count
                     }
                 })
 
                 // Add sent and read
+
                 chart_one_data[0]['column-1'] += chart_one_data[1]['column-1'];
 
                 summary_chart.dataProvider = chart_one_data;
@@ -160,12 +167,22 @@ $(function(){
                     console.log(response);
                     if(response.success){
                         $.each(response.messages, function(index, message){
+                            var status = "";
+
+                            switch(parseInt(message.receipt)){
+                                case 0: status = 'Sent'; break;
+                                case 1: status = 'Read'; break;
+                                case -1: status = 'Bounced'; break;
+                                default: status = 'Undetermined'; break;
+                            }
+
                             $('#email-list-table tbody').append(
                                 $('<tr>')
                                     .append($('<td>').text(message.sender))
                                     .append($('<td>').text(message.to))
                                     .append($('<td>').text(message.subject))
                                     .append($('<td>').text(message.added_date))
+                                    .append($('<td>').text(status))
                             );
                         });
                     }
@@ -189,7 +206,9 @@ $(function(){
             "startDuration": 1,
             "backgroundAlpha": 0.59,
             "borderColor": "#DADADA",
-            "color": "#7F7A7A",
+            "colors": [
+                "#578EBE"
+            ],
             "theme": "default",
             "categoryAxis": {
                 "gridPosition": "start"
@@ -240,7 +259,9 @@ $(function(){
             "plotAreaBorderColor": "#A9A9A9",
             "startDuration": 1,
             "startEffect": "easeOutSine",
-            "color": "#4F4F4F",
+            "colors": [
+                "#578EBE"
+            ],
             "fontSize": 12,
             "handDrawScatter": 5,
             "categoryAxis": {
@@ -285,7 +306,9 @@ $(function(){
             "plotAreaBorderColor": "#A9A9A9",
             "startDuration": 1,
             "startEffect": "easeOutSine",
-            "color": "#4F4F4F",
+            "colors": [
+                "#578EBE"
+            ],
             "fontSize": 12,
             "handDrawScatter": 5,
             "categoryAxis": {
@@ -330,7 +353,9 @@ $(function(){
             "plotAreaBorderColor": "#A9A9A9",
             "startDuration": 1,
             "startEffect": "easeOutSine",
-            "color": "#4F4F4F",
+            "colors": [
+                "#578EBE"
+            ],
             "fontSize": 12,
             "handDrawScatter": 5,
             "categoryAxis": {

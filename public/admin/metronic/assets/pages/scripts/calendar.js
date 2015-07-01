@@ -48,20 +48,25 @@ var TaskCalendar = function () {
                 eventRender: function(event, element, calEvent) {
                     element.find(".fc-time").before($('<span class="fc-icons" style="margin-right:5px;"><i class="fa '+ event.icon + ' fa-lg"></i></span>'));
                     if( event.customer_name != null ){
-                        element.find(".fc-title").after($('<span class="fc-client"> - <a style="color:#FFFFFF;text-decoration: underline;" href="' + $url + '/clients/client-summary/' + event.customer_id + '">' + event.customer_name + '</a></span>'));
+                        element.find(".fc-title").after($('<span class="fc-client"> - <a class="client-link" style="color:#FFFFFF;text-decoration: underline;" href="' + $url + '/clients/client-summary/' + event.customer_id + '">' + event.customer_name + '</a></span>'));
                     }
                 },
                 eventClick: function(calEvent, jsEvent, view) {
                     console.log(calEvent);
-                    //if( calEvent.source.dataType == 'gcal' ){
-                    if(typeof calEvent.source.googleCalendarId != 'undefined') {
-						window.open(calEvent.url, 'gcalevent', 'width=700,height=600');
-						return false;
-					}else{
-						var $remoteurl = $url + '/calendar/edit-task' + '/' + calEvent.id + '/' + calEvent.customerId + '/calendar';
-						openModal($remoteurl);
-					}
-					return false;
+                    if($(jsEvent.target).hasClass('client-link')){
+                        jsEvent.stopPropagation();
+                    } else {
+                        //if( calEvent.source.dataType == 'gcal' ){
+                        if(typeof calEvent.source.googleCalendarId != 'undefined') {
+                            window.open(calEvent.url, 'gcalevent', 'width=700,height=600');
+                            return false;
+                        }else{
+                            var $remoteurl = $url + '/calendar/edit-task' + '/' + calEvent.id + '/' + calEvent.customerId + '/calendar';
+                            openModal($remoteurl);
+                        }
+
+                        return false;
+                    }
                 },
                 dayClick: function(date, jsEvent, view) {
                     var view = objCalendar.fullCalendar('getView');

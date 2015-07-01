@@ -191,6 +191,7 @@
                                         </div>
                                         <div class="col-md-10">
                                             <select id="email-status-filter" class="form-control">
+                                                <option value="all">All</option>
                                                 <option value="sent">Sent</option>
                                                 <option value="read">Read</option>
                                                 <option value="bounced">Bounced</option>
@@ -215,6 +216,9 @@
                                             </th>
                                             <th class="numeric">
                                                 Date Sent
+                                            </th>
+                                            <th>
+                                                Status
                                             </th>
                                         </tr>
                                     </thead>

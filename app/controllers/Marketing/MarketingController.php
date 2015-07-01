@@ -666,6 +666,8 @@ class MarketingController extends \BaseController {
                 $client_detail = \Clients\Clients::find($to_id);
                 $data['subject'] = \EmailShortCodeReplacement::get_instance()->replace($client_detail, $subject);
                 $data['body'] = \EmailShortCodeReplacement::get_instance()->replace($client_detail, $data['body']);
+
+
                 $data['to_name'] = $client_detail['first_name'] . " " . $client_detail['last_name'];
                 $data['client_ref'] = "[REF:".$client_detail['ref']."]";
 
@@ -682,21 +684,40 @@ class MarketingController extends \BaseController {
                 );
 
                 $smessage = \Message\Message::create($new_message);
+
+
+                $old_body = $data['body'];
+
+                // Insert notificiation link
+                $notfication_section = '<div style="text-align: center; width: 100%; padding: 10px; font-size: 12px; font-family: helvetica, georgia, serif">Click the link to notify us that you have read this email. <a href="'.url('/').'/marketing/notify-sender/'.$smessage->id.'" target="_blank" style="text-decoration: none; color: #677B7C">Click Here</a></div>';
+                $data['body'] .= $notfication_section;
+
 				//tracker  image
 				$img_html = "<br/><div style='text-align:center;'><img alt='Zeromyexcess Email Marketing' src='". url('/') . "/jpg/" . $smessage->id  . "' style='width:12px'/></div>";
 				$data['body'] .= $img_html;
+
                 \Mail::send('emails.clients.marketing', $data, function($message) use ($data, $from_name, $from_email, $smessage)
                 {
                     $message->from($from_email, $from_name);
-                    $message->replyTo('dropbox.13554457@one23.co.uk', $from_name);
-                    $message->to($data['to_email'], $data['to_name'])->subject($data['subject'] . ' ' . $data['client_ref']);
+                    $message->replyTo('laravelcrm@one23.co.uk', $from_name);
+                    $message->to($data['to_email'], $data['to_name'])->subject($data['subject'] . ' ' . $data['client_ref'].'[MSG-REF: '.$smessage->id.']');
 
                     $message->getHeaders()->addTextHeader('MSG-REF',$smessage->id);
                     $message->getHeaders()->addTextHeader('Read-Receipt-To','laravelcrm@one23.co.uk');
                     $message->getHeaders()->addTextHeader('Disposition-Notification-To','laravelcrm@one23.co.uk');
                     $message->getHeaders()->addTextHeader('X-Confirm-Reading-To','laravelcrm@one23.co.uk');
-                    $message->getHeaders()->addTextHeader('Return-Receipt-Requested',1);
+                    $message->getHeaders()->addTextHeader('Return-Receipt-Requested','laravelcrm@one23.co.uk');
+                    $message->getHeaders()->addTextHeader('Generate-Delivery-Report','laravelcrm@one23.co.uk');
+                    $message->getHeaders()->addTextHeader('Errors-To','laravelcrm@one23.co.uk');
+                    $message->getHeaders()->addTextHeader('Return-Receipt-To','laravelcrm@one23.co.uk');
+                    $message->getHeaders()->addTextHeader('Registered-Mail-Reply-Requested-By','laravelcrm@one23.co.uk');
+                    $message->getHeaders()->addTextHeader('Return-Path','laravelcrm@one23.co.uk');
+                    $message->getHeaders()->addTextHeader('Errors-To','laravelcrm@one23.co.uk');
+
                 });
+
+                // Remove notification link
+                $data['body'] = $old_body;
 
                 // Set receipt to bounced if email was not send.
                 if(count(\Mail::failures()) > 0){
@@ -1421,7 +1442,13 @@ class MarketingController extends \BaseController {
             case 'bounced'  : $filter_id = -1; break;
         }
 
-        $messages = \Message\MessageEntity::get_instance()->listAllSentMessagesWithFilter($filter_id, $page_size, $page_ndx);
+        if($filter == 'all'){
+            $messages = \Message\MessageEntity::get_instance()->listAllMessagesFilter($page_size, $page_ndx);
+        } else {
+            $messages = \Message\MessageEntity::get_instance()->listAllSentMessagesWithFilter($filter_id, $page_size, $page_ndx);
+        }
+
+
 
         return \Response::json(array('success'=>true,'messages'=> $messages));
     }
@@ -1444,45 +1471,13 @@ class MarketingController extends \BaseController {
         ));
     }
 
-    public function getEmailCount($start_date, $end_date){
-
-    }
-
-    public function getSentEmailCount($start_date, $end_date){
-
-    }
-
-    public function getReadEmailCount($start_date, $end_date){
-
-    }
-
-    public function getBouncedEmailCount($start_date, $end_date){
-
-    }
-
-    public function getCheckEmailStatus(){
-        $username = 'laravelcrm@one23.co.uk';
-        $password = 'l4r4v3lcrm';
-        $server = '{baracus.hyliahub.com:993/imap/ssl}INBOX';
-
-        $inbox = imap_open($server, $username, $password);
-        $emails = imap_search($inbox, 'UNSEEN');
-
-        if(!empty($emails)){
-            foreach($emails as $email_number){
-                $message = imap_fetchbody($inbox,$email_number,3);
-                if(preg_match("/MSG-REF: (.*)/", $message, $matches)){
-                    $message_id = intval($matches[1]);
-                    print_r($message_id);
-                    // Update message's tracker
-                    if($message_id > 0){
-                        $message = \Message\Message::find($message_id);
-                        $message->receipt  = 1;
-                        $message->save();
-                    }
-                }
-            }
+    public function getNotifySender($message_id){
+        if($message_id > 0){
+            $message = \Message\Message::find($message_id);
+            $message->receipt  = 1;
+            $message->save();
         }
 
+        return \Redirect::to('/');
     }
 }
