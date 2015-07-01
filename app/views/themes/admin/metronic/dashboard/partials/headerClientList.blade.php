@@ -9,8 +9,8 @@
 			@endforeach
 		@endif
 	</ul>
-	<div style="width:30%" class="page-toolbar" id="clientSearch">
-		<div class="pull-right">
+	<div style="width:25%" class="page-toolbar" id="clientSearch">
+		<div class="pull-right" style="width:100%;">
 			<div class="input-group">
 				<input type="text" placeholder="Search Client" class="form-control">
 				<span class="input-group-btn">
@@ -87,7 +87,9 @@
 
 				$("#clientSearch input").on('change', function(e) {
 					//console.log(e.val);
-					window.location = "{{ url('clients/client-summary') }}/" + e.val;
+					if ( parseInt(e.val) ){
+						window.location = "{{ url('clients/client-summary') }}/" + e.val;
+					}
 				});
 
 				});
