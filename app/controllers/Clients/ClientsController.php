@@ -1787,6 +1787,7 @@ class ClientsController extends \BaseController {
 			->leftJoin('customer_address', 'customer_address.customer_id', '=', 'customer.id')
 			->leftJoin('customer_telephone', 'customer_telephone.customer_id', '=', 'customer.id')
 			->where('customer.belongs_user', '=', \Auth::id())
+			->whereNotIn('relationship',\Config::get('crm.client.relationship.exclude'))
 			->where(function($query){
 				$query->where('first_name','LIKE',\Input::get('keyword').'%')
 					->orWhere('last_name','LIKE',\Input::get('keyword').'%')
