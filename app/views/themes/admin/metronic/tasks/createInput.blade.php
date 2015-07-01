@@ -43,7 +43,7 @@
 					{{
 						Form::text(
 							'task_date',
-							isset($start) ? $start:null,
+							isset($start) ? $start:date('d/m/Y'),
 							array(
 								'class'=>'form-control input-sm input-sm',
 								'id'=>'task_date'
@@ -56,7 +56,7 @@
 						Form::select(
 							'task_hour',
 							$getTime,
-							isset($startHour) ? $startHour:null,
+							isset($startHour) ? $startHour:date('H'),
 							array(
 								'class'=>'form-control',
 								'id'=>'task_hour',
@@ -91,7 +91,7 @@
 						Form::select(
 							'end_task_hour',
 							$getTime,
-							null,
+							date('H'),
 							array(
 								'class'=>'form-control',
 								'id'=>'end_task_hour',
