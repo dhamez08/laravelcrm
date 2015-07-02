@@ -42,6 +42,7 @@
 <!--		<div class="scroller" style="height:256px" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd">-->
 			<table class="table table-condensed table-feeds" id="table-task-list">
 				<tbody>
+					
 				@if(count($tasks['tasks']['overdue']) > 0)
 					@foreach($tasks['tasks']['overdue'] as $task)
 						<tr>
@@ -49,9 +50,10 @@
 								{{ Form::checkbox('tasks_to_delete[]', $task->id) }}
 							</td>
 							<td class="text-center">
-								<div class="label label-sm label-info label-icon">
-									<i class="fa {{ $task->label->icons }}"></i>
+								<div class="label label-sm label-icon">
+									<a href="{{url('clients/client-summary'). '/' . $task->customer_id}}" title="{{ $task->client->first_name . ' ' . $task->client->last_name }}"><strong>{{ $task->client->first_name }}</strong></a>
 								</div>
+								
 							</td>
 							<td>
 								{{$task->displayHtmlLabelIcon(false)}}
@@ -107,8 +109,8 @@
 								{{ Form::checkbox('tasks_to_delete[]', $task->id) }}
 							</td>
 							<td class="text-center">
-								<div class="label label-sm label-info label-icon">
-									<i class="fa {{ $task->label->icons }}"></i>
+								<div class="label label-sm label-icon">
+									<a href="{{url('clients/client-summary'). '/' . $task->customer_id}}" title="{{ $task->client->first_name . ' ' . $task->client->last_name }}"><strong>{{ $task->client->first_name }}</strong></a>
 								</div>
 							</td>
 							<td>
@@ -164,8 +166,8 @@
 								{{ Form::checkbox('tasks_to_delete[]', $task->id) }}
 							</td>
 							<td class="text-center">
-								<div class="label label-sm label-info label-icon">
-									<i class="fa {{ $task->label->icons }}"></i>
+								<div class="label label-sm label-icon">
+									<a href="{{url('clients/client-summary'). '/' . $task->customer_id}}" title="{{ $task->client->first_name . ' ' . $task->client->last_name }}"><strong>{{ $task->client->first_name }}</strong></a>
 								</div>
 							</td>
 							<td>
@@ -222,8 +224,8 @@
 								{{ Form::checkbox('tasks_to_delete[]', $task->id) }}
 							</td>
 							<td class="text-center">
-								<div class="label label-sm label-info label-icon">
-									<i class="fa {{ $task->label->icons }}"></i>
+								<div class="label label-sm label-icon">
+									<a href="{{url('clients/client-summary'). '/' . $task->customer_id}}" title="{{ $task->client->first_name . ' ' . $task->client->last_name }}"><strong>{{ $task->client->first_name }}</strong></a>
 								</div>
 							</td>
 							<td>

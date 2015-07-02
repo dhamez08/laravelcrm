@@ -55,9 +55,9 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'crm',
+			'database'  => 'laravel_crm',
 			'username'  => 'root',
-			'password'  => '123',
+			'password'  => 'chair',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
