@@ -46,11 +46,6 @@
 <div class="row">
     <div class="col-md-3">
         <div class="row">
-            <div class="col-md-12">
-                @include( \DashboardEntity::get_instance()->getView() . '.dashboard.partials.chats' )
-            </div>
-        </div>
-        <div class="row">
             <?php $social = \SocialMediaAccount\ProfileEntity::get_instance()->getMediaAccount(); ?>
             @if(count($social) > 0)
                 @foreach($social as $account)
@@ -67,7 +62,7 @@
                                     </div>
                                     <div class="tools">
                                         <a href="" class="collapse"></a>
-                                        <a href="" title="Used as Profile photo" data-profile-id="{{$account->id}}" class="config social-profile-config"></a>
+                                        <a href="{{url('profile')}}" title="Used as Profile photo" data-profile-id="{{$account->id}}" class="config social-profile-config"></a>
                                         <!--
                                         <a href="" class="reload"></a>
                                         <a href="" class="remove"></a>

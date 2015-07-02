@@ -1,4 +1,4 @@
-<div class="portlet box green-haze">
+<!-- <div class="portlet box green-haze hidden">
 	<div class="portlet-title line">
 		<div class="caption">
 			<i class="fa fa-comments"></i>Chats
@@ -137,3 +137,4 @@
 		</div>
 	</div>
 </div>
+-->
