@@ -163,7 +163,17 @@
 		<li id="header_task_bar" class="dropdown dropdown-extended dropdown-tasks">
 			<a data-close-others="true" data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle" href="#">
 			<i class="icon-calendar"></i>
-			@if(\CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(((isset($clientId))? $clientId :NULL),\Auth::id())['due']->today > 0)
+            {{--*/ $tasks = \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(((isset($clientId))? $clientId :NULL),\Auth::id())['data'] /*--}}
+            {{--*/ $unread = 0 /*--}}
+            @foreach($tasks as $task)
+                @if(time() >= strtotime($task->remind) &&
+                    time() <= strtotime($task->date) &&
+                    intval($task->remind_mins) && !$task->is_reminded)
+                    {{--*/ $unread++ /*--}}
+                @endif
+            @endforeach
+
+			@if($unread > 0)
 			 	<span class="badge badge-default">
 			 		{{\CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser()['due']->today}}
 				</span>
@@ -173,7 +183,7 @@
 				<li>
 					<p>
 						@if(\CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(((isset($clientId))? $clientId :NULL),\Auth::id())['due']->today > 0)
-						 You have {{\CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(((isset($clientId))? $clientId :NULL),\Auth::id())['due']->today}} tasks reminder
+                            You have {{$unread}} tasks reminder
 						@else
 						 You dont have a pending tasks.
 						@endif
@@ -182,11 +192,12 @@
 				<li>
 					<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: auto;"><ul style="overflow: hidden; width: auto; height: auto;" class="dropdown-menu-list scroller" data-initialized="1">
 						@if(\CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(((isset($clientId))? $clientId :NULL),\Auth::id())['due']->today > 0)
-							{{--*/ $tasks = \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(((isset($clientId))? $clientId :NULL),\Auth::id())['data'] /*--}}
-                            @for($counter = 0; $counter < 3; $counter++)
+							@for($counter = 0; $counter < 3; $counter++)
                                 {{--*/ $dueTasks = $tasks[$counter] /*--}}
-                                @if(!$dueTasks->isReminded())
-									<li>
+                                @if(time() >= strtotime($task->remind) &&
+                                    time() <= strtotime($task->date) &&
+                                    intval($task->remind_mins) && !$task->is_reminded)
+									<li class="task-item" data-task-id="{{$dueTasks->id}}">
 										<a class="openModal" data-toggle="modal" data-target=".ajaxModal" href="{{action('Task\TaskController@getEditClientTask',array('id'=>$dueTasks->id,'customerid'=>$dueTasks->customer_id,'redirect'=>'task'))}}">
 										<span class="task">
 											<span class="desc">

@@ -491,6 +491,7 @@ class TaskController extends \BaseController {
 
     public function getAjaxTaskCount(){
         $data   = $this->data_view;
+        $counter = 0;
         $response['count'] = $this->dueTaskCount();
         if($response['count'] > 0){
             $tasks = \CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(((isset($clientId))? $clientId :NULL),\Auth::id())['data'];
@@ -500,12 +501,14 @@ class TaskController extends \BaseController {
                     time() <= strtotime($task->date) &&
                     intval($task->remind_mins) && !$task->is_reminded){
                     $reminders[] = $task;
+                    $counter++;
                 }
             }
             if(!empty($reminders)){
                 $response['reminder'] = \View::make( $data['view_path'] . '.tasks.partials.taskListItem', array('reminders' => $reminders))->render();
             }
         }
+        $response['count'] = $counter;
         $response['result'] = true;
         return \Response::json($response);
     }
