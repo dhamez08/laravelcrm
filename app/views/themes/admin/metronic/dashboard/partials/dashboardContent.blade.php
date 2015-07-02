@@ -67,7 +67,7 @@
                                     </div>
                                     <div class="tools">
                                         <a href="" class="collapse"></a>
-                                        <a href="" title="Used as Profile photo" data-profile-id="{{$account->id}}" class="config social-profile-config"></a>
+                                        <a href="{{url('profile')}}" title="Used as Profile photo" data-profile-id="{{$account->id}}" class="config social-profile-config"></a>
                                         <!--
                                         <a href="" class="reload"></a>
                                         <a href="" class="remove"></a>
