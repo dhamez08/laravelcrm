@@ -49,9 +49,14 @@
 							<td style="width:1%">
 								{{ Form::checkbox('tasks_to_delete[]', $task->id) }}
 							</td>
+							
 							<td class="text-center">
-								<div class="label label-sm label-icon">
-									<a href="{{url('clients/client-summary'). '/' . $task->customer_id}}" title="{{ $task->client->first_name . ' ' . $task->client->last_name }}"><strong>{{ $task->client->first_name }}</strong></a>
+								<div class="label label-sm {{isset($customerId) ? 'label-info':''}} label-icon">
+									@if (isset($customerId))
+										<i class="fa {{ $task->label->icons }}"></i>
+									@else
+										<a href="{{url('clients/client-summary'). '/' . $task->customer_id}}" title="{{ $task->client->first_name . ' ' . $task->client->last_name }}"><strong>{{ $task->client->first_name }}</strong></a>
+									@endif
 								</div>
 								
 							</td>
@@ -109,8 +114,12 @@
 								{{ Form::checkbox('tasks_to_delete[]', $task->id) }}
 							</td>
 							<td class="text-center">
-								<div class="label label-sm label-icon">
-									<a href="{{url('clients/client-summary'). '/' . $task->customer_id}}" title="{{ $task->client->first_name . ' ' . $task->client->last_name }}"><strong>{{ $task->client->first_name }}</strong></a>
+								<div class="label label-sm {{isset($customerId) ? 'label-info':''}} label-icon">
+									@if (isset($customerId))
+										<i class="fa {{ $task->label->icons }}"></i>
+									@else
+										<a href="{{url('clients/client-summary'). '/' . $task->customer_id}}" title="{{ $task->client->first_name . ' ' . $task->client->last_name }}"><strong>{{ $task->client->first_name }}</strong></a>
+									@endif
 								</div>
 							</td>
 							<td>
@@ -166,8 +175,12 @@
 								{{ Form::checkbox('tasks_to_delete[]', $task->id) }}
 							</td>
 							<td class="text-center">
-								<div class="label label-sm label-icon">
-									<a href="{{url('clients/client-summary'). '/' . $task->customer_id}}" title="{{ $task->client->first_name . ' ' . $task->client->last_name }}"><strong>{{ $task->client->first_name }}</strong></a>
+								<div class="label label-sm {{isset($customerId) ? 'label-info':''}} label-icon">
+									@if (isset($customerId))
+										<i class="fa {{ $task->label->icons }}"></i>
+									@else
+										<a href="{{url('clients/client-summary'). '/' . $task->customer_id}}" title="{{ $task->client->first_name . ' ' . $task->client->last_name }}"><strong>{{ $task->client->first_name }}</strong></a>
+									@endif
 								</div>
 							</td>
 							<td>
@@ -224,8 +237,12 @@
 								{{ Form::checkbox('tasks_to_delete[]', $task->id) }}
 							</td>
 							<td class="text-center">
-								<div class="label label-sm label-icon">
-									<a href="{{url('clients/client-summary'). '/' . $task->customer_id}}" title="{{ $task->client->first_name . ' ' . $task->client->last_name }}"><strong>{{ $task->client->first_name }}</strong></a>
+								<div class="label label-sm {{isset($customerId) ? 'label-info':''}} label-icon">
+									@if (isset($customerId))
+										<i class="fa {{ $task->label->icons }}"></i>
+									@else
+										<a href="{{url('clients/client-summary'). '/' . $task->customer_id}}" title="{{ $task->client->first_name . ' ' . $task->client->last_name }}"><strong>{{ $task->client->first_name }}</strong></a>
+									@endif
 								</div>
 							</td>
 							<td>
