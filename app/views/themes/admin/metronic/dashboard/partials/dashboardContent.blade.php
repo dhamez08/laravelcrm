@@ -8,6 +8,10 @@
     padding-top: 10px;
     letter-spacing: -0.8px;
 }
+
+.task-body {
+    max-height: 300px;
+}
 </style>
 
 <div class="row">

@@ -20,7 +20,7 @@
 			</a>
 		</div>
 	</div>
-	<div class="portlet-body" style="overflow-y: scroll">
+	<div class="portlet-body task-body" style="overflow-y: scroll">
 
 		<p class="task-accordion-head">Overdue : <span class="badge badge-danger">{{$tasks['due']->all}}</span></p>
 		{{ 
