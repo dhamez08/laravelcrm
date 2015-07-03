@@ -51,7 +51,11 @@
 							</td>
 							<td class="text-center">
 								<div class="label label-sm label-icon">
-									<a href="{{url('clients/client-summary'). '/' . $task->customer_id}}" title="{{ $task->client->first_name . ' ' . $task->client->last_name }}"><strong>{{ $task->client->first_name }}</strong></a>
+									@if (isset($customerId))
+										<i class="fa {{ $task->label->icons }}"></i>
+									@else
+										<a href="{{url('clients/client-summary'). '/' . $task->customer_id}}" title="{{ $task->client->first_name . ' ' . $task->client->last_name }}"><strong>{{ $task->client->first_name }}</strong></a>
+									@endif
 								</div>
 								
 							</td>

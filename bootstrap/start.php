@@ -31,7 +31,7 @@ $env = $app->detectEnvironment(array(
 	'elias_local' => array('mamalias23-PC','elias-mamalias'),
 	'dick_local' => array('BrixBrianLagz','BrixBrianLanz','BrixBrianLague'),
     'tristan_local' => array('dhamez-nix'),
-    'prime_local'=>array('prime-pc')
+    'prime_local'=>array('prime-pc','comprime')
 ));
 
 /*
