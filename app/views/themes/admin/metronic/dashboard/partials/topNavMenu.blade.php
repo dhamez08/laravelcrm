@@ -109,6 +109,22 @@
 		</li>
 		--}}
 		<!-- END NOTIFICATION DROPDOWN -->
+		<!--BEGIN ADD NEW RECORD -->
+		<li id="header_inbox_bar" class="dropdown dropdown-extended dropdown-inbox">
+			<a data-close-others="true" data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle">
+				<i class="fa fa-database"></i>
+				<span class="badge badge-default">+</span>
+			</a>
+			<ul class="dropdown-menu" style="width:250px;">
+				<li class="text-center"><p>Add Record</p></li>
+				<li class="text-left"><a href="{{url('clients/create')}}"><i class="fa fa-user"></i>Create a new person/private client</a></li>
+				<li class="text-left"><a href="{{action('Clients\ClientsController@getCreateClientCompany')}}"><i class="fa fa-building"></i>Create a new company client</a></li>
+				<li class="text-left"><a class="openModal" href="{{url('clients/create-client-task')}}" data-target=".createTask" data-toggle="modal"><i class="fa fa-tasks"></i>Create a new task</a></li>
+				
+			</ul>
+		</li>
+		<!--END NEW RECORD -->
+		
 		<!-- BEGIN INBOX DROPDOWN -->
 		<li id="header_inbox_bar" class="dropdown dropdown-extended dropdown-inbox">
 			<a data-close-others="true" data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle" onclick="window.location='{{ url('messages/inbox') }}'">
