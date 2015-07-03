@@ -287,7 +287,7 @@ return array(
 	),
 	'client' => array(
 		'relationship' => array(
-			'exclude' => array('Son', 'Daughter')
+			'exclude' => array(0,'Son', 'Daughter')
 		)
 	)
 );

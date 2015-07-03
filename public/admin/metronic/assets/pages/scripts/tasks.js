@@ -100,7 +100,8 @@ var CreateTask = (function(){
             	jQuery('#task_date').datepicker({
 				    autoclose:true,
 				    //startDate: '+0d',
-				    format: dateClientFormat
+				    format: dateClientFormat,
+					todayHighlight: true
 				});
 
 			    var url = baseURL + '/clients/typeahead-client';
