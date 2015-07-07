@@ -115,5 +115,8 @@ class DocumentLibrariesController extends \BaseController {
 			return \Redirect::back()->withErrors(['There was a problem deleting your document, please try again']);
 		}
 	}
+	public function postSection(){
+		return \Redirect::back();
+	}
 
 }
