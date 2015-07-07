@@ -21,7 +21,12 @@
 							<span class="caption-subject font-green-sharp ">My Uploaded Documents</span>
 						</div>
 						<div class="col-md-4 text-right">
-							<span class="text-primary" style="font-size:16px;"><a><i class="fa fa-plus-circle"></i> <a href="#" data-toggle="modal" data-target="#section-subsection-modal">Create New Section</a></span>
+							<span class="text-primary" style="font-size:16px;">
+								<i class="fa fa-plus-circle"></i> 
+								<a href="#" data-toggle="modal" data-target="#section-subsection-modal" data-sectionid="55" id="btnCreateSection">
+									Create New Section
+								</a>
+							</span>
 							
 						</div>
 					</div>
@@ -32,30 +37,61 @@
 								<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 310px;">
 									<div class="scroller" style="overflow: hidden; width: auto; height: 337px;" data-always-visible="1" data-rail-visible="0" data-initialized="1">
 										<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+											
+											<!-- section items --->
+											@foreach($sections as $section)
 											<div class="panel panel-default">
+											
 												<div class="panel-heading" role="tab" id="headingOne" style="height:40px;">
 													<h4 class="panel-title" style="width:100%;">
 														<div class="col-md-8">
 														<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-															<span class="font-green-sharp" style="font-size:18px;">Section</span>
+															<span class="font-green-sharp" style="font-size:18px;">{{ $section->description }} </span>
 														</a>
 														</div>
 														<div class="col-md-4 text-right text-primary">
-															<i class="fa fa-plus-circle"></i> Add New Subsection | <i class="fa fa-edit"></i> Edit Section
+															<i class="fa fa-plus-circle"></i> 
+															<a href="#" data-toggle="modal" 
+															   data-target="#section-subsection-modal" 
+															   data-sectionid="{{$section->id}}" 
+															   name="btnCreateSubsection">
+																Add New Subsection
+															</a> | 
+															<i class="fa fa-edit"></i> 
+															<a href="#" data-toggle="modal" 
+															   data-target="#section-subsection-modal" 
+															   data-sectionid="{{$section->id}}" 
+															   data-sectiondesc="{{$section->description}}"
+															   name="btnEditSection">Edit Section</a>
 														</div>
 													</h4>
 												</div>
 												<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne" style="margin-top:8px;">
 													<ul class="list-group feeds">
+														@foreach($subsection[$section->id] as $subsection)
 														<li class="list-group-item list-group-item-heading panel-title">
 															<div class="col-md-8">
-																<span class="font-green-sharp" style="font-size:18px;">Subsection</span>
+																<span class="font-green-sharp" style="font-size:18px;">{{$subsection->description}}</span>
 															</div>
 															<div class="col-md-4 text-primary text-right">
-																<i class="fa fa-plus-circle"></i><a href="#" data-toggle="modal" data-target="#add-document-library-modal">Add New Document</a> | <i class="fa fa-edit"></i> Edit Subsection
+																<i class="fa fa-plus-circle"></i>
+																<a href="#" data-toggle="modal" 
+																   data-target="#add-document-library-modal"
+																   data-subsectionid="{{$subsection->id}}"
+																   data-sectionid="{{$section->id}}">
+																	Add New Document
+																</a> | 
+																<i class="fa fa-edit">
+																	
+																</i> 
+																<a href="#" data-toggle="modal" 
+																	data-target="#section-subsection-modal" 
+																	data-sectionid="{{$subsection->id}}" 
+																	data-sectiondesc="{{$subsection->description}}"
+																	name="btnEditSection">Edit Subsection</a>
 															</div>
 														</li>
-														@foreach($documents as $document)
+														@foreach($documents[$subsection->id] as $document)
 															<li class="list-group-item">
 																<div class="col1">
 																	<div class="cont">
@@ -76,9 +112,14 @@
 																</div>
 															</li>
 														@endforeach
+														@endforeach
 													</ul>
 												</div>
+												
+												
 											</div>
+											@endforeach
+											<!--end section items -->
 										</div>
 									</div>
 									<div class="slimScrollBar" style="width: 7px; position: absolute; top: 0px; opacity: 0.4; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; z-index: 99; right: 1px; height: 187.717355371901px; display: block; background: rgb(187, 187, 187);">

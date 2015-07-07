@@ -7,7 +7,7 @@
       		<span aria-hidden="true">x</span>
       		<span class="sr-only">Close</span>
       	</button>
-      	<h4 class="modal-title">Document Section / Subsection</h3>
+      	<h4 class="modal-title" id="modalTitle">Document Section / Subsection</h3>
       </div>
       <div class="modal-body">
       	{{ Form::open(array('url' => 'document-library/section')) }}
@@ -18,6 +18,8 @@
                 <div class="form-group">
                   <label class="control-label">Description</label>
                   <input type="text" class="form-control" name="description" />
+				  <input type="hidden" name="section_id" id="txtSectionId" value="0"/>
+				  <input type="hidden" name="subsection_id" id="txtSubsectionId" value="0"/>
                 </div>
               </div>
             </div>

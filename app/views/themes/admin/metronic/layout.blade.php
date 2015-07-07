@@ -154,6 +154,7 @@
 		<script src="{{$asset_path}}/global/scripts/metronic.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/layout/scripts/layout.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/pages/scripts/tasks.js" type="text/javascript"></script>
+		<script src="{{$asset_path}}/pages/scripts/sections.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/pages/scripts/crm.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/global/plugins/typeahead/typeahead.bundle.min.js" type="text/javascript"></script>
 		<script src="{{$asset_path}}/global/plugins/bootstrap-editable/bootstrap-editable/js/bootstrap-editable.js" type="text/javascript"></script>
