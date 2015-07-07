@@ -2,6 +2,8 @@
 
 namespace DocumentLibraries;
 
+use DocumentLibrary\DocumentLibraryEntity;
+
 class DocumentLibrariesController extends \BaseController {
 
 	/**
@@ -115,5 +117,20 @@ class DocumentLibrariesController extends \BaseController {
 			return \Redirect::back()->withErrors(['There was a problem deleting your document, please try again']);
 		}
 	}
+
+    public function getBulkDelete(){
+        $files_ids = \Input::get('file_ids');
+
+        if(!empty($files_ids)){
+            foreach($files_ids as $file_id){
+                $document = \DocumentLibrary\DocumentLibraryEntity::get_instance()->find($file_id);
+                $document->delete();
+            }
+            \Session::flash('message', 'Document was successfully deleted');
+            return \Redirect::back();
+        } else {
+            return \Redirect::back()->withErrors(['There was a problem deleting your document, please try again']);
+        }
+    }
 
 }
