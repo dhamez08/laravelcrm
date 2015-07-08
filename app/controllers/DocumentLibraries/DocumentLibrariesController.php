@@ -67,7 +67,18 @@ class DocumentLibrariesController extends \BaseController {
 		$data['icons']				= \Config::get('crm.document_file_type_class');
 		$data['documents']			= \DocumentLibrary\DocumentLibraryEntity::get_instance()->documents();
 		$data 						= array_merge($data,$this->getSetupThemes());
-
+		
+		//FOR THE SUBSECTIONS
+		$data['sections']			= \DocumentLibrary\DocumentSection::get_instance()->doc_sections();
+		$data['subsections']		= array();
+		foreach($data['sections'] as $section){
+			$data['subsections'][$section->id] = \DocumentLibrary\DocumentSection::get_instance()->doc_subsections($section->id);
+			foreach($data['subsections'][$section->id] as $subsection){
+				$data['documents'][$subsection->id] = array();
+			}
+		}
+		//END SUBSECTIONS
+		
 		return \View::make( $data['view_path'] . '.document-libraries.index', $data );
 	}
 
@@ -116,6 +127,20 @@ class DocumentLibrariesController extends \BaseController {
 		}
 	}
 	public function postSection(){
+		$section = new \DocumentLibrary\DocumentSection();
+		//if id has value then edit the content
+		if ( (int)\Input::get('id') ){
+			$field_array = array('description'=>\Input::get('description'));
+			$section->update_section((int) \Input::get('id'), $field_array);
+		}else{
+			//create it
+			$section->user_id = \Auth::id();
+			$section->status_id = 1;
+			$section->description = \Input::get('description');
+			$section->parent_id = \Input::get('parent_id');
+			$section->save();
+		}
+		
 		return \Redirect::back();
 	}
 

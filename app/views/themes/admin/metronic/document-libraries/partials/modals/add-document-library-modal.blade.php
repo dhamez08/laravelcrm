@@ -26,8 +26,7 @@
                 <div class="form-group">
                   <label class="control-label">Select Document:</label>
                   <input type="file" class="form-control" name="doc" />
-				  <input type="hidden" name="section_id" id="sectionId" value="0"/>
-				  <input type="hidden" name="subsection_id" id="subSectionId" value="0"/>
+				  <input type="hidden" name="subsection_id" id="txtDocSectionId" value="0"/>
                 </div>
               </div>
             </div>

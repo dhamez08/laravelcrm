@@ -42,14 +42,19 @@
 											@foreach($sections as $section)
 											<div class="panel panel-default">
 											
-												<div class="panel-heading" role="tab" id="headingOne" style="height:40px;">
+												<div class="panel-heading" role="tab" id="heading{{$section->id}}}}" style="height:40px;">
 													<h4 class="panel-title" style="width:100%;">
-														<div class="col-md-8">
-														<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-															<span class="font-green-sharp" style="font-size:18px;">{{ $section->description }} </span>
+														<div class="col-md-7">
+														<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$section->id}}" aria-expanded="false" aria-controls="collapseOne">
+															@if ( count($subsections[$section->id]) )
+																<i class="glyphicon glyphicon-chevron-down" aria-hidden="true"></i>
+															@endif
+															<span class="text-primary" style="font-size:18px;">{{ $section->description }} 
+																
+															</span>
 														</a>
 														</div>
-														<div class="col-md-4 text-right text-primary">
+														<div class="col-md-5 text-right text-primary">
 															<i class="fa fa-plus-circle"></i> 
 															<a href="#" data-toggle="modal" 
 															   data-target="#section-subsection-modal" 
@@ -62,23 +67,27 @@
 															   data-target="#section-subsection-modal" 
 															   data-sectionid="{{$section->id}}" 
 															   data-sectiondesc="{{$section->description}}"
-															   name="btnEditSection">Edit Section</a>
+															   name="btnEditSection">Edit Section
+															</a> |
+															<i class="fa fa-minus-circle text-danger"></i>
+															Delete
 														</div>
 													</h4>
 												</div>
-												<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne" style="margin-top:8px;">
+												<div id="collapse{{$section->id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne" style="margin-top:8px;">
 													<ul class="list-group feeds">
-														@foreach($subsection[$section->id] as $subsection)
+														@foreach($subsections[$section->id] as $subsection)
 														<li class="list-group-item list-group-item-heading panel-title">
-															<div class="col-md-8">
+															<div class="col-md-7">
 																<span class="font-green-sharp" style="font-size:18px;">{{$subsection->description}}</span>
 															</div>
-															<div class="col-md-4 text-primary text-right">
+															<div class="col-md-5 text-primary text-right">
 																<i class="fa fa-plus-circle"></i>
 																<a href="#" data-toggle="modal" 
 																   data-target="#add-document-library-modal"
 																   data-subsectionid="{{$subsection->id}}"
-																   data-sectionid="{{$section->id}}">
+																   data-sectionid="{{$section->id}}"
+																   name="btnAddNewDocument">
 																	Add New Document
 																</a> | 
 																<i class="fa fa-edit">
@@ -88,7 +97,11 @@
 																	data-target="#section-subsection-modal" 
 																	data-sectionid="{{$subsection->id}}" 
 																	data-sectiondesc="{{$subsection->description}}"
-																	name="btnEditSection">Edit Subsection</a>
+																	name="btnEditSection">
+																	Edit Subsection
+																</a> |
+																<i class="fa fa-minus-circle text-danger"></i>
+																Delete
 															</div>
 														</li>
 														@foreach($documents[$subsection->id] as $document)
@@ -130,7 +143,7 @@
 							</div>
 						</div>
 						<!--END TABS-->
-						<button class="btn green-haze btn-circle btn-sm pull-right" data-toggle="modal" data-target="#add-document-library-modal">New</button>
+						<!-- <button class="btn green-haze btn-circle btn-sm pull-right" data-toggle="modal" data-target="#add-document-library-modal">New</button> -->
 					</div>
 				</div>	
 				<!-- END CUSTOM FILES -->

@@ -17,9 +17,9 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label class="control-label">Description</label>
-                  <input type="text" class="form-control" name="description" />
-				  <input type="hidden" name="section_id" id="txtSectionId" value="0"/>
-				  <input type="hidden" name="subsection_id" id="txtSubsectionId" value="0"/>
+                  <input type="text" class="form-control" name="description" id="txtDescription"/>
+				  <input type="hidden" name="parent_id" id="txtSectionId" value="0"/>
+				  <input type="hidden" name="id" id="txtId" value="0"/>
                 </div>
               </div>
             </div>
