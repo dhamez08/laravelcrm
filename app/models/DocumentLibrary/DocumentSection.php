@@ -4,7 +4,7 @@ namespace DocumentLibrary;
 use \Illuminate\Database\Eloquent\SoftDeletingTrait;
 
 class DocumentSection extends \Eloquent{
-    use SoftDeletingTrait;
+    use \SoftDeletingTrait;
 	protected $table = 'doc_sections';
 	protected static $instance = null;
 	
@@ -28,13 +28,16 @@ class DocumentSection extends \Eloquent{
 	public function doc_sections(){
 		$doc_sections = \DB::table($this->table)
 					->where('user_id', '=', \Auth::id())
-					->where('parent_id','=',0);
+					->where('parent_id','=',0)
+                    ->where('deleted_at','=',null);
 		return $doc_sections->get();
 	}
 	public function doc_subsections($section_id = NULL){
 		$sub = array();
 		if ( $section_id !== NULL ){
-			$doc_subsections = \DB::table($this->table)->where('parent_id', '=', (int)$section_id);
+			$doc_subsections = \DB::table($this->table)
+                ->where('parent_id', '=', (int)$section_id)
+                ->where('deleted_at','=',null);
 			$sub = $doc_subsections->get();
 		}
 		return $sub;

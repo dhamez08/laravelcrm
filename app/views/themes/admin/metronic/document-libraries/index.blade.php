@@ -15,7 +15,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<!-- CUSTOM FILES -->
-				<div class="portlet light bordered" style="min-height: 425px">
+				<div class="portlet light bordered" style="min-height: 625px">
 					<div class="portlet-title tabbable-line">
 						<div class="caption col-md-8">
 							<span class="caption-subject font-green-sharp ">My Uploaded Documents</span>
@@ -25,6 +25,9 @@
 								<a class="btn blue" href="#" data-toggle="modal" data-target="#section-subsection-modal" data-sectionid="55" id="btnCreateSection">
 									<i class="fa fa-plus"></i> Create New Section
 								</a>
+                                <a class="btn red disabled" href="#" id="delete-all">
+                                    <i class="fa fa-times"></i> Delete Selected
+                                </a>
 							</span>
 							
 						</div>
@@ -35,16 +38,19 @@
 							<div class="tab-pane active">
                                 @foreach($sections as $section)
                                 <div class="portlet box blue-hoki">
-                                    <div class="portlet-title">
+                                    <div class="portlet-title" style="border-bottom-width: 0px;">
                                         <div class="caption">
                                             <i class="fa fa-folder"></i>{{$section->description}}
+                                        </div>
+                                        <div class="tools">
+                                            <a class="collapse" href="javascript:;" data-original-title="" title=""></a>
                                         </div>
                                         <div class="actions">
                                             <a class="btn btn-default btn-sm" href="javascript:;" name="btnCreateSubsection" data-sectionid="{{$section->id}}" data-target="#section-subsection-modal" data-toggle="modal">
                                                 <i class="fa fa-plus"></i> Add Subsection </a>
                                             <a class="btn btn-default btn-sm" href="javascript:;" name="btnEditSection" data-sectiondesc="{{$section->description}}" data-sectionid="{{$section->id}}" data-target="#section-subsection-modal" data-toggle="modal" >
                                                 <i class="fa fa-pencil"></i> Edit </a>
-                                            <a class="btn btn-default btn-sm" href="javascript:;">
+                                            <a class="btn btn-default btn-sm delete-section" href="javascript:;" data-master-section-id="{{$section->id}}">
                                                 <i class="fa fa-trash"></i> Delete </a>
                                         </div>
                                     </div>
@@ -61,11 +67,11 @@
                                                                     {{$subsection->description}} </a>
                                                             </div>
                                                             <div class="col-md-2 text-right" style="padding-top: 6px; padding-bottom: 6px">
-                                                                <a href="javascript:;" class="btn btn-default btn-sm" name="btnAddNewDocument" data-sectionid="1" data-subsectionid="2" data-target="#add-document-library-modal" data-toggle="modal">
+                                                                <a href="javascript:;" class="btn btn-default btn-sm" name="btnAddNewDocument" data-sectionid="{{$section->id}}" data-subsectionid="{{$subsection->id}}" data-target="#add-document-library-modal" data-toggle="modal">
                                                                     <i class="fa fa-upload"></i></a>
                                                                 <a href="javascript:;" class="btn btn-default btn-sm" name="btnEditSection" data-sectiondesc="{{$subsection->description}}" data-sectionid="{{$subsection->id}}" data-target="#section-subsection-modal" data-toggle="modal">
                                                                     <i class="fa fa-pencil"></i></a>
-                                                                <a href="javascript:;" class="btn btn-default btn-sm">
+                                                                <a href="javascript:;" class="btn btn-default btn-sm delete-section" data-master-section-id="{{$subsection->id}}">
                                                                     <i class="fa fa-trash"></i></a>
                                                             </div>
                                                         </div>
@@ -88,7 +94,7 @@
                                                                             </div>
                                                                             <div class="col-md-10">
                                                                                 <div class="desc">
-                                                                                    <a href="{{ $path.'/'.$document->filename }}" target="_blank">{{ $document->name }}</a>
+                                                                                    <a href="{{ $path.'/'.$document->filename }}" target="_blank" class="file-preview" data-thumb="{{ asset('public' . $document->thumbnail) }}">{{ $document->name }}</a>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -132,10 +138,12 @@
                 $(function(){
                     var file_ids = new Array();
 
-                    $('.file-checkbox').on('click', function(){
-                        $('#select-all-file').prop('checked',false);
-                        $('#select-all-file').uniform({checkedClass: ''})
+                    $('.accordion-toggle').on('click', function () {
+                        var panel_group = $(this).closest('.panel-group');
+                        panel_group.find('.panel-collapse').collapse('toggle');
+                    });
 
+                    $('.file-checkbox').on('click', function(){
                         var cbx = $(this);
                         var file_id = cbx.data('file-id');
 
@@ -148,14 +156,13 @@
                         }
 
                         if(file_ids.length){
-                            $('#delete-all').prop('disabled',false);
+                            $('#delete-all').removeClass('disabled');
                         } else {
-                            $('#delete-all').prop('disabled',true);
+                            $('#delete-all').addClass('disabled');
                         }
                     });
 
                     $('#delete-all').on('click',function(){
-
                         var bootbox_open = true;
                         var box = bootbox.confirm({
                             message: 'Are you sure you want to delete selected documents?',
@@ -174,26 +181,23 @@
                         });
                     });
 
-                    $('#select-all-file').on('click',function(){
-                        var is_checked = $(this).is(":checked")
+                    $('.delete-section').on('click',function(){
+                        var bootbox_open = true;
+                        var section_id = $(this).data('master-section-id');
+                        var box = bootbox.confirm({
+                            message: 'Are you sure you want to delete this section? This will delete all files inside the sections.',
+                            callback: function(result){
+                                if(result){
+                                    window.location.href = baseURL+'/document-library/delete-section/'+section_id;
+                                }
 
-                        var checkedClass = is_checked ? 'checked' : '';
-                        $('.file-checkbox').prop('checked',is_checked);
-                        $('.file-checkbox').uniform({checkedClass: checkedClass})
-
-
-                        if(is_checked){
-                            file_ids = new Array();
-                            $.each($('.file-checkbox'),function(){
-                                file_ids.push($(this).data('file-id'));
-                            })
-
-                            $('#delete-all').prop('disabled',false);
-                        } else {
-                            file_ids = new Array();
-                            $('#delete-all').prop('disabled',true);
-                        }
-
+                                if(bootbox_open){
+                                    bootbox_open = false;
+                                    box.find('.close').click();
+                                }
+                            },
+                            show: true
+                        });
                     })
                 });
             </script>

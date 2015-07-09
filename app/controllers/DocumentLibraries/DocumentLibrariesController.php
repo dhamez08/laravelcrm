@@ -151,12 +151,31 @@ class DocumentLibrariesController extends \BaseController {
         if(!empty($files_ids)){
             foreach($files_ids as $file_id){
                 $document = \DocumentLibrary\DocumentLibraryEntity::get_instance()->find($file_id);
-                $document->delete();
+                if($document->belongs_to == \Auth::id()){
+                    $document->delete();
+                } else {
+                    return \Redirect::back()->withErrors(['There was a problem deleting your document, please try again']);
+                }
             }
             \Session::flash('message', 'Document was successfully deleted');
             return \Redirect::back();
         } else {
             return \Redirect::back()->withErrors(['There was a problem deleting your document, please try again']);
+        }
+    }
+
+    public function getDeleteSection($section_id){
+        $section = \DocumentLibrary\DocumentSection::find($section_id);
+
+        if($section->user_id == \Auth::id()){
+            $section->delete();
+            foreach($section->documents()->get() as $document){
+                $document->delete();
+            }
+            \Session::flash('message', 'Section was successfully deleted');
+            return \Redirect::back();
+        } else {
+            return \Redirect::back()->withErrors(['There was a problem deleting this section, please try again']);
         }
     }
 

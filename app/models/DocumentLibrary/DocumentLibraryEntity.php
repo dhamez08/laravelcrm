@@ -2,6 +2,7 @@
 namespace DocumentLibrary;
 
 use \Illuminate\Database\Eloquent\SoftDeletingTrait;
+use Tristan\ThumbnailGenerator\ThumbnailGenerator;
 
 class DocumentLibraryEntity extends \Eloquent{
 
@@ -39,7 +40,7 @@ class DocumentLibraryEntity extends \Eloquent{
 		$ext = $file->getClientOriginalExtension();
 		$file_name = \Auth::id().'_'.time().'.'.$ext;
 
-		$document = new $this;
+        $document = new $this;
 		$document->belongs_to = \Auth::id();
 		$document->name = \Input::get('name');
 		$document->filename = $file_name;
@@ -48,8 +49,13 @@ class DocumentLibraryEntity extends \Eloquent{
 		$document->active = 1;
 
 		if($file->move($destination, $file_name)) {
-			return $document->save() ? 1:0;
-		}
+            $thumbgen = new ThumbnailGenerator();
+            $thumb_filename = $thumbgen->generateThumbnail('document/library/own/'.$file_name);
+            $document->thumbnail = $thumb_filename;
+
+            return $document->save() ? 1:0;
+
+        }
 
 		return 0;
 
