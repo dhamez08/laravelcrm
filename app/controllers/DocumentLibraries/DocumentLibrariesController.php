@@ -72,11 +72,10 @@ class DocumentLibrariesController extends \BaseController {
 		
 		//FOR THE SUBSECTIONS
 		$data['sections']			= \DocumentLibrary\DocumentSection::get_instance()->doc_sections();
-		$data['subsections']		= array();
 		foreach($data['sections'] as $section){
 			$data['subsections'][$section->id] = \DocumentLibrary\DocumentSection::get_instance()->doc_subsections($section->id);
 			foreach($data['subsections'][$section->id] as $subsection){
-				$data['documents'][$subsection->id] = array();
+				$data['documents'][$subsection->id] = \DocumentLibrary\DocumentSection::find($subsection->id)->documents()->get();
 			}
 		}
 		//END SUBSECTIONS

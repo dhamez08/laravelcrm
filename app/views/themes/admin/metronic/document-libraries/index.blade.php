@@ -40,9 +40,9 @@
                                             <i class="fa fa-folder"></i>{{$section->description}}
                                         </div>
                                         <div class="actions">
-                                            <a class="btn btn-default btn-sm" href="javascript:;">
+                                            <a class="btn btn-default btn-sm" href="javascript:;" name="btnCreateSubsection" data-sectionid="{{$section->id}}" data-target="#section-subsection-modal" data-toggle="modal">
                                                 <i class="fa fa-plus"></i> Add Subsection </a>
-                                            <a class="btn btn-default btn-sm" href="javascript:;">
+                                            <a class="btn btn-default btn-sm" href="javascript:;" name="btnEditSection" data-sectiondesc="{{$section->description}}" data-sectionid="{{$section->id}}" data-target="#section-subsection-modal" data-toggle="modal" >
                                                 <i class="fa fa-pencil"></i> Edit </a>
                                             <a class="btn btn-default btn-sm" href="javascript:;">
                                                 <i class="fa fa-trash"></i> Delete </a>
@@ -61,9 +61,9 @@
                                                                     {{$subsection->description}} </a>
                                                             </div>
                                                             <div class="col-md-2 text-right" style="padding-top: 6px; padding-bottom: 6px">
-                                                                <a href="javascript:;" class="btn btn-default btn-sm">
+                                                                <a href="javascript:;" class="btn btn-default btn-sm" name="btnAddNewDocument" data-sectionid="1" data-subsectionid="2" data-target="#add-document-library-modal" data-toggle="modal">
                                                                     <i class="fa fa-upload"></i></a>
-                                                                <a href="javascript:;" class="btn btn-default btn-sm">
+                                                                <a href="javascript:;" class="btn btn-default btn-sm" name="btnEditSection" data-sectiondesc="{{$subsection->description}}" data-sectionid="{{$subsection->id}}" data-target="#section-subsection-modal" data-toggle="modal">
                                                                     <i class="fa fa-pencil"></i></a>
                                                                 <a href="javascript:;" class="btn btn-default btn-sm">
                                                                     <i class="fa fa-trash"></i></a>
@@ -74,50 +74,30 @@
                                                 <div class="panel-collapse collapse" id="sub-section-{{$subsection->id}}" aria-expanded="false" style="height: 0px;">
                                                     <div class="panel-body">
                                                         <ul class="feeds">
-                                                            <li>
-                                                                <div class="col-md-7">
-                                                                    <div class="row">
-                                                                        <div class="col-md-1">
-                                                                            <div class="checker"><span><input type="checkbox" data-file-id="11" class="file-checkbox"></span></div>
-                                                                        </div>
-                                                                        <div class="col-md-1">
-                                                                            <div class="label label-sm label-danger">
-                                                                                <i class="fa fa-file-image-o"></i>
+                                                            @foreach($documents[$subsection->id] as $document)
+                                                                <li>
+                                                                    <div class="col-md-7">
+                                                                        <div class="row">
+                                                                            <div class="col-md-1">
+                                                                                <input class="file-checkbox" type="checkbox" data-file-id="{{$document->id}}" />
                                                                             </div>
-                                                                        </div>
-                                                                        <div class="col-md-10">
-                                                                            <div class="desc">
-                                                                                <a target="_blank" href="http://zeromyexcess.co.uk/laravelcrm/public/document/library/own/16_1436457191.jpg">test</a>
+                                                                            <div class="col-md-1">
+                                                                                <div class="label label-sm label-danger">
+                                                                                    <i class="fa {{ $icons[$document->file_ext] or 'fa-file-o' }}"></i>
+                                                                                </div>
                                                                             </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <a onclick="return confirm('Are you sure you want to delete?')" class="btn btn-sm red" href="http://zeromyexcess.co.uk/laravelcrm/document-library/delete/11"><i class="fa fa-times"></i> Remove</a>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="col-md-7">
-                                                                    <div class="row">
-                                                                        <div class="col-md-1">
-                                                                            <div class="checker"><span><input type="checkbox" data-file-id="11" class="file-checkbox"></span></div>
-                                                                        </div>
-                                                                        <div class="col-md-1">
-                                                                            <div class="label label-sm label-danger">
-                                                                                <i class="fa fa-file-image-o"></i>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-10">
-                                                                            <div class="desc">
-                                                                                <a target="_blank" href="http://zeromyexcess.co.uk/laravelcrm/public/document/library/own/16_1436457191.jpg">test</a>
+                                                                            <div class="col-md-10">
+                                                                                <div class="desc">
+                                                                                    <a href="{{ $path.'/'.$document->filename }}" target="_blank">{{ $document->name }}</a>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <a onclick="return confirm('Are you sure you want to delete?')" class="btn btn-sm red" href="http://zeromyexcess.co.uk/laravelcrm/document-library/delete/11"><i class="fa fa-times"></i> Remove</a>
-                                                                </div>
-                                                            </li>
+                                                                    <div class="col-md-4">
+                                                                        <a href="{{ url('document-library/delete/'.$document->id) }}" class="btn btn-sm red" onclick="return confirm('Are you sure you want to delete?')"><i class="fa fa-times"></i> Remove</a>
+                                                                    </div>
+                                                                </li>
+                                                            @endforeach
                                                         </ul>
                                                     </div>
                                                 </div>

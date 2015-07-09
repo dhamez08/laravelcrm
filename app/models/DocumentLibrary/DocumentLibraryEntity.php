@@ -5,7 +5,7 @@ use \Illuminate\Database\Eloquent\SoftDeletingTrait;
 
 class DocumentLibraryEntity extends \Eloquent{
 
-	use SoftDeletingTrait;
+	use \SoftDeletingTrait;
 
 	protected $table = 'document_library_own';
 	protected static $instance = null;
@@ -44,6 +44,7 @@ class DocumentLibraryEntity extends \Eloquent{
 		$document->name = \Input::get('name');
 		$document->filename = $file_name;
 		$document->file_ext = $ext;
+        $document->section_id = \Input::get('subsection_id');
 		$document->active = 1;
 
 		if($file->move($destination, $file_name)) {

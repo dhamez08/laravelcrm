@@ -36,7 +36,7 @@ $(function(){
 	//add new document
 	if ( $("a[name=btnAddNewDocument]").length ){
 		$("a[name=btnAddNewDocument]").on("click",function(e){
-			$("#txtDocSectionId").val($(this).data('sectionid'));
+			$("#txtDocSectionId").val($(this).data('subsectionid'));
 			return;
 		});
 	}

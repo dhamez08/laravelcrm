@@ -7,7 +7,7 @@
       		<span aria-hidden="true">x</span>
       		<span class="sr-only">Close</span>
       	</button>
-      	<h4 class="modal-title">Upload File To Library</h3>
+      	<h3 class="modal-title">Upload File To Library</h3>
       </div>
       <div class="modal-body">
       	{{ Form::open(array('url' => 'document-library/upload','files'=>true)) }}

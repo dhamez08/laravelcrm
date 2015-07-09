@@ -4,7 +4,7 @@ namespace DocumentLibrary;
 use \Illuminate\Database\Eloquent\SoftDeletingTrait;
 
 class DocumentSection extends \Eloquent{
-
+    use SoftDeletingTrait;
 	protected $table = 'doc_sections';
 	protected static $instance = null;
 	
@@ -47,4 +47,8 @@ class DocumentSection extends \Eloquent{
             ->where('id', (int)$section_id)
             ->update($field_array);
 	}
+
+    public function documents(){
+        return $this->hasMany('\DocumentLibrary\DocumentLibrary','section_id','id');
+    }
 }
