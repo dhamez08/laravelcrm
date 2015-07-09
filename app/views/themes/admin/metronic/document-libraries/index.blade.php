@@ -17,60 +17,121 @@
 				<!-- CUSTOM FILES -->
 				<div class="portlet light bordered" style="min-height: 425px">
 					<div class="portlet-title tabbable-line">
-						<div class="caption">
+						<div class="caption col-md-8">
 							<span class="caption-subject font-green-sharp ">My Uploaded Documents</span>
+						</div>
+						<div class="col-md-4 text-right">
+							<span class="text-primary" style="font-size:16px;">
+								<a class="btn blue" href="#" data-toggle="modal" data-target="#section-subsection-modal" data-sectionid="55" id="btnCreateSection">
+									<i class="fa fa-plus"></i> Create New Section
+								</a>
+							</span>
+							
 						</div>
 					</div>
 					<div class="portlet-body tabbable-line">
 						<!--BEGIN TABS-->
 						<div class="tab-content">
 							<div class="tab-pane active">
-								<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 310px;"><div class="scroller" style="overflow: hidden; width: auto; height: 337px;" data-always-visible="1" data-rail-visible="0" data-initialized="1">
-									<ul class="feeds">
-                                        <li>
-                                            <div class="col-md-7">
-                                                <div class="row">
-                                                    <div class="col-md-1">
-                                                        <input id="select-all-file" type="checkbox"/>
-                                                    </div>
-                                                    <div class="col-md-11" style="color: #ACACAC">
-                                                            Select All
+                                @foreach($sections as $section)
+                                <div class="portlet box blue-hoki">
+                                    <div class="portlet-title">
+                                        <div class="caption">
+                                            <i class="fa fa-folder"></i>{{$section->description}}
+                                        </div>
+                                        <div class="actions">
+                                            <a class="btn btn-default btn-sm" href="javascript:;">
+                                                <i class="fa fa-plus"></i> Add Subsection </a>
+                                            <a class="btn btn-default btn-sm" href="javascript:;">
+                                                <i class="fa fa-pencil"></i> Edit </a>
+                                            <a class="btn btn-default btn-sm" href="javascript:;">
+                                                <i class="fa fa-trash"></i> Delete </a>
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body">
+                                        <div id="main-section-{{$section->id}}" class="panel-group accordion">
+                                        <!-- Loop within subsections -->
+                                            @foreach($subsections[$section->id] as $subsection)
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+                                                        <div class="row" style="margin: 0">
+                                                            <div class="col-md-10">
+                                                                <a href="#sub-section-{{$subsection->id}}" data-parent="#main-section-{{$section->id}}" data-toggle="collapse" class="accordion-toggle collapsed" aria-expanded="false">
+                                                                    {{$subsection->description}} </a>
+                                                            </div>
+                                                            <div class="col-md-2 text-right" style="padding-top: 6px; padding-bottom: 6px">
+                                                                <a href="javascript:;" class="btn btn-default btn-sm">
+                                                                    <i class="fa fa-upload"></i></a>
+                                                                <a href="javascript:;" class="btn btn-default btn-sm">
+                                                                    <i class="fa fa-pencil"></i></a>
+                                                                <a href="javascript:;" class="btn btn-default btn-sm">
+                                                                    <i class="fa fa-trash"></i></a>
+                                                            </div>
+                                                        </div>
+                                                    </h4>
+                                                </div>
+                                                <div class="panel-collapse collapse" id="sub-section-{{$subsection->id}}" aria-expanded="false" style="height: 0px;">
+                                                    <div class="panel-body">
+                                                        <ul class="feeds">
+                                                            <li>
+                                                                <div class="col-md-7">
+                                                                    <div class="row">
+                                                                        <div class="col-md-1">
+                                                                            <div class="checker"><span><input type="checkbox" data-file-id="11" class="file-checkbox"></span></div>
+                                                                        </div>
+                                                                        <div class="col-md-1">
+                                                                            <div class="label label-sm label-danger">
+                                                                                <i class="fa fa-file-image-o"></i>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-10">
+                                                                            <div class="desc">
+                                                                                <a target="_blank" href="http://zeromyexcess.co.uk/laravelcrm/public/document/library/own/16_1436457191.jpg">test</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <a onclick="return confirm('Are you sure you want to delete?')" class="btn btn-sm red" href="http://zeromyexcess.co.uk/laravelcrm/document-library/delete/11"><i class="fa fa-times"></i> Remove</a>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="col-md-7">
+                                                                    <div class="row">
+                                                                        <div class="col-md-1">
+                                                                            <div class="checker"><span><input type="checkbox" data-file-id="11" class="file-checkbox"></span></div>
+                                                                        </div>
+                                                                        <div class="col-md-1">
+                                                                            <div class="label label-sm label-danger">
+                                                                                <i class="fa fa-file-image-o"></i>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-10">
+                                                                            <div class="desc">
+                                                                                <a target="_blank" href="http://zeromyexcess.co.uk/laravelcrm/public/document/library/own/16_1436457191.jpg">test</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <a onclick="return confirm('Are you sure you want to delete?')" class="btn btn-sm red" href="http://zeromyexcess.co.uk/laravelcrm/document-library/delete/11"><i class="fa fa-times"></i> Remove</a>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4"></div>
-                                        </li>
-										@foreach($documents as $document)
-										<li>
-											<div class="col-md-7">
-												<div class="row">
-                                                    <div class="col-md-1">
-                                                        <input class="file-checkbox" type="checkbox" data-file-id="{{$document->id}}" />
-                                                    </div>
-													<div class="col-md-1">
-														<div class="label label-sm label-danger">
-															<i class="fa {{ $icons[$document->file_ext] or 'fa-file-o' }}"></i>
-														</div>
-													</div>
-													<div class="col-md-10">
-														<div class="desc">
-															<a href="{{ $path.'/'.$document->filename }}" target="_blank">{{ $document->name }}</a>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="col-md-4">
-												<a href="{{ url('document-library/delete/'.$document->id) }}" class="btn btn-sm red" onclick="return confirm('Are you sure you want to delete?')"><i class="fa fa-times"></i> Remove</a>
-											</div>
-										</li>
-										@endforeach
-									</ul>
-								</div><div class="slimScrollBar" style="width: 7px; position: absolute; top: 0px; opacity: 0.4; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; z-index: 99; right: 1px; height: 187.717355371901px; display: block; background: rgb(187, 187, 187);"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(234, 234, 234);"></div></div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                                @endforeach
+
 							</div>
 						</div>
 						<!--END TABS-->
-						<button class="btn green-haze btn-circle btn-sm pull-right" data-toggle="modal" data-target="#add-document-library-modal">New</button>
-                        <button class="btn green-haze btn-circle btn-sm pull-right" id="delete-all" disabled="true">Delete All</button>
+						<!-- <button class="btn green-haze btn-circle btn-sm pull-right" data-toggle="modal" data-target="#add-document-library-modal">New</button> -->
 					</div>
 				</div>	
 				<!-- END CUSTOM FILES -->
@@ -79,7 +140,8 @@
 	</div>
 
 	@include( \DashboardEntity::get_instance()->getView() . '.document-libraries.partials.modals.add-document-library-modal' )
-
+	@stop
+	@include( \DashboardEntity::get_instance()->getView() . '.document-libraries.partials.modals.section-subsection-modal' )
 	@stop
 @stop
 @section('script-footer')
