@@ -4,6 +4,10 @@
 	@section('head-page-level-css')
 	@parent
 	<!-- BEGIN PAGE LEVEL STYLES -->
+    <link href="{{$asset_path}}/global/plugins/dropzone/css/dropzone.css" rel="stylesheet"/>
+    <link href="{{$asset_path}}/global/plugins/jquery-file-upload/blueimp-gallery/blueimp-gallery.min.css" rel="stylesheet"/>
+    <link href="{{$asset_path}}/global/plugins/jquery-file-upload/css/jquery.fileupload.css" rel="stylesheet"/>
+    <link href="{{$asset_path}}/global/plugins/jquery-file-upload/css/jquery.fileupload-ui.css" rel="stylesheet"/>
 	<!-- END PAGE LEVEL SCRIPTS -->
 	@stop
 @stop
@@ -134,6 +138,34 @@
 	@parent
 	@section('footer-custom-js')
         @parent
+            <!-- BEGIN:File Upload Plugin JS files-->
+            <!-- The Templates plugin is included to render the upload/download listings -->
+            <script src="{{$asset_path}}/global/plugins/jquery-file-upload/js/vendor/tmpl.min.js"></script>
+            <!-- The Load Image plugin is included for the preview images and image resizing functionality -->
+            <script src="{{$asset_path}}/global/plugins/jquery-file-upload/js/vendor/load-image.min.js"></script>
+            <!-- The Canvas to Blob plugin is included for image resizing functionality -->
+            <script src="{{$asset_path}}/global/plugins/jquery-file-upload/js/vendor/canvas-to-blob.min.js"></script>
+            <!-- blueimp Gallery script -->
+            <script src="{{$asset_path}}/global/plugins/jquery-file-upload/blueimp-gallery/jquery.blueimp-gallery.min.js"></script>
+            <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
+            <script src="{{$asset_path}}/global/plugins/jquery-file-upload/js/jquery.iframe-transport.js"></script>
+            <!-- The basic File Upload plugin -->
+            <script src="{{$asset_path}}/global/plugins/jquery-file-upload/js/jquery.fileupload.js"></script>
+            <!-- The File Upload processing plugin -->
+            <script src="{{$asset_path}}/global/plugins/jquery-file-upload/js/jquery.fileupload-process.js"></script>
+            <!-- The File Upload image preview & resize plugin -->
+            <script src="{{$asset_path}}/global/plugins/jquery-file-upload/js/jquery.fileupload-image.js"></script>
+            <!-- The File Upload audio preview plugin -->
+            <script src="{{$asset_path}}/global/plugins/jquery-file-upload/js/jquery.fileupload-audio.js"></script>
+            <!-- The File Upload video preview plugin -->
+            <script src="{{$asset_path}}/global/plugins/jquery-file-upload/js/jquery.fileupload-video.js"></script>
+            <!-- The File Upload validation plugin -->
+            <script src="{{$asset_path}}/global/plugins/jquery-file-upload/js/jquery.fileupload-validate.js"></script>
+            <!-- The File Upload user interface plugin -->
+            <script src="{{$asset_path}}/global/plugins/jquery-file-upload/js/jquery.fileupload-ui.js"></script>
+
+            <script src="{{$asset_path}}/pages/scripts/form-fileupload.js"></script>
+            <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
             <script>
                 $(function(){
                     var file_ids = new Array();
@@ -201,5 +233,31 @@
                     })
                 });
             </script>
+        <script>
+            jQuery(document).ready(function() {
+                $(document).bind('drop dragover', function (e) {
+                    e.preventDefault();
+                });
+                FormFileUpload.init();
+                deleteFiles.init();
+                jQuery('a.clientFiles').each(function(){
+                    jQuery(this).editable({
+                        send:'always',
+                        ajaxOptions: {
+                            dataType: 'json'
+                        },
+                        success: function(response, newValue) {
+                            if(!response) {
+                                return "Unknown error!";
+                            }
+
+                            if(response.result === false) {
+                                return response.message;
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
         @stop
 @stop

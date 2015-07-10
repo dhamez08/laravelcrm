@@ -3,6 +3,8 @@
 namespace DocumentLibraries;
 
 use DocumentLibrary\DocumentLibraryEntity;
+use Tristan\ThumbnailGenerator\ThumbnailGenerator;
+
 
 class DocumentLibrariesController extends \BaseController {
 
@@ -112,6 +114,28 @@ class DocumentLibrariesController extends \BaseController {
 		}
 	}
 
+    public function postAjaxUpload(){
+        $belongs_to = \Auth::id();
+        $section_id = \Input::get('subsection_id');
+
+        if( \Input::hasFile('files') ){
+            foreach(\Input::file('files') as $file){
+                $this->fileUpload($file, $section_id);
+
+
+                return \Response::json(
+                    array(
+                        'success'=>true,
+                        'msg'=>'',
+                        'redirect'=>url('document-library'),
+                    )
+                );
+            }
+        }else{
+            return \Response::json(array('success'=>false,'msg'=>'Cannot upload, file.'));
+        }
+    }
+
 	public function getDelete($id) {
 		$document = \DocumentLibrary\DocumentLibraryEntity::get_instance()->find($id);
 		if($document) {
@@ -176,6 +200,31 @@ class DocumentLibrariesController extends \BaseController {
             return \Redirect::back();
         } else {
             return \Redirect::back()->withErrors(['There was a problem deleting this section, please try again']);
+        }
+    }
+
+    public function fileUpload($file, $section_id){
+        $destination = public_path()."/document/library/own/";
+        $ext = $file->getClientOriginalExtension();
+        $file_name = \Auth::id().'_'.time().'.'.$ext;
+        $display_name = $file->getClientOriginalName();
+
+        $document = new \DocumentLibrary\DocumentLibrary();
+        $document->belongs_to = \Auth::id();
+        $document->name = $display_name;
+        $document->filename = $file_name;
+        $document->file_ext = $ext;
+        $document->section_id = $section_id;
+        $document->active = 1;
+
+        if($file->move($destination, $file_name)) {
+            $thumbgen = new ThumbnailGenerator();
+            $thumb_filename = $thumbgen->generateThumbnail('document/library/own/'.$file_name);
+            $document->thumbnail = $thumb_filename;
+
+            return $document->save() ? 1:0;
+        } else {
+            return 0;
         }
     }
 
