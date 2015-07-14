@@ -15,10 +15,11 @@
                     <p>
                         You can access the <strong>Document Library</strong> page in the top menu.
                     </p>
-                    <img class="thumbnail" src="{{url('/public/img/help_and_settings/document_library/top_bar.png')}}" /><p>
+                    <img class="thumbnail" src="{{url('/public/img/help_and_settings/document_library/top_bar.png')}}" />
+                    <p>
                         Upon entering the page, you will be presented with an area where you can create sections and upload files to those sections.
                     </p>
-                    <img class="thumbnail" src="{{url('/public/img/help_and_settings/document_library/document_library.png')}}" /><p>
+                    <img class="thumbnail" src="{{url('/public/img/help_and_settings/document_library/document_library.png')}}" />
                 </div>
             </div>
         </div>
@@ -31,23 +32,46 @@
             </div>
             <div id="document-library-1" class="panel-collapse collapse">
                 <div class="panel-body">
+                    <h3>Sections</h3>
                     <p>
-                        This crm provides you with an Email Marketing tool. This allows you to send marketing emails to multiple clients at once. You can create templates which you can reuse and send again to other clients in the future. You can either use plain text emails or use our predefined email layouts which you can modify to your preference to make your email more appealing to your clients.
+                        You can organize your files by creating sections and subsections. To create a section simple click the <strong><i class="fa fa-plus"></i> Create New Section</strong>. Enter the desired name of the section on the popup and click <strong>Ok</strong>.
                     </p>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#document-library-group" href="#document-library-2">
-                        Manipulating Sections </a>
-                </h4>
-            </div>
-            <div id="document-library-2" class="panel-collapse collapse">
-                <div class="panel-body">
+                    <img class="thumbnail" src="{{url('/public/img/help_and_settings/document_library/create_section.png')}}" />
                     <p>
-                        This crm provides you with an Email Marketing tool. This allows you to send marketing emails to multiple clients at once. You can create templates which you can reuse and send again to other clients in the future. You can either use plain text emails or use our predefined email layouts which you can modify to your preference to make your email more appealing to your clients.
+                        After creating a section, a box will appear on the screen which will represent each section you have created.
+                    </p>
+                    <img class="thumbnail" src="{{url('/public/img/help_and_settings/document_library/sections.png')}}" />
+                    <p>
+                        Each section has the following controls.
+                    </p>
+                    <img class="thumbnail" src="{{url('/public/img/help_and_settings/document_library/section_controls.png')}}" />
+                    <ul style="color: #636363">
+                        <li><strong><i class="fa fa-plus"></i> Add Subsection</strong> - this will add subsections inside that particular section</li>
+                        <li><strong><i class="fa fa-pencil"></i> Edit</strong> - this will allow you to change the name of the section</li>
+                        <li><strong><i class="fa fa-trash"></i> Delete</strong> - this will delete that particular section</li>
+                        <li><strong><i class="fa fa-chevron-up"></i></strong> - this will collapse the current section to give you a better view of all your sections</li>
+                    </ul>
+                    <h3>Subsections</h3>
+                    <p>
+                        After creating your sections, you are now ready to add your subsections. You can as many subsections as you like to neatly organize your files. To add a subsection click the <strong><i class="fa fa-plus"></i> Add Subsection</strong> button on the section where you want to add it. Enter the desired name of the subsection and click <strong>Ok</strong>.
+                    </p>
+                    <img class="thumbnail" src="{{url('/public/img/help_and_settings/document_library/create_subsection.png')}}" />
+                    <p>
+                        Subsections are then represented as panels inside your sections. This panels are collapsible, you can click the title bar to toggle the collapse.
+                    </p>
+                    <img class="thumbnail" src="{{url('/public/img/help_and_settings/document_library/sub_section_panels.png')}}" />
+                    <p>
+                        Each subsection has the following controls, almost the same as the section panel.
+                    </p>
+                    <img class="thumbnail" src="{{url('/public/img/help_and_settings/document_library/subsection_controls.png')}}" />
+                    <ul style="color: #636363">
+                        <li><strong><i class="fa fa-upload"></i></strong> - this will allow you to upload files into your subsections</li>
+                        <li><strong><i class="fa fa-pencil"></i></strong> - this will allow you to change the name of the subsection</li>
+                        <li><strong><i class="fa fa-trash"></i></strong> - this will delete that particular subsection</li>
+                    </ul>
+                    <br/>
+                    <p>
+                        <i>Note: Be careful when deleting a section as this will delete all the subsections and files inside it. Make sure that you really intend to delete the section before confirming the prompt on delete.</i>
                     </p>
                 </div>
             </div>
@@ -110,14 +134,13 @@
                         If you no longer need documents in your library, you can always delete them. There are two ways you can delete the files.
                     </p>
                     <ol style="color: #636363">
-                        <li>Click the <strong><i class="fa fa-times"></i> Remove</strong> button beside the file you want to delete</li>
-                        <li>Selecting multiple files using the checkbox and clicking <strong><i class="fa fa-times"></i> Delete Selected</strong> button to bulk delete the selected files</li>
+                        <li>Click the <strong><i class="fa fa-trash"></i></strong> button beside the file you want to delete</li>
+                        <li>Selecting multiple files using the checkbox and clicking <strong><i class="fa fa-trash-o"></i> Delete Selected</strong> button to bulk delete the selected files</li>
                     </ol>
-                    <img class="thumbnail" src="{{url('/public/img/help_and_settings/document_library/delete.png')}}" />
                     <p>
-                        One advantage of using the bulk delete is you can delete files across sections at once.
+                        You can also check the <strong>Select All</strong> checkbox to automatically select all files within that section only.
                     </p>
-                    <img class="thumbnail" src="{{url('/public/img/help_and_settings/document_library/multi_delete.png')}}" />
+                    <img class="thumbnail" src="{{url('/public/img/help_and_settings/document_library/delete.png')}}" />
                 </div>
             </div>
         </div>
