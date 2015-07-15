@@ -586,9 +586,10 @@ class ClientsController extends \BaseController {
 
 
 				// update dashboard
-				\Session::flash('message', 'Successfully Added Customer');
-				return \Redirect::action('Clients\ClientsController@getIndex');
-
+			//	\Session::flash('message', 'Successfully Added Customer');
+			//	return \Redirect::action('Clients\ClientsController@getIndex');
+				//go to customer's page
+				return \Redirect::to('clients/client-summary/'  . $customer->id);
 			}//end customer id
 
 		}else{
