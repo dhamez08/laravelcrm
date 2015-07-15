@@ -345,6 +345,9 @@ class ClientsController extends \BaseController {
 			if( $person->url()->count() > 0 ){
 				$person->url()->delete();
 			}
+            if( $person->task()->count() > 0){
+                $person->task()->delete();
+            }
 			$person->delete();
 
 			// Log Activity
@@ -1886,5 +1889,40 @@ class ClientsController extends \BaseController {
 			//redirect('clients');
 			return \Redirect::to('clients');
 		}	
-	}	
+	}
+
+    public function getBulkDelete($token){
+
+        if( strcmp(\Session::token(), $token) == 0 ){
+            $client_ids = \Input::get('client_ids');
+
+            foreach($client_ids as $id){
+                $person = \Clients\Clients::find($id);
+                if( $person->telephone()->count() > 0 ){
+                    $person->telephone()->delete();
+                }
+                if( $person->address()->count() > 0 ){
+                    $person->address()->delete();
+                }
+                if( $person->emails()->count() > 0 ){
+                    $person->emails()->delete();
+                }
+                if( $person->url()->count() > 0 ){
+                    $person->url()->delete();
+                }
+                if( $person->task()->count() > 0){
+                    $person->task()->delete();
+                }
+                $person->delete();
+            }
+            // Log Activity
+            //\Activity\ActivityEntity::get_instance()->logActivity('Remove Client', $id);
+
+            \Session::flash('message', 'Successfully Deleted Client');
+            return \Redirect::action('Clients\ClientsController@getIndex');
+        }else{
+            echo 'nice try hacker';
+            die();
+        }
+    }
 }

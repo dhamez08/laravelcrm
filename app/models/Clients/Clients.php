@@ -11,6 +11,8 @@ class Clients extends \Eloquent{
 	 *
 	 * @var string
 	 */
+    use \SoftDeletingTrait;
+    protected $dates = ['deleted_at'];
 	protected $table = 'customer';
 
 	protected $fillable = array(

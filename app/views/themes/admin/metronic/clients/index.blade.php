@@ -134,6 +134,8 @@
 							<table id="dt-customer-list" class="table table-striped table-advance table-hover">
 								<thead>
 									<tr>
+                                        <th width="10">
+                                        </th>
 										<th>
 
 										</th>
@@ -145,10 +147,20 @@
 									</tr>
 								</thead>
 								<tbody>
+                                    <tr>
+                                        <td><input type="checkbox" class="select-all-clients"/></td>
+                                        <td></td>
+                                        <td style="color: #9C9C9C">Select All</td>
+                                        <td><a style="cursor: pointer" class="delete-selected-clients">
+                                                <i class="icon-trash"></i> Delete Selected</a></td>
+                                    </tr>
 									@if( isset($array_customer) && count($array_customer) > 0 )
 										@foreach($array_customer as $customers)
 										@if( is_null($tag_id) )
 											<tr>
+                                                <td>
+                                                    <input type="checkbox" class="client-checkbox" data-client-id="{{$customers['customer_id']}}"/>
+                                                </td>
 												<td style="width:1%">
                                                     @if( $customers['type'] == 2 )
 													    <img src="{{ isset($customers['profile_image']->image) ? $customers['profile_image']->image : url('public/img/profile_images/summary_company.png') }}" style="width:35px; background: #DEDEDE">
@@ -194,16 +206,23 @@
 											@else
 											<?php //	{{-- @if( in_array($tag_id,$customers['my_tag_object']->lists('tag_id')) ) --}} ?>
 												@if(count(array_diff($tag_id, $customers['my_tag_object']->lists('tag_id'))) == 0)
-													<td style="width:1%">
-														<img src="{{ isset($customers['profile_image']->image) ? $customers['profile_image']->image : url('public/img/profile_images/summary_person.png') }}" style="width:35px">
-													</td>
-													<td>
-														<div>
-															@if( $customers['type'] == 2 )
-																<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$customers['customer_id']))}}" data-toggle="popover" data-trigger="hover" data-placement="right" data-title="Client Overview" data-client-fullname="{{$customers['company_name']}}" data-client-address="{{ $customers['address'] }}" data-client-phone="{{ implode(', ', $customers['telephone']) }}" data-client-email="{{ implode(', ', $customers['emails']) }}" data-client-website="{{ implode(', ', $customers['urls']) }}">{{$customers['company_name']}}</a>
-															@else
-																<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$customers['customer_id']))}}" data-toggle="popover" data-trigger="hover" data-placement="right" data-title="Client Overview" data-client-fullname="{{ $customers['fullname'] }}" data-client-address="{{ $customers['address'] }}" data-client-phone="{{ implode(', ', $customers['telephone']) }}" data-client-email="{{ implode(', ', $customers['emails']) }}" data-client-website="{{ implode(', ', $customers['urls']) }}" {{ isset($customers['profile_image']->image) ? $customers['profile_image']->image : url('public/img/profile_images/summary_person.png') }}>{{$customers['fullname']}}</a>
-															@endif
+                                                <td>
+                                                    <input type="checkbox" class="client-checkbox" data-client-id="{{$customers['customer_id']}}"/>
+                                                </td>
+                                                <td style="width:1%">
+                                                    @if( $customers['type'] == 2 )
+                                                    <img src="{{ isset($customers['profile_image']->image) ? $customers['profile_image']->image : url('public/img/profile_images/summary_company.png') }}" style="width:35px; background: #DEDEDE">
+                                                    @else
+                                                    <img src="{{ isset($customers['profile_image']->image) ? $customers['profile_image']->image : url('public/img/profile_images/summary_person.png') }}" style="width:35px">
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        @if( $customers['type'] == 2 )
+                                                        <a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$customers['customer_id']))}}" data-toggle="popover" data-trigger="hover" data-placement="right" data-title="Client Overview" data-client-fullname="{{ $customers['company_name'] }}" data-client-address="{{ $customers['address'] }}" data-client-phone="{{ implode(', ', $customers['telephone']) }}" data-client-email="{{ implode(', ', $customers['emails']) }}" data-client-website="{{ implode(', ', $customers['urls']) }}" data-client-profile-picture="{{ isset($customers['profile_image']->image) ? $customers['profile_image']->image : url('public/img/profile_images/summary_company.png') }}">{{$customers['company_name']}}</a>
+                                                        @else
+                                                        <a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$customers['customer_id']))}}" data-toggle="popover" data-trigger="hover" data-placement="right" data-title="Client Overview" data-client-fullname="{{ $customers['fullname'] }}" data-client-address="{{ $customers['address'] }}" data-client-phone="{{ implode(', ', $customers['telephone']) }}" data-client-email="{{ implode(', ', $customers['emails']) }}" data-client-website="{{ implode(', ', $customers['urls']) }}" data-client-profile-picture="{{ isset($customers['profile_image']->image) ? $customers['profile_image']->image : url('public/img/profile_images/summary_person.png') }}">{{$customers['fullname']}}</a>
+                                                        @endif
 
 														<?php //	{{--@if( $customers['associated'] != 0 && $customers['relationship'] != '' )--}} ?>
 																<?php $partner = \Helpers::array_key_exists_wildcard($array_customer,$customers['associated'],'key-value'); ?>
@@ -274,6 +293,42 @@
 				//'width': 'resolve'
 				width: '230px'
 			});
+
+            $('.select-all-clients').change(function() {
+                var panel = $(this).closest('#dt-customer-list');
+                var checkedClass = $(this).is(":checked") ? 'checked' : '';
+                panel.find('.client-checkbox').prop('checked', $(this).is(":checked"));
+                panel.find('.client-checkbox').uniform({checkedClass: checkedClass});
+            });
+
+            $('.delete-selected-clients').on('click',function(){
+                var client_ids = new Array();
+                var checkboxes = $('.client-checkbox:checked');
+
+                $.each(checkboxes,function(){
+                    var client_id = $(this).data('client-id');
+                    client_ids.push(client_id);
+                });
+
+                if(client_ids.length !== 0){
+                    var bootbox_open = true;
+                    var box = bootbox.confirm({
+                        message: 'Are you sure you want to delete selected clients?',
+                        callback: function(result){
+                            if(result){
+                                var query = $.param({ client_ids: client_ids });
+                                window.location.href = baseURL+'/clients/bulk-delete/{{\Session::token()}}?'+query;
+                            }
+
+                            if(bootbox_open){
+                                bootbox_open = false;
+                                box.find('.close').click();
+                            }
+                        },
+                        show: true
+                    });
+                }
+            });
 
 			var clientListTable = $('#dt-customer-list').dataTable({
 				'paging': false,
