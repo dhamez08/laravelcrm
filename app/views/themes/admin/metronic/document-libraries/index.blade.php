@@ -29,9 +29,6 @@
 								<a class="btn blue" href="#" data-toggle="modal" data-target="#section-subsection-modal" data-sectionid="55" id="btnCreateSection">
 									<i class="fa fa-plus"></i> Create New Section
 								</a>
-                                <a class="btn red disabled" href="#" id="delete-all">
-                                    <i class="fa fa-times"></i> Delete Selected
-                                </a>
 							</span>
 							
 						</div>
@@ -84,6 +81,23 @@
                                                 <div class="panel-collapse collapse" id="sub-section-{{$subsection->id}}" aria-expanded="false" style="height: 0px;">
                                                     <div class="panel-body">
                                                         <ul class="feeds">
+                                                            @if(!$documents[$subsection->id]->isEmpty())
+                                                            <li>
+                                                                <div class="col-md-7">
+                                                                    <div class="row">
+                                                                        <div class="col-md-1">
+                                                                            <input class="select-all" type="checkbox"/>
+                                                                        </div>
+                                                                        <div class="col-md-11" style="color: #8A8A8A">
+                                                                            Select All
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <a class="btn btn-sm red delete-all"><i class="fa fa-trash-o"></i> Delete Selected</a>
+                                                                </div>
+                                                            </li>
+                                                            @endif
                                                             @foreach($documents[$subsection->id] as $document)
                                                                 <li>
                                                                     <div class="col-md-7">
@@ -104,7 +118,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-4">
-                                                                        <a href="{{ url('document-library/delete/'.$document->id) }}" class="btn btn-sm red" onclick="return confirm('Are you sure you want to delete?')"><i class="fa fa-times"></i> Remove</a>
+                                                                        <a href="{{ url('document-library/delete/'.$document->id) }}" class="btn btn-sm red" onclick="return confirm('Are you sure you want to delete?')"><i class="fa fa-trash"></i></a>
                                                                     </div>
                                                                 </li>
                                                             @endforeach
@@ -170,47 +184,46 @@
                 $(function(){
                     var file_ids = new Array();
 
-                    $('.accordion-toggle').on('click', function () {
-                        var panel_group = $(this).closest('.panel-group');
-                        panel_group.find('.panel-collapse').collapse('toggle');
+                    $('.accordion-toggle').on('click', function (event) {
+                        var target = $(this).attr('href');
+                        $(target).collapse('toggle');
                     });
 
-                    $('.file-checkbox').on('click', function(){
-                        var cbx = $(this);
-                        var file_id = cbx.data('file-id');
+                    $('.select-all').change(function() {
+                        var panel = $(this).closest('.panel-body');
+                        var checkedClass = $(this).is(":checked") ? 'checked' : '';
+                        panel.find('.file-checkbox').prop('checked', $(this).is(":checked"));
+                        panel.find('.file-checkbox').uniform({checkedClass: checkedClass});
+                    });
 
-                        if(cbx.is(':checked')){
+                    $('.delete-all').on('click',function(){
+                        var panel = $(this).closest('.panel-body');
+                        var checkboxes = panel.find('.file-checkbox:checked');
+                        file_ids.length = 0;
+
+                        $.each(checkboxes,function(){
+                            var file_id = $(this).data('file-id');
                             file_ids.push(file_id);
-                        } else {
-                            var index = file_ids.indexOf(file_id);
-                            if (index >= 0)
-                                file_ids.splice(index, 1);
-                        }
-
-                        if(file_ids.length){
-                            $('#delete-all').removeClass('disabled');
-                        } else {
-                            $('#delete-all').addClass('disabled');
-                        }
-                    });
-
-                    $('#delete-all').on('click',function(){
-                        var bootbox_open = true;
-                        var box = bootbox.confirm({
-                            message: 'Are you sure you want to delete selected documents?',
-                            callback: function(result){
-                                if(result){
-                                    var query = $.param({ file_ids: file_ids });
-                                    window.location.href = baseURL+'/document-library/bulk-delete?'+query;
-                                }
-
-                                if(bootbox_open){
-                                    bootbox_open = false;
-                                    box.find('.close').click();
-                                }
-                            },
-                            show: true
                         });
+
+                        if(file_ids.length !== 0){
+                            var bootbox_open = true;
+                            var box = bootbox.confirm({
+                                message: 'Are you sure you want to delete selected documents?',
+                                callback: function(result){
+                                    if(result){
+                                        var query = $.param({ file_ids: file_ids });
+                                        window.location.href = baseURL+'/document-library/bulk-delete?'+query;
+                                    }
+
+                                    if(bootbox_open){
+                                        bootbox_open = false;
+                                        box.find('.close').click();
+                                    }
+                                },
+                                show: true
+                            });
+                        }
                     });
 
                     $('.delete-section').on('click',function(){
@@ -230,7 +243,7 @@
                             },
                             show: true
                         });
-                    })
+                    });
                 });
             </script>
         <script>

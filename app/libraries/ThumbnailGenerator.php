@@ -75,7 +75,7 @@ class ThumbnailGenerator {
     }
 
     private function convertToPDF($file){
-        $command = "libreoffice --headless --convert-to pdf '{$file->getPathname()}' --outdir '{$this->pdf_storage}'";
+        $command = "sudo libreoffice --headless --convert-to pdf '{$file->getPathname()}' --outdir '{$this->pdf_storage}'";
         exec($command);
         $file = new \Symfony\Component\HttpFoundation\File\File($this->pdf_storage.$this->generateFileName($file).".pdf");
         return $file;

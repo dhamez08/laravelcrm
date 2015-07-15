@@ -116,7 +116,9 @@ class ProfileController extends \BaseController {
 
 		\Debugbar::info($data['user']);
 
-		return \View::make( $data['view_path'] . '.profile.index', $data );
+		return \View::make( $data['view_path'] . '.profile.index', $data )
+                ->nest('email_marketing_tab',$data['view_path'] . '.profile.partials.user-guide.email-marketing')
+                ->nest('document_library_tab', $data['view_path'] . '.profile.partials.user-guide.document-library');
 	}
 
 	/**
