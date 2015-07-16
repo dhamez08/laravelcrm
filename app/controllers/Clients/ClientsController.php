@@ -1983,5 +1983,5 @@ class ClientsController extends \BaseController {
 		$data['email']				= $data['customer']->emails();
 		return \View::make( $data['view_path'] . '.clients.partials.emailEmptyWidget', $data );
 	}
-g
+
 }
