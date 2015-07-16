@@ -391,7 +391,7 @@
 			});
 			function bind_email_click(){
 				$(".client_item").on("click",function(){
-					window.location = "clients/client-summary/" + $(this).data('id') +  "#sendmail";
+					window.location = baseURL+"/clients/client-summary/" + $(this).data('id') +  "#sendmail";
 				});
 			}
 		</script>
