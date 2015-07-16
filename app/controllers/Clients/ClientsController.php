@@ -1886,5 +1886,12 @@ class ClientsController extends \BaseController {
 			//redirect('clients');
 			return \Redirect::to('clients');
 		}	
-	}	
+	}
+	public function getSendEmail($client_id){
+		$data = $this->data_view;
+		$data['customer'] = \Clients\Clients::find($clientId);
+		$data['customer']->touch();
+		$data['currentClient'] = \Clients\ClientEntity::get_instance()->bindCustomer($data['customer']);
+		return \View::make( $data['view_path'] . '.clients.partials.emailEmptyWidget', $data );
+	}
 }

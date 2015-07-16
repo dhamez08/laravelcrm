@@ -157,7 +157,7 @@
 														@if( $customers['type'] == 2 )
 															<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$customers['customer_id']))}}">{{$customers['company_name']}}</a>
 														@else
-															<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$customers['customer_id']))}}" data-toggle="popover" data-trigger="hover" data-placement="right" data-title="Client Overview" data-client-fullname="{{ $customers['fullname'] }}" data-client-address="{{ $customers['address'] }}" data-client-phone="{{ implode(', ', $customers['telephone']) }}" data-client-email="{{ implode(', ', $customers['emails']) }}" data-client-website="{{ implode(', ', $customers['urls']) }}" data-client-profile-picture="{{ isset($customers['profile_image']->image) ? $customers['profile_image']->image : url('public/img/profile_images/summary_person.png') }}">{{$customers['fullname']}}</a>
+															<a href="{{action('Clients\ClientsController@getClientSummary',array('clientId'=>$customers['customer_id']))}}" data-id="{{$customers['customer_id']}}" data-toggle="popover" data-trigger="manual" data-placement="right" data-title="Client Overview" data-client-fullname="{{ $customers['fullname'] }}" data-client-address="{{ $customers['address'] }}" data-client-phone="{{ implode(', ', $customers['telephone']) }}" data-client-email="{{ implode(', ', $customers['emails']) }}" data-client-website="{{ implode(', ', $customers['urls']) }}" data-client-profile-picture="{{ isset($customers['profile_image']->image) ? $customers['profile_image']->image : url('public/img/profile_images/summary_person.png') }}" >{{$customers['fullname']}}</a>
 														@endif
 
 													<?php //	{{--@if( $customers['associated'] != 0 && $customers['relationship'] != '' )--}} ?>
@@ -255,7 +255,9 @@
 			</div>
 
 		</div>
-
+	<div id="email-popup" class="hidden">
+		
+	</div>
 	@stop
 @stop
 
@@ -302,14 +304,40 @@
 						popoverTemplate.find('.family-members').text('FAMILY MEMBERS');
 						popoverTemplate.find('.address').text($(this).data('client-address'));
 						popoverTemplate.find('.phone').text($(this).data('client-phone'));
-						popoverTemplate.find('.email').text($(this).data('client-email'));
-						popoverTemplate.find('.website').text($(this).data('client-website'));
+						popoverTemplate.find('.email').html("<a style='cursor:pointer' class='client_item' data-id='" + $(this).data('id') + "'>" + $(this).data('client-email') + "</a>" );
+						popoverTemplate.find('.website').html("<a target='_blank' href='" + $(this).data('client-website') + "'>" + $(this).data('client-website') + "</a>");
 
 						return $('#client-popover-template').html();
 					}
 				});
+				$('a[data-toggle="popover"]').hover(
+						function(){
+							$(this).popover('show');
+							bind_email_click();
+							$(this).removeClass('hasShown');
+							$(".hasShown").each(function(){
+								$(this).popover('hide');
+							});
+						},
+						function(){
+							//$(this).popover('hide');
+							$(this).addClass('hasShown');
+						}
+				);
 			});
-
+			$(document).click(function(e){
+				$('a[data-toggle="popover"]').each(function(){
+						$(this).popover('hide');
+					});
+			});
+			function bind_email_click(){
+				$(".client_item").on("click",function(){
+					
+					 $.get("clients/ClientEmail/" + $(this).data('id'), function(data){
+						$("#email-popup").html(data);
+					});
+				});
+			}
 		</script>
 	@stop
 @stop

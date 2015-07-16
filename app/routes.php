@@ -49,6 +49,7 @@ Route::group(array('before' => 'auth'), function()
 	{
 		Route::controller( '/' , 'Clients\ClientsController' );
 		Route::controller( 'create' , 'Clients\ClientsController' );
+		Route::controller('sendemail','Clients\ClientsController');
 	});
 
 	Route::group(array('prefix' => 'settings/tags'), function()
