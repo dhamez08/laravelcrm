@@ -66,7 +66,7 @@
 								@else
 								<div class="btn-group btn-group-sm btn-group-solid btn-group-justified">
 								@endif
-								<a href="#" data-target=".emailMessage" data-toggle="modal" class="openModal btn btn-sm red">Email</a>
+								<a href="#" data-target=".emailMessage" data-toggle="modal" class="openModal btn btn-sm red" id="sendmail">Email</a>
 							</div>
 						</div>
 		 			</div>

@@ -40,6 +40,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::controller( 'messages', 'Messages\MessagesController' );
 	Route::get( 'client-messages/{client_id}', 'Messages\MessagesController@getIndex' );
 	Route::post( 'client-messages/{client_id}', 'Messages\MessagesController@postView' );
+	Route::get( 'popmail/{client_id}', 'Clients\ClientsController@getPopmail');
 	Route::controller( 'sms', 'SMS\SMSController' );
 	Route::get( 'settings' , 'Settings\SettingsController@getIndex' );
 	Route::controller('client-tag', 'ClientTags\ClientTagsController');
@@ -49,7 +50,7 @@ Route::group(array('before' => 'auth'), function()
 	{
 		Route::controller( '/' , 'Clients\ClientsController' );
 		Route::controller( 'create' , 'Clients\ClientsController' );
-		Route::controller('sendemail','Clients\ClientsController');
+		
 	});
 
 	Route::group(array('prefix' => 'settings/tags'), function()

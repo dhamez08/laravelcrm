@@ -332,10 +332,7 @@
 			});
 			function bind_email_click(){
 				$(".client_item").on("click",function(){
-					
-					 $.get("clients/ClientEmail/" + $(this).data('id'), function(data){
-						$("#email-popup").html(data);
-					});
+					window.location = "clients/client-summary/" + $(this).data('id') +  "#sendmail";
 				});
 			}
 		</script>
