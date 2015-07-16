@@ -60,7 +60,23 @@
 				</div>
 				<div class="col-md-6">
 					<h3 class="form-section">Address</h3>
-					@include( \DashboardEntity::get_instance()->getView() . '.clients.company.companyAddressInput' )
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Type: </label>
+                        <div class="col-md-9">
+                            <label>Home</label>
+                            <input type="checkbox" name="address_checkbox[]" class="form-control address-checkbox" value="home"/>
+
+                            <label>Work</label>
+                            <input type="checkbox" name="address_checkbox[]" class="form-control address-checkbox" value="work"/>
+                        </div>
+                    </div>
+
+                    @foreach(array('home','work') as $address_index)
+                        @include( \DashboardEntity::get_instance()->getView() . '.clients.partials.addressMultipleInput', array('index' => $address_index) )
+                    @endforeach
+
+                    {{-- @include( \DashboardEntity::get_instance()->getView() . '.clients.company.companyAddressInput' ) --}}
 				</div>
 			</div>
 			<div id="partner_details" class="hide">
@@ -105,9 +121,11 @@
 	@parent
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 	<script type="text/javascript" src="{{$asset_path}}/pages/scripts/client.js"></script>
+    <script src="https://getaddress.io/js/jquery.getAddress-1.0.0.min.js"></script>
 		<script>
 			jQuery(document).ready(function() {
-				addPhone.init();
+                addAddress.init();
+                addPhone.init();
 				addEmail.init();
 				addPartner.init();
 				addChildren.init();
@@ -117,6 +135,42 @@
 					"{{action('Clients\ClientsController@getAjaxSearchCompany')}}",
 					"{{action('Clients\ClientsController@getAjaxSearcCompanyInfo')}}"
 				);
+
+                $('#home_postcode_lookup').getAddress({
+                    api_key: 'zCgWr6M_E0eA-L4drmAXAQ297',
+                    output_fields:{
+                        line_1: '#home_address_line_1',
+                        line_2: '#home_address_line_2',
+                        line_3: '#home_address_line_3',
+                        post_town: '#home_town',
+                        postcode: '#home_postcode'
+                    },
+                    onAddressSelected: function() {
+                        var address = [];
+                        if($('#home_address_line_1').val() !== '') address.push($('#home_address_line_1').val());
+                        if($('#home_address_line_2').val() !== '') address.push($('#home_address_line_2').val());
+                        if($('#home_address_line_3').val() !== '') address.push($('#home_address_line_3').val());
+                        $('#home_address').val(address.join('\n'));
+                    }
+                });
+
+                $('#work_postcode_lookup').getAddress({
+                    api_key: 'zCgWr6M_E0eA-L4drmAXAQ297',
+                    output_fields:{
+                        line_1: '#work_address_line_1',
+                        line_2: '#work_address_line_2',
+                        line_3: '#work_address_line_3',
+                        post_town: '#work_town',
+                        postcode: '#work_postcode'
+                    },
+                    onAddressSelected: function() {
+                        var address = [];
+                        if($('#work_address_line_1').val() !== '') address.push($('#work_address_line_1').val());
+                        if($('#work_address_line_2').val() !== '') address.push($('#work_address_line_2').val());
+                        if($('#work_address_line_3').val() !== '') address.push($('#work_address_line_3').val());
+                        $('#work_address').val(address.join('\n'));
+                    }
+                });
 			});
 		</script>
 	@stop

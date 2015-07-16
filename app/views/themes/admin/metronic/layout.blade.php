@@ -234,7 +234,7 @@
 				@if(isset($customer))
         			profileLink.init(baseURL,'{{\Auth::id()}}','{{$customer->id}}');
         			PortletDraggable.init();
-        			@if( ! \Request::is('clients/edit/*'))
+        			@if( ! \Request::is('clients/edit/*') &&  ! \Request::is('clients/edit-company/*')  )
         				HandleMapsGoogle.init();
         			@endif
         			clientFileSearch.init(baseURL);

@@ -1077,30 +1077,63 @@ class ClientsController extends \BaseController {
 					$contact = \Clients\ClientEntity::get_instance()->createOrUpdate(\Input::get('contact_person'));
 				}// if has contact
 
-				if( \Input::has('address_id') ){
-					// update address
-					$arrayAddress = array(
-						'address_line_1' => \Input::get('address_line_1'),
-						'address_line_2' => \Input::get('address_line_2'),
-						'town' 			 => \Input::get('town'),
-						'county' 		 => \Input::get('county'),
-						'postcode' 		 => \Input::get('postcode'),
-						'type' 			 => \Input::get('address_type'),
-					);
-					$address = \CustomerAddress\CustomerAddressController::get_instance()->postAddressWrapper($arrayAddress, \Input::get('address_id'));
-				}else{
-					// insert address
-					$arrayAddress = array(
-						'customer_id' 	 => $clientId,
-						'address_line_1' => \Input::get('address_line_1'),
-						'address_line_2' => \Input::get('address_line_2'),
-						'town' 			 => \Input::get('town'),
-						'county' 		 => \Input::get('county'),
-						'postcode' 		 => \Input::get('postcode'),
-						'type' 			 => \Input::get('address_type'),
-					);
-					$address = \CustomerAddress\CustomerAddressController::get_instance()->postAddressWrapper($arrayAddress);
-				}
+                foreach(\Input::get('address') as $address_index => $address_data) {
+                    // check if new address
+                    if(isset($address_data['id'])) {
+                        if(in_array(strtolower($address_index), \Input::get('address_checkbox'))) {
+                            //update
+                            $arrayAddress = array(
+                                'address_line_1' => $address_data['address_line_1'],
+                                'address_line_2' => $address_data['address_line_2'],
+                                'town' 			 => $address_data['town'],
+                                'county' 		 => $address_data['county'],
+                                'postcode' 		 => $address_data['postcode'],
+                                //'type' 			 => $address_data[''],
+                            );
+                            $address = \CustomerAddress\CustomerAddressController::get_instance()->postAddressWrapper($arrayAddress, $address_data['id']);
+                        } else {
+                            //delete
+                            \CustomerAddress\CustomerAddress::find($address_data['id'])->delete();
+                        }
+                    } else {
+                        //create
+                        $arrayAddress = array(
+                            'customer_id' 	 => $clientId,
+                            'address_line_1' => $address_data['address_line_1'],
+                            'address_line_2' => $address_data['address_line_2'],
+                            'town' 			 => $address_data['town'],
+                            'county' 		 => $address_data['county'],
+                            'postcode' 		 => $address_data['postcode'],
+                            'type' 			 => ucfirst($address_index),
+                        );
+                        $address = \CustomerAddress\CustomerAddressController::get_instance()->postAddressWrapper($arrayAddress);
+                    }
+                }
+
+//				if( \Input::has('address_id') ){
+//					// update address
+//					$arrayAddress = array(
+//						'address_line_1' => \Input::get('address_line_1'),
+//						'address_line_2' => \Input::get('address_line_2'),
+//						'town' 			 => \Input::get('town'),
+//						'county' 		 => \Input::get('county'),
+//						'postcode' 		 => \Input::get('postcode'),
+//						'type' 			 => \Input::get('address_type'),
+//					);
+//					$address = \CustomerAddress\CustomerAddressController::get_instance()->postAddressWrapper($arrayAddress, \Input::get('address_id'));
+//				}else{
+//					// insert address
+//					$arrayAddress = array(
+//						'customer_id' 	 => $clientId,
+//						'address_line_1' => \Input::get('address_line_1'),
+//						'address_line_2' => \Input::get('address_line_2'),
+//						'town' 			 => \Input::get('town'),
+//						'county' 		 => \Input::get('county'),
+//						'postcode' 		 => \Input::get('postcode'),
+//						'type' 			 => \Input::get('address_type'),
+//					);
+//					$address = \CustomerAddress\CustomerAddressController::get_instance()->postAddressWrapper($arrayAddress);
+//				}
 			}
 			\Session::flash('message', 'Successfully Updated Company');
 			return \Redirect::action('Clients\ClientsController@getClientSummary',array('clientId'=>$clientId));
@@ -1174,16 +1207,32 @@ class ClientsController extends \BaseController {
 				}// if has contact
 
 				// insert address
-				$arrayAddress = array(
-					'customer_id' 	 => $customer->id,
-					'address_line_1' => \Input::get('address_line_1'),
-					'address_line_2' => \Input::get('address_line_2'),
-					'town' 			 => \Input::get('town'),
-					'county' 		 => \Input::get('county'),
-					'postcode' 		 => \Input::get('postcode'),
-					'type' 			 => \Input::get('address_type')
-				);
-				\CustomerAddress\CustomerAddressController::get_instance()->postAddressWrapper($arrayAddress);
+//				$arrayAddress = array(
+//					'customer_id' 	 => $customer->id,
+//					'address_line_1' => \Input::get('address_line_1'),
+//					'address_line_2' => \Input::get('address_line_2'),
+//					'town' 			 => \Input::get('town'),
+//					'county' 		 => \Input::get('county'),
+//					'postcode' 		 => \Input::get('postcode'),
+//					'type' 			 => \Input::get('address_type')
+//				);
+//				\CustomerAddress\CustomerAddressController::get_instance()->postAddressWrapper($arrayAddress);
+                $address_checkbox = \Input::get('address_checkbox');
+                foreach(\Input::get('address') as $address_type => $address_data) {
+                    if(in_array($address_type, $address_checkbox)) {
+                        $arrayAddress = array(
+                            'customer_id' 	 => $customer->id,
+                            'address_line_1' => $address_data['address_line_1'],
+                            'address_line_2' => $address_data['address_line_2'],
+                            'town' 			 => $address_data['town'],
+                            'county' 		 => $address_data['county'],
+                            'postcode' 		 => $address_data['postcode'],
+                            'type' 			 => ucfirst($address_type),
+                        );
+                        $address = \CustomerAddress\CustomerAddressController::get_instance()->postAddressWrapper($arrayAddress);
+                    }
+                }
+
 
 				\CustomerPhone\CustomerPhoneController::get_instance()->iteratePhoneInput(
 					\Input::get('telephone'),
