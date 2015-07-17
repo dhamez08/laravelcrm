@@ -165,13 +165,13 @@ class TaskController extends \BaseController {
 	public function putAjaxUpdateTask($taskid){
 		$rules = array(
 			'name' => 'required|min:3',
-			'getclient' => 'required',
+			//'getclient' => 'required',
 			'task_date' => 'required',
 			'note_type' => 'required',			
 		);
 		$messages = array(
 			'name.required'=>'Task Name is required',
-			'getclient.required'=>'Link to client is required',
+			//'getclient.required'=>'Link to client is required',
 			'note_type.required'=>'Note Type is required',			
 			'name.min'=>'Task Name must have more than 3 character',
 			'task_date.required'=>'Task date is required',
