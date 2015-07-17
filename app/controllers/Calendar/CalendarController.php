@@ -124,11 +124,15 @@ class CalendarController extends \BaseController {
 		$data['remindMin']		= \Config::get('crm.task_remind');
 		$data['theDate']		= \Carbon\Carbon::parse($data['tasks']->date);
 		$data['endDate']		= \Carbon\Carbon::parse($data['tasks']->end_time);
-		$linkTo					= \Clients\Clients::find($data['tasks']->customer_id);
-		if($linkTo->type == 2){
-			$data['client_linkTo'] = $linkTo->company_name;
+		if ( $data['tasks']->customer_id > 0 ){
+			$linkTo					= \Clients\Clients::find($data['tasks']->customer_id);
+			if($linkTo->type == 2){
+				$data['client_linkTo'] = $linkTo->company_name;
+			}else{
+				$data['client_linkTo'] = $linkTo->first_name.' '.$linkTo->last_name;
+			}
 		}else{
-			$data['client_linkTo'] = $linkTo->first_name.' '.$linkTo->last_name;
+			$data['client_linkTo'] = '';
 		}
 
 		$data['noteType']		= $data['tasks']->note_type;

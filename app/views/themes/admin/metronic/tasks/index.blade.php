@@ -85,10 +85,12 @@
 												{{$task->displayHtmlLabelIcon()}}
 												&nbsp;
 												<span>
-													For
-													<a href="{{action('Clients\ClientsController@getClientSummary',array('id'=>$task->customer_id))}}">
-													{{$task->displayTaskFullName()}}
-													</a>
+													@if ( $task->customer_id > 0 )
+														For
+														<a href="{{action('Clients\ClientsController@getClientSummary',array('id'=>$task->customer_id))}}">
+															{{$task->displayTaskFullName()}}
+														</a>
+													@endif
 												</span>
 												<div class="task-config-btn btn-group">
 													<a class="btn btn-xs default" href="#" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">

@@ -209,7 +209,12 @@
 					<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: auto;"><ul style="overflow: hidden; width: auto; height: auto;" class="dropdown-menu-list scroller" data-initialized="1">
 						@if(\CustomerTasks\CustomerTasksEntity::get_instance()->getTaskUser(((isset($clientId))? $clientId :NULL),\Auth::id())['due']->today > 0)
 							@for($counter = 0; $counter < 3; $counter++)
-                                {{--*/ $dueTasks = $tasks[$counter] /*--}}
+                                {{-- $dueTasks = isset($tasks[$counter] --}}
+								@if (isset($tasks[$counter]))
+									{{--*/ $dueTasks = $tasks[$counter] /*--}}
+								@else
+									{{--*/ break /*--}}
+								@endif
                                 @if(time() >= strtotime($task->remind) &&
                                     time() <= strtotime($task->date) &&
                                     intval($task->remind_mins) && !$task->is_reminded)

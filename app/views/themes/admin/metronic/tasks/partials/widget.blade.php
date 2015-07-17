@@ -55,7 +55,7 @@
 									@if (isset($customerId))
 										<i class="fa {{ $task->label->icons }}"></i>
 									@else
-										<a href="{{url('clients/client-summary'). '/' . $task->customer_id}}" title="{{ $task->client->first_name . ' ' . $task->client->last_name }}"><strong>{{ $task->client->first_name }}</strong></a>
+										<a href="{{url('clients/client-summary'). '/' . $task->customer_id}}" title="{{ $task->customer_id > 0 ? $task->client->first_name . ' ' . $task->client->last_name : '' }}"><strong>{{ $task->customer_id > 0 ? $task->client->first_name : '' }}</strong></a>
 									@endif
 								</div>
 								
@@ -118,7 +118,7 @@
 									@if (isset($customerId))
 										<i class="fa {{ $task->label->icons }}"></i>
 									@else
-										<a href="{{url('clients/client-summary'). '/' . $task->customer_id}}" title="{{ $task->client->first_name . ' ' . $task->client->last_name }}"><strong>{{ $task->client->first_name }}</strong></a>
+										<a href="{{url('clients/client-summary'). '/' . $task->customer_id}}" title="{{ $task->customer_id > 0 ? $task->client->first_name . ' ' . $task->client->last_name : '' }}"><strong>{{ $task->customer_id > 0 ? $task->client->first_name : '' }}</strong></a>
 									@endif
 								</div>
 							</td>

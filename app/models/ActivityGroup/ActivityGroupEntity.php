@@ -64,7 +64,11 @@ class ActivityGroupEntity extends \Eloquent{
 				$object = \CustomerTasks\CustomerTasks::where('id', $objectId)->first();
 				if($object) {
 					$result->client_id = $object->customer_id;
-					$result->name = $object->client->first_name . ' ' . $object->client->last_name;
+					if ( $object->customer_id > 0 ){
+						$result->name = $object->client->first_name . ' ' . $object->client->last_name;
+					}else{
+						$result->name = '';
+					}
 					$result->details = $object->name;
 					$result->icon = 'fa-tasks';
 				}

@@ -91,6 +91,10 @@ class ActivityEntity extends \Eloquent {
 			$clientLink = '<a href="'.url('clients/client-summary/'.$objectDetails->client_id).'">'.$objectDetails->name.'</a>';
 
 			$log = str_replace('YYY', $clientLink, str_replace('XXX', $sourceUser, $activityType->log_text));
+			if ( $objectDetails->client_id === 0 ){
+				$log = str_replace("for","",$log);
+				
+			}
 			if(!empty($objectDetails->details))	$log .= '<br/><br/><blockquote class="blockquote-dashboard">' . $objectDetails->details . '</blockquote>';
 
 			$list[] = array(
