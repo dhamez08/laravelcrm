@@ -43,7 +43,7 @@
 	<div class="row-fluid">
 		<div class="col-md-12">
 			<div class="panel panel-default">
-				<div class="panel-body">
+				<div class="panel-body" style="max-height:400px;overflow:scroll; ">
 					<h5 style="margin-top:0px;">Documents Shared with Client</h5>
 					@if($shared)
 						<table class="table">
