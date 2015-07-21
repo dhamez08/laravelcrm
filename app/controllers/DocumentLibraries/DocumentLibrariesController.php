@@ -128,6 +128,11 @@ class DocumentLibrariesController extends \BaseController {
                         'success'=>true,
                         'msg'=>'',
                         'redirect'=>url('document-library'),
+                        'files' => array(
+                            array(
+                                'name'=> $file->getClientOriginalName(),
+                            )
+                        )
                     )
                 );
             }

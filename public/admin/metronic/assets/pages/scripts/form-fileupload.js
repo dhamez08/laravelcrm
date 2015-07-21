@@ -15,17 +15,16 @@ var FormFileUpload = function () {
 					// Uncomment the following to send cross-domain cookies:
 					//xhrFields: {withCredentials: true},
 				//}).bind('fileuploaddone', function (e, data) {
-				}).bind('fileuploadcompleted', function (e, data) {	
-					console.log('DONE');
-					//$('#msg').html('');
-					if(data.result.success == true) {
-						setTimeout(function() {
-							window.location.replace(data.result.redirect);
-						}, 2000);						
-						/*$.get( data.result.listurl + "/" + data.result.websiteid , function(html) {
-							$('#slideritems').html(html);
-						});*/
-					} else {
+				}).bind('fileuploadcompleted', function(e, data){
+                    if(data.result.success == true) {
+                        $('#redirect-url').val(data.result.redirect);
+                    }
+                }).bind('fileuploadstopped', function (e, data) {
+                    if($('#redirect-url').val()){
+                        $('.fileupload-progress').addClass('fade');
+                        $('.progress-bar').css('width','0%');
+                        window.location.replace($('#redirect-url').val());
+                    }else {
 						var strMsg = "<div class='alert alert-danger'>";
 							strMsg += "<strong>Error! </strong>";
 							strMsg += data.result.msg;

@@ -306,6 +306,7 @@
 								 File Upload widget with multiple file selection.<br>
 								 The maximum file size for uploads is 5 MB<br>
 							</p>
+                            <input type="hidden" id="redirect-url" />
 						</blockquote>
 						<br>
 							{{

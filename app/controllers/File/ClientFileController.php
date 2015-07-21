@@ -228,6 +228,11 @@ class ClientFileController extends \BaseController {
 							'success'=>true,
 							'msg'=>'',
 							'redirect'=>url('clients/client-summary/' . $customer_id),
+                            'files' => array(
+                                array(
+                                    'name'=> $file->getClientOriginalName(),
+                                )
+                            )
 						)
 					);
 				}
@@ -237,6 +242,11 @@ class ClientFileController extends \BaseController {
 						'success'=>true,
 						'msg'=>'',
 						'redirect'=>url('file/client-file/' . $customer_id),
+                        'files' => array(
+                            array(
+                                'name'=> $file->getClientOriginalName(),
+                            )
+                        )
 					)
 				);
 			}
