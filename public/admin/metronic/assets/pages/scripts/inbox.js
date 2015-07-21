@@ -223,7 +223,7 @@ var Inbox = function () {
             async: false
         });
     }
-
+    
     var handleCCInput = function () {
         var the = $('.inbox-compose .mail-to .inbox-cc');
         var input = $('.inbox-compose .input-cc');

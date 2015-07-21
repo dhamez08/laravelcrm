@@ -112,6 +112,7 @@ class EmailController extends \BaseController {
 			'to' => 'required',
 			'cc' => 'email',
 			'bcc' => 'email',
+			'mailto'=> 'email',
 			'subject' => 'required',
 		);
 
@@ -121,6 +122,7 @@ class EmailController extends \BaseController {
 			'cc.email'=>'CC Email is not valid',
 			'bcc.email'=>'BCC Email is not valid',
 			'subject.required'=>'Subject is required',
+			'mailto.email'=> 'Mail to is not valid'
 		);
 
         if($template_type == 'text'){
@@ -138,7 +140,7 @@ class EmailController extends \BaseController {
 			$data['cc'] = 0;
 			$data['bcc'] = 0;
 			$data['client_files'] = 0;
-
+			$data['mailto'] = \Input::get('mailto');
 			$customers = \Input::get('to');
 
 			$data['subject'] = \Input::get('subject');
@@ -232,9 +234,13 @@ class EmailController extends \BaseController {
 				$data['body'] = \EmailShortCodeReplacement::get_instance()->replace($custObj, $data['body']);
 
 				if($custObj->emails()->count() > 0) {
-
-					$data['to_email'] = $custObj->emails()->first()->email;
-					$data['to_name'] = $custObj->first_name . " " . $custObj->last_name;
+					if ( (int) \Input::get('mailcustomer') > 0 ){
+						$data['to_email'] = $custObj->emails()->first()->email;
+						$data['to_name'] = $custObj->first_name . " " . $custObj->last_name;
+					}else{
+						$data['to_email'] = \Input::get('mailto');
+						$data['to_name'] =  \Input::get('mailto');
+					}
 					$data['client_ref'] = "[REF:".$custObj->ref."]";
 					
 					// build array to have message

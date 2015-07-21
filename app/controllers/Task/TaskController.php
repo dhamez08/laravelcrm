@@ -165,13 +165,13 @@ class TaskController extends \BaseController {
 	public function putAjaxUpdateTask($taskid){
 		$rules = array(
 			'name' => 'required|min:3',
-			'getclient' => 'required',
+			//'getclient' => 'required',
 			'task_date' => 'required',
 			'note_type' => 'required',			
 		);
 		$messages = array(
 			'name.required'=>'Task Name is required',
-			'getclient.required'=>'Link to client is required',
+			//'getclient.required'=>'Link to client is required',
 			'note_type.required'=>'Note Type is required',			
 			'name.min'=>'Task Name must have more than 3 character',
 			'task_date.required'=>'Task date is required',
@@ -270,13 +270,13 @@ class TaskController extends \BaseController {
 	public function postAjaxCreateTask(){
 		$rules = array(
 			'task_name' => 'required|min:3',
-			'getclient' => 'required',
+			//'getclient' => 'required',
 			'task_date' => 'required',
 			'note_type' => 'required',
 		);
 		$messages = array(
 			'task_name.required'=>'Task Name is required',
-			'getclient.required'=>'Link to client is required',
+			//'getclient.required'=>'Link to client is required',
 			'note_type.required'=>'Note Type is required',
 			'task_name.min'=>'Task Name must have more than 3 character',
 			'task_date.required'=>'Task date is required',
@@ -377,14 +377,18 @@ class TaskController extends \BaseController {
 		$data['remindMin']		= \Config::get('crm.task_remind');
 		$data['theDate']		= \Carbon\Carbon::parse($data['tasks']->date);
 		$data['endDate']		= \Carbon\Carbon::parse($data['tasks']->end_time);
-
-		$linkTo					= \Clients\Clients::find($data['tasks']->customer_id);
-		if($linkTo->type == 2){
-			$data['client_linkTo'] = $linkTo->company_name;
+		
+		if ( $customerId > 0 ){
+			$linkTo					= \Clients\Clients::find($data['tasks']->customer_id);
+			if($linkTo->type == 2){
+				$data['client_linkTo'] = $linkTo->company_name;
+			}else{
+				$data['client_linkTo'] = $linkTo->first_name.' '.$linkTo->last_name;
+			}
 		}else{
-			$data['client_linkTo'] = $linkTo->first_name.' '.$linkTo->last_name;
+			$data['client_linkTo'] = '';
+			
 		}
-
 		$data['notes'][0]		= 'None';
 		$data['notes'] 			= array_replace($data['notes'],\CustomerNotes\CustomerNotes::customerId($data['tasks']->customer_id)->noTasks(array($data['tasks']->note_id))->lists('subject', 'id'));
 		$data['chosen_note']	= $data['tasks']->note_id ? $data['tasks']->note_id : null;

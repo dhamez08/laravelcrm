@@ -1,6 +1,11 @@
 @if(count($tasks) > 0)
     @for($counter = 0; $counter < 3; $counter++)
-        {{--*/ $task = $tasks[$counter] /*--}}
+        {{-- $task = $tasks[$counter] --}}
+		@if (isset($tasks[$counter]))
+			{{--*/ $task = $tasks[$counter] /*--}}
+		@else
+			{{--*/ break /*--}}
+		@endif
         @if(!$task->is_reminded)
             <li class="task-item" data-task-id="{{$task->id}}">
                 <a class="openModal" data-toggle="modal" data-target=".ajaxModal" href="{{action('Task\TaskController@getEditClientTask',array('id'=>$task->id,'customerid'=>$task->customer_id,'redirect'=>'task'))}}">

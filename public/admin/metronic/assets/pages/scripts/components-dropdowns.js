@@ -9,11 +9,17 @@ var ComponentsDropdowns = function () {
 
         $('#select2_sample2').select2({
             placeholder: "Select a State",
-            allowClear: true
+            allowClear: true,
+            selectOnBlur: true
         });
 
         $('#select2_user').select2({
             placeholder: "Select a Customer",
+            allowClear: true
+        });
+        
+        $('#select2_user2').select2({
+            placeholder: "Select Customer's Email",
             allowClear: true
         });
 
