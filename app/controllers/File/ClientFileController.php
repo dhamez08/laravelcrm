@@ -372,7 +372,4 @@ class ClientFileController extends \BaseController {
 		}
 	}
 
-    public function getTest(){
-        echo php_ini_loaded_file();
-    }
 }
