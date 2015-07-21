@@ -372,7 +372,7 @@ class ClientFileController extends \BaseController {
 		}
 	}
 
-    public function ajaxGetThumbnail(){
-
+    public function getTest(){
+        echo php_ini_loaded_file();
     }
 }
