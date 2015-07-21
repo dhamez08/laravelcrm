@@ -223,7 +223,16 @@ var ClientEmail = function () {
             async: false
         });
     }
-
+    var handleToInput = function () {
+        var the = $('.inbox-compose .mail-to .inbox-to');
+        var input = $('.inbox-compose .input-to');
+        the.hide();
+        input.show();
+        $('.close', input).click(function () {
+            input.hide();
+            the.show();
+        });
+    }
     var handleCCInput = function () {
         var the = $('.inbox-compose .mail-to .inbox-cc');
         var input = $('.inbox-compose .input-cc');
@@ -312,7 +321,11 @@ var ClientEmail = function () {
             $('.inbox-cc-bcc').on('click', '.inbox-bcc', function () {
                 handleBCCInput();
             });
-
+            
+            $('.inbox-cc-bcc').on('click', '.inbox-to', function () {
+                handleToInput();
+            });
+            
             $('.cancel-btn').on('click', function(e) {
                 e.preventDefault();
                 history.back(-1);

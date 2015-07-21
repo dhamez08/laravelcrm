@@ -30,18 +30,32 @@
                   <div class="inbox-form-group mail-to">
                     <label class="control-label">To:</label>
                     <div class="controls controls-to">
-                      <select id="select2_user" class="form-control select2" multiple placeholder="Select Customer's Email">
+                      <select id="select2_user2" class="select2" multiple placeholder="Select Customer's Email" style="width:720px;" name="mailcustomer">
                         @if( $email->count() > 0 )
                           @foreach($email->get() as $mail)
                             <option value="{{ $customer->id }}" selected="selected">{{ $mail->email }}</option>
                           @endforeach
                        @endif
                       </select>
+						<span class="inbox-cc-bcc" style="cursor: pointer">
+							<span class="inbox-to">To<small>(any email)</small></span>
+							<span class="inbox-cc">	Cc </span>
+							<span class="inbox-bcc">Bcc </span>
+						</span>
                       <input type="hidden" name="to[]" value="{{ $customer->id }}" />
                       </div>
+					
+                    </div>
+				  <div class="inbox-form-group input-to display-hide">
+						  <a href="javascript:;" class="close" style="margin-top:40px;margin-right:5px">;
+                        </a>
+                        <label class="control-label">To (any email):</label>
+                        <div class="controls controls-to">
+                          <input type="text" name="mailto" class="form-control">
+                        </div>
                       </div>
                       <div class="inbox-form-group input-cc display-hide">
-                        <a href="javascript:;" class="close">
+						  <a href="javascript:;" class="close" style="margin-top:40px;margin-right:5px">;
                         </a>
                         <label class="control-label">Cc:</label>
                         <div class="controls controls-cc">
@@ -49,7 +63,7 @@
                         </div>
                       </div>
                       <div class="inbox-form-group input-bcc display-hide">
-                        <a href="javascript:;" class="close">
+                        <a href="javascript:;" class="close" style="margin-top:40px;margin-right:5px">
                         </a>
                         <label class="control-label">Bcc:</label>
                         <div class="controls controls-bcc">
