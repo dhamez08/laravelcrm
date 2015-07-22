@@ -631,7 +631,7 @@ class ClientsController extends \BaseController {
 		$data['customer_files']			= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->limit(10)->orderBy('id','desc')->get();
 		$data['files_count']				= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->count();
 		$data['tags']								= \CustomerTags\CustomerTags::CustomerTag()->where('customer_id','=',$clientId)->get();
-
+		$data['shared'] 			= \Clients\ClientEntity::get_instance()->getViewMyDocsSharedList($clientId);
 		//$data['tag_widget']			= \ClientTags\ClientTagsController::get_instance()->getClientTagWidget($clientId);
 		$data 						= array_merge($data,$dashboard_data);
 		return \View::make( $data['view_path'] . '.clients.summary', $data );

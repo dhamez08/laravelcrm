@@ -146,26 +146,93 @@
 						</div>
 						<div class="tab-pane" id="livedocs">
 							<div class="scroller" style="height:350px" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd">
-								<ul class="feeds">
-									<li>
-										<div class="col1">
-											<div class="cont">
-												<div class="cont-col1">
-													<div class="label label-sm label-info">
-														<i class="fa fa-info-circle"></i>
-													</div>
-												</div>
-												<div class="cont-col2">
-													<div class="desc">
-														 No Live Document found!
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="col2">
-										</div>
-									</li>
-								</ul>
+								<table class="table table-condensed" id="table-file-list">
+									<tbody>
+										@if($shared)
+											@foreach($shared as $shared_file)
+												<tr>
+													<td>
+														<span class="label label-sm label-info">
+															<?php
+															$ext = explode(".",$shared_file['url']);
+															$ext = strtolower(trim(end($ext)));
+															$file_type = "file";
+															switch($ext){
+																case "pdf":
+																	$file_type = "file-pdf";
+																	break;
+																case "doc":
+																case "docx":
+																	$file_type = "file-word";
+																	break;
+																case "png":
+																case "jpg":
+																case "jpeg":
+																case "bmp":
+																case "gif":
+																case "tif":
+																	$file_type = "file-image";
+																	break;
+																case "ppt":
+																case "pptx":
+																	$file_type = "file-powerpoint";
+																	break;
+																case "xls":
+																case "xlsx":
+																	$file_type = "file-excel";
+																	break;
+																case "php":
+																case "js":
+																case "py":
+																case "rb":
+																case "cpp":
+																case "c":
+																case "sh":
+																case "html":
+																case "css":
+																case "sass":
+																case "less":
+																	$file_type = "file-code";
+																	break;
+																case "mp3":
+																case "mp4":
+																case "acc":
+																case "ogg":
+																	$file_type = "file-sound";
+																	break;
+																case "mkv":
+																case "flv":
+																case "avi":
+																case "wmv":
+																	$file_type = "file-video";
+																	break;
+																case "zip":
+																case "rar":
+																case "bz":
+																case "gz":
+																	$file_type = "file-zip";
+																	break;
+																default:
+																	$file_type = "file";
+															}
+															?>
+															<i class="fa fa-{{$file_type}}-o"></i>
+														</span>
+													</td>
+													<td>
+														<a href="{{ $shared_file['url'] }}" target="_blank"> {{ $shared_file['name'] }}</a>
+
+														@if($shared_file['notes']!="")
+															<em> - {{ $shared_file['notes'] }}</em>				
+														@endif	
+													</td>
+													<td style="text-align:right;"><small>{{ date("d/m/y H:i", strtotime($shared_file['time'])) }}</small></td>
+												
+												</tr>
+											@endforeach
+										@endif
+									</tbody>
+								</table>
 							</div>
 						</div>
 						<div class="tab-pane" id="search">
