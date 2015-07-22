@@ -149,6 +149,9 @@
 								<table class="table table-condensed" id="table-file-list">
 									<tbody>
 										@if($shared)
+										<tr>
+											<td colspan="3">Documents shared with client</td>
+										</tr>
 											@foreach($shared as $shared_file)
 												<tr>
 													<td>
@@ -230,7 +233,14 @@
 												
 												</tr>
 											@endforeach
+										@else
+										<tr>
+											<td colspan="3">
+												No document found.
+											</td>
+										</tr>
 										@endif
+										
 									</tbody>
 								</table>
 							</div>
