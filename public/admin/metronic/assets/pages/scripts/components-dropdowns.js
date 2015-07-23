@@ -22,7 +22,10 @@ var ComponentsDropdowns = function () {
             placeholder: "Select Customer's Email",
             allowClear: true
         });
-
+        $('#client_files').select2({
+            placeholder: "Select files to attach",
+            allowClear: true
+        });
         $('#select2_user_forward').select2({
             placeholder: "Select a Customer",
             allowClear: true

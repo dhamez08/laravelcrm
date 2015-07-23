@@ -257,11 +257,11 @@ class EmailController extends \BaseController {
 					);
 					
 					$smessage = \Message\Message::create($new_message);
-					//tracker  image
-					$img_html = "<br/><small>Sent through <img src='". url('/') . "/jpg/" . $smessage->id  . "' style='width:12px'/>";
+					//tracker  image removed 07/22/2015, steve ordered through ashley
+					//$img_html = "<br/><small>Sent through <img src='". url('/') . "/jpg/" . $smessage->id  . "' style='width:12px'/>";
 					
 					if($btn_action=='send') {
-						$data['body'] .= $img_html;
+						//$data['body'] .= $img_html;
 						\Mail::send($email_view, $data, function($message) use ($data, $from_name, $from_email, $smessage)
 						{
 							$message->from($from_email, $from_name);
@@ -270,8 +270,10 @@ class EmailController extends \BaseController {
 							if($data['bcc'])
 								$message->bcc($data['bcc']);
 							if($data['client_files']) {
-								$file_attach = explode("|", $data['client_files']);
-								$message->attach(url('/') . '/public/' . $file_attach[1], array("as"=>$file_attach[0]));
+								foreach($data['client_files'] as $client_file){
+									$file_attach = explode("|", $client_file);
+									$message->attach(url('/') . '/public/' . $file_attach[1], array("as"=>$file_attach[0]));
+								}
 							}
 							$message->replyTo('dropbox.13554457@one23.co.uk', $from_name);
 							$message->to($data['to_email'], $data['to_name'])->subject($data['subject'] . ' ' . $data['client_ref']);
@@ -294,13 +296,14 @@ class EmailController extends \BaseController {
 					}
 					
 					if($data['client_files']) {
-						$file_attach = explode("|", $data['client_files']);
-						$new_attachment = array(
-							'message_id' => $smessage->id,
-							'file' => $file_attach[1]
-						);
-
-						$smessageattach = \MessageAttachment\MessageAttachment::create($new_attachment);
+						foreach($data['client_files'] as $client_file){
+							$file_attach = explode("|", $client_file);
+							$new_attachment = array(
+								'message_id' => $smessage->id,
+								'file' => $file_attach[1]
+							);
+							$smessageattach = \MessageAttachment\MessageAttachment::create($new_attachment);
+						}
 					}
 
 				}
