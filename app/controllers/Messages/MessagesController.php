@@ -328,8 +328,10 @@ class MessagesController extends \BaseController {
 							if($data['bcc'])
 								$message->bcc($data['bcc']);
 							if($data['client_files']) {
-								$file_attach = explode("|", $data['client_files']);
-								$message->attach(url('/') . '/public/' . $file_attach[1], array("as"=>$file_attach[0]));
+								foreach($data['client_files'] as $client_file){
+									$file_attach = explode("|", $client_file);
+									$message->attach(url('/') . '/public/' . $file_attach[1], array("as"=>$file_attach[0]));
+								}
 							}
 							$message->replyTo('dropbox.13554457@one23.co.uk', $from_name);
 							$message->to($data['to_email'], $data['to_name'])->subject($data['subject'] . ' ' . $data['client_ref']);
@@ -350,13 +352,15 @@ class MessagesController extends \BaseController {
 					$smessage = \Message\Message::create($new_message);
 
 					if($data['client_files']) {
-						$file_attach = explode("|", $data['client_files']);
-						$new_attachment = array(
-							'message_id' => $smessage->id,
-							'file' => $file_attach[1]
-						);
+						foreach($data['client_files'] as $client_file){
+							$file_attach = explode("|", $client_file);
+							$new_attachment = array(
+								'message_id' => $smessage->id,
+								'file' => $file_attach[1]
+							);
 
-						$smessageattach = \MessageAttachment\MessageAttachment::create($new_attachment);
+							$smessageattach = \MessageAttachment\MessageAttachment::create($new_attachment);
+						}
 					}
 
 				}

@@ -56,8 +56,7 @@
 	<div class="inbox-form-group">
 		<label class="control-label">Files:</label>
 		<div class="controls">
-			<select id="client_files" name="client_files" class="form-control">
-	            <option value="">Select Files</option>
+			<select id="client_files" multiple name="client_files[]" class="select2 form-control">
 	            <?php 
 	            $client_files = \CustomerFiles\CustomerFilesEntity::get_instance()->getFilesByUser(\Auth::id());
 	            $document_libraries = \DocumentLibrary\DocumentLibraryEntity::get_instance()->documents();

@@ -86,11 +86,10 @@
                         </div>
                       </div>
                       <div class="inbox-form-group">
-                        <label class="control-label">Files:</label>
+                        <label class="control-label">Attach Files:</label>
                         <div class="controls">
-                          <select id="client_files" name="client_files" class="form-control">
-                            <option value="">Select Files</option>
-                            <?php
+							<select id="client_files" multiple name="client_files[]" class="select2 form-control">
+                             <?php
                             $client_files = \CustomerFiles\CustomerFilesEntity::get_instance()->getFilesByClient(isset($customer) ? $customer->id:'');
                             $document_libraries = \DocumentLibrary\DocumentLibraryEntity::get_instance()->documents();
                             ?>
@@ -122,11 +121,11 @@
                         <div class="controls">
                           <select id="email_template" name="email_template" class="form-control">
                             <option data-template-type="text" value="">No template required</option>
-                            <option value="" disabled>Plain Text</option>
+                            <option value="" disabled>Custom Built Templates</option>
                             @foreach($templates as $template)
                             <option data-template-type="text" value="{{ $template->id }}">{{ $template->name }}</option>
                             @endforeach
-                            <option value="" disabled>HTML Template</option>
+                            <option value="" disabled>Template Builder Templates</option>
                             @foreach($html_templates as $html_template)
                             <option data-template-type="html" value="{{ $html_template['id'] }}">{{ $html_template['name'] }}</option>
                             @endforeach
