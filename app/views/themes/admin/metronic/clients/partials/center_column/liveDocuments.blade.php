@@ -44,8 +44,8 @@
 		<div class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-body" style="max-height:400px;overflow:scroll; ">
-					<h5 style="margin-top:0px;">Documents Shared with Client</h5>
 					@if($shared)
+                    <h5 style="margin-top:0px;">Documents Shared with Client</h5>
 						<table class="table">
 							@foreach($shared as $shared_file)
 							<tr>
@@ -63,9 +63,32 @@
 							</tr>
 							@endforeach
 						</table>
-					@else		  	
-						No files/documents have been shared with the client.
 					@endif
+
+                    @if($uploaded)
+                    <h5 style="margin-top:0px;">Documents Uploaded by Client</h5>
+                    <table class="table">
+                        @foreach($uploaded as $uploaded_file)
+                        <tr>
+                            <td width="70%">
+                                <a href="{{ $uploaded_file['url'] }}" target="_blank">{{ $uploaded_file['name'] }}</a>
+
+                                @if($uploaded_file['notes']!="")
+                                <em> - {{ $uploaded_file['notes'] }}</em>
+                                @endif
+                            </td>
+                            <td width="15%" style="text-align:center;">{{ date("d/m/y H:i", strtotime($uploaded_file['time'])) }}</td>
+                            <td align="center" style="text-align:center;">
+                                <a href="{{ $uploaded_file['url'] }}" target="_blank">View Document</a>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </table>
+                    @endif
+
+                    @if(!$uploaded && !$shared))
+                        No shared and uploaded files by clients
+                    @endif
 				</div>
 			</div>
 		</div>

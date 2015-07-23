@@ -606,7 +606,9 @@ class ClientsController extends \BaseController {
 	public function getClientSummary($clientId){
 		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
 		$dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
-		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid');
+        $account 					= \Clients\ClientEntity::get_instance()->getVMDAccount($clientId);
+
+        array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid');
 
 		$data 											= $this->data_view;
 		$data['pageTitle'] 					= 'Client';
@@ -635,6 +637,9 @@ class ClientsController extends \BaseController {
 		$data['files_count']				= \CustomerFiles\CustomerFiles::CustomerFile($clientId)->count();
 		$data['tags']								= \CustomerTags\CustomerTags::CustomerTag()->where('customer_id','=',$clientId)->get();
 		$data['shared'] 			= \Clients\ClientEntity::get_instance()->getViewMyDocsSharedList($clientId);
+        if($account){
+            $data['uploaded'] 			= \Clients\ClientEntity::get_instance()->getViewMyDocsUploadedList($account['vmd']);
+        }
 		//$data['tag_widget']			= \ClientTags\ClientTagsController::get_instance()->getClientTagWidget($clientId);
 		$data 						= array_merge($data,$dashboard_data);
 		return \View::make( $data['view_path'] . '.clients.summary', $data );
