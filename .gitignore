@@ -4,7 +4,6 @@ wkhtmltopdf-windows/
 .idea/
 public/document/
 public/documents/
-public/img/
 
 composer.lock
 composer.phar
@@ -12,3 +11,5 @@ app/config/packages/atticmedia/anvard/hybridauth.php
 /one23couk/nbproject/private/
 
 .htaccess
+/public/img/company_logo/
+/public/img/company_logos/
