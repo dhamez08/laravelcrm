@@ -12,7 +12,7 @@
 			<div id="clients-0" class="panel-collapse collapse in">
 				<div class="panel-body">
 					<p>
-						Client page on this CRM is a great way to organize person or organization that are already using your services or those you think might need your services in the future. 
+						Client page on this CRM is a great way to organize person or organisation that are already using your services or those you think might need your services in the future. 
 						Digitally organize them and never forget any prospect again. 
 					</p>
 					<p>
@@ -85,7 +85,7 @@
 					</p>
 					<img class="thumbnail" src="{{url('/public/img/help_and_settings/clients/company_form.png')}}" />
 					<p>
-						Organization Information section has an auto lookup for the name entered. Just enter a few characters about a certain company and press 'search company information' button to have a full list of similar company names.
+						Organisation Information section has an auto lookup for the name entered. Just enter a few characters about a certain company and press 'search company information' button to have a full list of similar company names.
 					</p>
 					<img class="thumbnail" src="{{url('/public/img/help_and_settings/clients/company_info.png')}}" />
 					<p>
@@ -135,7 +135,16 @@
 			</div>
 			<div id="clients-4" class="panel-collapse collapse">
 				<div class="panel-body">
-					
+					<p>
+						Instant Search helps you to instantly find a contact, a prospect person or company in the your clients record. 
+						The instant search is always available on all your CRM pages. You just type on the search box provided and you will instantly presented with clients that match your typed information. 
+						A search information can be a firstname, surname, contact number, postcode or a company name. 
+						
+					</p>
+					<img class="thumbnail" src="{{url('/public/img/help_and_settings/clients/search.png')}}" />
+					<p>
+						You can click on the search result to have a full information view about the client.
+					</p>
 				</div>
 			</div>
 		</div>
@@ -149,7 +158,12 @@
 			</div>
 			<div id="clients-5" class="panel-collapse collapse">
 				<div class="panel-body">
-					
+					<p>
+						A view filter is an easy way to see only those clients that meet the condition you specify. 
+						View filter is available on the client list view page.
+						The search box is searched through the contact number or name of a person or company. 
+					</p>
+					<img class="thumbnail" src="{{url('/public/img/help_and_settings/clients/filter.png')}}" />
 				</div>
 			</div>
 		</div>
