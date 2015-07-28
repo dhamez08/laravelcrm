@@ -22,6 +22,10 @@
 						<i class="fa fa-group"></i> Membership </a>
 					</li>
 					<li>
+						<a data-toggle="tab" href="#clients-hlp">
+						<i class="fa fa-group"></i> Clients </a>
+					</li>
+					<li>
 						<a data-toggle="tab" href="#tab_3">
 						<i class="fa fa-leaf"></i> Terms Of Service </a>
 					</li>
@@ -43,6 +47,7 @@
 				<div class="tab-content">
 					{{ $email_marketing_tab }}
                     {{ $document_library_tab }}
+					{{ $clients_tab }}
 				</div>
 			</div>
 		</div>

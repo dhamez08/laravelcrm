@@ -118,7 +118,8 @@ class ProfileController extends \BaseController {
 
 		return \View::make( $data['view_path'] . '.profile.index', $data )
                 ->nest('email_marketing_tab',$data['view_path'] . '.profile.partials.user-guide.email-marketing')
-                ->nest('document_library_tab', $data['view_path'] . '.profile.partials.user-guide.document-library');
+                ->nest('document_library_tab', $data['view_path'] . '.profile.partials.user-guide.document-library')
+				->nest('clients_tab', $data['view_path'] . '.profile.partials.user-guide.clients');
 	}
 
 	/**

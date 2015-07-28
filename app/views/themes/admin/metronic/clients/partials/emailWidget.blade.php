@@ -121,14 +121,16 @@
                         <div class="controls">
                           <select id="email_template" name="email_template" class="form-control">
                             <option data-template-type="text" value="">No template required</option>
-                            <option value="" disabled>Custom Built Templates</option>
-                            @foreach($templates as $template)
+							<optgroup label="Custom Built Templates">
+                              @foreach($templates as $template)
                             <option data-template-type="text" value="{{ $template->id }}">{{ $template->name }}</option>
                             @endforeach
-                            <option value="" disabled>Template Builder Templates</option>
+						  </optgroup>
+						  <optgroup label="Template Builder Templates">
                             @foreach($html_templates as $html_template)
                             <option data-template-type="html" value="{{ $html_template['id'] }}">{{ $html_template['name'] }}</option>
                             @endforeach
+						  </optgroup>
                           </select>
                         </div>
                       </div>
