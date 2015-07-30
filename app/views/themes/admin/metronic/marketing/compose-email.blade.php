@@ -108,7 +108,7 @@
                                             </td>
                                         </tr>
                                     @else
-                                        @if(count(array_diff($tag_id, $val_customer->my_tag->lists('tag_id'))) == 0)
+                                        @if(count(array_diff($tag_id, $customer->my_tag->lists('tag_id'))) == 0)
                                             <tr>
                                                 <td>
                                                     <input type="checkbox" name="email[]" value="{{$email->id}}" />
