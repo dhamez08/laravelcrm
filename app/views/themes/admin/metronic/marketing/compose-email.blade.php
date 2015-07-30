@@ -99,13 +99,25 @@
                         @foreach($customer_list->get() as $customer)
                             @if( $customer->emails->count() > 0)
                                 @foreach($customer->emails as $email)
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" name="email[]" value="{{$email->id}}" />
-                                            {{$customer->title}} {{$customer->first_name}} {{$customer->last_name}} -
-                                            <span class="label label-info"><i class="fa fa-envelope-o"></i> {{$email->email}}</span>
-                                        </td>
-                                    </tr>
+                                    @if( is_null($tag_id) )
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" name="email[]" value="{{$email->id}}" />
+                                                {{$customer->title}} {{$customer->first_name}} {{$customer->last_name}} -
+                                                <span class="label label-info"><i class="fa fa-envelope-o"></i> {{$email->email}}</span>
+                                            </td>
+                                        </tr>
+                                    @else
+                                        @if(count(array_diff($tag_id, $val_customer->my_tag->lists('tag_id'))) == 0)
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" name="email[]" value="{{$email->id}}" />
+                                                    {{$customer->title}} {{$customer->first_name}} {{$customer->last_name}} -
+                                                    <span class="label label-info"><i class="fa fa-envelope-o"></i> {{$email->email}}</span>
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    @endif
                                 @endforeach
                             @endif
                         @endforeach
