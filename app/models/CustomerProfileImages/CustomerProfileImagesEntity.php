@@ -72,7 +72,7 @@ class CustomerProfileImagesEntity extends \Eloquent{
 				$obj->reference_name = "facebook";
                 $obj->reference_username = $username;
 //                $obj->image = $image_url;
-                $obj->image_thumbnails = $image_url;
+//                $obj->image_thumbnails = $image_url;
 
 				$obj->save();
 
