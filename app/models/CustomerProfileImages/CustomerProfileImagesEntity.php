@@ -66,7 +66,7 @@ class CustomerProfileImagesEntity extends \Eloquent{
 					$obj = \CustomerProfileImages\CustomerProfileImages::find($check->id);
 				}
 
-                $image_url = $this->fetchImage($username);
+//                $image_url = $this->fetchImage($username);
 
 				$obj->customer_id = \Input::get('customer_id');
 				$obj->reference_name = "facebook";
@@ -77,9 +77,9 @@ class CustomerProfileImagesEntity extends \Eloquent{
 				$obj->save();
 
 //              Set id as profile image
-                $client = \Clients\Clients::find($obj->customer_id);
-                $client->profile_image = $obj->id;
-                $client->save();
+//                $client = \Clients\Clients::find($obj->customer_id);
+//                $client->profile_image = $obj->id;
+//                $client->save();
 
 				return $obj;
 			} else {
