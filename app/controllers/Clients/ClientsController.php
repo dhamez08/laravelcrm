@@ -446,6 +446,7 @@ class ClientsController extends \BaseController {
 			'partner_last_name' => 'required_if:marital_status,Married|min:3',
 			'partner_dob' => 'required_if:marital_status,Married',
 			'partner_job_title' => 'required_if:marital_status,Married|min:3',
+            'address_checkbox' => 'required|min:1'
 		);
 		$messages = array(
 			'title.required'=>'Person Title is required',
@@ -465,6 +466,7 @@ class ClientsController extends \BaseController {
 			'partner_dob.required_if'=>'Partner Date of birth is required',
 			'partner_job_title.required_if'=>'Partner Title is required',
 			'partner_job_title.min'=>'Partner Title Job Title must have more than 3 character',
+            'address_checkbox.required' => 'At least one address is required'
 		);
 		$validator = \Validator::make(\Input::all(), $rules, $messages);
 
@@ -1156,6 +1158,7 @@ class ClientsController extends \BaseController {
 			'companyreg' => 'required|min:3',
 			'companyemployee' => 'required',
 			'sector' => 'required',
+            'address_checkbox' => 'required|min:1'
 		);
 		$messages = array(
 			'company_name.required'=>'Company Name is required',
@@ -1164,6 +1167,7 @@ class ClientsController extends \BaseController {
 			'companyreg.min'=>'Company Reg must have more than 3 character',
 			'companyemployee.required' => 'Company Employee is Required',
 			'sector.required'=>'Sector is required',
+            'address_checkbox.required' => 'At least one address is required'
 		);
 
 		$validator = \Validator::make(\Input::all(), $rules, $messages);
