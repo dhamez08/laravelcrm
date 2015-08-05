@@ -223,7 +223,7 @@
 														</span>
 													</td>
 													<td>
-														<a href="{{ $shared_file['url'] }}" target="_blank"> {{ $shared_file['name'] }}</a>
+														<a href="{{ $shared_file['url'] }}" class="file-preview" data-thumb="{{ $shared_file['thumb_url'] }}" target="_blank"> {{ $shared_file['name'] }}</a>
 
 														@if($shared_file['notes']!="")
 															<em> - {{ $shared_file['notes'] }}</em>				
@@ -310,7 +310,7 @@
                                                             </span>
                                                 </td>
                                                 <td>
-                                                    <a href="{{ $uploaded_file['url'] }}" target="_blank"> {{ $uploaded_file['name'] }}</a>
+                                                    <a href="{{ $uploaded_file['url'] }}" class="file-preview" data-thumb="{{ $uploaded_file['thumb_url'] }}" target="_blank"> {{ $uploaded_file['name'] }}</a>
 
                                                     @if($uploaded_file['notes']!="")
                                                     <em> - {{ $uploaded_file['notes'] }}</em>
