@@ -1928,6 +1928,7 @@ class ClientsController extends \BaseController {
 				// save details
 				$file_details = array(
 					'url' => $upload['url'],
+                    'thumb_url' => $upload['thumb'],
 					'ref' => $upload['ref'],
 					'time' => date('Y-m-d H:i:s'),
 					'user_id' => $client,
