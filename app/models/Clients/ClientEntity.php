@@ -396,7 +396,7 @@ class ClientEntity extends \Eloquent{
 		curl_close($ch);
 		if ($response) {		
 			$response = json_decode($response, true);
-			return array('ref' => $response['ref'], 'url' => $response['url']);
+			return array('ref' => $response['ref'], 'url' => $response['url'], 'thumb' => $response['thumb']);
 		} else {
 			return false;
 		}
