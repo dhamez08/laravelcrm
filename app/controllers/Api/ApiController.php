@@ -7,6 +7,7 @@ class ApiController extends \Controller{
 		$new_file = array(
 			'ref' => \Input::get('ref'),
 			'url' => \Input::get('url'),
+            'thumb_url' => \Input::get('thumb'),
 			'name' => \Input::get('name'),
 			'notes' => \Input::get('notes'),
 			'time' => \Input::get('time'),
