@@ -15,7 +15,8 @@
         "maatwebsite/excel": "1.*",
         "sybio/image-workshop": "2.0.*",
 		"intervention/image": "~2.1",
-		"barryvdh/laravel-dompdf": "0.4.*"
+		"barryvdh/laravel-dompdf": "0.4.*",
+		"anlutro/curl": "^1.4"
 	},
 	"autoload": {
 		"classmap": [

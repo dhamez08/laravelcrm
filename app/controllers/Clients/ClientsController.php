@@ -1862,54 +1862,131 @@ class ClientsController extends \BaseController {
 		return \Response::json( $clients );
 	}
 
-	public function getLiveDocuments($clientId)
-	{
-		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
-		$dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
-		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid');
+//	public function getLiveDocuments($clientId)
+//	{
+//		$group_id					= \User\UserEntity::get_instance()->getUserToGroup()->first()->group_id;
+//		$dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
+//		array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid');
+//
+//		$data 						= $this->_getClientData($clientId);
+//		$data['center_column_view']	= 'liveDocuments';
+//		$data['clientId']			= $clientId;
+//
+//		$data['customer_details']		=  \Clients\Clients::find($clientId)->address()->first()->toArray();
+//		$data['vmd'] 				= \Clients\ClientEntity::get_instance()->getVMD();	//$this->client_model->getVMD();
+//		$account 					= \Clients\ClientEntity::get_instance()->getVMDAccount($clientId);	//$this->client_model->getVMDAccount($client);
+//		$data['account'] 			= $account;
+//		$data['shared'] 			= \Clients\ClientEntity::get_instance()->getViewMyDocsSharedList($clientId);	//$this->client_model->getViewMyDocsSharedList($client);
+//		$data['uploaded'] 			= \Clients\ClientEntity::get_instance()->getViewMyDocsUploadedList($account['vmd']);	//$this->client_model->getViewMyDocsUploadedList($account['vmd']);
+//
+//		$data 						= array_merge($data,$dashboard_data);
+//
+//		return \View::make( $data['view_path'] . '.clients.liveDocuments', $data);
+//	}
 
-		$data 						= $this->_getClientData($clientId);
-		$data['center_column_view']	= 'liveDocuments';
-		$data['clientId']			= $clientId;
+//	public function getViewMyDocumentsActivate() {
+//		$clientID = \Input::get('id');
+//		$client = \Clients\Clients::find($clientID);
+//		// get client details so we can create an vmd account
+//		if ($client) {
+//			$result = \Clients\ClientEntity::get_instance()->createVMDAccount($client->id, $client->title, $client->first_name, $client->last_name, 'test@one23.co.uk', $client->address()->first()->postcode);
+//
+//			if ($result) {
+//				// update client vmd record
+//				\Clients\ClientEntity::get_instance()->updateVMDRecord($client->id, $result['ref'], $result['pin']);
+//				return \Redirect::to('clients/live-documents/' . $client->id);
+//			} else {
+//				return \Redirect::to('clients/live-documents/' . $client->id . '?error');
+//			}
+//		}
+//	}
 
-		$data['customer_details']		=  \Clients\Clients::find($clientId)->address()->first()->toArray();
-		$data['vmd'] 				= \Clients\ClientEntity::get_instance()->getVMD();	//$this->client_model->getVMD();
-		$account 					= \Clients\ClientEntity::get_instance()->getVMDAccount($clientId);	//$this->client_model->getVMDAccount($client);
-		$data['account'] 			= $account;	
-		$data['shared'] 			= \Clients\ClientEntity::get_instance()->getViewMyDocsSharedList($clientId);	//$this->client_model->getViewMyDocsSharedList($client);
-		$data['uploaded'] 			= \Clients\ClientEntity::get_instance()->getViewMyDocsUploadedList($account['vmd']);	//$this->client_model->getViewMyDocsUploadedList($account['vmd']);		
+//	public function getViewMyDocumentsUnlink() {
+//		//$this->load->model('client_model');
+//		//$client = $this->input->get('id');
+//		$client = \Input::get('id');
+//		//$this->client_model->updateVMDRecordRemove($client);
+//		\Clients\ClientEntity::get_instance()->updateVMDRecordRemove($client);
+//		//redirect("clients/view_my_documents?id=". $client);
+//		return \Redirect::to('clients/live-documents/' . $client);
+//	}
 
-		$data 						= array_merge($data,$dashboard_data);
+    public function getLiveDocuments($clientId){
+        $dashboard_data 			= \Dashboard\DashboardController::get_instance()->getSetupThemes();
+        array_set($dashboard_data,'html_body_class','page-header-fixed page-quick-sidebar-over-content page-container-bg-solid');
 
-		return \View::make( $data['view_path'] . '.clients.liveDocuments', $data);
-	}
+        $data 						= $this->_getClientData($clientId);
+        $data['center_column_view']	= 'liveDocuments';
+        $data['clientId']			= $clientId;
 
-	public function getViewMyDocumentsActivate() {
-		$clientID = \Input::get('id');
-		$client = \Clients\Clients::find($clientID);
-		// get client details so we can create an vmd account
-		if ($client) {
-			$result = \Clients\ClientEntity::get_instance()->createVMDAccount($client->id, $client->title, $client->first_name, $client->last_name, 'test@one23.co.uk', $client->address()->first()->postcode);
-			
-			if ($result) {
-				// update client vmd record
-				\Clients\ClientEntity::get_instance()->updateVMDRecord($client->id, $result['ref'], $result['pin']);
-				return \Redirect::to('clients/live-documents/' . $client->id);
-			} else {
-				return \Redirect::to('clients/live-documents/' . $client->id . '?error');
-			}
-		}
-	}
+        $data['customer_details']		=  \Clients\Clients::find($clientId)->address()->first()->toArray();
+        $data['vmd'] 				= $data['customer']->vmd_id;
 
-	public function getViewMyDocumentsUnlink() {
-		//$this->load->model('client_model');
-		//$client = $this->input->get('id');
-		$client = \Input::get('id');
-		//$this->client_model->updateVMDRecordRemove($client);
-		\Clients\ClientEntity::get_instance()->updateVMDRecordRemove($client);
-		//redirect("clients/view_my_documents?id=". $client);
-		return \Redirect::to('clients/live-documents/' . $client);
-	}		
+
+
+        if($data['vmd']){
+            $data['account'] = \ViewMyDocuments\ViewMyDocuments::get_instance()->get_vmd_details($data['vmd']);
+            $data['shared'] = \ViewMyDocuments\ViewMyDocuments::get_instance()->get_shared_files($data['vmd']);
+            $data['uploaded'] = \ViewMyDocuments\ViewMyDocuments::get_instance()->get_uploaded_files($data['vmd']);
+
+//            echo "<fieldset><legend>Data</legend><pre>",print_r($data['shared'], TRUE),"</pre></fieldset>";
+        }
+
+        $data 						= array_merge($data,$dashboard_data);
+//
+        return \View::make( $data['view_path'] . '.clients.liveDocuments', $data);
+    }
+
+    public function getViewMyDocumentsActivate() {
+        $clientID = \Input::get('id');
+        $data 						= $this->_getClientData($clientID);
+        $data['clientId']			= $clientID;
+        $data['customer_details']		=  \Clients\Clients::find($clientID)->address()->first()->toArray();
+
+        $basic_user = $data['customer']->toArray();
+        $user_email = $data['email']->first()->toArray();
+        $user_contact = $data['telephone']->first()->toArray();
+
+        $user_details = array(
+            "title" => strtolower($basic_user['title']).'.',
+            'first_name' => $basic_user['first_name'],
+            'last_name' => $basic_user['last_name'],
+            'postcode' => $data['customer_details']['postcode'],
+            'email' => $user_email['email'],
+            "occupation" => $basic_user['occupation'],
+            "address" => $data['customer_details']['address_line_1'],
+            "town" => $data['customer_details']['town'],
+            "phone_number" => $user_contact['number']
+        );
+
+
+        $client = \ViewMyDocuments\ViewMyDocuments::get_instance()->activate($user_details);
+
+        // get client details so we can create an vmd account
+        if (isset($client->id)) {
+           // Update vmd record
+            $user = \Clients\Clients::find($clientID);
+            $user->vmd_id = $client->id;
+            $saved = $user->save();
+
+            if ($saved) {
+                return \Redirect::to('clients/live-documents/' . $clientID);
+            } else {
+                return \Redirect::to('clients/live-documents/' . $clientID . '?error');
+            }
+        } else {
+            return \Redirect::to('clients/live-documents/' . $clientID);
+        }
+    }
+
+    public function getViewMyDocumentsUnlink() {
+        $client = \Input::get('id');
+        $user = \Clients\Clients::find($client);
+        \ViewMyDocuments\ViewMyDocuments::get_instance()->deactivate($user->vmd_id);
+        $user->vmd_id = 0;
+        $user->save();
+        return \Redirect::to('clients/live-documents/' . $client);
+    }
 
 	public function postViewMyDocumentsShare() {
 		//$this->load->model('client_model');
